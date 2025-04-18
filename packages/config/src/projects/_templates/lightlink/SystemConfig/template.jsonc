@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SystemConfig",
+  "description": "Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.",
+  "ignoreMethods": ["proxiableUUID"]
+}

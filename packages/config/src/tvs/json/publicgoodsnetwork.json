@@ -1,0 +1,115 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "publicgoodsnetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "publicgoodsnetwork-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+        "decimals": 18,
+        "sinceTimestamp": 1689106811
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "publicgoodsnetwork-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+            "decimals": 18,
+            "sinceTimestamp": 1689106847
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+            "decimals": 18,
+            "sinceTimestamp": 1689106811
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "publicgoodsnetwork-GTC",
+      "priceId": "gitcoin",
+      "symbol": "GTC",
+      "name": "Gitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F",
+        "chain": "ethereum",
+        "escrowAddress": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+        "decimals": 18,
+        "sinceTimestamp": 1689106811
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "publicgoodsnetwork-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+        "decimals": 6,
+        "sinceTimestamp": 1689106811
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "publicgoodsnetwork-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+        "decimals": 6,
+        "sinceTimestamp": 1689106811
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

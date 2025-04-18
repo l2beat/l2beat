@@ -7,9 +7,8 @@
     value: "External"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    description: "There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice."
     orderHint: -604800
-    secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
@@ -27,10 +26,10 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed."
-    orderHint: Infinity
+    description: "Although the OP stack fraud proof system is deployed, it assumes by default that data was made available. During a potential data withholding attack, it is impossible to prove a malicious state root."
+    orderHint: 0
     secondLine: "7d challenge period"
     sentiment: "bad"
-    value: "Fraud proofs (INT)"
+    value: "None"
   }
 }

@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 21937191,
-  "configHash": "0xf8679103ff7665c72a7a00552ced6d571b4e415768c43ce91bcc7ab1328ff58c",
+  "configHash": "0x7670fdcc70b99733da3f49c25d005670fca98f8150e45e54e7d833ac6881bbda",
   "entries": [
     {
       "name": "HomeUpgradeBeacon",
@@ -655,6 +655,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

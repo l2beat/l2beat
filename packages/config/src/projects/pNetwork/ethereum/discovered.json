@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0x3ab7f95900d4121969334c254c469fdfe8f5e353a35071c048736c2cc4f84ab8",
+  "configHash": "0x21c57e9cf05206a807ef29fd21dbdbf457da0ff9d6b01694e25595a89fed3035",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -1073,8 +1073,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "tokens/Lido/EVMScriptRegistry": "0xf15bea0ce9ca2fce59f1d42d128e15a18b05a3c54aeebc6bb4bcceb2986f3fc9",
-    "tokens/Lido/MiniMeToken": "0xe6377d7d81dcc6db240e3c8d3c229509e5d86c3f075135c8f21ddae7920d27ef"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
+    "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
   }
 }

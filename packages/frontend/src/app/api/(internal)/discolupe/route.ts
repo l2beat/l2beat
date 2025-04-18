@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { getFinalityProjects } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getLiveness } from '~/server/features/scaling/liveness/get-liveness'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get-7d-tvs-breakdown'
 import { ps } from '~/server/projects'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
@@ -28,7 +28,7 @@ async function getResponse() {
 
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingTechnology'],
-    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'isArchived'],
+    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'archivedAt'],
   })
 
   return {
@@ -48,7 +48,7 @@ async function getResponse() {
           project.discoveryInfo?.permissionsDiscoDriven ?? false,
         areContractsDiscoveryDriven:
           project.discoveryInfo?.contractsDiscoDriven ?? false,
-        isArchived: !!project.isArchived,
+        isArchived: !!project.archivedAt,
         isUpcoming: !!project.isUpcoming,
         isUnderReview: project.statuses.isUnderReview,
 

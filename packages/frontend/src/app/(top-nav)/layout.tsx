@@ -5,12 +5,12 @@ import { Footer } from '../../components/footer'
 import { NavLayout } from '../../components/nav/nav-layout'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const showHiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <NavLayout
       logoLink="/"
       topNavbar
-      showHiringBadge={showHiringBadge}
+      ecosystemsEnabled={env.NEXT_PUBLIC_ECOSYSTEMS}
+      showHiringBadge={env.NEXT_PUBLIC_SHOW_HIRING_BADGE}
       topChildren={
         <>
           <Banner />

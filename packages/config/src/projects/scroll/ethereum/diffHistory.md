@@ -1,4 +1,91 @@
-Generated with discovered.json: 0xd350ff4ba429eb20e9b048eb63fdb191e24c3a41
+Generated with discovered.json: 0x22200622219b038faab9444767ffef0c4108759b
+
+# Diff at Wed, 16 Apr 2025 13:25:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22123508
+- current block number: 22281836
+
+## Description
+
+Phase 1 of the Euclid upgrade.
+- Upgraded ScrollChain implementation: new commit batch function supporting postEuclid → commitBatchWithBlobProof has a new implementation supporting new bach encoding versions until v6 (_commitBatchFromV2ToV6). Main change is the introduction of the BatchHeaderV3Codec new encoding.
+- Updated verifier to the zkVM verifier for Phase 1
+- Updated access in the ScrollOwner contract on L1, allowing SECURITY_COUNCIL_NO_DELAY role to call ScrollChain.finalizeEuclidInitialBatch
+
+Next step is proposal of the migration block, followed by its Security Council approval (finalizeEuclidInitialBatch) and then execution of the Phase 2 transactions to complete the Euclid upgrade.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.5:
++        {"startBatchIndex":0,"verifier":"0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247"}
+      values.latestVerifier.4.verifier:
+-        "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247"
++        "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB"
+      values.latestVerifier.3.verifier:
+-        "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB"
++        "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D"
+      values.latestVerifier.2.verifier:
+-        "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D"
++        "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3"
+      values.legacyVerifiersLength.5:
++        0
+      values.verifierVersions.5:
++        6
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.finalizeEuclidInitialBatch(bytes32):
++        ["SECURITY_COUNCIL_NO_DELAY_ROLE"]
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x2069ff6eafc8fa79ae2c7e13a2618c44102f1f1b273cc5584e0b7cd3961948e1"
++        "0x2d7fa796a8274772f3ee8143549252719d97cf0dafeaf769802b66b51a195041"
+      values.$implementation:
+-        "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"
++        "0x8f339292d2b3909574B2bEB051a613a987dB538f"
+      values.$pastUpgrades.5:
++        ["2025-04-15T14:47:23.000Z","0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0",["0x8f339292d2b3909574B2bEB051a613a987dB538f"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.initialEuclidBatchIndex:
++        0
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid (0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ScrollChain/ScrollChain.sol                    | 945 ++++++++-------------
+ .../ethereum/.flat/ZkEvmVerifierPostEuclid.sol     | 102 +++
+ 2 files changed, 453 insertions(+), 594 deletions(-)
+```
+
+Generated with discovered.json: 0xd5b080877ee782c7bf9b0e92b9f4247e8379505a
 
 # Diff at Tue, 25 Mar 2025 11:06:18 GMT:
 

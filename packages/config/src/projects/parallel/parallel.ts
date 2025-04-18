@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1704289654), // 2024-01-03T13:47:34Z
-  isArchived: true,
+  archivedAt: UnixTime(1733356800), // 2024-12-05T00:00:00.000Z,
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

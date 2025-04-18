@@ -13,10 +13,12 @@ import type {
   ProjectActivityConfig,
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
+  ProjectColors,
   ProjectContracts,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectDiscoveryInfo,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -50,18 +52,22 @@ export interface ScalingProject {
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  /** Is this project archived? */
-  isArchived?: boolean
+  /** Date of archiving of the project */
+  archivedAt?: UnixTime
   /** Is this project an upcoming rollup? */
   isUpcoming?: boolean
   /** Has this project changed and is under review? */
   isUnderReview?: boolean
+  /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
+  colors?: ProjectColors
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  /** Ecosystem information */
+  ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
   dataAvailability?: ProjectScalingDa
   /** Details about the custom availability solution */
@@ -73,13 +79,13 @@ export interface ScalingProject {
   /** Rollup stage */
   stage: ProjectScalingStage
   /** Deep dive into project technology */
-  technology: ProjectScalingTechnology
+  technology?: ProjectScalingTechnology
   /** Open-source node details */
   stateDerivation?: ProjectScalingStateDerivation
   /** Explains how project validates state */
   stateValidation?: ProjectScalingStateValidation
   /** List of smart contracts used in the project */
-  contracts: ProjectContracts
+  contracts?: ProjectContracts
   /** List of permissioned addresses on a given chain */
   permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
@@ -238,7 +244,7 @@ export interface Bridge {
   id: ProjectId
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  isArchived?: boolean
+  archivedAt?: UnixTime
   isUpcoming?: boolean
   isUnderReview?: boolean
   display: BridgeDisplay
@@ -250,6 +256,7 @@ export interface Bridge {
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
   discoveryInfo?: ProjectDiscoveryInfo
+  upgradesAndGovernance?: string
 }
 
 export interface BridgeDisplay {
@@ -262,6 +269,7 @@ export interface BridgeDisplay {
   category: BridgeCategory
   links: ProjectLinks
   architectureImage?: string
+  upgradesAndGovernanceImage?: string
 }
 
 export interface BridgeConfig {

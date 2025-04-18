@@ -41,6 +41,7 @@ import type {
   ProjectActivityConfig,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -114,7 +115,7 @@ interface OpStackConfigCommon {
   capability?: ProjectScalingCapability
   architectureImage?: string
   stateValidationImage?: string
-  isArchived?: true
+  archivedAt?: UnixTime
   addedAt: UnixTime
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
@@ -153,9 +154,11 @@ interface OpStackConfigCommon {
   additionalBadges?: Badge[]
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
-  riskView?: ProjectScalingRiskView
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  ecosystemInfo?: ProjectEcosystemInfo
+  hasSuperchainScUpgrades?: boolean
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
   }
@@ -243,7 +246,7 @@ function opStackCommon(
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
-      (partOfSuperchain
+      (templateVars.hasSuperchainScUpgrades
         ? ({
             category: 'Funds can be stolen if',
             text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
@@ -256,7 +259,7 @@ function opStackCommon(
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
   return {
-    isArchived: templateVars.isArchived,
+    archivedAt: templateVars.archivedAt,
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
@@ -322,6 +325,7 @@ function opStackCommon(
       ],
       daTracking: getDaTracking(templateVars),
     },
+    ecosystemInfo: templateVars.ecosystemInfo,
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {
@@ -334,7 +338,7 @@ function opStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
-    riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider),
     stage:
       templateVars.stage ??
       computedStage(templateVars, postsToEthereum(templateVars)),
@@ -531,6 +535,7 @@ function getStateValidation(
         gameSplitDepth: permissionedGameSplitDepth,
         gameClockExtension: permissionedGameClockExtension,
         oracleChallengePeriod: oracleChallengePeriod,
+        isPermissionless: false,
       })
     }
     case 'Permissionless': {
@@ -576,6 +581,7 @@ function getStateValidation(
         gameSplitDepth: permissionlessGameSplitDepth,
         gameClockExtension: permissionlessGameClockExtension,
         oracleChallengePeriod: oracleChallengePeriod,
+        isPermissionless: true,
       })
     }
   }
@@ -588,6 +594,7 @@ function describeOPFP({
   gameSplitDepth,
   gameClockExtension,
   oracleChallengePeriod,
+  isPermissionless,
 }: {
   disputeGameBonds: number
   maxClockDuration: number
@@ -595,6 +602,7 @@ function describeOPFP({
   gameSplitDepth: number
   gameClockExtension: number
   oracleChallengePeriod: number
+  isPermissionless: boolean
 }): ProjectScalingStateValidation {
   const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
 
@@ -613,8 +621,7 @@ function describeOPFP({
   })()
 
   return {
-    description:
-      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    description: `Updates to the system state can be proposed and challenged by ${isPermissionless ? 'anyone who has sufficient funds' : 'permissioned operators only'}. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.`,
     categories: [
       {
         title: 'State root proposals',
@@ -663,15 +670,21 @@ function getRiskView(
   daProvider: DAProvider | undefined,
 ): ProjectScalingRiskView {
   return {
-    stateValidation: getRiskViewStateValidation(templateVars),
-    exitWindow: getRiskViewExitWindow(templateVars),
-    proposerFailure: getRiskViewProposerFailure(templateVars),
-    dataAvailability: {
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      getRiskViewStateValidation(templateVars),
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      getRiskViewExitWindow(templateVars),
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      getRiskViewProposerFailure(templateVars),
+    dataAvailability: templateVars.nonTemplateRiskView?.dataAvailability ?? {
       ...(daProvider === undefined
         ? RISK_VIEW.DATA_ON_CHAIN
         : daProvider.riskView),
     },
-    sequencerFailure: {
+    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       // the value is inside the node config, but we have no reference to it
       // so we assume it to be the same value as in other op stack chains
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
@@ -691,7 +704,7 @@ function getRiskViewStateValidation(
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissioned': {
@@ -701,13 +714,13 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT.description +
           ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
         sentiment: 'bad',
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissionless': {
       return {
         ...RISK_VIEW.STATE_FP_INT,
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
   }
@@ -717,7 +730,15 @@ function getRiskViewExitWindow(
   templateVars: OpStackConfigCommon,
 ): TableReadyValue {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
-
+  if (templateVars.hasSuperchainScUpgrades) {
+    return {
+      value: 'None',
+      description:
+        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+      sentiment: 'bad',
+      orderHint: -finalizationPeriod,
+    }
+  }
   return RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod)
 }
 
@@ -1204,6 +1225,10 @@ function getFinality(
 function getTrackedTxs(
   templateVars: OpStackConfigCommon,
 ): Layer2TxConfig[] | undefined {
+  if (templateVars.nonTemplateTrackedTxs !== undefined) {
+    return templateVars.nonTemplateTrackedTxs
+  }
+
   const fraudProofType = getFraudProofType(templateVars)
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
@@ -1218,38 +1243,36 @@ function getTrackedTxs(
         templateVars.l2OutputOracle ??
         templateVars.discovery.getContract('L2OutputOracle')
 
-      return (
-        templateVars.nonTemplateTrackedTxs ?? [
-          {
-            uses: [
-              { type: 'liveness', subtype: 'batchSubmissions' },
-              { type: 'l2costs', subtype: 'batchSubmissions' },
-            ],
-            query: {
-              formula: 'transfer',
-              from: sequencerAddress,
-              to: sequencerInbox,
-              sinceTimestamp: templateVars.genesisTimestamp,
-            },
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
           },
-          {
-            uses: [
-              { type: 'liveness', subtype: 'stateUpdates' },
-              { type: 'l2costs', subtype: 'stateUpdates' },
-            ],
-            query: {
-              formula: 'functionCall',
-              address: l2OutputOracle.address,
-              selector: '0x9aaab648',
-              functionSignature:
-                'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-              sinceTimestamp: UnixTime(
-                l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
-              ),
-            },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: l2OutputOracle.address,
+            selector: '0x9aaab648',
+            functionSignature:
+              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+            sinceTimestamp: UnixTime(
+              l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
+            ),
           },
-        ]
-      )
+        },
+      ]
     }
     case 'Permissioned':
     case 'Permissionless': {
@@ -1348,6 +1371,35 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
   }
 }
 
+function getChallengePeriod(templateVars: OpStackConfigCommon): number {
+  const fraudProofType = getFraudProofType(templateVars)
+
+  switch (fraudProofType) {
+    case 'None': {
+      const l2OutputOracle =
+        templateVars.l2OutputOracle ??
+        templateVars.discovery.getContract('L2OutputOracle')
+
+      return templateVars.discovery.getContractValue<number>(
+        l2OutputOracle.name ?? l2OutputOracle.address,
+        'FINALIZATION_PERIOD_SECONDS',
+      )
+    }
+    case 'Permissioned': {
+      return templateVars.discovery.getContractValue<number>(
+        'PermissionedDisputeGame',
+        'maxClockDuration',
+      )
+    }
+    case 'Permissionless': {
+      return templateVars.discovery.getContractValue<number>(
+        'FaultDisputeGame',
+        'maxClockDuration',
+      )
+    }
+  }
+}
+
 type FraudProofType = 'None' | 'Permissioned' | 'Permissionless'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
@@ -1378,7 +1430,7 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(
-    hostChain.technology.dataAvailability !== undefined,
+    hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
   assert(

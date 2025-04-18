@@ -1,0 +1,43 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "treasure",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "treasure-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x650BE505C391d396A1e0b1f2337EaE77F064fF7f",
+        "chain": "treasure",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "treasure-MAGIC",
+      "priceId": "magic",
+      "symbol": "MAGIC",
+      "name": "MAGIC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
+        "chain": "ethereum",
+        "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

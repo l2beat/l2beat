@@ -1,11 +1,14 @@
+import { AddShape } from './AddShape'
 import { AdriansCommand } from './AdriansCommand'
 import { CheckRpc } from './CheckRpc'
+import { Colorize } from './Colorize'
 import { CompareFlatSources } from './CompareFlatSources'
 import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
+import { DownloadShapes } from './DownloadShapes'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
 import { FetchFlatSources } from './FetchFlatSources'
@@ -18,6 +21,7 @@ import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
+import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
@@ -31,14 +35,17 @@ import { UI } from './UI'
 
 export function getSubcommands() {
   return [
+    AddShape,
     AdriansCommand,
     CheckRpc,
+    Colorize,
     CompareFlatSources,
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
     DeploymentTimestamp,
     DetectProxy,
+    DownloadShapes,
     Discover,
     Events,
     FetchFlatSources,
@@ -47,6 +54,7 @@ export function getSubcommands() {
     FindCelestiaNamespace,
     GetTokenMinters,
     MatchFlat,
+    ModelPermissions,
     OPConfigs,
     Powerdiff,
     RefreshDiscovery,

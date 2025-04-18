@@ -2,28 +2,47 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
-import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import {
+  TvsChartDataParams,
+  getTvsChart,
+} from '~/server/features/scaling/tvs/get-tvs-chart-data'
 import { ps } from '~/server/projects'
 
 export async function GET(
   request: NextRequest,
   props: { params: Promise<{ slug: string }> },
 ) {
-  const params = await props.params
+  const { slug } = await props.params
   const searchParams = request.nextUrl.searchParams
-  const range = TvsChartRange.catch('30d').parse(searchParams.get('range'))
 
-  const response = await getCachedResponse(params.slug, range)
+  const range = searchParams.get('range') as TvsChartDataParams['range'] | null
+
+  const params: TvsChartDataParams = {
+    range: range ?? '30d',
+    filter: { type: 'projects', projectIds: [slug] },
+    excludeAssociatedTokens:
+      searchParams.get('excludeAssociatedTokens') === 'true',
+    previewRecategorisation: false,
+  }
+  const parsedParams = TvsChartDataParams.safeParse(params)
+
+  if (parsedParams.error) {
+    return NextResponse.json({
+      success: false,
+      errors: parsedParams.error.errors,
+    })
+  }
+
+  const response = await getCachedResponse(slug, parsedParams.data)
 
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (slug: string, range: TvsChartRange) => {
+  async (slug: string, params: TvsChartDataParams) => {
     const project = await ps.getProject({
       slug,
-      where: ['tvlConfig', 'isScaling'],
+      where: ['tvsConfig', 'isScaling'],
     })
 
     if (!project) {
@@ -33,12 +52,7 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const data = await getTvsChart({
-      range,
-      excludeAssociatedTokens: false,
-      filter: { type: 'projects', projectIds: [project.id] },
-      previewRecategorisation: false,
-    })
+    const data = await getTvsChart(params)
 
     const oldestTvsData = data.at(0)
     const latestTvsData = data.at(-1)
@@ -50,23 +64,23 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const centsValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
-    const ethValue = centsValue / latestTvsData[4]
+    const usdValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
+    const ethValue = usdValue / latestTvsData[4]
 
     return {
       success: true,
       data: {
-        usdValue: centsValue / 100,
+        usdValue,
         ethValue,
         chart: {
           types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
           data: data.map(
             ([timestamp, native, canonical, external, ethPrice]) => [
               timestamp,
-              native / 100,
-              canonical / 100,
-              external / 100,
-              ethPrice / 100,
+              native,
+              canonical,
+              external,
+              ethPrice,
             ],
           ),
         },

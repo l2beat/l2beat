@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "rarimo",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "rarimo-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x2F3c205613d9451f88E19E011ED23775afe00C41",
+        "decimals": 18,
+        "sinceTimestamp": 1741046400
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,3 +1,201 @@
+Generated with discovered.json: 0x23ddd321ca8872fa9923d75f9c7d686a774c43f9
+
+# Diff at Sun, 06 Apr 2025 08:20:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 21235446
+- current block number: 22208300
+
+## Description
+
+Operators change, no change to implementations.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.permission:
+-        "interact"
++        "sequence"
+      issuedPermissions.1.to:
+-        "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7"
++        "0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01"
+      issuedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      issuedPermissions.0.permission:
+-        "sequence"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4"
++        "0x68ca4cDCb0F47457273B554E60ff8321D5C133E4"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      values.batcherHash:
+-        "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4"
++        "0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01"
+      values.owner:
+-        "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7"
++        "0x68ca4cDCb0F47457273B554E60ff8321D5C133E4"
+      values.unsafeBlockSigner:
+-        "0xa7A4D6d5920b93D0FE590f9524Ef17f24EE1F5B8"
++        "0x1F316F0F898AAb1919F9Fb9183F8D1900F721AdB"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xa669A743b065828682eE16109273F5CFeF5e676d) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.2.to:
+-        "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398"
++        "0xE363e5aeAbf7F6c20589a774fCD83389ebBF0275"
+      issuedPermissions.2.via.0:
+-        {"address":"0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"}
+      issuedPermissions.1.permission:
+-        "propose"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1"
++        "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398"
+      issuedPermissions.1.via.0:
++        {"address":"0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"}
+      issuedPermissions.0.permission:
+-        "challenge"
++        "propose"
+      issuedPermissions.0.to:
+-        "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752"
++        "0x0DE6711cE623d03f0888310ca3A04a69DE0E12e1"
+      values.$pastUpgrades.2:
++        ["2024-04-18T08:59:47.000Z","0x3873d6dcc852f76be0f9f8c71f927a42b055ddb43c495e17464831044ac31046",["0x93E1c0D8ef27930130fb809CE18ca681A8C32F85"]]
+      values.$pastUpgrades.1:
++        ["2025-04-05T10:01:23.000Z","0x73ee182446c88efe7fcb620040891c07867047a2f87527f0c2f313d87f9657d9",["0x93E1c0D8ef27930130fb809CE18ca681A8C32F85"]]
+      values.$pastUpgrades.0.2:
+-        "2024-04-18T08:59:47.000Z"
++        ["0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]
+      values.$pastUpgrades.0.1:
+-        "0x3873d6dcc852f76be0f9f8c71f927a42b055ddb43c495e17464831044ac31046"
++        "2025-04-05T09:37:35.000Z"
+      values.$pastUpgrades.0.0:
+-        ["0x93E1c0D8ef27930130fb809CE18ca681A8C32F85"]
++        "0x8a478837105675e4e373c2a15350499aaed1c3c899df845ea10eec28b275c662"
+      values.$upgradeCount:
+-        1
++        3
++++ severity: HIGH
+      values.challenger:
+-        "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752"
++        "0xE363e5aeAbf7F6c20589a774fCD83389ebBF0275"
+      values.CHALLENGER:
+-        "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752"
++        "0xE363e5aeAbf7F6c20589a774fCD83389ebBF0275"
++++ severity: HIGH
+      values.proposer:
+-        "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1"
++        "0x0DE6711cE623d03f0888310ca3A04a69DE0E12e1"
+      values.PROPOSER:
+-        "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1"
++        "0x0DE6711cE623d03f0888310ca3A04a69DE0E12e1"
+    }
+```
+
+```diff
+    contract undefined (0xc76C563185d01284AdbC9cF5bb909162dD2F15e7) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Cyber Multisig 2 (0x68ca4cDCb0F47457273B554E60ff8321D5C133E4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../cyber/ethereum/.flat/Cyber Multisig 2/Safe.sol | 1088 ++++++++++++++++++++
+ .../.flat/Cyber Multisig 2/SafeProxy.p.sol         |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235446 (main branch discovery), not current.
+
+```diff
+    contract Cyber (0x1a76Ed328600489811F819959a74043f106CF0f9) {
+    +++ description: None
+      name:
++        "Cyber"
+    }
+```
+
+```diff
+    contract AltLayer 3 (0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7) {
+    +++ description: None
+      name:
++        "AltLayer 3"
+    }
+```
+
+```diff
+    contract AltLayer 1 (0xaC79765A73eB9dcBd3c427181E6819902AE25b48) {
+    +++ description: None
+      name:
++        "AltLayer 1"
+    }
+```
+
+```diff
+    contract AltLayer 2 (0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2) {
+    +++ description: None
+      name:
++        "AltLayer 2"
+    }
+```
+
+```diff
+    contract Cyber Multisig 1 (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      name:
+-        "CyberMultisig"
++        "Cyber Multisig 1"
+    }
+```
+
+Generated with discovered.json: 0x593b052fd6514b69536e7767ab73029863bc3607
+
+# Diff at Thu, 27 Mar 2025 11:14:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21235446
+- current block number: 21235446
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235446 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x19b5804B88F10262A55ac731f28A3BbC4209853a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0xddb0cc237f83bac9998dc846134be267a48b3abb
 
 # Diff at Wed, 19 Mar 2025 13:04:31 GMT:

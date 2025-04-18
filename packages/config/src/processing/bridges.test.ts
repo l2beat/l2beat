@@ -95,11 +95,17 @@ describe('bridges', () => {
           | 'destination'
           | 'isUnderReview'
           | 'detailedDescription'
+          | 'upgradesAndGovernance'
+          | 'upgradesAndGovernanceImage'
         >
 
         function check(key: Key) {
           const item = bridge.technology[key]
-          if (item) {
+          if (Array.isArray(item)) {
+            for (const [i, x] of item.entries()) {
+              checkChoice(x, `${key}[${i}]`)
+            }
+          } else if (item) {
             checkChoice(item, key)
           }
         }

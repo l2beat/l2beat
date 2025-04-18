@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sorare",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sorare-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+        "decimals": 18,
+        "sinceTimestamp": 1626352527
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

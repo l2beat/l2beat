@@ -5,12 +5,13 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { compact } from 'lodash'
+import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
-import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvs/utils/get-associated-token-warning'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
@@ -22,11 +23,11 @@ export async function getBridgesSummaryEntries() {
     ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvlInfo'],
       where: ['isBridge'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 
-  return projects
+  const entries = projects
     .map((project) =>
       getBridgesSummaryEntry(
         project,
@@ -35,6 +36,8 @@ export async function getBridgesSummaryEntries() {
       ),
     )
     .sort(compareTvs)
+
+  return groupByBridgeTabs(entries)
 }
 
 export interface BridgesSummaryEntry extends CommonBridgesEntry {

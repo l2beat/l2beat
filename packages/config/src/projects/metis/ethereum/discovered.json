@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0xcf4bbee5e64778a8d521ef9d14db0c2d1d5aa31ed53722ce346a0d0fdad7631e",
+  "configHash": "0x8bf387763be8d2a67e1cb4936b1aed25979f933d4ebc3d590604d3f8343cdae7",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -494,7 +494,6 @@
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
       "proxyType": "immutable",
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -533,7 +532,8 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MToken",
@@ -1456,8 +1456,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2"
   }
 }

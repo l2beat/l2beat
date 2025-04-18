@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22094602,
-  "configHash": "0x767cf99caa643b539d5fde7009d51489be2131d8643e1c01b8fc5135637cc00b",
+  "blockNumber": 22188901,
+  "configHash": "0x3569c6cfa9bf554f1e1bfe199cbfd36a11bdbacdf8d4d24cedbdd31daeb3ff24",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -119,12 +119,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 24334200,
-        "latestOutputIndex": 13519,
-        "nextBlockNumber": 24336000,
-        "nextFinalizeOutputIndex": 13351,
-        "nextOutputIndex": 13520,
-        "nextOutputMinL2Timestamp": 1742552389,
+        "latestBlockNumber": 24903000,
+        "latestOutputIndex": 13835,
+        "nextBlockNumber": 24904800,
+        "nextFinalizeOutputIndex": 13667,
+        "nextOutputIndex": 13836,
+        "nextOutputMinL2Timestamp": 1743689989,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -321,8 +321,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "activatedValidatorCount": 8,
-        "activatedValidatorTotalWeight": "12727206259968603879239893",
+        "activatedValidatorCount": 9,
+        "activatedValidatorTotalWeight": "31723384761745083215624839",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -336,7 +336,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x3A68B16303AF7969aE0E84DEd82dbF865D725547",
+        "nextValidator": "0x16876e5c608cec36968517A9Eb345269D308D94a",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -407,8 +407,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 200000,
-          "prevBlockNum": 22086356
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 22187836
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -549,7 +549,7 @@
       "name": "SP1VerifierGateway",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
-      "template": "succinct/SP1SuccinctGateway",
+      "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
@@ -576,6 +576,9 @@
         "verifier": ["0x0000000000000000000000000000000000000000", false]
       },
       "fieldMeta": {
+        "verifier": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
+        },
         "oldVerifier": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
         },
@@ -590,9 +593,6 @@
         },
         "oldVerifier5": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
-        },
-        "verifier": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
       "derivedName": "SP1VerifierGateway"
@@ -738,7 +738,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4341,
+        "messageNonce": 4346,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -961,18 +961,6 @@
         "version": "0.1.5"
       },
       "derivedName": "ZKVerifier"
-    },
-    {
-      "address": "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
     },
     {
       "name": "Colosseum",
@@ -1293,7 +1281,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22094602,
+        "clock": 22188901,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1368,21 +1356,16 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SP1Verifier",
-      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1729727135,
-      "sinceBlock": 21031662,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
-        "VERSION": "v3.0.0"
-      },
-      "derivedName": "SP1Verifier"
+      "address": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
     },
     {
       "name": "SecurityCouncilTokenOwners",
@@ -1439,12 +1422,6 @@
         },
         {
           "permission": "interact",
-          "to": "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
           "to": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
           "description": "one of the signers of the KromaSecurityCouncil.",
           "via": []
@@ -1452,6 +1429,12 @@
         {
           "permission": "interact",
           "to": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
+          "description": "one of the signers of the KromaSecurityCouncil.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
           "description": "one of the signers of the KromaSecurityCouncil.",
           "via": []
         },
@@ -1687,7 +1670,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22094602,
+        "clock": 22188901,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1722,9 +1705,9 @@
           "0x27EFE61C5266e461995141f57b4D13F13c83f786",
           "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
           "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A",
-          "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
+          "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
         ],
-        "tokens": [0, 11, 4, 10, 13, 7, 14, 9, 12, 15],
+        "tokens": [0, 11, 4, 10, 13, 7, 14, 9, 12, 16],
         "tokenURI": [
           "https://nft.kroma.network/sc/1.png",
           "https://nft.kroma.network/sc/3.png"
@@ -1777,26 +1760,6 @@
       "address": "0xF5624B7E74C4Ed876C9793C7895184747a8D2310",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Poseidon2",
-      "address": "0xFd234971881a7c72965175fA8E438c97B2Dcd273",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa3600b2900d8b1fef0f3e6e58b0a56f5639eee39776eb2d7bce841b245fdf288"
-      ],
-      "proxyType": "immutable",
-      "description": "Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.",
-      "sinceTimestamp": 1693288007,
-      "sinceBlock": 18018289,
-      "values": { "$immutable": true },
-      "derivedName": "",
-      "references": [
-        {
-          "text": "Source Code",
-          "href": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"
-        }
-      ]
     },
     {
       "name": "ValidatorPool",
@@ -2515,15 +2478,6 @@
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
-    "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -2758,13 +2712,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "global/Timelock": "0x78c0e6200d758a9209bea4e159fd18076a0a2643ec0d7227e6cab48f6a65baeb",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
-    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
-    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1",
-    "succinct/SP1SuccinctGateway": "0x2b1d17343f6cd8f25c32002ecd089a7f0e7a0d38c6c48fe7e47e2610e4ecec2e"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44",
+    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   }
 }

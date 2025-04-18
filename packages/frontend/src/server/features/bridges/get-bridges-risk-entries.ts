@@ -7,8 +7,8 @@ import type {
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import { getProjectsLatestTvsUsd } from '../scaling/tvs/get-latest-tvs-usd'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import { getProjectsLatestTvsUsd } from '../scaling/tvs/utils/get-latest-tvs-usd'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
@@ -19,7 +19,7 @@ export async function getBridgeRiskEntries() {
     ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
       where: ['isBridge'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 

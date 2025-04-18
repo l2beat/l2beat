@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcd772341fe9a13c24d2960e39cc051e9bb5e1183
+
+# Diff at Thu, 10 Apr 2025 14:44:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 13963893
+- current block number: 13963893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 13963893 (main branch discovery), not current.
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xa4fe61b8f8c934c882062cf6c8eb85ef35c3dec5
 
 # Diff at Tue, 11 Mar 2025 08:13:36 GMT:

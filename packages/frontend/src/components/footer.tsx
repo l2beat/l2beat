@@ -11,10 +11,7 @@ export function Footer({ className, innerContainerClassName }: Props) {
 
   return (
     <footer
-      className={cn(
-        'border-t border-divider px-4 pb-6 pt-4 dark:border-zinc-700 md:border-t-0 md:px-12 md:pb-10',
-        className,
-      )}
+      className={cn('px-4 py-6 md:px-12 md:pb-10 md:pt-4 lg:pb-5', className)}
     >
       <div
         className={cn(

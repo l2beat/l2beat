@@ -2,7 +2,7 @@
   "name": "silicon",
   "chain": "ethereum",
   "blockNumber": 21766766,
-  "configHash": "0x8a7673863addb464e15f303893061a4826ddc322c1b6ba72a34bc043b02961ba",
+  "configHash": "0x5df3b6f2ba50249a59e0689b6f586e18f66d3b23c92781b8880d36bf2f606cee",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -136,7 +136,6 @@
         "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -434,9 +433,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "polygon-cdk/PolygonDataCommittee": "0xfdd0edf47a38318651165ce286364aef1d10e081bd028bd87b1d37e369f74913",
-    "polygon-cdk/PolygonZkEVM": "0xa5e14ba8c6f4f08fbf0a0563e2b3a245b53f98592b0f5c183ed637422e7aeed9",
-    "polygon-cdk/Verifier": "0x156dd18408212b6f9819278c83e38b5262986c093c695670634cfe4daeb25053"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
+    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
+    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
   }
 }

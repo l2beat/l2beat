@@ -1,19 +1,24 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import type {
+  BalanceOfEscrowAmountFormula,
+  CalculationFormula,
+  ConstAmountFormula,
+  TotalSupplyAmountFormula,
+  TvsToken,
+} from '@l2beat/config'
+import {
+  EthereumAddress,
+  ProjectId,
+  TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from '../tools/DataStorage'
 import {
   createAmountConfig,
   createPriceConfigId,
 } from '../tools/extractPricesAndAmounts'
-import {
-  type BalanceOfEscrowAmountFormula,
-  type CalculationFormula,
-  type ConstAmountFormula,
-  type ProjectTvsConfig,
-  type Token,
-  TokenId,
-  type TotalSupplyAmountFormula,
-} from '../types'
+import type { ProjectTvsConfig } from '../types'
 import { ValueService } from './ValueService'
 
 describe(ValueService.name, () => {
@@ -34,12 +39,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -57,7 +62,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -119,17 +124,17 @@ describe(ValueService.name, () => {
         projectId: ProjectId('bob'),
         tokens: [
           // WBTC with amount formula as totalSupply on L2
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('WBTC'),
             priceId: 'price-WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
           // solvBTC with
           // - amount formula as totalSupply on L2
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('solvBTC'),
             priceId: 'price-solvBTC',
             amount: solvBTCAmountFormula,
@@ -149,7 +154,7 @@ describe(ValueService.name, () => {
                 },
               ],
             },
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -185,7 +190,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -240,12 +245,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -263,7 +268,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -312,7 +317,7 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: {
@@ -321,7 +326,7 @@ describe(ValueService.name, () => {
               arguments: [amountFormulaInRange, amountFormulaNotInRange],
             },
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -340,7 +345,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -375,12 +380,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -396,7 +401,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(undefined),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
@@ -420,12 +425,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -443,13 +448,147 @@ describe(ValueService.name, () => {
           .resolvesToOnce(100),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
       ).toBeRejectedWith(
         `Amount not found for ${amountConfigId} within configured range (timestamp: ${mockTimestamp}, since: ${amountFormula.sinceTimestamp}, until: ${amountFormula.untilTimestamp})`,
       )
+    })
+
+    it('should calculate TVS - min formula with both arguments resolving to 0', async () => {
+      const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
+
+      const totalSupplyFormula = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+      } as TotalSupplyAmountFormula
+
+      const constFormula = {
+        type: 'const',
+        value: '0',
+        decimals: 0,
+      } as ConstAmountFormula
+
+      const amountFormula = {
+        type: 'calculation',
+        operator: 'min',
+        arguments: [constFormula, totalSupplyFormula],
+      } as CalculationFormula
+
+      const totalSupplyConfigId = createAmountConfig(totalSupplyFormula).id
+
+      const tvsConfig = mockObject<ProjectTvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<TvsToken>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: amountFormula,
+            valueForProject: undefined,
+            valueForSummary: undefined,
+          }),
+        ],
+      })
+
+      const mockTimestamp = UnixTime.now()
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(totalSupplyConfigId, mockTimestamp)
+          .resolvesToOnce(0n)
+          .resolvesToOnce(0n),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
+      })
+
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
+
+      const result = await valueService.calculate(tvsConfig, [mockTimestamp])
+
+      expect(result).toEqual([
+        {
+          timestamp: mockTimestamp,
+          tokenId: tvsConfig.tokens[0].id,
+          amount: 0,
+          projectId: ProjectId('project'),
+          value: 0,
+          valueForProject: 0,
+          valueForSummary: 0,
+        },
+      ])
+    })
+
+    it('should throw when min formula has both arguments resolving to undefined', async () => {
+      const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
+
+      // First totalSupply formula that will resolve to undefined
+      const totalSupplyFormula1 = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+        sinceTimestamp: UnixTime(300), // This will make it out of range
+      } as TotalSupplyAmountFormula
+
+      // Second totalSupply formula that will resolve to undefined
+      const totalSupplyFormula2 = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+        sinceTimestamp: UnixTime(300), // This will make it out of range
+      } as TotalSupplyAmountFormula
+
+      const amountFormula = {
+        type: 'calculation',
+        operator: 'min',
+        arguments: [totalSupplyFormula1, totalSupplyFormula2],
+      } as CalculationFormula
+
+      const totalSupplyConfigId1 = createAmountConfig(totalSupplyFormula1).id
+      const totalSupplyConfigId2 = createAmountConfig(totalSupplyFormula2).id
+
+      const tvsConfig = mockObject<ProjectTvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<TvsToken>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: amountFormula,
+            valueForProject: undefined,
+            valueForSummary: undefined,
+          }),
+        ],
+      })
+
+      const mockTimestamp = UnixTime(200) // Earlier than the sinceTimestamp
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(totalSupplyConfigId1, mockTimestamp)
+          .resolvesToOnce(undefined)
+          .given(totalSupplyConfigId2, mockTimestamp)
+          .resolvesToOnce(undefined),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(200),
+      })
+
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
+
+      // Since both arguments resolve to undefined and are out of range,
+      // we expect the calculation to throw an error
+      await expect(
+        async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
+      ).toBeRejected()
     })
   })
 })

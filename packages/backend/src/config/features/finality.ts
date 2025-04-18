@@ -11,7 +11,7 @@ export async function getFinalityConfig(
   const projects = await ps.getProjects({
     select: ['finalityConfig'],
     optional: ['chainConfig'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
 
   return {

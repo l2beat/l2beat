@@ -1,4 +1,5 @@
 import path from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import type {
@@ -6,12 +7,11 @@ import type {
   DiscoveryModuleConfig,
 } from '../config/types'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
-import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
-import { TEMPLATES_PATH } from './analysis/TemplateService'
+import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
-import type { DiscoveryConfig } from './config/DiscoveryConfig'
+import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
@@ -28,6 +28,7 @@ export async function runDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
   chainConfigs: DiscoveryChainConfig[],
+  logger: Logger,
 ): Promise<void> {
   const projectConfig = configReader.readConfig(
     config.project,
@@ -41,7 +42,6 @@ export async function runDiscovery(
           .blockNumber
       : undefined)
 
-  const logger = DiscoveryLogger.CLI
   const { result, blockNumber, providerStats } = await discover(
     paths,
     chainConfigs,
@@ -67,9 +67,9 @@ export async function runDiscovery(
 
   if (config.project.startsWith('shared-')) {
     const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
-    const backrefConfigs = allConfigs.filter((c) =>
-      c.sharedModules.includes(config.project),
-    )
+    const backrefConfigs = allConfigs
+      .filter((c) => c.structure.sharedModules.includes(config.project))
+      .map((c) => c.structure)
     printSharedModuleInfo(backrefConfigs)
   }
 
@@ -77,7 +77,14 @@ export async function runDiscovery(
     printProviderStats(logger, providerStats)
   }
 
-  printTemplatization(logger, result, !!config.verboseTemplatization)
+  const templateService = new TemplateService(paths.discovery)
+
+  printTemplatization(
+    logger,
+    result,
+    !!config.verboseTemplatization,
+    templateService,
+  )
 }
 
 export async function dryRunDiscovery(
@@ -86,6 +93,7 @@ export async function dryRunDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
   chainConfigs: DiscoveryChainConfig[],
+  logger: Logger,
 ): Promise<void> {
   const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
   const blockNumber = await provider.getBlockNumber()
@@ -105,6 +113,7 @@ export async function dryRunDiscovery(
       blockNumber,
       http,
       config.overwriteCache,
+      logger,
     ),
     justDiscover(
       paths,
@@ -113,6 +122,7 @@ export async function dryRunDiscovery(
       blockNumberYesterday,
       http,
       config.overwriteCache,
+      logger,
     ),
   ])
 
@@ -128,28 +138,31 @@ export async function dryRunDiscovery(
 async function justDiscover(
   paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   blockNumber: number,
   http: HttpClient,
   overwriteCache: boolean,
+  logger: Logger,
 ): Promise<DiscoveryOutput> {
   const { result } = await discover(
     paths,
     chainConfigs,
     config,
-    DiscoveryLogger.CLI,
+    logger,
     blockNumber,
     http,
     overwriteCache,
   )
-  return toDiscoveryOutput(config, blockNumber, result)
+
+  const templateService = new TemplateService(paths.discovery)
+  return toDiscoveryOutput(templateService, config, blockNumber, result)
 }
 
 export async function discover(
   paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
-  config: DiscoveryConfig,
-  logger: DiscoveryLogger,
+  config: ConfigRegistry,
+  logger: Logger,
   blockNumber: number | undefined,
   http: HttpClient,
   overwriteChache: boolean,
@@ -164,19 +177,20 @@ export async function discover(
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
+  const chain = config.structure.chain
   const { allProviders, discoveryEngine } = getDiscoveryEngine(
     paths,
     chainConfigs,
     cache,
     http,
     logger,
-    config.chain,
+    chain,
   )
-  blockNumber ??= await allProviders.getLatestBlockNumber(config.chain)
-  const provider = allProviders.get(config.chain, blockNumber)
+  blockNumber ??= await allProviders.getLatestBlockNumber(chain)
+  const provider = allProviders.get(chain, blockNumber)
   return {
-    result: await discoveryEngine.discover(provider, config),
+    result: await discoveryEngine.discover(provider, config.structure),
     blockNumber,
-    providerStats: allProviders.getStats(config.chain),
+    providerStats: allProviders.getStats(chain),
   }
 }

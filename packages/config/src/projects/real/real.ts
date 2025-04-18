@@ -11,7 +11,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('real')
 
 export const real: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1717598702), // 2024-06-05T14:45:02Z
+  addedAt: UnixTime(1715731200), // 2024-05-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
@@ -54,7 +54,11 @@ export const real: ScalingProject = orbitStackL2({
     sinceTimestamp: UnixTime(1710580715),
     coingeckoPlatform: 're-al',
     apis: [
-      { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },
+      {
+        type: 'rpc',
+        url: 'https://tangible-real.gateway.tenderly.co/',
+        callsPerMinute: 3000,
+      },
       { type: 'blockscout', url: 'https://explorer.re.al/api' },
     ],
   },

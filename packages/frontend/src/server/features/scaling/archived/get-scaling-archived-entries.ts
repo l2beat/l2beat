@@ -11,9 +11,9 @@ import type { ProjectChanges } from '../../projects-change-report/get-projects-c
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { compareTvs } from '../tvs/utils/compare-tvs'
-import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
-import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
@@ -21,7 +21,7 @@ export async function getScalingArchivedEntries() {
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-      where: ['isScaling', 'isArchived'],
+      where: ['isScaling', 'archivedAt'],
     }),
   ])
 

@@ -1,3 +1,218 @@
+Generated with discovered.json: 0x5e0bc532f79f29693f016aa967fca1df15c9969d
+
+# Diff at Fri, 11 Apr 2025 13:16:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b607477490db79d49274f7585039ac7263456118 block: 22194715
+- current block number: 22194715
+
+## Description
+
+Config: global mapping updated for op stack prestates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22194715 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405:
++        "v1.5.1-rc.1 (cannon64)"
+      usedTypes.0.arg.0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01:
++        "v1.5.1-rc.1"
+      usedTypes.0.arg.0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef:
++        "v1.5.0 (cannon64)"
+      usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
++        "v1.5.0"
+      usedTypes.0.arg.0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37:
++        "v1.4.0-unichain"
+    }
+```
+
+Generated with discovered.json: 0x98b2b9bc07a8c29da161a0518206f1fc6d512a0f
+
+# Diff at Thu, 10 Apr 2025 14:43:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22194715
+- current block number: 22194715
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22194715 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0xeae6bd770f4ab78572fc165210b22496d48a7bc4
+
+# Diff at Fri, 04 Apr 2025 09:39:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22166596
+- current block number: 22194715
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      values.$implementation:
+-        "0x53c165169401764778F780a69701385eb0FF19B7"
++        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol                         | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166596 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH (0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d","via":[{"address":"0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
++        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
+      issuedPermissions.0.via.0:
+-        {"address":"0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract undefined (0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53","description":"can pull funds from the contract in case of emergency."}
+    }
+```
+
+Generated with discovered.json: 0x7d7a2c22d692f14526ebfd644f785714a525c271
+
+# Diff at Mon, 31 Mar 2025 11:27:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21895014
+- current block number: 22166596
+
+## Description
+
+ms signer changes.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.7:
++        "0x001271c57AeC639952B5201D052767c316755512"
+      values.$members.6:
++        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
+      values.$members.5:
+-        "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01"
++        "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca"
+      values.$members.4:
+-        "0x39CF304731099e756204219BF0a8cCc4738dE9dD"
++        "0x0a214444613E3970049BD74a8d72d5bF9EF0094c"
+      values.$members.3:
+-        "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"
++        "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
+      values.$members.2:
+-        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
++        "0xeD9919D57162D518014C391a687AA8fb9DB55654"
+      values.$members.1:
+-        "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6"
++        "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7"
+      values.$members.0:
+-        "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21"
++        "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670"
+      values.$threshold:
+-        3
++        5
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "5 of 8 (63%)"
+    }
+```
+
+Generated with discovered.json: 0x98c85b5c2f2295f8884250768e736f23d1f00b30
+
+# Diff at Thu, 27 Mar 2025 11:15:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21895014
+- current block number: 21895014
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21895014 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x5891090d5085679714cb0e62f74950a3c19146a8) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0x3535636dc464a2e733b2b1396a16062323477aa3
 
 # Diff at Tue, 18 Mar 2025 08:14:33 GMT:

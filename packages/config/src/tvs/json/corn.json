@@ -1,0 +1,207 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "corn",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "corn-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x957C9DC25DE6B8E46a7Fa0D081bA749DD005B54f",
+        "decimals": 8,
+        "sinceTimestamp": 1733924495
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-CORN",
+      "priceId": "corn-3",
+      "symbol": "CORN",
+      "name": "Corn",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54471/large/corn.jpg?1739933588",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "corn-3",
+        "decimals": 18,
+        "sinceTimestamp": 1743120000,
+        "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+        "chain": "corn"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "corn-eBTC",
+      "priceId": "ether-fi-staked-btc",
+      "symbol": "eBTC",
+      "name": "ether.fi BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+        "chain": "corn",
+        "decimals": 8,
+        "sinceTimestamp": 1733771467
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-LBTC",
+      "priceId": "lombard-staked-btc",
+      "symbol": "LBTC",
+      "name": "Lombard Staked Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+        "chain": "corn",
+        "decimals": 8,
+        "sinceTimestamp": 1733245117
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-SolvBTC",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+        "chain": "corn",
+        "decimals": 18,
+        "sinceTimestamp": 1734006126
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-SolvBTC.BBN",
+      "priceId": "solv-protocol-solvbtc-bbn",
+      "symbol": "SolvBTC.BBN",
+      "name": "SolvBTC Babylon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+        "chain": "corn",
+        "decimals": 18,
+        "sinceTimestamp": 1734006360
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-stBTC",
+      "priceId": "lorenzo-stbtc",
+      "symbol": "stBTC",
+      "name": "Lorenzo stBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
+        "chain": "corn",
+        "decimals": 18,
+        "sinceTimestamp": 1734072451
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Corn)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
+        "chain": "corn",
+        "decimals": 6,
+        "sinceTimestamp": 1733450235
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x00943b11764176C3a8323aEFCBd6fE70CFb6272d",
+        "decimals": 8,
+        "sinceTimestamp": 1733923955
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",
+        "chain": "corn",
+        "decimals": 18,
+        "sinceTimestamp": 1733425962
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-WETH",
+      "priceId": "ethereum",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
+        "chain": "corn",
+        "decimals": 18,
+        "sinceTimestamp": 1733432431
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}

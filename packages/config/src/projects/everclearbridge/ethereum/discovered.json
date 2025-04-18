@@ -1,8 +1,8 @@
 {
   "name": "everclearbridge",
   "chain": "ethereum",
-  "blockNumber": 22065300,
-  "configHash": "0x262a759db51e7c264a6a0ee5a3e68fb3415ef86d43526c898bb669ae984a9ca8",
+  "blockNumber": 22281661,
+  "configHash": "0xf6255b90d6d8cf60ac88f30aef3b838734029c8364d89da263a71d6176b3eac2",
   "entries": [
     {
       "name": "Permit2",
@@ -121,20 +121,20 @@
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
           "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
           "0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
-          "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044"
+          "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
         ],
         "$threshold": 2,
         "domainSeparator": "0x64412860115383b11fa25f237671c0f1360620ce4cb4483a378e947a2eaf2d69",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 19,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "EverclearSpoke",
+      "name": "EverclearSpokeV3",
       "address": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "unverified": true,
@@ -151,7 +151,7 @@
       "sinceBlock": 20760959,
       "values": {
         "$admin": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
-        "$implementation": "0x7e3667D4dE0B592c78cAa70faC8FE6d5853DfAAc",
+        "$implementation": "0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2",
         "$pastUpgrades": [
           [
             "2024-09-16T05:00:59.000Z",
@@ -162,20 +162,25 @@
             "2024-12-18T10:09:23.000Z",
             "0xe1b76ceaae265ba0c3762b3143858112401f39d49c84020906c3a0f7544d9d74",
             ["0x7e3667D4dE0B592c78cAa70faC8FE6d5853DfAAc"]
+          ],
+          [
+            "2025-04-15T09:38:11.000Z",
+            "0x4fa770e2446e25bbf87e7464bbc9c15afa45a4c4afdda25e34ee74b5eef1b20f",
+            ["0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "callExecutor": "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99",
         "DOMAIN": 1,
         "EVERCLEAR": 25327,
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 953, "last": 952 },
+        "intentQueue": { "first": 2198, "last": 2197 },
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 2000000,
         "messageReceiver": "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 952,
+        "nonce": 2197,
         "owner": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -184,10 +189,10 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "0x6281ea3060B26352b558C4F45767C90db482c4fd"
       },
-      "derivedName": "EverclearSpoke"
+      "derivedName": "EverclearSpokeV3"
     },
     {
-      "address": "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044",
+      "address": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -237,7 +242,10 @@
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
     ],
-    "0x7e3667D4dE0B592c78cAa70faC8FE6d5853DfAAc": [
+    "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": [
+      "constructor(address _singleton)"
+    ],
+    "0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -323,6 +331,7 @@
       "function messageGasLimit() view returns (uint256)",
       "function messageReceiver() view returns (address)",
       "function modules(uint8 _strategy) view returns (address _module)",
+      "function newIntent(uint32[] _destinations, bytes32 _receiver, address _inputAsset, bytes32 _outputAsset, uint256 _amount, uint24 _maxFee, uint48 _ttl, bytes _data) returns (bytes32 _intentId, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
       "function newIntent(uint32[] _destinations, address _receiver, address _inputAsset, address _outputAsset, uint256 _amount, uint24 _maxFee, uint48 _ttl, bytes _data) returns (bytes32 _intentId, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
       "function newIntent(uint32[] _destinations, address _receiver, address _inputAsset, address _outputAsset, uint256 _amount, uint24 _maxFee, uint48 _ttl, bytes _data, tuple(uint256 nonce, uint256 deadline, bytes signature) _permit2Params) returns (bytes32 _intentId, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
       "function nonce() view returns (uint64)",
@@ -350,9 +359,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function watchtower() view returns (address)",
       "function withdraw(address _asset, uint256 _amount)"
-    ],
-    "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": [
-      "constructor(address _singleton)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -405,6 +411,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

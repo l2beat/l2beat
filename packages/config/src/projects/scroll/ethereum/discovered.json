@@ -1,13 +1,31 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22123508,
-  "configHash": "0x9569e25516bc0bb36f559226e0df135b8f50b8ee2f9d38a8448432db28d4a9a7",
+  "blockNumber": 22281836,
+  "configHash": "0x00fbe2a18737c516c900aac35643d414247918e488635069a1a6b67e15fd11b4",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ZkEvmVerifierPostEuclid",
+      "address": "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743130499,
+      "sinceBlock": 22142559,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582",
+        "verifierDigest1": "0x001e7bcb266824cb08ad303990e90a9c4b901eaaa52e562e513df47d4c168949",
+        "verifierDigest2": "0x0038553adf417a6a3df35d2fdfd14b892f1e49ba18937ece7960c1e7cee6e3dc"
+      },
+      "derivedName": "ZkEvmVerifierPostEuclid"
     },
     {
       "name": "PlonkVerifierV1-1",
@@ -139,13 +157,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 39323435,
+        "l2BaseFee": 39266780,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 952652,
-        "nextUnfinalizedQueueIndex": 952648,
+        "nextCrossDomainMessageIndex": 953649,
+        "nextUnfinalizedQueueIndex": 953647,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 952652,
+        "pendingQueueIndex": 953648,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -277,7 +295,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe",
@@ -315,7 +333,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -536,11 +554,15 @@
           {
             "startBatchIndex": 0,
             "verifier": "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3"
+          },
+          {
+            "startBatchIndex": 0,
+            "verifier": "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3"
           }
         ],
-        "legacyVerifiersLength": [0, 0, 0, 0, 0],
+        "legacyVerifiersLength": [0, 0, 0, 0, 0, 0],
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "verifierVersions": [0, 1, 2, 3, 4]
+        "verifierVersions": [0, 1, 2, 3, 4, 6]
       },
       "derivedName": "MultipleVersionRollupVerifier"
     },
@@ -877,7 +899,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 2,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -1157,7 +1179,10 @@
               "setPause(bool)": ["emergency-nodelay"],
               "addSequencer(address)": ["ops-fast"],
               "addProver(address)": ["ops-fast"],
-              "updateMaxNumTxInChunk(uint256)": ["ops-fast"]
+              "updateMaxNumTxInChunk(uint256)": ["ops-fast"],
+              "finalizeEuclidInitialBatch(bytes32)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE"
+              ]
             },
             "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": {
               "updateWhitelistStatus(address[],bool)": ["emergency-nodelay"]
@@ -1419,7 +1444,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -1496,7 +1521,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -1593,7 +1618,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x2069ff6eafc8fa79ae2c7e13a2618c44102f1f1b273cc5584e0b7cd3961948e1"
+        "0x2d7fa796a8274772f3ee8143549252719d97cf0dafeaf769802b66b51a195041"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -1608,7 +1633,7 @@
       "sinceBlock": 18306934,
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f",
+        "$implementation": "0x8f339292d2b3909574B2bEB051a613a987dB538f",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -1634,10 +1659,16 @@
             "2024-08-20T23:36:35.000Z",
             "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7",
             ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
+          ],
+          [
+            "2025-04-15T14:47:23.000Z",
+            "0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0",
+            ["0x8f339292d2b3909574B2bEB051a613a987dB538f"]
           ]
         ],
-        "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 356908,
+        "$upgradeCount": 6,
+        "initialEuclidBatchIndex": 0,
+        "lastFinalizedBatchIndex": 357908,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1836,7 +1867,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -1878,6 +1909,17 @@
         "verifierDigest": "0x0a1904dbfff4614fb090b4b3864af4874f12680c32f07889e9ede8665097e5ec"
       },
       "derivedName": "ZkEvmVerifierV2"
+    },
+    {
+      "name": "",
+      "address": "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743130487,
+      "sinceBlock": 22142558,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "L1StandardERC20Gateway",
@@ -2127,7 +2169,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 17657501918144,
+        "totalBridgedUSDC": 18807343922848,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -2195,6 +2237,14 @@
     }
   ],
   "abis": {
+    "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": [
+      "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2)",
+      "error VerificationFailed()",
+      "function plonkVerifier() view returns (address)",
+      "function verifierDigest1() view returns (bytes32)",
+      "function verifierDigest2() view returns (bytes32)",
+      "function verify(bytes bundleProof, bytes publicInput) view"
+    ],
     "0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03": [
       "constructor(address _counterpart, address _router, address _messenger)",
       "error ErrorCallerIsNotCounterpartGateway()",
@@ -2973,19 +3023,7 @@
     "0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": [
       "constructor(address _singleton)"
     ],
-    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": [
-      "constructor(address _singleton)"
-    ],
-    "0x9479ABfebefEea3c846163012a472b44F305b3d7": [
-      "constructor(address _singleton)"
-    ],
-    "0x987e300fDfb06093859358522a79098848C33852": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f": [
+    "0x8f339292d2b3909574B2bEB051a613a987dB538f": [
       "constructor(uint64 _chainId, address _messageQueue, address _verifier)",
       "error ErrorAccountIsNotEOA()",
       "error ErrorBatchHeaderV0LengthTooSmall()",
@@ -2997,6 +3035,8 @@
       "error ErrorCallPointEvaluationPrecompileFailed()",
       "error ErrorCallerIsNotProver()",
       "error ErrorCallerIsNotSequencer()",
+      "error ErrorEuclidForkEnabled()",
+      "error ErrorFinalizePreAndPostEuclidBatchInOneBundle()",
       "error ErrorFoundMultipleBlobs()",
       "error ErrorGenesisBatchHasNonZeroField()",
       "error ErrorGenesisBatchImported()",
@@ -3013,6 +3053,7 @@
       "error ErrorLastL1MessageSkipped()",
       "error ErrorNoBlobFound()",
       "error ErrorNoBlockInChunkV1()",
+      "error ErrorNotAllV4BatchFinalized()",
       "error ErrorNumTxsLessThanNumL1Msgs()",
       "error ErrorRevertFinalizedBatch()",
       "error ErrorRevertNotStartFromEnd()",
@@ -3020,6 +3061,9 @@
       "error ErrorStateRootIsZero()",
       "error ErrorTooManyTxsInOneChunk()",
       "error ErrorUnexpectedPointEvaluationPrecompileOutput()",
+      "error ErrorV5BatchContainsTransactions()",
+      "error ErrorV5BatchNotContainsOnlyOneBlock()",
+      "error ErrorV5BatchNotContainsOnlyOneChunk()",
       "error ErrorZeroAddress()",
       "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
       "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
@@ -3033,13 +3077,13 @@
       "event UpdateSequencer(address indexed account, bool status)",
       "function addProver(address _account)",
       "function addSequencer(address _account)",
-      "function commitBatch(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap)",
       "function commitBatchWithBlobProof(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap, bytes _blobDataProof)",
       "function committedBatches(uint256) view returns (bytes32)",
-      "function finalizeBatchWithProof4844(bytes _batchHeader, bytes32, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)",
-      "function finalizeBundleWithProof(bytes _batchHeader, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _aggrProof)",
+      "function finalizeBundleWithProof(bytes batchHeader, bytes32 postStateRoot, bytes32 withdrawRoot, bytes aggrProof)",
+      "function finalizeEuclidInitialBatch(bytes32 postStateRoot)",
       "function finalizedStateRoots(uint256) view returns (bytes32)",
       "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
+      "function initialEuclidBatchIndex() view returns (uint256)",
       "function initialize(address _messageQueue, address _verifier, uint256 _maxNumTxInChunk)",
       "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
       "function isProver(address) view returns (bool)",
@@ -3059,6 +3103,18 @@
       "function updateMaxNumTxInChunk(uint256 _maxNumTxInChunk)",
       "function verifier() view returns (address)",
       "function withdrawRoots(uint256) view returns (bytes32)"
+    ],
+    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": [
+      "constructor(address _singleton)"
+    ],
+    "0x9479ABfebefEea3c846163012a472b44F305b3d7": [
+      "constructor(address _singleton)"
+    ],
+    "0x987e300fDfb06093859358522a79098848C33852": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3399,7 +3455,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

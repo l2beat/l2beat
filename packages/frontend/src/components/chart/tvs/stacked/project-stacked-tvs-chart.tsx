@@ -3,6 +3,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
+import { TvsBreakdownButton } from '~/components/projects/sections/stacked-tvs-section'
 import { TokenCombobox } from '~/components/token-combobox'
 import type {
   ProjectToken,
@@ -22,14 +23,14 @@ interface Props {
   milestones: Milestone[]
   projectId: string
   tokens: ProjectTokens | undefined
-  isBridge: boolean
+  tvsBreakdownUrl?: string
 }
 
 export function ProjectStackedTvsChart({
   milestones,
   projectId,
   tokens,
-  isBridge,
+  tvsBreakdownUrl,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
@@ -38,7 +39,7 @@ export function ProjectStackedTvsChart({
   if (tokens && token) {
     return (
       <ProjectTokenChart
-        isBridge={isBridge}
+        isBridge={false}
         tokens={tokens}
         setToken={setToken}
         token={token}
@@ -48,6 +49,7 @@ export function ProjectStackedTvsChart({
         setUnit={setUnit}
         milestones={milestones}
         projectId={projectId}
+        tvsBreakdownUrl={tvsBreakdownUrl}
         showStackedChartLegend
       />
     )
@@ -55,7 +57,6 @@ export function ProjectStackedTvsChart({
 
   return (
     <DefaultChart
-      isBridge={isBridge}
       projectId={projectId}
       milestones={milestones}
       timeRange={timeRange}
@@ -65,13 +66,13 @@ export function ProjectStackedTvsChart({
       setToken={setToken}
       unit={unit}
       setUnit={setUnit}
+      tvsBreakdownUrl={tvsBreakdownUrl}
     />
   )
 }
 
 interface DefaultChartProps {
   projectId: string
-  isBridge: boolean
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
@@ -80,11 +81,11 @@ interface DefaultChartProps {
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
+  tvsBreakdownUrl: string | undefined
 }
 
 function DefaultChart({
   projectId,
-  isBridge,
   milestones,
   timeRange,
   setTimeRange,
@@ -93,6 +94,7 @@ function DefaultChart({
   setToken,
   unit,
   setUnit,
+  tvsBreakdownUrl,
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
@@ -103,7 +105,7 @@ function DefaultChart({
   const chartData = useMemo(
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
-        const divider = unit === 'usd' ? 100 : ethPrice
+        const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
           native: native / divider,
@@ -132,16 +134,23 @@ function DefaultChart({
         isLoading={isLoading}
         className="mb-2 mt-4"
       />
-      <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-        {tokens && (
-          <TokenCombobox
-            tokens={tokens}
-            value={token}
-            setValue={setToken}
-            isBridge={isBridge}
-          />
+      <div className="flex flex-wrap items-center justify-between gap-1">
+        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
+          {tokens && (
+            <TokenCombobox
+              tokens={tokens}
+              value={token}
+              setValue={setToken}
+              isBridge={false}
+            />
+          )}
+        </TvsChartUnitControls>
+        {tvsBreakdownUrl && (
+          <div className="hidden md:inline-block">
+            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          </div>
         )}
-      </TvsChartUnitControls>
+      </div>
     </section>
   )
 }

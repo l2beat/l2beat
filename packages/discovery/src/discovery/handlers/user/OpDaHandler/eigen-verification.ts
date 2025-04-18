@@ -9,7 +9,7 @@ import type { IProvider } from '../../../provider/IProvider'
  * These versioning prefixes are super weird.
  */
 const EIGEN_DA_CONSTANTS = {
-  COMMITMENT_PREFIX: '0x01',
+  COMMITMENT_FIRST_BYTE: '01',
   COMMITMENT_THIRD_BYTE: '00',
   EIGEN_AVS: EthereumAddress('0x870679e138bcdf293b7ff14dd44b70fc97e12fc0'),
 } as const
@@ -18,25 +18,19 @@ export async function checkForEigenDA(
   provider: IProvider,
   sequencerTxs: Transaction[],
 ) {
+  const possibleCommitments = sequencerTxs.map(({ input }) =>
+    reduceUntil(input),
+  )
+
   // Byte-check step + RLP decode attempt
   const eigenBlobInfos =
-    sequencerTxs.length > 0 &&
-    sequencerTxs.flatMap((tx) => {
-      const thirdByte = tx.input.slice(6, 8)
-
-      const prefixMatch = tx.input.startsWith(
-        EIGEN_DA_CONSTANTS.COMMITMENT_PREFIX,
-      )
-      const thirdByteMatch =
-        thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
-
-      const hasByteMatch = prefixMatch && thirdByteMatch
-
-      if (!hasByteMatch) {
+    possibleCommitments.length > 0 &&
+    possibleCommitments.flatMap((input) => {
+      if (!input) {
         return []
       }
 
-      const eigenBlobInfo = tryParsingEigenDaBlobInfo(tx.input)
+      const eigenBlobInfo = tryParsingEigenDaBlobInfo(input)
 
       if (!eigenBlobInfo) {
         return []
@@ -130,16 +124,31 @@ function extractBlobBatchHeaderHash(decoded: EigenDaBlobInfo): string {
   return blobBatchHeaderHash.toLowerCase()
 }
 
-function tryParsingEigenDaBlobInfo(inputData: string): EigenDaBlobInfo | null {
-  try {
-    // strip three commitment type bytes + 0x
-    const eigenCommitment = inputData.slice(4 * 2)
-    // Sometimes it's prefixed with 00, sometimes it's not.
-    const noTypeCommitment = eigenCommitment.startsWith('00')
-      ? eigenCommitment.slice(2)
-      : eigenCommitment
+// Some projects (yghm Mantle) prefixes commitment with some data
+// So we reduce until we find the commitment start point.
+function reduceUntil(input: string) {
+  for (let i = 0; i < input.length; i++) {
+    const slice = input.slice(i, input.length)
 
-    const rlp = RLP.decode('0x' + noTypeCommitment)
+    const firstByte = slice.slice(0, 2)
+    const thirdByte = slice.slice(4, 6)
+
+    if (
+      firstByte === EIGEN_DA_CONSTANTS.COMMITMENT_FIRST_BYTE &&
+      thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
+    ) {
+      const commitment = slice.slice(6)
+      // sometimes we still have 00 remaining
+      return commitment.startsWith('00') ? commitment.slice(2) : commitment
+    }
+  }
+}
+
+function tryParsingEigenDaBlobInfo(
+  possibleCommitment: string,
+): EigenDaBlobInfo | null {
+  try {
+    const rlp = RLP.decode('0x' + possibleCommitment)
 
     return EigenDaBlobInfo.parse(rlp)
   } catch {

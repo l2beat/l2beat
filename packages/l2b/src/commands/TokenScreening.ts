@@ -117,7 +117,7 @@ interface DiscoveredContract {
 }
 
 interface DiscoveredJson {
-  contracts: DiscoveredContract[]
+  entries: DiscoveredContract[]
 }
 
 // Add interface for Etherscan API response
@@ -441,7 +441,7 @@ function getCanonicalEscrow(
   network: string,
 ): string {
   // Find either L1ERC20Gateway or L1StandardBridge contract
-  const gatewayContract = discovered.contracts.find(
+  const gatewayContract = discovered.entries.find(
     (contract: { name: string }) =>
       contract.name === 'L1ERC20Gateway' ||
       contract.name === 'L1StandardBridge',
@@ -851,7 +851,7 @@ async function checkMintersType(
 
         // Extract contract addresses from discovered.json
         const bridgeContracts =
-          discovered.contracts?.map((c: { address: string }) =>
+          discovered.entries?.map((c: { address: string }) =>
             c.address.toLowerCase(),
           ) || []
 

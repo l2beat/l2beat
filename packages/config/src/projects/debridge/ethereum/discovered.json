@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "blockNumber": 19531527,
-  "configHash": "0x00fdc328e973c15cac8fa5533ea6f24881229f0e7e8bfde883d6eee8eb1c1195",
+  "configHash": "0x80d0f4e865ec26f81ea1c609d2fa2d992ef9a3d555f57e63945415922f52b2f6",
   "entries": [
     {
       "address": "0x1c0720B124e7251e881a0fbCfe259d085C59f205",
@@ -939,6 +939,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

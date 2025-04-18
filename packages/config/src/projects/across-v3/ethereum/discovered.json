@@ -1,8 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22045124,
-  "configHash": "0x4864d8eb7c16e2f58ea88346cc916e898a929cc7c54035a06d2fb05456ea4cdb",
+  "blockNumber": 22187210,
+  "configHash": "0x214eda55a967c5658b0a8650b33ba257b6e75d3c40c750d0662827c535fad25a",
   "entries": [
     {
       "name": "Zora_Adapter",
@@ -48,7 +48,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "123816854238637611765605806",
+        "totalSupply": "124018193097078690919536779",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -166,33 +166,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkStack_Adapter",
-      "address": "0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D",
-      "type": "Contract",
-      "template": "acrossv3/adapter",
-      "sourceHashes": [
-        "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1741796927,
-      "sinceBlock": 22031982,
-      "values": {
-        "$immutable": true,
-        "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "CHAIN_ID": 324,
-        "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
-        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "L2_GAS_LIMIT": 2000000,
-        "L2_REFUND_ADDRESS": "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
-        "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      },
-      "derivedName": "ZkStack_Adapter"
-    },
-    {
       "name": "Boba_Adapter",
       "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
       "type": "Contract",
@@ -296,7 +269,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743669071,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -397,11 +370,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743669071,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2388308,
+        "numberOfDeposits": 2450997,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -412,6 +385,35 @@
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "Ethereum_SpokePool"
+    },
+    {
+      "name": "ZkStack_CustomGasToken_Adapter",
+      "address": "0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F",
+      "type": "Contract",
+      "template": "acrossv3/adapter",
+      "sourceHashes": [
+        "0x8b466289090e66459b36349e01501be1bd35c1736ee390dd01c68d0098ca2c06"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1743426143,
+      "sinceBlock": 22167069,
+      "values": {
+        "$immutable": true,
+        "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "CHAIN_ID": 232,
+        "CUSTOM_GAS_TOKEN": "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+        "CUSTOM_GAS_TOKEN_FUNDER": "0x0d57392895Db5aF3280e9223323e20F3951E81B1",
+        "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 2000000,
+        "L2_REFUND_ADDRESS": "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
+        "SHARED_BRIDGE": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      },
+      "derivedName": "ZkStack_CustomGasToken_Adapter"
     },
     {
       "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
@@ -466,7 +468,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743669071,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -573,7 +575,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 808,
+        "nonce": 811,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -672,7 +674,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743669071,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -700,6 +702,33 @@
       "address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ZkStack_Adapter",
+      "address": "0xA374585E6062517Ee367ee5044946A6fBe17724f",
+      "type": "Contract",
+      "template": "acrossv3/adapter",
+      "sourceHashes": [
+        "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1743426587,
+      "sinceBlock": 22167105,
+      "values": {
+        "$immutable": true,
+        "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "CHAIN_ID": 324,
+        "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 2000000,
+        "L2_REFUND_ADDRESS": "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
+        "SHARED_BRIDGE": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      },
+      "derivedName": "ZkStack_Adapter"
     },
     {
       "name": "WorldChain_Adapter",
@@ -786,7 +815,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 301,
+        "nonce": 307,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -853,8 +882,9 @@
           "10": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
           "130": "0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
           "137": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
+          "232": "0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F",
           "288": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-          "324": "0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D",
+          "324": "0xA374585E6062517Ee367ee5044946A6fBe17724f",
           "480": "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32",
           "690": "0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
           "1135": "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B",
@@ -876,6 +906,7 @@
           "10": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
           "130": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "137": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
+          "232": "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12",
           "288": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
           "324": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
           "480": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
@@ -902,13 +933,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x144fa2439eaad140d2f791af1fcf1b9dc0ebb4cdfb4e45adb4d92e47957c3072",
-          "relayerRefundRoot": "0xc77f9ac7d4e7ea8b43edd0208842be8743802323c70fa408817cb7c9a7d875bf",
-          "slowRelayRoot": "0xc0c7d70d3af4b2a1e852cf2c90ae9b9280fef7a821e6ff6bf079268af4f2a5d7",
+          "poolRebalanceRoot": "0x80f3067533badd88fc32b98f9e4b290763fc77cc356981fcc0cf6d5bd14c67ef",
+          "relayerRefundRoot": "0xdec6bcf320d3a00a4c03498b6938c05d0a77f9544f75407e4d46bcfe20d9f512",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 16,
-          "challengePeriodEndTimestamp": 1741956563
+          "unclaimedPoolRebalanceLeafCount": 17,
+          "challengePeriodEndTimestamp": 1743669719
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -985,6 +1016,11 @@
     },
     {
       "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1350,23 +1386,6 @@
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
     ],
-    "0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D": [
-      "constructor(uint256 _chainId, address _bridgeHub, address _l1Weth, address _l2RefundAddress, uint256 _l2GasLimit, uint256 _l1GasToL2GasPerPubDataLimit, uint256 _maxTxGasprice)",
-      "error ETHGasTokenRequired()",
-      "error TransactionFeeTooHigh()",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "event ZkStackMessageRelayed(bytes32 indexed canonicalTxHash)",
-      "function BRIDGE_HUB() view returns (address)",
-      "function CHAIN_ID() view returns (uint256)",
-      "function L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT() view returns (uint256)",
-      "function L1_WETH() view returns (address)",
-      "function L2_GAS_LIMIT() view returns (uint256)",
-      "function L2_REFUND_ADDRESS() view returns (address)",
-      "function SHARED_BRIDGE() view returns (address)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
-    ],
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
       "event MessageRelayed(address target, bytes message)",
@@ -1445,6 +1464,25 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F": [
+      "constructor(uint256 _chainId, address _bridgeHub, address _l1Weth, address _l2RefundAddress, address _customGasTokenFunder, uint256 _l2GasLimit, uint256 _l1GasToL2GasPerPubDataLimit, uint256 _maxTxGasprice)",
+      "error ETHGasTokenNotAllowed()",
+      "error TransactionFeeTooHigh()",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "event ZkStackMessageRelayed(bytes32 indexed canonicalTxHash)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function CHAIN_ID() view returns (uint256)",
+      "function CUSTOM_GAS_TOKEN() view returns (address)",
+      "function CUSTOM_GAS_TOKEN_FUNDER() view returns (address)",
+      "function L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT() view returns (uint256)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint256)",
+      "function L2_REFUND_ADDRESS() view returns (address)",
+      "function SHARED_BRIDGE() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
     "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": [
       "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter, address _l2RefundL2Address, address _l1Usdc, address _cctpTokenMessenger, uint32 _cctpDomainId, uint8 _nativeTokenDecimals, address _customGasTokenFunder, uint256 _l2MaxSubmissionCost, uint256 _l2GasPrice)",
@@ -1626,6 +1664,23 @@
       "function slashProposal(uint256 id)",
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xA374585E6062517Ee367ee5044946A6fBe17724f": [
+      "constructor(uint256 _chainId, address _bridgeHub, address _l1Weth, address _l2RefundAddress, uint256 _l2GasLimit, uint256 _l1GasToL2GasPerPubDataLimit, uint256 _maxTxGasprice)",
+      "error ETHGasTokenRequired()",
+      "error TransactionFeeTooHigh()",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "event ZkStackMessageRelayed(bytes32 indexed canonicalTxHash)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function CHAIN_ID() view returns (uint256)",
+      "function L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT() view returns (uint256)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint256)",
+      "function L2_REFUND_ADDRESS() view returns (address)",
+      "function SHARED_BRIDGE() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
     "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32": [
       "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge)",
@@ -1961,7 +2016,7 @@
     ]
   },
   "usedTemplates": {
-    "acrossv3/adapter": "0x477fd2e27b95b7a4609217940d808bdbb6e884865684846ee5b30f780d3ce512",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "acrossv3/adapter": "0x7ea4ee28a6e351703fc5bf48576608bb770d9579614d4faa1edd3c5a0d442670",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

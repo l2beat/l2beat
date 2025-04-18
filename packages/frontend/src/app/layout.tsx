@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { PlausibleProvider } from '~/providers/plausible-provider'
+import { TRPCReactProvider } from '~/trpc/react'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { NavigationProgressBar } from '../components/navigation-progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { TRPCReactProvider } from '~/trpc/react'
 import { AppLayout } from './_layout'
-import { ProgressBar } from '~/components/progress-bar'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -46,7 +46,7 @@ export default async function RootLayout({
               searchBarProjects={searchBarProjects}
             >
               {children}
-              <ProgressBar />
+              <NavigationProgressBar />
             </AppLayout>
           </PlausibleProvider>
         </TRPCReactProvider>

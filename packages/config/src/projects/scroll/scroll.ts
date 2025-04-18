@@ -363,7 +363,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
         },
       ],
     },
@@ -373,7 +373,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
         },
       ],
     },
@@ -383,7 +383,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
         },
       ],
     },
@@ -750,6 +750,13 @@ export const scroll: ScalingProject = {
     },
   },
   milestones: [
+    {
+      title: 'SCR token launch',
+      url: 'https://scroll.io/blog/scr-token',
+      date: '2024-10-19T00:00:00.00Z',
+      description: 'Scroll launches its SCR token.',
+      type: 'general',
+    },
     {
       title: 'Batches reverted',
       url: 'https://status.scroll.io/incidents/44k6s4qg6kcs',

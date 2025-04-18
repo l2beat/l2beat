@@ -1,4 +1,307 @@
-Generated with discovered.json: 0xc88cf7bbefd4c00477b53f15f4070c47dbe51c55
+Generated with discovered.json: 0xd20a0b978ac369a146acfc5593d9f54e11ab2443
+
+# Diff at Tue, 15 Apr 2025 09:10:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 22073290
+- current block number: 22273396
+
+## Description
+
+discodrive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22073290 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all critical access control roles and permissions (full admin of the main bridge escrow).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.1.to:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.1.via.2:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.1:
+-        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+      issuedPermissions.0.description:
++        "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
+      values.defaultAdminAC:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
++++ severity: HIGH
+      values.isPaused_BLOB_SUBMISSION:
++        false
++++ severity: HIGH
+      values.isPaused_CALLDATA_SUBMISSION:
++        false
++++ severity: HIGH
+      values.isPaused_COMPLETE_TOKEN_BRIDGING:
++        false
++++ severity: HIGH
+      values.isPaused_FINALIZATION:
++        false
++++ severity: HIGH
+      values.isPaused_GENERAL:
++        false
++++ severity: HIGH
+      values.isPaused_INITIATE_TOKEN_BRIDGING:
++        false
++++ severity: HIGH
+      values.isPaused_L1_L2:
++        false
++++ severity: HIGH
+      values.isPaused_L2_L1:
++        false
+      fieldMeta:
++        {"isPaused_GENERAL":{"severity":"HIGH"},"isPaused_L1_L2":{"severity":"HIGH"},"isPaused_L2_L1":{"severity":"HIGH"},"isPaused_BLOB_SUBMISSION":{"severity":"HIGH"},"isPaused_CALLDATA_SUBMISSION":{"severity":"HIGH"},"isPaused_FINALIZATION":{"severity":"HIGH"},"isPaused_INITIATE_TOKEN_BRIDGING":{"severity":"HIGH"},"isPaused_COMPLETE_TOKEN_BRIDGING":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D) {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      description:
+-        "A proxy contract forwarding calls to a predefined (immutable) target contract."
++        "A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address."
+      template:
++        "linea/CallForwardingProxy"
+      receivedPermissions:
++        [{"permission":"interact","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"submit and finalize blocks as the Operator role when 6 months of no finalizations have passed."}]
+    }
+```
+
+```diff
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763) {
+    +++ description: Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.
+      template:
++        "linea/BridgedToken"
+      description:
++        "Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract USDCBridgeProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5)
+    +++ description: None
+```
+
+```diff
+    contract undefined (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce)
+    +++ description: None
+```
+
+```diff
+    contract Linea Multisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready."}
+      receivedPermissions.7:
++        {"permission":"interact","from":"0x971f46a2852d11D59dbF0909e837cfd06f357DeB","description":"change the beacon implementation."}
+      receivedPermissions.6:
++        {"permission":"interact","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"manage all critical access control roles and permissions (full admin of the rollup system)."}
+      receivedPermissions.5.description:
+-        "execute transactions that are ready."
++        "propose transactions."
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.4.description:
+-        "propose transactions."
+      receivedPermissions.4.via:
++        [{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]
+      receivedPermissions.3.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.2.via:
+-        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.2.description:
++        "cancel queued transactions."
+      receivedPermissions.1.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.description:
+-        "cancel queued transactions."
++        "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB) {
+    +++ description: A beacon with an upgradeable implementation currently set as 0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      name:
+-        "ERC20UpgradableBeacon"
++        "UpgradeableBeacon"
+      template:
++        "global/UpgradeableBeacon"
+      description:
++        "A beacon with an upgradeable implementation currently set as 0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation."
+      issuedPermissions:
++        [{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"change the beacon implementation.","via":[]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"change the beacon implementation.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761)
+    +++ description: None
+```
+
+```diff
+    contract PlonkVerifierForMultiTypeDataAggregation (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F) {
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+      name:
+-        "VerifierProofType3"
++        "PlonkVerifierForMultiTypeDataAggregation"
+      template:
++        "linea/PlonkVerifierForMultiTypeDataAggregation"
+      description:
++        "Smart contract used to verify the proofs of Linea zkEVM execution."
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      issuedPermissions.6:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0x3697bD0bC6C050135b8321F989a5316eACbF367D","description":"submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.","via":[]}
+      issuedPermissions.3.to:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.3.via.2:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.2.via.1:
+-        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}
+      issuedPermissions.2.via.0:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+      issuedPermissions.2.description:
++        "manage all critical access control roles and permissions (full admin of the rollup system)."
+      values.defaultAdminAC:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      fieldMeta.isPaused_GENERAL:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_L1_L2:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_L2_L1:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_BLOB_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_CALLDATA_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_FINALIZATION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      name:
+-        "Timelock"
++        "L1Timelock"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      description:
+-        "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
++        "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe."
+      receivedPermissions.8:
++        {"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"0x971f46a2852d11D59dbF0909e837cfd06f357DeB","description":"change the beacon implementation.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.5.description:
+-        "execute transactions that are ready."
++        "propose transactions."
+      receivedPermissions.4.description:
+-        "propose transactions."
++        "cancel queued transactions."
+      receivedPermissions.3.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.3.description:
+-        "cancel queued transactions."
++        "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
+      values.pausers:
++        "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      template:
++        "linea/Roles"
+      issuedPermissions:
++        [{"permission":"interact","to":"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8","description":"pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xd68ff1f87cc1128bfa6bc1657cd80fb02545ec7f
+
+# Diff at Thu, 10 Apr 2025 14:42:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22073290
+- current block number: 22073290
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22073290 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      displayName:
+-        "L1Timelock"
+    }
+```
+
+Generated with discovered.json: 0x03420feeee1ba43cd09c3c31108e3f6f457358ba
 
 # Diff at Tue, 18 Mar 2025 10:53:25 GMT:
 

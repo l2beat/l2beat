@@ -1,0 +1,404 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "allbridge",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "allbridge-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-FEI",
+      "priceId": "fei-usd",
+      "symbol": "FEI",
+      "name": "Fei USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14570/large/ZqsF51Re_400x400.png?1696514251",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x956F47F50A910163D8BF957Cf5846D573E7f87CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-FTX Token",
+      "priceId": "ftx-token",
+      "symbol": "FTX Token",
+      "name": "FTT",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9026/large/F.png?1696509161",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-MIM",
+      "priceId": "magic-internet-money",
+      "symbol": "MIM",
+      "name": "Magic Internet Money",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16786/large/mimlogopng.png?1696516358",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 18,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+            "decimals": 6,
+            "sinceTimestamp": 1636635220
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
+            "decimals": 6,
+            "sinceTimestamp": 1669206935
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+            "chain": "arbitrum",
+            "escrowAddress": "0x690e66fc0F8be8964d40e55EdE6aEBdfcB8A21Df",
+            "decimals": 6,
+            "sinceTimestamp": 1687868331
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+            "chain": "base",
+            "escrowAddress": "0xDA6bb1ec3BaBA68B26bEa0508d6f81c9ec5e96d5",
+            "decimals": 6,
+            "sinceTimestamp": 1706798147
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+            "chain": "optimism",
+            "escrowAddress": "0x3B96F88b2b9EB87964b852874D41B633e0f1f68F",
+            "decimals": 6,
+            "sinceTimestamp": 1702912935
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+              "decimals": 6,
+              "sinceTimestamp": 1636635220
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
+              "decimals": 6,
+              "sinceTimestamp": 1669206935
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1687868331
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1706798147
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1702912935
+            },
+            "priceId": "usd-coin"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-USDT-1",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+            "decimals": 6,
+            "sinceTimestamp": 1636635220
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
+            "decimals": 6,
+            "sinceTimestamp": 1662596190
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+            "chain": "arbitrum",
+            "escrowAddress": "0x47235cB71107CC66B12aF6f8b8a9260ea38472c7",
+            "decimals": 6,
+            "sinceTimestamp": 1706918400
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+              "decimals": 6,
+              "sinceTimestamp": 1636635220
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
+              "decimals": 6,
+              "sinceTimestamp": 1662596190
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1706918400
+            },
+            "priceId": "tether"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-USDT-2",
+      "priceId": "bridged-usdt",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+        "chain": "optimism",
+        "escrowAddress": "0xb24A05d54fcAcfe1FC00c59209470d4cafB0deEA",
+        "decimals": 6,
+        "sinceTimestamp": 1706918400
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1706918400
+        },
+        "priceId": "bridged-usdt"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "allbridge-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+        "decimals": 8,
+        "sinceTimestamp": 1636635220
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

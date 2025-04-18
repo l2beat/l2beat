@@ -1,0 +1,469 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "blast",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "blast-ANDY",
+      "priceId": "andyerc",
+      "symbol": "ANDY",
+      "name": "Andy",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35767/large/IMG_0310.jpeg?1711371918",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "andyerc",
+        "decimals": 9,
+        "sinceTimestamp": 1711324800,
+        "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+        "chain": "blast"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-BAG",
+      "priceId": "bag",
+      "symbol": "BAG",
+      "name": "Bag",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35417/large/BAG-coingecko.png?1709393428",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x808688c820AB080A6Ff1019F03E5EC227D9b522B",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1709251200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-BLAST",
+      "priceId": "blast",
+      "symbol": "BLAST",
+      "name": "Blast",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35494/large/Blast.jpg?1719385662",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1719446400,
+        "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
+        "chain": "blast"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "blast-bWOOL",
+      "priceId": "wolf-game-wool",
+      "symbol": "bWOOL",
+      "name": "bWOOL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20760/large/KM3RwIVx_400x400.jpg?1696520155",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1715703713
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-DOLA",
+      "priceId": "dola-usd",
+      "symbol": "DOLA",
+      "name": "Dola USD Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14287/large/dola.png?1696513984",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-ETH-2",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x98078db053902644191f93988341E31289E1C8FE",
+        "decimals": 18,
+        "sinceTimestamp": 1708812935
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-ezETH-1",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1710255749
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-ezETH-2",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-JUICE",
+      "priceId": "juice-finance",
+      "symbol": "JUICE",
+      "name": "Juice",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36503/large/juice-logo-purple-200x200_%281%29.png?1711619018",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "juice-finance",
+        "decimals": 18,
+        "sinceTimestamp": 1711584000,
+        "address": "0x818a92bc81Aad0053d72ba753fb5Bc3d0C5C0923",
+        "chain": "blast"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-OLE",
+      "priceId": "openleverage",
+      "symbol": "OLE",
+      "name": "OpenLeverage Token V2",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26098/large/256x256_OLE_Token_Logo.png?1696525189",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1B6e9c73beE68102d9dd4A2627f97bFf4183ab0A",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-PAC",
+      "priceId": "pacmoon",
+      "symbol": "PAC",
+      "name": "PacMoon",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36459/large/pacmoon.png?1711501114",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "pacmoon",
+        "decimals": 18,
+        "sinceTimestamp": 1711497600,
+        "address": "0x5ffd9EbD27f2fcAB044c0f0a26A45Cb62fa29c06",
+        "chain": "blast"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-PSTAKE",
+      "priceId": "pstake-finance",
+      "symbol": "PSTAKE",
+      "name": "pSTAKE Finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23931/large/PSTAKE_Dark.png?1696523129",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-RBX",
+      "priceId": "rabbitx",
+      "symbol": "RBX",
+      "name": "RabbitX",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30048/large/RBX.png?1696528970",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-rsETH-1",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1710823563
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-stETH-2",
+      "priceId": "staked-ether",
+      "symbol": "stETH",
+      "name": "Liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1696513206",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+            "chain": "ethereum",
+            "escrowAddress": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
+            "decimals": 18,
+            "sinceTimestamp": 1700359187
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+            "chain": "ethereum",
+            "escrowAddress": "0x98078db053902644191f93988341E31289E1C8FE",
+            "decimals": 18,
+            "sinceTimestamp": 1708812935
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-sUSDe-1",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1713651093
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-USDB",
+      "priceId": "usdb",
+      "symbol": "USDB",
+      "name": "USDB",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35595/large/65c67f0ebf2f6a1bd0feb13c_usdb-icon-yellow.png?1709255427",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4300000000000000000000000000000000000003",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1709251200
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 6,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-USDe-1",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1713651041
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 6,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 8,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-weETH-1",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+        "chain": "blast",
+        "decimals": 18,
+        "sinceTimestamp": 1712897077
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

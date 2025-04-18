@@ -1,8 +1,8 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 21766633,
-  "configHash": "0x5c96727d3fc5e04692ef1fe7ee2b819d0c64e123a6d9580de815ca9e6f237950",
+  "blockNumber": 22187418,
+  "configHash": "0x3b194055eb0e90c4361fc55c31d020bee72fae0355c55d51da7574efeca92135",
   "entries": [
     {
       "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
@@ -337,7 +337,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 24,
+        "nonce": 31,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -540,7 +540,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 6407100,
+        "lastBlockNum": 17866800,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -575,9 +575,9 @@
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 6407100,
-        "lastState": "0x1e4dd2c7434e8393889f81a784a5baaf0930e50c8e620e5c4c774ef53eaf3c29",
-        "lastUpdateTime": 1738593395,
+        "lastBlockNum": 17866800,
+        "lastState": "0xc491e4b42df7b3e27dafecf02774bfc433adf728091d0be145ca12c0378e4a3f",
+        "lastUpdateTime": 1743669947,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
       "derivedName": "StateOracle"
@@ -599,7 +599,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
-        "0x2527d117bfcdd69b3e49a08514f4e5090307308646ebf2f019e382e7c4968fb3"
+        "0x7acdcc46a2f205d33ffeddfba5678af59f36b41d63a986907a50713f1aba8311"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.",
@@ -627,15 +627,20 @@
       "sinceBlock": 21443138,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943",
+        "$implementation": "0x68A4DdEDc285241440733719e43B1BCB795dD8c7",
         "$pastUpgrades": [
           [
             "2024-12-20T10:28:59.000Z",
             "0xc793a201858182f97a65c563295dc14c1bb63902b6af4afc6c367eafe9edcc1b",
             ["0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943"]
+          ],
+          [
+            "2025-03-31T13:26:35.000Z",
+            "0xa0ea3636586490b57142400ba479e1309d04e948db316b43e85733d4a63dbbf6",
+            ["0x68A4DdEDc285241440733719e43B1BCB795dD8c7"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "acAdmin": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -668,49 +673,6 @@
     }
   ],
   "abis": {
-    "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943": [
-      "constructor()",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event Initialized(uint64 version)",
-      "event Registered(address indexed original, address indexed minted)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Terminated(address indexed original, address indexed minted)",
-      "event Unregistered(address indexed original, address indexed minted)",
-      "event Upgraded(address indexed implementation)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function REGISTER_ROLE() view returns (bytes32)",
-      "function TERMINATOR_ROLE() view returns (bytes32)",
-      "function UNREGISTER_ROLE() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address admin)",
-      "function mintedToOriginal(address minted) view returns (address original)",
-      "function originalToMinted(address original) view returns (address minted)",
-      "function originalToMintedTerminable(address original) view returns (address minted)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function register(address original, address minted)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function terminateEURC()",
-      "function terminateUSDC()",
-      "function terminateUSDT()",
-      "function unregister(address original, address minted)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -880,6 +842,47 @@
       "function updateVerifier() view returns (address)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x68A4DdEDc285241440733719e43B1BCB795dD8c7": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Initialized(uint64 version)",
+      "event Registered(address indexed original, address indexed minted)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Terminated(address indexed original, address indexed minted)",
+      "event Unregistered(address indexed original, address indexed minted)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function REGISTER_ROLE() view returns (bytes32)",
+      "function TERMINATOR_ROLE() view returns (bytes32)",
+      "function UNREGISTER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin)",
+      "function mintedToOriginal(address minted) view returns (address original)",
+      "function originalToMinted(address original) view returns (address minted)",
+      "function originalToMintedTerminable(address original) view returns (address minted)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function register(address original, address minted)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function terminate(address original, address minted)",
+      "function unregister(address original, address minted)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x72965045A6691E5A74299D1e878f303264D4D910": [
       "constructor(address _stateOracle, address _ownedBy)",
       "error ECDSAInvalidSignature()",
@@ -957,6 +960,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

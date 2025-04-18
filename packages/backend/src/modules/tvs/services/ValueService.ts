@@ -1,20 +1,26 @@
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
+import type {
+  AmountFormula,
+  CalculationFormula,
+  ValueFormula,
+} from '@l2beat/config'
+import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
 import type { DataStorage } from '../tools/DataStorage'
 import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
 import {
   createAmountConfig,
   createPriceConfigId,
 } from '../tools/extractPricesAndAmounts'
-import type {
-  AmountFormula,
-  CalculationFormula,
-  ProjectTvsConfig,
-  TokenValue,
-  ValueFormula,
-} from '../types'
+import type { ProjectTvsConfig, TokenValue } from '../types'
 
 export class ValueService {
-  constructor(private readonly storage: DataStorage) {}
+  private logger: Logger
+  constructor(
+    private readonly storage: DataStorage,
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async calculate(
     config: ProjectTvsConfig,
@@ -48,8 +54,12 @@ export class ValueService {
             )
           : value
 
-        const valueForTotal = token.valueForTotal
-          ? await this.executeFormula(token.id, token.valueForTotal, timestamp)
+        const valueForSummary = token.valueForSummary
+          ? await this.executeFormula(
+              token.id,
+              token.valueForSummary,
+              timestamp,
+            )
           : (valueForProject ?? value)
 
         values.push({
@@ -62,7 +72,7 @@ export class ValueService {
             BigIntWithDecimals.toNumber(valueForProject).toFixed(2),
           ),
           valueForSummary: Number(
-            BigIntWithDecimals.toNumber(valueForTotal).toFixed(2),
+            BigIntWithDecimals.toNumber(valueForSummary).toFixed(2),
           ),
         })
       }
@@ -131,47 +141,67 @@ export class ValueService {
       tokenId: string,
       formula: CalculationFormula | ValueFormula | AmountFormula,
       timestamp: UnixTime,
-    ): Promise<BigIntWithDecimals> => {
+    ): Promise<BigIntWithDecimals | undefined> => {
       if (formula.type === 'value') {
         return await this.executeValueFormula(tokenId, formula, timestamp)
       }
 
       if (formula.type === 'calculation') {
-        return await formula.arguments.reduce(
-          async (
-            acc: Promise<BigIntWithDecimals>,
-            current: CalculationFormula | ValueFormula | AmountFormula,
-            index: number,
-          ) => {
-            const valueAcc = await acc
-            const value = await executeFormulaRecursive(
-              tokenId,
-              current,
-              timestamp,
-            )
+        const values: (bigint | undefined)[] = []
+        for (const argument of formula.arguments) {
+          const value = await executeFormulaRecursive(
+            tokenId,
+            argument,
+            timestamp,
+          )
+          values.push(value)
+        }
 
-            switch (formula.operator) {
-              case 'sum':
-                return valueAcc + (value ?? 0n)
-              case 'diff':
-                return index === 0 ? value : valueAcc - (value ?? 0n)
-              case 'max':
-                return value ? (valueAcc > value ? valueAcc : value) : valueAcc
-              case 'min':
-                return value ? (valueAcc < value ? valueAcc : value) : valueAcc
+        const definedValues = values.filter(notUndefined)
+
+        if (definedValues.length === 0) {
+          throw new Error('All values undefined')
+        }
+
+        switch (formula.operator) {
+          case 'sum':
+            return definedValues.reduce((val, acc) => (acc += val), 0n)
+          // TODO: enforce by test somewhere, all have the same since timestamp
+          case 'diff':
+            if (values[0] !== undefined) {
+              const subtractFrom = values[0]
+              const toSubtract = values
+                .slice(1)
+                .filter(notUndefined)
+                .reduce((val, acc) => (acc += val), 0n)
+
+              const result = subtractFrom - toSubtract
+
+              if (result < 0n) {
+                this.logger.warn(`Diff returned less than zero`, { tokenId })
+                return 0n
+              }
+
+              return result
             }
-          },
-          Promise.resolve(
-            formula.operator === 'min' ? BigIntWithDecimals.MAX : 0n,
-          ),
-        )
+
+            throw new Error('First argument of diff cannot be undefined')
+          case 'max':
+            return definedValues.reduce(
+              (val, acc) => (val > acc ? val : acc),
+              0n,
+            )
+          case 'min':
+            return definedValues.reduce(
+              (val, acc) => (val < acc ? val : acc),
+              BigIntWithDecimals.MAX,
+            )
+        }
       }
 
-      return (
-        (await this.executeAmountFormula(tokenId, formula, timestamp)) ?? 0n
-      )
+      return await this.executeAmountFormula(tokenId, formula, timestamp)
     }
 
-    return await executeFormulaRecursive(tokenId, formula, timestamp)
+    return (await executeFormulaRecursive(tokenId, formula, timestamp)) ?? 0n
   }
 }

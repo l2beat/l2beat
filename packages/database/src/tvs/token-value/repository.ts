@@ -29,6 +29,56 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByTokenIdInTimeRange(
+    tokenId: string,
+    fromInclusive: UnixTime | null,
+    toInclusive: UnixTime | null,
+  ): Promise<TokenValueRecord[]> {
+    let query = this.db
+      .selectFrom('TokenValue')
+      .selectAll()
+      .where('tokenId', '=', tokenId)
+
+    if (fromInclusive) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    if (toInclusive) {
+      query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
+    }
+
+    const rows = await query.orderBy('timestamp', 'asc').execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getByProjectAtOrBefore(
+    project: string,
+    timestamp: UnixTime,
+  ): Promise<TokenValueRecord[]> {
+    const subquery = this.db
+      .selectFrom('TokenValue')
+      .select(['tokenId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('projectId', '=', project)
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .groupBy(['tokenId'])
+      .as('latest')
+
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .innerJoin(subquery, (join) =>
+        join
+          .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .where('TokenValue.projectId', '=', project)
+      .selectAll('TokenValue')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x0de94823f8a1ba5a9939ea0b14b799487a8de5dd
+
+# Diff at Mon, 31 Mar 2025 12:35:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 17195680
+- current block number: 17565279
+
+## Description
+
+Ignore (config related).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17195680 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      values.$pastUpgrades.1:
++        ["2024-04-03T12:30:11.000Z","0x151e5e3496cc0cfa545a4515a036154bb172dea85ccafce5563b408a83793570",["0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A"]]
+      values.$pastUpgrades.0:
++        [["0xB8017A397E7844635c5a2750d0BEB2af97506461"],"0xd4a7bf62cc26e7852b2f27b65739c9d3fb4c0f7ad57757d0a854391c9b1395c3","2024-02-29T14:48:33.000Z"]
+      values.$upgradeCount:
+-        0
++        2
+    }
+```
+
 Generated with discovered.json: 0xdc5c6c7e7983d97265f340084f26454c61c7a1e5
 
 # Diff at Wed, 26 Mar 2025 14:31:19 GMT:

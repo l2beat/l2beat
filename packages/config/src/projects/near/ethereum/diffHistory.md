@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x15ff73a0385e2e5875715e2f5a00fd979d3eb343
+Generated with discovered.json: 0x26003174530c3d64f9ee652a12aa5063f89d0ee1
+
+# Diff at Wed, 09 Apr 2025 09:41:49 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b04ae40394d41744c67519d82fd543837c6ad4a0 block: 19531990
+- current block number: 22230519
+
+## Description
+
+- deposits are paused, withdrawals are not
+- `adminSendEth()` [called](https://app.blocksec.com/explorer/tx/eth/0xa86a0cf177d232e578b806dde6871f331d1f6650f8f02ecaab5645f7202e2242) on the ETH escrow
+- `adminTransfer()` (in a multicall) [called](https://etherscan.io/tx/0xc0a56a969a75127b0ec174a2e313c281d5990644f9e170218768ef7b1c2a85fa) on the ERC20 escrow
+- funds are now [here](https://etherscan.io/address/0xe00c629afaccb0510995a2b95560e446a24c85b9)
+- [here](https://x.com/NEARProtocol/status/1908247501032824914) is the announcement of migration from rainbow bridge to "omnibridge" 
+
+## Watched changes
+
+```diff
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f) {
+    +++ description: None
+      values.paused:
+-        0
++        1
+    }
+```
+
+```diff
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52) {
+    +++ description: None
+      values.paused:
+-        0
++        3
+    }
+```
+
+Generated with discovered.json: 0x0a49f33417609c85252f2137d340cfd732de6391
 
 # Diff at Tue, 04 Mar 2025 10:39:28 GMT:
 

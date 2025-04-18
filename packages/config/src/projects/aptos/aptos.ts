@@ -32,7 +32,7 @@ export const aptos: Bridge = {
     },
     description:
       'Aptos Bridge is built on top of LayerZero protocol and is a token bridge for transferring assets from Ethereum to Aptos. It leverages an oracle and relayer for cross-chain security for the protocol.',
-    category: 'Token Bridge',
+    category: 'Single-chain',
   },
   riskView: {
     validatedBy: {

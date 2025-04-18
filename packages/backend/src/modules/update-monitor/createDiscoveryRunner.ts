@@ -1,14 +1,15 @@
 import {
   type DiscoveryChainConfig,
-  type DiscoveryLogger,
   type DiscoveryPaths,
   type DiscoveryCache as IDiscoveryCache,
   InMemoryCache,
   LeveledCache,
   RedisCache,
+  TemplateService,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -20,7 +21,7 @@ export function createDiscoveryRunner(
   paths: DiscoveryPaths,
   http: HttpClient,
   peripherals: Peripherals,
-  discoveryLogger: DiscoveryLogger,
+  discoveryLogger: Logger,
   chainConfigs: DiscoveryChainConfig[],
   chain: string,
   cacheEnabled: boolean,
@@ -46,7 +47,13 @@ export function createDiscoveryRunner(
     chain,
   )
 
-  return new DiscoveryRunner(allProviders, discoveryEngine, chain)
+  const templateService = new TemplateService(paths.discovery)
+  return new DiscoveryRunner(
+    allProviders,
+    discoveryEngine,
+    templateService,
+    chain,
+  )
 }
 
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {

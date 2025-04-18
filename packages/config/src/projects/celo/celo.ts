@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -35,6 +35,7 @@ export const celo: ScalingProject = opStackL2({
       ],
     },
   },
+  hasSuperchainScUpgrades: true,
   associatedTokens: ['CELO'],
   chainConfig: {
     gasTokens: ['CELO'],
@@ -65,6 +66,21 @@ export const celo: ScalingProject = opStackL2({
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
+  nonTemplateRiskView: {
+    stateValidation: {
+      value: 'None',
+      description:
+        'Although the OP stack fraud proof system is deployed, it assumes by default that data was made available. During a potential data withholding attack, it is impossible to prove a malicious state root.',
+      sentiment: 'bad',
+      secondLine: `${formatSeconds(
+        discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'proofMaturityDelaySeconds',
+        ),
+      )} challenge period`,
+      orderHint: 0,
+    },
+  },
   isNodeAvailable: 'UnderReview',
   discovery,
   genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200

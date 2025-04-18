@@ -1,0 +1,240 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sophon",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sophon-BEAM",
+      "priceId": "beam-2",
+      "symbol": "BEAM",
+      "name": "Beam",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32417/large/chain-logo.png?1698114384",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7A94dFb534ec790277Ad332EFB9B11687A130880",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x72af9F169B619D85A47Dfa8fefbCD39dE55c567D",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-OPN",
+      "priceId": "open-ticketing-ecosystem",
+      "symbol": "OPN",
+      "name": "Open Ecosystem Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36612/large/TOKEN.png?1711975511",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA96aD8EC6A83F23e0A75E5d8c9cE13C1042c4295",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x06432e41131B70708c1C46814c2fcE9e720edd8A",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-sDAI",
+      "priceId": "savings-dai",
+      "symbol": "sDAI",
+      "name": "Savings Dai",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xeCcbb9360d235548473Cb8C752735F68e652439B",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-stAethir",
+      "priceId": "aethir",
+      "symbol": "stAethir",
+      "name": "Staked Aethir",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x42E5bFdC7032D1F8e4B4D3fea3Eb5dB9C01Ef997",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-stAVAIL",
+      "priceId": "staked-avail",
+      "symbol": "stAVAIL",
+      "name": "Staked Avail",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51343/large/stAVAIL_200x200.png?1730824445",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB2253e3D9A00e1471Ae7A3F77cBe7d81ec542A3e",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-stAZUR",
+      "priceId": "azuro-protocol",
+      "symbol": "stAZUR",
+      "name": "Staked $AZUR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38499/large/azuro.jpeg?1717727357",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x841bE23f3872309f50E0c955c8Cb4b660f733811",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "custom",
+      "id": "sophon-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9Aa0F72392B5784Ad86c6f3E899bCc053D00Db4F",
+        "chain": "sophon",
+        "decimals": 6,
+        "sinceTimestamp": 1733169600
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6386dA73545ae4E2B2E0393688fA8B65Bb9a7169",
+        "chain": "sophon",
+        "decimals": 6,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xF1f9E08a0818594FDe4713AE0Db1E46672Ca960E",
+        "chain": "sophon",
+        "decimals": 8,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5E9Fc50b44988B66BA84500f8Bc32C0493fe8F8D",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x60D02F185F80644e1A5ae35497736dd31d1b078B",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    }
+  ]
+}

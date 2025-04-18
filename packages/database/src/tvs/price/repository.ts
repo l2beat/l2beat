@@ -13,6 +13,20 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.length
   }
 
+  async getPrice(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsPriceRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getPricesInRange(
     configurationIds: string[],
     fromInclusive: UnixTime,
@@ -24,6 +38,23 @@ export class TvsPriceRepository extends BaseRepository {
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getPricesInRangeByPriceId(
+    priceId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<TvsPriceRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('priceId', '=', priceId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map(toRecord)

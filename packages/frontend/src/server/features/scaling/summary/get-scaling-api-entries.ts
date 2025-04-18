@@ -4,7 +4,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 
 export interface ScalingApiEntry {
   id: string
@@ -40,7 +40,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvlInfo'],
-      whereNot: ['isArchived', 'isUpcoming'],
+      whereNot: ['archivedAt', 'isUpcoming'],
     }),
   ])
 

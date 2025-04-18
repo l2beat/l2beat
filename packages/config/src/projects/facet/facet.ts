@@ -1,7 +1,10 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { UnixTime } from '@l2beat/shared-pure'
-import { FORCE_TRANSACTIONS, OPERATOR, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -42,7 +45,7 @@ export const facet: ScalingProject = opStackL2({
       description: 'Fast bridge contract.',
     }),
   ],
-  riskView: {
+  nonTemplateRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
@@ -95,7 +98,7 @@ export const facet: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1733855495),
   milestones: [
     {
-      title: 'Facet Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/0xFacet/status/1866610169620336761',
       date: '2024-12-10T00:00:00Z',
       description: 'Facet launches at Ethereum block 21373000.',

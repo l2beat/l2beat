@@ -20,6 +20,7 @@ import {
   showHidden,
 } from './actions/other'
 import { selectAndFocus } from './actions/selectAndFocus'
+import { setNodes } from './actions/setNodes'
 import { persistNodeLayout } from './utils/storage'
 
 const INITIAL_STATE: State = {
@@ -53,6 +54,7 @@ export const useStore = create<State & Actions>()(
     (set) => ({
       ...INITIAL_STATE,
       loadNodes: wrapAction(set, loadNodes),
+      setNodes: wrapAction(set, setNodes),
       colorSelected: wrapAction(set, colorSelected),
       hideSelected: wrapAction(set, hideSelected),
       hideUnknowns: wrapAction(set, hideUnknowns),
@@ -72,7 +74,7 @@ export const useStore = create<State & Actions>()(
     }),
     {
       // You can update the key if changes are backwards incompatible
-      name: 'store-v3',
+      name: 'store-v4',
       partialize: (state) => {
         return {
           projectId: state.projectId,

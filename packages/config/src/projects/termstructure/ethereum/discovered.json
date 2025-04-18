@@ -2,7 +2,7 @@
   "name": "termstructure",
   "chain": "ethereum",
   "blockNumber": 20469346,
-  "configHash": "0xd9d7156b3bafb14c0e59b44f343c31884aab7bff7803a80016bec183432d1e6d",
+  "configHash": "0xf4df2cbe5d0af520d9a39d81cb1d8caee3b86a7e1f8c8745e3bfa317f90860ae",
   "entries": [
     {
       "name": "ZkTrueUp",
@@ -949,6 +949,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

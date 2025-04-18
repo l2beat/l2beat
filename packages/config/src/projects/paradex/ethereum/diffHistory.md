@@ -1,3 +1,417 @@
+Generated with discovered.json: 0xfa1a198116bb60f60bdd28e2356a011725028810
+
+# Diff at Wed, 16 Apr 2025 12:53:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22243995
+- current block number: 22281682
+
+## Description
+
+EOA removed from main contract, now 'only' present in the main bridge.
+
+## Watched changes
+
+```diff
+    contract undefined (0x0000000000000000000000000000000000000020) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"manage critical access control roles and the role that can upgrade the implementation."}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.9:
+-        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.8:
+-        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.7:
+-        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.6.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.5.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      issuedPermissions.5.description:
+-        "disable the withdrawal limit."
+      issuedPermissions.4.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.3.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.2.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.2.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      issuedPermissions.1.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.0.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.GOVERNANCE_ADMIN.members.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.SECURITY_ADMIN.members.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.secAdminAC.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.secAgentAC.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.4:
+-        {"permission":"operateStarknet","to":"0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2","via":[]}
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","via":[]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "operateStarknet"
+      issuedPermissions.2.to:
+-        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++        "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
+      issuedPermissions.1.permission:
+-        "governStarknet"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
++        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++++ description: Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.
++++ severity: HIGH
+      values.$admin:
+-        ["0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"]
++        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+    }
+```
+
+Generated with discovered.json: 0x07b676fed79eb1ff46c9d1cfc6e03967919be842
+
+# Diff at Fri, 11 Apr 2025 06:46:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22231621
+- current block number: 22243995
+
+## Description
+
+MS signer changes.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.5:
++        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
+      values.$members.4:
+-        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
++        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xc7b1f536b4e947a2b2af7a716168edbc6347c230
+
+# Diff at Thu, 10 Apr 2025 14:42:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22231621
+- current block number: 22231621
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231621 (main branch discovery), not current.
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      displayName:
+-        "Starknet"
+    }
+```
+
+Generated with discovered.json: 0xf1a5d592dc1b70cb25ca4b2419644a258d2c0a0d
+
+# Diff at Wed, 09 Apr 2025 13:23:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 22208553
+- current block number: 22231621
+
+## Description
+
+Upgrade to latest SN stack contracts (includes programHash).
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
++        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
+      values.$implementation:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.$pastUpgrades.3:
++        ["2023-07-20T11:05:35.000Z","0x7862f09db4097dc43ad1972ca9ee11eaf64a1fbfdb21fe6f84ad6b68d4b9fa56",["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]]
+      values.$pastUpgrades.2.2:
+-        "2023-07-20T11:05:35.000Z"
++        "2025-04-07T20:04:59.000Z"
+      values.$pastUpgrades.2.1:
+-        "0x7862f09db4097dc43ad1972ca9ee11eaf64a1fbfdb21fe6f84ad6b68d4b9fa56"
++        ["0x2793010E6711Acd5C46ed17f2183a9d58db71e04"]
+      values.$pastUpgrades.2.0:
+-        ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]
++        "0x63d55b2c0cfa3b1866e99b66c6632e5474e177ce0e3b5d5b68ed8b801d76cc53"
+      values.$upgradeCount:
+-        3
++        4
+      values.aggregatorHashMapped:
+-        "StarkNet Aggregator (old)"
++        "Starknet Aggregator (since v0.13.4)"
+      values.aggregatorProgramHash:
+-        "1161178844461337253856226043908368523817098764221830529880464854589141231910"
++        "273279642033703284306509103355536170486431195329675679055627933497997642494"
+      values.identify:
+-        "StarkWare_Starknet_2024_9"
++        "StarkWare_Starknet_2025_10"
+      values.implementation:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "853638403225561750106379562222782223909906501242604214771127703946595519856"
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.programHashHistory.5:
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.programHashMapped:
+-        "StarkNet OS (Paradex)"
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.feeCollector:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22208553 => .flat}/Paradex/Starknet.sol | 207 ++++++++++++++++++---
+ 1 file changed, 176 insertions(+), 31 deletions(-)
+```
+
+Generated with discovered.json: 0x323a73c4e59a58ea7a4f67fc221fb8d9db8c4f25
+
+# Diff at Sun, 06 Apr 2025 08:03:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22187409
+- current block number: 22208553
+
+## Description
+
+usdc bridge gov changes.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.APP_GOVERNOR.members.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_GOVERNOR.members.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_ROLE_ADMIN.members.1:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
+Generated with discovered.json: 0x03d3c49cc13e4aca5681486214828592274910c5
+
+# Diff at Thu, 03 Apr 2025 09:11:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad19dfb413ff34348157f743c194a146b6447e05 block: 22166267
+- current block number: 22187409
+
+## Description
+
+Gov roles granted in the USDC bridge.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.9:
++        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.8:
++        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.7:
++        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.6.description:
++        "disable the withdrawal limit."
+      issuedPermissions.5.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0x0000000000000000000000000000000000000020"
+      issuedPermissions.4.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.4.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      values.accessControl.GOVERNANCE_ADMIN.members.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.4:
++        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+      receivedPermissions:
++        [{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"manage critical access control roles and the role that can upgrade the implementation."}]
+    }
+```
+
+Generated with discovered.json: 0x84361864b63573b6658527d315c9d1b42f887e2c
+
+# Diff at Mon, 31 Mar 2025 10:22:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21979760
+- current block number: 22166267
+
+## Description
+
+new appgovernor, max USDC balance raise.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.APP_GOVERNOR.members.1:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: The maximum total balance that can be locked in the bridge.
+      values.maxTotalBalance:
+-        50000000000000
++        60000000000000
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/Paradex Multisig 2/Safe.sol     | 1088 ++++++++++++++++++++
+ .../.flat/Paradex Multisig 2/SafeProxy.p.sol       |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0xd0ec5206adf2a943b0433009bacf20878d932750
+
+# Diff at Thu, 27 Mar 2025 11:14:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21979760
+- current block number: 21979760
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21979760 (main branch discovery), not current.
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
 Generated with discovered.json: 0xcf31ec92ef38e775e8d040d58b86eba8c646b552
 
 # Diff at Wed, 19 Mar 2025 13:05:14 GMT:

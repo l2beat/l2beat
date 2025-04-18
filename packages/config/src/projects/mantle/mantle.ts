@@ -16,7 +16,7 @@ export const mantle: ScalingProject = opStackL2({
   additionalBadges: [BADGES.DA.EigenDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
     name: 'Mantle',
@@ -59,7 +59,7 @@ export const mantle: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
       },
     ],
@@ -74,7 +74,7 @@ export const mantle: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
       date: '2023-07-14T00:00:00.00Z',
       description: 'Mantle is live on mainnet.',

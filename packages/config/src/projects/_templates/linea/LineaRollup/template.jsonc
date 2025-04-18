@@ -19,6 +19,14 @@
     "rollingHashes"
   ],
   "fields": {
+    "fallbackOperator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed."
+        }
+      ]
+    },
     "verifiers": {
       "description": "Mapping of proof type to ZK Plonk Verifier contract",
       "handler": {
@@ -30,11 +38,21 @@
       "handler": {
         "type": "accessControl",
         "roleNames": {
-          "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR",
-          "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER",
-          "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82": "RATE_LIMIT_SETTER"
+          "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER"
         }
       }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system)."
+        }
+      ]
     },
     "Operators": {
       "handler": {
@@ -55,6 +73,7 @@
     // 8  COMPLETE_TOKEN_BRIDGING
     // }
     "isPaused_GENERAL": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -62,6 +81,7 @@
       }
     },
     "isPaused_L1_L2": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -69,6 +89,7 @@
       }
     },
     "isPaused_L2_L1": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -76,6 +97,7 @@
       }
     },
     "isPaused_BLOB_SUBMISSION": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -83,6 +105,7 @@
       }
     },
     "isPaused_CALLDATA_SUBMISSION": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -90,6 +113,7 @@
       }
     },
     "isPaused_FINALIZATION": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -97,6 +121,7 @@
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -104,6 +129,7 @@
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",

@@ -8,7 +8,7 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/popover'
 import { VerticalSeparator } from '~/components/core/vertical-separator'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 import type { FilterableValueId } from './filterable-value'

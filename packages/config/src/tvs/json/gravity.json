@@ -1,0 +1,101 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "gravity",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "gravity-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+        "decimals": 18,
+        "sinceTimestamp": 1639416372
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "gravity-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+        "decimals": 6,
+        "sinceTimestamp": 1639416372
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "gravity-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+        "decimals": 6,
+        "sinceTimestamp": 1639416372
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "gravity-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+        "decimals": 8,
+        "sinceTimestamp": 1639416372
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "gravity-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+        "decimals": 18,
+        "sinceTimestamp": 1639416372
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

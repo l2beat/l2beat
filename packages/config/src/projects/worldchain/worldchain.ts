@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,12 +8,15 @@ const discovery = new ProjectDiscovery('worldchain')
 const genesisTimestamp = UnixTime(1719335639)
 
 export const worldchain = opStackL2({
-  addedAt: UnixTime(1729586060), // 2024-10-22T08:34:20Z
+  addedAt: UnixTime(1729123200), // 2024-10-17T00:00:00Z
   genesisTimestamp,
   discovery,
   additionalBadges: [BADGES.RaaS.Alchemy],
   additionalPurposes: ['Identity'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'World Chain',
     slug: 'world',

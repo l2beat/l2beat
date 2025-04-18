@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x7e9d1be03ad8a44e61f3cd44d7dc0d1c3e8a7fd5
+
+# Diff at Tue, 15 Apr 2025 08:46:02 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@1acb936ffa55ac28c32c3e876a56831df24189ae block: 22081896
+- current block number: 22273219
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081896 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x055eb21fc805d410a22068c2444f29e657628599
+
+# Diff at Thu, 10 Apr 2025 14:42:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22081896
+- current block number: 22081896
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081896 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0xf7d2fd294e01ccff500764d2a4265dcc11765914
+
+# Diff at Thu, 27 Mar 2025 11:14:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22081896
+- current block number: 22081896
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081896 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0x3ddd0e0bed34f0684ffffc53c69dfcce6351f402
 
 # Diff at Wed, 19 Mar 2025 15:45:59 GMT:

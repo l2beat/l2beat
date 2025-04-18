@@ -1,0 +1,14 @@
+{
+  "SuperchainConfig_v1_1_0": {
+    "hash": "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d",
+    "address": "0x8486fB8acCE33702EAd543D234e904eDfB35E220",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "SuperchainConfig_v1_2_0": {
+    "hash": "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686",
+    "address": "0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

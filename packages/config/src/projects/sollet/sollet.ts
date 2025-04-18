@@ -10,7 +10,7 @@ export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'Sollet',
     slug: 'sollet',
@@ -18,7 +18,7 @@ export const sollet: Bridge = {
       'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
     description:
       'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
-    category: 'Token Bridge',
+    category: 'Single-chain',
     links: {
       websites: ['https://sollet.io/'],
       socialMedia: ['https://projectserum.medium.com/'],

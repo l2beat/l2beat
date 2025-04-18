@@ -74,7 +74,10 @@ export function ContractEntry({
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
-            <strong id={contract.name} className="scroll-mt-14 md:scroll-mt-10">
+            <strong
+              id={contract.name}
+              className="word-break-word scroll-mt-14 md:scroll-mt-10"
+            >
               {contract.name}
             </strong>{' '}
             {entries.map((address, i) => (
@@ -105,7 +108,7 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+            <Markdown className="word-break-word mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {contract.description}
             </Markdown>
           )}

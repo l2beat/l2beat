@@ -52,7 +52,7 @@ const sanctionExpirySeconds = l2discovery.getContractValue<number>(
 
 export const kinto: ScalingProject = orbitStackL2({
   capability: 'appchain',
-  addedAt: UnixTime(1695735468), // 2023-09-26T13:37:48Z
+  addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   overridingPurposes: ['KYC-ed DeFi'],
@@ -77,6 +77,7 @@ export const kinto: ScalingProject = orbitStackL2({
       ],
     },
   },
+  associatedTokens: ['K'],
   chainConfig: {
     name: 'kinto',
     chainId: 7887,
@@ -779,6 +780,14 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
     },
   ],
   milestones: [
+    {
+      title: 'Appchain Stage 1',
+      url: 'https://medium.com/mamori-finance/kinto-is-now-a-stage1-appchain-2cf3c81546ea',
+      date: '2025-03-27T00:00:00Z',
+      description:
+        'Users can exit the L2 in case of unwanted upgrades by actors other than the Security Council.',
+      type: 'general',
+    },
     {
       title: 'Security Council Governance',
       url: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',

@@ -22,15 +22,9 @@ interface Props {
   projectId: string
   milestones: Milestone[]
   tokens: ProjectTokens | undefined
-  isBridge: boolean
 }
 
-export function ProjectTvsChart({
-  projectId,
-  milestones,
-  tokens,
-  isBridge,
-}: Props) {
+export function ProjectTvsChart({ projectId, milestones, tokens }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
@@ -39,7 +33,7 @@ export function ProjectTvsChart({
   if (tokens && token) {
     return (
       <ProjectTokenChart
-        isBridge={isBridge}
+        isBridge={true}
         tokens={tokens}
         setToken={setToken}
         token={token}
@@ -55,7 +49,6 @@ export function ProjectTvsChart({
 
   return (
     <DefaultChart
-      isBridge={isBridge}
       projectId={projectId}
       milestones={milestones}
       timeRange={timeRange}
@@ -71,7 +64,6 @@ export function ProjectTvsChart({
 
 interface DefaultChartProps {
   projectId: string
-  isBridge: boolean
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
@@ -85,7 +77,6 @@ interface DefaultChartProps {
 function DefaultChart({
   projectId,
   milestones,
-  isBridge,
   timeRange,
   setTimeRange,
   unit,
@@ -103,9 +94,10 @@ function DefaultChart({
   const chartData: TvsChartDataPoint[] | undefined = data?.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
       const total = native + canonical + external
+      const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: unit === 'usd' ? total / 100 : total / ethPrice,
+        value: total / divider,
       }
     },
   )
@@ -133,7 +125,7 @@ function DefaultChart({
             tokens={tokens}
             setValue={setToken}
             value={token}
-            isBridge={isBridge}
+            isBridge={true}
           />
         )}
       </TvsChartUnitControls>

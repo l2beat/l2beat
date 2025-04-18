@@ -10,6 +10,7 @@ import { align } from '../projects/align/align'
 import { allo } from '../projects/allo/allo'
 import { ancient } from '../projects/ancient/ancient'
 import { apex } from '../projects/apex/apex'
+import { appchain } from '../projects/appchain/appchain'
 import { arbitrum } from '../projects/arbitrum/arbitrum'
 import { arcology } from '../projects/arcology/arcology'
 import { arenaz } from '../projects/arenaz/arenaz'
@@ -63,6 +64,7 @@ import { funki } from '../projects/funki/funki'
 import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
+import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
@@ -105,6 +107,7 @@ import { lumia } from '../projects/lumia/lumia'
 import { lyra } from '../projects/lyra/lyra'
 import { mantapacific } from '../projects/mantapacific/mantapacific'
 import { mantle } from '../projects/mantle/mantle'
+import { mawari } from '../projects/mawari/mawari'
 import { memento } from '../projects/memento/memento'
 import { metal } from '../projects/metal/metal'
 import { metis } from '../projects/metis/metis'
@@ -152,6 +155,7 @@ import { puffer } from '../projects/puffer/puffer'
 import { quarkchain } from '../projects/quarkchain/quarkchain'
 import { r0ar } from '../projects/r0ar/r0ar'
 import { race } from '../projects/race/race'
+import { rarimo } from '../projects/rarimo/rarimo'
 import { real } from '../projects/real/real'
 import { reddioex } from '../projects/reddioex/reddioex'
 import { reddiozkvm } from '../projects/reddiozkvm/reddiozkvm'
@@ -162,6 +166,7 @@ import { river } from '../projects/river/river'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
 import { scroll } from '../projects/scroll/scroll'
+import { settlus } from '../projects/settlus/settlus'
 import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
 import { silicon } from '../projects/silicon/silicon'
@@ -173,9 +178,11 @@ import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
+import { sovrun } from '../projects/sovrun/sovrun'
 import { specular } from '../projects/specular/specular'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
+import { studiochain } from '../projects/studiochain/studiochain'
 import { superlumio } from '../projects/superlumio/superlumio'
 import { superseed } from '../projects/superseed/superseed'
 import { swan } from '../projects/swan/swan'
@@ -229,6 +236,7 @@ export const layer2s: ScalingProject[] = [
   allo,
   ancient,
   apex,
+  appchain,
   arbitrum,
   arcology,
   arenaz,
@@ -280,6 +288,7 @@ export const layer2s: ScalingProject[] = [
   fuse,
   galxegravity,
   gameswift,
+  gasp,
   genlayer,
   gluon,
   gmnetwork,
@@ -322,6 +331,7 @@ export const layer2s: ScalingProject[] = [
   lyra,
   mantapacific,
   mantle,
+  mawari,
   memento,
   metal,
   metis,
@@ -369,6 +379,7 @@ export const layer2s: ScalingProject[] = [
   quarkchain,
   r0ar,
   race,
+  rarimo,
   real,
   reddioex,
   reddiozkvm,
@@ -380,6 +391,7 @@ export const layer2s: ScalingProject[] = [
   rss3,
   rufus,
   scroll,
+  settlus,
   shape,
   shibarium,
   silicon,
@@ -391,9 +403,11 @@ export const layer2s: ScalingProject[] = [
   soon,
   sophon,
   sorare,
+  sovrun,
   specular,
   starknet,
   status,
+  studiochain,
   superlumio,
   superseed,
   swan,

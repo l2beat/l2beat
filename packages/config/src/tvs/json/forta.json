@@ -1,0 +1,35 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "forta",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "forta-FORT",
+      "priceId": "forta",
+      "symbol": "FORT",
+      "name": "Forta",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25060/large/Forta_lgo_%281%29.png?1696524210",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3A1429d50E0cBBc45c997aF600541Fe1cc3D2923",
+        "chain": "arbitrum",
+        "escrowAddress": "0x9Afa3DAc8a88b56A7dafE9B300D65fd039b8e4c7",
+        "decimals": 18,
+        "sinceTimestamp": 1730862045
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1730862045
+        },
+        "priceId": "forta"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

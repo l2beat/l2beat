@@ -1,0 +1,26 @@
+{
+  "RollupAdminLogic.1": {
+    "hash": "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e",
+    "address": "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupAdminLogic.1_arbitrum": {
+    "hash": "0xabf06072746c465404cbb92f513666e15a5409faccce7f76f4880a9b125b8a2e",
+    "address": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupUserLogic.2": {
+    "hash": "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406",
+    "address": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupUserLogic.2_arbitrum": {
+    "hash": "0x714cd478f69088c5274871f1be4e27736aedacf59858caeb9dbea9e47d23d213",
+    "address": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

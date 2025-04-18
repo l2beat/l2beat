@@ -1,16 +1,21 @@
 import type {
   AmountFormula,
   CalculationFormula,
-  Token,
+  TvsToken,
   ValueFormula,
-} from '../types'
+} from '@l2beat/config'
 
-export function getTokenSyncRange(token: Token): {
+/**
+ * Calculates the sync range for a token
+ * @param token Token
+ * @returns sync range
+ */
+export function getTokenSyncRange(token: TvsToken): {
   sinceTimestamp: number
   untilTimestamp: number | undefined
 } {
   let sinceTimestamp: number = Infinity
-  let untilTimestamp: number | undefined = undefined
+  let untilTimestamp: number | undefined = -1
 
   const getSyncRangeRecursive = (
     formula: CalculationFormula | ValueFormula | AmountFormula | undefined,
@@ -40,7 +45,21 @@ export function getTokenSyncRange(token: Token): {
 
   getSyncRangeRecursive(token.amount)
   getSyncRangeRecursive(token.valueForProject)
-  getSyncRangeRecursive(token.valueForTotal)
+  getSyncRangeRecursive(token.valueForSummary)
 
   return { sinceTimestamp, untilTimestamp }
+}
+
+/**
+ * Checks if timestamp is in sync range for the given token
+ * @param token token
+ * @param timestamp timestamp to check
+ * @returns result
+ */
+export function isInTokenSyncRange(token: TvsToken, timestamp: number) {
+  const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(token)
+  return (
+    timestamp >= sinceTimestamp &&
+    (untilTimestamp === undefined || timestamp <= untilTimestamp)
+  )
 }

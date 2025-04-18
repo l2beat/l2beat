@@ -1,4 +1,91 @@
-Generated with discovered.json: 0x636918d20646ac240ea7eb94aeec66369c632ac5
+Generated with discovered.json: 0x45888a83e1e720c9131ee7555495937934bf8b42
+
+# Diff at Thu, 03 Apr 2025 08:31:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad19dfb413ff34348157f743c194a146b6447e05 block: 22166242
+- current block number: 22187210
+
+## Description
+
+Redeploy zkstack adapters.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkStack_Adapter (0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkStack_CustomGasToken_Adapter (0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.232:
+-        "0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0"
++        "0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F"
+      values.Adapters.324:
+-        "0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D"
++        "0xA374585E6062517Ee367ee5044946A6fBe17724f"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_CustomGasToken_Adapter (0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_Adapter (0xA374585E6062517Ee367ee5044946A6fBe17724f)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xcfeefe518ed2f5050a3169fbf01cd75af43c2632
+
+# Diff at Mon, 31 Mar 2025 10:16:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22045124
+- current block number: 22166242
+
+## Description
+
+Add a second adapter for zkstacks.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.232:
++        "0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0"
+      values.CrossChainContracts.232:
++        "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_CustomGasToken_Adapter (0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/ZkStack_CustomGasToken_Adapter.sol       | 625 +++++++++++++++++++++
+ 1 file changed, 625 insertions(+)
+```
+
+Generated with discovered.json: 0x0e07582d889b04364a1534217256640cf647864f
 
 # Diff at Fri, 14 Mar 2025 12:33:51 GMT:
 

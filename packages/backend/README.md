@@ -219,6 +219,8 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `pnpm test` - run tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
 - `pnpm db:migrate` - apply the latest migration
+- `pnpm tvs:generate` - regenerate TVS config from latest inputs (check --help for available options)
+- `pnpm tvs:execute` - executes TVS with latest config (check --help for available options)
 
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 

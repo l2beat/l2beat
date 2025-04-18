@@ -51,14 +51,14 @@ export const swan: ScalingProject = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://mainnet-rpc01.swanchain.io',
+        url: 'https://mainnet-rpc-01.swanchain.org',
         callsPerMinute: 1500,
       },
     ],
   },
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://swanchain.medium.com/announcement-swan-chain-mainnet-is-now-live-e34feadec170',
       date: '2024-07-02T00:00:00Z',
       description: 'Swan Mainnet launches.',

@@ -1,4 +1,60 @@
-Generated with discovered.json: 0xbd2f44d8440a789a149a3d5fcf821bac09729be1
+Generated with discovered.json: 0x905eec349be76b315b91b7ffab9eb55ce7e13103
+
+# Diff at Thu, 10 Apr 2025 14:43:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21973872
+- current block number: 21973872
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973872 (main branch discovery), not current.
+
+```diff
+    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      displayName:
+-        "SP1Verifier"
+    }
+```
+
+Generated with discovered.json: 0xe8b260db4ece65e96c52859473309acd07b7c026
+
+# Diff at Thu, 03 Apr 2025 14:55:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 21973872
+- current block number: 21973872
+
+## Description
+
+Templatized SP1Verifier.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973872 (main branch discovery), not current.
+
+```diff
+    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      template:
++        "succinct/SP1Verifier"
+      displayName:
++        "SP1Verifier"
+      description:
++        "SP1Verifier is a contract used to verify proofs given public values and verification key."
+    }
+```
+
+Generated with discovered.json: 0xdfe96ceccfa57f816460528d311c383965924c85
 
 # Diff at Tue, 18 Mar 2025 08:14:21 GMT:
 

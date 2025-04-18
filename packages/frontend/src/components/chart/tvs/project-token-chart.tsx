@@ -22,6 +22,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
+import { TvsBreakdownButton } from '~/components/projects/sections/stacked-tvs-section'
 import { TokenCombobox } from '~/components/token-combobox'
 import { useIsClient } from '~/hooks/use-is-client'
 import type {
@@ -51,6 +52,7 @@ interface Props {
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
   showStackedChartLegend?: boolean
+  tvsBreakdownUrl?: string
 }
 
 export function ProjectTokenChart({
@@ -65,13 +67,13 @@ export function ProjectTokenChart({
   unit,
   setUnit,
   showStackedChartLegend,
+  tvsBreakdownUrl,
 }: Props) {
   const properUnit = unit === 'usd' ? 'usd' : token.symbol
 
   const { data, isLoading } = api.tvs.tokenChart.useQuery({
     token: {
-      chain: token.chain,
-      address: token.address,
+      tokenId: token.id,
       projectId,
     },
     range: timeRange,
@@ -143,7 +145,13 @@ export function ProjectTokenChart({
           <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
         </AreaChart>
       </ChartContainer>
-      <div className={cn(!showStackedChartLegend && 'mt-4')}>
+      <div
+        className={cn(
+          tvsBreakdownUrl &&
+            'flex flex-wrap items-center justify-between gap-1',
+          !showStackedChartLegend && 'mt-4',
+        )}
+      >
         <TokenChartUnitControls
           isBridge={isBridge}
           unit={unit}
@@ -152,6 +160,11 @@ export function ProjectTokenChart({
           token={token}
           setToken={setToken}
         />
+        {tvsBreakdownUrl && (
+          <div className="hidden md:inline-block">
+            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          </div>
+        )}
       </div>
     </section>
   )

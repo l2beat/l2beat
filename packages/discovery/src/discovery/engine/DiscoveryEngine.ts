@@ -1,6 +1,6 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type {
   AddressAnalyzer,
   AddressesWithTemplates,
@@ -8,7 +8,9 @@ import type {
   AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { StructureConfig } from '../config/StructureConfig'
+import { makeEntryStructureConfig } from '../config/structureUtils'
+import { buildSharedModuleIndex } from '../config/structureUtils'
 import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -19,7 +21,7 @@ export class DiscoveryEngine {
 
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
-    private readonly logger: DiscoveryLogger,
+    private readonly logger: Logger,
   ) {}
 
   reset() {
@@ -28,8 +30,9 @@ export class DiscoveryEngine {
 
   async discover(
     provider: IProvider,
-    config: DiscoveryConfig,
+    config: StructureConfig,
   ): Promise<Analysis[]> {
+    const sharedModuleIndex = buildSharedModuleIndex(config)
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
@@ -83,6 +86,7 @@ export class DiscoveryEngine {
           const skipReason = shouldSkip(
             EthereumAddress(address),
             config,
+            sharedModuleIndex,
             depth,
             this.objectCount,
           )
@@ -94,14 +98,14 @@ export class DiscoveryEngine {
               chalk.yellowBright('SKIP'),
               chalk.gray(skipReason),
             ]
-            this.logger.log(entries.join(' '))
+            this.logger.info(entries.join(' '))
             return
           }
 
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
-            config.for(address),
+            makeEntryStructureConfig(config, address),
             templates,
           )
           resolved[address.toString()] = analysis
@@ -146,14 +150,14 @@ export class DiscoveryEngine {
     const info = `${this.objectCount}/${total}`
     if (analysis.type === 'EOA') {
       const entries = [chalk.gray(info), analysis.address, chalk.blue('EOA')]
-      this.logger.log(entries.join(' '))
+      this.logger.info(entries.join(' '))
     } else if (analysis.type === 'Contract') {
       const entries = [
         chalk.gray(info),
         analysis.address,
         chalk.blue(analysis.name || '???'),
       ]
-      this.logger.log(entries.join(' '))
+      this.logger.info(entries.join(' '))
 
       const logs: string[] = []
       if (analysis.proxyType) {
@@ -175,7 +179,7 @@ export class DiscoveryEngine {
       for (const [i, log] of logs.entries()) {
         const prefix = i === logs.length - 1 ? `└─` : `├─`
         const indent = ' '.repeat(6)
-        this.logger.log(`${indent}${chalk.gray(prefix)} ${log}`)
+        this.logger.info(`${indent}${chalk.gray(prefix)} ${log}`)
       }
     }
   }
@@ -198,7 +202,7 @@ export class DiscoveryEngine {
       }
     }
     if (errorCount > 0) {
-      this.logger.log('')
+      this.logger.info('')
       this.logger.error(`Errors during discovery: ${errorCount}`)
       for (const error of errorMsgs) {
         this.logger.error(error)

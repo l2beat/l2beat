@@ -1,4 +1,367 @@
-Generated with discovered.json: 0x225dc4675917f9a8b5de7248feb82ab2784e84e6
+Generated with discovered.json: 0x7576f75efaba1aaac8f82e90bbb41d7781f170aa
+
+# Diff at Thu, 10 Apr 2025 14:42:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22181510
+- current block number: 22181510
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22181510 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
+Generated with discovered.json: 0xb6325967d5e6c6964d73a43ab98e401eca04bb19
+
+# Diff at Wed, 02 Apr 2025 15:08:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144857
+- current block number: 22181510
+
+## Description
+
+shared zk stack contracts upgraded to v26: config related changes for all children chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22144857 (main branch discovery), not current.
+
+```diff
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
+```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/Diamond_v26"
++        "shared-zk-stack/v26/Diamond"
+      issuedPermissions.5.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      issuedPermissions.4.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      issuedPermissions.3.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++++ description: true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.
++++ severity: HIGH
+      values.isPermanentRollup:
++        0
+      values.isPermanentRollupString:
++        "."
+      fieldMeta.IsPorterAvailableStatus:
++        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+      fieldMeta.isPermanentRollup:
++        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":".","1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."}}]
+    }
+```
+
+```diff
+    contract TxFiltererOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract undefined (0xfD7a03Cdb68E6488F950108A4d24f15519b87339) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+Generated with discovered.json: 0x91dbb8733e55245490020e9b1db9887f027db0fe
+
+# Diff at Fri, 28 Mar 2025 10:40:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@279f845afa28d7cd0a0fe99f5744c0fe98cd5c86 block: 22022296
+- current block number: 22144857
+
+## Description
+
+v26 upgrade.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/Diamond"
++        "shared-zk-stack/Diamond_v26"
+      sourceHashes.4:
+-        "0xdf47c6cd4fcffcfa4a670e1544e2391acc365cd7fd9b8e7583d58b28dff50c40"
++        "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6"
+      sourceHashes.3:
+-        "0x91db58e4059dfed7357e56dac17d2963c6f9cfb540f527988ed25172251a2584"
++        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+      sourceHashes.2:
+-        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
++        "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31"
+      sourceHashes.1:
+-        "0x981d4f2ae5949ab33c6ba83f6446595d3b853bf6f7157884304445d70b185374"
++        "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
+      sourceHashes.0:
+-        "0x081a1805983e86cd6a80ed48c012c26bf9a39473c0f1e69b357afff240f027a0"
++        "0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da"
+      description:
+-        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
+      issuedPermissions.5:
++        {"permission":"interact","to":"0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]}
+      issuedPermissions.4.to:
+-        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+      issuedPermissions.3.to:
+-        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      issuedPermissions.2.to:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      issuedPermissions.2.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+      issuedPermissions.2.via.0:
+-        {"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}
+      values.$implementation.3:
+-        "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
++        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+      values.$implementation.2:
+-        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
++        "0x36b026c39125964D99596CE302866B5A59E4dE27"
+      values.$implementation.1:
+-        "0x5575218cECd370E1d630d1AdB03c254B0B376821"
++        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
+      values.$implementation.0:
+-        "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
++        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
+      values.$pastUpgrades.4:
++        ["2024-07-30T16:30:35.000Z","0x98231507bfbba69996de5a8572d8f83ccf9756be6232d3f9431e2fc68c98d58b",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]]
+      values.$pastUpgrades.2.2:
+-        "0x98231507bfbba69996de5a8572d8f83ccf9756be6232d3f9431e2fc68c98d58b"
++        ["0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb","0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1","0x36b026c39125964D99596CE302866B5A59E4dE27","0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"]
+      values.$pastUpgrades.2.1:
+-        ["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]
++        "2025-03-26T09:58:23.000Z"
+      values.$pastUpgrades.2.0:
+-        "2024-07-30T16:30:35.000Z"
++        "0x8a8381da196ef20e8eb6868cdfff6f518ea9affc197a6ba7e607e9bd52947d3a"
+      values.$upgradeCount:
+-        4
++        5
+      values.daMode:
+-        1
+      values.facetAddresses.3:
+-        "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
++        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+      values.facetAddresses.2:
+-        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
++        "0x36b026c39125964D99596CE302866B5A59E4dE27"
+      values.facetAddresses.1:
+-        "0x5575218cECd370E1d630d1AdB03c254B0B376821"
++        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
+      values.facetAddresses.0:
+-        "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
++        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
+      values.facets.0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a:
+-        ["acceptAdmin()","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","freezeDiamond()","setPendingAdmin(address)","setPorterAvailability(bool)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)","setTokenMultiplier(uint128,uint128)","setTransactionFilterer(address)","setValidator(address,bool)","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))"]
+      values.facets.0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9:
+-        ["baseTokenGasPriceMultiplierDenominator()","baseTokenGasPriceMultiplierNominator()","facetAddress(bytes4)","facetAddresses()","facetFunctionSelectors(address)","facets()","getAdmin()","getBaseToken()","getBaseTokenBridge()","getBridgehub()","getFirstUnprocessedPriorityTx()","getL2BootloaderBytecodeHash()","getL2DefaultAccountBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","getL2SystemContractsUpgradeBlockNumber()","getL2SystemContractsUpgradeTxHash()","getPendingAdmin()","getPriorityQueueSize()","getPriorityTxMaxGasLimit()","getProtocolVersion()","getPubdataPricingMode()","getSemverProtocolVersion()","getStateTransitionManager()","getTotalBatchesCommitted()","getTotalBatchesExecuted()","getTotalBatchesVerified()","getTotalBlocksCommitted()","getTotalBlocksExecuted()","getTotalBlocksVerified()","getTotalPriorityTxs()","getVerifier()","getVerifierParams()","isDiamondStorageFrozen()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","isFunctionFreezable(bytes4)","isValidator(address)","l2LogsRootHash(uint256)","priorityQueueFrontOperation()","storedBatchHash(uint256)","storedBlockHash(uint256)"]
+      values.facets.0x5575218cECd370E1d630d1AdB03c254B0B376821:
+-        ["bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","transferEthToSharedBridge()"]
+      values.facets.0xBB13642F795014E0EAC2b0d52ECD5162ECb66712:
+-        ["commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])","commitBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])","executeBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])","executeBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])","proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))","proveBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))","revertBatches(uint256)","revertBatchesSharedBridge(uint256,uint256)"]
+      values.facets.0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x36b026c39125964D99596CE302866B5A59E4dE27:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.getBaseTokenBridge:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.getL2BootloaderBytecodeHash:
+-        "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678"
++        "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30"
++        "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0"
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        107374182400
++        111669149696
+      values.getSemverProtocolVersion.0:
+-        25
++        26
+      values.getStateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.getVerifier:
+-        "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66"
++        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5"
+      values.txFilterer:
+-        ["0xA8998F231a660Eca365B382943c71ad9b7619139"]
+      values.validators.1:
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      values.getBaseTokenAssetId:
++        "0x6ecd2c6d40ee7219f2e91c863d83d919c56dc87d93915f68b90119ab5fd25c42"
+      values.getChainId:
++        388
+      values.getChainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ severity: HIGH
+      values.getDAValidatorPair:
++        ["0x907b30407249949521Bf0c89A43558dae200146A","0xFa30EAe30351A83809657299F6Cad9557c232e8C"]
+      values.getSettlementLayer:
++        "0x0000000000000000000000000000000000000000"
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
++        "0xA8998F231a660Eca365B382943c71ad9b7619139"
+      values.isPriorityQueueActive:
++        false
+      fieldMeta.txFilterer:
+-        {"severity":"HIGH","description":"This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."}
+      fieldMeta.getProtocolVersion.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.getAdmin:
++        {"severity":"HIGH"}
+      fieldMeta.getTransactionFilterer:
++        {"severity":"HIGH","description":"This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."}
+      fieldMeta.getDAValidatorPair:
++        {"severity":"HIGH"}
+      fieldMeta.getPendingAdmin:
++        {"severity":"HIGH"}
+      fieldMeta.getPubdataPricingMode:
++        {"severity":"HIGH","description":"0 - Rollup, 1 - Validium"}
+    }
+```
+
+```diff
+    contract undefined (0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
+```
+
+```diff
+    contract undefined (0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+## Source code changes
+
+```diff
+.../CronosZkEvm/AdminFacet.1.sol                   | 1442 ++++++++++++-
+ .../CronosZkEvm/ExecutorFacet.4.sol                | 2016 ++++++++++++++----
+ .../CronosZkEvm/GettersFacet.2.sol                 | 1153 +++++++++-
+ .../CronosZkEvm/MailboxFacet.3.sol                 | 2195 ++++++++++++++------
+ .../ethereum/.flat/ValidatorTimelock.sol           |  504 +++++
+ .../{.flat@22022296 => .flat}/Verifier.sol         |   41 +-
+ 6 files changed, 6181 insertions(+), 1170 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022296 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      name:
+-        "ValidatorTimelock"
++        "ValidatorTimelock2"
+    }
+```
+
+Generated with discovered.json: 0x26e41d58817dac1ef7e59bd2050df6860b31ef5d
 
 # Diff at Wed, 19 Mar 2025 13:04:31 GMT:
 

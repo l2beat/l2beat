@@ -1,4 +1,171 @@
-Generated with discovered.json: 0xbd1f9846da108282e6ea39e1e4cad81bab01c387
+Generated with discovered.json: 0x2de03e25637931e4320ce8115961d6b424c99cea
+
+# Diff at Sun, 06 Apr 2025 08:11:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22166651
+- current block number: 22208595
+
+## Description
+
+owner/admin changes.
+
+## Watched changes
+
+```diff
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986) {
+    +++ description: None
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49) {
+    +++ description: None
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xf7134CE138832c1456F2a91D64621eE90c2bddEa"}]
+    }
+```
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      issuedPermissions.0.to:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$admin:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x399f8835567250b9edd2110bf8da23f343a0a2f2
+
+# Diff at Mon, 31 Mar 2025 11:38:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21845003
+- current block number: 22166651
+
+## Description
+
+New pending owners: moving from EOA to GnosisSafe.
+
+## Watched changes
+
+```diff
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+    }
+```
+
+```diff
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+    }
+```
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 14 files changed, 6916 insertions(+)
+```
+
+Generated with discovered.json: 0x62c4ad45e398d8990e8d437573657a015d57b469
 
 # Diff at Tue, 04 Mar 2025 10:40:13 GMT:
 

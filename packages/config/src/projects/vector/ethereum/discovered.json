@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21635855,
-  "configHash": "0xd7a6022a8b14cfb6c87fde69bed324dfdfffc1502ff4835a8686ec31f7c75f69",
+  "blockNumber": 22188870,
+  "configHash": "0xe08a90103551bf5632d38f75ed6562155e8a20e8d3df11cd9929b73e5c8ee83e",
   "entries": [
     {
       "name": "Vector",
@@ -79,13 +79,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 210,
-        "latestBlock": 846480,
+        "latestAuthoritySetId": 304,
+        "latestBlock": 1179840,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x00d0279ddadaccdbdb6142981d3830f9ada20ed4e2925ed186ae2be5806e3402",
+        "vectorXProgramVkey": "0x00e9bba2a9360f570b9ba99e5186825ac723bedebd486b6a818870c44e3e4d4f",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -102,10 +102,10 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuccinctGatewaySP1",
+      "name": "SP1VerifierGateway",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
-      "template": "succinct/SP1SuccinctGateway",
+      "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
@@ -116,12 +116,6 @@
           "permission": "interact",
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
         }
       ],
@@ -210,7 +204,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -248,7 +242,7 @@
       ]
     },
     {
-      "name": "SuccinctGatewaySP1Multisig",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -286,23 +280,6 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SP1Verifier",
-      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1729727135,
-      "sinceBlock": 21031662,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
-        "VERSION": "v3.0.0"
-      },
-      "derivedName": "SP1Verifier"
-    },
-    {
       "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -311,17 +288,12 @@
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ],
+      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
       "sinceTimestamp": 1735949699,
       "sinceBlock": 21547470,
       "values": {
@@ -439,15 +411,6 @@
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
-    "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -508,8 +471,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "succinct/SP1SuccinctGateway": "0x2b1d17343f6cd8f25c32002ecd089a7f0e7a0d38c6c48fe7e47e2610e4ecec2e",
-    "succinct/SP1Vector": "0xd6f6f03ce238588614fc6e48f2a34cde6b782a433f41a2fe62f7419298b8dc9a"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "succinct/SP1Vector": "0xba71ec9709d89d352f7a245e5b72cf3434f4e06994cd62092c06382309a93fa3",
+    "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
+    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   }
 }

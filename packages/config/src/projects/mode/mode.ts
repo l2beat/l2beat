@@ -1,7 +1,6 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { DERIVATION } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +9,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('mode')
 
 export const mode: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -33,6 +32,10 @@ export const mode: ScalingProject = opStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
+  hasSuperchainScUpgrades: true,
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
@@ -100,7 +103,7 @@ export const mode: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
       },
     ],

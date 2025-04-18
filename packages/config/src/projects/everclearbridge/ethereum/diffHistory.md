@@ -1,4 +1,89 @@
-Generated with discovered.json: 0x5913e14f121f999a90948b59c0fd558d2b297202
+Generated with discovered.json: 0xf4bd541a3feaba22dccc3f8afcd282ec5d53b5f9
+
+# Diff at Wed, 16 Apr 2025 12:49:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22187317
+- current block number: 22281661
+
+## Description
+
+Minor upgrade for the Spoke contract.
+
+## Watched changes
+
+```diff
+    contract EverclearSpokeV3 (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      name:
+-        "EverclearSpoke"
++        "EverclearSpokeV3"
+      values.$implementation:
+-        "0x7e3667D4dE0B592c78cAa70faC8FE6d5853DfAAc"
++        "0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2"
+      values.$pastUpgrades.2:
++        ["2024-09-16T05:00:59.000Z","0x0a57cf4df6073bd8c65327851929577a0e711996ed48b5785422168356237b80",["0x255aba6E7f08d40B19872D11313688c2ED65d1C9"]]
+      values.$pastUpgrades.1.2:
+-        "2024-09-16T05:00:59.000Z"
++        "0xe1b76ceaae265ba0c3762b3143858112401f39d49c84020906c3a0f7544d9d74"
+      values.$pastUpgrades.1.1:
+-        ["0x255aba6E7f08d40B19872D11313688c2ED65d1C9"]
++        "2024-12-18T10:09:23.000Z"
+      values.$pastUpgrades.1.0:
+-        "0x0a57cf4df6073bd8c65327851929577a0e711996ed48b5785422168356237b80"
++        ["0x7e3667D4dE0B592c78cAa70faC8FE6d5853DfAAc"]
+      values.$pastUpgrades.0.2:
+-        "0xe1b76ceaae265ba0c3762b3143858112401f39d49c84020906c3a0f7544d9d74"
++        ["0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2"]
+      values.$pastUpgrades.0.1:
+-        "2024-12-18T10:09:23.000Z"
++        "0x4fa770e2446e25bbf87e7464bbc9c15afa45a4c4afdda25e34ee74b5eef1b20f"
+      values.$pastUpgrades.0.0:
+-        ["0x7e3667D4dE0B592c78cAa70faC8FE6d5853DfAAc"]
++        "2025-04-15T09:38:11.000Z"
+      values.$upgradeCount:
+-        2
++        3
+      derivedName:
+-        "EverclearSpoke"
++        "EverclearSpokeV3"
+    }
+```
+
+## Source code changes
+
+```diff
+.../EverclearSpokeV3/EverclearSpokeV3.sol}         | 115 +++++++++++++++------
+ 1 file changed, 82 insertions(+), 33 deletions(-)
+```
+
+Generated with discovered.json: 0xa123728ef1295667fe671cc65f8b8a5236407fb8
+
+# Diff at Thu, 03 Apr 2025 08:52:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad19dfb413ff34348157f743c194a146b6447e05 block: 22065300
+- current block number: 22187317
+
+## Description
+
+ms member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6) {
+    +++ description: None
+      values.$members.1:
+-        "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
++        "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
+      values.$members.0:
+-        "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044"
++        "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
+    }
+```
+
+Generated with discovered.json: 0xe9c50b80396c9ae3d8272e3a8957929f39d373fb
 
 # Diff at Mon, 17 Mar 2025 09:02:15 GMT:
 

@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xe2cadebf64d897062f25bfa39d663325d824dacc
+Generated with discovered.json: 0x1d7fdef9c8df53981983a1df1c870bb3e24998d1
+
+# Diff at Wed, 16 Apr 2025 12:55:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 21378535
+- current block number: 22281691
+
+## Description
+
+signer changes.
+
+## Watched changes
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      values.$members.4:
+-        "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031"
++        "0xCfD1C43CdB2bD66c7B66a7aBe66Fb6BE497d7f86"
+      values.$members.3:
+-        "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b"
++        "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031"
+    }
+```
+
+Generated with discovered.json: 0x7f667a3f86bba88b911a68ac87a17f335823bc6f
 
 # Diff at Tue, 04 Mar 2025 10:39:42 GMT:
 

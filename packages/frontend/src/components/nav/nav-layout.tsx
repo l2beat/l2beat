@@ -1,14 +1,18 @@
 import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
+import { externalLinks } from '~/consts/external-links'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
+import { EcosystemsIcon } from '~/icons/pages/ecosystems'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
+import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
-import { MobileNavProvider } from './mobile-nav-context'
-import { MobileNavbar } from './mobile-navbar'
-import { NavSidebar } from './nav-sidebar'
-import { TopNavbar } from './top-navbar'
+import { HiringBadge } from '../badge/hiring-badge'
+import { SidebarProvider } from '../core/sidebar'
+import { MobileTopNavbar } from './mobile/mobile-top-navbar'
+import { NavSidebar } from './sidebar/nav-sidebar'
+import { TopNavbar } from './top-nav/top-navbar'
 import type { NavGroup } from './types'
 
 interface Props {
@@ -18,6 +22,7 @@ interface Props {
   topNavbar?: boolean
   topChildren?: ReactNode
   showHiringBadge: boolean
+  ecosystemsEnabled: boolean
 }
 
 export function NavLayout({
@@ -27,6 +32,7 @@ export function NavLayout({
   topNavbar,
   topChildren,
   showHiringBadge,
+  ecosystemsEnabled,
 }: Props) {
   const groups = compact<NavGroup>([
     {
@@ -142,13 +148,71 @@ export function NavLayout({
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
+    ecosystemsEnabled && {
+      type: 'multiple',
+      title: 'Ecosystems',
+      match: 'ecosystems',
+      disableMobileTabs: true,
+      icon: (
+        <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      ),
+      preventTitleNavigation: true,
+      links: (
+        await ps.getProjects({
+          select: ['ecosystemConfig'],
+        })
+      )
+        .map((ecosystem) => ({
+          title: ecosystem.name,
+          href: `/ecosystems/${ecosystem.slug}`,
+        }))
+        .sort((a, b) => a.title.localeCompare(b.title)),
+    },
   ])
 
+  const sideLinks = [
+    {
+      title: 'About Us',
+      href: '/about-us',
+    },
+    {
+      title: 'Forum',
+      href: externalLinks.forum,
+    },
+    {
+      title: 'Donate',
+      href: '/donate',
+    },
+    {
+      title: 'Governance',
+      href: '/governance',
+    },
+    {
+      title: 'Glossary',
+      href: '/glossary',
+    },
+    {
+      title: 'Jobs',
+      href: externalLinks.jobs,
+      accessory: showHiringBadge ? (
+        <HiringBadge />
+      ) : undefined,
+    },
+    {
+      title: 'Brand Kit',
+      href: externalLinks.brandKit,
+    },
+    {
+      title: 'FAQ',
+      href: '/faq',
+    },
+  ]
+
   return (
-    <MobileNavProvider>
+    <SidebarProvider>
       <div
         className={cn(
-          'relative flex flex-col overflow-x-clip lg:flex-row',
+          'relative flex flex-col lg:flex-row',
           topNavbar && 'lg:flex-col',
           className,
         )}
@@ -159,31 +223,32 @@ export function NavLayout({
             <TopNavbar
               logoLink={logoLink}
               groups={groups}
-              showHiringBadge={showHiringBadge}
+              sideLinks={sideLinks}
             />
           </>
         )}
         {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar
-          groups={groups}
-          logoLink={logoLink}
-          className={cn(!topNavbar && 'md:mb-5')}
-        />
+        <MobileTopNavbar groups={groups} logoLink={logoLink} />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
+          sideLinks={sideLinks}
           topNavbar={!!topNavbar}
-          showHiringBadge={showHiringBadge}
         />
-        <div className="min-w-0 flex-1">
+        <div
+          className={cn(
+            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
+            !topNavbar && 'md:pt-5 lg:ml-3 lg:pt-0',
+          )}
+        >
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
           {children}
         </div>
       </div>
-    </MobileNavProvider>
+    </SidebarProvider>
   )
 }

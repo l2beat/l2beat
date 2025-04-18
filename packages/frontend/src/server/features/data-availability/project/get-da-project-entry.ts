@@ -1,4 +1,4 @@
-import type { Project, UsedInProject } from '@l2beat/config'
+import type { Project, ProjectStatuses, UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -45,6 +45,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
   bridges: {
     name: string
     slug: string
+    statuses: ProjectStatuses | undefined
     isNoBridge: boolean
     grissiniValues: RosetteValue[]
     tvs: number
@@ -89,7 +90,7 @@ export async function getDaProjectEntry(
 ): Promise<DaProjectPageEntry | undefined> {
   const bridges = (
     await ps.getProjects({
-      select: ['daBridge', 'display'],
+      select: ['daBridge', 'display', 'statuses'],
       optional: ['permissions', 'contracts'],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)
@@ -118,8 +119,7 @@ export async function getDaProjectEntry(
       }),
     ])
 
-  const layerTvs =
-    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
+  const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
@@ -160,6 +160,7 @@ export async function getDaProjectEntry(
     bridges: bridges.map((bridge) => ({
       name: bridge.daBridge.name,
       slug: bridge.slug,
+      statuses: bridge.statuses,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
       tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)).latest,
@@ -195,6 +196,7 @@ export async function getDaProjectEntry(
     result.bridges.unshift({
       slug: 'no-bridge',
       isNoBridge: true,
+      statuses: undefined,
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
@@ -214,7 +216,7 @@ export async function getEthereumDaProjectEntry(
     'daLayer' | 'display' | 'statuses',
     'isUpcoming' | 'milestones'
   >,
-  bridge: Project<'daBridge' | 'display', 'contracts'>,
+  bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>,
 ): Promise<EthereumDaProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
     getDaLayerRisks(layer.daLayer),
@@ -235,8 +237,7 @@ export async function getEthereumDaProjectEntry(
     }),
   ])
 
-  const layerTvs =
-    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
+  const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 

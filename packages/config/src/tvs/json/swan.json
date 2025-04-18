@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "swan",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "swan-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15",
+            "decimals": 18,
+            "sinceTimestamp": 1718644919
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xed7525946A09056C6AaE29941b8323017382050e",
+            "decimals": 18,
+            "sinceTimestamp": 1718644955
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

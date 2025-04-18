@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sygma",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sygma-PHA",
+      "priceId": "pha",
+      "symbol": "PHA",
+      "name": "Phala",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12451/large/phala.png?1696512270",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E",
+        "chain": "ethereum",
+        "escrowAddress": "0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
+        "decimals": 18,
+        "sinceTimestamp": 1685659954
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

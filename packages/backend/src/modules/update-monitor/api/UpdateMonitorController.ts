@@ -1,8 +1,8 @@
 import type { Database } from '@l2beat/database'
 import type {
   ConfigReader,
+  ConfigRegistry,
   DiscoveryChainConfig,
-  DiscoveryConfig,
 } from '@l2beat/discovery'
 import type { ChainConverter } from '@l2beat/shared-pure'
 import {
@@ -12,7 +12,7 @@ import {
 import { renderDashboardPage } from './view/DashboardPage'
 
 export class UpdateMonitorController {
-  private readonly onDiskConfigs: Record<string, DiscoveryConfig[]> = {}
+  private readonly onDiskConfigs: Record<string, ConfigRegistry[]> = {}
 
   constructor(
     private readonly db: Database,

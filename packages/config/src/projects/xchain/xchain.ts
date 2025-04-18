@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  addedAt: UnixTime(1725235200), // 2024-09-02T00:00:00Z
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -49,7 +49,7 @@ export const xchain: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.idex.io/p/idex-mainnet-is-live',
       date: '2024-09-02T00:00:00Z',
       description: 'XCHAIN launches together with a new version of IDEX.',

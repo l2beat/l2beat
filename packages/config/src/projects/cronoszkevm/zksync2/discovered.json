@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "zksync2",
   "blockNumber": 54952349,
-  "configHash": "0x20e41e844b33ffe0b03755dade18d3cbb6d6ab559cceaf16d209f48bb11a4eba",
+  "configHash": "0xa2fd33a155db17129840a718f72e30712384723578786e64dcc3ae069d196416",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

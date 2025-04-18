@@ -1,0 +1,96 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "race",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "race-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
+        "decimals": 18,
+        "sinceTimestamp": 1720427195
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "race-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9",
+            "decimals": 18,
+            "sinceTimestamp": 1720427159
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
+            "decimals": 18,
+            "sinceTimestamp": 1720427195
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "race-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
+        "decimals": 6,
+        "sinceTimestamp": 1720427195
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "race-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
+        "decimals": 8,
+        "sinceTimestamp": 1720427195
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

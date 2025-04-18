@@ -5,14 +5,17 @@ import { RecategorisationPreviewBanner } from '~/components/recategorisation-pre
 
 export function SideNavLayout({
   children,
+  ecosystemsEnabled,
   showHiringBadge,
 }: {
   children: React.ReactNode
+  ecosystemsEnabled: boolean
   showHiringBadge: boolean
 }) {
   return (
     <NavLayout
       logoLink="/scaling/summary"
+      ecosystemsEnabled={ecosystemsEnabled}
       showHiringBadge={showHiringBadge}
       topChildren={
         <>

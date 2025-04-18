@@ -1,3 +1,276 @@
+Generated with discovered.json: 0x39eec3fdbbeb6b7588137ef0abe41f0d13f11a7c
+
+# Diff at Fri, 11 Apr 2025 13:15:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b607477490db79d49274f7585039ac7263456118 block: 22208467
+- current block number: 22208467
+
+## Description
+
+Config: global mapping updated for op stack prestates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208467 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405:
++        "v1.5.1-rc.1 (cannon64)"
+      usedTypes.0.arg.0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01:
++        "v1.5.1-rc.1"
+      usedTypes.0.arg.0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef:
++        "v1.5.0 (cannon64)"
+      usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
++        "v1.5.0"
+      usedTypes.0.arg.0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37:
++        "v1.4.0-unichain"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      usedTypes.0.arg.0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405:
++        "v1.5.1-rc.1 (cannon64)"
+      usedTypes.0.arg.0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01:
++        "v1.5.1-rc.1"
+      usedTypes.0.arg.0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef:
++        "v1.5.0 (cannon64)"
+      usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
++        "v1.5.0"
+      usedTypes.0.arg.0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37:
++        "v1.4.0-unichain"
+    }
+```
+
+Generated with discovered.json: 0xc6bfbf9782002f1d1668cd99a53a81f4b7fc89d1
+
+# Diff at Thu, 10 Apr 2025 14:42:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208467
+- current block number: 22208467
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208467 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0xe4f4e4148ea7d08d17ba43eaf24f1693d6cc9a25
+
+# Diff at Fri, 04 Apr 2025 09:43:57 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22166253
+- current block number: 22194735
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      values.$implementation:
+-        "0x53c165169401764778F780a69701385eb0FF19B7"
++        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        42
++        74
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol                         | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166253 (main branch discovery), not current.
+
+```diff
+    contract CeloProxyAdminOwner (0x4092A77bAF58fef0309452cEaCb09221e556E112) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x9c314E8057025F2982aa4B3923Abd741A8e8DE91","via":[{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]}
+      receivedPermissions.11.from:
+-        "0x9c314E8057025F2982aa4B3923Abd741A8e8DE91"
++        "0x3C519816C5BdC0a0199147594F83feD4F5847f13"
+      receivedPermissions.10.from:
+-        "0x3C519816C5BdC0a0199147594F83feD4F5847f13"
++        "0xa24Bf5Bc02997f63da4e2C7F802067e05a102504"
+      receivedPermissions.9.from:
+-        "0xa24Bf5Bc02997f63da4e2C7F802067e05a102504"
++        "0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906"
+      receivedPermissions.8.from:
+-        "0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906"
++        "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683"
+      receivedPermissions.7.from:
+-        "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683"
++        "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC"
+      receivedPermissions.6.from:
+-        "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC"
++        "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
+      receivedPermissions.5.from:
+-        "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
++        "0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.via:
+-        [{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]
+      receivedPermissions.4.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0x9c314E8057025F2982aa4B3923Abd741A8e8DE91) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xbcA67eE5188efc419c42C91156EcC888b20664f3","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+```diff
+    contract DelayedWETH (0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4092A77bAF58fef0309452cEaCb09221e556E112","via":[{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x783A434532Ee94667979213af1711505E8bFE374"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract undefined (0xbcA67eE5188efc419c42C91156EcC888b20664f3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x9c314E8057025F2982aa4B3923Abd741A8e8DE91","description":"can pull funds from the contract in case of emergency."}]
+    }
+```
+
+Generated with discovered.json: 0xb772550f6323acde094961a91b201b34afcfc19d
+
+# Diff at Mon, 31 Mar 2025 10:19:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22131469
+- current block number: 22166253
+
+## Description
+
+sub safe signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0xD1C635987B6Aa287361d08C6461491Fa9df087f2) {
+    +++ description: None
+      values.$members.2:
++        "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564"
+      values.$members.1:
+-        "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564"
++        "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
+      values.$members.0:
+-        "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
++        "0x4092A77bAF58fef0309452cEaCb09221e556E112"
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        4
++        42
+    }
+```
+
+Generated with discovered.json: 0x6a48b27ed7f493a8bcfa78e134c2a69f80ad426b
+
+# Diff at Thu, 27 Mar 2025 11:14:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22131469
+- current block number: 22131469
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22131469 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x55093104b76FAA602F9d6c35A5FFF576bE78d753) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0xae68a60ee89a55da5e8077e39e70b0cc59ac096c
 
 # Diff at Wed, 26 Mar 2025 13:47:13 GMT:

@@ -2,7 +2,7 @@
   "name": "race",
   "chain": "ethereum",
   "blockNumber": 21242938,
-  "configHash": "0xa313ebf2720b96fe151efa5d60931f26b079c273dc6ac1a900385e04215d0590",
+  "configHash": "0xb1320b58c32f881ed5b6480227b97b8b0a3c28813e65bec808d6dd466079c099",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -220,7 +220,8 @@
         "$immutable": true,
         "owner": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Race Multisig 1",
@@ -1134,16 +1135,16 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
-    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
-    "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",
-    "opstack/OptimismMintableERC20Factory": "0xd3169a0737182f43695ebece6a1d938818fd109666348266ac11025c63621ed0",
-    "opstack/OptimismPortal": "0x86dc78550214d6e43fda82cc0465fa27db3db49de0104c52918b711d004f7665",
-    "opstack/SuperchainConfigFake": "0xa8539434f587c9fec49a34272ebeff775ad6e86d4f42aa5fc396f5679d53b900",
-    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
+    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
 }

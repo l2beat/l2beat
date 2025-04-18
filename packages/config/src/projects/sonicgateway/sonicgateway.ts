@@ -60,7 +60,7 @@ export const sonicgateway: Bridge = {
     },
     description:
       'The Sonic Gateway is a token bridge built for token transfers between Ethereum and Sonic. It has a quasi-symmetrical design for two-way bridging but converts Ethereum-locked FTM into S on Sonic.',
-    category: 'Token Bridge',
+    category: 'Single-chain',
   },
   config: {
     associatedTokens: ['FTM'],

@@ -1,22 +1,22 @@
-import type { ValueRecord } from '@l2beat/database'
+import type { ProjectValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import type { Dictionary } from 'lodash'
+import { type Dictionary, uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { ps } from '~/server/projects'
+import { getRangeWithMax } from '~/utils/range/range'
 import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
+import { groupValuesByTimestamp } from './utils/group-values-by-timestamp'
 import {
   TvsProjectFilter,
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
-import { TvsChartRange, getRangeConfig } from './utils/range'
-import { sumValuesPerSource } from './utils/sum-values-per-source'
+import { TvsChartRange, rangeToResolution } from './utils/range'
 
 export const TvsChartDataParams = z.object({
   range: TvsChartRange,
@@ -58,31 +58,28 @@ export const getCachedTvsChartData = cache(
       filter,
       previewRecategorisation,
     )
-    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-      (p) => p.chainConfig,
-    )
-    const tokenList = await ps.getTokens()
     const tvsProjects = await getTvsProjects(
       projectsFilter,
-      chains,
-      tokenList,
       previewRecategorisation,
     )
+    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
+    const forSummary =
+      filter.type !== 'projects' || filter.projectIds.length !== 1
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
-      getTvsValuesForProjects(tvsProjects, range),
+      getTvsValuesForProjects(
+        tvsProjects.map((p) => p.projectId),
+        range,
+        !forSummary
+          ? 'PROJECT'
+          : excludeAssociatedTokens
+            ? 'SUMMARY_WA'
+            : 'SUMMARY',
+      ),
     ])
-
-    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
-    const forTotal =
-      filter.type !== 'projects' || filter.projectIds.length !== 1
-
-    return getChartData(values, ethPrices, {
-      excludeAssociatedTokens,
-      forTotal,
-    })
+    return getChartData(values, ethPrices)
   },
-  ['tvs-chart-data-v2'],
+  ['tvs-chart-data'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
@@ -90,43 +87,50 @@ export const getCachedTvsChartData = cache(
 )
 
 function getChartData(
-  values: Dictionary<Dictionary<ValueRecord[]>>,
+  values: Dictionary<Dictionary<ProjectValueRecord>>,
   ethPrices: Record<number, number>,
-  options: {
-    excludeAssociatedTokens: boolean
-    forTotal: boolean
-  },
 ) {
-  const timestampValues: Record<string, ValueRecord[]> = {}
+  const groupedValues = groupValuesByTimestamp(values)
 
-  for (const projectValues of Object.values(values)) {
-    for (const [timestamp, values] of Object.entries(projectValues)) {
-      const map = timestampValues[timestamp] ?? []
-      timestampValues[timestamp] = map.concat(values)
-    }
-  }
+  const timestamps = uniq([...Object.keys(groupedValues)]).sort()
 
-  return Object.entries(timestampValues).map(([timestamp, values]) => {
-    const summed = sumValuesPerSource(values, options)
+  return timestamps.map((timestamp) => {
+    const values = groupedValues[timestamp]
     const ethPrice = ethPrices[+timestamp]
     assert(ethPrice, 'No ETH price for ' + timestamp)
 
-    const native = Number(summed.native)
-    const canonical = Number(summed.canonical)
-    const external = Number(summed.external)
+    const native =
+      values?.reduce((acc, curr) => {
+        acc += Number(curr.native)
+        return acc
+      }, 0) ?? 0
 
-    return [+timestamp, native, canonical, external, ethPrice * 100] as const
+    const canonical =
+      values?.reduce((acc, curr) => {
+        acc += Number(curr.canonical)
+        return acc
+      }, 0) ?? 0
+
+    const external =
+      values?.reduce((acc, curr) => {
+        acc += Number(curr.external)
+        return acc
+      }, 0) ?? 0
+
+    return [+timestamp, native, canonical, external, ethPrice] as const
   })
 }
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
-  const { days, resolution } = getRangeConfig(range)
-  const target = UnixTime.toStartOf(
-    getTvsTargetTimestamp(),
-    resolution === 'hourly' ? 'hour' : 'day',
+  const resolution = rangeToResolution(range)
+  const target = getTvsTargetTimestamp()
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: target,
+  })
+  const timestamps = generateTimestamps(
+    [from ?? MIN_TIMESTAMPS.tvs, to],
+    resolution,
   )
-  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
-  const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
     return [timestamp, 3000, 2000, 1000, 1200]

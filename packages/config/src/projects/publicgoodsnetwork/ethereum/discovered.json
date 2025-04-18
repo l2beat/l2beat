@@ -2,7 +2,7 @@
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0xf14ceb099f8b0aecc42ea110adb2e098168239d7e504586c7fa4fef25766c53b",
+  "configHash": "0xc1ea43db53052d679c9c667000e15533c11ea523bdb79a0a1f5d26a43c546167",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -33,7 +33,8 @@
         "$immutable": true,
         "owner": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "BalanceClaimer",
@@ -950,14 +951,14 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
-    "opstack/BalanceClaimer": "0x3aca29e33240c7ae7013c1f63e9439860047249dbb534540cfe6b174becd5a5c",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1StandardBridge_PGN_withdraw": "0x44061306d45fc20e18ce60448c02eceff483a28674e05c7fca6276a634e5270a",
-    "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",
-    "opstack/OptimismPortal_PGN_withdraw": "0x1454fdd375a543923b243aadeb5e7284c703a4b56bf5eeb06810309a4a17fc44",
-    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/BalanceClaimer": "0x24e44fc38c9e034a6d225cfb7211317b7a29ed67b54d2c9e15c02149e337e8b2",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1StandardBridge_PGN_withdraw": "0x3852c09d8350685a58228fb27f783365110503b2b81fa5c6b62e73be56107d05",
+    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/OptimismPortal_PGN_withdraw": "0x9493c4cbd6f089c547d22fcfa61305c17c2330777fa47540b7a035640b58e232",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "L2CrossDomainMessenger_v1_4_0": {
+    "hash": "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29",
+    "address": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+    "chain": "optimism",
+    "blockNumber": 134041720
+  },
+  "L2CrossDomainMessenger_v2_1_1beta_1": {
+    "hash": "0x232dce20746263348611758da13c5157e6731aa8b6a6fde61475eb230f8a87f0",
+    "address": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+    "chain": "ink",
+    "blockNumber": 10183769
+  }
+}

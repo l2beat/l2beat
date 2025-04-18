@@ -1,0 +1,348 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "brine",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "brine-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1679529600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-BICO",
+      "priceId": "biconomy",
+      "symbol": "BICO",
+      "name": "Biconomy Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21061/large/biconomy_logo.jpg?1696520444",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-COMP",
+      "priceId": "compound-governance-token",
+      "symbol": "COMP",
+      "name": "Compound",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-ETHFI",
+      "priceId": "ether-fi",
+      "symbol": "ETHFI",
+      "name": "ether.fi governance token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1710720000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-LDO",
+      "priceId": "lido-dao",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-MKR",
+      "priceId": "maker",
+      "symbol": "MKR",
+      "name": "Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-POL",
+      "priceId": "polygon-ecosystem-token",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1698224783
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-RPL",
+      "priceId": "rocket-pool",
+      "symbol": "RPL",
+      "name": "Rocket Pool Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-STRK",
+      "priceId": "starknet",
+      "symbol": "STRK",
+      "name": "StarkNet Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1708473600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-TRUF",
+      "priceId": "truflation",
+      "symbol": "TRUF",
+      "name": "Truflation",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36642/large/TRUF_Token_Logo_Blue.png?1712034385",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x38C2a4a7330b22788374B8Ff70BBa513C8D848cA",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 18,
+        "sinceTimestamp": 1712707200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 6,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 6,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "brine-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+        "decimals": 8,
+        "sinceTimestamp": 1657453320
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

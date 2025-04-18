@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "river",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "river-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x9fDEEa19836A413C04e9672d3d09f482278e863c",
+            "decimals": 18,
+            "sinceTimestamp": 1716139103
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x2d51D580Cae0a644a5328E665c768C2A4c0E4a03",
+            "decimals": 18,
+            "sinceTimestamp": 1716139103
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

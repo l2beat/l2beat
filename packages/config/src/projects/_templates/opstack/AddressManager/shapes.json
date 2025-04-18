@@ -1,0 +1,26 @@
+{
+  "AddressManager": {
+    "hash": "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380",
+    "address": "0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AddressManager_blast": {
+    "hash": "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380",
+    "address": "0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Lib_AddressManager": {
+    "hash": "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205",
+    "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Lib_AddressManager_mantle": {
+    "hash": "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e",
+    "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

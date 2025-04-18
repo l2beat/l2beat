@@ -2,5 +2,15 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DelayedWETH",
   "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-  "ignoreInWatchMode": ["totalSupply"]
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pull funds from the contract in case of emergency."
+        }
+      ]
+    }
+  }
 }

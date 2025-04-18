@@ -1,5 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION, SOA } from '../../common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DERIVATION, ESCROW, SOA } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +10,7 @@ const l2discovery = new ProjectDiscovery('unichain', 'unichain')
 const genesisTimestamp = UnixTime(1730748359)
 
 export const unichain: ScalingProject = opStackL2({
-  addedAt: UnixTime(1728932992), // 2024-10-14T19:09:00Z
+  addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
   additionalDiscoveries: { ['unichain']: l2discovery },
   additionalPurposes: ['Exchange'],
@@ -33,6 +33,10 @@ export const unichain: ScalingProject = opStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
+  hasSuperchainScUpgrades: true,
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,
@@ -83,6 +87,15 @@ export const unichain: ScalingProject = opStackL2({
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),
   isNodeAvailable: true,
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+    }),
+  ],
   chainConfig: {
     name: 'unichain',
     chainId: 130,
@@ -108,7 +121,7 @@ export const unichain: ScalingProject = opStackL2({
   },
   milestones: [
     {
-      title: 'Unichain Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/unichain/status/1889313993296064770',
       date: '2025-02-12T00:00:00Z',
       type: 'general',

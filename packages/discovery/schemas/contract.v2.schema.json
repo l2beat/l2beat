@@ -13,7 +13,7 @@
       "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
     },
     "displayName": {
-      "$ref": "#/definitions/DiscoveryContract/properties/displayName"
+      "$ref": "#/definitions/ColorContract/properties/displayName"
     },
     "ignoreInWatchMode": {
       "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
@@ -24,24 +24,51 @@
     "ignoreRelatives": {
       "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
     },
-    "fields": { "$ref": "#/definitions/DiscoveryContract/properties/fields" },
     "methods": { "$ref": "#/definitions/DiscoveryContract/properties/methods" },
     "manualSourcePaths": {
-      "$ref": "#/definitions/DiscoveryContract/properties/manualSourcePaths"
+      "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
     },
+    "types": { "$ref": "#/definitions/DiscoveryContract/properties/types" },
     "categories": {
-      "$ref": "#/definitions/DiscoveryContract/properties/categories"
+      "$ref": "#/definitions/ColorContract/properties/categories"
     },
-    "category": {
-      "$ref": "#/definitions/DiscoveryContract/properties/category"
-    },
+    "category": { "$ref": "#/definitions/ColorContract/properties/category" },
     "description": {
-      "$ref": "#/definitions/DiscoveryContract/properties/description"
+      "$ref": "#/definitions/ColorContract/properties/description"
     },
     "references": {
-      "$ref": "#/definitions/DiscoveryContract/properties/references"
+      "$ref": "#/definitions/ColorContract/properties/references"
     },
-    "types": { "$ref": "#/definitions/DiscoveryContract/properties/types" }
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "$ref": "#/definitions/ColorContractField/properties/description"
+          },
+          "severity": {
+            "$ref": "#/definitions/ColorContractField/properties/severity"
+          },
+          "type": {
+            "$ref": "#/definitions/ColorContractField/properties/type"
+          },
+          "handler": {
+            "$ref": "#/definitions/DiscoveryContractField/properties/handler"
+          },
+          "template": {
+            "$ref": "#/definitions/DiscoveryContractField/properties/template"
+          },
+          "returnType": {
+            "$ref": "#/definitions/DiscoveryContractField/properties/returnType"
+          },
+          "permissions": {
+            "$ref": "#/definitions/DiscoveryContractField/properties/permissions"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
   },
   "additionalProperties": false,
   "definitions": {
@@ -520,13 +547,19 @@
       "properties": {
         "handler": { "$ref": "#/definitions/UserHandlerDefinition" },
         "template": { "type": "string" },
-        "description": { "type": "string" },
         "returnType": { "type": "string" },
-        "severity": { "$ref": "#/definitions/ContractFieldSeverity" },
         "permissions": {
           "type": "array",
           "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
-        },
+        }
+      },
+      "additionalProperties": false
+    },
+    "ColorContractField": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
         "type": {
           "anyOf": [
             { "$ref": "#/definitions/ContractValueType" },
@@ -610,7 +643,6 @@
           "additionalProperties": {
             "$ref": "#/definitions/DiscoveryContractField"
           },
-          "propertyNames": { "pattern": "^\\$?[a-z_][a-z\\d_]*$" },
           "default": {}
         },
         "methods": {
@@ -623,16 +655,6 @@
           "additionalProperties": { "type": "string" },
           "default": {}
         },
-        "categories": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
-        },
-        "category": { "type": "string" },
-        "description": { "type": "string" },
-        "references": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/ExternalReference" }
-        },
         "types": {
           "type": "object",
           "additionalProperties": {
@@ -643,33 +665,40 @@
       },
       "additionalProperties": false
     },
-    "CommonDiscoveryConfig": {
+    "ColorContract": {
       "type": "object",
       "properties": {
-        "import": { "type": "array", "items": { "type": "string" } },
-        "maxAddresses": { "type": "number", "exclusiveMinimum": 0 },
-        "maxDepth": { "type": "number" },
-        "overrides": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/definitions/DiscoveryContract" }
-        },
-        "sharedModules": { "type": "array", "items": { "type": "string" } },
+        "displayName": { "type": "string" },
         "categories": {
           "type": "object",
           "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
         },
-        "types": {
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "references": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ExternalReference" }
+        },
+        "fields": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/DiscoveryCustomType"
-          }
+            "$ref": "#/definitions/ColorContractField"
+          },
+          "default": {}
         },
-        "names": {
+        "manualSourcePaths": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "additionalProperties": { "type": "string" },
+          "default": {}
         }
       },
       "additionalProperties": false
+    },
+    "MergedContract": {
+      "anyOf": [
+        { "$ref": "#/definitions/DiscoveryContract" },
+        { "$ref": "#/definitions/ColorContract" }
+      ]
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"

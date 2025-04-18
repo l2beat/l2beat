@@ -1,0 +1,14 @@
+{
+  "StarknetTokenBridge_v2_0_4": {
+    "hash": "0xd3e96d9fb623969bd9cc3e5fed6779ce42c5de753b49fc73da783863d4043a2f",
+    "address": "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarknetTokenBridge_v2_0_6": {
+    "hash": "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211",
+    "address": "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

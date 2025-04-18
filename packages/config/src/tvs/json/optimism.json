@@ -1,0 +1,2171 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "optimism",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "optimism-1INCH",
+      "priceId": "1inch",
+      "symbol": "1INCH",
+      "name": "1INCH Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x111111111117dC0aa78b770fA6A738034120C302",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ACX",
+      "priceId": "across-protocol",
+      "symbol": "ACX",
+      "name": "Across Protocol Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28161/large/across-200x200.png?1696527165",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1669593600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-APE",
+      "priceId": "apecoin",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4d224452801ACEd8B2F0aebE155379bb5D594381",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1647475200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-APW",
+      "priceId": "apwine",
+      "symbol": "APW",
+      "name": "APWine Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15597/large/spectra.png?1696515232",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4104b135DBC9609Fc1A9490E61369036497660c8",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ARPA",
+      "priceId": "arpa",
+      "symbol": "ARPA",
+      "name": "ARPA Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-BAL",
+      "priceId": "balancer",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1696511572",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-BICO",
+      "priceId": "biconomy",
+      "symbol": "BICO",
+      "name": "Biconomy Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21061/large/biconomy_logo.jpg?1696520444",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1638316800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-BITCOIN",
+      "priceId": "harrypotterobamasonic10in",
+      "symbol": "BITCOIN",
+      "name": "HarryPotterObamaSonic10Inu",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30323/large/hpos10i_logo_casino_night-dexview.png?1696529224",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x72e4f9F808C49A2a61dE9C5896298920Dc4EEEa9",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 8,
+        "sinceTimestamp": 1684108800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-cbETH",
+      "priceId": "coinbase-wrapped-staked-eth",
+      "symbol": "cbETH",
+      "name": "Coinbase Wrapped Staked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27008/large/cbeth.png?1709186989",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1661385600
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-CHZ",
+      "priceId": "chiliz",
+      "symbol": "CHZ",
+      "name": "chiliZ",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8834/large/CHZ_Token_updated.png?1696508986",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3506424F91fD33084466F402d5D97f05F8e3b4AF",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-COMP",
+      "priceId": "compound-governance-token",
+      "symbol": "COMP",
+      "name": "Compound",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-CRO",
+      "priceId": "crypto-com-chain",
+      "symbol": "CRO",
+      "name": "CRO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 8,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-CRV",
+      "priceId": "curve-dao-token",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-crvUSD",
+      "priceId": "crvusd",
+      "symbol": "crvUSD",
+      "name": "Curve.Fi USD Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30118/large/crvusd.jpeg?1696529040",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1684886400
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-CTSI",
+      "priceId": "cartesi",
+      "symbol": "CTSI",
+      "name": "Cartesi Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11038/large/Cartesi_Logo.png?1696510982",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-CYBER",
+      "priceId": "cyberconnect",
+      "symbol": "CYBER",
+      "name": "CyberConnect",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31274/large/token.png?1715826754",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1692057600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-DAI-1",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-DAI-2",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "decimals": 18,
+        "sinceTimestamp": 1625675779
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-DHT",
+      "priceId": "dhedge-dao",
+      "symbol": "DHT",
+      "name": "dHedge DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12508/large/dht.png?1696512323",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-DOG",
+      "priceId": "the-doge-nft",
+      "symbol": "DOG",
+      "name": "The Doge NFT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18111/large/Doge.png?1696517615",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBAac2B4491727D78D2b78815144570b9f2Fe8899",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1630540800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-DOLA",
+      "priceId": "dola-usd",
+      "symbol": "DOLA",
+      "name": "Dola USD Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14287/large/dola.png?1696513984",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ENJ",
+      "priceId": "enjincoin",
+      "symbol": "ENJ",
+      "name": "Enjin Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1102/large/enjin-coin-logo.png?1696502200",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ENS",
+      "priceId": "ethereum-name-service",
+      "symbol": "ENS",
+      "name": "Ethereum Name Service",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19785/large/acatxTm8_400x400.jpg?1696519207",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1636416000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-EQB",
+      "priceId": "equilibria-finance",
+      "symbol": "EQB",
+      "name": "Equilibria Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30645/large/QLLK8pmR_400x400.jpg?1696529516",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1686096000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "decimals": 18,
+            "sinceTimestamp": 1685377379
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+            "decimals": 18,
+            "sinceTimestamp": 1624401464
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-EXA",
+      "priceId": "exa",
+      "symbol": "EXA",
+      "name": "exactly",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "exa",
+        "decimals": 18,
+        "sinceTimestamp": 1691539200,
+        "address": "0x1e925De1c68ef83bD98eE3E130eF14a50309C01B",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-EXTRA",
+      "priceId": "extra-finance",
+      "symbol": "EXTRA",
+      "name": "Extra Finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30973/large/Ex_logo-white-blue_ring_288x.png?1696529812",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "extra-finance",
+        "decimals": 18,
+        "sinceTimestamp": 1689292800,
+        "address": "0x2dAD3a13ef0C6366220f989157009e501e7938F8",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ezETH-1",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1718371339
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FIS",
+      "priceId": "stafi",
+      "symbol": "FIS",
+      "name": "StaFi",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12423/large/FIS.png?1696512244",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xef3A930e1FfFFAcd2fc13434aC81bD278B0ecC8d",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FOX",
+      "priceId": "shapeshift-fox-token",
+      "symbol": "FOX",
+      "name": "FOX",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9988/large/fox_token.png?1728373561",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FPI-1",
+      "priceId": "frax-price-index",
+      "symbol": "FPI",
+      "name": "Frax Price Index",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC5d43A94e26fCa47A9b21CF547ae4AA0268670E1",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1680743131
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FPIS-1",
+      "priceId": "frax-price-index-share",
+      "symbol": "FPIS",
+      "name": "Frax Price Index Share",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8368Dca5CE2a4Db530c0F6e535d90B6826428Dee",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1680743131
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FRAX-1",
+      "priceId": "frax",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1641759454
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FRAX-2",
+      "priceId": "frax",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-frxETH-1",
+      "priceId": "frax-ether",
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1673221013
+      },
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FXS-1",
+      "priceId": "frax-share",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1641759454
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FXS-2",
+      "priceId": "frax-share",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-GEAR",
+      "priceId": "gearbox",
+      "symbol": "GEAR",
+      "name": "Gearbox",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/21630/large/gear.png?1696520990",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBa3335588D9403515223F109EdC4eB7269a9Ab5D",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1671408000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-GTC",
+      "priceId": "gitcoin",
+      "symbol": "GTC",
+      "name": "Gitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-HAIR",
+      "priceId": "hairdao",
+      "symbol": "HAIR",
+      "name": "HairDAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29620/large/LinkedIn_Logo.jpg?1696528556",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9Ce115f0341ae5daBC8B477b74E83db2018A6f42",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1680048000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-HAN",
+      "priceId": "hanchain",
+      "symbol": "HAN",
+      "name": "HanChain",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27374/large/logo_200.png?1696526418",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0c90C57aaf95A3A87eadda6ec3974c99D786511F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1663718400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-HOP",
+      "priceId": "hop-protocol",
+      "symbol": "HOP",
+      "name": "Hop",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25445/large/hop.png?1696524577",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1654819200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-KITE",
+      "priceId": "kite",
+      "symbol": "KITE",
+      "name": "Protocol Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35343/large/_KITE.png?1708317581",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "kite",
+        "decimals": 18,
+        "sinceTimestamp": 1710201600,
+        "address": "0xf467C7d5a4A9C4687fFc7986aC6aD5A4c81E1404",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-KNC",
+      "priceId": "kyber-network-crystal",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14899/large/RwdVsGcw_400x400.jpg?1696514562",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-KWENTA",
+      "priceId": "kwenta",
+      "symbol": "KWENTA",
+      "name": "Kwenta",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1696526450",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "kwenta",
+        "decimals": 18,
+        "sinceTimestamp": 1668729600,
+        "address": "0x920Cf626a271321C151D027030D5d08aF699456b",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-LDO",
+      "priceId": "lido-dao",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-LRC",
+      "priceId": "loopring",
+      "symbol": "LRC",
+      "name": "LoopringCoin V2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/913/large/LRC.png?1696502034",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-LUSD",
+      "priceId": "liquity-usd",
+      "symbol": "LUSD",
+      "name": "LUSD Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14666/large/Group_3.png?1696514341",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-LYRA",
+      "priceId": "lyra-finance",
+      "symbol": "LYRA",
+      "name": "Lyra Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21490/large/Add-a-heading-26.png?1696520850",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1639612800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-MANA",
+      "priceId": "decentraland",
+      "symbol": "MANA",
+      "name": "Decentraland MANA",
+      "iconUrl": "https://assets.coingecko.com/coins/images/878/large/decentraland-mana.png?1696502010",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-MKR",
+      "priceId": "maker",
+      "symbol": "MKR",
+      "name": "Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-OCEAN",
+      "priceId": "ocean-protocol",
+      "symbol": "OCEAN",
+      "name": "Ocean Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3687/large/ocean-protocol-logo.jpg?1696504363",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x967da4048cD07aB37855c090aAF366e4ce1b9F48",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-OLAS",
+      "priceId": "autonolas",
+      "symbol": "OLAS",
+      "name": "Autonolas",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31099/large/OLAS-token.png?1696529930",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1690502400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-OP",
+      "priceId": "optimism",
+      "symbol": "OP",
+      "name": "Optimism",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1653955200,
+        "address": "0x4200000000000000000000000000000000000042",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PENDLE",
+      "priceId": "pendle",
+      "symbol": "PENDLE",
+      "name": "Pendle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x808507121B80c02388fAd14726482e061B8da827",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1681776000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PERP",
+      "priceId": "perpetual-protocol",
+      "symbol": "PERP",
+      "name": "Perpetual",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12381/large/60d18e06844a844ad75901a9_mark_only_03.png?1696512205",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PIKA",
+      "priceId": "pika-protocol",
+      "symbol": "PIKA",
+      "name": "Pika",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30279/large/Pika_protocol.png?1696529185",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "pika-protocol",
+        "decimals": 18,
+        "sinceTimestamp": 1685318400,
+        "address": "0x9A601C5bb360811d96A23689066af316a30c3027",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PLA",
+      "priceId": "playdapp",
+      "symbol": "PLA",
+      "name": "PlayDapp Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14316/large/54023228.png?1696514005",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PREMIA",
+      "priceId": "premia",
+      "symbol": "PREMIA",
+      "name": "Premia",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13962/large/apple-touch-icon.png?1696513698",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PSP",
+      "priceId": "paraswap",
+      "symbol": "PSP",
+      "name": "ParaSwap",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20403/large/ep7GqM19_400x400.jpg?1696519812",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1636966698
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PSTAKE",
+      "priceId": "pstake-finance",
+      "symbol": "PSTAKE",
+      "name": "pSTAKE Finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23931/large/PSTAKE_Dark.png?1696523129",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1645660800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PT",
+      "priceId": "phemex",
+      "symbol": "PT",
+      "name": "Phemex Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33314/large/phemex_logo.png?1701959611",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbBb32f99e6F2Cb29337EeBAA43C5069386DE6e6c",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1701388800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-RAI",
+      "priceId": "rai",
+      "symbol": "RAI",
+      "name": "Rai Reflex Index",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14004/large/RAI-logo-coin.png?1696513733",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1637625600
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-RGT",
+      "priceId": "rari-governance-token",
+      "symbol": "RGT",
+      "name": "Rari Governance Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12900/large/Rari_Logo_Transparent.png?1696512688",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD291E7a03283640FDc51b121aC401383A46cC623",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-RPL",
+      "priceId": "rocket-pool",
+      "symbol": "RPL",
+      "name": "Rocket Pool Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1632980703
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-rsETH",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1707187529
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SAND",
+      "priceId": "the-sandbox",
+      "symbol": "SAND",
+      "name": "SAND",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-scrvUSD",
+      "priceId": "savings-crvusd",
+      "symbol": "scrvUSD",
+      "name": "Savings crvUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51712/large/scrvUSD200x200.png?1731899723",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1731888000
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-sDAI",
+      "priceId": "savings-dai",
+      "symbol": "sDAI",
+      "name": "Savings Dai",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1696982400
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-sFRAX-1",
+      "priceId": "staked-frax",
+      "symbol": "sFRAX",
+      "name": "Staked FRAX",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1708387200
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-sfrxETH-1",
+      "priceId": "staked-frax-ether",
+      "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1673221028
+      },
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-Silo",
+      "priceId": "silo-finance",
+      "symbol": "Silo",
+      "name": "Silo Governance Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21454/large/y0iYKZOv_400x400.png?1696520816",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1639267200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SIPHER",
+      "priceId": "sipher",
+      "symbol": "SIPHER",
+      "name": "Sipher Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/21070/large/SipherToken.png?1696520453",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9F52c8ecbEe10e00D9faaAc5Ee9Ba0fF6550F511",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1639008000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SNT",
+      "priceId": "status",
+      "symbol": "SNT",
+      "name": "Status Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/779/large/status.png?1696501931",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SNX-1",
+      "priceId": "havven",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1696504103",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SNX-2",
+      "priceId": "havven",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1696504103",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+            "chain": "ethereum",
+            "escrowAddress": "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+            "decimals": 18,
+            "sinceTimestamp": 1620680982
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+            "chain": "ethereum",
+            "escrowAddress": "0x045e507925d2e05D114534D0810a1abD94aca8d6",
+            "decimals": 18,
+            "sinceTimestamp": 1610668212
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+            "chain": "ethereum",
+            "escrowAddress": "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068",
+            "decimals": 18,
+            "sinceTimestamp": 1620680934
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-STG-1",
+      "priceId": "stargate-finance",
+      "symbol": "STG",
+      "name": "StargateToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1647561600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-STONE-1",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1719601787
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-sUSDe-1",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1710892800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SUSHI",
+      "priceId": "sushi",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-T",
+      "priceId": "threshold-network-token",
+      "symbol": "T",
+      "name": "Threshold Network Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22228/large/nFPNiSbL_400x400.jpg?1696521570",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCdF7028ceAB81fA0C6971208e83fa7872994beE5",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1641168000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-TAROT",
+      "priceId": "tarot-2",
+      "symbol": "TAROT",
+      "name": "Tarot",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31800/large/TAROT.jpg?1696530615",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1F514A61bcde34F94Bc39731235690ab9da737F7",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1695081600
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-tBTC-1",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "Optimism tBTC v2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1681389587
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-THALES",
+      "priceId": "thales",
+      "symbol": "THALES",
+      "name": "Thales DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18388/large/CLVZJN_C_400x400.png?1696517879",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8947da500Eb47F82df21143D0C01A29862a8C3c5",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1643045985
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-TONCOIN",
+      "priceId": "the-open-network",
+      "symbol": "TONCOIN",
+      "name": "Wrapped TON Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17980/large/ton_symbol.png?1696517498",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 9,
+        "sinceTimestamp": 1630022400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-TRB",
+      "priceId": "tellor",
+      "symbol": "TRB",
+      "name": "Tellor Tributes",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9644/large/Blk_icon_current.png?1696509713",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-TUSD",
+      "priceId": "true-usd",
+      "symbol": "TUSD",
+      "name": "TrueUSD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3449/large/tusd.png?1696504140",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0000000000085d4780B73119b644AE5ecd22b376",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-UMA",
+      "priceId": "uma",
+      "symbol": "UMA",
+      "name": "UMA Voting Token v1",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10951/large/UMA.png?1696510900",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USD₮0",
+      "priceId": "usdt0",
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+        "chain": "optimism",
+        "decimals": 6,
+        "sinceTimestamp": 1741985315
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "chain": "optimism",
+        "decimals": 6,
+        "sinceTimestamp": 1668453318
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDC-2",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 6,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDD",
+      "priceId": "usdd",
+      "symbol": "USDD",
+      "name": "Decentralized USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25380/large/UUSD.jpg?1696524513",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1651449600
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDe-1",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1710186779
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 6,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-VELO",
+      "priceId": "velodrome-finance",
+      "symbol": "VELO",
+      "name": "VelodromeV2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25783/large/velo.png?1696524870",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "velodrome-finance",
+        "decimals": 18,
+        "sinceTimestamp": 1687392369,
+        "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-VITA",
+      "priceId": "vitadao",
+      "symbol": "VITA",
+      "name": "VitaDAO Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16580/large/QmRjwywiAfpzSfQTuWM3zCTghSHN7G6ohQaar7Ht6WANUp.png?1696516140",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624492800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 8,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1701648000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-WLD",
+      "priceId": "worldcoin-wld",
+      "symbol": "WLD",
+      "name": "Worldcoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1690156800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-WOO",
+      "priceId": "woo-network",
+      "symbol": "WOO",
+      "name": "Wootrade Network",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12921/large/WOO_Logos_2023_Profile_Pic_WOO.png?1696512709",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-wstETH-1",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1633564800
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-wstETH-2",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+        "decimals": 18,
+        "sinceTimestamp": 1659687799
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-XYO",
+      "priceId": "xyo-network",
+      "symbol": "XYO",
+      "name": "XY Oracle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4519/large/XYO_Network-logo.png?1696505103",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x55296f69f40Ea6d20E478533C15A6B08B654E758",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ZRO",
+      "priceId": "layerzero",
+      "symbol": "ZRO",
+      "name": "LayerZero",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1718928000
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ZRX",
+      "priceId": "0x",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/863/large/0x.png?1696501996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

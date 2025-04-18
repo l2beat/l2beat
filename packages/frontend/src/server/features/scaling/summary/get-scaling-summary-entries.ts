@@ -21,8 +21,8 @@ import { getActivityLatestUops } from '../activity/get-activity-latest-tps'
 import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
-import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
@@ -31,7 +31,7 @@ export async function getScalingSummaryEntries() {
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
@@ -90,7 +90,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   gasTokens: string[] | undefined
 }
 
-function getScalingSummaryEntry(
+export function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'

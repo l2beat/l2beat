@@ -1,0 +1,14 @@
+{
+  "SchemaRegistry_v1_0_1": {
+    "hash": "0x612d21c1676a505153f40dceb55f1251798affb5ed211cfc9c00efa2a51fcbfd",
+    "address": "0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13",
+    "chain": "optimism",
+    "blockNumber": 134041720
+  },
+  "SchemaRegistry_v1_3_1_beta1": {
+    "hash": "0x8953b1a1d45818a07988bc049a217a4400be83db95b5aeced6a374e52cd17c5e",
+    "address": "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020",
+    "chain": "ink",
+    "blockNumber": 10183769
+  }
+}

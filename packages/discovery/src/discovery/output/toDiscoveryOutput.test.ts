@@ -3,7 +3,8 @@ import { expect } from 'earl'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
-import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
+import { processAnalysis } from './structureOutput'
+import { sortByKeys } from './toDiscoveryOutput'
 
 const emptyOutputMeta = {
   type: 'EOA',
@@ -111,7 +112,6 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_A,
-          name: 'A',
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -130,7 +130,6 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_B,
-          name: 'B',
           derivedName: 'Something not B',
           proxyType: CONTRACT_B.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -154,7 +153,6 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_C,
-          name: 'C',
           proxyType: CONTRACT_C.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
@@ -183,7 +181,6 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_A,
-          name: 'A',
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -193,7 +190,6 @@ describe(processAnalysis.name, () => {
           type: 'Contract',
           address: ADDRESS_B,
           proxyType: CONTRACT_B.proxyType,
-          name: 'B',
           derivedName: 'Something not B',
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
@@ -204,7 +200,6 @@ describe(processAnalysis.name, () => {
           type: 'Contract',
           address: ADDRESS_C,
           proxyType: CONTRACT_C.proxyType,
-          name: 'C',
           values: CONTRACT_C.values,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,

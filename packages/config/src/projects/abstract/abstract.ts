@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -6,14 +6,11 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1729881083)
 const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const bridge = discovery.getContract('L1SharedBridge')
+
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const abstract: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1724863689), // 2024-08-28T16:48:09Z
+  addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
   display: {
     name: 'Abstract',
     slug: 'abstract',
@@ -36,6 +33,9 @@ export const abstract: ScalingProject = zkStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   chainConfig: {
     name: 'abstract',
     chainId,
@@ -48,7 +48,6 @@ export const abstract: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  discovery_ZKstackGovL2,
   diamondContract: discovery.getContract('AbstractZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -113,7 +112,7 @@ export const abstract: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/AbstractChain/status/1883939915169423777',
       date: '2025-01-27T00:00:00Z',
       description: 'Abstract launches their mainnet, opening for all users.',
