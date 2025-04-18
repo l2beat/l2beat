@@ -971,6 +971,37 @@ importers:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.8.2)(terser@5.36.0)
 
+  packages/tools-api:
+    dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+      '@l2beat/discovery':
+        specifier: workspace:*
+        version: link:../discovery
+      '@l2beat/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.0
+      express:
+        specifier: ^5.0.0
+        version: 5.0.1
+      viem:
+        specifier: ^2.8.14
+        version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+
   packages/typescript-config: {}
 
   packages/uif:

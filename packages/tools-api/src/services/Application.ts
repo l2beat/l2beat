@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Config } from '../config/config'
+import type { Config } from '../config/types'
 import { createHttpServer } from './HttpServer'
 
 export class Application {
@@ -8,6 +8,8 @@ export class Application {
   constructor(config: Config) {
     const logger = Logger.INFO
     const appLogger = logger.for(this)
+
+    console.log(config.discovered.allAbis.length)
 
     const httpServer = createHttpServer(config, logger.for('Router'))
 
