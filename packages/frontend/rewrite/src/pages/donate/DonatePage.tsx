@@ -7,13 +7,18 @@ import type { SearchBarProject } from '~/components/search-bar/search-bar-entry'
 export interface DonatePageProps {
   terms: GlossaryTermWithoutDescription[]
   searchBarProjects: SearchBarProject[]
+  showHiringBadge: boolean
+  ecosystemsEnabled: boolean
   qrCodeUrl: string
 }
 
 export function DonatePage(props: DonatePageProps) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout showHiringBadge={false}>
+      <SideNavLayout
+        showHiringBadge={props.showHiringBadge}
+        ecosystemsEnabled={props.ecosystemsEnabled}
+      >
         <NextDonatePage gitcoinOption={false} qrCodeUrl={props.qrCodeUrl} />
       </SideNavLayout>
     </AppLayout>
