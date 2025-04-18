@@ -351,63 +351,73 @@ function opStackCommon(
 function getDaTracking(
   templateVars: OpStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
+  // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
     return templateVars.nonTemplateDaTracking
   }
 
+  const systemConfig = templateVars.discovery
+
   const usesBlobs =
     templateVars.usesEthereumBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSequencerSendingBlobTx: boolean
-    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  const sequencerInbox = templateVars.discovery.getContractValue<string>(
-    'SystemConfig',
-    'sequencerInbox',
-  )
-
-  const inboxStartBlock =
-    templateVars.discovery.getContractValueOrUndefined<number>(
+    systemConfig.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
       'SystemConfig',
-      'startBlock',
-    ) ?? 0
+      'opStackDA',
+    ).isSequencerSendingBlobTx
 
-  const sequencer = templateVars.discovery.getContractValue<string>(
-    'SystemConfig',
-    'batcherHash',
-  )
+  if (usesBlobs) {
+    const sequencerInbox = systemConfig.getContractValue<string>(
+      'SystemConfig',
+      'sequencerInbox',
+    )
 
-  return usesBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxStartBlock,
-          inbox: sequencerInbox,
-          sequencers: [sequencer],
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+    const inboxStartBlock =
+      systemConfig.getContractValueOrUndefined<number>(
+        'SystemConfig',
+        'startBlock',
+      ) ?? 0
+
+    const sequencer = systemConfig.getContractValue<string>(
+      'SystemConfig',
+      'batcherHash',
+    )
+
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxStartBlock,
+        inbox: sequencerInbox,
+        sequencers: [sequencer],
+      },
+    ]
+  }
+
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
