@@ -9,6 +9,7 @@
     "dev:mock": "MOCK=true pnpm dev",
     "dev:no-turbo-mock": "MOCK=true pnpm dev:no-turbo",
     "build": "next build",
+    "build:prod": "VERCEL_ENV=production next build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "start": "next start",
     "lint": "next lint",
