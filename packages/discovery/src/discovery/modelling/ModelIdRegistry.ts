@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import type { KnowledgeBase } from './KnowledgeBase'
-import type { ClingoFact } from './factTypes'
+import type { ClingoFact } from './clingoparser'
 
 interface AddressData {
   modelId: string

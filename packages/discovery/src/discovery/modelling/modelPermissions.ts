@@ -10,8 +10,7 @@ import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
-import { parseClingoFact } from './clingoparser'
-import { type ClingoFact, ClingoFactFile } from './factTypes'
+import { type ClingoFact, parseClingoFact } from './clingoparser'
 import { interpolateModelTemplate } from './interpolate'
 import { runClingo } from './projectPageFacts'
 import {
@@ -33,16 +32,13 @@ export async function modelPermissions(
     paths,
     debug,
   )
-  // TODO, why reparsing?
-  const parsedFacts = ClingoFactFile.parse(JSON.parse(JSON.stringify(facts)))
-  const kb = new KnowledgeBase(parsedFacts.facts)
+  const kb = new KnowledgeBase(facts)
   const modelIdRegistry = new ModelIdRegistry(kb)
-  const transitivePermissionFacts = kb.getFacts('ultimatePermission')
-  const ultimatePermissions = transitivePermissionFacts.map((fact) =>
+  const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
+  const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
     parseTransitivePermissionFact(fact, modelIdRegistry),
   )
   return ultimatePermissions
-  // return ultimatePermissions.filter((p) => p.isFinal)
 }
 
 export function parseTransitivePermissionFact(
@@ -98,7 +94,7 @@ export async function buildProjectPageFacts(
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
-) {
+): Promise<ClingoFact[]> {
   const clingo = generateClingoForProject(
     project,
     configReader,
@@ -118,21 +114,21 @@ export async function buildProjectPageFacts(
   if (clingoResult.Models.Number !== 1) {
     throw new Error('Expected 1 model, got ' + clingoResult.Models.Number)
   }
-  const facts = clingoResult.Call[0]?.Witnesses[0]?.Value
+  const facts = clingoResult.Call[0]?.Witnesses[0]?.Value as string[]
   if (!facts) {
     throw new Error('No facts found')
   }
 
   const outputFilePath = join(projectPath, 'clingo.output.lp')
-  writeFileSync(outputFilePath, JSON.stringify(facts, null, 2))
+  writeFileSync(outputFilePath, facts.join('.\n'))
 
-  const parsed = { facts: facts.map(parseClingoFact) }
+  const result = facts.map(parseClingoFact)
 
   if (!debug) {
     unlinkSync(inputFilePath)
     unlinkSync(outputFilePath)
   }
-  return parsed
+  return result
 }
 
 export function readProjectPageClingoFile(paths: DiscoveryPaths): string {

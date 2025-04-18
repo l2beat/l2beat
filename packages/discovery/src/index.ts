@@ -75,8 +75,7 @@ export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,
   type ClingoValue,
-  parseExportedFacts,
-} from './discovery/modelling/factTypes'
+} from './discovery/modelling/clingoparser'
 export type {
   DiscoveryOutput,
   EntryParameters,
