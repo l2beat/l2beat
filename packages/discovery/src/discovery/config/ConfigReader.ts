@@ -88,19 +88,22 @@ export class ConfigReader {
     return Hash160(`0x${hasher.digest('hex')}`)
   }
 
-  readAllChains(): string[] {
-    const folders = readdirSync(path.join(this.rootPath), {
-      withFileTypes: true,
-    }).filter((x) => x.isDirectory() && !x.name.startsWith('_'))
-    const chains = new Set<string>()
-    for (const folder of folders) {
-      readdirSync(path.join(this.rootPath, folder.name), {
-        withFileTypes: true,
+  readAllProjectChainPairs(): { project: string; chains: string[] }[] {
+    return readdirSync(path.join(this.rootPath), { withFileTypes: true })
+      .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
+      .map((projectDir) => {
+        const projectPath = path.join(this.rootPath, projectDir.name)
+        const chains = readdirSync(projectPath, { withFileTypes: true })
+          .filter((x) => x.isDirectory())
+          .map((x) => x.name)
+        return { project: projectDir.name, chains }
       })
-        .filter((x) => x.isDirectory())
-        .map((x) => x.name)
-        .forEach((x) => chains.add(x))
-    }
+  }
+
+  readAllChains(): string[] {
+    const chains = new Set(
+      this.readAllProjectChainPairs().flatMap((x) => x.chains),
+    )
     return [...chains]
   }
 
