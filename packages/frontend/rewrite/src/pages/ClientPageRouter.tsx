@@ -2,6 +2,7 @@ import { AboutUsPage } from './about/AboutUsPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ActivityPage } from './scaling/activity/ActivityPage'
+import { RiskPage } from './scaling/risk/RiskPage'
 
 type Pages = typeof pages
 export type SsrData = {
@@ -14,8 +15,9 @@ export type SsrData = {
 const pages = {
   FaqPage,
   AboutUsPage,
-  ActivityPage,
   DonatePage,
+  ActivityPage,
+  RiskPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
