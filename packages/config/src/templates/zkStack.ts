@@ -593,50 +593,57 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
 function getDaTracking(
   templateVars: ZkStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
+  // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
     return templateVars.nonTemplateDaTracking
   }
 
-  const validatorTimelock =
-    templateVars.discovery.getContractDetails('ValidatorTimelock').address
+  if (templateVars.usesEthereumBlobs) {
+    const validatorTimelock =
+      templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
-  const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
-    'ValidatorTimelock',
-    'validatorsVTL',
-  )
+    const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
+      'ValidatorTimelock',
+      'validatorsVTL',
+    )
 
-  const inboxDeploymentBlockNumber =
-    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
+    const inboxDeploymentBlockNumber =
+      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
-  return templateVars.usesEthereumBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxDeploymentBlockNumber,
-          inbox: validatorTimelock,
-          sequencers: validatorsVTL,
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
+        inbox: validatorTimelock,
+        sequencers: validatorsVTL,
+      },
+    ]
+  }
+
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
