@@ -124,19 +124,6 @@
     }
   },
   {
-    "name": "Fraxtal",
-    "shortName": "fraxtal",
-    "chainId": 252,
-    "etherscanApi": true,
-    "explorerUrl": "https://fraxscan.com",
-    "alchemyId": "frax-mainnet",
-    "nativeCurrency": {
-      "name": "Frax Ether",
-      "symbol": "frxETH",
-      "decimals": 18
-    }
-  },
-  {
     "name": "Abstract",
     "shortName": "abstract",
     "chainId": 2741,

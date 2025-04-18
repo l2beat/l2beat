@@ -9,8 +9,6 @@ export class Application {
     const logger = Logger.INFO
     const appLogger = logger.for(this)
 
-    console.log(config.discovered.allAbis.length)
-
     const httpServer = createHttpServer(config, logger.for('Router'))
 
     this.start = async () => {
