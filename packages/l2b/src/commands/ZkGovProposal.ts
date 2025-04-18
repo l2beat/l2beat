@@ -34,7 +34,7 @@ export const ZkGovProposal = command({
       type: string,
       long: 'output',
       short: 'o',
-      description: 'Optional markdown file path for output',
+      description: 'Optional markdown file path for output (atm no work sry)',
       defaultValue: () => '',
       defaultValueIsSerializable: true,
     }),
