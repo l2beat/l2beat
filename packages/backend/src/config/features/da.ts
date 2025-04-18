@@ -24,8 +24,9 @@ export async function getDaTrackingConfig(
       name: 'ethereum',
       url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
       callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
-      batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
+      batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 500),
       startingBlock: 19426618,
+      batchCount: env.integer('ETHEREUM_BLOBS_BATCH_COUNT', 5),
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('ethereum'),

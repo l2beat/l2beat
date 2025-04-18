@@ -27,7 +27,7 @@ export interface Clients {
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
-  blobscan: { daLayer: string; client: BlobScanClient }[]
+  blobscan: { daLayer: string; client: BlobScanClient; batchCount: number }[]
   celestia: { daLayer: string; client: CelestiaRpcClient }[]
   avail: { daLayer: string; client: PolkadotRpcClient }[]
   getRpcClient: (chain: string) => RpcClient
@@ -171,12 +171,17 @@ export function initClients(config: Config, logger: Logger): Clients {
           const client = new BlobScanClient({
             callsPerMinute: layer.callsPerMinute,
             baseUrl: layer.url,
-            retryStrategy: 'UNRELIABLE',
+            retryStrategy: 'BLOBSCAN',
             sourceName: layer.name,
             logger,
             http,
           })
-          blobscan.push({ daLayer: layer.name, client })
+          assert(layer.batchCount, `Batch count should be defined`)
+          blobscan.push({
+            daLayer: layer.name,
+            client,
+            batchCount: layer.batchCount,
+          })
           break
         }
 

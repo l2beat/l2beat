@@ -8,7 +8,12 @@ interface Deps {
   logger: Logger
 }
 
-export type RetryHandlerVariant = 'RELIABLE' | 'UNRELIABLE' | 'SCRIPT' | 'TEST'
+export type RetryHandlerVariant =
+  | 'RELIABLE'
+  | 'UNRELIABLE'
+  | 'SCRIPT'
+  | 'TEST'
+  | 'BLOBSCAN'
 
 export class RetryHandler {
   constructor(private readonly $: Deps) {
@@ -53,6 +58,8 @@ export class RetryHandler {
         return this.SCRIPT(logger)
       case 'TEST':
         return this.TEST(logger)
+      case 'BLOBSCAN':
+        return this.BLOBSCAN(logger)
     }
   }
 
@@ -85,6 +92,14 @@ export class RetryHandler {
       logger: logger,
       initialRetryDelayMs: 1,
       maxRetries: 1,
+      maxRetryDelayMs: Infinity,
+    })
+
+  static BLOBSCAN = (logger: Logger) =>
+    new RetryHandler({
+      logger,
+      initialRetryDelayMs: 10,
+      maxRetries: 10,
       maxRetryDelayMs: Infinity,
     })
 }
