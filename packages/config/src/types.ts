@@ -297,6 +297,7 @@ export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
+  livenessFailure?: TableReadyValue
 }
 
 export interface ProjectBridgeTechnology {
@@ -307,6 +308,9 @@ export interface ProjectBridgeTechnology {
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
   detailedDescription?: string
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 // #endregion
 
