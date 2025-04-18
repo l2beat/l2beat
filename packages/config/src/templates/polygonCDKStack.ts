@@ -94,7 +94,7 @@ export interface PolygonCDKStackConfig {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
-  /** Set to true if projects post blobs to Ethereum */
+  /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {

@@ -148,7 +148,6 @@ interface OpStackConfigCommon {
   nodeSourceLink?: string
   chainConfig?: ChainConfig
   hasProperSecurityCouncil?: boolean
-  usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
@@ -162,6 +161,8 @@ interface OpStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
   }
+  /** Set to true if projects posts blobs to Ethereum */
+  usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -355,7 +356,7 @@ function getDaTracking(
   }
 
   const usesBlobs =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
@@ -816,7 +817,7 @@ function getTechnology(
   const portal = getOptimismPortal(templateVars)
 
   const usesBlobs =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
@@ -1144,7 +1145,7 @@ function getDAProvider(
   hostChainDA?: DAProvider,
 ): DAProvider {
   const postsToCelestia =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
@@ -1161,7 +1162,7 @@ function getDAProvider(
 
   if (daProvider === undefined) {
     const usesBlobs =
-      templateVars.usesBlobs ??
+      templateVars.usesEthereumBlobs ??
       templateVars.discovery.getContractValue<{
         isSequencerSendingBlobTx: boolean
       }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
@@ -1314,7 +1315,7 @@ function getTrackedTxs(
 
 function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
   const postsToCelestia =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
