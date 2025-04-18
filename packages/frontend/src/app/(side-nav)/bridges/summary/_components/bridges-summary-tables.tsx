@@ -13,6 +13,7 @@ import { TableSortingProvider } from '~/components/table/sorting/table-sorting-c
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
 import { BridgesSummaryTable } from './table/bridges-summary-table'
+import { BridgesSummarySingleChainTable } from './table/bridges-summary-singlechain-table'
 
 type Props = TabbedBridgeEntries<BridgesSummaryEntry>
 export function BridgesSummaryTables(props: Props) {
@@ -44,7 +45,7 @@ export function BridgesSummaryTables(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="singleChain">
-            <BridgesSummaryTable entries={entries.singleChain} />
+            <BridgesSummarySingleChainTable entries={entries.singleChain} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
