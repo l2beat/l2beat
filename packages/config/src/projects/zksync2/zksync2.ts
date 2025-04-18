@@ -144,6 +144,7 @@ export const zksync2: ScalingProject = zkStackL2({
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
     }),
   ],
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

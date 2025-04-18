@@ -105,7 +105,7 @@ export const facet: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  usesBlobs: false, // uses calldata
+  usesEthereumBlobs: false, // uses calldata
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/0xFacet/facet-node',
 })

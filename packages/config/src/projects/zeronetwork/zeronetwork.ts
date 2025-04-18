@@ -53,6 +53,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
     ],
   },
   diamondContract: discovery.getContract('ZeroNetworkZkEvm'),
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
