@@ -1,5 +1,5 @@
 'use client'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'react'
 import { MilestoneDrawerContent } from '~/components/core/chart/chart-milestones'
 import {
@@ -105,7 +105,8 @@ function Details({
   setSelectedMilestoneIndex: (index: number) => void
   className?: string
 }) {
-  const selectedMilestone = milestones[selectedMilestoneIndex]!
+  const selectedMilestone = milestones[selectedMilestoneIndex]
+  assert(selectedMilestone, 'No selected milestone')
 
   return (
     <div

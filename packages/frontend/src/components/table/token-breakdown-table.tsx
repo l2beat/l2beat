@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import type { Table as TanstackTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import type { Row } from '@tanstack/react-table'
@@ -24,7 +25,8 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
     return <TableEmptyState />
   }
 
-  const headers = table.getHeaderGroups()[0]!
+  const headers = table.getHeaderGroups()[0]
+  assert(headers, 'No table headers')
 
   return (
     <Table>

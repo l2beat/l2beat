@@ -67,8 +67,8 @@ function getDestination(destinations: string[]): {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }
-  if (destinations.length === 1) {
-    return { value: destinations[0]!, sentiment: 'neutral' }
+  if (destinations.length === 1 && destinations[0]) {
+    return { value: destinations[0], sentiment: 'neutral' }
   }
   return {
     value: 'Various',
