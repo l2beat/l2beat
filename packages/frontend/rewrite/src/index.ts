@@ -1,8 +1,11 @@
+import './dotenv'
+
 import compression from 'compression'
 import express from 'express'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import sirv from 'sirv'
+import { env } from '~/env'
 import { type Manifest, getManifest } from './common/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
 import { type RenderData, render } from './ssr/server'
@@ -12,9 +15,7 @@ const port = process.env.PORT ?? 3000
 
 const manifest = getManifest(isProduction, join(process.cwd(), 'rewrite'))
 const template = getTemplate(manifest)
-
 const app = express()
-
 if (isProduction) {
   app.use(compression())
   // TODO: immutable cache
@@ -42,6 +43,16 @@ function renderToHtml(data: RenderData, url: string) {
   const rendered = render(data, url)
   const sizeInBytes = JSON.stringify(data.ssr).length
   const sizeInKiB = (sizeInBytes / 1024).toFixed(2)
+  const envData = Object.fromEntries(
+    Object.entries(env)
+      .map(([key, value]) => {
+        if (!key.startsWith('NEXT_PUBLIC_')) {
+          return undefined
+        }
+        return [key, value] as const
+      })
+      .filter((x) => x !== undefined),
+  )
   console.log(`SSR data size: ${sizeInKiB} KiB`)
   return template
     .replace(`<!--app-head-->`, rendered.head)
@@ -50,6 +61,7 @@ function renderToHtml(data: RenderData, url: string) {
       `<!--ssr-data-->`,
       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
+    .replace(`<!--env-data-->`, `window.__ENV__=${JSON.stringify(envData)}`)
 }
 
 function getTemplate(manifest: Manifest) {

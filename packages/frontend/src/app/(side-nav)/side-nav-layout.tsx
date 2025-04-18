@@ -3,21 +3,10 @@ import { Footer } from '~/components/footer'
 import { NavLayout } from '~/components/nav/nav-layout'
 import { RecategorisationPreviewBanner } from '~/components/recategorisation-preview/recategorisation-preview-banner'
 
-export interface SideNavLayoutProps {
-  ecosystemsEnabled: boolean
-  showHiringBadge: boolean
-}
-
-export function SideNavLayout({
-  children,
-  ecosystemsEnabled,
-  showHiringBadge,
-}: SideNavLayoutProps & { children: React.ReactNode }) {
+export function SideNavLayout({ children }: { children: React.ReactNode }) {
   return (
     <NavLayout
       logoLink="/scaling/summary"
-      ecosystemsEnabled={ecosystemsEnabled}
-      showHiringBadge={showHiringBadge}
       topChildren={
         <>
           <RecategorisationPreviewBanner className="only:lg:rounded-b-xl only:xl:rounded-br-none" />

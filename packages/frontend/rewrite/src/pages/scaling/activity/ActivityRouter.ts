@@ -41,8 +41,6 @@ async function getActivityData(manifest: Manifest): Promise<RenderData> {
           iconUrl: manifest.getUrl(p.iconUrl),
         })),
         milestones: HOMEPAGE_MILESTONES,
-        showHiringBadge: false,
-        ecosystemsEnabled: false,
       },
     },
   }

@@ -37,8 +37,6 @@ async function getAboutUsData(manifest: Manifest): Promise<RenderData> {
           ...p,
           iconUrl: manifest.getUrl(p.iconUrl),
         })),
-        showHiringBadge: false,
-        ecosystemsEnabled: false,
       },
     },
   }

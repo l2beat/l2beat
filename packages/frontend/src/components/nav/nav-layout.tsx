@@ -13,6 +13,7 @@ import { MobileTopNavbar } from './mobile/mobile-top-navbar'
 import { NavSidebar } from './sidebar/nav-sidebar'
 import { TopNavbar } from './top-nav/top-navbar'
 import type { NavGroup } from './types'
+import { env } from '~/env'
 
 interface Props {
   children: ReactNode
@@ -20,8 +21,6 @@ interface Props {
   logoLink: string
   topNavbar?: boolean
   topChildren?: ReactNode
-  showHiringBadge: boolean
-  ecosystemsEnabled: boolean
 }
 
 export function NavLayout({
@@ -30,8 +29,6 @@ export function NavLayout({
   logoLink,
   topNavbar,
   topChildren,
-  showHiringBadge,
-  ecosystemsEnabled,
 }: Props) {
   const groups = compact<NavGroup>([
     {
@@ -147,7 +144,7 @@ export function NavLayout({
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
-    ecosystemsEnabled && {
+    env.NEXT_PUBLIC_ECOSYSTEMS && {
       type: 'multiple',
       title: 'Ecosystems',
       match: 'ecosystems',
@@ -206,7 +203,9 @@ export function NavLayout({
     {
       title: 'Jobs',
       href: externalLinks.jobs,
-      accessory: showHiringBadge ? <HiringBadge /> : undefined,
+      accessory: env.NEXT_PUBLIC_SHOW_HIRING_BADGE ? (
+        <HiringBadge />
+      ) : undefined,
     },
     {
       title: 'Brand Kit',
