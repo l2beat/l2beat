@@ -1,11 +1,11 @@
-import { ethers } from 'ethers'
 import chalk from 'chalk'
-import * as fs from 'fs'
-import * as path from 'path'
+import { ethers } from 'ethers'
 
 // Constants
-const ZK_PROTOCOL_GOVERNOR_ADDRESS = '0x76705327e682F2d96943280D99464Ab61219e34f'
-const PROTOCOL_UPGRADE_HANDLER_ADDRESS = '0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3'
+const ZK_PROTOCOL_GOVERNOR_ADDRESS =
+  '0x76705327e682F2d96943280D99464Ab61219e34f'
+const PROTOCOL_UPGRADE_HANDLER_ADDRESS =
+  '0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3'
 const L1_MESSENGER_ADDRESS = '0x0000000000000000000000000000000000008008'
 
 // Time periods in seconds
@@ -34,6 +34,20 @@ interface ProposalInfo {
   description: string
   blockNumber: number
   txHash: string
+}
+
+interface ProposalExtensionInfo {
+  proposalId: string
+  extendedDeadline: ethers.BigNumber
+  txHash: string
+  blockNumber: number
+  blockTimestamp: number
+}
+
+interface ProposalExecutionInfo {
+  txHash: string
+  blockNumber: number
+  blockTimestamp: number
 }
 
 interface L1MessageInfo {
@@ -65,6 +79,15 @@ interface UpgradeInfo {
   txHash: string
 }
 
+interface TimelineEvent {
+  status: string
+  time: Date
+  description: string
+  txHash?: string
+  color: 'green' | 'yellow' | 'red' | 'blue' | 'cyan' | 'white' | 'magenta'
+  isCurrent: boolean
+}
+
 // Enums
 enum ProposalState {
   Pending,
@@ -74,7 +97,7 @@ enum ProposalState {
   Succeeded,
   Queued,
   Expired,
-  Executed
+  Executed,
 }
 
 enum UpgradeState {
@@ -84,7 +107,7 @@ enum UpgradeState {
   ExecutionPending,
   Ready,
   Expired,
-  Done
+  Done,
 }
 
 export class ZkGovProposalAnalyzer {
@@ -103,93 +126,129 @@ export class ZkGovProposalAnalyzer {
    * @param proposalId The proposal ID to analyze
    */
   public async analyzeProposal(proposalId: string): Promise<void> {
-    console.log(chalk.blue(`\nAnalyzing ZKsync governance proposal ${chalk.bold(proposalId)}...\n`))
+    console.log(
+      chalk.blue(
+        `\nAnalyzing ZKsync governance proposal ${chalk.bold(proposalId)}...\n`,
+      ),
+    )
 
     try {
       // Step 1: Get proposal information from L2
       const proposalInfo = await this.findProposalCreatedEvent(proposalId)
       if (!proposalInfo) {
-        console.log(chalk.red(`Proposal ${proposalId} not found on ZKsync Era (L2)`))
+        console.log(
+          chalk.red(`Proposal ${proposalId} not found on ZKsync Era (L2)`),
+        )
         return
       }
 
       // Step 2: Get proposal state on L2
       const proposalState = await this.getProposalState(proposalId)
 
+      // Step 3: Check if there was a late quorum extension
+      const extensionInfo = await this.findProposalExtendedEvent(proposalId)
+
+      // Step 4: Find execution info if proposal was executed
+      let executionInfo: ProposalExecutionInfo | null = null
+      if (proposalState === ProposalState.Executed) {
+        executionInfo = await this.findProposalExecutedInfo(proposalId)
+      }
+
+      // Initialize timeline events array
+      const timeline: TimelineEvent[] = await this.buildProposalTimeline(
+        proposalInfo,
+        proposalState,
+        extensionInfo,
+        executionInfo,
+      )
+
       // Initialize output content
       const output: string[] = []
 
-      // Add L2 information to output
-      this.addL2InfoToOutput(output, proposalInfo, proposalState)
+      // Add header to output
+      this.addHeaderToOutput(output, proposalInfo, proposalState)
+
+      // Add timeline to output
+      this.addTimelineToOutput(output, timeline)
+
+      // Add proposal details to output
+      this.addProposalDetailsToOutput(output, proposalInfo)
 
       let l1MessageInfo: L1MessageInfo | null = null
       let upgradeInfo: UpgradeInfo | null = null
       let upgradeState: UpgradeState | null = null
       let upgradeStatus: UpgradeStatusInfo | null = null
+      let l2BlockTimestamp: number = 0
 
-      // Step 3: If executed, check for L1 message
-      if (proposalState === ProposalState.Executed) {
-        const executedTxHash = await this.findProposalExecutedTx(proposalId)
-        if (executedTxHash) {
-          // Step 4: Find L1 message sent event
-          l1MessageInfo = await this.findL1MessageSent(executedTxHash)
+      // Step 5: If executed, check for L1 message
+      if (executionInfo) {
+        // Step 6: Find L1 message sent event
+        l1MessageInfo = await this.findL1MessageSent(executionInfo.txHash)
 
-          if (l1MessageInfo) {
-            // Step 5: Get L1 upgrade information
-            const l2ExecutionBlock = await this.l2Provider.getTransactionReceipt(executedTxHash)
-            const l2BlockTimestamp = (await this.l2Provider.getBlock(l2ExecutionBlock.blockNumber)).timestamp
-            const estimatedL1Block = await this.getL1BlockAfterTimestamp(l2BlockTimestamp)
+        if (l1MessageInfo) {
+          l2BlockTimestamp = executionInfo.blockTimestamp
+          const estimatedL1Block = await this.getL1BlockAfterTimestamp(
+            l2BlockTimestamp + EXECUTION_DELAY,
+          )
 
-            upgradeInfo = await this.findUpgradeStartedEvent(l1MessageInfo.hash, estimatedL1Block)
-            upgradeState = await this.getUpgradeState(l1MessageInfo.hash)
-            upgradeStatus = await this.getUpgradeStatus(l1MessageInfo.hash)
+          // Step 7: Get L1 upgrade information
+          upgradeInfo = await this.findUpgradeStartedEvent(
+            l1MessageInfo.hash,
+            estimatedL1Block,
+          )
+          upgradeState = await this.getUpgradeState(l1MessageInfo.hash)
+          upgradeStatus = await this.getUpgradeStatus(l1MessageInfo.hash)
 
-            // Add L1 information to output
-            this.addL1InfoToOutput(
-              output, 
-              l1MessageInfo, 
-              upgradeInfo, 
-              upgradeState, 
-              upgradeStatus, 
-              l2BlockTimestamp
-            )
-          } else {
-            output.push(chalk.yellow("\nThis proposal doesn't target L1 (no L1 message was sent)"))
+          // Add L1 information to output
+          this.addL1InfoToOutput(
+            output,
+            l1MessageInfo,
+            upgradeInfo,
+            upgradeState,
+            upgradeStatus,
+            l2BlockTimestamp,
+            executionInfo.txHash,
+          )
+
+          // Step 8: Compare the payloads (L2 vs L1)
+          if (upgradeInfo) {
+            this.addPayloadComparisonToOutput(output, proposalInfo, upgradeInfo)
           }
+        } else {
+          output.push(
+            chalk.yellow(
+              "\nThis proposal doesn't target L1 (no L1 message was sent)",
+            ),
+          )
         }
       }
-
-      // Step 6: Display and/or save output
-      if (this.outputPath) {
-        await this.writeToMarkdownFile(output)
-        console.log(chalk.green(`\nOutput saved to ${this.outputPath}`))
-      } else {
-        this.displayOutput(output)
-      }
-
+      // 9. Display output
+      this.displayOutput(output)
     } catch (error) {
-      console.error(chalk.red("\nError analyzing proposal:"), error)
+      console.error(chalk.red('\nError analyzing proposal:'), error)
     }
   }
 
   /**
    * Find the ProposalCreated event for a given proposal ID
    */
-  private async findProposalCreatedEvent(proposalId: string): Promise<ProposalInfo | null> {
+  private async findProposalCreatedEvent(
+    proposalId: string,
+  ): Promise<ProposalInfo | null> {
     const zkGovernorInterface = new ethers.utils.Interface([
-      'event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)'
+      'event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)',
     ])
 
     // Event signature hash
     const eventSig = ethers.utils.id(
-      'ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)'
+      'ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)',
     )
 
     // Get logs (we need to scan all logs since proposalId is not indexed)
     const logs = await this.l2Provider.getLogs({
       address: ZK_PROTOCOL_GOVERNOR_ADDRESS,
       topics: [eventSig],
-      fromBlock: 41196850
+      fromBlock: 41196850,
     })
 
     // Parse logs and find matching proposalId
@@ -208,11 +267,54 @@ export class ZkGovProposalAnalyzer {
             voteEnd: parsedLog.args.voteEnd,
             description: parsedLog.args.description,
             blockNumber: log.blockNumber,
-            txHash: log.transactionHash
+            txHash: log.transactionHash,
           }
         }
-      } catch (error) {
-        console.log(chalk.yellow("Error parsing log, skipping..."))
+      } catch (_error) {
+        console.log(chalk.yellow('Error parsing log, skipping...'))
+      }
+    }
+
+    return null
+  }
+
+  /**
+   * Find the ProposalExtended event for a given proposal ID
+   */
+  private async findProposalExtendedEvent(
+    proposalId: string,
+  ): Promise<ProposalExtensionInfo | null> {
+    const zkGovernorInterface = new ethers.utils.Interface([
+      'event ProposalExtended(uint256 indexed proposalId, uint64 extendedDeadline)',
+    ])
+
+    // Event signature hash
+    const eventSig =
+      '0x541f725fb9f7c98a30cc9c0ff32fbb14358cd7159c847a3aa20a2bdc442ba511' // ProposalExtended
+
+    // Get logs with indexed proposalId
+    const logs = await this.l2Provider.getLogs({
+      address: ZK_PROTOCOL_GOVERNOR_ADDRESS,
+      topics: [
+        eventSig,
+        ethers.utils.hexZeroPad(
+          ethers.BigNumber.from(proposalId).toHexString(),
+          32,
+        ),
+      ],
+      fromBlock: 41196850,
+    })
+
+    if (logs.length > 0) {
+      const parsedLog = zkGovernorInterface.parseLog(logs[0])
+      const block = await this.l2Provider.getBlock(logs[0].blockNumber)
+
+      return {
+        proposalId: parsedLog.args.proposalId.toString(),
+        extendedDeadline: parsedLog.args.extendedDeadline,
+        txHash: logs[0].transactionHash,
+        blockNumber: logs[0].blockNumber,
+        blockTimestamp: block.timestamp,
       }
     }
 
@@ -224,14 +326,14 @@ export class ZkGovProposalAnalyzer {
    */
   private async getProposalState(proposalId: string): Promise<ProposalState> {
     const zkGovernorInterface = new ethers.utils.Interface([
-      'function state(uint256 _proposalId) view returns (uint8)'
+      'function state(uint256 _proposalId) view returns (uint8)',
     ])
 
     const data = zkGovernorInterface.encodeFunctionData('state', [proposalId])
 
     const result = await this.l2Provider.call({
       to: ZK_PROTOCOL_GOVERNOR_ADDRESS,
-      data
+      data,
     })
 
     const [state] = ethers.utils.defaultAbiCoder.decode(['uint8'], result)
@@ -239,21 +341,23 @@ export class ZkGovProposalAnalyzer {
   }
 
   /**
-   * Find the transaction hash of the ProposalExecuted event
+   * Find the execution information of a proposal
    */
-  private async findProposalExecutedTx(proposalId: string): Promise<string | null> {
+  private async findProposalExecutedInfo(
+    proposalId: string,
+  ): Promise<ProposalExecutionInfo | null> {
     const zkGovernorInterface = new ethers.utils.Interface([
-      'event ProposalExecuted(uint256 proposalId)'
+      'event ProposalExecuted(uint256 proposalId)',
     ])
 
     // Event signature hash
     const eventSig = ethers.utils.id('ProposalExecuted(uint256)')
 
-    // Get logs (we need to scan all logs since proposalId is not indexed)
+    // Get logs
     const logs = await this.l2Provider.getLogs({
       address: ZK_PROTOCOL_GOVERNOR_ADDRESS,
       topics: [eventSig],
-      fromBlock: 41196850
+      fromBlock: 41196850,
     })
 
     // Parse logs and find matching proposalId
@@ -261,10 +365,15 @@ export class ZkGovProposalAnalyzer {
       try {
         const parsedLog = zkGovernorInterface.parseLog(log)
         if (parsedLog.args.proposalId.toString() === proposalId) {
-          return log.transactionHash
+          const block = await this.l2Provider.getBlock(log.blockNumber)
+          return {
+            txHash: log.transactionHash,
+            blockNumber: log.blockNumber,
+            blockTimestamp: block.timestamp,
+          }
         }
-      } catch (error) {
-        console.log(chalk.yellow("Error parsing log, skipping..."))
+      } catch (_error) {
+        console.log(chalk.yellow('Error parsing log, skipping...'))
       }
     }
 
@@ -272,13 +381,142 @@ export class ZkGovProposalAnalyzer {
   }
 
   /**
+   * Build a timeline of events for the proposal
+   */
+  private async buildProposalTimeline(
+    proposalInfo: ProposalInfo,
+    currentState: ProposalState,
+    extensionInfo: ProposalExtensionInfo | null,
+    executionInfo: ProposalExecutionInfo | null,
+  ): Promise<TimelineEvent[]> {
+    const timeline: TimelineEvent[] = []
+
+    // Get block timestamp for proposal creation
+    const creationBlock = await this.l2Provider.getBlock(
+      proposalInfo.blockNumber,
+    )
+    const creationTime = creationBlock.timestamp
+
+    // 1. Proposal Creation
+    timeline.push({
+      status: 'Created',
+      time: new Date(creationTime * 1000),
+      description: 'Proposal was created',
+      txHash: proposalInfo.txHash,
+      color: 'blue',
+      isCurrent: false,
+    })
+
+    // 2. Pending Period
+    const pendingStart = new Date(creationTime * 1000)
+    timeline.push({
+      status: 'Pending',
+      time: pendingStart,
+      description: 'Waiting for voting to start',
+      color: 'yellow',
+      isCurrent: currentState === ProposalState.Pending,
+    })
+
+    // 3. Active Period
+    const voteStartTime = proposalInfo.voteStart.toNumber()
+    const originalVoteEndTime = proposalInfo.voteEnd.toNumber()
+
+    timeline.push({
+      status: 'Active',
+      time: new Date(voteStartTime * 1000),
+      description: 'Voting period started',
+      color: 'yellow',
+      isCurrent: currentState === ProposalState.Active && !extensionInfo,
+    })
+
+    // 4. Late Quorum Extension (if applicable)
+    if (extensionInfo) {
+      const extendedDeadline = extensionInfo.extendedDeadline.toNumber()
+      timeline.push({
+        status: 'Extended',
+        time: new Date(extensionInfo.blockTimestamp * 1000),
+        description: `Vote period extended to ${new Date(extendedDeadline * 1000).toISOString()}`,
+        txHash: extensionInfo.txHash,
+        color: 'cyan',
+        isCurrent: currentState === ProposalState.Active,
+      })
+    }
+
+    // 5. Vote End
+    const actualVoteEndTime = extensionInfo
+      ? extensionInfo.extendedDeadline.toNumber()
+      : originalVoteEndTime
+
+    const voteEndEvent: TimelineEvent = {
+      status: 'Vote Ended',
+      time: new Date(actualVoteEndTime * 1000),
+      description: 'Voting period ended',
+      color: 'blue',
+      isCurrent: false,
+    }
+
+    // Different outcomes after vote ends
+    if (currentState === ProposalState.Canceled) {
+      voteEndEvent.status = 'Canceled'
+      voteEndEvent.description = 'Proposal was canceled'
+      voteEndEvent.color = 'red'
+      voteEndEvent.isCurrent = true
+    } else if (currentState === ProposalState.Defeated) {
+      voteEndEvent.status = 'Defeated'
+      voteEndEvent.description = 'Proposal was defeated'
+      voteEndEvent.color = 'red'
+      voteEndEvent.isCurrent = true
+    } else if (
+      [
+        ProposalState.Succeeded,
+        ProposalState.Queued,
+        ProposalState.Executed,
+      ].includes(currentState)
+    ) {
+      voteEndEvent.status = 'Succeeded'
+      voteEndEvent.description = 'Proposal vote succeeded'
+      voteEndEvent.color = 'green'
+      voteEndEvent.isCurrent = currentState === ProposalState.Succeeded
+    }
+
+    timeline.push(voteEndEvent)
+
+    // 6. Queued (in ZKsync this is very brief since timelock is 0)
+    if ([ProposalState.Queued, ProposalState.Executed].includes(currentState)) {
+      timeline.push({
+        status: 'Queued',
+        time: new Date(actualVoteEndTime * 1000),
+        description: 'Proposal queued for execution',
+        color: 'yellow',
+        isCurrent: currentState === ProposalState.Queued,
+      })
+    }
+
+    // 7. Executed
+    if (currentState === ProposalState.Executed && executionInfo) {
+      timeline.push({
+        status: 'Executed',
+        time: new Date(executionInfo.blockTimestamp * 1000),
+        description: 'Proposal executed on L2',
+        txHash: executionInfo.txHash,
+        color: 'green',
+        isCurrent: true,
+      })
+    }
+
+    return timeline
+  }
+
+  /**
    * Find the L1MessageSent event in a transaction receipt
    */
-  private async findL1MessageSent(txHash: string): Promise<L1MessageInfo | null> {
+  private async findL1MessageSent(
+    txHash: string,
+  ): Promise<L1MessageInfo | null> {
     const receipt = await this.l2Provider.getTransactionReceipt(txHash)
 
     const messengerInterface = new ethers.utils.Interface([
-      'event L1MessageSent(address indexed _sender, bytes32 indexed _hash, bytes _message)'
+      'event L1MessageSent(address indexed _sender, bytes32 indexed _hash, bytes _message)',
     ])
 
     // Event signature hash
@@ -286,13 +524,15 @@ export class ZkGovProposalAnalyzer {
 
     // Find L1MessageSent in transaction logs
     for (const log of receipt.logs) {
-      if (log.address.toLowerCase() === L1_MESSENGER_ADDRESS.toLowerCase() && 
-          log.topics[0] === eventSig) {
+      if (
+        log.address.toLowerCase() === L1_MESSENGER_ADDRESS.toLowerCase() &&
+        log.topics[0] === eventSig
+      ) {
         const parsedLog = messengerInterface.parseLog(log)
         return {
           sender: parsedLog.args._sender,
           hash: parsedLog.args._hash,
-          message: parsedLog.args._message
+          message: parsedLog.args._message,
         }
       }
     }
@@ -304,20 +544,21 @@ export class ZkGovProposalAnalyzer {
    * Find UpgradeStarted event on L1
    */
   private async findUpgradeStartedEvent(
-    upgradeId: string, 
-    fromBlock: number
+    upgradeId: string,
+    fromBlock: number,
   ): Promise<UpgradeInfo | null> {
     const upgradeHandlerInterface = new ethers.utils.Interface([
-      'event UpgradeStarted(bytes32 indexed _id, tuple(tuple(address target, uint256 value, bytes data)[] calls, address executor, bytes32 salt) _proposal)'
+      'event UpgradeStarted(bytes32 indexed _id, tuple(tuple(address target, uint256 value, bytes data)[] calls, address executor, bytes32 salt) _proposal)',
     ])
 
     // Event signature hash
-    const eventSig = '0x71a79729ed8b7db17b27c5dfe0ae24cf41d52b08c8dfc82592fc7db23010c879' // UpgradeStarted
+    const eventSig =
+      '0x71a79729ed8b7db17b27c5dfe0ae24cf41d52b08c8dfc82592fc7db23010c879' // UpgradeStarted
     // Get logs with indexed upgradeId
     const logs = await this.l1Provider.getLogs({
       address: PROTOCOL_UPGRADE_HANDLER_ADDRESS,
       topics: [eventSig, ethers.utils.hexZeroPad(upgradeId, 32)],
-      fromBlock
+      fromBlock,
     })
 
     if (logs.length > 0) {
@@ -326,7 +567,7 @@ export class ZkGovProposalAnalyzer {
         id: parsedLog.args._id,
         proposal: parsedLog.args._proposal,
         blockNumber: logs[0].blockNumber,
-        txHash: logs[0].transactionHash
+        txHash: logs[0].transactionHash,
       }
     }
 
@@ -338,14 +579,16 @@ export class ZkGovProposalAnalyzer {
    */
   private async getUpgradeState(upgradeId: string): Promise<UpgradeState> {
     const upgradeHandlerInterface = new ethers.utils.Interface([
-      'function upgradeState(bytes32 _id) view returns (uint8)'
+      'function upgradeState(bytes32 _id) view returns (uint8)',
     ])
 
-    const data = upgradeHandlerInterface.encodeFunctionData('upgradeState', [upgradeId])
+    const data = upgradeHandlerInterface.encodeFunctionData('upgradeState', [
+      upgradeId,
+    ])
 
     const result = await this.l1Provider.call({
       to: PROTOCOL_UPGRADE_HANDLER_ADDRESS,
-      data
+      data,
     })
 
     const [state] = ethers.utils.defaultAbiCoder.decode(['uint8'], result)
@@ -355,39 +598,45 @@ export class ZkGovProposalAnalyzer {
   /**
    * Get detailed upgrade status from L1
    */
-  private async getUpgradeStatus(upgradeId: string): Promise<UpgradeStatusInfo | null> {
+  private async getUpgradeStatus(
+    upgradeId: string,
+  ): Promise<UpgradeStatusInfo | null> {
     const upgradeHandlerInterface = new ethers.utils.Interface([
-      'function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)'
+      'function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)',
     ])
 
-    const data = upgradeHandlerInterface.encodeFunctionData('upgradeStatus', [upgradeId])
+    const data = upgradeHandlerInterface.encodeFunctionData('upgradeStatus', [
+      upgradeId,
+    ])
 
     try {
       const result = await this.l1Provider.call({
         to: PROTOCOL_UPGRADE_HANDLER_ADDRESS,
-        data
+        data,
       })
 
       const [
-        creationTimestamp, 
-        securityCouncilApprovalTimestamp, 
-        guardiansApproval, 
-        guardiansExtendedLegalVeto, 
-        executed
+        creationTimestamp,
+        securityCouncilApprovalTimestamp,
+        guardiansApproval,
+        guardiansExtendedLegalVeto,
+        executed,
       ] = ethers.utils.defaultAbiCoder.decode(
-        ['uint48', 'uint48', 'bool', 'bool', 'bool'], 
-        result
+        ['uint48', 'uint48', 'bool', 'bool', 'bool'],
+        result,
       )
 
       return {
         creationTimestamp: Number(creationTimestamp),
-        securityCouncilApprovalTimestamp: Number(securityCouncilApprovalTimestamp),
+        securityCouncilApprovalTimestamp: Number(
+          securityCouncilApprovalTimestamp,
+        ),
         guardiansApproval,
         guardiansExtendedLegalVeto,
-        executed
+        executed,
       }
-    } catch (error) {
-      console.log(chalk.yellow("Error getting upgrade status"))
+    } catch (_error) {
+      console.log(chalk.yellow('Error getting upgrade status'))
       return null
     }
   }
@@ -406,47 +655,139 @@ export class ZkGovProposalAnalyzer {
 
     // Estimate a good starting point by using average block time (12s for Ethereum)
     const blockTimeEstimate = 12 // seconds
-    const blockDiff = Math.floor((currentBlockData.timestamp - timestamp) / blockTimeEstimate)
+    const blockDiff = Math.floor(
+      (currentBlockData.timestamp - timestamp) / blockTimeEstimate,
+    )
     const estimatedBlock = Math.max(1, currentBlock - blockDiff)
 
     return estimatedBlock
   }
 
   /**
-   * Add L2 information to output array
+   * Add header information to output array
    */
-  private addL2InfoToOutput(
-    output: string[], 
-    proposalInfo: ProposalInfo, 
-    proposalState: ProposalState
+  private addHeaderToOutput(
+    output: string[],
+    proposalInfo: ProposalInfo,
+    proposalState: ProposalState,
   ): void {
     // Header
-    output.push(chalk.bold.blue("=".repeat(50)))
-    output.push(chalk.bold.blue("ZKsync Governance Proposal Analysis"))
-    output.push(chalk.bold.blue("=".repeat(50)))
+    output.push(chalk.bold.blue('='.repeat(80)))
+    output.push(
+      chalk.bold.blue(
+        `ZKsync Governance Proposal Analysis - ID: ${proposalInfo.proposalId}`,
+      ),
+    )
+    output.push(chalk.bold.blue('='.repeat(80)))
 
-    // Proposal ID and basic info
-    output.push(chalk.bold("\nProposal ID: ") + proposalInfo.proposalId)
-    output.push(chalk.bold("Proposer: ") + proposalInfo.proposer)
-    output.push(chalk.bold("Description: ") + proposalInfo.description)
+    // Proposal basic info
+    output.push(chalk.bold('\nProposer: ') + proposalInfo.proposer)
+    output.push(
+      chalk.bold('Current State: ') + this.formatProposalState(proposalState),
+    )
+    output.push(chalk.bold('Description: ') + proposalInfo.description)
+  }
 
-    // Proposal state on L2
-    output.push(chalk.bold("\nL2 State: ") + this.formatProposalState(proposalState))
+  /**
+   * Add timeline to output array
+   */
+  private addTimelineToOutput(
+    output: string[],
+    timeline: TimelineEvent[],
+  ): void {
+    output.push(chalk.bold.cyan('\n' + '='.repeat(80)))
+    output.push(chalk.bold.cyan('Proposal Timeline'))
+    output.push(chalk.bold.cyan('='.repeat(80)))
 
-    // Vote schedule
-    const voteStart = new Date(proposalInfo.voteStart.toNumber() * 1000)
-    const voteEnd = new Date(proposalInfo.voteEnd.toNumber() * 1000)
-    output.push(chalk.bold("\nVoting period: "))
-    output.push(`  Start: ${voteStart.toISOString()} (${this.formatTimeDistance(voteStart)})`)
-    output.push(`  End: ${voteEnd.toISOString()} (${this.formatTimeDistance(voteEnd)})`)
+    // Sort timeline by time
+    timeline.sort((a, b) => a.time.getTime() - b.time.getTime())
+
+    // Current time for relative time calculations
+    const now = new Date()
+
+    // Find current step for special formatting
+    let currentEventIndex = timeline.findIndex((event) => event.isCurrent)
+    if (currentEventIndex === -1) {
+      // If no current event (shouldn't happen), find the last past event
+      for (let i = timeline.length - 1; i >= 0; i--) {
+        if (timeline[i].time <= now) {
+          currentEventIndex = i
+          break
+        }
+      }
+    }
+
+    // Display timeline with connections
+    for (let i = 0; i < timeline.length; i++) {
+      const event = timeline[i]
+      const formattedTime = event.time
+        .toISOString()
+        .replace('T', ' ')
+        .substring(0, 19)
+      const relativeTime = this.formatTimeDistance(event.time)
+
+      // Choose appropriate marker and style based on position in timeline
+      let marker: string
+      let statusLine: string
+
+      if (i === currentEventIndex) {
+        // Current event
+        marker = chalk.bold.white('•') // Current state marker is a filled circle
+        statusLine = chalk.bold[event.color](`${event.status.toUpperCase()}`)
+      } else if (i < currentEventIndex) {
+        // Past event
+        marker = chalk.gray('✓') // Past events get a checkmark
+        statusLine = chalk[event.color](event.status)
+      } else {
+        // Future event
+        marker = chalk.gray('○') // Future events get an empty circle
+        statusLine = chalk.gray(event.status)
+      }
+
+      // Add connector line for all but the last item
+      const connector = i < timeline.length - 1 ? chalk.gray('│') : ' '
+
+      // Format the timeline entry
+      output.push(`${marker} ${statusLine}`)
+      output.push(`${connector}  ${formattedTime} (${relativeTime})`)
+      if (event.description) {
+        output.push(
+          `${connector}  ${i === currentEventIndex ? chalk.bold(event.description) : event.description}`,
+        )
+      }
+      if (event.txHash) {
+        output.push(`${connector}  ${chalk.dim(`Tx: ${event.txHash}`)}`)
+      }
+
+      // Add spacing connector if not the last item
+      if (i < timeline.length - 1) {
+        output.push(`${connector}`)
+      }
+    }
+  }
+
+  /**
+   * Add proposal details to output
+   */
+  private addProposalDetailsToOutput(
+    output: string[],
+    proposalInfo: ProposalInfo,
+  ): void {
+    output.push(chalk.bold.green('\n' + '='.repeat(80)))
+    output.push(chalk.bold.green('L2 Proposal Details'))
+    output.push(chalk.bold.green('='.repeat(80)))
 
     // Proposal targets and calldata
-    output.push(chalk.bold("\nProposal Targets:"))
+    output.push(chalk.bold('\nProposal Targets:'))
     for (let i = 0; i < proposalInfo.targets.length; i++) {
-      output.push(chalk.cyan(`\nTarget ${i+1}: ${proposalInfo.targets[i]}`))
-      output.push(`  Value: ${ethers.utils.formatEther(proposalInfo.values[i])} ETH`)
-      output.push(`  Signature: ${proposalInfo.signatures[i] || '(none)'}`)
-      output.push(`  Calldata: ${this.formatCalldata(proposalInfo.calldatas[i])}`)
+      output.push(chalk.cyan(`\nTarget ${i + 1}: ${proposalInfo.targets[i]}`))
+      output.push(
+        `Value: ${ethers.utils.formatEther(proposalInfo.values[i])} ETH`,
+      )
+      if (proposalInfo.signatures[i]) {
+        output.push(`Signature: ${proposalInfo.signatures[i]}`)
+      }
+      output.push(`Calldata: ${proposalInfo.calldatas[i]}`)
     }
   }
 
@@ -459,85 +800,207 @@ export class ZkGovProposalAnalyzer {
     upgradeInfo: UpgradeInfo | null,
     upgradeState: UpgradeState | null,
     upgradeStatus: UpgradeStatusInfo | null,
-    l2ExecutionTimestamp: number
+    l2ExecutionTimestamp: number,
+    l2ExecutionTxHash: string,
   ): void {
-    // Add L1 Message Hash
-    output.push(chalk.bold.green("\n" + "=".repeat(50)))
-    output.push(chalk.bold.green("L1 Upgrade Information"))
-    output.push(chalk.bold.green("=".repeat(50)))
+    // Add L1 section header
+    output.push(chalk.bold.magenta('\n' + '='.repeat(80)))
+    output.push(chalk.bold.magenta('L1 Upgrade Information'))
+    output.push(chalk.bold.magenta('='.repeat(80)))
 
-    output.push(chalk.bold("\nL1 Message Hash: ") + l1MessageInfo.hash)
+    output.push(chalk.bold('\nL1 Message Hash: ') + l1MessageInfo.hash)
+    output.push(
+      chalk.bold('L2 -> L1 Message Origin: ') +
+        chalk.dim(`Tx: ${l2ExecutionTxHash}`),
+    )
 
     // Show estimated arrival time on L1
-    const estimatedL1Arrival = new Date((l2ExecutionTimestamp + EXECUTION_DELAY) * 1000)
-    output.push(chalk.bold("Estimated L1 Arrival: ") + 
-      `${estimatedL1Arrival.toISOString()} (${this.formatTimeDistance(estimatedL1Arrival)})`)
+    const estimatedL1Arrival = new Date(
+      (l2ExecutionTimestamp + EXECUTION_DELAY) * 1000,
+    )
+    output.push(
+      chalk.bold('\nEstimated L1 Arrival: ') +
+        `${estimatedL1Arrival.toISOString()} (${this.formatTimeDistance(estimatedL1Arrival)})`,
+    )
 
     // If upgrade was found on L1
     if (upgradeInfo) {
-      output.push(chalk.bold("\nL1 Upgrade Started: ") + "Yes")
+      output.push(
+        chalk.bold('\nL1 Upgrade Started: ') +
+          'Yes (' +
+          chalk.dim(`Tx: ${upgradeInfo.txHash}`) +
+          ')',
+      )
+      output.push(chalk.bold('L1 Upgrade ID: ') + upgradeInfo.id)
 
-      // Check if targets match between L2 and L1
-      output.push(chalk.bold("\nProposal Calls from L1:"))
-      for (let i = 0; i < upgradeInfo.proposal.calls.length; i++) {
-        const call = upgradeInfo.proposal.calls[i]
-        output.push(chalk.cyan(`\nTarget ${i+1}: ${call.target}`))
-        output.push(`  Value: ${ethers.utils.formatEther(call.value)} ETH`)
-        output.push(`  Calldata: ${this.formatCalldata(call.data)}`)
-      }
-
-      output.push(chalk.bold("\nExecutor: ") + upgradeInfo.proposal.executor)
-
-      // Show upgrade state and status
+      // Show upgrade state
       if (upgradeState !== null) {
-        output.push(chalk.bold("\nL1 Upgrade State: ") + this.formatUpgradeState(upgradeState))
+        output.push(
+          chalk.bold('\nL1 Upgrade State: ') +
+            this.formatUpgradeState(upgradeState),
+        )
       }
 
+      // Create L1 upgrade timeline if we have status information
       if (upgradeStatus) {
-        output.push(chalk.bold("\nUpgrade Timeline:"))
+        output.push(chalk.bold.cyan('\nL1 Upgrade Timeline:'))
 
         const creationTime = new Date(upgradeStatus.creationTimestamp * 1000)
-        output.push(`  Creation: ${creationTime.toISOString()} (${this.formatTimeDistance(creationTime)})`)
-
-        // Calculate and show time periods based on the upgrade state
-        const vetoEndTime = new Date(
-          (upgradeStatus.creationTimestamp + 
-            (upgradeStatus.guardiansExtendedLegalVeto ? EXTENDED_LEGAL_VETO_PERIOD : STANDARD_LEGAL_VETO_PERIOD)
-          ) * 1000
+        output.push(
+          `• ${chalk.cyan('Created')}: ${creationTime.toISOString()} (${this.formatTimeDistance(creationTime)})`,
         )
-        output.push(`  Legal Veto Period End: ${vetoEndTime.toISOString()} (${this.formatTimeDistance(vetoEndTime)})`)
 
+        // Calculate veto period end time
+        const vetoEndTime = new Date(
+          (upgradeStatus.creationTimestamp +
+            (upgradeStatus.guardiansExtendedLegalVeto
+              ? EXTENDED_LEGAL_VETO_PERIOD
+              : STANDARD_LEGAL_VETO_PERIOD)) *
+            1000,
+        )
+
+        // Show if legal veto was extended
+        if (upgradeStatus.guardiansExtendedLegalVeto) {
+          const standardVetoEnd = new Date(
+            (upgradeStatus.creationTimestamp + STANDARD_LEGAL_VETO_PERIOD) *
+              1000,
+          )
+          output.push(
+            `• ${chalk.yellow('Standard Legal Veto End')}: ${standardVetoEnd.toISOString()} (${this.formatTimeDistance(standardVetoEnd)})`,
+          )
+          output.push(
+            `• ${chalk.yellow('Extended Legal Veto End')}: ${vetoEndTime.toISOString()} (${this.formatTimeDistance(vetoEndTime)})`,
+          )
+        } else {
+          output.push(
+            `• ${chalk.yellow('Legal Veto Period End')}: ${vetoEndTime.toISOString()} (${this.formatTimeDistance(vetoEndTime)})`,
+          )
+        }
+
+        // Show status based on current state
         if (upgradeStatus.securityCouncilApprovalTimestamp > 0) {
-          const scApprovalTime = new Date(upgradeStatus.securityCouncilApprovalTimestamp * 1000)
-          output.push(`  Security Council Approval: ${scApprovalTime.toISOString()} (${this.formatTimeDistance(scApprovalTime)})`)
+          const scApprovalTime = new Date(
+            upgradeStatus.securityCouncilApprovalTimestamp * 1000,
+          )
+          output.push(
+            `• ${chalk.green('Security Council Approval')}: ${scApprovalTime.toISOString()} (${this.formatTimeDistance(scApprovalTime)})`,
+          )
 
-          const readyTime = new Date((upgradeStatus.securityCouncilApprovalTimestamp + UPGRADE_DELAY_PERIOD) * 1000)
-          output.push(`  Ready for Execution: ${readyTime.toISOString()} (${this.formatTimeDistance(readyTime)})`)
+          const readyTime = new Date(
+            (upgradeStatus.securityCouncilApprovalTimestamp +
+              UPGRADE_DELAY_PERIOD) *
+              1000,
+          )
+          output.push(
+            `• ${chalk.green('Ready for Execution')}: ${readyTime.toISOString()} (${this.formatTimeDistance(readyTime)})`,
+          )
+
+          if (upgradeStatus.executed) {
+            output.push(`• ${chalk.green('Executed')}: Yes`)
+          } else if (upgradeState === UpgradeState.Ready) {
+            output.push(
+              `• ${chalk.yellow('Execution Status')}: Ready to be executed`,
+            )
+          } else if (upgradeState === UpgradeState.Expired) {
+            output.push(`• ${chalk.red('Execution Status')}: Expired`)
+          } else {
+            output.push(`• ${chalk.yellow('Execution Status')}: Waiting`)
+          }
         } else {
           // If Security Council didn't approve, show waiting period and guardian approval info
           const waitingEndTime = new Date(
-            (upgradeStatus.creationTimestamp + 
-              (upgradeStatus.guardiansExtendedLegalVeto ? EXTENDED_LEGAL_VETO_PERIOD : STANDARD_LEGAL_VETO_PERIOD) + 
-              UPGRADE_WAIT_OR_EXPIRE_PERIOD
-            ) * 1000
+            (upgradeStatus.creationTimestamp +
+              (upgradeStatus.guardiansExtendedLegalVeto
+                ? EXTENDED_LEGAL_VETO_PERIOD
+                : STANDARD_LEGAL_VETO_PERIOD) +
+              UPGRADE_WAIT_OR_EXPIRE_PERIOD) *
+              1000,
           )
 
           if (upgradeStatus.guardiansApproval) {
-            output.push(`  Guardians Approval: Yes`)
-            output.push(`  Ready for Execution: ${waitingEndTime.toISOString()} (${this.formatTimeDistance(waitingEndTime)})`)
+            output.push(`• ${chalk.green('Guardians Approval')}: Yes`)
+            output.push(
+              `• ${chalk.yellow('Ready for Execution')}: ${waitingEndTime.toISOString()} (${this.formatTimeDistance(waitingEndTime)})`,
+            )
           } else {
-            output.push(`  Guardians Approval: No`)
-            output.push(`  Expires If Not Approved By: ${waitingEndTime.toISOString()} (${this.formatTimeDistance(waitingEndTime)})`)
+            output.push(`• ${chalk.yellow('Guardians Approval')}: No`)
+            output.push(
+              `• ${chalk.yellow('Expires If Not Approved By')}: ${waitingEndTime.toISOString()} (${this.formatTimeDistance(waitingEndTime)})`,
+            )
+          }
+        }
+      }
+    } else {
+      output.push(chalk.yellow('\nL1 Upgrade not yet started or not found'))
+    }
+  }
+
+  /**
+   * Compare and add payload comparison to output
+   */
+  private addPayloadComparisonToOutput(
+    output: string[],
+    proposalInfo: ProposalInfo,
+    upgradeInfo: UpgradeInfo,
+  ): void {
+    output.push(chalk.bold.yellow('\n' + '='.repeat(80)))
+    output.push(chalk.bold.yellow('L2 vs L1 Payload Comparison'))
+    output.push(chalk.bold.yellow('='.repeat(80)))
+
+    const l1Calls = upgradeInfo.proposal.calls
+
+    // Check if L2 calldata contains L1 calldata
+    let matchFound = false
+    let l2CallForL1 = null
+
+    // L2 calls targeting the L1 messenger should contain the L1 calls
+    for (let i = 0; i < proposalInfo.targets.length; i++) {
+      // Only check calls to L1 Messenger
+      if (
+        proposalInfo.targets[i].toLowerCase() ===
+        L1_MESSENGER_ADDRESS.toLowerCase()
+      ) {
+        l2CallForL1 = proposalInfo.calldatas[i]
+
+        // Check if all L1 calls are contained in this L2 calldata
+        let allCallsFound = true
+        for (const l1Call of l1Calls) {
+          if (!l2CallForL1.includes(l1Call.data.substring(2))) {
+            // Remove '0x' prefix
+            allCallsFound = false
+            break
           }
         }
 
-        // Additional status flags
-        output.push(chalk.bold("\nStatus Flags:"))
-        output.push(`  Extended Legal Veto: ${upgradeStatus.guardiansExtendedLegalVeto ? 'Yes' : 'No'}`)
-        output.push(`  Executed: ${upgradeStatus.executed ? 'Yes' : 'No'}`)
+        if (allCallsFound) {
+          matchFound = true
+          break
+        }
       }
+    }
+
+    if (matchFound) {
+      output.push(
+        chalk.green('\n✓ L1 payload is contained within the L2 proposal'),
+      )
+      output.push(
+        '\nL1 proposal calls are correctly encapsulated in the L2 -> L1 message',
+      )
     } else {
-      output.push(chalk.yellow("\nL1 Upgrade not yet started or not found"))
+      output.push(chalk.red('\n✗ L1 payload does not match L2 proposal'))
+      output.push('\nDetailed comparison:')
+
+      // List L1 calls
+      output.push(chalk.bold('\nL1 Upgrade Calls:'))
+      for (let i = 0; i < l1Calls.length; i++) {
+        const call = l1Calls[i]
+        output.push(chalk.cyan(`\nTarget ${i + 1}: ${call.target}`))
+        output.push(`Value: ${ethers.utils.formatEther(call.value)} ETH`)
+        output.push(`Calldata: ${call.data}`)
+      }
+
+      output.push(chalk.bold('\nL1 Executor: ') + upgradeInfo.proposal.executor)
+      output.push(chalk.bold('L1 Salt: ') + upgradeInfo.proposal.salt)
     }
   }
 
@@ -546,8 +1009,14 @@ export class ZkGovProposalAnalyzer {
    */
   private formatProposalState(state: ProposalState): string {
     const stateNames = [
-      "Pending", "Active", "Canceled", "Defeated", 
-      "Succeeded", "Queued", "Expired", "Executed"
+      'Pending',
+      'Active',
+      'Canceled',
+      'Defeated',
+      'Succeeded',
+      'Queued',
+      'Expired',
+      'Executed',
     ]
 
     const stateName = stateNames[state]
@@ -574,8 +1043,13 @@ export class ZkGovProposalAnalyzer {
    */
   private formatUpgradeState(state: UpgradeState): string {
     const stateNames = [
-      "None", "LegalVetoPeriod", "Waiting", "ExecutionPending", 
-      "Ready", "Expired", "Done"
+      'None',
+      'LegalVetoPeriod',
+      'Waiting',
+      'ExecutionPending',
+      'Ready',
+      'Expired',
+      'Done',
     ]
 
     const stateName = stateNames[state]
@@ -623,32 +1097,9 @@ export class ZkGovProposalAnalyzer {
   }
 
   /**
-   * Format calldata for display
-   */
-  private formatCalldata(data: string): string {
-    if (!data || data === '0x') return '(none)'
-    if (data.length <= 66) return data
-    return `${data.substring(0, 62)}...`
-  }
-
-  /**
    * Display the output in terminal
    */
   private displayOutput(output: string[]): void {
     console.log(output.join('\n'))
-  }
-
-  /**
-   * Write output to markdown file
-   */
-  private async writeToMarkdownFile(output: string[]): Promise<void> {
-    // Convert chalk colored strings to markdown
-    const markdownOutput = output.map(line => {
-      // Remove chalk color codes for markdown
-      return line.replace(/\x1b\[[0-9;]*m/g, '')
-    })
-
-    // Join and write to file
-    fs.writeFileSync(path.resolve(this.outputPath), markdownOutput.join('\n'))
   }
 }

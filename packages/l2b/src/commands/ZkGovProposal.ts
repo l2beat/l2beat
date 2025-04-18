@@ -4,12 +4,13 @@ import { HttpUrl } from './types'
 
 export const ZkGovProposal = command({
   name: 'zkgovproposal',
-  description: 'Analyze ZKsync governance proposals and track their status across L2 and L1.',
+  description:
+    'Analyze ZKsync governance proposals and track their status across L2 and L1.',
   args: {
-    proposalId: positional({ 
-      type: string, 
+    proposalId: positional({
+      type: string,
       displayName: 'proposalId',
-      description: 'ZKsync governance proposal ID to analyze' 
+      description: 'ZKsync governance proposal ID to analyze',
     }),
     l2RpcUrl: option({
       type: HttpUrl,
@@ -42,7 +43,7 @@ export const ZkGovProposal = command({
     const analyzer = new ZkGovProposalAnalyzer({
       l2RpcUrl: args.l2RpcUrl,
       l1RpcUrl: args.l1RpcUrl,
-      outputPath: args.outputFile
+      outputPath: args.outputFile,
     })
 
     await analyzer.analyzeProposal(args.proposalId)
