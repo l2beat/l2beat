@@ -1,9 +1,6 @@
-// packages/l2b/src/commands/ZkGovProposal.ts
 import { command, option, positional, string } from 'cmd-ts'
 import { ZkGovProposalAnalyzer } from '../implementations/zkgovproposal'
-import { Hash256Value, HttpUrl } from './types'
-import { existsSync } from 'fs'
-import path from 'path'
+import { HttpUrl } from './types'
 
 export const ZkGovProposal = command({
   name: 'zkgovproposal',
@@ -33,18 +30,11 @@ export const ZkGovProposal = command({
       defaultValueIsSerializable: true,
     }),
     outputFile: option({
-      type: HttpUrl,
+      type: string,
       long: 'output',
       short: 'o',
       description: 'Optional markdown file path for output',
       defaultValue: () => '',
-      defaultValueIsSerializable: true,
-    }),
-    executionDelay: option({
-      type: HttpUrl,
-      long: 'execution-delay',
-      description: 'Delay in hours from L2 to L1 (default: 3)',
-      defaultValue: () => '3',
       defaultValueIsSerializable: true,
     }),
   },
@@ -52,10 +42,9 @@ export const ZkGovProposal = command({
     const analyzer = new ZkGovProposalAnalyzer({
       l2RpcUrl: args.l2RpcUrl,
       l1RpcUrl: args.l1RpcUrl,
-      executionDelay: parseInt(args.executionDelay),
       outputPath: args.outputFile
     })
 
-    await analyzer.analyzeProposal(args.proposalId.toString())
+    await analyzer.analyzeProposal(args.proposalId)
   },
 })
