@@ -31,6 +31,16 @@ permission(Receiver, "act", Msig) :-
   msig(Msig, Threshold),
   Threshold == 1.
 
+% multisig can act independently if threshold is greater than 1 (even if it passes act permission to e.g. module)
+canActIndependently(Msig) :-
+  msig(Msig, Threshold),
+  Threshold > 1.
+
+% anyone that doesn't pass act permission to someone else can act independently
+canActIndependently(Actor) :-
+  address(Actor, _, _),
+  not permission(_, "act", Actor).
+
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
 transitivePermission(Receiver, Permission, Giver, Delay, Description, Condition, Delay, nil) :-
@@ -49,6 +59,7 @@ transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, Origina
   TotalDelay = PreviousTotalDelay + ViaDelay.
   % OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
+% 2. Narrowing down to isFinal or directNonFinal 
 ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, isFinal) :-
   transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via),
   OriginalPermission != "act",
@@ -60,33 +71,10 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
   Via == nil, % we only want to show direct permissions
   not member(Giver, Receiver). % for backwards compatibility, we didn't show direct "act" permission for multisig members
 
-canActIndependently(Msig) :-
-  msig(Msig, Threshold),
-  Threshold > 1.
-
-canActIndependently(Actor) :-
-  address(Actor, _, _),
-  not permission(_, "act", Actor).
-
-% % 2. Filtering permission to only those we want to display
-% % a) Show only final permissions (which don't give "act" to someone else)
-% filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via, isFinal) :-
-%   transitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via),
-%   not permission(_, "act", Receiver).
-
-% % b) ...unless it's a direct permission (to say "can be used to")
-% filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via, nonFinal) :-
-%   transitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via),
-%   Via == nil,
-%   permission(_, "act", Receiver).
-
-
 #show address/3.
 % #show addressName/2.
 % #show addressType/2.
 % #show addressDescription/2.
-% #show filteredTransitivePermission/8.
 % #show canActIndependently/1.
-#show hasField/3.
 #show transitivePermission/8.
 #show ultimatePermission/9.
