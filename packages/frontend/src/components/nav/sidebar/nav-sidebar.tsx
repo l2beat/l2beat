@@ -121,6 +121,8 @@ function NavCollapsibleItem({
     setOpen(isActive)
   }, [allGroupLinks, pathname])
 
+  if (!group.links[0]) return null
+
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
       {breakpoint === 'xs' ||
