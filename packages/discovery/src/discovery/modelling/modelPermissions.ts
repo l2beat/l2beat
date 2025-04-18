@@ -1,22 +1,21 @@
 import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionConfig } from '../config/PermissionConfig'
-import type { Permission } from '../config/StructureConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
 import { interpolateModelTemplate } from './interpolate'
-import { runClingo } from './projectPageFacts'
+import { parseUltimatePermissionFact } from './parseUltimatePermissionFact'
 import {
   buildPermissionsModel,
   contractValuesForInterpolation,
 } from './relations'
+import { runClingo } from './runClingo'
 
 export async function modelPermissions(
   project: string,
@@ -36,56 +35,9 @@ export async function modelPermissions(
   const modelIdRegistry = new ModelIdRegistry(kb)
   const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
-    parseTransitivePermissionFact(fact, modelIdRegistry),
+    parseUltimatePermissionFact(fact, modelIdRegistry),
   )
   return ultimatePermissions
-}
-
-export function parseTransitivePermissionFact(
-  fact: ClingoFact,
-  modelIdRegistry: ModelIdRegistry,
-) {
-  const delay = Number(fact.params[3])
-  // const totalDelay = Number(fact.params[6])
-  const receiverData = modelIdRegistry.getAddressData(String(fact.params[0]))
-  return {
-    receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
-    receiverChain: receiverData.chain,
-    permission: String(fact.params[1]) as Permission,
-    from: EthereumAddress(
-      modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
-    ),
-    delay: delay === 0 ? undefined : delay,
-    description: orUndefined(String, fact.params[4]),
-    condition: orUndefined(String, fact.params[5]),
-    // totalDelay: totalDelay === 0 ? undefined : totalDelay,
-    via:
-      fact.params[7] === undefined
-        ? undefined
-        : ((fact.params[7] as ClingoFact[]).map((x) =>
-            parseTransitivePermissionVia(x, modelIdRegistry),
-          ) ?? undefined),
-    isFinal: fact.params[8] === 'isFinal',
-  }
-}
-
-export type ParsedTransitivePermissionFact = ReturnType<
-  typeof parseTransitivePermissionFact
->
-
-export function parseTransitivePermissionVia(
-  via: ClingoFact,
-  modelIdRegistry: ModelIdRegistry,
-) {
-  const delay = Number(via.params[2])
-  return {
-    address: EthereumAddress(
-      modelIdRegistry.idToChainPrefixedAddress(String(via.params[0])),
-    ),
-    // permission: String(via.params[1]),
-    delay: delay === 0 ? undefined : delay,
-    condition: orUndefined(String, via.params[3]),
-  }
 }
 
 export async function buildProjectPageFacts(
@@ -132,7 +84,7 @@ export async function buildProjectPageFacts(
 }
 
 export function readProjectPageClingoFile(paths: DiscoveryPaths): string {
-  const path = join(paths.discovery, '_clingo', 'forProjectPage.lp')
+  const path = join(paths.discovery, '_clingo', 'modelPermissions.lp')
   return readFileSync(path, 'utf8')
 }
 
@@ -238,13 +190,6 @@ export function generateClingoFromModelLp(
     return interpolated
   }
   return ''
-}
-
-function orUndefined<V, C>(
-  caster: (value: V) => C,
-  value: V | undefined,
-): C | undefined {
-  return value === undefined ? undefined : caster(value)
 }
 
 export function buildAddressToNameMap(

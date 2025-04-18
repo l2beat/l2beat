@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { runClingo } from './projectPageFacts'
+import { runClingo } from './runClingo'
 
 describe(runClingo.name, () => {
   it('runs clingo on passed program', async () => {
