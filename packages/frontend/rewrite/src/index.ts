@@ -1,7 +1,7 @@
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
 import compression from 'compression'
 import express from 'express'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import sirv from 'sirv'
 import { type Manifest, getManifest } from './common/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
@@ -21,6 +21,15 @@ if (isProduction) {
   app.use('/static', sirv('./rewrite/dist/static', { extensions: [] }))
 } else {
   app.use('/static', express.static('./rewrite/static'))
+  app.use((req, res, next) => {
+    const start = process.hrtime()
+    res.on('finish', () => {
+      const diff = process.hrtime(start)
+      const time = (diff[0] * 1e3 + diff[1] / 1e6).toFixed(2) // ms with 2 decimal places
+      console.log(`[${req.method}] ${req.originalUrl} - ${time} ms`)
+    })
+    next()
+  })
 }
 
 ServerPageRouter(app, manifest, renderToHtml)
@@ -31,6 +40,9 @@ app.listen(port, () => {
 
 function renderToHtml(data: RenderData, url: string) {
   const rendered = render(data, url)
+  const sizeInBytes = JSON.stringify(data.ssr).length
+  const sizeInKiB = (sizeInBytes / 1024).toFixed(2)
+  console.log(`SSR data size: ${sizeInKiB} KiB`)
   return template
     .replace(`<!--app-head-->`, rendered.head)
     .replace(`<!--app-html-->`, rendered.html)
