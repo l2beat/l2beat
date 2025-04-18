@@ -823,51 +823,56 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
 function getDaTracking(
   templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
 ): ProjectDaTrackingConfig[] | undefined {
+  // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
     return templateVars.nonTemplateDaTracking
   }
 
-  const usesBlobs = templateVars.usesEthereumBlobs ?? false
+  if (templateVars.usesEthereumBlobs) {
+    const batchPosters = templateVars.discovery.getContractValue<string[]>(
+      'SequencerInbox',
+      'batchPosters',
+    )
 
-  const batchPosters = templateVars.discovery.getContractValue<string[]>(
-    'SequencerInbox',
-    'batchPosters',
-  )
+    const inboxDeploymentBlockNumber =
+      templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
 
-  const inboxDeploymentBlockNumber =
-    templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
+        inbox: templateVars.sequencerInbox.address,
+        sequencers: batchPosters,
+      },
+    ]
+  }
 
-  return usesBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxDeploymentBlockNumber,
-          inbox: templateVars.sequencerInbox.address,
-          sequencers: batchPosters,
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
 
 function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
