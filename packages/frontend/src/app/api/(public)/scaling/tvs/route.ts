@@ -2,25 +2,57 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
-import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import {
+  TvsChartDataParams,
+  getTvsChart,
+} from '~/server/features/scaling/tvs/get-tvs-chart-data'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  const range = TvsChartRange.catch('30d').parse(searchParams.get('range'))
-  const response = await getCachedResponse(range)
+
+  const range = searchParams.get('range') as TvsChartDataParams['range'] | null
+  const type = searchParams.get('type') as
+    | TvsChartDataParams['filter']['type']
+    | null
+  const projectIds = searchParams.get('projectIds')
+
+  if (type === 'projects' && !projectIds) {
+    return NextResponse.json({
+      success: false,
+      errors: [{ message: 'projectIds is required for "projects" type' }],
+    })
+  }
+
+  const params: TvsChartDataParams = {
+    range: range ?? '30d',
+    filter:
+      type === 'projects'
+        ? {
+            type: 'projects',
+            projectIds: projectIds?.split(',') ?? [],
+          }
+        : { type: type ?? 'layer2' },
+    excludeAssociatedTokens:
+      searchParams.get('excludeAssociatedTokens') === 'true',
+    previewRecategorisation: false,
+  }
+
+  const parsedParams = TvsChartDataParams.safeParse(params)
+  if (parsedParams.error) {
+    return NextResponse.json({
+      success: false,
+      errors: parsedParams.error.errors,
+    })
+  }
+
+  const response = await getCachedResponse(parsedParams.data)
 
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (range: TvsChartRange) => {
-    const data = await getTvsChart({
-      range,
-      excludeAssociatedTokens: false,
-      filter: { type: 'layer2' },
-      previewRecategorisation: false,
-    })
+  async (params: TvsChartDataParams) => {
+    const data = await getTvsChart(params)
 
     const latestTvsData = data.at(-1)
 

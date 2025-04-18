@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
+import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -9,9 +10,18 @@ import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getActivitySyncWarning } from './utils/is-activity-synced'
-import type { ActivityProjectFilter } from './utils/project-filter-utils'
-import { createActivityProjectsFilter } from './utils/project-filter-utils'
-import type { ActivityTimeRange } from './utils/range'
+import {
+  ActivityProjectFilter,
+  createActivityProjectsFilter,
+} from './utils/project-filter-utils'
+import { ActivityTimeRange } from './utils/range'
+
+export type ActivityChartParams = z.infer<typeof ActivityChartParams>
+export const ActivityChartParams = z.object({
+  filter: ActivityProjectFilter,
+  range: ActivityTimeRange,
+  previewRecategorisation: z.boolean().default(false),
+})
 
 /**
  * A function that computes values for chart data of the activity over time.
@@ -31,11 +41,7 @@ export type ActivityChartData = Awaited<
 >
 
 export const getCachedActivityChartData = cache(
-  async (
-    filter: ActivityProjectFilter,
-    range: ActivityTimeRange,
-    previewRecategorisation: boolean,
-  ) => {
+  async ({ filter, range, previewRecategorisation }: ActivityChartParams) => {
     const db = getDb()
     const projects = (await getActivityProjects())
       .filter(createActivityProjectsFilter(filter, previewRecategorisation))
@@ -104,12 +110,10 @@ export const getCachedActivityChartData = cache(
   },
 )
 
-function getMockActivityChart(
-  _: ActivityProjectFilter,
-  timeRange: ActivityTimeRange,
-  __: boolean,
-): ActivityChartData {
-  const [from, to] = getRangeWithMax(timeRange, 'daily')
+function getMockActivityChart({
+  range,
+}: ActivityChartParams): ActivityChartData {
+  const [from, to] = getRangeWithMax(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? MIN_TIMESTAMPS.activity,
     to,
