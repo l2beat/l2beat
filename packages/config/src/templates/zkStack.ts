@@ -93,7 +93,6 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
@@ -104,6 +103,8 @@ export interface ZkStackConfigCommon {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
   ecosystemInfo?: ProjectEcosystemInfo
+  /** Set to true if projects post blobs to Ethereum */
+  usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -607,7 +608,7 @@ function getDaTracking(
   const inboxDeploymentBlockNumber =
     templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
-  return templateVars.usesBlobs
+  return templateVars.usesEthereumBlobs
     ? [
         {
           type: 'ethereum',
