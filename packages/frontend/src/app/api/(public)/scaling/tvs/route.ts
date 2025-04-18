@@ -10,12 +10,10 @@ import {
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
 
-  const range = searchParams.get('range') as
-    | TvsChartDataParams['range']
-    | undefined
+  const range = searchParams.get('range') as TvsChartDataParams['range'] | null
   const type = searchParams.get('type') as
     | TvsChartDataParams['filter']['type']
-    | undefined
+    | null
   const projectIds = searchParams.get('projectIds')
 
   if (type === 'projects' && !projectIds) {

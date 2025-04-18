@@ -12,10 +12,8 @@ export async function GET(request: NextRequest) {
 
   const type = searchParams.get('type') as
     | ActivityChartParams['filter']['type']
-    | undefined
-  const range = searchParams.get('range') as
-    | ActivityChartParams['range']
-    | undefined
+    | null
+  const range = searchParams.get('range') as ActivityChartParams['range'] | null
   const projectIds = searchParams.get('projectIds')
 
   if (type === 'projects' && !projectIds) {

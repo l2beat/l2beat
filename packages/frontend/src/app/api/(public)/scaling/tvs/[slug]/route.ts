@@ -15,9 +15,7 @@ export async function GET(
   const { slug } = await props.params
   const searchParams = request.nextUrl.searchParams
 
-  const range = searchParams.get('range') as
-    | TvsChartDataParams['range']
-    | undefined
+  const range = searchParams.get('range') as TvsChartDataParams['range'] | null
 
   const params: TvsChartDataParams = {
     range: range ?? '30d',

@@ -15,9 +15,7 @@ export async function GET(
   const { slug } = await props.params
   const searchParams = request.nextUrl.searchParams
 
-  const range = searchParams.get('range') as
-    | ActivityChartParams['range']
-    | undefined
+  const range = searchParams.get('range') as ActivityChartParams['range'] | null
 
   const params: ActivityChartParams = {
     filter: { type: 'projects', projectIds: [slug] },
