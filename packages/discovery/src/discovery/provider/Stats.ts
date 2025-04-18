@@ -1,6 +1,6 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { formatSI } from '@l2beat/shared'
 import { assert, formatAsAsciiTable } from '@l2beat/shared-pure'
-import type { DiscoveryLogger } from '../DiscoveryLogger'
 
 export const ProviderMeasurement = {
   CALL: 0,
@@ -76,7 +76,7 @@ export interface AllProviderStats {
 }
 
 export function printProviderStats(
-  logger: DiscoveryLogger,
+  logger: Logger,
   {
     highLevelMeasurements,
     cacheMeasurements,
@@ -120,7 +120,7 @@ export function printProviderStats(
     )
   }
 
-  logger.log(formatAsAsciiTable(headers, rows))
+  logger.info(formatAsAsciiTable(headers, rows))
 }
 
 function formatDurations(durations: number[]): string {

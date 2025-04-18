@@ -31,23 +31,23 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const centsValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
-    const ethValue = centsValue / latestTvsData[4]
+    const usdValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
+    const ethValue = usdValue / latestTvsData[4]
 
     return {
       success: true,
       data: {
-        usdValue: centsValue / 100,
+        usdValue,
         ethValue,
         chart: {
           types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
           data: data.map(
             ([timestamp, native, canonical, external, ethPrice]) => [
               timestamp,
-              native / 100,
-              canonical / 100,
-              external / 100,
-              ethPrice / 100,
+              native,
+              canonical,
+              external,
+              ethPrice,
             ],
           ),
         },

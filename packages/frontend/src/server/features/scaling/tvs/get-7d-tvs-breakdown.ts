@@ -1,13 +1,14 @@
 import type { Project } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { groupBy, pick } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
-import { getTvsBreakdown } from './get-tvs-breakdown'
-import { getTvsProjects } from './get-tvs-projects'
-import { getTvsValuesForProjects } from './get-tvs-values-for-projects'
+import { getTvsProjects } from './utils/get-tvs-projects'
+import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 
 export function get7dTvsBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>
@@ -51,89 +52,98 @@ type TvsBreakdownProjectFilter = z.infer<typeof TvsBreakdownProjectFilter>
 
 const getCached7dTokenBreakdown = cache(
   async (props: TvsBreakdownProjectFilter): Promise<SevenDayTvsBreakdown> => {
-    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-      (p) => p.chainConfig,
+    const tvsProjects = await getTvsProjects(
+      createTvsBreakdownProjectFilter(props),
+    )
+    const db = getDb()
+    const target = getTvsTargetTimestamp()
+    const values = await db.tvsProjectValue.getProjectValuesAtTimestamps(
+      target - 7 * UnixTime.DAY,
+      target,
+      ['PROJECT', 'PROJECT_WA'],
     )
 
-    const tokens = await ps.getTokens()
-    const tvsValues = await getTvsValuesForProjects(
-      await getTvsProjects(
-        createTvsBreakdownProjectFilter(props),
-        chains,
-        tokens,
-      ),
-      '7d',
+    const valuesByProject = pick(
+      groupBy(values, (v) => v.project),
+      tvsProjects.map((p) => p.projectId),
     )
 
     const projects = Object.fromEntries(
-      Object.entries(tvsValues).map(
-        ([projectId, values]): [string, ProjectSevenDayTvsBreakdown] => {
-          const latestTimestamp = Math.max(...Object.keys(values).map(Number))
-          const oldestTimestamp = Math.min(...Object.keys(values).map(Number))
-          const latestValues = values[latestTimestamp] ?? []
-          const oldestValues = values[oldestTimestamp] ?? []
-          const breakdown = getTvsBreakdown(latestValues)
-          const oldBreakdown = getTvsBreakdown(oldestValues)
-          const total =
-            breakdown.native + breakdown.canonical + breakdown.external
-          const oldTotal =
-            oldBreakdown.native + oldBreakdown.canonical + oldBreakdown.external
-          const associatedTotal =
-            breakdown.associated.native +
-            breakdown.associated.canonical +
-            breakdown.associated.external
-          const oldAssociatedTotal =
-            oldBreakdown.associated.native +
-            oldBreakdown.associated.canonical +
-            oldBreakdown.associated.external
+      Object.entries(valuesByProject).map(
+        ([projectId, projectValues]): [string, ProjectSevenDayTvsBreakdown] => {
+          const projectValuesWithoutAssociated = projectValues.filter(
+            (v) => v.type === 'PROJECT_WA',
+          )
+          const projectValuesAll = projectValues.filter(
+            (v) => v.type === 'PROJECT',
+          )
+
+          const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
+          const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
+          const latestValue = projectValuesAll.at(-1)
+          const oldestValue = projectValuesAll.at(0)
+
+          assert(
+            latestValue &&
+              oldestValue &&
+              latestWithoutAssociated &&
+              oldestWithoutAssociated,
+            `No values for project ${projectId}`,
+          )
+
           return [
             projectId,
             {
               breakdown: {
-                total: total / 100,
-                native: breakdown.native / 100,
-                canonical: breakdown.canonical / 100,
-                external: breakdown.external / 100,
-                ether: breakdown.ether / 100,
-                stablecoin: breakdown.stablecoin / 100,
+                total: latestValue.value,
+                native: latestValue.native,
+                canonical: latestValue.canonical,
+                external: latestValue.external,
+                ether: latestValue.ether,
+                stablecoin: latestValue.stablecoin,
               },
               associated: {
-                total: associatedTotal / 100,
-                native: breakdown.associated.native / 100,
-                canonical: breakdown.associated.canonical / 100,
-                external: breakdown.associated.external / 100,
+                total: latestValue.associated,
+                native: latestValue.native - latestWithoutAssociated.native,
+                canonical:
+                  latestValue.canonical - latestWithoutAssociated.canonical,
+                external:
+                  latestValue.external - latestWithoutAssociated.external,
               },
               change: {
-                total: calculatePercentageChange(total, oldTotal),
+                total: calculatePercentageChange(
+                  latestValue.value,
+                  oldestValue.value,
+                ),
                 native: calculatePercentageChange(
-                  breakdown.native,
-                  oldBreakdown.native,
+                  latestValue.native,
+                  oldestValue.native,
                 ),
                 canonical: calculatePercentageChange(
-                  breakdown.canonical,
-                  oldBreakdown.canonical,
+                  latestValue.canonical,
+                  oldestValue.canonical,
                 ),
                 external: calculatePercentageChange(
-                  breakdown.external,
-                  oldBreakdown.external,
+                  latestValue.external,
+                  oldestValue.external,
                 ),
               },
               changeExcludingAssociated: {
                 total: calculatePercentageChange(
-                  total - associatedTotal,
-                  oldTotal - oldAssociatedTotal,
+                  latestWithoutAssociated.value,
+                  oldestWithoutAssociated.value,
                 ),
                 native: calculatePercentageChange(
-                  breakdown.native - breakdown.associated.native,
-                  oldBreakdown.native - oldBreakdown.associated.native,
+                  latestWithoutAssociated.native,
+                  oldestWithoutAssociated.native,
                 ),
                 canonical: calculatePercentageChange(
-                  breakdown.canonical - breakdown.associated.canonical,
-                  oldBreakdown.canonical - oldBreakdown.associated.canonical,
+                  latestWithoutAssociated.canonical,
+                  oldestWithoutAssociated.canonical,
                 ),
                 external: calculatePercentageChange(
-                  breakdown.external - breakdown.associated.external,
-                  oldBreakdown.external - oldBreakdown.associated.external,
+                  latestWithoutAssociated.external,
+                  oldestWithoutAssociated.external,
                 ),
               },
             },
@@ -143,8 +153,7 @@ const getCached7dTokenBreakdown = cache(
     )
 
     const total = Object.values(projects).reduce(
-      (acc, { breakdown }) =>
-        acc + breakdown.native + breakdown.canonical + breakdown.external,
+      (acc, { breakdown }) => acc + breakdown.total,
       0,
     )
 
@@ -175,7 +184,7 @@ function createTvsBreakdownProjectFilter(
   }
 }
 async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
-  const projects = await ps.getProjects({ where: ['tvlConfig'] })
+  const projects = await ps.getProjects({ where: ['tvsConfig'] })
   return {
     total: 1000,
     projects: Object.fromEntries(

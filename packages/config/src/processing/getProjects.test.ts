@@ -175,9 +175,16 @@ describe('getProjects', () => {
               })
             }
 
-            it(`contracts[${chain}][${i}] name isn't empty`, () => {
-              expect(contract.name.trim().length).toBeGreaterThan(0)
+            it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
+              assert(
+                contract.name.trim().length > 0,
+                [
+                  `contract [${chain}:${contract.address}] name is empty`,
+                  `this is most likely because it's unverified and the name needs to be assigned manually`,
+                ].join('\n'),
+              )
             })
+
             const upgradableBy = contract.upgradableBy
             const permissionsForChain = (project.permissions ?? {})[chain]
             const all = [

@@ -1,230 +1,109 @@
-import type { ConfigMapping } from '@l2beat/backend-shared'
-import type { ChainConfig, ProjectContracts } from '@l2beat/config'
 import type {
-  AmountConfigEntry,
-  AssetId,
-  EthereumAddress,
-  ProjectId,
-  Token,
-} from '@l2beat/shared-pure'
-import {
-  assert,
-  ChainConverter,
-  ChainId,
-  UnixTime,
-  asNumber,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
-import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
-import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
-import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
+  ChainConfig,
+  Formula,
+  Project,
+  ProjectContract,
+} from '@l2beat/config'
+import type { TokenValueRecord } from '@l2beat/database'
+import type { UnixTime } from '@l2beat/shared-pure'
+import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
+import { formatTimestamp } from '~/utils/dates'
+import type { Address } from './extract-addresses-from-token-config'
+import { extractAddressesFromTokenConfig } from './extract-addresses-from-token-config'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
-import type { BreakdownRecord, CanonicalAssetBreakdownData } from './types'
+import type {
+  BaseAssetBreakdownData,
+  BreakdownRecord,
+  CanonicalAssetBreakdownData,
+} from './types'
 
 export async function getTvsBreakdown(
-  configMapping: ConfigMapping,
+  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
+  tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
-  projectId: ProjectId,
-  tokenMap: Map<AssetId, Token>,
-  gasTokens?: string[],
-  target?: UnixTime,
-  projectContracts?: ProjectContracts['addresses'],
+  targetTimestamp: UnixTime,
 ) {
-  const chainConverter = new ChainConverter(chains)
-
-  const targetTimestamp =
-    target ?? UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
-
-  const prices = await getLatestPriceForConfigurations(
-    configMapping.prices,
-    targetTimestamp,
-  )
-
-  const tokenAmounts = await getLatestAmountForConfigurations(
-    configMapping.amounts,
-    targetTimestamp,
-  )
-
-  const pricesMap = new Map(prices.prices.map((x) => [x.configId, x.priceUsd]))
-
   const breakdown: BreakdownRecord = {
-    canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
+    canonical: [],
     external: [],
     native: [],
   }
 
-  for (const amount of tokenAmounts.amounts) {
-    const config = configMapping.getAmountConfig(amount.configId)
+  const projectTokens = project.tvsConfig
+  const gasTokens = project.chainConfig?.gasTokens
+  const projectContracts = project.contracts?.addresses
 
-    if (config.project !== projectId) {
-      throw new Error(
-        `Project id mismatch. Expected ${projectId}, got ${config.project}. Double check amounts mappings.`,
-      )
+  for (const token of projectTokens) {
+    const tokenValue = tokenValuesMap.get(token.id)
+    if (!tokenValue) continue
+
+    const { addresses, escrows } = extractAddressesFromTokenConfig(token)
+    const address = processAddresses(addresses, chains)
+
+    const tokenWithValues: BaseAssetBreakdownData = {
+      ...token,
+      address,
+      formula: token.amount as Formula,
+      iconUrl: token.iconUrl ?? '',
+      usdValue: tokenValue.value,
+      amount: tokenValue.amount,
+      isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
+      syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
     }
 
-    if (config.untilTimestamp && config.untilTimestamp < targetTimestamp) {
-      continue
-    }
-
-    const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
-    if (prices.excluded.has(priceConfig.configId)) {
-      continue
-    }
-    const price = pricesMap.get(priceConfig.configId)
-    assert(price, 'Price not found for id ' + priceConfig.configId)
-
-    const amountAsNumber = asNumber(amount.amount, config.decimals)
-    const valueAsNumber = amountAsNumber * price
-
-    switch (config.source) {
+    switch (token.source) {
       case 'canonical': {
-        const address = getTokenAddress(config)
-        const isSharedEscrow = getIsSharedEscrow(config)
-        assert(
-          config.type !== 'totalSupply' && config.type !== 'circulatingSupply',
-        )
-
-        const contractName = projectContracts?.[priceConfig.chain]?.find(
-          (c) => c.address.toLowerCase() === config.escrowAddress.toLowerCase(),
-        )?.name
-
-        const explorer = chains.find(
-          (c) => c.name === priceConfig.chain,
-        )?.explorerUrl
-
-        const asset = breakdown.canonical.get(priceConfig.assetId)
-        if (asset) {
-          asset.usdValue += valueAsNumber
-          asset.amount += amountAsNumber
-          asset.escrows.push({
-            amount: amountAsNumber,
-            usdValue: valueAsNumber,
-            escrowAddress: config.escrowAddress,
-            name: contractName,
-            ...(config.type === 'preminted' ? { isPreminted: true } : {}),
-            isSharedEscrow,
-          })
-        } else {
-          breakdown.canonical.set(priceConfig.assetId, {
-            assetId: priceConfig.assetId,
-            /*
-             * We are taking chain from price because there is an edge case in which
-             * chain from amount config is different for frontend and backend purposes.
-             * E.g. Elastic chain and AggLayer where we have shared escrows.
-             */
-            chain: {
-              name: priceConfig.chain,
-              id: ChainId(chainConverter.toChainId(priceConfig.chain)),
-            },
-            amount: amountAsNumber,
-            usdValue: valueAsNumber,
-            usdPrice: price.toString(),
-            isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
-            tokenAddress: address === 'native' ? undefined : address,
-            escrows: [
-              {
-                amount: amountAsNumber,
-                usdValue: valueAsNumber,
-                escrowAddress: config.escrowAddress,
-                name: contractName,
-                ...(config.type === 'preminted' ? { isPreminted: true } : {}),
-                isSharedEscrow,
-                url: explorer
-                  ? `${explorer}/address/${config.escrowAddress}`
-                  : undefined,
-              },
-            ],
-          })
+        const escrow = processAddresses(escrows, chains, projectContracts)
+        const canonicalTokenWithValues: CanonicalAssetBreakdownData = {
+          ...tokenWithValues,
+          escrow,
         }
+        breakdown.canonical.push(canonicalTokenWithValues)
         break
       }
-      case 'external': {
-        const token = tokenMap.get(priceConfig.assetId)
-        const address = getTokenAddress(config)
-
-        breakdown.external.push({
-          assetId: priceConfig.assetId,
-          chain: {
-            name: priceConfig.chain,
-            id: ChainId(chainConverter.toChainId(priceConfig.chain)),
-          },
-          isLockedInEscrow: config.type === 'escrow',
-          amount: amountAsNumber,
-          usdValue: valueAsNumber,
-          usdPrice: price.toString(),
-          isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
-          tokenAddress: address === 'native' ? undefined : address,
-          bridgedUsing: config.bridgedUsing ?? {
-            bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
-            warning: token?.bridgedUsing?.warning,
-          },
-        })
+      case 'external':
+        breakdown.external.push(tokenWithValues)
         break
-      }
-      case 'native': {
-        const address = getTokenAddress(config)
-        breakdown.native.push({
-          assetId: priceConfig.assetId,
-          chain: {
-            name: priceConfig.chain,
-            id: ChainId(chainConverter.toChainId(priceConfig.chain)),
-          },
-          amount: amountAsNumber,
-          usdValue: valueAsNumber,
-          usdPrice: price.toString(),
-          isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
-          // TODO: force fe to accept "native"
-          tokenAddress: address === 'native' ? undefined : address,
-        })
-      }
+      case 'native':
+        breakdown.native.push(tokenWithValues)
+        break
+      default:
+        assertUnreachable(token.source)
     }
   }
 
-  const sortedBreakdown = recordToSortedBreakdown(breakdown)
-  const breakdownWithTokenInfo = assignTokenMetaToBreakdown(
-    sortedBreakdown,
-    tokenMap,
-  )
-
-  return {
-    dataTimestamp: targetTimestamp,
-    breakdown: breakdownWithTokenInfo,
-  }
+  return recordToSortedBreakdown(breakdown)
 }
 
-function getIsSharedEscrow(config: AmountConfigEntry) {
-  switch (config.type) {
-    case 'aggLayerL2Token':
-    case 'aggLayerNativeEtherPreminted':
-    case 'aggLayerNativeEtherWrapped':
-    case 'elasticChainL2Token':
-    case 'elasticChainEther':
-      return true
-    case 'escrow':
-    case 'preminted':
-      return false
-    case 'circulatingSupply':
-    case 'totalSupply':
-      throw new Error(
-        `Only escrow configs should be passed there ${config.assetId}`,
-      )
-    default:
-      assertUnreachable(config)
+function processAddresses(
+  addresses: Address[],
+  chains: ChainConfig[],
+  projectContracts?: Record<string, ProjectContract[]>,
+): BaseAssetBreakdownData['address'] {
+  if (addresses.length > 1) {
+    return 'multiple'
   }
+  if (addresses.length === 1 && addresses[0]) {
+    const address = addresses[0]
+    const contractName = projectContracts?.[address.chain]?.find(
+      (c) => c.address.toLowerCase() === address.address.toLowerCase(),
+    )?.name
+    const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
+
+    return {
+      address: address.address,
+      url: explorer ? `${explorer}/address/${address.address}` : undefined,
+      name: contractName,
+    }
+  }
+  return undefined
 }
 
-function getTokenAddress(
-  config: AmountConfigEntry & { configId: string },
-): EthereumAddress | 'native' {
-  switch (config.type) {
-    case 'aggLayerL2Token':
-    case 'elasticChainL2Token':
-      return config.l1Address
-    case 'aggLayerNativeEtherPreminted':
-    case 'aggLayerNativeEtherWrapped':
-    case 'elasticChainEther':
-      return 'native'
-    default:
-      return config.address
+function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
+  if (valueTimestamp < targetTimestamp) {
+    return `Token data is not synced since ${formatTimestamp(valueTimestamp, {
+      mode: 'datetime',
+      longMonthName: true,
+    })}.`
   }
 }
