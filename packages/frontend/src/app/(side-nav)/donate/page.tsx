@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { env } from '~/env'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { DonatePage } from './donate-page'
+import { DonatePage } from './_page'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Donate - L2BEAT',

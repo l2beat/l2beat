@@ -1,6 +1,8 @@
+import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Router } from 'express'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
+import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import type { Manifest } from '../../../common/Manifest'
 import type { RenderData, RenderFunction } from '../../../ssr/server'
 
@@ -18,7 +20,7 @@ export function ActivityRouter(
 
 async function getActivityData(manifest: Manifest): Promise<RenderData> {
   const searchBarProjects = await getSearchBarProjects()
-
+  const entries = await getScalingActivityEntries()
   return {
     head: {
       manifest,
@@ -29,14 +31,16 @@ async function getActivityData(manifest: Manifest): Promise<RenderData> {
     ssr: {
       page: 'ActivityPage',
       props: {
+        entries,
         terms: getCollection('glossary').map((term) => ({
           id: term.id,
           matches: [term.data.term, ...(term.data.match ?? [])],
         })),
         searchBarProjects: searchBarProjects.map((p) => ({
           ...p,
-          iconUrl: manifest.getUrl('/static' + p.iconUrl),
+          iconUrl: manifest.getUrl(p.iconUrl),
         })),
+        milestones: HOMEPAGE_MILESTONES,
         showHiringBadge: false,
         ecosystemsEnabled: false,
       },

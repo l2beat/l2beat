@@ -1,4 +1,4 @@
-import { DonatePage as NextDonatePage } from '~/app/(side-nav)/donate/donate-page'
+import { DonatePage as NextDonatePage } from '~/app/(side-nav)/donate/_page'
 import type { SideNavLayoutProps } from '~/app/(side-nav)/side-nav-layout'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'

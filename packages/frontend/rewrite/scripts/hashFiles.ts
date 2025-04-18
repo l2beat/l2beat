@@ -8,7 +8,7 @@ interface Manifest {
   images: Record<string, { src: string; width: number; height: number }>
 }
 
-addHashes({
+void addHashes({
   prefix: '/static',
   inputDir: 'rewrite/static',
   outputDir: 'rewrite/dist/static',

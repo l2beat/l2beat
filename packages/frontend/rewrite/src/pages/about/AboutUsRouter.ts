@@ -35,7 +35,7 @@ async function getAboutUsData(manifest: Manifest): Promise<RenderData> {
         })),
         searchBarProjects: searchBarProjects.map((p) => ({
           ...p,
-          iconUrl: manifest.getUrl('/static' + p.iconUrl),
+          iconUrl: manifest.getUrl(p.iconUrl),
         })),
         showHiringBadge: false,
         ecosystemsEnabled: false,

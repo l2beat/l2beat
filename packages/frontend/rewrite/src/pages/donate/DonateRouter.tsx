@@ -29,14 +29,14 @@ async function getDonateData(manifest: Manifest): Promise<RenderData> {
     ssr: {
       page: 'DonatePage',
       props: {
-        qrCodeUrl: manifest.getUrl('/static/images/qr-codes/donate.png'),
+        qrCodeUrl: manifest.getUrl('/images/qr-codes/donate.png'),
         terms: getCollection('glossary').map((term) => ({
           id: term.id,
           matches: [term.data.term, ...(term.data.match ?? [])],
         })),
         searchBarProjects: searchBarProjects.map((p) => ({
           ...p,
-          iconUrl: manifest.getUrl('/static' + p.iconUrl),
+          iconUrl: manifest.getUrl(p.iconUrl),
         })),
         showHiringBadge: false,
         ecosystemsEnabled: false,

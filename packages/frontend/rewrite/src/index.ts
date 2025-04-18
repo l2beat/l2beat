@@ -18,9 +18,9 @@ const app = express()
 if (isProduction) {
   app.use(compression())
   // TODO: immutable cache
-  app.use('/static', sirv('./rewrite/dist/static', { extensions: [] }))
+  app.use('/', sirv('./rewrite/dist/static', { extensions: [] }))
 } else {
-  app.use('/static', express.static('./rewrite/static'))
+  app.use('/', express.static('./rewrite/static'))
   app.use((req, res, next) => {
     const start = process.hrtime()
     res.on('finish', () => {

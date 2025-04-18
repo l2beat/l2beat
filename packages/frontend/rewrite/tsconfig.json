@@ -10,7 +10,8 @@
       "~/*": ["./src/*"],
       "next/navigation": ["./src/_next/navigation"],
       "next/image": ["./src/_next/image"],
-      "next/link": ["./src/_next/link"]
+      "next/link": ["./src/_next/link"],
+      "next/cache": ["./src/_next/cache"]
     }
   },
   "exclude": ["dist", "static"]

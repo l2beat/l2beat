@@ -36,20 +36,18 @@ export default async function RootLayout({
         />
       </head>
       <body className={roboto.variable}>
-        <TRPCReactProvider>
-          <PlausibleProvider>
-            <AppLayout
-              terms={terms.map((term) => ({
-                id: term.id,
-                matches: [term.data.term, ...(term.data.match ?? [])],
-              }))}
-              searchBarProjects={searchBarProjects}
-            >
-              {children}
-              <NavigationProgressBar />
-            </AppLayout>
-          </PlausibleProvider>
-        </TRPCReactProvider>
+        <PlausibleProvider>
+          <AppLayout
+            terms={terms.map((term) => ({
+              id: term.id,
+              matches: [term.data.term, ...(term.data.match ?? [])],
+            }))}
+            searchBarProjects={searchBarProjects}
+          >
+            {children}
+            <NavigationProgressBar />
+          </AppLayout>
+        </PlausibleProvider>
       </body>
     </html>
   )
