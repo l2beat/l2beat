@@ -102,7 +102,7 @@ export const kinto: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  usesBlobs: true,
+  usesEthereumBlobs: true,
   nonTemplateRiskView: {
     exitWindow: {
       value: 'None',
@@ -185,7 +185,7 @@ The Appchain designation of Kinto is mainly due to a modified L2 node, which que
 This makes the KintoAppRegistry contract a critical system contract and any change to its configuration equivalent to an upgrade of the Layer 2 system.
 The KintoAppRegistry contract is also governed via the AccessManager by the Security Council or the Kinto Multisig 2 with a ${formatSeconds(l2critDelay)} delay.
 
-Another critical contract on the Appchain is called KintoID. Permissioned actors with the 'KYC provider' role in the KintoID contract can 'sanction' (freeze) user smart wallets, preventing them from transacting. 
+Another critical contract on the Appchain is called KintoID. Permissioned actors with the 'KYC provider' role in the KintoID contract can 'sanction' (freeze) user smart wallets, preventing them from transacting.
 To protect users from this role which is mostly held by EOAs, a sanction expires if not confirmed by the Security Council within ${formatSeconds(sanctionExpirySeconds)}.
 An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.
 
@@ -199,11 +199,11 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
       {
         name: 'Enforced smart wallets and KYC',
         description: `
-      The Kinto L2 node is a fork of Arbitrum's geth implementation with notable changes to the state transition function. 
-      A valid state transition in Kinto [disallows all transactions by EOAs](https://github.com/KintoXYZ/kinto-go-ethereum/blob/7aba9b812a82d9339d29a2345946c3d7030a0377/core/kinto_hardfork_7.go#L58) and new contract creation, unless specifically whitelisted. 
+      The Kinto L2 node is a fork of Arbitrum's geth implementation with notable changes to the state transition function.
+      A valid state transition in Kinto [disallows all transactions by EOAs](https://github.com/KintoXYZ/kinto-go-ethereum/blob/7aba9b812a82d9339d29a2345946c3d7030a0377/core/kinto_hardfork_7.go#L58) and new contract creation, unless specifically whitelisted.
       The current whitelist is sourced directly from the KintoAppRegistry smart contract on Kinto L2, and can be modified by the L2 governance.
       This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted.
-        
+
       The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.`,
         risks: [
           {

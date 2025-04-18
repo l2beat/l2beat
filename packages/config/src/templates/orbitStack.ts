@@ -145,7 +145,6 @@ interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
-  usesBlobs?: boolean
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
@@ -159,6 +158,8 @@ interface OrbitStackConfigCommon {
   customDa?: ProjectCustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Set to true if projects posts blobs to Ethereum */
+  usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -826,7 +827,7 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const usesBlobs = templateVars.usesBlobs ?? false
+  const usesBlobs = templateVars.usesEthereumBlobs ?? false
 
   const batchPosters = templateVars.discovery.getContractValue<string[]>(
     'SequencerInbox',
@@ -995,7 +996,7 @@ function getDAProvider(
 
   if (postsToEthereum(templateVars)) {
     const usesBlobs =
-      templateVars.usesBlobs ??
+      templateVars.usesEthereumBlobs ??
       templateVars.discovery.getContractValueOrUndefined(
         'SequencerInbox',
         'postsBlobs',
