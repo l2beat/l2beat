@@ -482,44 +482,47 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const inbox = templateVars.discovery.getContract('PolygonZkEVM')
-
-  const sequencers = [
-    templateVars.discovery.getContractValue<string>(
+  if (templateVars.usesEthereumBlobs) {
+    const polygonContract = templateVars.discovery.getContract('PolygonZkEVM')
+    const sequencer = templateVars.discovery.getContractValue<string>(
       'PolygonZkEVM',
       'trustedSequencer',
-    ),
-  ]
+    )
 
-  return templateVars.usesEthereumBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inbox.sinceBlock ?? 0,
-          inbox: inbox.address,
-          sequencers,
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: polygonContract.sinceBlock ?? 0,
+        inbox: polygonContract.address,
+        sequencers: [sequencer],
+      },
+    ]
+  }
+
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
