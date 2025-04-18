@@ -3,6 +3,13 @@
 **Table of Contents**
 
 - [Proof system](#proof-system)
+  - [Batch Lifecycle](#batch-lifecycle)
+    - [Batch Commitment](#batch-commitment)
+    - [Batch Finalization](#batch-finalization)
+  - [Enforced Mode](#enforced-mode)
+  - [Batch Versions](#batch-versions)
+  - [ZK Proof Verification](#zk-proof-verification)
+  - [Security Considerations](#security-considerations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
