@@ -199,7 +199,6 @@ import { ternoa } from '../projects/ternoa/ternoa'
 import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
-import { turboprotocol } from '../projects/turboprotocol/turboprotocol'
 import { tusima } from '../projects/tusima/tusima'
 import { unichain } from '../projects/unichain/unichain'
 import { union } from '../projects/union/union'
@@ -425,7 +424,6 @@ export const layer2s: ScalingProject[] = [
   thanos,
   thebinaryholdings,
   treasure,
-  turboprotocol,
   tusima,
   unichain,
   union,
