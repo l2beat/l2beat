@@ -1,0 +1,10 @@
+{
+  "extends": "@l2beat/typescript-config/base",
+  "compilerOptions": {
+    "jsx": "react",
+    "noUncheckedIndexedAccess": false,
+    "outDir": "build",
+    "rootDir": "."
+  },
+  "include": ["src", "scripts"]
+}
