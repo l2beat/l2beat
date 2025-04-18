@@ -121,10 +121,6 @@ export class ZkGovProposalAnalyzer {
     this.outputPath = config.outputPath
   }
 
-  /**
-   * Analyze a ZKsync governance proposal
-   * @param proposalId The proposal ID to analyze
-   */
   public async analyzeProposal(proposalId: string): Promise<void> {
     console.log(
       chalk.blue(
@@ -150,8 +146,33 @@ export class ZkGovProposalAnalyzer {
 
       // Step 4: Find execution info if proposal was executed
       let executionInfo: ProposalExecutionInfo | null = null
+      let l1MessageInfo: L1MessageInfo | null = null
+      let upgradeInfo: UpgradeInfo | null = null
+      let upgradeState: UpgradeState | null = null
+      let upgradeStatus: UpgradeStatusInfo | null = null
+      let l2BlockTimestamp: number = 0
+
       if (proposalState === ProposalState.Executed) {
         executionInfo = await this.findProposalExecutedInfo(proposalId)
+
+        // Get L1 info immediately if proposal was executed
+        if (executionInfo) {
+          l1MessageInfo = await this.findL1MessageSent(executionInfo.txHash)
+
+          if (l1MessageInfo) {
+            l2BlockTimestamp = executionInfo.blockTimestamp
+            const estimatedL1Block = await this.getL1BlockAfterTimestamp(
+              l2BlockTimestamp + EXECUTION_DELAY,
+            )
+
+            upgradeInfo = await this.findUpgradeStartedEvent(
+              l1MessageInfo.hash,
+              estimatedL1Block,
+            )
+            upgradeState = await this.getUpgradeState(l1MessageInfo.hash)
+            upgradeStatus = await this.getUpgradeStatus(l1MessageInfo.hash)
+          }
+        }
       }
 
       // Initialize timeline events array
@@ -163,70 +184,167 @@ export class ZkGovProposalAnalyzer {
       )
 
       // Initialize output content
-      const output: string[] = []
+      const summaryOutput: string[] = []
+      const detailsOutput: string[] = []
 
-      // Add header to output
-      this.addHeaderToOutput(output, proposalInfo, proposalState)
+      // Add summary section (description and calldata) to summary output
+      // Pass the L1 upgradeInfo to addSummaryToOutput
+      this.addSummaryToOutput(
+        summaryOutput,
+        proposalInfo,
+        proposalState,
+        upgradeInfo,
+      )
 
-      // Add timeline to output
-      this.addTimelineToOutput(output, timeline)
+      // Add header to details output
+      this.addHeaderToOutput(detailsOutput, proposalInfo, proposalState)
 
-      // Add proposal details to output
-      this.addProposalDetailsToOutput(output, proposalInfo)
+      // Add timeline to details output
+      this.addTimelineToOutput(detailsOutput, timeline)
 
-      let l1MessageInfo: L1MessageInfo | null = null
-      let upgradeInfo: UpgradeInfo | null = null
-      let upgradeState: UpgradeState | null = null
-      let upgradeStatus: UpgradeStatusInfo | null = null
-      let l2BlockTimestamp: number = 0
+      // Add additional proposal details to details output
+      this.addAdditionalProposalDetailsToOutput(detailsOutput, proposalInfo)
 
-      // Step 5: If executed, check for L1 message
-      if (executionInfo) {
-        // Step 6: Find L1 message sent event
-        l1MessageInfo = await this.findL1MessageSent(executionInfo.txHash)
+      // Add L1 information to details output if available
+      if (executionInfo && l1MessageInfo) {
+        this.addL1InfoToOutput(
+          detailsOutput,
+          l1MessageInfo,
+          upgradeInfo,
+          upgradeState,
+          upgradeStatus,
+          l2BlockTimestamp,
+          executionInfo.txHash,
+        )
 
-        if (l1MessageInfo) {
-          l2BlockTimestamp = executionInfo.blockTimestamp
-          const estimatedL1Block = await this.getL1BlockAfterTimestamp(
-            l2BlockTimestamp + EXECUTION_DELAY,
-          )
-
-          // Step 7: Get L1 upgrade information
-          upgradeInfo = await this.findUpgradeStartedEvent(
-            l1MessageInfo.hash,
-            estimatedL1Block,
-          )
-          upgradeState = await this.getUpgradeState(l1MessageInfo.hash)
-          upgradeStatus = await this.getUpgradeStatus(l1MessageInfo.hash)
-
-          // Add L1 information to output
-          this.addL1InfoToOutput(
-            output,
-            l1MessageInfo,
+        // Step 8: Compare the payloads (L2 vs L1)
+        if (upgradeInfo) {
+          this.addPayloadComparisonToOutput(
+            detailsOutput,
+            proposalInfo,
             upgradeInfo,
-            upgradeState,
-            upgradeStatus,
-            l2BlockTimestamp,
-            executionInfo.txHash,
-          )
-
-          // Step 8: Compare the payloads (L2 vs L1)
-          if (upgradeInfo) {
-            this.addPayloadComparisonToOutput(output, proposalInfo, upgradeInfo)
-          }
-        } else {
-          output.push(
-            chalk.yellow(
-              "\nThis proposal doesn't target L1 (no L1 message was sent)",
-            ),
           )
         }
+      } else if (executionInfo) {
+        detailsOutput.push(
+          chalk.yellow(
+            "\nThis proposal doesn't target L1 (no L1 message was sent)",
+          ),
+        )
       }
-      // 9. Display output
-      this.displayOutput(output)
+
+      // 9. Combine outputs and display
+      const combinedOutput = [...summaryOutput, ...detailsOutput]
+      this.displayOutput(combinedOutput)
     } catch (error) {
       console.error(chalk.red('\nError analyzing proposal:'), error)
     }
+  }
+
+  /**
+   * Add summary information (description and calldata) to output
+   */
+  private addSummaryToOutput(
+    output: string[],
+    proposalInfo: ProposalInfo,
+    proposalState: ProposalState,
+    upgradeInfo: UpgradeInfo | null = null,
+  ): void {
+    output.push(chalk.bold.green('='.repeat(80)))
+    output.push(chalk.bold.green('PROPOSAL SUMMARY'))
+    output.push(chalk.bold.green('='.repeat(80)))
+
+    // Basic info
+    output.push(chalk.bold('\nID: ') + proposalInfo.proposalId)
+    output.push(chalk.bold('State: ') + this.formatProposalState(proposalState))
+
+    // Description first
+    output.push(chalk.bold('\nDescription:'))
+    output.push(proposalInfo.description)
+
+    // If we have L1 upgrade info, display L1 payload instead of L2
+    if (upgradeInfo) {
+      output.push(chalk.bold.cyan('\nL1 Upgrade Targets:'))
+      for (let i = 0; i < upgradeInfo.proposal.calls.length; i++) {
+        const call = upgradeInfo.proposal.calls[i]
+        output.push(chalk.cyan(`\nTarget ${i + 1}: ${call.target}`))
+        output.push(`Value: ${ethers.utils.formatEther(call.value)} ETH`)
+        output.push(`Calldata: ${call.data}`)
+      }
+      output.push(chalk.bold('\nL1 Executor: ') + upgradeInfo.proposal.executor)
+      output.push(chalk.bold('L1 Salt: ') + upgradeInfo.proposal.salt)
+    } else {
+      // Otherwise display L2 targets
+      output.push(chalk.bold.cyan('\nProposal Targets:'))
+      for (let i = 0; i < proposalInfo.targets.length; i++) {
+        output.push(chalk.cyan(`\nTarget ${i + 1}: ${proposalInfo.targets[i]}`))
+        output.push(
+          `Value: ${ethers.utils.formatEther(proposalInfo.values[i])} ETH`,
+        )
+        if (proposalInfo.signatures[i]) {
+          output.push(`Signature: ${proposalInfo.signatures[i]}`)
+        }
+        output.push(`Calldata: ${proposalInfo.calldatas[i]}`)
+      }
+    }
+
+    // Add a clear separator
+    output.push('\n' + chalk.bold.blue('='.repeat(80)))
+    output.push(chalk.bold.blue('DETAILED ANALYSIS'))
+    output.push(chalk.bold.blue('='.repeat(80)))
+  }
+
+  /**
+   * Add header information to output array (without duplicating description)
+   */
+  private addHeaderToOutput(
+    output: string[],
+    proposalInfo: ProposalInfo,
+    proposalState: ProposalState,
+  ): void {
+    // Header
+    output.push(chalk.bold.blue('\n' + '='.repeat(80)))
+    output.push(
+      chalk.bold.blue(
+        `ZKsync Governance Proposal Analysis - ID: ${proposalInfo.proposalId}`,
+      ),
+    )
+    output.push(chalk.bold.blue('='.repeat(80)))
+
+    // Proposal basic info (without repeating description)
+    output.push(chalk.bold('\nProposer: ') + proposalInfo.proposer)
+    output.push(
+      chalk.bold('Current State: ') + this.formatProposalState(proposalState),
+    )
+  }
+
+  /**
+   * Add additional proposal details to output (without repeating description and calldata)
+   */
+  private addAdditionalProposalDetailsToOutput(
+    output: string[],
+    proposalInfo: ProposalInfo,
+  ): void {
+    output.push(chalk.bold.green('\n' + '='.repeat(80)))
+    output.push(chalk.bold.green('Additional Proposal Information'))
+    output.push(chalk.bold.green('='.repeat(80)))
+
+    // Add vote timing information
+    const voteStartDate = new Date(proposalInfo.voteStart.toNumber() * 1000)
+    const voteEndDate = new Date(proposalInfo.voteEnd.toNumber() * 1000)
+
+    output.push(chalk.bold('\nVoting Period:'))
+    output.push(
+      `Start: ${voteStartDate.toISOString()} (${this.formatTimeDistance(voteStartDate)})`,
+    )
+    output.push(
+      `End: ${voteEndDate.toISOString()} (${this.formatTimeDistance(voteEndDate)})`,
+    )
+
+    // Add transaction details
+    output.push(chalk.bold('\nProposal Creation:'))
+    output.push(`Block: ${proposalInfo.blockNumber}`)
+    output.push(`Transaction: ${proposalInfo.txHash}`)
   }
 
   /**
@@ -664,31 +782,6 @@ export class ZkGovProposalAnalyzer {
   }
 
   /**
-   * Add header information to output array
-   */
-  private addHeaderToOutput(
-    output: string[],
-    proposalInfo: ProposalInfo,
-    proposalState: ProposalState,
-  ): void {
-    // Header
-    output.push(chalk.bold.blue('='.repeat(80)))
-    output.push(
-      chalk.bold.blue(
-        `ZKsync Governance Proposal Analysis - ID: ${proposalInfo.proposalId}`,
-      ),
-    )
-    output.push(chalk.bold.blue('='.repeat(80)))
-
-    // Proposal basic info
-    output.push(chalk.bold('\nProposer: ') + proposalInfo.proposer)
-    output.push(
-      chalk.bold('Current State: ') + this.formatProposalState(proposalState),
-    )
-    output.push(chalk.bold('Description: ') + proposalInfo.description)
-  }
-
-  /**
    * Add timeline to output array
    */
   private addTimelineToOutput(
@@ -763,31 +856,6 @@ export class ZkGovProposalAnalyzer {
       if (i < timeline.length - 1) {
         output.push(`${connector}`)
       }
-    }
-  }
-
-  /**
-   * Add proposal details to output
-   */
-  private addProposalDetailsToOutput(
-    output: string[],
-    proposalInfo: ProposalInfo,
-  ): void {
-    output.push(chalk.bold.green('\n' + '='.repeat(80)))
-    output.push(chalk.bold.green('L2 Proposal Details'))
-    output.push(chalk.bold.green('='.repeat(80)))
-
-    // Proposal targets and calldata
-    output.push(chalk.bold('\nProposal Targets:'))
-    for (let i = 0; i < proposalInfo.targets.length; i++) {
-      output.push(chalk.cyan(`\nTarget ${i + 1}: ${proposalInfo.targets[i]}`))
-      output.push(
-        `Value: ${ethers.utils.formatEther(proposalInfo.values[i])} ETH`,
-      )
-      if (proposalInfo.signatures[i]) {
-        output.push(`Signature: ${proposalInfo.signatures[i]}`)
-      }
-      output.push(`Calldata: ${proposalInfo.calldatas[i]}`)
     }
   }
 
@@ -978,20 +1046,16 @@ export class ZkGovProposalAnalyzer {
         }
       }
     }
-
+    // Show matching status
     if (matchFound) {
       output.push(
         chalk.green('\n✓ L1 payload is contained within the L2 proposal'),
       )
-      output.push(
-        '\nL1 proposal calls are correctly encapsulated in the L2 -> L1 message',
-      )
     } else {
       output.push(chalk.red('\n✗ L1 payload does not match L2 proposal'))
-      output.push('\nDetailed comparison:')
 
-      // List L1 calls
-      output.push(chalk.bold('\nL1 Upgrade Calls:'))
+      // If no match found, show full L1 payload details
+      output.push(chalk.bold('\nFull L1 Upgrade Details:'))
       for (let i = 0; i < l1Calls.length; i++) {
         const call = l1Calls[i]
         output.push(chalk.cyan(`\nTarget ${i + 1}: ${call.target}`))
