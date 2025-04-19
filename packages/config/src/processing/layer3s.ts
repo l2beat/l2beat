@@ -22,6 +22,7 @@ import { evedex } from '../projects/evedex/evedex'
 import { fiefdom } from '../projects/fiefdom/fiefdom'
 import { forta } from '../projects/forta/forta'
 import { game7 } from '../projects/game7/game7'
+import { gridy } from '../projects/gridy/gridy'
 import { geist } from '../projects/geist/geist'
 import { ham } from '../projects/ham/ham'
 import { henez } from '../projects/henez/henez'
@@ -88,6 +89,7 @@ export const layer3s: ScalingProject[] = [
   forta,
   game7,
   geist,
+  gridy,
   inevm,
   ham,
   henez,

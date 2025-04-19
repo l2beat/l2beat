@@ -144,7 +144,12 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
     case 'avail':
       input.push(config.appId)
       break
-
+    case 'starknet':
+      input.push(config.inbox)
+      if (config.sequencers) {
+        input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
+      }
+      break
     default:
       assertUnreachable(config)
   }

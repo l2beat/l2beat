@@ -25,6 +25,14 @@ const ETH_BLOBS_OR_CALLDATA: DaProjectTableValue = {
   projectId: ProjectId('ethereum'),
 }
 
+const STARKNET_CALLDATA: DaProjectTableValue = {
+  value: 'Starknet',
+  secondLine: 'Calldata',
+  sentiment: 'good',
+  description: 'The data is posted to Starknet as calldata.',
+  projectId: ProjectId('starknet'),
+}
+
 const MEMO: DaProjectTableValue = {
   value: 'MEMO',
   sentiment: 'warning',
@@ -126,4 +134,5 @@ export const DA_LAYERS = {
   NEAR_DA,
   POLYGON_POS_DA,
   HYPERLIQUID_DA,
+  STARKNET_CALLDATA
 }
