@@ -1,5 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -87,8 +88,11 @@ export function TvsCustomTooltip({
         <div>{formatTimestamp(label, { longMonthName: true })}</div>
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

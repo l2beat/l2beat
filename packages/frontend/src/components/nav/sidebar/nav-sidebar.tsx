@@ -121,6 +121,8 @@ function NavCollapsibleItem({
     setOpen(isActive)
   }, [allGroupLinks, pathname])
 
+  if (!group.links[0]) return null
+
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
       {breakpoint === 'xs' ||
@@ -152,7 +154,7 @@ function NavCollapsibleItem({
       ) : (
         <div className="group flex items-center p-1.5" data-active={isActive}>
           <Link
-            href={group.links[0]!.href}
+            href={group.links[0].href}
             className="flex items-center gap-2"
             data-active={isActive}
           >
