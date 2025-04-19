@@ -108,3 +108,19 @@ export type EntryParameters = StructureEntry & ColorEntry
 export interface ColorOutput {
   entries: ColorEntry[]
 }
+
+export type PermissionsOutput = {
+  receiver: string
+  receiverChain: string
+  permission: Permission
+  from: EthereumAddress
+  delay?: number
+  description?: string
+  condition?: string
+  via?: {
+    address: EthereumAddress
+    delay?: number
+    condition?: string
+  }[]
+  isFinal: boolean
+}[]

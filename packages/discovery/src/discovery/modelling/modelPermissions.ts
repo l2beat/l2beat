@@ -5,7 +5,11 @@ import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionConfig } from '../config/PermissionConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
-import type { DiscoveryOutput, EntryParameters } from '../output/types'
+import type {
+  DiscoveryOutput,
+  EntryParameters,
+  PermissionsOutput,
+} from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
@@ -23,7 +27,7 @@ export async function modelPermissions(
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
-) {
+): Promise<PermissionsOutput> {
   const facts = await buildProjectPageFacts(
     project,
     configReader,

@@ -8,7 +8,12 @@ import {
 import { modelPermissions } from '../discovery/modelling/modelPermissions'
 import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult'
 import { sortEntry } from '../discovery/output/toDiscoveryOutput'
-import type { ReceivedPermission } from '../discovery/output/types'
+import type {
+  DiscoveryOutput,
+  EntryParameters,
+  PermissionsOutput,
+  ReceivedPermission,
+} from '../discovery/output/types'
 
 export async function modelPermissionsCommand(
   project: string,
@@ -32,63 +37,79 @@ export async function modelPermissionsCommand(
     debug,
   )
 
+  await writePermissionsIntoDiscovery(
+    project,
+    ultimatePermissions,
+    configReader,
+  )
+}
+
+export async function writePermissionsIntoDiscovery(
+  project: string,
+  ultimatePermissions: PermissionsOutput,
+  configReader: ConfigReader,
+) {
   const chainConfigs = configReader
     .readAllChainsForProject(project)
     .flatMap((chain) => configReader.readConfig(project, chain))
+
   for (const config of chainConfigs) {
     const discovery = configReader.readDiscovery(config.name, config.chain)
-    for (const entry of discovery.entries) {
-      // .receivedPermissions
-      const ultimatePermissionsForEntry = ultimatePermissions.filter(
-        (p) =>
-          // TODO: uncomment this
-          // p.receiver.startsWith(`${config.chain}:${entry.address}`),
-          p.receiver.startsWith(`${entry.address}`) &&
-          p.receiverChain === config.chain &&
-          p.isFinal,
-      )
-      if (ultimatePermissionsForEntry.length === 0) {
-        entry.receivedPermissions = undefined
-      } else {
-        entry.receivedPermissions = reverseVia(
-          sortReceivedPermissions(
-            ultimatePermissionsForEntry.map((p) => {
-              const { receiver, receiverChain, isFinal, ...rest } = p
-              return rest
-            }),
-          ),
-        )
-      }
+    combinePermissionsIntoDiscovery(discovery, ultimatePermissions)
 
-      // .directlyReceivedPermissions
-      const directlyReceivedPermissionsForEntry = ultimatePermissions.filter(
-        (p) =>
-          // TODO: uncomment this
-          // p.receiver.startsWith(`${config.chain}:${entry.address}`),
-          p.receiver.startsWith(`${entry.address}`) &&
-          p.receiverChain === config.chain &&
-          !p.isFinal,
-      )
-      if (directlyReceivedPermissionsForEntry.length === 0) {
-        entry.directlyReceivedPermissions = undefined
-      } else {
-        entry.directlyReceivedPermissions = reverseVia(
-          sortReceivedPermissions(
-            directlyReceivedPermissionsForEntry.map((p) => {
-              const { receiver, receiverChain, isFinal, ...rest } = p
-              return rest
-            }),
-          ),
-        )
-      }
-    }
     const projectDiscoveryFolder = configReader.getProjectChainPath(
       config.name,
       config.chain,
     )
-
     discovery.entries = discovery.entries.map((e) => sortEntry(e))
     await saveDiscoveredJson(discovery, projectDiscoveryFolder)
+  }
+}
+
+export async function combinePermissionsIntoDiscovery(
+  discovery: DiscoveryOutput,
+  ultimatePermissions: PermissionsOutput,
+) {
+  const updateRelevantField = (
+    entry: EntryParameters,
+    field: keyof EntryParameters,
+    value: ReceivedPermission[] | undefined,
+  ) => {
+    if (field === 'receivedPermissions') {
+      entry.receivedPermissions = value
+    } else if (field === 'directlyReceivedPermissions') {
+      entry.directlyReceivedPermissions = value
+    } else {
+      throw new Error(`Not a permission field: ${field}`)
+    }
+  }
+
+  for (const entry of discovery.entries) {
+    const permissionKeys: (keyof EntryParameters)[] = [
+      'receivedPermissions',
+      'directlyReceivedPermissions',
+    ]
+    for (const key of permissionKeys) {
+      const ultimatePermissionsForEntry = ultimatePermissions.filter(
+        (p) =>
+          p.receiver.startsWith(`${entry.address}`) &&
+          p.receiverChain === discovery.chain &&
+          (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
+      )
+      const permissions =
+        ultimatePermissionsForEntry.length === 0
+          ? undefined
+          : reverseVia(
+              sortReceivedPermissions(
+                ultimatePermissionsForEntry.map((p) => {
+                  // Remove some fields for backwards compatibility
+                  const { receiver, receiverChain, isFinal, ...rest } = p
+                  return rest
+                }),
+              ),
+            )
+      updateRelevantField(entry, key, permissions)
+    }
   }
 }
 
