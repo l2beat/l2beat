@@ -80,7 +80,6 @@ export const paradex: ScalingProject = {
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
@@ -99,7 +98,22 @@ export const paradex: ScalingProject = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'paradex',
+    chainId: undefined,
+    gasTokens: ['ETH'],
+    apis: [
+      {
+        type: 'starknet',
+        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_7',
+        callsPerMinute: 120,
+      },
+    ],
+  },
   config: {
+    activityConfig: {
+      type: 'block',
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
