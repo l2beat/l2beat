@@ -293,4 +293,14 @@ export const chains: ChainConfig[] = [
       url: 'https://scan.everclear.org/api',
     },
   },
+  {
+    name: 'zircuit',
+    chainId: 48900,
+    shortName: 'zircuit',
+    multicall: getMulticall3Config(6000000),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.zircuit.com/api',
+    },
+  },
 ] as const satisfies ChainConfig[]
