@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "guardian": {
+      "permissions": [{ "type": "guard" }]
+    },
+    "GUARDIAN": {
+      "permissions": [{ "type": "guard" }]
+    },
+    "privilegedAddress": {
+      "permissions": [
+        { "type": "interact", "description": "withdraw all ETH without proof." }
+      ]
+    }
+  },
+  "category": "core"
+}

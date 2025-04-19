@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22281682,
+  "blockNumber": 22297523,
   "configHash": "0x75b01e71bcecec119b4af78c11def06e55006a267e7ff5c6dc3d13b07f672ae9",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -94,21 +94,6 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
           "permission": "upgrade",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
         }
@@ -131,11 +116,6 @@
       ]
     },
     {
-      "address": "0xd123e24C318a14BaF01f487d59D8Ce3F8E1aeE5C",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "USDC Bridge",
       "address": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
       "type": "Contract",
@@ -147,24 +127,6 @@
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
         {
           "permission": "interact",
           "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
@@ -187,12 +149,20 @@
           "permission": "upgrade",
           "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+          "via": []
         }
       ],
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
       "values": {
-        "$admin": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+        "$admin": [
+          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+        ],
         "$immutable": false,
         "$implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
         "$pastUpgrades": [
@@ -220,10 +190,7 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": [
-              "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-              "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
-            ]
+            "members": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
           },
           "APP_GOVERNOR": {
             "adminRole": "APP_ROLE_ADMIN",
@@ -237,7 +204,10 @@
             ]
           },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
@@ -254,10 +224,7 @@
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "govAdminAC": [
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
-        ],
+        "govAdminAC": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
         "isFrozen": false,
@@ -269,14 +236,8 @@
         "messagingContract": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
-        "secAdminAC": [
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
-        ],
-        "secAgentAC": [
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
-        ],
+        "secAdminAC": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
+        "secAgentAC": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -404,7 +365,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 8002,
+        "l1ToL2MessageNonce": 8093,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -421,9 +382,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2970525902094365205289337873221798979347443583430761434779447207611390782983",
-        "stateBlockNumber": 597425,
-        "stateRoot": "538190910968283773010307991421771365071288788349407777116605991710540316867",
+        "stateBlockHash": "113851972028654747998646526297950112613694452391891651524543775941673396190",
+        "stateBlockNumber": 604525,
+        "stateRoot": "2465094003022298983960508271829868787350468273188617980456169661174750300053",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -504,6 +465,10 @@
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "manage critical access control roles and the role that can upgrade the implementation."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -517,15 +482,14 @@
           "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
           "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
           "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
-          "0xd123e24C318a14BaF01f487d59D8Ce3F8E1aeE5C",
           "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6"
         ],
         "$threshold": 3,
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 6,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"

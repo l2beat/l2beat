@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2887456bb2991e89b8f1b0fc8bc81c437d6fc89c
+
+# Diff at Fri, 18 Apr 2025 18:06:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 22281836
+- current block number: 22297562
+
+## Description
+
+Euclid batch number added.
+
+## Watched changes
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.initialEuclidBatchIndex:
+-        0
++        357915
+    }
+```
+
 Generated with discovered.json: 0x22200622219b038faab9444767ffef0c4108759b
 
 # Diff at Wed, 16 Apr 2025 13:25:02 GMT:
