@@ -49,7 +49,6 @@ import { rivalz } from '../projects/rivalz/rivalz'
 import { sanko } from '../projects/sanko/sanko'
 import { skynet } from '../projects/skynet/skynet'
 import { slingshot } from '../projects/slingshot/slingshot'
-import { songprotocol } from '../projects/songprotocol/songprotocol'
 import { spheron } from '../projects/spheron/spheron'
 import { stack } from '../projects/stack/stack'
 import { superposition } from '../projects/superposition/superposition'
@@ -121,7 +120,6 @@ export const layer3s: ScalingProject[] = [
   lumiterra,
   oursong,
   playblock,
-  songprotocol,
   spheron,
   superposition,
   syndr,
