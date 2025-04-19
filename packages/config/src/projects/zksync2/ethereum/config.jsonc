@@ -17,11 +17,11 @@
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2",
     "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD": "ValidatorTimelock3",
     "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61": "Governance",
-    "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78": "TransactionFilterer"
+    "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f": "TransactionFilterer"
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {
-    "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78": {
+    "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f": {
       "canActIndependently": false
     },
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
