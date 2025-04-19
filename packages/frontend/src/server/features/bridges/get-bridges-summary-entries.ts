@@ -1,6 +1,7 @@
 import type {
   BridgeCategory,
   Project,
+  ProjectTechnologyChoice,
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
@@ -21,7 +22,13 @@ export async function getBridgesSummaryEntries() {
     get7dTvsBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvlInfo'],
+      select: [
+        'statuses',
+        'bridgeInfo',
+        'bridgeRisks',
+        'tvlInfo',
+        'bridgeTechnology',
+      ],
       where: ['isBridge'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -44,7 +51,11 @@ export interface BridgesSummaryEntry extends CommonBridgesEntry {
   type: BridgeCategory
   tvs: TvsData
   validatedBy: TableReadyValue
+  livenessFailure: TableReadyValue | undefined
+  sourceUpgradeability: TableReadyValue | undefined
   tvsOrder: number
+  destination: string[]
+  otherConsiderations: ProjectTechnologyChoice[] | undefined
 }
 
 interface TvsData {
@@ -63,7 +74,9 @@ interface TvsData {
 }
 
 function getBridgesSummaryEntry(
-  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvlInfo'>,
+  project: Project<
+    'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvlInfo' | 'bridgeTechnology'
+  >,
   changes: ProjectChanges,
   bridgeTvs: ProjectSevenDayTvsBreakdown | undefined,
 ): BridgesSummaryEntry {
@@ -94,7 +107,11 @@ function getBridgesSummaryEntry(
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
       ]),
     },
+    destination: project.bridgeInfo.destination,
     validatedBy: project.bridgeRisks.validatedBy,
+    livenessFailure: project.bridgeRisks.livenessFailure,
+    sourceUpgradeability: project.bridgeRisks.sourceUpgradeability,
+    otherConsiderations: project.bridgeTechnology.otherConsiderations,
     tvsOrder: bridgeTvs?.breakdown.total ?? -1,
   }
 }

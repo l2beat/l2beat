@@ -3,19 +3,18 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { getBridgesSummaryActiveColumns } from './columns'
 
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import { bridgesSummaryOthersColumns } from './others-columns'
 
 export interface Props {
   entries: BridgesSummaryEntry[]
-  isOthers?: boolean
 }
 
-export function BridgesSummaryTable({ entries, isOthers }: Props) {
+export function BridgesSummaryOthersTable({ entries }: Props) {
   const activeTable = useTable({
     data: entries,
-    columns: getBridgesSummaryActiveColumns(isOthers),
+    columns: bridgesSummaryOthersColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

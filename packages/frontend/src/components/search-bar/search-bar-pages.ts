@@ -69,12 +69,6 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'bridges',
-    name: 'Risk Analysis',
-    tags: ['pages', 'bridges', 'risks'],
-    href: '/bridges/risk',
-  },
-  {
-    category: 'bridges',
     name: 'Archived',
     tags: ['pages', 'bridges'],
     href: '/bridges/archived',
