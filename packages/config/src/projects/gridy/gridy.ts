@@ -19,7 +19,7 @@ import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 export const gridy: ScalingProject = {
   type: 'layer3',
   id: ProjectId('gridy'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: UnixTime(1745041853), // 2025-04-19T05:50:53Z
   hostChain: ProjectId('starknet'),
   badges: [
@@ -37,6 +37,9 @@ export const gridy: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://gridy.karnot.xyz/'],
+      socialMedia: [
+        'https://twitter.com/karnotxyz',
+      ],
     },
     liveness: {
       explanation:
@@ -48,7 +51,7 @@ export const gridy: ScalingProject = {
       chainId: 6120767554663640178324841317716,
       apis: [
         {
-          type: 'rpc',
+          type: 'starknet',
           url: '',
           callsPerMinute: 10,
         },
@@ -80,7 +83,7 @@ export const gridy: ScalingProject = {
   },
   dataAvailability: {
     layer: DA_LAYERS.STARKNET_CALLDATA,
-    bridge: DA_BRIDGES.NONE,
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS
   },
   riskView: {
@@ -97,7 +100,7 @@ export const gridy: ScalingProject = {
         callsItselfRollup: true,
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: false,
+        rollupNodeSourceAvailable: true,
       },
       stage1: {
         principle: false,
@@ -116,16 +119,10 @@ export const gridy: ScalingProject = {
   technology: {
       stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-      dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
+      dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_CALLDATA_OFF_CHAIN,
       operator: OPERATOR.CENTRALIZED_OPERATOR,
       forceTransactions: {
         ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-        references: [
-          {
-            title: 'Censorship resistance of Starknet - Forum Discussion',
-            url: 'https://community.starknet.io/t/censorship-resistance/196',
-          },
-        ],
       },
       exitMechanisms: EXITS.STARKNET,
     },
