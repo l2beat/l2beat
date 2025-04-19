@@ -63,7 +63,7 @@ export const gridy: ScalingProject = {
       {
         type: 'starknet',
         daLayer: ProjectId('starknet'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        sinceBlock: 0,
         inbox: '0x4090b89b476da6dccd66e8e27db5bc814bfaee95dc3eb84ec00a7a64af03600',
         sequencers: ['0x04f59E35F2d130Fe6ef478b6A8b65B5fbb272BB7D67c047A0Dd7a2Dd9b320A30'],
       },
