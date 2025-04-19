@@ -1,12 +1,9 @@
 import {
   ConfigReader,
-  type ReceivedPermission,
   TemplateService,
   getDiscoveryPaths,
-  modelPermissions,
-  saveDiscoveredJson,
+  modelPermissionsCommand,
 } from '@l2beat/discovery'
-import { sortEntry } from '@l2beat/discovery/dist/discovery/output/toDiscoveryOutput'
 import { boolean, command, flag, positional, string } from 'cmd-ts'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
@@ -36,96 +33,14 @@ export const ModelPermissions = command({
         .flatMap((chain) => configReader.readAllProjectsForChain(chain))
     }
     for (const project of projects) {
-      console.log(`Modelling: ${project}`)
-      const ultimatePermissions = await modelPermissions(
+      await modelPermissionsCommand(
         project,
         configReader,
         templateService,
         paths,
         args.debug,
       )
-      const chainConfigs = configReader
-        .readAllChainsForProject(project)
-        .flatMap((chain) => configReader.readConfig(project, chain))
-      for (const config of chainConfigs) {
-        const discovery = configReader.readDiscovery(config.name, config.chain)
-        for (const entry of discovery.entries) {
-          // .receivedPermissions
-          const ultimatePermissionsForEntry = ultimatePermissions.filter(
-            (p) =>
-              // TODO: uncomment this
-              // p.receiver.startsWith(`${config.chain}:${entry.address}`),
-              p.receiver.startsWith(`${entry.address}`) &&
-              p.receiverChain === config.chain &&
-              p.isFinal,
-          )
-          if (ultimatePermissionsForEntry.length === 0) {
-            entry.receivedPermissions = undefined
-          } else {
-            entry.receivedPermissions = reverseVia(
-              sortReceivedPermissions(
-                ultimatePermissionsForEntry.map((p) => {
-                  const { receiver, receiverChain, isFinal, ...rest } = p
-                  return rest
-                }),
-              ),
-            )
-          }
-
-          // .directlyReceivedPermissions
-          const directlyReceivedPermissionsForEntry =
-            ultimatePermissions.filter(
-              (p) =>
-                // TODO: uncomment this
-                // p.receiver.startsWith(`${config.chain}:${entry.address}`),
-                p.receiver.startsWith(`${entry.address}`) &&
-                p.receiverChain === config.chain &&
-                !p.isFinal,
-            )
-          if (directlyReceivedPermissionsForEntry.length === 0) {
-            entry.directlyReceivedPermissions = undefined
-          } else {
-            entry.directlyReceivedPermissions = reverseVia(
-              sortReceivedPermissions(
-                directlyReceivedPermissionsForEntry.map((p) => {
-                  const { receiver, receiverChain, isFinal, ...rest } = p
-                  return rest
-                }),
-              ),
-            )
-          }
-        }
-        const projectDiscoveryFolder = configReader.getProjectChainPath(
-          config.name,
-          config.chain,
-        )
-
-        discovery.entries = discovery.entries.map((e) => sortEntry(e))
-        await saveDiscoveredJson(discovery, projectDiscoveryFolder)
-
-        updateDiffHistory(config.name, config.chain)
-      }
+      updateDiffHistory(project)
     }
   },
 })
-
-function reverseVia(p: ReceivedPermission[]) {
-  return p.map((p) => {
-    const { via, ...rest } = p
-    if (!via) {
-      return p
-    }
-    return {
-      ...rest,
-      via: via.reverse(),
-    }
-  })
-}
-
-function sortReceivedPermissions<T extends ReceivedPermission>(
-  input: T[],
-): T[] {
-  return input.sort((a, b) => {
-    return JSON.stringify(a).localeCompare(JSON.stringify(b))
-  })
-}
