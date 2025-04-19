@@ -1,7 +1,7 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import Link from 'next/link'
-import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
+import { ThroughputSectionChart } from '~/components/chart/data-availability/throughput-section-chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { ClockIcon } from '~/icons/clock'
@@ -26,6 +26,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
       }
     | undefined
   totalPosted: number
+  customColors: Record<string, string>
   syncStatus: {
     warning: string | undefined
     isSynced: boolean
@@ -40,6 +41,7 @@ export function ThroughputSection({
   pastDayAvgThroughputPerSecond,
   largestPoster,
   totalPosted,
+  customColors,
   syncStatus,
   milestones,
   ...sectionProps
@@ -60,9 +62,10 @@ export function ThroughputSection({
         per day.
       </p>
       <HorizontalSeparator className="my-4" />
-      <ProjectDaThroughputChart
-        projectId={projectId}
+      <ThroughputSectionChart
+        daLayer={projectId}
         configuredThroughputs={throughput}
+        customColors={customColors}
         milestones={milestones}
       />
       <HorizontalSeparator className="my-4" />

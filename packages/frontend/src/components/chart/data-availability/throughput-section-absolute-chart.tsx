@@ -2,7 +2,7 @@
 
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
@@ -14,22 +14,27 @@ import type { ProjectChartDataWithConfiguredThroughput } from './project-da-abso
 import { ProjectDaAbsoluteThroughputChart } from './project-da-absolute-throughput-chart'
 
 interface Props {
-  projectId: ProjectId
+  daLayer: ProjectId
   configuredThroughputs: DaLayerThroughput[]
   milestones: Milestone[]
+  range: DaThroughputTimeRange
+  setRange: (range: DaThroughputTimeRange) => void
+  showMax: boolean
+  setShowMax: (showMax: boolean) => void
 }
 
-export function ProjectDaThroughputChart({
-  projectId,
+export function ThroughputSectionAbsoluteChart({
+  daLayer,
   configuredThroughputs,
   milestones,
+  range,
+  setRange,
+  showMax,
+  setShowMax,
 }: Props) {
-  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
-  const [showMax, setShowMax] = useState(true)
-
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,
-    projectId,
+    projectId: daLayer,
   })
 
   const chartRange = useMemo(
@@ -66,7 +71,7 @@ export function ProjectDaThroughputChart({
         </div>
       </div>
       <ProjectDaAbsoluteThroughputChart
-        projectId={projectId}
+        projectId={daLayer}
         dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
         isLoading={isLoading}
         showMax={showMax}

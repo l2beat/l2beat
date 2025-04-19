@@ -1,9 +1,8 @@
 'use client'
 
-import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
+import { AreaChart } from 'recharts'
 
 import {
   ChartContainer,
@@ -38,7 +37,16 @@ interface Props {
 
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'line' })
-  const { denominator, unit } = getDaDataParams(data)
+  const max = useMemo(() => {
+    return data
+      ? Math.max(
+          ...data.map(([_, ...rest]) =>
+            Math.max(...rest.filter((x) => x !== null)),
+          ),
+        )
+      : undefined
+  }, [data])
+  const { denominator, unit } = getDaDataParams(max)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       return {
@@ -116,7 +124,7 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
           return (
             <div
               key={index}
