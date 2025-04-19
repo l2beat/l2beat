@@ -1,6 +1,9 @@
 import type { Project, ProjectScalingRiskView } from '@l2beat/config'
 import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
+import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
+import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
+import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
@@ -13,7 +16,14 @@ export async function getScalingRiskEntries() {
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+      select: [
+        'statuses',
+        'scalingInfo',
+        'scalingRisks',
+        'display',
+        'scalingTechnology',
+      ],
+      optional: ['customDa', 'scalingDa'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -35,10 +45,22 @@ export async function getScalingRiskEntries() {
 export interface ScalingRiskEntry extends CommonScalingEntry {
   risks: ProjectScalingRiskView
   tvsOrder: number
+  hasStateValidationSection: boolean
+  hasDataAvailabilitySection: boolean
+  hasWithdrawalsSection: boolean
+  hasOperatorsSection: boolean
 }
 
 function getScalingRiskEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks' | 'display'>,
+  project: Project<
+    | 'scalingInfo'
+    | 'statuses'
+    | 'scalingRisks'
+    | 'display'
+    | 'scalingTechnology',
+    // optional
+    'customDa' | 'scalingDa'
+  >,
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingRiskEntry {
@@ -46,5 +68,9 @@ function getScalingRiskEntry(
     ...getCommonScalingEntry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
     tvsOrder: tvs ?? -1,
+    hasStateValidationSection: !!project.scalingTechnology?.stateValidation,
+    hasDataAvailabilitySection: !!getDataAvailabilitySection(project),
+    hasWithdrawalsSection: !!getWithdrawalsSection(project),
+    hasOperatorsSection: !!getOperatorSection(project),
   }
 }
