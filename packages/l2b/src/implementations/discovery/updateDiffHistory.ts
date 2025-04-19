@@ -53,7 +53,7 @@ export async function updateDiffHistoryForChain(
   overwriteCache: boolean = false,
 ) {
   // Get discovered.json from main branch and compare to current
-  console.log(`Updateing diffHistory for: ${projectName} on ${chain}`)
+  console.log(`Updating diffHistory for: ${projectName} on ${chain}`)
   const paths = getDiscoveryPaths()
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder =
