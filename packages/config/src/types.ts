@@ -870,9 +870,19 @@ export type ProjectDaTrackingConfig =
   | EthereumDaTrackingConfig
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
+  | StarknetDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
+  daLayer: ProjectId
+  inbox: string
+  sequencers?: string[]
+  sinceBlock: number
+  untilBlock?: number
+}
+
+export interface StarknetDaTrackingConfig {
+  type: 'starknet'
   daLayer: ProjectId
   inbox: string
   sequencers?: string[]
