@@ -4,6 +4,7 @@ import type {
   ContractFieldSeverity,
   Permission,
 } from '../config/StructureConfig'
+import type { ParsedUltimatePermissionFact } from '../modelling/parseUltimatePermissionFact'
 
 export type ContractValue =
   | string
@@ -21,10 +22,6 @@ export interface StructureOutput {
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
-}
-
-export interface PermissionOutput {
-  entries: Record<string, IssuedPermission[]>
 }
 
 export interface DiscoveryOutput {
@@ -63,9 +60,6 @@ export interface ResolvedPermissionDetails {
   via?: ResolvedPermissionPath[]
 }
 
-export type IssuedPermission = ResolvedPermissionDetails & {
-  to: EthereumAddress
-}
 export type ReceivedPermission = ResolvedPermissionDetails & {
   from: EthereumAddress
 }
@@ -101,8 +95,9 @@ export type ColorEntry = {
   displayName?: string
   description?: string
   fieldMeta?: Record<string, FieldMeta>
-  issuedPermissions?: IssuedPermission[]
+  issuedPermissions?: ReceivedPermission[]
   receivedPermissions?: ReceivedPermission[]
+  permissions?: ParsedUltimatePermissionFact[]
   directlyReceivedPermissions?: ReceivedPermission[]
   references?: ExternalReference[]
   category?: ContractCategory
@@ -113,3 +108,19 @@ export type EntryParameters = StructureEntry & ColorEntry
 export interface ColorOutput {
   entries: ColorEntry[]
 }
+
+export type PermissionsOutput = {
+  receiver: string
+  receiverChain: string
+  permission: Permission
+  from: EthereumAddress
+  delay?: number
+  description?: string
+  condition?: string
+  via?: {
+    address: EthereumAddress
+    delay?: number
+    condition?: string
+  }[]
+  isFinal: boolean
+}[]

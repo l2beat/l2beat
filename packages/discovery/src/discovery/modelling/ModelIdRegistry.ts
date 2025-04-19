@@ -1,5 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { KnowledgeBase } from './KnowledgeBase'
-import type { ClingoFact } from './factTypes'
+import type { ClingoFact } from './clingoparser'
 
 interface AddressData {
   modelId: string
@@ -74,6 +75,13 @@ export class ModelIdRegistry {
       throw new Error(`No address data found for modelId ${modelId}`)
     }
     return data
+  }
+
+  idToChainPrefixedAddress(modelId: string): string {
+    const data = this.getAddressData(modelId)
+    // return `${data.chain}:${EthereumAddress(data.address)}`
+    // temporary removal of chain prefix for debugging (TODO)
+    return `${EthereumAddress(data.address)}`
   }
 
   replaceIdsWithNames(s: string): string {

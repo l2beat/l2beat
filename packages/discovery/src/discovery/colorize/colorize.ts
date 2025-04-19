@@ -13,6 +13,7 @@ import type {
   StructureOutput,
 } from '../output/types'
 import { get$Implementations } from '../utils/extractors'
+import { interpolateString } from '../utils/interpolateString'
 
 export function colorize(
   config: ColorConfig,
@@ -39,26 +40,6 @@ export function colorize(
   }
 
   return result
-}
-
-function interpolateString(
-  description: string | undefined,
-  structure: StructureEntry,
-): string | undefined {
-  if (description === undefined) {
-    return undefined
-  }
-
-  return description.replace(/\{\{\s*((\$\.?)?\w+)\s*\}\}/g, (_match, key) => {
-    const value =
-      key === '$.address' ? structure.address : structure.values?.[key]
-    if (value === undefined) {
-      throw new Error(
-        `Value for variable "{{ ${key} }}" in contract field not found in contract analysis`,
-      )
-    }
-    return String(value)
-  })
 }
 
 function getReferences(

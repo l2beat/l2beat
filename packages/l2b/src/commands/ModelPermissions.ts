@@ -2,9 +2,10 @@ import {
   ConfigReader,
   TemplateService,
   getDiscoveryPaths,
-  modelPermissions,
+  modelPermissionsCommand,
 } from '@l2beat/discovery'
-import { command, positional, string } from 'cmd-ts'
+import { boolean, command, flag, positional, string } from 'cmd-ts'
+import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const ModelPermissions = command({
   name: 'model-permissions',
@@ -13,25 +14,33 @@ export const ModelPermissions = command({
       type: string,
       displayName: 'projectQuery',
     }),
+    debug: flag({
+      type: boolean,
+      long: 'debug',
+      short: 'd',
+      description: 'Keep debug Clingo files',
+    }),
   },
   handler: async (args) => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const chainConfigs = await Promise.all(
-      configReader
-        .readAllChainsForProject(args.projectQuery)
-        .flatMap((chain) => configReader.readConfig(args.projectQuery, chain)),
-    )
-    for (const config of chainConfigs) {
-      const discovery = configReader.readDiscovery(config.name, config.chain)
-      const permissions = modelPermissions(
-        config.structure,
-        discovery,
+    let projects = [args.projectQuery]
+    if (args.projectQuery === 'all') {
+      projects = configReader
+        .readAllChains()
+        .flatMap((chain) => configReader.readAllProjectsForChain(chain))
+    }
+    for (const project of projects) {
+      await modelPermissionsCommand(
+        project,
+        configReader,
         templateService,
+        paths,
+        args.debug,
       )
-      console.dir(permissions, { depth: null })
+      updateDiffHistory(project)
     }
   },
 })

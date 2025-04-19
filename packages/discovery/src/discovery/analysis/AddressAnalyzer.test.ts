@@ -72,7 +72,6 @@ describe(AddressAnalyzer.name, () => {
         name: undefined,
         deploymentTimestamp: undefined,
         deploymentBlockNumber: undefined,
-        targetsMeta: undefined,
         address,
       })
     })
@@ -184,12 +183,6 @@ describe(AddressAnalyzer.name, () => {
         },
         abis: sources.abis,
         sourceBundles: sources.sources,
-        targetsMeta: {
-          [admin.toString()]: {
-            canActIndependently: undefined,
-            permissions: [{ type: 'upgrade', delay: 0, target: address }],
-          },
-        },
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -303,12 +296,6 @@ describe(AddressAnalyzer.name, () => {
         },
         abis: sources.abis,
         sourceBundles: sources.sources,
-        targetsMeta: {
-          [admin.toString()]: {
-            canActIndependently: undefined,
-            permissions: [{ type: 'upgrade', delay: 0, target: address }],
-          },
-        },
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -419,12 +406,6 @@ describe(AddressAnalyzer.name, () => {
         },
         abis: sources.abis,
         sourceBundles: sources.sources,
-        targetsMeta: {
-          [admin.toString()]: {
-            canActIndependently: undefined,
-            permissions: [{ type: 'upgrade', delay: 0, target: address }],
-          },
-        },
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),

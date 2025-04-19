@@ -5,9 +5,7 @@ import type {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
-  AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
-import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
 import type { StructureConfig } from '../config/StructureConfig'
 import { makeEntryStructureConfig } from '../config/structureUtils'
 import { buildSharedModuleIndex } from '../config/structureUtils'
@@ -127,17 +125,6 @@ export class DiscoveryEngine {
 
       depth++
     }
-
-    const analyzedContracts = Object.values(resolved).filter(
-      (a): a is AnalyzedContract => a.type === 'Contract',
-    )
-    const inverted = invertMeta(analyzedContracts.map((c) => c.targetsMeta))
-    Object.values(resolved).forEach((a) => {
-      a.combinedMeta = mergeContractMeta(
-        a.type === 'Contract' ? a.selfMeta : undefined,
-        inverted[a.address.toString()],
-      )
-    })
 
     const result = Object.values(resolved)
     this.checkErrors(result)
