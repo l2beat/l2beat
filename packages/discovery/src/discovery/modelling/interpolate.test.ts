@@ -76,7 +76,7 @@ describe(interpolateModelTemplate.name, () => {
     expect(result).toEqual(`
       msig(contactMsigA, 2).
       member(contactMsigA, 
-        (memberA; memberB; "0x0000000000000000000000000000000000000aBc")
+        (memberA; memberB; "0x0000000000000000000000000000000000000abc")
       ).
       myAddr(contactMsigA, "0x0000000000000000000000000000000000000123").
       myName("ContactMsigA").

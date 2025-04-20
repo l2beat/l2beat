@@ -49,8 +49,10 @@ export function tryCastingToName(
   return name ? normalizeId(name) : quoteEthereumAddress(value)
 }
 
-export function quoteEthereumAddress(address: string) {
-  return EthereumAddress.check(address) ? `"${address}"` : address
+export function quoteEthereumAddress(value: string) {
+  return EthereumAddress.checkIgnoringCase(value)
+    ? `"${value.toLowerCase()}"`
+    : value
 }
 
 // Clingo ids need to start with a lowercase letter
