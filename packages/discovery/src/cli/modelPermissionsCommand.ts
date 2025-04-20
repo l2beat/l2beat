@@ -46,7 +46,7 @@ export async function modelPermissionsCommand(
 
 export async function writePermissionsIntoDiscovery(
   project: string,
-  ultimatePermissions: PermissionsOutput,
+  permissionsOutput: PermissionsOutput,
   configReader: ConfigReader,
 ) {
   const chainConfigs = configReader
@@ -55,7 +55,7 @@ export async function writePermissionsIntoDiscovery(
 
   for (const config of chainConfigs) {
     const discovery = configReader.readDiscovery(config.name, config.chain)
-    combinePermissionsIntoDiscovery(discovery, ultimatePermissions)
+    combinePermissionsIntoDiscovery(discovery, permissionsOutput)
 
     const projectDiscoveryFolder = configReader.getProjectChainPath(
       config.name,
@@ -68,7 +68,7 @@ export async function writePermissionsIntoDiscovery(
 
 export async function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
-  ultimatePermissions: PermissionsOutput,
+  permissionsOutput: PermissionsOutput,
 ) {
   const updateRelevantField = (
     entry: EntryParameters,
@@ -84,13 +84,15 @@ export async function combinePermissionsIntoDiscovery(
     }
   }
 
+  discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
+
   for (const entry of discovery.entries) {
     const permissionKeys: (keyof EntryParameters)[] = [
       'receivedPermissions',
       'directlyReceivedPermissions',
     ]
     for (const key of permissionKeys) {
-      const ultimatePermissionsForEntry = ultimatePermissions.filter(
+      const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
           p.receiver.startsWith(`${entry.address}`) &&
           p.receiverChain === discovery.chain &&

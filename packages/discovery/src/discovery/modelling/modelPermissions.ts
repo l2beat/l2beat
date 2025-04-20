@@ -1,4 +1,5 @@
 import { readFileSync, unlinkSync, writeFileSync } from 'fs'
+import { createHash } from 'crypto'
 import { join } from 'path'
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -12,7 +13,7 @@ import type {
 } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
-import { type ClingoFact, parseClingoFact } from './clingoparser'
+import { parseClingoFact } from './clingoparser'
 import { interpolateModelTemplate } from './interpolate'
 import { parseUltimatePermissionFact } from './parseUltimatePermissionFact'
 import {
@@ -20,6 +21,7 @@ import {
   contractValuesForInterpolation,
 } from './relations'
 import { runClingo } from './runClingo'
+import { Hash256 } from '@l2beat/shared-pure'
 
 export async function modelPermissions(
   project: string,
@@ -28,20 +30,23 @@ export async function modelPermissions(
   paths: DiscoveryPaths,
   debug: boolean,
 ): Promise<PermissionsOutput> {
-  const facts = await buildProjectPageFacts(
+  const { permissions, permissionsConfigHash } = await buildProjectPageFacts(
     project,
     configReader,
     templateService,
     paths,
     debug,
   )
-  const kb = new KnowledgeBase(facts)
+  const kb = new KnowledgeBase(permissions)
   const modelIdRegistry = new ModelIdRegistry(kb)
   const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
     parseUltimatePermissionFact(fact, modelIdRegistry),
   )
-  return ultimatePermissions
+  return {
+    permissionsConfigHash,
+    permissions: ultimatePermissions,
+  }
 }
 
 export async function buildProjectPageFacts(
@@ -50,12 +55,13 @@ export async function buildProjectPageFacts(
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
-): Promise<ClingoFact[]> {
+) {
   const clingo = generateClingoForProject(
     project,
     configReader,
     templateService,
   )
+  const permissionsConfigHash = generatePermissionConfigHash(clingo)
   const projectPageClingoFile = readProjectPageClingoFile(paths)
   const combinedClingo = clingo + '\n' + projectPageClingoFile
   const projectPath = configReader.getProjectPath(project)
@@ -84,12 +90,20 @@ export async function buildProjectPageFacts(
     unlinkSync(inputFilePath)
     unlinkSync(outputFilePath)
   }
-  return result
+  return {
+    permissionsConfigHash,
+    permissions: result,
+  }
 }
 
 export function readProjectPageClingoFile(paths: DiscoveryPaths): string {
   const path = join(paths.discovery, '_clingo', 'modelPermissions.lp')
   return readFileSync(path, 'utf8')
+}
+
+export function generatePermissionConfigHash(clingoInput: string) {
+  const hash = createHash('sha256').update(clingoInput).digest('hex')
+  return Hash256('0x' + hash)
 }
 
 export function generateClingoForProject(
@@ -101,6 +115,7 @@ export function generateClingoForProject(
 
   const chainConfigs = configReader
     .readAllChainsForProject(project)
+    .sort((a, b) => a.localeCompare(b))
     .flatMap((chain) => configReader.readConfig(project, chain))
 
   for (const config of chainConfigs) {
@@ -128,25 +143,27 @@ export function generateClingoForProjectOnChain(
     discovery.entries,
   )
 
-  discovery.entries.forEach((entry) => {
-    const clingoFromPermissions = generateClingoFromPermissionsConfig(
-      entry,
-      discovery.chain,
-      config,
-      templateService,
-      addressToNameMap,
-    )
-    generatedClingo.push(clingoFromPermissions)
-    const clingoFromModelLp = generateClingoFromModelLp(
-      entry,
-      discovery.chain,
-      templateService,
-      addressToNameMap,
-    )
-    if (clingoFromModelLp !== undefined) {
-      generatedClingo.push(clingoFromModelLp)
-    }
-  })
+  discovery.entries
+    .sort((a, b) => a.address.localeCompare(b.address))
+    .forEach((entry) => {
+      const clingoFromPermissions = generateClingoFromPermissionsConfig(
+        entry,
+        discovery.chain,
+        config,
+        templateService,
+        addressToNameMap,
+      )
+      generatedClingo.push(clingoFromPermissions)
+      const clingoFromModelLp = generateClingoFromModelLp(
+        entry,
+        discovery.chain,
+        templateService,
+        addressToNameMap,
+      )
+      if (clingoFromModelLp !== undefined) {
+        generatedClingo.push(clingoFromModelLp)
+      }
+    })
 
   return generatedClingo.join('\n')
 }

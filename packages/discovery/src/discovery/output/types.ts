@@ -33,6 +33,7 @@ export interface DiscoveryOutput {
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
+  permissionsConfigHash?: Hash256
 }
 
 export interface DiscoveryCustomType {
@@ -110,17 +111,20 @@ export interface ColorOutput {
 }
 
 export type PermissionsOutput = {
-  receiver: string
-  receiverChain: string
-  permission: Permission
-  from: EthereumAddress
-  delay?: number
-  description?: string
-  condition?: string
-  via?: {
-    address: EthereumAddress
+  permissionsConfigHash: Hash256
+  permissions: {
+    receiver: string
+    receiverChain: string
+    permission: Permission
+    from: EthereumAddress
     delay?: number
+    description?: string
     condition?: string
+    via?: {
+      address: EthereumAddress
+      delay?: number
+      condition?: string
+    }[]
+    isFinal: boolean
   }[]
-  isFinal: boolean
-}[]
+}
