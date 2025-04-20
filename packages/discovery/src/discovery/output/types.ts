@@ -4,7 +4,6 @@ import type {
   ContractFieldSeverity,
   Permission,
 } from '../config/StructureConfig'
-import type { ParsedUltimatePermissionFact } from '../modelling/parseUltimatePermissionFact'
 
 export type ContractValue =
   | string
@@ -96,15 +95,16 @@ export type ColorEntry = {
   displayName?: string
   description?: string
   fieldMeta?: Record<string, FieldMeta>
-  issuedPermissions?: ReceivedPermission[]
-  receivedPermissions?: ReceivedPermission[]
-  permissions?: ParsedUltimatePermissionFact[]
-  directlyReceivedPermissions?: ReceivedPermission[]
   references?: ExternalReference[]
   category?: ContractCategory
 }
 
-export type EntryParameters = StructureEntry & ColorEntry
+export type PermissionEntry = {
+  receivedPermissions?: ReceivedPermission[]
+  directlyReceivedPermissions?: ReceivedPermission[]
+}
+
+export type EntryParameters = StructureEntry & ColorEntry & PermissionEntry
 
 export interface ColorOutput {
   entries: ColorEntry[]

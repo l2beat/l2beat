@@ -262,11 +262,12 @@ describe('discovery config.jsonc', () => {
         const hash = generatePermissionConfigHash(clingoInput)
         assert(
           hash === discovery.permissionsConfigHash,
-          [ '',
+          [
+            '',
             `Permissions model of "${c.name}" is not up to date.`,
             `Run \`l2b model-permissions ${c.name}\`.`,
             `or to refresh all projects: \`l2b model-permissions all\`.`,
-            ''
+            '',
           ].join('\n\n'),
         )
       }

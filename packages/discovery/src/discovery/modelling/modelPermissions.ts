@@ -1,6 +1,7 @@
-import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { createHash } from 'crypto'
+import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { Hash256 } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
@@ -21,7 +22,6 @@ import {
   contractValuesForInterpolation,
 } from './relations'
 import { runClingo } from './runClingo'
-import { Hash256 } from '@l2beat/shared-pure'
 
 export async function modelPermissions(
   project: string,
@@ -30,14 +30,15 @@ export async function modelPermissions(
   paths: DiscoveryPaths,
   debug: boolean,
 ): Promise<PermissionsOutput> {
-  const { permissions, permissionsConfigHash } = await buildProjectPageFacts(
-    project,
-    configReader,
-    templateService,
-    paths,
-    debug,
-  )
-  const kb = new KnowledgeBase(permissions)
+  const { permissionFacts, permissionsConfigHash } =
+    await modelPermissionFactsUsingClingo(
+      project,
+      configReader,
+      templateService,
+      paths,
+      debug,
+    )
+  const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
   const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
@@ -49,21 +50,20 @@ export async function modelPermissions(
   }
 }
 
-export async function buildProjectPageFacts(
+export async function modelPermissionFactsUsingClingo(
   project: string,
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
 ) {
-  const clingo = generateClingoForProject(
+  const clingoForProject = generateClingoForProject(
     project,
     configReader,
     templateService,
   )
-  const permissionsConfigHash = generatePermissionConfigHash(clingo)
-  const projectPageClingoFile = readProjectPageClingoFile(paths)
-  const combinedClingo = clingo + '\n' + projectPageClingoFile
+  const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
+  const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
   const projectPath = configReader.getProjectPath(project)
 
   const inputFilePath = join(projectPath, 'clingo.input.lp')
@@ -90,13 +90,15 @@ export async function buildProjectPageFacts(
     unlinkSync(inputFilePath)
     unlinkSync(outputFilePath)
   }
+
+  const permissionsConfigHash = generatePermissionConfigHash(clingoForProject)
   return {
     permissionsConfigHash,
-    permissions: result,
+    permissionFacts: result,
   }
 }
 
-export function readProjectPageClingoFile(paths: DiscoveryPaths): string {
+export function readModelPermissionsClingoFile(paths: DiscoveryPaths): string {
   const path = join(paths.discovery, '_clingo', 'modelPermissions.lp')
   return readFileSync(path, 'utf8')
 }

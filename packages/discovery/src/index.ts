@@ -1,7 +1,11 @@
 export { discover } from './cli/discoverCommand'
 export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
-export { modelPermissions, generateClingoForProject, generatePermissionConfigHash } from './discovery/modelling/modelPermissions'
+export {
+  modelPermissions,
+  generateClingoForProject,
+  generatePermissionConfigHash,
+} from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export { getChainConfig, getChainShortName } from './config/config.discovery'
 export type {
