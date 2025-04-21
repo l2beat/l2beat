@@ -29,7 +29,7 @@ const STARKNET_CALLDATA: DaProjectTableValue = {
   value: 'Starknet',
   secondLine: 'Calldata',
   sentiment: 'good',
-  description: 'The data is posted to Starknet as calldata.',
+  description: 'The data is posted to Starknet as calldata and Starknet's validators are responsible for serving it.',
   projectId: ProjectId('starknet'),
 }
 
