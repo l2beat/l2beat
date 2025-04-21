@@ -28,7 +28,7 @@ const ETH_BLOBS_OR_CALLDATA: DaProjectTableValue = {
 const STARKNET_CALLDATA: DaProjectTableValue = {
   value: 'Starknet',
   secondLine: 'Calldata',
-  sentiment: 'good',
+  sentiment: 'warning',
   description: 'The data is posted to Starknet as calldata and Starknet's validators are responsible for serving it.',
   projectId: ProjectId('starknet'),
 }
