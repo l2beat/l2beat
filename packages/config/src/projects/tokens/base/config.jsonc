@@ -7,9 +7,9 @@
     "0xD8724322f44E5c58D7A815F542036fb17DbbF839" // wOETH
   ],
   "overrides": {
-    "0x1e89F91Ee35D7d21c8e8238c79146daF7aB8Bb94":{
-        // chainlink ccip BurnMintTokenPool
-        "ignoreDiscovery": true
+    "0x1e89F91Ee35D7d21c8e8238c79146daF7aB8Bb94": {
+      // chainlink ccip BurnMintTokenPool
+      "ignoreDiscovery": true
     }
   }
 }
