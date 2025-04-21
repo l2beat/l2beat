@@ -315,17 +315,11 @@ export const paradex: ScalingProject = {
       type: 'general',
     },
     {
-      title: 'Paradex introduces $DIME',
-      url: 'https://x.com/tradeparadex/status/1907041207177613610',
-      date: '2024-12-07T00:00:00Z',
-      description: 'Paradex introduces $DIME, the native token of the Paradex Network',
-      type: 'general',
-    },
-    {
       title: 'Vaults Launched',
       url: 'https://x.com/tradeparadex/status/1843550172443512998',
       date: '2024-10-08T00:00:00Z',
-      description: 'Paradex launches Vaults, the future of on-chain investment management',
+      description:
+        'Paradex launches Vaults, the future of on-chain investment management.',
       type: 'general',
     },
     {
