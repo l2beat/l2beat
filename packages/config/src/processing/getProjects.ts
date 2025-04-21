@@ -68,7 +68,9 @@ function layer2Or3ToProject(
     shortName: p.display.shortName,
     slug: p.display.slug,
     addedAt: p.addedAt,
+
     // data
+    colors: p.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
@@ -228,6 +230,8 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     bridgeTechnology: {
       ...p.technology,
       detailedDescription: p.display.detailedDescription,
+      upgradesAndGovernance: p.upgradesAndGovernance,
+      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     contracts: p.contracts,
     permissions: p.permissions,

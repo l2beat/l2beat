@@ -13,6 +13,7 @@ import type {
   ProjectActivityConfig,
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
+  ProjectColors,
   ProjectContracts,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
@@ -57,6 +58,8 @@ export interface ScalingProject {
   isUpcoming?: boolean
   /** Has this project changed and is under review? */
   isUnderReview?: boolean
+  /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
+  colors?: ProjectColors
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
@@ -253,6 +256,7 @@ export interface Bridge {
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
   discoveryInfo?: ProjectDiscoveryInfo
+  upgradesAndGovernance?: string
 }
 
 export interface BridgeDisplay {
@@ -265,6 +269,7 @@ export interface BridgeDisplay {
   category: BridgeCategory
   links: ProjectLinks
   architectureImage?: string
+  upgradesAndGovernanceImage?: string
 }
 
 export interface BridgeConfig {

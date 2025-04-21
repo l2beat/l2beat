@@ -3349,6 +3349,12 @@
   ],
   "base": [
     {
+      "symbol": "XCN",
+      "address": "0x9c632e6aaa3ea73f91554f8a3cb2ed2f29605e0c",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "DOGINME",
       "address": "0x6921b130d297cc43754afba22e5eac0fbf8db75b",
       "source": "native",
@@ -6278,6 +6284,22 @@
     }
   ],
   "unichain": [
+    {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
+      "source": "external",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "weETH",
       "category": "ether",

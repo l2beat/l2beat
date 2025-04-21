@@ -19,11 +19,13 @@ export function TopNavLink({
 )) {
   const pathname = usePathname()
   return (
-    <li className="h-full">
+    <li className="group/top-nav-link h-full">
       <Link
         className={cn(
           'flex h-full items-center font-medium',
-          large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2 max-xl:text-sm',
+          large
+            ? 'pr-2 text-base group-last/top-nav-link:pr-0 md:pr-6 md:text-lg'
+            : 'pr-3 group-last/top-nav-link:pr-0 max-xl:text-sm',
           pathname.startsWith(href) && [
             'pt-0.5 text-brand',
             !withoutUnderline && 'border-b-2 border-current',

@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xdd9cb77f161bd2028ef9a46c1a05d5d81d0c9f0d
+
+# Diff at Fri, 18 Apr 2025 18:08:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 22187418
+- current block number: 22297572
+
+## Description
+
+Small upgrade that allows claiming for any address (to that address).
+
+## Watched changes
+
+```diff
+    contract TokenDeposit (0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20) {
+    +++ description: Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.
+      sourceHashes.0:
+-        "0xa91b55bb0cd39f657105bf6422bd209274305ae3556f2f802a822a891fabfa0e"
++        "0xb8e319a32352b23a4c5e25d87b867e5b2e228f4962fba3d1cebef0fa6f879ab8"
+      values.$implementation:
+-        "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"
++        "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"
+      values.$pastUpgrades.2:
++        ["2024-12-23T17:54:23.000Z","0x8186d6acbf5d0d33ccb6a7054e1e9f61649873e7c85bdf7cd11825a266db5983",["0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"]]
+      values.$pastUpgrades.1.2:
+-        "0x8186d6acbf5d0d33ccb6a7054e1e9f61649873e7c85bdf7cd11825a266db5983"
++        ["0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"]
+      values.$pastUpgrades.1.1:
+-        "2024-12-23T17:54:23.000Z"
++        "0x00658364f89d911d6cf167646f3d4cdcdaa90c60c1c1b5b7c1991e3e606dbf9c"
+      values.$pastUpgrades.1.0:
+-        ["0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"]
++        "2025-04-17T03:06:47.000Z"
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4) {
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+      values.accessControl.0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]}
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22187418 => .flat}/TokenDeposit/TokenDeposit.sol | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x9423de32266d187af505222684dae5f935f665bc
 
 # Diff at Thu, 03 Apr 2025 09:13:42 GMT:

@@ -158,6 +158,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   ecosystemInfo?: ProjectEcosystemInfo
+  hasSuperchainScUpgrades?: boolean
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
   }
@@ -245,7 +246,7 @@ function opStackCommon(
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
-      (partOfSuperchain
+      (templateVars.hasSuperchainScUpgrades
         ? ({
             category: 'Funds can be stolen if',
             text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
@@ -703,7 +704,7 @@ function getRiskViewStateValidation(
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissioned': {
@@ -713,13 +714,13 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT.description +
           ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
         sentiment: 'bad',
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissionless': {
       return {
         ...RISK_VIEW.STATE_FP_INT,
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
   }
@@ -729,7 +730,15 @@ function getRiskViewExitWindow(
   templateVars: OpStackConfigCommon,
 ): TableReadyValue {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
-
+  if (templateVars.hasSuperchainScUpgrades) {
+    return {
+      value: 'None',
+      description:
+        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+      sentiment: 'bad',
+      orderHint: -finalizationPeriod,
+    }
+  }
   return RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod)
 }
 
@@ -1357,6 +1366,35 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
+      )
+    }
+  }
+}
+
+function getChallengePeriod(templateVars: OpStackConfigCommon): number {
+  const fraudProofType = getFraudProofType(templateVars)
+
+  switch (fraudProofType) {
+    case 'None': {
+      const l2OutputOracle =
+        templateVars.l2OutputOracle ??
+        templateVars.discovery.getContract('L2OutputOracle')
+
+      return templateVars.discovery.getContractValue<number>(
+        l2OutputOracle.name ?? l2OutputOracle.address,
+        'FINALIZATION_PERIOD_SECONDS',
+      )
+    }
+    case 'Permissioned': {
+      return templateVars.discovery.getContractValue<number>(
+        'PermissionedDisputeGame',
+        'maxClockDuration',
+      )
+    }
+    case 'Permissionless': {
+      return templateVars.discovery.getContractValue<number>(
+        'FaultDisputeGame',
+        'maxClockDuration',
       )
     }
   }

@@ -44,7 +44,7 @@ export function toRawDiscoveryOutput(
   const structure = getStructureOutput(config.structure, blockNumber, results)
   const colorized = colorize(config.color, structure, templateService)
 
-  return combineStructureAndColor(structure, colorized)
+  return withoutUndefinedKeys(combineStructureAndColor(structure, colorized))
 }
 
 export function combineStructureAndColor(
@@ -60,6 +60,10 @@ export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
   ) as T
+}
+
+export function withoutUndefinedKeys<T extends object>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T
 }
 
 export function sortEntry(e: EntryParameters): EntryParameters {

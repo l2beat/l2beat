@@ -1,12 +1,19 @@
 import Image from 'next/image'
+import { NotSyncedIcon } from '~/components/not-synced/not-synced-icon'
 
 interface Props {
   iconUrl: string
   symbol: string
   isGasToken?: boolean
+  syncStatus?: string
 }
 
-export function TokenNameCell({ iconUrl, symbol, isGasToken }: Props) {
+export function TokenNameCell({
+  iconUrl,
+  symbol,
+  isGasToken,
+  syncStatus,
+}: Props) {
   return (
     <div className="flex items-center justify-start gap-2 pr-4 md:pr-2">
       <Image
@@ -19,6 +26,7 @@ export function TokenNameCell({ iconUrl, symbol, isGasToken }: Props) {
       <span className="text-xs font-medium">
         {symbol} {isGasToken && '(gas)'}
       </span>
+      {syncStatus && <NotSyncedIcon content={syncStatus} />}
     </div>
   )
 }

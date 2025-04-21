@@ -12,9 +12,3 @@ export function rangeToResolution(range: TvsChartRange) {
   if (days && days < 180) return 'sixHourly'
   return 'daily'
 }
-
-export function getRangeConfig(range: TvsChartRange) {
-  const days = rangeToDays(range)
-  const resolution = rangeToResolution(range)
-  return { days, resolution } as const
-}

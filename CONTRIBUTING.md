@@ -75,7 +75,7 @@ General token prerequisites (without these your token CANNOT be added):
 
 Refer to the [docs - tvl.md](docs/tvl.md) for further token insights.
 
-## Add your project project to the website
+## Add your project to the website
 
 If you want to add a new project you can do that by opening a PR. To do this you need to:
 

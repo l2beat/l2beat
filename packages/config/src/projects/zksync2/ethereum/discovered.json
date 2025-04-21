@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22217035,
-  "configHash": "0x9b1d5fc5fe98d8d596c92c189c558ca52fab3703a466a7bb4f5dda2a1b54df1e",
+  "blockNumber": 22297690,
+  "configHash": "0x9d3166e7fdbd0d4ee03be1554c6cf369801e3fdcddb72834fc1144687f7ae027",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -68,6 +68,12 @@
           "permission": "interact",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "via": []
         },
         {
@@ -431,29 +437,29 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3271874,
+        "getFirstUnprocessedPriorityTx": 3272455,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 10,
-        "getPriorityTreeRoot": "0x872d7cb7cf98afad229d757d1730a5023a577fa18d9b2615e16dcebeb47ac622",
+        "getPriorityQueueSize": 17,
+        "getPriorityTreeRoot": "0x2bcf0525796ca70d38613dedd3b3ff66742fffb8fcecf47ab07f9c39e7668f0e",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 498472,
-        "getTotalBatchesExecuted": 498469,
-        "getTotalBatchesVerified": 498471,
-        "getTotalBlocksCommitted": 498472,
-        "getTotalBlocksExecuted": 498469,
-        "getTotalBlocksVerified": 498471,
-        "getTotalPriorityTxs": 3271884,
-        "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
+        "getTotalBatchesCommitted": 498760,
+        "getTotalBatchesExecuted": 498755,
+        "getTotalBatchesVerified": 498758,
+        "getTotalBlocksCommitted": 498760,
+        "getTotalBlocksExecuted": 498755,
+        "getTotalBlocksVerified": 498758,
+        "getTotalPriorityTxs": 3272472,
+        "getTransactionFilterer": "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -694,6 +700,24 @@
       },
       "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "TransactionFilterer",
+      "address": "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
+        }
+      ],
+      "sinceTimestamp": 1744727411,
+      "sinceBlock": 22274987,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "ValidatorTimelock",

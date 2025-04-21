@@ -4,25 +4,6 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "celo-AAVE",
-      "priceId": "aave",
-      "symbol": "AAVE",
-      "name": "Aave Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
-        "chain": "ethereum",
-        "escrowAddress": "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
-        "decimals": 18,
-        "sinceTimestamp": 1741879559
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "celo-CELO-1",
       "priceId": "celo",
       "symbol": "CELO",

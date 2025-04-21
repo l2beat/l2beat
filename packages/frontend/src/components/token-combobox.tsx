@@ -46,9 +46,9 @@ export function TokenCombobox({
 
   const onSelect = (currentValue: string) => {
     const token =
-      currentValue === value?.assetId.toString()
+      currentValue === value?.id.toString()
         ? undefined
-        : allTokens.find((t) => t.assetId.toString() === currentValue)
+        : allTokens.find((t) => t.id.toString() === currentValue)
     setValue(token)
     setOpen(false)
   }
@@ -136,14 +136,14 @@ function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
       <CommandGroup heading={heading}>
         {filteredTokens.slice(0, MAX_PER_SOURCE).map((token) => (
           <CommandItem
-            key={token.assetId.toString()}
-            value={token.assetId.toString()}
+            key={token.id.toString()}
+            value={token.id.toString()}
             onSelect={onSelect}
           >
             <CheckIcon
               className={cn(
                 'mr-2 size-5 shrink-0',
-                value?.assetId === token.assetId ? 'opacity-100' : 'opacity-0',
+                value?.id === token.id ? 'opacity-100' : 'opacity-0',
               )}
             />
             <TokenItem token={token} />
@@ -168,7 +168,7 @@ function TokenItem({ token }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
       <Image
-        src={token.iconUrl}
+        src={token.iconUrl ?? '/images/token-placeholder.png'}
         alt={token.name}
         width={18}
         height={18}

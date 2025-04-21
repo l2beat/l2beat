@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A public proxy contract forwarding calls to a predefined target contract ({{target}}). Can be called by any address."
+}

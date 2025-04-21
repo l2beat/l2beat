@@ -444,6 +444,10 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
           description: 'Verifier contract for ZK-proven batches.',
           ...upgradesTaikoMultisig,
         }),
+        discovery.getContractDetails('RiscZeroGroth16Verifier', {
+          description: 'Verifier contract for ZK-proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
         discovery.getContractDetails('SP1Verifier', {
           description: 'Verifier contract for ZK-proven batches.',
           ...upgradesTaikoMultisig,

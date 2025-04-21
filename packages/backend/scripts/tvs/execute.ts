@@ -20,6 +20,7 @@ import {
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
 import { getEffectiveConfig } from '../../src/modules/tvs/tools/getEffectiveConfig'
 import type {
   TokenValue,
@@ -54,7 +55,8 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
-    const localExecutor = new LocalExecutor(ps, env, logger)
+    const localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    const localExecutor = new LocalExecutor(ps, env, logger, localStorage)
 
     const start = Date.now()
 
@@ -310,8 +312,20 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              value: '$' + formatNumberWithCommas(t.value),
               amount: formatNumberWithCommas(t.amount),
+              value: '$' + formatNumberWithCommas(t.value),
+              ...(t.valueForProject !== t.value
+                ? {
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
+                : {}),
+              ...(t.valueForSummary !== t.valueForProject
+                ? {
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
+                : {}),
             }
           }),
       },
@@ -324,8 +338,20 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              value: '$' + formatNumberWithCommas(t.value),
               amount: formatNumberWithCommas(t.amount),
+              value: '$' + formatNumberWithCommas(t.value),
+              ...(t.valueForProject !== t.value
+                ? {
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
+                : {}),
+              ...(t.valueForSummary !== t.valueForProject
+                ? {
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
+                : {}),
             }
           }),
       },
@@ -338,8 +364,20 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              value: '$' + formatNumberWithCommas(t.value),
               amount: formatNumberWithCommas(t.amount),
+              value: '$' + formatNumberWithCommas(t.value),
+              ...(t.valueForProject !== t.value
+                ? {
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
+                : {}),
+              ...(t.valueForSummary !== t.valueForProject
+                ? {
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
+                : {}),
             }
           }),
       },

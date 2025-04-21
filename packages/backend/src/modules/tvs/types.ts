@@ -6,27 +6,7 @@ import type {
   TvsToken,
 } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import type { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-
-export function isEscrowToken(token: TvsToken): token is EscrowToken {
-  return token.amount.type === 'balanceOfEscrow'
-}
-
-export type EscrowToken = TvsToken & {
-  amount: BalanceOfEscrowAmountFormula
-}
-
-export type PriceSources = Map<string, PriceSource[]>
-
-export type PriceSource = CoingeckoPriceSource | CoinMarketCapPriceSource
-
-interface CoingeckoPriceSource {
-  coingeckoId: CoingeckoId
-}
-
-interface CoinMarketCapPriceSource {
-  coinMarketCapId: string
-}
+import type { UnixTime } from '@l2beat/shared-pure'
 
 export type ProjectTvsConfig = {
   projectId: string
@@ -50,6 +30,27 @@ export interface BlockTimestampConfig {
 export interface ProjectValueConfig {
   project: string
 }
+
+export interface AmountConfigBase {
+  id: string
+}
+
+export type BalanceOfEscrowAmountConfig = BalanceOfEscrowAmountFormula &
+  AmountConfigBase
+
+export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
+  AmountConfigBase
+
+export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
+  AmountConfigBase
+
+export type ConstAmountConfig = ConstAmountFormula & AmountConfigBase
+
+export type AmountConfig =
+  | BalanceOfEscrowAmountConfig
+  | TotalSupplyAmountConfig
+  | CirculatingSupplyAmountConfig
+  | ConstAmountConfig
 
 export type TokenValue = Omit<TokenValueRecord, 'configurationId'>
 
@@ -83,24 +84,3 @@ export interface TvsProjectBreakdown {
   bridgesTvs: number
   bridgesProjects: { projectId: string; value: number }[]
 }
-
-export interface AmountConfigBase {
-  id: string
-}
-
-export type BalanceOfEscrowAmountConfig = BalanceOfEscrowAmountFormula &
-  AmountConfigBase
-
-export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
-  AmountConfigBase
-
-export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
-  AmountConfigBase
-
-export type ConstAmountConfig = ConstAmountFormula & AmountConfigBase
-
-export type AmountConfig =
-  | BalanceOfEscrowAmountConfig
-  | TotalSupplyAmountConfig
-  | CirculatingSupplyAmountConfig
-  | ConstAmountConfig

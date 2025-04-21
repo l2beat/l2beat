@@ -40,7 +40,14 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
   ) {
     const adjustedTo = this.$.circulatingSupplyProvider.getAdjustedTo(from, to)
 
-    // TODO: return if range too small
+    if (this.isEmptyRange(from, adjustedTo)) {
+      this.logger.info('No timestamps to sync in range', {
+        from,
+        to,
+        adjustedTo,
+      })
+      return () => Promise.resolve(to)
+    }
 
     this.logger.info('Fetching circulating supplies', {
       from,
@@ -107,6 +114,12 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
 
       return adjustedTo
     }
+  }
+
+  private isEmptyRange(from: number, adjustedTo: number) {
+    return (
+      this.$.syncOptimizer.getTimestampsToSync(from, adjustedTo, 1).length === 0
+    )
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

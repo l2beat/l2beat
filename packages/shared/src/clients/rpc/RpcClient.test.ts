@@ -3,6 +3,7 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { RpcClient } from './RpcClient'
+import { MulticallV3Client } from './multicall/MulticallV3Client'
 
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
@@ -274,6 +275,191 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.isMulticallDeployed.name, () => {
+    it('returns true when multicall client is configured and block number is after deployment', () => {
+      const multicallClient = new MulticallV3Client(
+        EthereumAddress.random(),
+        1000,
+        3,
+      )
+
+      const rpc = new RpcClient({
+        sourceName: 'chain',
+        url: 'API_URL',
+        http: mockObject<HttpClient>({}),
+        callsPerMinute: 100_000,
+        retryStrategy: 'TEST',
+        logger: Logger.SILENT,
+        multicallClient,
+      })
+
+      expect(rpc.isMulticallDeployed(1000)).toEqual(true)
+      expect(rpc.isMulticallDeployed(1001)).toEqual(true)
+    })
+
+    it('returns false when multicall client is configured but block number is before deployment', () => {
+      const multicallClient = new MulticallV3Client(
+        EthereumAddress.random(),
+        1000,
+        3,
+      )
+
+      const rpc = new RpcClient({
+        sourceName: 'chain',
+        url: 'API_URL',
+        http: mockObject<HttpClient>({}),
+        callsPerMinute: 100_000,
+        retryStrategy: 'TEST',
+        logger: Logger.SILENT,
+        multicallClient,
+      })
+
+      expect(rpc.isMulticallDeployed(999)).toEqual(false)
+    })
+
+    it('returns false when multicall client is not configured', () => {
+      const rpc = new RpcClient({
+        sourceName: 'chain',
+        url: 'API_URL',
+        http: mockObject<HttpClient>({}),
+        callsPerMinute: 100_000,
+        retryStrategy: 'TEST',
+        logger: Logger.SILENT,
+      })
+
+      expect(rpc.isMulticallDeployed(1000)).toEqual(false)
+    })
+  })
+
+  describe(RpcClient.prototype.multicall.name, () => {
+    it('throws error when multicall client is not configured', async () => {
+      const rpc = new RpcClient({
+        sourceName: 'chain',
+        url: 'API_URL',
+        http: mockObject<HttpClient>({}),
+        callsPerMinute: 100_000,
+        retryStrategy: 'TEST',
+        logger: Logger.SILENT,
+      })
+
+      const calls = [
+        {
+          to: EthereumAddress.random(),
+          data: Bytes.fromHex('0x123456'),
+        },
+      ]
+
+      await expect(rpc.multicall(calls, 1000)).toBeRejectedWith(
+        'Multicall not configured for block 1000',
+      )
+    })
+
+    it('throws error when block number is before multicall deployment', async () => {
+      const multicallClient = new MulticallV3Client(
+        EthereumAddress.random(),
+        1000,
+        3,
+      )
+
+      const rpc = new RpcClient({
+        sourceName: 'chain',
+        url: 'API_URL',
+        http: mockObject<HttpClient>({}),
+        callsPerMinute: 100_000,
+        retryStrategy: 'TEST',
+        logger: Logger.SILENT,
+        multicallClient,
+      })
+
+      const calls = [
+        {
+          to: EthereumAddress.random(),
+          data: Bytes.fromHex('0x123456'),
+        },
+      ]
+
+      await expect(rpc.multicall(calls, 999)).toBeRejectedWith(
+        'Multicall not configured for block 999',
+      )
+    })
+
+    it('processes calls in batches and returns combined results', async () => {
+      const multicallAddress = EthereumAddress.random()
+      const multicallClient = new MulticallV3Client(
+        multicallAddress,
+        1000,
+        2, // Small batch size to test batching
+      )
+
+      const encodeBatchesMock = mockFn().returns([
+        {
+          to: multicallAddress,
+          data: Bytes.fromHex('0xaaaaaa'),
+        },
+        {
+          to: multicallAddress,
+          data: Bytes.fromHex('0xbbbbbb'),
+        },
+      ])
+      multicallClient.encodeBatches = encodeBatchesMock
+
+      const decodeMock = mockFn()
+        .returnsOnce([
+          { success: true, data: Bytes.fromHex('0x111') },
+          { success: true, data: Bytes.fromHex('0x222') },
+        ])
+        .returnsOnce([{ success: true, data: Bytes.fromHex('0x333') }])
+      multicallClient.decode = decodeMock
+
+      const http = mockObject<HttpClient>({
+        fetch: mockFn()
+          .returnsOnce({ result: '0x123456' })
+          .returnsOnce({ result: '0x654321' }),
+      })
+
+      const rpc = new RpcClient({
+        sourceName: 'chain',
+        url: 'API_URL',
+        http,
+        callsPerMinute: 100_000,
+        retryStrategy: 'TEST',
+        logger: Logger.SILENT,
+        multicallClient,
+      })
+
+      const calls = [
+        {
+          to: EthereumAddress.random(),
+          data: Bytes.fromHex('0x111'),
+        },
+        {
+          to: EthereumAddress.random(),
+          data: Bytes.fromHex('0x222'),
+        },
+        {
+          to: EthereumAddress.random(),
+          data: Bytes.fromHex('0x333'),
+        },
+      ]
+
+      const result = await rpc.multicall(calls, 1500)
+
+      expect(encodeBatchesMock).toHaveBeenCalledWith(calls)
+
+      expect(http.fetch).toHaveBeenCalledTimes(2)
+
+      expect(decodeMock).toHaveBeenCalledTimes(2)
+      expect(decodeMock).toHaveBeenNthCalledWith(1, Bytes.fromHex('0x123456'))
+      expect(decodeMock).toHaveBeenNthCalledWith(2, Bytes.fromHex('0x654321'))
+
+      expect(result).toEqual([
+        { success: true, data: Bytes.fromHex('0x111') },
+        { success: true, data: Bytes.fromHex('0x222') },
+        { success: true, data: Bytes.fromHex('0x333') },
+      ])
+    })
+  })
+
   describe(RpcClient.prototype.batchCall.name, () => {
     it('batches multiple calls correctly and returns results in order', async () => {
       const http = mockObject<HttpClient>({
@@ -318,14 +504,12 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.batchCall(calls)
 
-      // Expected results in the order of the input calls
       expect(result).toEqual([
         Bytes.fromHex('0x123abc'),
         Bytes.fromHex('0x456def'),
         Bytes.fromHex('0x789abc'),
       ])
 
-      // Verify that the HTTP fetch was called with the correct batch request
       expect(http.fetch).toHaveBeenCalledWith('API_URL', {
         body: JSON.stringify([
           {

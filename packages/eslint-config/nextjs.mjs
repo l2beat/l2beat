@@ -66,6 +66,8 @@ const typescriptConfigs = tsEslint.config(
           },
         },
       ],
+
+      '@typescript-eslint/no-non-null-assertion': 'error',
     },
   },
 )

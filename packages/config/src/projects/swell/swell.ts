@@ -67,6 +67,7 @@ export const swell = opStackL2({
       },
     ],
   },
+  hasSuperchainScUpgrades: true,
   nonTemplateTrackedTxs: [
     {
       uses: [

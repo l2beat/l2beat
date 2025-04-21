@@ -1,6 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { capitalize } from 'lodash'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -73,8 +73,7 @@ export function ProjectTokenChart({
 
   const { data, isLoading } = api.tvs.tokenChart.useQuery({
     token: {
-      chain: token.chain,
-      address: token.address,
+      tokenId: token.id,
       projectId,
     },
     range: timeRange,
@@ -185,8 +184,11 @@ function CustomTooltip({
         <div>{formatTimestamp(label, { longMonthName: true })}</div>
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

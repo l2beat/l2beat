@@ -73,6 +73,7 @@ export interface BaseProject {
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
+  colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
 
@@ -127,6 +128,10 @@ export interface BaseProject {
 }
 
 // #region common data
+export interface ProjectColors {
+  primary: string
+  secondary: string
+}
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
@@ -292,6 +297,7 @@ export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
+  livenessFailure?: TableReadyValue
 }
 
 export interface ProjectBridgeTechnology {
@@ -302,6 +308,9 @@ export interface ProjectBridgeTechnology {
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
   detailedDescription?: string
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 // #endregion
 
@@ -773,6 +782,8 @@ export interface BlockActivityConfig {
   type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
+  // how many blocks to fetch in single indexer tick
+  batchSize?: number
 }
 
 export type AdjustCount =
@@ -892,10 +903,6 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
-  colors: {
-    primary: `#${string}`
-    secondary: `#${string}`
-  }
   token: {
     tokenId: string
     projectId: ProjectId
