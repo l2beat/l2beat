@@ -2,25 +2,18 @@ import { createHash } from 'crypto'
 import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { Hash256 } from '@l2beat/shared-pure'
-import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
-import type { PermissionConfig } from '../config/PermissionConfig'
+import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
-import type {
-  DiscoveryOutput,
-  EntryParameters,
-  PermissionsOutput,
-} from '../output/types'
+import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
+import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { parseClingoFact } from './clingoparser'
-import { interpolateModelTemplate } from './interpolate'
+import { generateClingoFromModelLp } from './generateClingo'
+import { generateClingoFromPermissionsConfig } from './generateClingo'
 import { parseUltimatePermissionFact } from './parseUltimatePermissionFact'
-import {
-  buildPermissionsModel,
-  contractValuesForInterpolation,
-} from './relations'
 import { runClingo } from './runClingo'
 
 export async function modelPermissions(
@@ -134,7 +127,7 @@ export function generateClingoForProject(
 }
 
 export function generateClingoForProjectOnChain(
-  config: PermissionConfig,
+  config: PermissionsConfig,
   discovery: DiscoveryOutput,
   templateService: TemplateService,
 ) {
@@ -168,62 +161,4 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
-}
-
-export function generateClingoFromPermissionsConfig(
-  entry: EntryParameters,
-  chain: string,
-  config: PermissionConfig,
-  templateService: TemplateService,
-  addressToNameMap: Record<string, string>,
-) {
-  const permissionTemplate = entry.template
-    ? templateService.loadContractPermissionTemplate(entry.template)
-    : undefined
-  const mergedPermissionsConfig = merge(
-    {},
-    permissionTemplate,
-    config.overrides?.[entry.address.toString()],
-  )
-
-  return buildPermissionsModel(
-    chain,
-    mergedPermissionsConfig,
-    entry,
-    addressToNameMap,
-  )
-}
-
-export function generateClingoFromModelLp(
-  entry: EntryParameters,
-  chain: string,
-  templateService: TemplateService,
-  addressToNameMap: Record<string, string>,
-): string {
-  const modelTemplate = entry.template
-    ? templateService.loadClingoModelTemplate(entry.template)
-    : undefined
-  if (modelTemplate) {
-    const values = contractValuesForInterpolation(chain, entry)
-    const interpolated = interpolateModelTemplate(
-      modelTemplate,
-      values,
-      addressToNameMap,
-    )
-    return interpolated
-  }
-  return ''
-}
-
-export function buildAddressToNameMap(
-  chain: string,
-  entries: EntryParameters[],
-): Record<string, string> {
-  const result: Record<string, string> = {}
-  for (const entity of entries) {
-    const address = entity.address.toLowerCase()
-    const suffix = `_${chain}_${address}`
-    result[address] = (entity.name ?? 'eoa') + suffix
-  }
-  return result
 }

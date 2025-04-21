@@ -1,5 +1,5 @@
 import { ColorConfig } from './ColorConfig'
-import { PermissionConfig } from './PermissionConfig'
+import { PermissionsConfig } from './PermissionConfig'
 import { StructureConfig } from './StructureConfig'
 
 // values inside this class should not be modified during the runtime
@@ -7,12 +7,12 @@ import { StructureConfig } from './StructureConfig'
 export class ConfigRegistry {
   readonly structure: StructureConfig
   readonly color: ColorConfig
-  readonly permission: PermissionConfig
+  readonly permission: PermissionsConfig
 
   constructor(readonly unparsedConfig: object) {
     this.structure = StructureConfig.parse(unparsedConfig)
     this.color = ColorConfig.parse(unparsedConfig)
-    this.permission = PermissionConfig.parse(unparsedConfig)
+    this.permission = PermissionsConfig.parse(unparsedConfig)
   }
 
   get name(): string {
