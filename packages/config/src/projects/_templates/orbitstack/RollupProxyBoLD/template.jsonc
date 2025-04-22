@@ -45,7 +45,7 @@
         "method": "wasmModuleRoot",
         "args": []
       },
-      "returnType": "(ArbOsWasmModuleRoot)"
+      "edit": "$ArbOsWasmModuleRoot($)"
     },
     "challenges": {
       "description": "Emitted on createChallenge() in RollupUserLogic.",

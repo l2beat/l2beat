@@ -8,7 +8,7 @@
         "method": "getMinDelay",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": "$FormatSeconds($)"
     },
     "accessControl": {
       "handler": {

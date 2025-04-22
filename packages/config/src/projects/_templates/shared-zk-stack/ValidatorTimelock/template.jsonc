@@ -9,7 +9,7 @@
         "method": "executionDelay",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": "$FormatSeconds($)"
     },
     "revertedBlocks": {
       "handler": {

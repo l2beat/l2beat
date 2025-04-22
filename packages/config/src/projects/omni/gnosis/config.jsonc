@@ -48,17 +48,17 @@
         "targetAddress": {
           "description": "Address of the target contract on Ethereum",
           "severity": "HIGH",
-          "returnType": "(EthereumAddress)"
+          "edit": "$EthereumAddress($)"
         },
         "adapters": {
           "description": "Array of the adapters on Ethereum",
           "severity": "HIGH",
-          "returnType": "(EthereumAddress[])"
+          "edit": "$map($, $EthereumAddress)"
         },
         "reporters": {
           "description": "Array of the reporters on Ethereum",
           "severity": "HIGH",
-          "returnType": "(EthereumAddress[])"
+          "edit": "$map($, $EthereumAddress)"
         },
         "threshold": {
           "description": "Threshold of the adapters on Ethereum",

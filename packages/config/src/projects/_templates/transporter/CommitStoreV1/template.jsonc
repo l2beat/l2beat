@@ -15,7 +15,7 @@
       }
     },
     "getStaticConfig": {
-      "returnType": "(tuple(ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address armProxy))"
+      "edit": "$shape([\"chainSelector\", $ChainIdMap], [\"sourceChainSelector\", $ChainIdMap], \"onRamp\", \"armProxy\")"
     }
   }
 }

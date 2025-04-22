@@ -19,7 +19,7 @@
       }
     },
     "getStaticConfig": {
-      "returnType": "(tuple(address commitStore, ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address prevOffRamp, address armProxy))"
+      "edit": "$shape(\"commitStore\", [\"chainSelector\", $ChainIdMap], [\"sourceChainSelector\", $ChainIdMap], \"onRamp\", \"prevOffRamp\", \"armProxy\")"
     }
   }
 }
