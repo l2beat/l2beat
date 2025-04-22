@@ -294,6 +294,22 @@ export const scroll: ScalingProject = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0xc1aa4e19',
+          functionSignature:
+            'function finalizeBundlePostEuclidV2(bytes,uint256,bytes32,bytes32,bytes)',
+          sinceTimestamp: UnixTime(1745508700),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'batchSubmissions' },
           { type: 'l2costs', subtype: 'batchSubmissions' },
         ],
@@ -323,6 +339,22 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function commitBatchWithBlobProof(uint8,bytes,bytes[],bytes,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x9bbaa2ba',
+          functionSignature:
+            'function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash)',
+          sinceTimestamp: UnixTime(1745508700),
         },
       },
     ],
@@ -363,7 +395,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
     },
@@ -373,7 +405,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
     },
@@ -382,8 +414,8 @@ export const scroll: ScalingProject = {
       references: [
         {
           title:
-            'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+            'ScrollChain.sol - Etherscan source code, finalizeBundlePostEuclidV2() function modifier',
+          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
     },
@@ -392,10 +424,10 @@ export const scroll: ScalingProject = {
       references: [
         {
           title: 'EnforcedTxGateway.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+          url: 'https://etherscan.io/address/0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc#code',
         },
         {
-          title: 'EnforcedTxGateway is paused - Etherscan proxy contract',
+          title: 'EnforcedTxGateway - Etherscan proxy contract',
           url: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
         },
       ],
