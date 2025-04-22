@@ -10,6 +10,7 @@ import { LivenessRouter } from './liveness/LivenessRouter'
 import { RiskRouter } from './risk/RiskRouter'
 import { SummaryRouter } from './summary/SummaryRouter'
 import { TvsRouter } from './tvs/TvsRouter'
+import { UpcomingRouter } from './upcoming/UpcomingRouter'
 
 export function ScalingRouter(
   app: Router,
@@ -25,4 +26,5 @@ export function ScalingRouter(
   FinalityRouter(app, manifest, render)
   CostsRouter(app, manifest, render)
   ArchivedRouter(app, manifest, render)
+  UpcomingRouter(app, manifest, render)
 }

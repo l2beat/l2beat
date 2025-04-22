@@ -10,6 +10,7 @@ import { LivenessPage } from './scaling/liveness/LivenessPage'
 import { RiskPage } from './scaling/risk/RiskPage'
 import { SummaryPage } from './scaling/summary/SummaryPage'
 import { TvsPage } from './scaling/tvs/TvsPage'
+import { UpcomingPage } from './scaling/upcoming/UpcomingPage'
 
 export type Pages = typeof pages
 
@@ -34,6 +35,7 @@ const pages = {
   FinalityPage,
   CostsPage,
   ArchivedPage,
+  UpcomingPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
