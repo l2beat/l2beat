@@ -4,8 +4,10 @@ import { FaqPage } from './faq/FaqPage'
 import { ActivityPage } from './scaling/activity/ActivityPage'
 import { RiskPage } from './scaling/risk/RiskPage'
 import { SummaryPage } from './scaling/summary/SummaryPage'
+import { TvsPage } from './scaling/tvs/TvsPage'
 
-type Pages = typeof pages
+export type Pages = typeof pages
+
 export type SsrData = {
   [K in keyof Pages]: {
     page: K
@@ -21,6 +23,7 @@ const pages = {
   SummaryPage,
   ActivityPage,
   RiskPage,
+  TvsPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

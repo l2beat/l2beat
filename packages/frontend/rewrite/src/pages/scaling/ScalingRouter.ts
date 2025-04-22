@@ -4,6 +4,7 @@ import type { RenderFunction } from 'rewrite/src/ssr/server'
 import { ActivityRouter } from './activity/ActivityRouter'
 import { RiskRouter } from './risk/RiskRouter'
 import { SummaryRouter } from './summary/SummaryRouter'
+import { TvsRouter } from './tvs/TvsRouter'
 
 export function ScalingRouter(
   app: Router,
@@ -13,4 +14,5 @@ export function ScalingRouter(
   SummaryRouter(app, manifest, render)
   ActivityRouter(app, manifest, render)
   RiskRouter(app, manifest, render)
+  TvsRouter(app, manifest, render)
 }
