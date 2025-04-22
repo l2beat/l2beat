@@ -86,7 +86,7 @@ export const shibarium: ScalingProject = {
     ],
   },
   dataAvailability: {
-    layer: DA_LAYERS.NONE,
+    layer: DA_LAYERS.DAC,
     bridge: {
       value: `${currentValidatorSetSize} validators`,
       sentiment: 'bad',
