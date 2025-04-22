@@ -88,7 +88,7 @@ export const shibarium: ScalingProject = {
   dataAvailability: {
     layer: DA_LAYERS.NONE,
     bridge: {
-      value: '${currentValidatorSetSize} validators',
+      value: `${currentValidatorSetSize} validators`,
       sentiment: 'bad',
       description:
         'The bridge verifies that at least 2/3+1 of the whitelisted validators stake has signed off on the checkpoint. The StakeMaanger contract is the source of truth for the current validator set. The identity of the validators is not public, so it is not possible to verify the presence of sybils, or the number of different entities behind the validators. Since members are whitelisted, the validator set effectively acts as a permissioned DAC.',
