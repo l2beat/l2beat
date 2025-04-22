@@ -8,7 +8,7 @@ Generated with discovered.json: 0xeb13d17a442ea77145d52a8c84ad818fb7f8058d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Contracts have been verified, mainly the ones regarding StakeManager. Everything is practically identical to Polygon PoS, except that to join the validator set you need to be whitelisted.
 
 ## Watched changes
 
