@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x04c768105da91e62c392797603ca17c6dc066d97
+Generated with discovered.json: 0xeb13d17a442ea77145d52a8c84ad818fb7f8058d
 
-# Diff at Tue, 22 Apr 2025 12:33:40 GMT:
+# Diff at Tue, 22 Apr 2025 12:43:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@bbb76c9f77fad4b15762021b65f1caa97ff57da6 block: 22266722
@@ -268,7 +268,7 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract StakeManagerExtension (0x17174796E0eF24330aed565c87Ba5e85431DE19e)
-    +++ description: None
+    +++ description: Contract primarly used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
 ```
 
 ```diff
