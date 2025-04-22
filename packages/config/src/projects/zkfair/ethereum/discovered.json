@@ -1,8 +1,8 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 22166672,
-  "configHash": "0xd927e7a8796e3897444bdb9229e2c3bd6090e0af32673e815b79d2c1d0b9fafc",
+  "blockNumber": 22322978,
+  "configHash": "0x1bbb491be6246fd6efdb6fe937f87ff8ac1f4c064b62b550613544e84eb42f63",
   "entries": [
     {
       "name": "ZKFairAdmin",
@@ -358,7 +358,7 @@
       "derivedName": "CDKDataCommittee"
     },
     {
-      "name": "Bridge",
+      "name": "OldBridge",
       "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
       "type": "Contract",
       "unverified": true,
@@ -410,6 +410,17 @@
       "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Bridge",
+      "address": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742988323,
+      "sinceBlock": 22130765,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "ProxyAdmin",

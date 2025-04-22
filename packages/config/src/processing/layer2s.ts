@@ -56,7 +56,6 @@ import { fhenix } from '../projects/fhenix/fhenix'
 import { fluence } from '../projects/fluence/fluence'
 import { fluent } from '../projects/fluent/fluent'
 import { form } from '../projects/form/form'
-import { frame } from '../projects/frame/frame'
 import { fraxtal } from '../projects/fraxtal/fraxtal'
 import { fuel } from '../projects/fuel/fuel'
 import { fuelv1 } from '../projects/fuelv1/fuelv1'
@@ -199,7 +198,6 @@ import { ternoa } from '../projects/ternoa/ternoa'
 import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
-import { turboprotocol } from '../projects/turboprotocol/turboprotocol'
 import { tusima } from '../projects/tusima/tusima'
 import { unichain } from '../projects/unichain/unichain'
 import { union } from '../projects/union/union'
@@ -280,7 +278,6 @@ export const layer2s: ScalingProject[] = [
   fluence,
   fluent,
   form,
-  frame,
   fraxtal,
   fuel,
   fuelv1,
@@ -425,7 +422,6 @@ export const layer2s: ScalingProject[] = [
   thanos,
   thebinaryholdings,
   treasure,
-  turboprotocol,
   tusima,
   unichain,
   union,
