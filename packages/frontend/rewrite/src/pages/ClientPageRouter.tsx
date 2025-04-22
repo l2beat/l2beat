@@ -3,6 +3,7 @@ import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ActivityPage } from './scaling/activity/ActivityPage'
 import { RiskPage } from './scaling/risk/RiskPage'
+import { SummaryPage } from './scaling/summary/SummaryPage'
 
 type Pages = typeof pages
 export type SsrData = {
@@ -16,6 +17,8 @@ const pages = {
   FaqPage,
   AboutUsPage,
   DonatePage,
+  // Scaling
+  SummaryPage,
   ActivityPage,
   RiskPage,
 }
