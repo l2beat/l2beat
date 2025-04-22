@@ -97,10 +97,13 @@ export const shibarium: ScalingProject = {
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: currentValidatorSetSize,
-      requiredSignatures: floor((currentValidatorSetSize * 2) / 3) + 1,
-    }),
+    dataAvailability: {
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: currentValidatorSetSize,
+        requiredSignatures: floor((currentValidatorSetSize * 2) / 3) + 1,
+      }),
+      sentiment: 'bad', // because members are not public
+    },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,

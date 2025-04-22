@@ -4,7 +4,7 @@
   dataAvailability: {
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 9/12 that is tasked with protecting and supplying the data."
     orderHint: 0.75
-    sentiment: "warning"
+    sentiment: "bad"
     value: "External (DAC)"
   }
   exitWindow: {
