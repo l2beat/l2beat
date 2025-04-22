@@ -2,6 +2,8 @@ import { AboutUsPage } from './about/AboutUsPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ActivityPage } from './scaling/activity/ActivityPage'
+import { DataAvailabilityPage } from './scaling/data-availability/DataAvailabilityPage'
+import { LivenessPage } from './scaling/liveness/LivenessPage'
 import { RiskPage } from './scaling/risk/RiskPage'
 import { SummaryPage } from './scaling/summary/SummaryPage'
 import { TvsPage } from './scaling/tvs/TvsPage'
@@ -24,6 +26,8 @@ const pages = {
   ActivityPage,
   RiskPage,
   TvsPage,
+  DataAvailabilityPage,
+  LivenessPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

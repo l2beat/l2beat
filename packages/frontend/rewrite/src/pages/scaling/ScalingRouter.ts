@@ -2,6 +2,8 @@ import type { Router } from 'express'
 import type { Manifest } from 'rewrite/src/common/Manifest'
 import type { RenderFunction } from 'rewrite/src/ssr/server'
 import { ActivityRouter } from './activity/ActivityRouter'
+import { DataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
+import { LivenessRouter } from './liveness/LivenessRouter'
 import { RiskRouter } from './risk/RiskRouter'
 import { SummaryRouter } from './summary/SummaryRouter'
 import { TvsRouter } from './tvs/TvsRouter'
@@ -15,4 +17,6 @@ export function ScalingRouter(
   ActivityRouter(app, manifest, render)
   RiskRouter(app, manifest, render)
   TvsRouter(app, manifest, render)
+  DataAvailabilityRouter(app, manifest, render)
+  LivenessRouter(app, manifest, render)
 }
