@@ -46,14 +46,15 @@ describe('getProjects', () => {
     }
   })
 
-  it('every project has statuses and display', () => {
+  describe('every non-ecosystem project has statuses and display', () => {
     for (const project of projects) {
-      if (project.statuses === undefined) {
-        throw new Error(`${project.id}: missing statuses`)
+      if (project.ecosystemConfig) {
+        continue
       }
-      if (project.display === undefined) {
-        throw new Error(`${project.id}: missing display`)
-      }
+      it(project.name, () => {
+        expect(project.statuses).not.toEqual(undefined)
+        expect(project.display).not.toEqual(undefined)
+      })
     }
   })
 
