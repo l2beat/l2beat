@@ -7,6 +7,7 @@ import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAva
 import { DataAvailabilityThroughputPage } from './data-availability/throughput/DataAvailabilityThroughputPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
+import { GlossaryPage } from './glossary/GlossaryPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -17,8 +18,8 @@ import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
-import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
 import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
+import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
 export type Pages = typeof pages
 
 export type SsrData = {
@@ -53,6 +54,7 @@ const pages = {
   ZkCatalogProjectPage,
   // Side pages
   FaqPage,
+  GlossaryPage,
   AboutUsPage,
   DonatePage,
 }

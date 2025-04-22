@@ -1,29 +1,12 @@
-import type { Router } from 'express'
 import { getZkCatalogProjectDetails } from '~/app/(side-nav)/zk-catalog/[slug]/_utils/get-zk-catalog-project-details'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
 import type { Manifest } from '../../../common/Manifest'
-import type { RenderData, RenderFunction } from '../../../ssr/server'
+import type { RenderData } from '../../../ssr/server'
 
-export function ZkCatalogProjectRouter(
-  app: Router,
-  manifest: Manifest,
-  render: RenderFunction,
-) {
-  app.get('/zk-catalog/:slug', async (req, res) => {
-    const data = await getZkCatalogProjectData(manifest, req.params.slug)
-    if (!data) {
-      res.status(404).send('Not found')
-      return
-    }
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-}
-
-async function getZkCatalogProjectData(
+export async function getZkCatalogProjectData(
   manifest: Manifest,
   slug: string,
 ): Promise<RenderData | undefined> {

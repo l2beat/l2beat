@@ -1,23 +1,10 @@
-import type { Router } from 'express'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData, RenderFunction } from '../../../ssr/server'
 
-export function DataAvailabilityRiskRouter(
-  app: Router,
-  manifest: Manifest,
-  render: RenderFunction,
-) {
-  app.get('/data-availability/risk', async (req, res) => {
-    const data = await getDataAvailabilityRiskData(manifest)
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-}
-
-async function getDataAvailabilityRiskData(
+export async function getDataAvailabilityRiskData(
   manifest: Manifest,
 ): Promise<RenderData> {
   const [searchBarProjects, { publicSystems, customSystems }] =

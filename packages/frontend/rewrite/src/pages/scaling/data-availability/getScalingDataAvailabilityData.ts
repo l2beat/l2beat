@@ -1,23 +1,10 @@
-import type { Router } from 'express'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { getScalingDaEntries } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import type { Manifest } from '../../../common/Manifest'
-import type { RenderData, RenderFunction } from '../../../ssr/server'
+import type { RenderData } from '../../../ssr/server'
 
-export function ScalingDataAvailabilityRouter(
-  app: Router,
-  manifest: Manifest,
-  render: RenderFunction,
-) {
-  app.get('/scaling/data-availability', async (req, res) => {
-    const data = await getScalingDataAvailabilityData(manifest)
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-}
-
-async function getScalingDataAvailabilityData(
+export async function getScalingDataAvailabilityData(
   manifest: Manifest,
 ): Promise<RenderData> {
   const [searchBarProjects, entries] = await Promise.all([

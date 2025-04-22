@@ -1,16 +1,30 @@
 import type { Router } from 'express'
 import type { Manifest } from 'rewrite/src/common/Manifest'
 import type { RenderFunction } from 'rewrite/src/ssr/server'
-import { DataAvailabilityRiskRouter } from './risk/DataAvailabilityRiskRouter'
-import { DataAvailabilitySummaryRouter } from './summary/DataAvailabilitySummaryRouter'
-import { DataAvailabilityThroughputRouter } from './throughput/DataAvailabilityThroughputRouter'
+import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
+import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
+import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabilityThroughputData'
 
 export function DataAvailabilityRouter(
   app: Router,
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  DataAvailabilitySummaryRouter(app, manifest, render)
-  DataAvailabilityRiskRouter(app, manifest, render)
-  DataAvailabilityThroughputRouter(app, manifest, render)
+  app.get('/data-availability/summary', async (req, res) => {
+    const data = await getDataAvailabilitySummaryData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/data-availability/risk', async (req, res) => {
+    const data = await getDataAvailabilityRiskData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/data-availability/throughput', async (req, res) => {
+    const data = await getDataAvailabilityThroughputData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
 }

@@ -6,6 +6,7 @@ import { BridgesRouter } from './bridges/BridgesRouter'
 import { DataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { DonateRouter } from './donate/DonateRouter'
 import { FaqRouter } from './faq/FaqRouter'
+import { GlossaryRouter } from './glossary/GlossaryRouter'
 import { ScalingRouter } from './scaling/ScalingRouter'
 import { ZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
@@ -14,6 +15,10 @@ export function ServerPageRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
+  app.get('/', async (req, res) => {
+    res.redirect('/scaling/summary')
+  })
+
   ScalingRouter(app, manifest, render)
   BridgesRouter(app, manifest, render)
   DataAvailabilityRouter(app, manifest, render)
@@ -21,4 +26,5 @@ export function ServerPageRouter(
   FaqRouter(app, manifest, render)
   AboutUsRouter(app, manifest, render)
   DonateRouter(app, manifest, render)
+  GlossaryRouter(app, manifest, render)
 }

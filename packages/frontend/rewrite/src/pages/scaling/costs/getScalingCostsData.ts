@@ -1,24 +1,13 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import type { Router } from 'express'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import type { Manifest } from '../../../common/Manifest'
-import type { RenderData, RenderFunction } from '../../../ssr/server'
+import type { RenderData } from '../../../ssr/server'
 
-export function ScalingCostsRouter(
-  app: Router,
+export async function getScalingCostsData(
   manifest: Manifest,
-  render: RenderFunction,
-) {
-  app.get('/scaling/costs', async (req, res) => {
-    const data = await getScalingCostsData(manifest)
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-}
-
-async function getScalingCostsData(manifest: Manifest): Promise<RenderData> {
+): Promise<RenderData> {
   const [searchBarProjects, entries] = await Promise.all([
     getSearchBarProjects(),
     getScalingCostsEntries(),

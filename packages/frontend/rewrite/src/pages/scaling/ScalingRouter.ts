@@ -1,30 +1,83 @@
 import type { Router } from 'express'
 import type { Manifest } from 'rewrite/src/common/Manifest'
 import type { RenderFunction } from 'rewrite/src/ssr/server'
-import { ScalingActivityRouter } from './activity/ScalingActivityRouter'
-import { ScalingArchivedRouter } from './archived/ScalingArchivedRouter'
-import { ScalingCostsRouter } from './costs/ScalingCostsRouter'
-import { ScalingDataAvailabilityRouter } from './data-availability/ScalingDataAvailabilityRouter'
-import { ScalingFinalityRouter } from './finality/ScalingFinalityRouter'
-import { ScalingLivenessRouter } from './liveness/ScalingLivenessRouter'
-import { ScalingRiskRouter } from './risk/ScalingRiskRouter'
-import { ScalingSummaryRouter } from './summary/ScalingSummaryRouter'
-import { ScalingTvsRouter } from './tvs/ScalingTvsRouter'
-import { ScalingUpcomingRouter } from './upcoming/ScalingUpcomingRouter'
+import { getScalingActivityData } from './activity/getScalingActivityData'
+import { getScalingArchivedData } from './archived/getScalingArchivedData'
+import { getScalingCostsData } from './costs/getScalingCostsData'
+import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
+import { getScalingFinalityData } from './finality/getScalingFinalityData'
+import { getScalingLivenessData } from './liveness/getScalingLivenessData'
+import { getScalingRiskData } from './risk/getScalingRiskData'
+import { getScalingSummaryData } from './summary/getScalingSummaryData'
+import { getScalingTvsData } from './tvs/getScalingTvsData'
+import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
 
 export function ScalingRouter(
   app: Router,
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  ScalingSummaryRouter(app, manifest, render)
-  ScalingActivityRouter(app, manifest, render)
-  ScalingRiskRouter(app, manifest, render)
-  ScalingTvsRouter(app, manifest, render)
-  ScalingDataAvailabilityRouter(app, manifest, render)
-  ScalingLivenessRouter(app, manifest, render)
-  ScalingFinalityRouter(app, manifest, render)
-  ScalingCostsRouter(app, manifest, render)
-  ScalingArchivedRouter(app, manifest, render)
-  ScalingUpcomingRouter(app, manifest, render)
+  app.get('/scaling', async (req, res) => {
+    res.redirect('/scaling/summary')
+  })
+
+  app.get('/scaling/summary', async (req, res) => {
+    const data = await getScalingSummaryData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/activity', async (req, res) => {
+    const data = await getScalingActivityData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/risk', async (req, res) => {
+    const data = await getScalingRiskData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/tvs', async (req, res) => {
+    const data = await getScalingTvsData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/data-availability', async (req, res) => {
+    const data = await getScalingDataAvailabilityData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/liveness', async (req, res) => {
+    const data = await getScalingLivenessData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/finality', async (req, res) => {
+    const data = await getScalingFinalityData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/costs', async (req, res) => {
+    const data = await getScalingCostsData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/archived', async (req, res) => {
+    const data = await getScalingArchivedData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
+
+  app.get('/scaling/upcoming', async (req, res) => {
+    const data = await getScalingUpcomingData(manifest)
+    const html = render(data, req.originalUrl)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+  })
 }

@@ -1,27 +1,12 @@
-import type { Router } from 'express'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import type { Manifest } from '../../../common/Manifest'
-import type { RenderData, RenderFunction } from '../../../ssr/server'
+import type { RenderData } from '../../../ssr/server'
 
-export function BridgesSummaryRouter(
-  app: Router,
+export async function getBridgesSummaryData(
   manifest: Manifest,
-  render: RenderFunction,
-) {
-  app.get('/bridges', async (req, res) => {
-    res.redirect('/bridges/summary')
-  })
-
-  app.get('/bridges/summary', async (req, res) => {
-    const data = await getBridgesSummaryData(manifest)
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-}
-
-async function getBridgesSummaryData(manifest: Manifest): Promise<RenderData> {
+): Promise<RenderData> {
   const [searchBarProjects, entries] = await Promise.all([
     getSearchBarProjects(),
     getBridgesSummaryEntries(),

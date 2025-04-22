@@ -1,37 +1,26 @@
-import type { Router } from 'express'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
-import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData, RenderFunction } from '../../../ssr/server'
+import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 
-export function ScalingSummaryRouter(
-  app: Router,
+export async function getDataAvailabilityThroughputData(
   manifest: Manifest,
-  render: RenderFunction,
-) {
-  app.get('/scaling/summary', async (req, res) => {
-    const data = await getScalingSummaryData(manifest)
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-}
-
-async function getScalingSummaryData(manifest: Manifest): Promise<RenderData> {
+): Promise<RenderData> {
   const [searchBarProjects, entries] = await Promise.all([
     getSearchBarProjects(),
-    getScalingSummaryEntries(),
+    getDaThroughputEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'Summary - L2BEAT',
+      title: 'Data Availability Throughput - L2BEAT',
       description:
         'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
     },
     ssr: {
-      page: 'ScalingSummaryPage',
+      page: 'DataAvailabilityThroughputPage',
       props: {
         entries,
         terms: getCollection('glossary').map((term) => ({

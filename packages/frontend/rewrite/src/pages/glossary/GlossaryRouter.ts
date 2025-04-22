@@ -1,15 +1,15 @@
 import type { Router } from 'express'
 import type { Manifest } from '../../common/Manifest'
 import type { RenderFunction } from '../../ssr/server'
-import { getFaqData } from './getFaqData'
+import { getGlossaryData } from './getGlossaryData'
 
-export function FaqRouter(
+export function GlossaryRouter(
   app: Router,
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/faq', async (req, res) => {
-    const data = await getFaqData(manifest)
+  app.get('/glossary', async (req, res) => {
+    const data = await getGlossaryData(manifest)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
