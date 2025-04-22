@@ -22,7 +22,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
-import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
+import { getBadgeWithParamsAndLink } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -128,14 +128,14 @@ export async function getScalingProjectEntry(
     ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
-
+  const category = isProjectOther(project.scalingInfo)
+    ? 'Other'
+    : project.scalingInfo.type
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    category: isProjectOther(project.scalingInfo)
-      ? 'Other'
-      : project.scalingInfo.type,
+    category,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -172,7 +172,7 @@ export async function getScalingProjectEntry(
           }
         : undefined,
     badges: project.display.badges
-      .map((badge) => getBadgeWithParams(badge, project))
+      .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
   }

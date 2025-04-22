@@ -22,6 +22,12 @@ export const worldcoinsmtb: BaseProject = {
     isUnderReview: false,
     isUnverified: false,
   },
+  display: {
+    description:
+      'ZK program to add or delete users from the Worldcoin anonymity set.',
+    links: {},
+    badges: [],
+  },
   proofVerification: {
     shortDescription:
       'ZK program to add or delete users from the Worldcoin anonymity set.',

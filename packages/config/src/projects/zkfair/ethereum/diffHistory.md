@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x0b3d25ed69814c6fb756c24c2c0090adb9937059
+
+# Diff at Tue, 22 Apr 2025 07:14:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 22166672
+- current block number: 22322978
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166672 (main branch discovery), not current.
+
+```diff
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      name:
+-        "Bridge"
++        "OldBridge"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf7d12fae8f1a6f5eca7bda8230644a4d0ec6764c
 
 # Diff at Mon, 31 Mar 2025 11:42:43 GMT:

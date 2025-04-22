@@ -1,6 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { capitalize } from 'lodash'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -184,8 +184,11 @@ function CustomTooltip({
         <div>{formatTimestamp(label, { longMonthName: true })}</div>
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

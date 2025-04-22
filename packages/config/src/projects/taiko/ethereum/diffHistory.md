@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xecd6800dd7703f5141727f7d90cdfb34ca77f507
+
+# Diff at Fri, 18 Apr 2025 18:11:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 21973872
+- current block number: 22297586
+
+## Description
+
+Update RiscZeroGroth16Verifier.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.verifier_RISCZERO_GROTH16_VERIFIER:
+-        "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9"
++        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21973872 => .flat}/RiscZeroGroth16Verifier.sol         | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+```
+
 Generated with discovered.json: 0x905eec349be76b315b91b7ffab9eb55ce7e13103
 
 # Diff at Thu, 10 Apr 2025 14:43:26 GMT:

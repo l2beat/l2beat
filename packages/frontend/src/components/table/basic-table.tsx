@@ -58,7 +58,8 @@ export function BasicTable<T extends CommonProjectEntry>(
   assert(maxDepth <= 1, 'Only 1 level of headers is supported')
 
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
-  const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
+  const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
+  assert(actualHeader, 'Actual header is required')
 
   const rows = getTableRows(props.table)
   return (

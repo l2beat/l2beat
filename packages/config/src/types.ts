@@ -782,6 +782,8 @@ export interface BlockActivityConfig {
   type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
+  // how many blocks to fetch in single indexer tick
+  batchSize?: number
 }
 
 export type AdjustCount =

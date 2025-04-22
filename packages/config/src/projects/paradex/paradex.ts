@@ -80,7 +80,6 @@ export const paradex: ScalingProject = {
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
@@ -99,7 +98,22 @@ export const paradex: ScalingProject = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'paradex',
+    chainId: undefined,
+    gasTokens: ['ETH'],
+    apis: [
+      {
+        type: 'starknet',
+        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_7',
+        callsPerMinute: 120,
+      },
+    ],
+  },
   config: {
+    activityConfig: {
+      type: 'block',
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
@@ -307,6 +321,28 @@ export const paradex: ScalingProject = {
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
+    {
+      title: 'Perpetual Options Launch',
+      url: 'https://x.com/tradeparadex/status/1907041207177613610',
+      date: '2025-04-01T00:00:00Z',
+      description: 'Paradex opens perpetual options trading to all users.',
+      type: 'general',
+    },
+    {
+      title: 'Vaults Launched',
+      url: 'https://x.com/tradeparadex/status/1843550172443512998',
+      date: '2024-10-08T00:00:00Z',
+      description:
+        'Paradex launches Vaults, the future of on-chain investment management.',
+      type: 'general',
+    },
+    {
+      title: 'Paradex exits Open Beta',
+      url: 'https://x.com/tradeparadex/status/1854537396714651707',
+      date: '2024-11-07T00:00:00Z',
+      description: 'Paradex launches XP Warzone Season 1 and exits Open Beta.',
+      type: 'general',
+    },
     {
       title: 'Paradex starts using blobs',
       url: 'https://twitter.com/tradeparadex/status/1768306190596153799',

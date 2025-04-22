@@ -190,8 +190,6 @@ export interface ActivityConfigProject {
   id: ProjectId
   chainName: string
   activityConfig: ProjectActivityConfig
-  /** @deprecated This should somehow be configured differently */
-  batchSize: number
 }
 
 export interface MetricsAuthConfig {

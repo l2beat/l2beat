@@ -53,14 +53,14 @@ export function DaRiskTable({
   }
 
   const renderInlineSpanFill = ({ row }: { row: Row<DaRiskEntry> }) => {
-    if (row.original.bridges.length === 0) {
+    if (!row.original.bridges[0]) {
       return null
     }
 
     return (
       <BridgeCells
         excludeBridge={excludeBridge}
-        bridge={row.original.bridges[0]!}
+        bridge={row.original.bridges[0]}
       />
     )
   }

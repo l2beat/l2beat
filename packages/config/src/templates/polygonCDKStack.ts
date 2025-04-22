@@ -39,6 +39,7 @@ import type {
   ProjectActivityConfig,
   ProjectContract,
   ProjectCustomDa,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
   ProjectScalingCapability,
@@ -93,6 +94,22 @@ export interface PolygonCDKStackConfig {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  /** Set to true if projects posts blobs to Ethereum */
+  usesEthereumBlobs?: boolean
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export function polygonCDKStack(
@@ -193,6 +210,7 @@ export function polygonCDKStack(
           to: 'proofSubmissions',
         },
       },
+      daTracking: getDaTracking(templateVars),
       finality:
         templateVars.daProvider !== undefined
           ? undefined
@@ -455,4 +473,56 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
+}
+
+function getDaTracking(
+  templateVars: PolygonCDKStackConfig,
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
+  if (templateVars.usesEthereumBlobs) {
+    const polygonContract = templateVars.discovery.getContract('PolygonZkEVM')
+    const sequencer = templateVars.discovery.getContractValue<string>(
+      'PolygonZkEVM',
+      'trustedSequencer',
+    )
+
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: polygonContract.sinceBlock ?? 0,
+        inbox: polygonContract.address,
+        sequencers: [sequencer],
+      },
+    ]
+  }
+
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
