@@ -1,3 +1,303 @@
+Generated with discovered.json: 0xa668375aeb7b759453ec5f937692528e1ce169de
+
+# Diff at Tue, 22 Apr 2025 11:01:59 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 22297562
+- current block number: 22324112
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.6:
++        {"startBatchIndex":0,"verifier":"0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357"}
+      values.legacyVerifiersLength.6:
++        0
+      values.verifierVersions.6:
++        7
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe550fda323606a4b4fd2a05cf45dda231290e1d57a077828632c098fa0579161"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x3398c4e9f90ea456548cdcae1cc54faeeb87df22bb43f709500e759bb1ac5643"
+      values.$implementation:
+-        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
++        "0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868"
+      values.$pastUpgrades.2:
++        ["2023-10-08T16:25:23.000Z","0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e",["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]]
+      values.$pastUpgrades.1.2.0:
+-        "0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"
++        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
+      values.$pastUpgrades.1.1:
+-        "2023-10-08T16:25:23.000Z"
++        "2024-02-22T08:20:23.000Z"
+      values.$pastUpgrades.1.0:
+-        "0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e"
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
+-        ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
++        "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21"
+      values.$pastUpgrades.0.1:
+-        "2024-02-22T08:20:23.000Z"
++        "2025-04-22T06:01:35.000Z"
+      values.$pastUpgrades.0.0:
+-        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
++        ["0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868"]
+      values.$upgradeCount:
+-        2
++        3
+      values.messageQueue:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.messageQueueV1:
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.messageQueueV2:
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xcb83aeace6c4751da7d9340ffa2eff5c9c9fdf2e9c1f25d6bc2f31ffabfcb477"
++        "0x7e017c785ff8a5c9fce815594b0d7e7ced85dbc125ae000cd7babf1cfaefabf9"
+      values.$implementation:
+-        "0x642af405bF64660665B37977449C9C536B806318"
++        "0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc"
+      values.$pastUpgrades.1:
++        ["2025-04-22T06:01:35.000Z","0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21",["0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.messageQueue:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
++++ description: Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.
++++ severity: HIGH
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}
+      receivedPermissions.14.from:
+-        "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"
++        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
+      receivedPermissions.13.from:
+-        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
++        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
+      receivedPermissions.12.from:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+      receivedPermissions.11.from:
+-        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      receivedPermissions.10.from:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
+      receivedPermissions.9.from:
+-        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0x987e300fDfb06093859358522a79098848C33852"
+      receivedPermissions.8.from:
+-        "0x987e300fDfb06093859358522a79098848C33852"
++        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      receivedPermissions.7.from:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+      receivedPermissions.6.from:
+-        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      receivedPermissions.5.from:
+-        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
++        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
+      receivedPermissions.4.from:
+-        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
++        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      receivedPermissions.3.from:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      receivedPermissions.2.from:
+-        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      receivedPermissions.1.from:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes):
+-        ["emergency-nodelay"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.finalizeEuclidInitialBatch(bytes32):
+-        ["SECURITY_COUNCIL_NO_DELAY_ROLE"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes):
++        ["emergency-nodelay"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.disableEnforcedBatchMode():
++        ["SECURITY_COUNCIL_NO_DELAY_ROLE"]
+      values.accessControl.targets.0x8432728A257646449245558B8b7Dbe51A16c7a4D:
++        {"updateMessageQueueParameters((uint32,uint112,uint112))":["ops-fast"],"updateEnforcedBatchParameters((uint24,uint24))":["ops-fast"],"updateSigner(address)":["emergency-nodelay"]}
+      values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d:
++        {"setPause(bool)":["emergency-nodelay"]}
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x2d7fa796a8274772f3ee8143549252719d97cf0dafeaf769802b66b51a195041"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306"
+      values.$implementation:
+-        "0x8f339292d2b3909574B2bEB051a613a987dB538f"
++        "0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"
+      values.$pastUpgrades.6:
++        ["2025-04-15T14:47:23.000Z","0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0",["0x8f339292d2b3909574B2bEB051a613a987dB538f"]]
+      values.$pastUpgrades.5.2:
+-        "2025-04-15T14:47:23.000Z"
++        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
+      values.$pastUpgrades.5.1:
+-        "0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0"
++        ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
+      values.$pastUpgrades.5.0:
+-        ["0x8f339292d2b3909574B2bEB051a613a987dB538f"]
++        "2024-08-20T23:36:35.000Z"
+      values.$pastUpgrades.4.2:
+-        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
++        "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21"
+      values.$pastUpgrades.4.1.0:
+-        "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"
++        "0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"
+      values.$pastUpgrades.4.0:
+-        "2024-08-20T23:36:35.000Z"
++        "2025-04-22T06:01:35.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.messageQueue:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.isEnforcedModeEnabled:
++        false
+      values.messageQueueV1:
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.messageQueueV2:
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+      values.miscData:
++        {"lastCommittedBatchIndex":358169,"lastFinalizedBatchIndex":358166,"lastFinalizeTimestamp":1745316335,"flags":1,"reserved":0}
+      values.systemConfig:
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.16:
++        {"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"}
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515"}
+      directlyReceivedPermissions.14.from:
+-        "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"
++        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
+      directlyReceivedPermissions.13.from:
+-        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
++        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
+      directlyReceivedPermissions.12.from:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+      directlyReceivedPermissions.11.from:
+-        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      directlyReceivedPermissions.10.from:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
+      directlyReceivedPermissions.9.from:
+-        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0x987e300fDfb06093859358522a79098848C33852"
+      directlyReceivedPermissions.8.from:
+-        "0x987e300fDfb06093859358522a79098848C33852"
++        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      directlyReceivedPermissions.7.from:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+      directlyReceivedPermissions.6.from:
+-        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      directlyReceivedPermissions.5.from:
+-        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
++        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
+      directlyReceivedPermissions.4.from:
+-        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
++        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      directlyReceivedPermissions.3.from:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      directlyReceivedPermissions.2.from:
+-        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      directlyReceivedPermissions.1.from:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid (0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1MessageQueueV2 (0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xf5bABa891e6De03540ecfb1917B8F07112A45a83)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../EnforcedTxGateway/EnforcedTxGateway.sol        |   79 +-
+ .../.flat/L1MessageQueueV2/L1MessageQueueV2.sol    | 1013 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++++++++++++
+ .../L1ScrollMessenger/L1ScrollMessenger.sol        |   43 +-
+ .../ScrollChain/ScrollChain.sol                    |  652 ++++++++++---
+ .../ethereum/.flat/SystemConfig/SystemConfig.sol   |  545 +++++++++++
+ .../SystemConfig/TransparentUpgradeableProxy.p.sol |  729 ++++++++++++++
+ ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |    0
+ ...-0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357.sol |  102 ++
+ 9 files changed, 3746 insertions(+), 146 deletions(-)
+```
+
 Generated with discovered.json: 0x2887456bb2991e89b8f1b0fc8bc81c437d6fc89c
 
 # Diff at Fri, 18 Apr 2025 18:06:50 GMT:

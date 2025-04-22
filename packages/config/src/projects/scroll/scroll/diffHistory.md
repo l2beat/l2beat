@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x1e364d0ac4a5f2e107fe1c38d097a2ace9744ee0
+
+# Diff at Tue, 22 Apr 2025 12:25:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 14489756
+- current block number: 14912771
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14489756 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: None
+      values.accessControl:
++        {"roles":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"]},"SECURITY_COUNCIL_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]},"SCROLL_MULTISIG_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"EMERGENCY_MULTISIG_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_1DAY_DELAY_TOLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_7DAY_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"emergency-nodelay":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"]},"ops-fast":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"]}},"targets":{"0xA76acF000C890b0DD7AEEf57627d9899F955d026":{"upgrade(address,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"upgradeAndCall(address,address,bytes)":["SECURITY_COUNCIL_NO_DELAY_ROLE"]},"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81":{"upgrade(address,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"upgradeAndCall(address,address,bytes)":["SECURITY_COUNCIL_NO_DELAY_ROLE"]},"0x5300000000000000000000000000000000000003":{"updateWhitelistStatus(address[],bool)":["emergency-nodelay"]},"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC":{"setPause(bool)":["emergency-nodelay"]},"0x33B60d5Dd260d453cAC3782b0bDC01ce84672142":{"pauseDeposit(bool)":["emergency-nodelay"],"pauseWithdraw(bool)":["emergency-nodelay"],"updateCircleCaller(address)":["ops-fast"]},"0x5300000000000000000000000000000000000002":{"setOverhead(uint256)":["ops-fast"],"setCommitScalar(uint256)":["ops-fast"],"setBlobScalar(uint256)":["ops-fast"]},"0x5300000000000000000000000000000000000005":{"updateMinWithdrawAmount(uint256)":["ops-fast"],"updateRecipient(address)":["ops-fast"]},"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79":{"setERC20Gateway(address[],address[])":["ops-fast"]},"0x64CCBE37c9A82D85A1F2E74649b7A42923067988":{"updateTokenMapping(address,address)":["ops-fast"]},"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582":{"updateTokenMapping(address,address)":["ops-fast"]},"0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc":{"updateTokenMapping(address,address)":["ops-fast"]},"0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4":{"transferOwnership(address)":["ops-fast"]},"0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE":{"transferOwnership(address)":["ops-fast"]},"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC":{"withdrawFailedAmount(address,address)":["ops-fast"],"grantRole(bytes32,address)":["ops-fast"],"revokeRole(bytes32,address)":["ops-fast"]}}}
+    }
+```
+
+```diff
+    contract TimelockController (0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f","0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x1f807E2E8ab2e61230a0A9C271F90242831278b4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x03b847c424c07f740148152dd789cace71e817bd
 
 # Diff at Sun, 06 Apr 2025 08:18:52 GMT:

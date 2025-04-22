@@ -1,11 +1,16 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 14489756,
-  "configHash": "0xb81db4b41f17ff28e5ccf38400dedd8c6424e48c18d4f411875e5db58dc0ba35",
+  "blockNumber": 14912771,
+  "configHash": "0xf0ca42871dbac193514a12630de241331140e9ac82446dea8b02202d9e39d686",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -117,6 +122,99 @@
       "sinceBlock": 4,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "roles": {
+            "DEFAULT_ADMIN_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": ["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"]
+            },
+            "SECURITY_COUNCIL_NO_DELAY_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": ["0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]
+            },
+            "SCROLL_MULTISIG_NO_DELAY_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": []
+            },
+            "EMERGENCY_MULTISIG_NO_DELAY_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": []
+            },
+            "TIMELOCK_1DAY_DELAY_TOLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": []
+            },
+            "TIMELOCK_7DAY_DELAY_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": []
+            },
+            "emergency-nodelay": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": ["0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"]
+            },
+            "ops-fast": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": ["0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"]
+            }
+          },
+          "targets": {
+            "0xA76acF000C890b0DD7AEEf57627d9899F955d026": {
+              "upgrade(address,address)": ["SECURITY_COUNCIL_NO_DELAY_ROLE"],
+              "upgradeAndCall(address,address,bytes)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE"
+              ]
+            },
+            "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81": {
+              "upgrade(address,address)": ["SECURITY_COUNCIL_NO_DELAY_ROLE"],
+              "upgradeAndCall(address,address,bytes)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE"
+              ]
+            },
+            "0x5300000000000000000000000000000000000003": {
+              "updateWhitelistStatus(address[],bool)": ["emergency-nodelay"]
+            },
+            "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
+              "setPause(bool)": ["emergency-nodelay"]
+            },
+            "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": {
+              "pauseDeposit(bool)": ["emergency-nodelay"],
+              "pauseWithdraw(bool)": ["emergency-nodelay"],
+              "updateCircleCaller(address)": ["ops-fast"]
+            },
+            "0x5300000000000000000000000000000000000002": {
+              "setOverhead(uint256)": ["ops-fast"],
+              "setCommitScalar(uint256)": ["ops-fast"],
+              "setBlobScalar(uint256)": ["ops-fast"]
+            },
+            "0x5300000000000000000000000000000000000005": {
+              "updateMinWithdrawAmount(uint256)": ["ops-fast"],
+              "updateRecipient(address)": ["ops-fast"]
+            },
+            "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": {
+              "setERC20Gateway(address[],address[])": ["ops-fast"]
+            },
+            "0x64CCBE37c9A82D85A1F2E74649b7A42923067988": {
+              "updateTokenMapping(address,address)": ["ops-fast"]
+            },
+            "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": {
+              "updateTokenMapping(address,address)": ["ops-fast"]
+            },
+            "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": {
+              "updateTokenMapping(address,address)": ["ops-fast"]
+            },
+            "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": {
+              "transferOwnership(address)": ["ops-fast"]
+            },
+            "0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE": {
+              "transferOwnership(address)": ["ops-fast"]
+            },
+            "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC": {
+              "withdrawFailedAmount(address,address)": ["ops-fast"],
+              "grantRole(bytes32,address)": ["ops-fast"],
+              "revokeRole(bytes32,address)": ["ops-fast"]
+            }
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "derivedName": "ScrollOwner"
@@ -167,9 +265,141 @@
       "proxyType": "EOA"
     },
     {
+      "name": "TimelockController",
+      "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1730295071,
+      "sinceBlock": 10662938,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 0,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "derivedName": "TimelockController"
+    },
+    {
+      "name": "Scroll Multisig 1",
+      "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1696921139,
+      "sinceBlock": 198,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
+          "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
+          "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
+          "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x3c1c8289504b61cac5885c3d77180adebd3efcde75abfd92bb93d7c22ef71bf9",
+        "getChainId": 534352,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 4 (25%)",
+        "nonce": 15,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "address": "0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockController",
+      "address": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696918064,
+      "sinceBlock": 5,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+              "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 86400,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "derivedName": "TimelockController"
     },
     {
       "name": "GnosisSafeL2",
@@ -328,9 +558,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xb40a147623c54c169fa416797ebfb433ffa513bdb4f788c2b40bd84ee44da29e",
+        "messageRoot": "0x2b943287b99f4d7ace43f46ab9392fcb2292691cbf5cbed8bfb3cb7f29cec88c",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 203355,
+        "nextMessageIndex": 203964,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "derivedName": "L2MessageQueue"
@@ -521,6 +751,41 @@
       "sinceBlock": 8963444,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+              "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+            ]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -646,6 +911,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD",
       "type": "EOA",
       "proxyType": "EOA"
@@ -686,6 +956,52 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "name": "TimelockController",
+      "address": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1730295517,
+      "sinceBlock": 10663087,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+              "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 0,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "derivedName": "TimelockController"
+    },
+    {
       "address": "0xaFb4c32eCb8e4a86363a2fb2Fa27982fbd21ac32",
       "type": "EOA",
       "proxyType": "EOA"
@@ -704,6 +1020,38 @@
       "address": "0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Scroll Multisig 2",
+      "address": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1696921130,
+      "sinceBlock": 196,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
+          "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
+          "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
+          "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x01958bc76f8f37a78dc2cc3d55599b3272496041a7cf25da7f6586bdd9773700",
+        "getChainId": 534352,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 28,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0xc1985e3712b33a5303e097e9CeD22E91338ba64d",
@@ -916,6 +1264,11 @@
       "derivedName": "L2StandardERC20Gateway"
     },
     {
+      "address": "0xE2e6345baAD18f779167443Dc4886495507b3249",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -926,7 +1279,65 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Scroll Multisig 3",
+      "address": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1696921121,
+      "sinceBlock": 194,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xFCf6364F5157901f533DD3615A5d8c375F13c072",
+          "0xE2e6345baAD18f779167443Dc4886495507b3249",
+          "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
+          "0xfc31892C5500AbE00974280b28907BaA9190E384",
+          "0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x2da259468fe80a1de4ef3b7c82f8f7156ab4a8aa9572c765f3e977f1e2aa23a9",
+        "getChainId": 534352,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 5 (80%)",
+        "nonce": 13,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "address": "0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xfc31892C5500AbE00974280b28907BaA9190E384",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFCf6364F5157901f533DD3615A5d8c375F13c072",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -997,6 +1408,48 @@
     "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": [
       "constructor(address _singleton)"
     ],
+    "0x1f807E2E8ab2e61230a0A9C271F90242831278b4": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": [
+      "constructor(address _singleton)"
+    ],
     "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1045,6 +1498,45 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
     ],
     "0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351": [
       "constructor(address _singleton)"
@@ -1392,6 +1884,48 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
+      "constructor(address _singleton)"
+    ],
     "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": [
       "constructor(address _singleton)"
     ],
@@ -1517,6 +2051,55 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -1533,6 +2116,9 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": [
+      "constructor(address _singleton)"
     ],
     "0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": [
       "error AlreadyInit()",
