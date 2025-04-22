@@ -36,7 +36,6 @@ import { mindchain } from '../projects/mindchain/mindchain'
 import { molten } from '../projects/molten/molten'
 import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
-import { mxc } from '../projects/mxc/mxc'
 import { nums } from '../projects/nums/nums'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
@@ -62,6 +61,7 @@ import { winr } from '../projects/winr/winr'
 import { xai } from '../projects/xai/xai'
 import { xrone } from '../projects/xrone/xrone'
 import { zklinknova } from '../projects/zklinknova/zklinknova'
+import { moonchain } from '../projects/moonchain/moonchain'
 
 export const layer3s: ScalingProject[] = [
   anomaly,
@@ -114,7 +114,7 @@ export const layer3s: ScalingProject[] = [
   molten,
   muster,
   mvchain,
-  mxc,
+  moonchain,
   nums,
   unite,
   vessel,
