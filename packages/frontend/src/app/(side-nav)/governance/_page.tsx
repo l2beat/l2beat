@@ -1,0 +1,93 @@
+import { CustomLink } from '~/components/link/custom-link'
+import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
+import type { CollectionEntry } from '~/content/get-collection'
+import { CustomLinkIcon } from '~/icons/outlink'
+import { GovernanceHeaderIllustration } from './_assets/governance-header'
+import { GovernanceEventsSection } from './_components/sections/governance-events-section'
+import { OfficeHoursSection } from './_components/sections/office-hours-section'
+import { OurApproachSection } from './_components/sections/our-approach-section'
+import { OurMissionSection } from './_components/sections/our-mission-section'
+import { RecentPublicationsSection } from './_components/sections/recent-publications-section'
+import type { GovernanceEventEntry } from './_utils/get-governance-event-entries'
+import type { GovernancePublicationEntry } from './_utils/get-governance-publication-entry'
+import Image from 'next/image'
+
+interface GovernancePageProps {
+  publications: GovernancePublicationEntry[]
+  events: GovernanceEventEntry[]
+  delegatedProjects: CollectionEntry<'delegated-projects'>[]
+}
+export function GovernancePage({
+  publications,
+  events,
+  delegatedProjects,
+}: GovernancePageProps) {
+  return (
+    <>
+      <MainPageHeader>Governance</MainPageHeader>
+      <Header delegatedProjects={delegatedProjects} />
+      <main>
+        <div className="grid md:mt-6 md:gap-6 lg:grid-cols-8 lg:gap-6 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
+          <RecentPublicationsSection publications={publications} />
+          <OfficeHoursSection />
+          <GovernanceEventsSection
+            events={events}
+            className="lg:col-span-full"
+          />
+          <OurApproachSection className="lg:col-span-4" />
+          <OurMissionSection className="lg:col-span-4" />
+        </div>
+      </main>
+    </>
+  )
+}
+
+function Header({
+  delegatedProjects,
+}: { delegatedProjects: CollectionEntry<'delegated-projects'>[] }) {
+  return (
+    <PrimaryCard className="md:p-8">
+      <h1 className="mb-4 text-3xl font-bold md:hidden">Governance</h1>
+      <div className="flex w-full items-center justify-between gap-5">
+        <div className="flex flex-col gap-6">
+          <p className="paragraph-18">
+            By delegating your governance votes to L2BEAT, you&apos;re
+            supporting our mission to protect the interests of the Ethereum
+            community and uphold our shared values. Together, we can lead the L2
+            ecosystem towards a safer, more secure decentralized future.
+          </p>
+          <div className="flex flex-col gap-2.5">
+            <span className="text-xs font-medium uppercase tracking-[-0.14px] text-purple-100 dark:text-pink-200">
+              Delegate your tokens
+            </span>
+            <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
+              {delegatedProjects.map((delegatedProject) => (
+                <CustomLink
+                  key={delegatedProject.id}
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary p-2 text-xs tracking-[-0.14px] md:w-fit"
+                  href={delegatedProject.data.delegateTokensUrl}
+                  underline={false}
+                >
+                  <Image
+                    alt={`Logo of ${delegatedProject.data.name}`}
+                    width={20}
+                    height={20}
+                    src={`/icons/${delegatedProject.data.slug}.png`}
+                  />
+                  {delegatedProject.data.name}
+                  <CustomLinkIcon className="fill-current" />
+                </CustomLink>
+              ))}
+            </div>
+          </div>
+          <p className="paragraph-15">
+            If you&apos;d like to see us act as a delegate in another protocol,
+            please let us know and we&apos;ll see what we can do.
+          </p>
+        </div>
+        <GovernanceHeaderIllustration className="hidden h-full min-w-[434px] lg:block" />
+      </div>
+    </PrimaryCard>
+  )
+}

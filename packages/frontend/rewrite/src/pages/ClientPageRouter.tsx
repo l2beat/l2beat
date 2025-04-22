@@ -8,6 +8,7 @@ import { DataAvailabilityThroughputPage } from './data-availability/throughput/D
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
+import { GovernancePage } from './governance/GovernancePage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -52,6 +53,8 @@ const pages = {
   // ZK Catalog
   ZkCatalogPage,
   ZkCatalogProjectPage,
+  // Governance
+  GovernancePage,
   // Side pages
   FaqPage,
   GlossaryPage,

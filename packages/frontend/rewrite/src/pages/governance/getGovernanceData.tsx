@@ -1,0 +1,50 @@
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import type { RenderData } from 'rewrite/src/ssr/server'
+import { getGovernanceEventEntries } from '~/app/(side-nav)/governance/_utils/get-governance-event-entries'
+import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
+import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
+import { getCollection } from '~/content/get-collection'
+
+export async function getGovernanceData(
+  manifest: Manifest,
+): Promise<RenderData> {
+  const searchBarProjects = await getSearchBarProjects()
+  const publications = getCollection('publications')
+    .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
+    .slice(0, 4)
+  const publicationEntries = publications.map(getGovernancePublicationEntry)
+
+  const events = getCollection('events')
+  const allEventEntries = getGovernanceEventEntries(events)
+  const nearestEventIndex = allEventEntries.findIndex(
+    (e) => e.startDate > new Date(),
+  )
+  const eventEntries = allEventEntries.slice(
+    nearestEventIndex,
+    nearestEventIndex + 8,
+  )
+  const delegatedProjects = getCollection('delegated-projects')
+  return {
+    head: {
+      manifest,
+      title: 'Glossary - L2BEAT',
+      description: "A glossary of terms for Ethereum's Layer 2 ecosystem",
+    },
+    ssr: {
+      page: 'GovernancePage',
+      props: {
+        publications: publicationEntries,
+        events: eventEntries,
+        delegatedProjects,
+        terms: getCollection('glossary').map((term) => ({
+          id: term.id,
+          matches: [term.data.term, ...(term.data.match ?? [])],
+        })),
+        searchBarProjects: searchBarProjects.map((p) => ({
+          ...p,
+          iconUrl: manifest.getUrl(p.iconUrl),
+        })),
+      },
+    },
+  }
+}
