@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa668375aeb7b759453ec5f937692528e1ce169de
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 
 ## Watched changes
 
