@@ -10,7 +10,7 @@ export function DataAvailabilityRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  DataAvailabilityRiskRouter(app, manifest, render)
   DataAvailabilitySummaryRouter(app, manifest, render)
+  DataAvailabilityRiskRouter(app, manifest, render)
   DataAvailabilityThroughputRouter(app, manifest, render)
 }

@@ -47,8 +47,8 @@ const pages = {
   BridgesRiskPage,
   BridgesArchivedPage,
   // Data Availability
-  DataAvailabilityRiskPage,
   DataAvailabilitySummaryPage,
+  DataAvailabilityRiskPage,
   DataAvailabilityThroughputPage,
 }
 
