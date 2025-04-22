@@ -3,6 +3,7 @@ import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesRiskPage } from './bridges/risk/BridgesRiskPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
+import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
@@ -45,6 +46,7 @@ const pages = {
   BridgesRiskPage,
   BridgesArchivedPage,
   // Data Availability
+  DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
 }
 
