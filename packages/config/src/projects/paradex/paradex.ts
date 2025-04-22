@@ -283,7 +283,7 @@ export const paradex: ScalingProject = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: false,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       principle: false,
@@ -298,7 +298,19 @@ export const paradex: ScalingProject = {
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },
-  }),
+  },
+  {
+    rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
+  },),
+  stateDerivation: {
+    nodeSoftware:
+      'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
+    compressionScheme:
+      'Paradex uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
+    genesisState: 'There is no non-empty genesis state.',
+    dataFormat:
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
+  },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
