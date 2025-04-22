@@ -22,6 +22,11 @@ export const worldcoinsemaphore: BaseProject = {
     isUnderReview: false,
     isUnverified: false,
   },
+  display: {
+    description: 'Anonymity set inclusion checker for the Worldcoin network.',
+    links: {},
+    badges: [],
+  },
   proofVerification: {
     shortDescription:
       'Anonymity set inclusion checker for the Worldcoin network.',

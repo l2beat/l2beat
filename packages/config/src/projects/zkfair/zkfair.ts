@@ -119,7 +119,7 @@ export const zkfair: ScalingProject = {
     slug: 'zkfair',
     purposes: ['Universal'],
     redWarning:
-      'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA](https://etherscan.io/address/0x4ea1f0f05e7484ee85a97303dc88c2df4288df3e).',
+      'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA, then deposited to AAVE](https://etherscan.io/address/0x4ea1f0f05e7484ee85a97303dc88c2df4288df3e). They were subsequently withdrawn and [moved to a new contract](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed). Related [tweet by the ZKFair team](https://x.com/ZKFCommunity/status/1910329561105252694).',
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
@@ -137,8 +137,14 @@ export const zkfair: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
+        address: EthereumAddress('0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e'),
+        sinceTimestamp: UnixTime(1744292087),
+        tokens: '*',
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x9cb4706e20A18E59a48ffa7616d700A3891e1861'),
         sinceTimestamp: UnixTime(1702879283),
+        untilTimestamp: UnixTime(1744292087), // funds sweeped to EOA, then [resupplied to an unverified bridge escrow](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed)
         tokens: '*',
       }),
     ],
@@ -323,8 +329,11 @@ export const zkfair: ScalingProject = {
           ],
         }),
         discovery.getContractDetails('Bridge', {
+          description: 'The current escrow contract for user funds.',
+        }),
+        discovery.getContractDetails('OldBridge', {
           description:
-            'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer ERC20 assets. To transfer funds a user initiated transaction on both sides is required.',
+            'Deprecated! Was the escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer ERC20 assets. To transfer funds a user initiated transaction on both sides is required.',
           ...timelockUpgrades,
         }),
         discovery.getContractDetails('GlobalExitRoot', {

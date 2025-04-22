@@ -290,7 +290,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "bob-uniBTC",
       "priceId": "universal-btc",
       "symbol": "uniBTC",
@@ -302,6 +302,47 @@
         "chain": "bob",
         "decimals": 8,
         "sinceTimestamp": 1724924845
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "universal-btc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
+              "chain": "bob",
+              "decimals": 8,
+              "sinceTimestamp": 1724924845
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ignition-fbtc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+              "chain": "bob",
+              "decimals": 8,
+              "escrowAddress": "0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf",
+              "sinceTimestamp": 1724924845
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+              "chain": "bob",
+              "decimals": 8,
+              "escrowAddress": "0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf",
+              "sinceTimestamp": 1724924845
+            }
+          }
+        ]
       },
       "category": "other",
       "source": "external",

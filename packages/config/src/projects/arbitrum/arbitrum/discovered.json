@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 316974509,
+  "blockNumber": 329029286,
   "configHash": "0xbdbecc0dd48a94b3a91419f34638a4dc9308beea002b8d29ab119cb15e8f4532",
   "entries": [
     {
@@ -81,7 +81,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 31195,
+        "exitNum": 32307,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway",
@@ -1328,11 +1328,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xC3514C143Df27eB29AC4c56c59A260713B841BDd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xc43a77b64b34551beA865C9E85A116B444EF44B1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1358,15 +1353,14 @@
           "0xc43a77b64b34551beA865C9E85A116B444EF44B1",
           "0x25032D068633cfbe52c134EBdD965b2C2B4C2710",
           "0x0adc7D8eB4C01219858a579C9539780CD9575035",
-          "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2",
-          "0xC3514C143Df27eB29AC4c56c59A260713B841BDd"
+          "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
         ],
         "$threshold": 3,
         "domainSeparator": "0xe4f0ec755d38a2bdac77c78b062de0dd8c27b669b85a64db9795ff13d57e3f18",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 6,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1415,7 +1409,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2023,
+        "exitNum": 2046,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway",

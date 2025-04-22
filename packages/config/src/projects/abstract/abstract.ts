@@ -66,6 +66,7 @@ export const abstract: ScalingProject = zkStackL2({
       },
     }),
   ],
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
