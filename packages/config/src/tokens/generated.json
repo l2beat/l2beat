@@ -10477,6 +10477,28 @@
       }
     },
     {
+      "name": "ApeCoin",
+      "coingeckoId": "apecoin",
+      "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+      "symbol": "APE",
+      "decimals": 18,
+      "deploymentTimestamp": 1724803954,
+      "coingeckoListingTimestamp": 1647475200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "zero",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",

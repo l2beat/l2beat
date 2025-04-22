@@ -2215,6 +2215,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "APE",
+      "coingeckoId": "apecoin",
+      "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+      "source": "external",
+      "supply": "zero", // preminted to Apechain L3
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "FLY",
       "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",
       "source": "native",
