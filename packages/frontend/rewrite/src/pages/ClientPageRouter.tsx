@@ -2,6 +2,7 @@ import { AboutUsPage } from './about/AboutUsPage'
 import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesRiskPage } from './bridges/risk/BridgesRiskPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
+import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
@@ -43,6 +44,8 @@ const pages = {
   BridgesSummaryPage,
   BridgesRiskPage,
   BridgesArchivedPage,
+  // Data Availability
+  DataAvailabilityRiskPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
