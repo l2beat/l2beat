@@ -115,7 +115,7 @@
         "isBatchFinalized",
         "withdrawRoots"
       ],
-      "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
+      "ignoreInWatchMode": ["miscData","lastFinalizedBatchIndex"],
       "fields": {
         "sequencers": {
           "handler": {
@@ -309,6 +309,10 @@
       "manualSourcePaths": {
         "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
       }
+    },
+    "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": {
+      "ignoreMethods": ["estimateCrossDomainMessageFee", "getMessageEnqueueTimestamp", "getMessageRollingHash"],
+      "ignoreInWatchMode": ["getFirstUnfinalizedMessageEnqueueTime", "nextCrossDomainMessageIndex", "nextUnfinalizedQueueIndex"]
     }
   }
 }
