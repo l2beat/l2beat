@@ -17,10 +17,13 @@
       ]
     }
   },
-  "ignoreMethods": ["headerBlocks"],
+  "ignoreMethods": [
+    "headerBlocks"
+  ],
   "ignoreInWatchMode": [
     "_nextHeaderBlock",
     "getLastChildBlock",
     "currentHeaderBlock"
-  ]
+  ],
+  "category": "core"
 }

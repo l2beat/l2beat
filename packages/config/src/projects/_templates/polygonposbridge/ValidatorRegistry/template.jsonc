@@ -6,9 +6,10 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "it can update the whitelist of validators"
+          "description": "can update the whitelist of validators"
         }
       ]
     }
-  }
+  },
+  "category": "core"
 }

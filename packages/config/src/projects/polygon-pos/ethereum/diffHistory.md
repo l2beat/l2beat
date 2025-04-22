@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x037039735c1173bdb2e867327224cc45a0509714
+Generated with discovered.json: 0xea113c00110c69c6b3fcd0a5b5e93ab4d9b826f5
 
-# Diff at Tue, 22 Apr 2025 11:50:50 GMT:
+# Diff at Tue, 22 Apr 2025 12:34:00 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@bbb76c9f77fad4b15762021b65f1caa97ff57da6 block: 22265851
@@ -17,12 +17,22 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22265851 (main branch discovery), not current.
 
 ```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
     contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
     +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
       template:
 +        "polygonposbridge/WithdrawManager"
       description:
 +        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -31,6 +41,22 @@ discovery. Values are for block 22265851 (main branch discovery), not current.
     +++ description: None
       template:
 +        "polygonposbridge/StakingNFT"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 

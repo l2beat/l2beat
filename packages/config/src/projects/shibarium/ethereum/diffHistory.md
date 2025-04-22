@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7b112ce6ff18c5d09ccf339570a4b9247eeea1cf
+Generated with discovered.json: 0x04c768105da91e62c392797603ca17c6dc066d97
 
-# Diff at Tue, 22 Apr 2025 11:50:24 GMT:
+# Diff at Tue, 22 Apr 2025 12:33:40 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@bbb76c9f77fad4b15762021b65f1caa97ff57da6 block: 22266722
-- current block number: 22324355
+- current block number: 22324571
 
 ## Description
 
@@ -37,6 +37,14 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22266722 (main branch discovery), not current.
 
 ```diff
+    contract StateSender (0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C) {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
     contract WithdrawalManager (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) {
     +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
       unverified:
@@ -47,6 +55,8 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 +        ["0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c","0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0"]
       description:
 +        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -132,6 +142,8 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 +        "polygonposbridge/StakeManager_shibarium"
       sourceHashes:
 +        ["0x315e4278520bf097047cc2be4371ac60125bba1043fa4e97e7054988fe3ba503","0x0e16b120e42fc8b8c6ed46c538b263aa895b463415254eba82cc25e7d104a136"]
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -163,37 +175,37 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 +        "interact"
       receivedPermissions.5.from:
 -        "0xc3897302aB4B42931cB4857050Fa60f53B775870"
-+        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
++        "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6"
       receivedPermissions.5.description:
-+        "can delete arbitrary checkpoints."
++        "can update the whitelist of validators"
       receivedPermissions.4.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.4.from:
 -        "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
-+        "0x17174796E0eF24330aed565c87Ba5e85431DE19e"
++        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
       receivedPermissions.4.description:
-+        "can update the validator registry address used to check whitelist inclusion."
++        "can delete arbitrary checkpoints."
       receivedPermissions.3.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.3.from:
 -        "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
-+        "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce"
++        "0x17174796E0eF24330aed565c87Ba5e85431DE19e"
       receivedPermissions.3.description:
-+        "can update how much of the slashed funds go to the proposer and reporter."
++        "can update the validator registry address used to check whitelist inclusion."
       receivedPermissions.2.from:
 -        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
-+        "0x65218A41Fb92637254B4f8c97448d3dF343A3064"
++        "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce"
       receivedPermissions.2.description:
 -        "can delete arbitrary checkpoints."
-+        "can replace all validators."
++        "can update how much of the slashed funds go to the proposer and reporter."
       receivedPermissions.1.from:
 -        "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce"
-+        "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6"
++        "0x65218A41Fb92637254B4f8c97448d3dF343A3064"
       receivedPermissions.1.description:
 -        "can update how much of the slashed funds go to the proposer and reporter."
-+        "it can update the whitelist of validators"
++        "can replace all validators."
     }
 ```
 
@@ -208,6 +220,22 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 +        "0x6d"
       sourceHashes:
 +        ["0xd28d2832fa5e35e810073b99fcec18faf119bfc95223abc05bfb353a1f90dfd3"]
+    }
+```
+
+```diff
+    contract Governance (0xC476E20c2F7FA3B35aC242aBE71B59e902242f06) {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RootChain (0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 

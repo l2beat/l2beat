@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
   "chain": "ethereum",
-  "blockNumber": 22324355,
+  "blockNumber": 22324571,
   "configHash": "0x51e94a1b7cde4e6bf1f01abc5ff018f6ae087791fbe66b4b1abb46c62437d9c7",
   "entries": [
     {
@@ -259,7 +259,8 @@
         "validatorThreshold": 0,
         "WITHDRAWAL_DELAY": 0
       },
-      "derivedName": "StakeManagerExtension"
+      "derivedName": "StakeManagerExtension",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Merkle",
@@ -298,7 +299,8 @@
           "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
         ]
       },
-      "derivedName": "StateSender"
+      "derivedName": "StateSender",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "StakingNFT",
@@ -379,7 +381,7 @@
         {
           "permission": "interact",
           "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "it can update the whitelist of validators",
+          "description": "can update the whitelist of validators",
           "via": []
         }
       ],
@@ -391,7 +393,8 @@
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "validatorWhitelistingEnable": true
       },
-      "derivedName": "ValidatorRegistry"
+      "derivedName": "ValidatorRegistry",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "WithdrawalManager",
@@ -418,7 +421,8 @@
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2
       },
-      "derivedName": "WithdrawManager"
+      "derivedName": "WithdrawManager",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "StakeManager",
@@ -531,7 +535,8 @@
         "WITHDRAWAL_DELAY": 1,
         "withdrawalDelay": 1
       },
-      "derivedName": "StakeManager"
+      "derivedName": "StakeManager",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ERC20Predicate",
@@ -614,7 +619,7 @@
         {
           "permission": "interact",
           "from": "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
-          "description": "it can update the whitelist of validators"
+          "description": "can update the whitelist of validators"
         },
         {
           "permission": "interact",
@@ -907,7 +912,8 @@
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2
       },
-      "derivedName": "Governance"
+      "derivedName": "Governance",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "RootChain",
@@ -955,7 +961,8 @@
         "proxyType": 2,
         "VOTE_TYPE": 2
       },
-      "derivedName": "RootChain"
+      "derivedName": "RootChain",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ERC20Predicate",
@@ -1862,7 +1869,7 @@
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
-    "polygonposbridge/ValidatorRegistry": "0xc97a67e64ddf8f3e5dc72e67748329f83b0761b4c53aec00099f26c864953730",
+    "polygonposbridge/ValidatorRegistry": "0x6d525dc05290b0183414a4731a6dc9236e6d96841b6b657bae95deebeddee807",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

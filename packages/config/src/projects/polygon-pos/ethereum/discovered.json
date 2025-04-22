@@ -150,7 +150,8 @@
           "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
         ]
       },
-      "derivedName": "StateSender"
+      "derivedName": "StateSender",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "WithdrawManager",
@@ -177,7 +178,8 @@
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2
       },
-      "derivedName": "WithdrawManager"
+      "derivedName": "WithdrawManager",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "MintableERC1155Predicate",
@@ -698,7 +700,8 @@
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2
       },
-      "derivedName": "Governance"
+      "derivedName": "Governance",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ValidatorShare",
@@ -862,7 +865,8 @@
         "proxyType": 2,
         "VOTE_TYPE": 2
       },
-      "derivedName": "RootChain"
+      "derivedName": "RootChain",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
