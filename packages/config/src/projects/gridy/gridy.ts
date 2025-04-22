@@ -101,7 +101,7 @@ export const gridy: ScalingProject = {
         callsItselfRollup: true,
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
+        rollupNodeSourceAvailable: false,
       },
       stage1: {
         principle: false,
