@@ -26,6 +26,7 @@ export const gridy: ScalingProject = {
       BADGES.VM.CairoVM,
       BADGES.Stack.SNStack,
       BADGES.Infra.SHARP,
+      BADGES.RaaS.Karnot
     ],
   display: {
     name: 'Gridy',
