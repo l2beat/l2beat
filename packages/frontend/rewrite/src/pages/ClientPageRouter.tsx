@@ -3,6 +3,7 @@ import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ActivityPage } from './scaling/activity/ActivityPage'
 import { DataAvailabilityPage } from './scaling/data-availability/DataAvailabilityPage'
+import { FinalityPage } from './scaling/finality/FinalityPage'
 import { LivenessPage } from './scaling/liveness/LivenessPage'
 import { RiskPage } from './scaling/risk/RiskPage'
 import { SummaryPage } from './scaling/summary/SummaryPage'
@@ -28,6 +29,7 @@ const pages = {
   TvsPage,
   DataAvailabilityPage,
   LivenessPage,
+  FinalityPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
