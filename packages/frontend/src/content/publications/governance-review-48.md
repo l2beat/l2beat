@@ -47,7 +47,7 @@ You can find us to discuss everything related to Optimism’s governance, from c
 
 ### **Builders’ Voices Needed: Shaping the Future of Arbitrum Together**
 
-We (L2BEAT) published a thread asking Arbitrum builders to weigh in as the DAO shapes its 1‑2 year strategic objectives. We believe delegates need direct feedback from project teams, and we invite builders to spend 10 minutes providing their input by answering 4 core questions. Responses are welcome publicly in the thread, privately for anonymized aggregation, or via a live call we’ll be organizing soon.
+We (L2BEAT) [published](https://forum.arbitrum.foundation/t/builders-voices-needed-shaping-the-future-of-arbitrum-together/29065) a thread asking Arbitrum builders to weigh in as the DAO shapes its 1‑2 year strategic objectives. We believe delegates need direct feedback from project teams, and we invite builders to spend 10 minutes providing their input by answering 4 core questions. Responses are welcome publicly in the thread, privately for anonymized aggregation, or via a live call we’ll be organizing soon.
 
 
 ### **DeFi Renaissance Incentive Program (DRIP)**
@@ -115,7 +115,7 @@ Aadarsh from PYOR [has created](https://gov.uniswap.org/t/rfc-proposal-for-univi
 
 ### **Revocation of Uniswap Growth’s Discretionary Budget for Co-Incentive Campaigns**
 
-Pepo, writing in his capacity, has asked the DAO to strip the Uniswap Growth initiative of the fast‑track spending power it received last December. That authority let the Growth team deploy up to $250k of surplus UNI on “urgent” co‑incentive deals without the usual 4‑week governance cycle, provided they published each spend immediately. 4 months later, no campaigns have been launched, no forum updates have appeared, and the EtherFi collaboration cited as time‑sensitive has never materialised. Pepo argues that the silence betrays the urgency case and erodes trust, so any future liquidity‑mining or partnership budgets should return to the standard RFC → Snapshot → on‑chain path. He invites comment for 7 days before moving to a Snapshot revocation vote, followed—if it passes—by an on‑chain execution to end the discretionary mandate.
+Pepo, writing in his capacity, [has asked the DAO](https://gov.uniswap.org/t/revocation-of-uniswap-growths-discretionary-budget-for-co-incentive-campaigns/25475) to strip the Uniswap Growth initiative of the fast‑track spending power it received last December. That authority let the Growth team deploy up to $250k of surplus UNI on “urgent” co‑incentive deals without the usual 4‑week governance cycle, provided they published each spend immediately. 4 months later, no campaigns have been launched, no forum updates have appeared, and the EtherFi collaboration cited as time‑sensitive has never materialised. Pepo argues that the silence betrays the urgency case and erodes trust, so any future liquidity‑mining or partnership budgets should return to the standard RFC → Snapshot → on‑chain path. He invites comment for 7 days before moving to a Snapshot revocation vote, followed—if it passes—by an on‑chain execution to end the discretionary mandate.
 
 
 ### **Uniswap Accountability Committee (UAC): Season 3 Report**
@@ -297,7 +297,7 @@ Feedback from Mexican builders and the wider DAO is invited for one week; a full
 
 ### **Brazil Local Node - Regional Evaluation**
 
-Modular Crypto has filed the “Brazil Local Node – Regional Evaluation” pitch. They argue that Brazil, now the largest crypto hub in Latin America with roughly 16M holders and a maturing regulatory framework under the Central Bank, is ready for a dedicated Scroll presence. They plan for Modular Crypto to run the node: publish Portuguese‑language research and livestreams, draw thousands to live events such as Modular Carnaval, and act as active Scroll voters. The node would seed original Scroll workshops, developer tracks, a six‑week “Scroll Open Brazil”, three IRL gatherings, and a state-university hackathon while partnering with Brazil’s many Web3 communities and KOLs. They request operational funding and coordination with the Scroll Foundation, promising ongoing Portuguese content, public task‑boards for contributors, and integration into Brazil’s rapidly expanding fintech landscape, including Drex CBDC trials and major banks tokenising assets.
+Modular Crypto has filed the “[Brazil Local Node – Regional Evaluation](https://forum.scroll.io/t/brazil-local-node-regional-evaluation/613)” pitch. They argue that Brazil, now the largest crypto hub in Latin America with roughly 16M holders and a maturing regulatory framework under the Central Bank, is ready for a dedicated Scroll presence. They plan for Modular Crypto to run the node: publish Portuguese‑language research and livestreams, draw thousands to live events such as Modular Carnaval, and act as active Scroll voters. The node would seed original Scroll workshops, developer tracks, a six‑week “Scroll Open Brazil”, three IRL gatherings, and a state-university hackathon while partnering with Brazil’s many Web3 communities and KOLs. They request operational funding and coordination with the Scroll Foundation, promising ongoing Portuguese content, public task‑boards for contributors, and integration into Brazil’s rapidly expanding fintech landscape, including Drex CBDC trials and major banks tokenising assets.
 
 **Discuss with L2BEAT**
 
