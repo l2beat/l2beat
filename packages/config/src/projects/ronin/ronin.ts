@@ -23,7 +23,9 @@ const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
 const paused =
   discovery.getContractValue<boolean>('MainchainGateway', 'paused') === true
-const warningText = paused ? 'The bridge is currently paused. A migration to a new messaging infrastructure and new escrows [is in progress](https://x.com/Ronin_Network/status/1914579206396371186).' : undefined
+const warningText = paused
+  ? 'The bridge is currently paused. A migration to a new messaging infrastructure and new escrows [is in progress](https://x.com/Ronin_Network/status/1914579206396371186).'
+  : undefined
 
 const pausable = {
   paused,

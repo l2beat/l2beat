@@ -606,7 +606,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "UnknownIsm",
       "address": "0xb7d55490065c157352b2a560bb3eFf5d5c548563",
       "type": "Contract",
       "unverified": true,

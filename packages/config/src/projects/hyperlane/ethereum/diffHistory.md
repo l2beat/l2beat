@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2ca210d0d53b4f6e146e54f2cc5ac29163dbd3b4
+Generated with discovered.json: 0xf95dbe1f4e31e711e7c1112df4cb54f4cd42afe8
 
-# Diff at Tue, 22 Apr 2025 11:45:56 GMT:
+# Diff at Tue, 22 Apr 2025 12:16:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 22187330
@@ -119,7 +119,7 @@ New ISMs, no validation changes for eclipse.
 
 ```diff
 -   Status: DELETED
-    contract UnknownIsm (0xEE9b1fbB0453dcD55DD155438Ef8DA902C5D5075)
+    contract  (0xEE9b1fbB0453dcD55DD155438Ef8DA902C5D5075)
     +++ description: None
 ```
 
@@ -143,7 +143,7 @@ New ISMs, no validation changes for eclipse.
 
 ```diff
 +   Status: CREATED
-    contract  (0xb7d55490065c157352b2a560bb3eFf5d5c548563)
+    contract UnknownIsm (0xb7d55490065c157352b2a560bb3eFf5d5c548563)
     +++ description: None
 ```
 
@@ -243,6 +243,15 @@ discovery. Values are for block 22187330 (main branch discovery), not current.
 -   Status: DELETED
     contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
     +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
+    contract  (0xEE9b1fbB0453dcD55DD155438Ef8DA902C5D5075) {
+    +++ description: None
+      name:
+-        "UnknownIsm"
++        ""
+    }
 ```
 
 Generated with discovered.json: 0x057c152a2765cbb9ea3b3a3c754b4f7ea4685376
