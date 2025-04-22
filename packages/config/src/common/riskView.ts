@@ -520,13 +520,13 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: TableReadyValue = {
   orderHint: 0,
 }
 
-function PROPOSER_POLYGON_POS(
+function PROPOSER_POS(
   stakedValidatorSetSize: number,
   validatorSetSizeCap: number,
 ): TableReadyValue {
   return {
     value: 'Cannot withdraw',
-    description: `The Polygon PoS network is composed of ${stakedValidatorSetSize} validators. Blocks are included in the chain only if signed by 2/3+1 of the network stake. It's currently not possible to join the set if the validator cap is reached. The current validator cap is set to ${validatorSetSizeCap}. In the event of a failure in reaching consensus, withdrawals are frozen.`,
+    description: `The PoS network is composed of ${stakedValidatorSetSize} validators. Blocks are included in the chain only if signed by 2/3+1 of the network stake. It's currently not possible to join the set if the validator cap is reached. The current validator cap is set to ${validatorSetSizeCap}. In the event of a failure in reaching consensus, withdrawals are frozen.`,
     sentiment: 'warning',
   }
 }
@@ -718,7 +718,7 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
-  PROPOSER_POLYGON_POS,
+  PROPOSER_POS,
 
   // exitWindow
   EXIT_WINDOW,

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
+  "ignoreMethods": [
+    "latestSignerUpdateEpoch",
+    "validatorAuction",
+    "validators",
+    "validatorStateChanges",
+    "signers"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the validator registry address used to check whitelist inclusion."
+        }
+      ]
+    }
+  },
+  "category": "core"
+}
