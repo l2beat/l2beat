@@ -278,30 +278,32 @@ export const paradex: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  },
-  {
-    rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
-  },),
+  ),
   stateDerivation: {
     nodeSoftware:
       'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
