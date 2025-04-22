@@ -45,10 +45,10 @@ const getCachedResponse = cache(
     const parsedParams = TvsChartDataParams.safeParse(params)
 
     if (parsedParams.error) {
-      return NextResponse.json({
+      return {
         success: false,
         errors: parsedParams.error.errors,
-      })
+      } as const
     }
 
     const data = await getTvsChart(params)
