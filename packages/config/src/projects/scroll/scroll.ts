@@ -131,8 +131,8 @@ export const scroll: ScalingProject = {
         principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
       },
       stage2: {
