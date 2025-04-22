@@ -144,7 +144,6 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
     case 'avail':
       input.push(config.appId)
       break
-
     default:
       assertUnreachable(config)
   }
