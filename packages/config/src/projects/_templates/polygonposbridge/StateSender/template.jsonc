@@ -12,11 +12,7 @@
       }
     }
   },
-  "ignoreInWatchMode": [
-    "counter"
-  ],
-  "ignoreRelatives": [
-    "REGISTRATIONS"
-  ],
+  "ignoreInWatchMode": ["counter"],
+  "ignoreRelatives": ["REGISTRATIONS"],
   "category": "core"
 }

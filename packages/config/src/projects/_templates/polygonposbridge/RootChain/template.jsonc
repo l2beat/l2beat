@@ -17,9 +17,7 @@
       ]
     }
   },
-  "ignoreMethods": [
-    "headerBlocks"
-  ],
+  "ignoreMethods": ["headerBlocks"],
   "ignoreInWatchMode": [
     "_nextHeaderBlock",
     "getLastChildBlock",
