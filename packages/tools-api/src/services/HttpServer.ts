@@ -1,7 +1,7 @@
 import type { Server } from 'http'
 import type { Logger } from '@l2beat/backend-tools'
 import express from 'express'
-import type { Config } from '../config/config'
+import type { Config } from '../config/types'
 
 export function createHttpServer(config: Config, logger: Logger) {
   const app = express()
