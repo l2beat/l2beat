@@ -46,6 +46,18 @@ describe('getProjects', () => {
     }
   })
 
+  describe('every non-ecosystem project has statuses and display', () => {
+    for (const project of projects) {
+      if (project.ecosystemConfig) {
+        continue
+      }
+      it(project.name, () => {
+        expect(project.statuses).not.toEqual(undefined)
+        expect(project.display).not.toEqual(undefined)
+      })
+    }
+  })
+
   it('every project can be serialized', () => {
     function findNonSerializable(
       value: unknown,

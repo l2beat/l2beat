@@ -115,8 +115,7 @@ export const honeypot: ScalingProject = {
             '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
           ),
           selector: '0xddfdfbb0',
-          functionSignature:
-            'function submitClaim(bytes calldata _claimData) external onlyOwner',
+          functionSignature: 'function submitClaim(bytes calldata _claimData)',
           sinceTimestamp: UnixTime(1694467715),
         },
       },

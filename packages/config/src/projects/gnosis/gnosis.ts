@@ -7,6 +7,18 @@ export const gnosis: BaseProject = {
   name: 'Gnosis Chain',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
+  display: {
+    description:
+      "Gnosis Chain is a community-owned EVM-based network operated by a diverse set of validators around the world. It is one of Ethereum's first sidechains.",
+    links: {},
+    badges: [],
+  },
   chainConfig: {
     name: 'gnosis',
     chainId: 100,
