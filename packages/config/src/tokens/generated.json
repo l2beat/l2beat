@@ -10488,7 +10488,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
       "chainId": 42161,
       "source": "external",
-      "supply": "zero",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
           {

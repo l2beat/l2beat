@@ -47,18 +47,8 @@
           }
         ]
       },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1724863522
-        },
-        "priceId": "apecoin"
-      },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": true
     }
   ]

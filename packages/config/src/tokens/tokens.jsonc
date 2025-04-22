@@ -2219,7 +2219,7 @@
       "coingeckoId": "apecoin",
       "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
       "source": "external",
-      "supply": "zero", // preminted to Apechain L3
+      "supply": "totalSupply", // preminted to Apechain L3
       "bridgedUsing": {
         "bridges": [
           {

@@ -245,8 +245,49 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "arbitrum-APE-1",
+      "priceId": "apecoin",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1724876200
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "apecoin",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1724876200
+            }
+          },
+          {
+            "type": "const",
+            "value": "1000000000000000000000000000",
+            "decimals": 18,
+            "sinceTimestamp": 1724876200
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-APE-2",
       "priceId": "apecoin",
       "symbol": "APE",
       "name": "ApeCoin",
