@@ -17,7 +17,8 @@ import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
-
+import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
+import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
 export type Pages = typeof pages
 
 export type SsrData = {
@@ -28,9 +29,6 @@ export type SsrData = {
 }[keyof Pages]
 
 const pages = {
-  FaqPage,
-  AboutUsPage,
-  DonatePage,
   // Scaling
   ScalingSummaryPage,
   ScalingRiskPage,
@@ -50,6 +48,13 @@ const pages = {
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
   DataAvailabilityThroughputPage,
+  // ZK Catalog
+  ZkCatalogPage,
+  ZkCatalogProjectPage,
+  // Side pages
+  FaqPage,
+  AboutUsPage,
+  DonatePage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
