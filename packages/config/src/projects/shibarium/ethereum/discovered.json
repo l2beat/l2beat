@@ -208,7 +208,7 @@
         "0x6c5643dd27ff09baeb85b5fb025f64da4c191a2c42e30f5b72c33b0b8d74dbf4"
       ],
       "proxyType": "immutable",
-      "description": "Contract primarly used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
+      "description": "Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
       "issuedPermissions": [
         {
           "permission": "interact",

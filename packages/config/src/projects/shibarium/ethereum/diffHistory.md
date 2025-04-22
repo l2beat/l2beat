@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xeb13d17a442ea77145d52a8c84ad818fb7f8058d
+Generated with discovered.json: 0x11a34964fbb894a3ba05b5c0c2cab9f06af62d75
 
-# Diff at Tue, 22 Apr 2025 12:43:24 GMT:
+# Diff at Tue, 22 Apr 2025 14:34:57 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@bbb76c9f77fad4b15762021b65f1caa97ff57da6 block: 22266722
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 22266722
 - current block number: 22324571
 
 ## Description
@@ -268,7 +268,7 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract StakeManagerExtension (0x17174796E0eF24330aed565c87Ba5e85431DE19e)
-    +++ description: Contract primarly used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
+    +++ description: Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
 ```
 
 ```diff

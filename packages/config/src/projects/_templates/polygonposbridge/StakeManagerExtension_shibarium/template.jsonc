@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contract primarly used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
+  "description": "Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
   "ignoreMethods": [
     "latestSignerUpdateEpoch",
     "validatorAuction",
