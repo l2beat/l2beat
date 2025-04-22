@@ -1,21 +1,21 @@
 import type { Milestone } from '@l2beat/config'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { ScalingTvsPage as NextTvsPage } from '~/app/(side-nav)/scaling/tvs/_page'
+import { ScalingCostsPage as NextCostsPage } from '~/app/(side-nav)/scaling/costs/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'
 import { AppLayout } from '~/app/_layout'
-import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
+import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedScalingEntries<ScalingTvsEntry>
+  entries: TabbedScalingEntries<ScalingCostsEntry>
   milestones: Milestone[]
 }
 
-export function TvsPage(props: Props) {
+export function ScalingCostsPage(props: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextTvsPage entries={props.entries} milestones={props.milestones} />
+        <NextCostsPage entries={props.entries} milestones={props.milestones} />
       </SideNavLayout>
     </AppLayout>
   )

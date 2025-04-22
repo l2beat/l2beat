@@ -1,19 +1,18 @@
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { ScalingFinalityPage as NextFinalityPage } from '~/app/(side-nav)/scaling/finality/_page'
+import { ScalingSummaryPage as NextSummaryPage } from '~/app/(side-nav)/scaling/summary/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'
 import { AppLayout } from '~/app/_layout'
-import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedScalingEntries<ScalingFinalityEntry>
+  entries: TabbedScalingEntries<ScalingSummaryEntry>
 }
-
-export function FinalityPage(props: Props) {
+export function ScalingSummaryPage(props: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextFinalityPage entries={props.entries} />
+        <NextSummaryPage entries={props.entries} />
       </SideNavLayout>
     </AppLayout>
   )

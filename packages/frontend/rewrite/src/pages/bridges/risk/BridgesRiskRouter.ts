@@ -1,39 +1,36 @@
 import type { Router } from 'express'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
-import { getScalingDaEntries } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import type { Manifest } from '../../../common/Manifest'
 import type { RenderData, RenderFunction } from '../../../ssr/server'
 
-export function DataAvailabilityRouter(
+export function BridgesRiskRouter(
   app: Router,
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/scaling/data-availability', async (req, res) => {
-    const data = await getDataAvailabilityData(manifest)
+  app.get('/bridges/risk', async (req, res) => {
+    const data = await getBridgesRiskData(manifest)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }
 
-async function getDataAvailabilityData(
-  manifest: Manifest,
-): Promise<RenderData> {
+async function getBridgesRiskData(manifest: Manifest): Promise<RenderData> {
   const [searchBarProjects, entries] = await Promise.all([
     getSearchBarProjects(),
-    getScalingDaEntries(),
+    getBridgeRiskEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'Data Availability - L2BEAT',
-      description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+      title: 'Bridge Risks - L2BEAT',
+      description: 'L2BEAT - detailed risk analysis of Ethereum bridges.',
     },
     ssr: {
-      page: 'DataAvailabilityPage',
+      page: 'BridgesRiskPage',
       props: {
         entries,
         terms: getCollection('glossary').map((term) => ({

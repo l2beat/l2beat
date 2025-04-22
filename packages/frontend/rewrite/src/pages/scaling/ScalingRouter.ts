@@ -1,30 +1,30 @@
 import type { Router } from 'express'
 import type { Manifest } from 'rewrite/src/common/Manifest'
 import type { RenderFunction } from 'rewrite/src/ssr/server'
-import { ActivityRouter } from './activity/ActivityRouter'
-import { ArchivedRouter } from './archived/ArchivedRouter'
-import { CostsRouter } from './costs/CostsRouter'
-import { DataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
-import { FinalityRouter } from './finality/FinalityRouter'
-import { LivenessRouter } from './liveness/LivenessRouter'
-import { RiskRouter } from './risk/RiskRouter'
-import { SummaryRouter } from './summary/SummaryRouter'
-import { TvsRouter } from './tvs/TvsRouter'
-import { UpcomingRouter } from './upcoming/UpcomingRouter'
+import { ScalingActivityRouter } from './activity/ScalingActivityRouter'
+import { ScalingArchivedRouter } from './archived/ScalingArchivedRouter'
+import { ScalingCostsRouter } from './costs/ScalingCostsRouter'
+import { ScalingDataAvailabilityRouter } from './data-availability/ScalingDataAvailabilityRouter'
+import { ScalingFinalityRouter } from './finality/ScalingFinalityRouter'
+import { ScalingLivenessRouter } from './liveness/ScalingLivenessRouter'
+import { ScalingRiskRouter } from './risk/ScalingRiskRouter'
+import { ScalingSummaryRouter } from './summary/ScalingSummaryRouter'
+import { ScalingTvsRouter } from './tvs/ScalingTvsRouter'
+import { ScalingUpcomingRouter } from './upcoming/ScalingUpcomingRouter'
 
 export function ScalingRouter(
   app: Router,
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  SummaryRouter(app, manifest, render)
-  ActivityRouter(app, manifest, render)
-  RiskRouter(app, manifest, render)
-  TvsRouter(app, manifest, render)
-  DataAvailabilityRouter(app, manifest, render)
-  LivenessRouter(app, manifest, render)
-  FinalityRouter(app, manifest, render)
-  CostsRouter(app, manifest, render)
-  ArchivedRouter(app, manifest, render)
-  UpcomingRouter(app, manifest, render)
+  ScalingSummaryRouter(app, manifest, render)
+  ScalingActivityRouter(app, manifest, render)
+  ScalingRiskRouter(app, manifest, render)
+  ScalingTvsRouter(app, manifest, render)
+  ScalingDataAvailabilityRouter(app, manifest, render)
+  ScalingLivenessRouter(app, manifest, render)
+  ScalingFinalityRouter(app, manifest, render)
+  ScalingCostsRouter(app, manifest, render)
+  ScalingArchivedRouter(app, manifest, render)
+  ScalingUpcomingRouter(app, manifest, render)
 }

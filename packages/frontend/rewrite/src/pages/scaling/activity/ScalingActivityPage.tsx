@@ -11,7 +11,7 @@ interface Props extends AppLayoutProps {
   milestones: Milestone[]
 }
 
-export function ActivityPage(props: Props) {
+export function ScalingActivityPage(props: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
