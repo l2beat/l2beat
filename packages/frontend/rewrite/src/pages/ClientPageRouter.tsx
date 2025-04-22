@@ -9,6 +9,7 @@ import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
+import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -55,6 +56,7 @@ const pages = {
   ZkCatalogProjectPage,
   // Governance
   GovernancePage,
+  GovernancePublicationsPage,
   // Side pages
   FaqPage,
   GlossaryPage,
