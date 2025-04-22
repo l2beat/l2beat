@@ -9,6 +9,7 @@ import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
+import { GovernancePublicationPage } from './governance/publications/:id/GovernancePublicationPage'
 import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
@@ -57,6 +58,7 @@ const pages = {
   // Governance
   GovernancePage,
   GovernancePublicationsPage,
+  GovernancePublicationPage,
   // Side pages
   FaqPage,
   GlossaryPage,

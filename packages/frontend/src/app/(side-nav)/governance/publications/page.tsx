@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { getGovernancePublicationEntry } from '../_utils/get-governance-publication-entry'
-import { GovernancePublicationPage } from './_page'
+import { GovernancePublicationsPage } from './_page'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance publications - L2BEAT',
@@ -18,5 +18,5 @@ export default function Page() {
     .sort((b, a) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
     .map(getGovernancePublicationEntry)
 
-  return <GovernancePublicationPage publications={publications} />
+  return <GovernancePublicationsPage publications={publications} />
 }

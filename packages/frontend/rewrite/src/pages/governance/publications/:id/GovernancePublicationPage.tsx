@@ -1,18 +1,21 @@
 import type { GovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
-import { GovernancePublicationsPage as NextGovernancePublicationPage } from '~/app/(side-nav)/governance/publications/_page'
+import { GovernancePublicationPage as NextGovernancePublicationPage } from '~/app/(side-nav)/governance/publications/[slug]/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'
 import { AppLayout } from '~/app/_layout'
 
 interface Props extends AppLayoutProps {
-  publications: GovernancePublicationEntry[]
+  publication: GovernancePublicationEntry
 }
 
-export function GovernancePublicationsPage({ publications, ...props }: Props) {
+export function GovernancePublicationPage({ publication, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextGovernancePublicationPage publications={publications} />
+        <NextGovernancePublicationPage
+          publication={publication}
+          descriptionClassName="font-rewrite-roboto-serif"
+        />
       </SideNavLayout>
     </AppLayout>
   )

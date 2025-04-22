@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
@@ -11,7 +12,6 @@ import { OurMissionSection } from './_components/sections/our-mission-section'
 import { RecentPublicationsSection } from './_components/sections/recent-publications-section'
 import type { GovernanceEventEntry } from './_utils/get-governance-event-entries'
 import type { GovernancePublicationEntry } from './_utils/get-governance-publication-entry'
-import Image from 'next/image'
 
 interface GovernancePageProps {
   publications: GovernancePublicationEntry[]

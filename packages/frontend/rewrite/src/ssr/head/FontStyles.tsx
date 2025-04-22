@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Manifest } from '../../common/Manifest'
 import type { FontInfo } from './fonts'
 

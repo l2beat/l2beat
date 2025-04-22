@@ -7,7 +7,7 @@ interface Props {
   publications: GovernancePublicationEntry[]
 }
 
-export function GovernancePublicationPage({ publications }: Props) {
+export function GovernancePublicationsPage({ publications }: Props) {
   return (
     <>
       <MainPageHeader>Governance Publications</MainPageHeader>
