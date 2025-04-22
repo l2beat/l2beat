@@ -7,8 +7,11 @@ export PATH="$(pwd)/../../node_modules/.bin:$PATH"
 rm -rf rewrite/dist
 rm -rf rewrite/static/icons
 rm -rf rewrite/static/images
+rm -rf rewrite/static/meta-images
 cp -r public/icons rewrite/static/icons
 cp -r public/images rewrite/static/images
+cp -r public/meta-images rewrite/static/meta-images
+
 
 esbuild \
   rewrite/src/ssr/client.tsx \
