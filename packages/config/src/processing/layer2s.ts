@@ -56,7 +56,6 @@ import { fhenix } from '../projects/fhenix/fhenix'
 import { fluence } from '../projects/fluence/fluence'
 import { fluent } from '../projects/fluent/fluent'
 import { form } from '../projects/form/form'
-import { frame } from '../projects/frame/frame'
 import { fraxtal } from '../projects/fraxtal/fraxtal'
 import { fuel } from '../projects/fuel/fuel'
 import { fuelv1 } from '../projects/fuelv1/fuelv1'
@@ -279,7 +278,6 @@ export const layer2s: ScalingProject[] = [
   fluence,
   fluent,
   form,
-  frame,
   fraxtal,
   fuel,
   fuelv1,
