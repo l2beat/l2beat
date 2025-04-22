@@ -19,11 +19,6 @@ export const bob: ScalingProject = opStackL2({
   display: {
     name: 'BOB',
     slug: 'bob',
-    tvlWarning: {
-      value:
-        'The total TVS doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
-      sentiment: 'warning',
-    },
     description:
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
     links: {
