@@ -143,7 +143,9 @@ struct BlockParamsV2 {
 }
 ```
 
-Default values for `proposer`, `coinbase`, `anchorBlockId` and `timestamp` are set if not provided, specifically `msg.sender`, `msg.sender`, the block number previous to the current one, and the current block timestamp. Then, a `BlockMetadataV2` structure is created, which is defined as follows:
+Default values for `proposer`, `coinbase`, `anchorBlockId` and `timestamp` are set if not provided, specifically `msg.sender`, `msg.sender`, the block number previous to the current one, and the current block timestamp. It is checked that the `anchorBlockId` is less than the current block number, but not more than `maxAnchorHeightOffset` behind. It is checked that the current `anchorBlockId` is greater than the parents' `anchorBlockId`. The same check is then performed using the `_params`'s `timestamp` value. It is checked that the timestamp in which the current block is proposed is later than the timestamp of the parent block. It is then checked that the `parentMetaHash` corresponds to the parent's `metaHash`.
+
+Then, a `BlockMetadataV2` structure is created, which is defined as follows:
 
 ```solidity
 struct BlockMetadataV2 {
@@ -170,4 +172,4 @@ struct BlockMetadataV2 {
 }
 ```
 
-It is recommended to check the diagram above to understand how it is constructed.
+It is recommended to check the diagram above to understand how it is constructed. A `BlockV2` structure is also populated to be then saved in the `blocks` mapping under the `numBlock % blockRingBufferSize` key. It's important to note that the `BlockV2`'s `proposedIn` for a block has a different meaning than the `BlockMetadataV2`'s `proposedIn`, as the former represents its `anchorBlockId`, and the latter represents the time when it is actually proposed. Then the `numBlocks` is incremented, and the `lastProposedIn` is set to the current block number. Finally, the `debitBond` function is called to collect the liveness bond, which is slashed if the proposed block doesn't get timely proven. The token used is the `_bondToken`, and the amount is the `livenessBond` value.
