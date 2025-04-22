@@ -252,26 +252,15 @@
       "name": "ApeCoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
-        "chain": "arbitrum",
-        "decimals": 18,
-        "sinceTimestamp": 1724876200
-      },
-      "valueForProject": {
         "type": "calculation",
         "operator": "diff",
         "arguments": [
           {
-            "type": "value",
-            "priceId": "apecoin",
-            "amount": {
-              "type": "totalSupply",
-              "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
-              "chain": "arbitrum",
-              "decimals": 18,
-              "sinceTimestamp": 1724876200
-            }
+            "type": "totalSupply",
+            "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+            "chain": "arbitrum",
+            "decimals": 18,
+            "sinceTimestamp": 1724876200
           },
           {
             "type": "const",
