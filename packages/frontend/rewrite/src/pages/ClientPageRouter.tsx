@@ -2,6 +2,7 @@ import { AboutUsPage } from './about/AboutUsPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { ActivityPage } from './scaling/activity/ActivityPage'
+import { CostsPage } from './scaling/costs/CostsPage'
 import { DataAvailabilityPage } from './scaling/data-availability/DataAvailabilityPage'
 import { FinalityPage } from './scaling/finality/FinalityPage'
 import { LivenessPage } from './scaling/liveness/LivenessPage'
@@ -30,6 +31,7 @@ const pages = {
   DataAvailabilityPage,
   LivenessPage,
   FinalityPage,
+  CostsPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
