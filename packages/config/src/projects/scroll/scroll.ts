@@ -46,6 +46,21 @@ const timelockEmergencyDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
+const maxDelayMessageQueue = discovery.getContractValue<number>(
+  'SystemConfig',
+  'maxDelayMessageQueue',
+)
+
+const maxDelayEnterEnforcedMode = discovery.getContractValue<number>(
+  'SystemConfig',
+  'maxDelayEnterEnforcedMode',
+)
+
+const minSelfSequenceDelay = Math.min(
+  maxDelayMessageQueue,
+  maxDelayEnterEnforcedMode,
+)
+
 const upgradesSC = {
   upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
 }
@@ -384,8 +399,8 @@ export const scroll: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(minSelfSequenceDelay),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   technology: {
     newCryptography: NEW_CRYPTOGRAPHY.ZK_SNARKS,
