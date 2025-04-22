@@ -149,6 +149,7 @@ import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
+import { powerloom } from '../projects/powerloom/powerloom' 
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -373,6 +374,7 @@ export const layer2s: ScalingProject[] = [
   polygonpos2,
   polygonzkevm,
   polynomial,
+  powerloom,
   prom,
   publicgoodsnetwork,
   puffer,
