@@ -1100,7 +1100,7 @@
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
     "opstack/L1StandardBridge_soon": "0x545407107f1c6d9179f00d8c26dff0bef837cbcd0e5306290dc2da9f245c200f",
     "opstack/L2OutputOracle_soon": "0x79f80bfef9f855843b0eee957f5a07f63964c178d1d7b3eb7da201768126db59",
-    "opstack/OptimismPortal_soon": "0x5d8643517240a09f63b7d2636b18af4994a4a38772d51b5a8204639f4b67abec",
+    "opstack/OptimismPortal_soon": "0x507812100f0bd906b170b3a3aada83e2bcdb3b7ab4ef917a52e227dcdd9d42d9",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
