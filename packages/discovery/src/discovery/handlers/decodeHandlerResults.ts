@@ -6,19 +6,21 @@ import type {
 import type { EntryParameters } from '../output/types'
 import { TypeApplier } from '../type-casters/TypeApplier'
 import type { HandlerResult } from './Handler'
+import { EditRuntime } from './edit'
 
-export function decodeHandlerResults(
+export async function decodeHandlerResults(
   results: HandlerResult[],
   fieldOverrides: StructureContract['fields'],
   types: Record<string, DiscoveryCustomType>,
-): {
+): Promise<{
   values: EntryParameters['values']
   errors: Record<string, string>
   usedTypes: DiscoveryCustomType[]
-} {
+}> {
   const values: EntryParameters['values'] = {}
   const errors: EntryParameters['errors'] = {}
   const typeApplier = new TypeApplier(types)
+  const runtime = new EditRuntime(types)
 
   for (const result of results) {
     if (result.value !== undefined) {
@@ -43,5 +45,31 @@ export function decodeHandlerResults(
       errors[result.field] = result.error
     }
   }
-  return { values, errors, usedTypes: typeApplier.usedTypes }
+
+  for (const fieldName in fieldOverrides) {
+    const copy = (fieldOverrides ?? {})[fieldName]?.copy
+    if (copy !== undefined) {
+      try {
+        values[fieldName] = values[copy]
+      } catch (e) {
+        errors[fieldName] = getErrorMessage(e)
+      }
+    }
+
+    const edit = (fieldOverrides ?? {})[fieldName]?.edit
+    if (edit !== undefined) {
+      try {
+        values[fieldName] = await runtime.evaluateEdit(values[fieldName], edit)
+      } catch (e) {
+        console.log(e)
+        errors[fieldName] = getErrorMessage(e)
+      }
+    }
+  }
+
+  return {
+    values,
+    errors,
+    usedTypes: [...typeApplier.usedTypes, ...runtime.usedTypes],
+  }
 }

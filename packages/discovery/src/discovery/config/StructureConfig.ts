@@ -59,6 +59,8 @@ export const StructureContractField = z.object({
   template: z.string().optional(),
   returnType: z.string().optional(),
   permissions: z.array(RawPermissionConfiguration).optional(),
+  copy: z.string().optional(),
+  edit: z.string().optional(),
 })
 
 export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>

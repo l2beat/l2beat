@@ -22,7 +22,7 @@ export class HandlerExecutor {
   }> {
     const handlers = getHandlers(abi, config)
     const results = await executeHandlers(provider, handlers, address)
-    const { values, errors, usedTypes } = decodeHandlerResults(
+    const { values, errors, usedTypes } = await decodeHandlerResults(
       results,
       config.fields,
       config.types,
