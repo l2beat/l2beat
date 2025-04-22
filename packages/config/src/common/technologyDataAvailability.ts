@@ -159,12 +159,6 @@ function CELESTIA_OFF_CHAIN(
   }
 }
 
-const STARKNET_CALLDATA_OFF_CHAIN: ProjectTechnologyChoice = {
-  ...GENERIC_OFF_CHAIN,
-  description:
-    'The transaction data is stored in Starknet as calldata and is not recorded on the Ethereum main chain.',
-}
-
 function AVAIL_OFF_CHAIN(isUsingVector: boolean): ProjectTechnologyChoice {
   const additionalDescription = isUsingVector
     ? ' The vector bridge is used to verify attestations from the Avail validator set that the data is indeed available.'
