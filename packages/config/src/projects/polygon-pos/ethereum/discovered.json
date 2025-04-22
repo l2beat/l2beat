@@ -156,11 +156,13 @@
       "name": "WithdrawManager",
       "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
       "type": "Contract",
+      "template": "polygonposbridge/WithdrawManager",
       "sourceHashes": [
         "0x05029129ea02d46e1d659b46c83ec5822b7d15f5d332a3dd100436ebeabb01b4",
         "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
       ],
       "proxyType": "EIP897 proxy",
+      "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.",
       "sinceTimestamp": 1590850831,
       "sinceBlock": 10167782,
       "values": {
@@ -422,6 +424,7 @@
       "name": "StakingNFT",
       "address": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
       "type": "Contract",
+      "template": "polygonposbridge/StakingNFT",
       "sourceHashes": [
         "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
       ],
@@ -2708,6 +2711,8 @@
     "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
-    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
+    "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
+    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
+    "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

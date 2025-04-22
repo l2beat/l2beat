@@ -12,7 +12,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can update the validator whitelist."
+          "description": "can update the validator registry address used to check whitelist inclusion."
         }
       ]
     }

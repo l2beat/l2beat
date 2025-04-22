@@ -1,6 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["token", "tokenMatic", "migration"],
+  "ignoreRelatives": [
+    "token",
+    "tokenMatic",
+    "migration",
+    "validatorShareFactory"
+  ],
   "ignoreMethods": [
     "getValidatorContract",
     "delegatedAmount",

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1cf5e34c63735e0fe75696066fa5a80a7342dcd8
+Generated with discovered.json: 0x7b112ce6ff18c5d09ccf339570a4b9247eeea1cf
 
-# Diff at Thu, 17 Apr 2025 11:00:07 GMT:
+# Diff at Tue, 22 Apr 2025 11:50:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@ec33c227dfa86656ed24cde03ee45faaa2dc8cd0 block: 22266722
-- current block number: 22288276
+- comparing to: main@bbb76c9f77fad4b15762021b65f1caa97ff57da6 block: 22266722
+- current block number: 22324355
 
 ## Description
 
@@ -17,16 +17,16 @@ Provide description of changes. This section will be preserved.
     +++ description: None
       values.delegatorsReward.3:
 -        "137524527461779631638"
-+        "123397913578441224841"
++        "109467320641385679508"
       values.delegatorsReward.2:
 -        "31505383038278874498"
-+        "218936315138744130106"
++        "209217921475560211751"
       values.delegatorsReward.1:
 -        "31034346349265424252"
-+        "50777457966269063059"
++        "46086307030217220592"
       values.delegatorsReward.0:
 -        "311850291839562954995"
-+        "16104893532627932222"
++        "86098662800150278851"
     }
 ```
 
@@ -38,11 +38,15 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 
 ```diff
     contract WithdrawalManager (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) {
-    +++ description: None
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
       unverified:
 -        true
+      template:
++        "polygonposbridge/WithdrawManager"
       sourceHashes:
 +        ["0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c","0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0"]
+      description:
++        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager."
     }
 ```
 
@@ -134,35 +138,42 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 ```diff
     contract undefined (0x80Cc222EA02F4334F67e9E55E7412fed62599004) {
     +++ description: None
-      receivedPermissions.12:
+      receivedPermissions.13:
 +        {"permission":"upgrade","from":"0x98C831cFB18852f7deB3E3a970e907475b49730f"}
-      receivedPermissions.11:
+      receivedPermissions.12:
 +        {"permission":"upgrade","from":"0x65218A41Fb92637254B4f8c97448d3dF343A3064"}
-      receivedPermissions.10:
+      receivedPermissions.11:
 +        {"permission":"upgrade","from":"0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0x12185669Dac70749f717247971E0B8819b2e472e"}
       receivedPermissions.9.from:
 -        "0x98C831cFB18852f7deB3E3a970e907475b49730f"
-+        "0x12185669Dac70749f717247971E0B8819b2e472e"
++        "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
       receivedPermissions.8.from:
 -        "0x65218A41Fb92637254B4f8c97448d3dF343A3064"
-+        "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
++        "0xc3897302aB4B42931cB4857050Fa60f53B775870"
       receivedPermissions.7.from:
 -        "0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665"
-+        "0xc3897302aB4B42931cB4857050Fa60f53B775870"
++        "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
       receivedPermissions.6.from:
 -        "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
-+        "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
++        "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
       receivedPermissions.5.from:
 -        "0xc3897302aB4B42931cB4857050Fa60f53B775870"
-+        "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
++        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
+      receivedPermissions.5.description:
++        "can delete arbitrary checkpoints."
       receivedPermissions.4.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.4.from:
 -        "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
-+        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
++        "0x17174796E0eF24330aed565c87Ba5e85431DE19e"
       receivedPermissions.4.description:
-+        "can delete arbitrary checkpoints."
++        "can update the validator registry address used to check whitelist inclusion."
       receivedPermissions.3.permission:
 -        "upgrade"
 +        "interact"
@@ -179,10 +190,10 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 +        "can replace all validators."
       receivedPermissions.1.from:
 -        "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce"
-+        "0x17174796E0eF24330aed565c87Ba5e85431DE19e"
++        "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6"
       receivedPermissions.1.description:
 -        "can update how much of the slashed funds go to the proposer and reporter."
-+        "can update the validator whitelist."
++        "it can update the whitelist of validators"
     }
 ```
 
@@ -215,55 +226,9 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ValidatorShare (0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6) {
+-   Status: DELETED
+    contract ValidatorShare (0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6)
     +++ description: None
-      unverified:
--        true
-      values.activeAmount:
-+        0
-      values.commissionRate_deprecated:
-+        0
-      values.delegation:
-+        false
-      values.eventsHub:
-+        "0x0000000000000000000000000000000000000000"
-      values.exchangeRate:
-+        100
-      values.isOwner:
-+        false
-      values.lastCommissionUpdate_deprecated:
-+        0
-      values.locked:
-+        false
-      values.minAmount:
-+        0
-      values.owner:
-+        "0x80Cc222EA02F4334F67e9E55E7412fed62599004"
-      values.rewardPerShare:
-+        0
-      values.stakeManager:
-+        "0x0000000000000000000000000000000000000000"
-      values.stakingLogger:
-+        "0x0000000000000000000000000000000000000000"
-      values.totalStake_deprecated:
-+        0
-      values.totalSupply:
-+        0
-      values.validatorId:
-+        0
-      values.validatorRewards_deprecated:
-+        0
-      values.withdrawExchangeRate:
-+        100
-      values.withdrawPool:
-+        0
-      values.withdrawShares:
-+        0
-      sourceHashes:
-+        ["0x53808537620653e3fb39027255cc047daae4c6cfb674c4b90c4e18831b27bcbb"]
-      errors:
-+        {"getRewardPerShare":"Processing error occurred."}
-    }
 ```
 
 ```diff
@@ -287,13 +252,7 @@ discovery. Values are for block 22266722 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract ValidatorRegistry (0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ValidatorShareFactory (0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD)
-    +++ description: None
+    +++ description: Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.
 ```
 
 Generated with discovered.json: 0xd0d871211e1987eadd1af7cec3f1aeb8bcb9654d

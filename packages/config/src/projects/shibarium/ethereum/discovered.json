@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
   "chain": "ethereum",
-  "blockNumber": 22288276,
+  "blockNumber": 22324355,
   "configHash": "0x51e94a1b7cde4e6bf1f01abc5ff018f6ae087791fbe66b4b1abb46c62437d9c7",
   "entries": [
     {
@@ -212,7 +212,7 @@
         {
           "permission": "interact",
           "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can update the validator whitelist.",
+          "description": "can update the validator registry address used to check whitelist inclusion.",
           "via": []
         }
       ],
@@ -290,7 +290,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 39793,
+        "counter": 39873,
         "isOwner": false,
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "REGISTRATIONS": [
@@ -304,6 +304,7 @@
       "name": "StakingNFT",
       "address": "0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0",
       "type": "Contract",
+      "template": "polygonposbridge/StakingNFT",
       "sourceHashes": [
         "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
       ],
@@ -328,11 +329,9 @@
           "0xF0Bf9BA7B71646d73a393d805CaF0c7e67C06a0F"
         ],
         "symbol": "SHV",
-        "tokenByIndex": [1, 2, 3, 4, 5],
         "tokenURI": ["", "", "", ""],
         "totalSupply": 12
       },
-      "errors": { "tokenByIndex": "Processing error occurred." },
       "derivedName": "StakingNFT"
     },
     {
@@ -370,10 +369,20 @@
       "name": "ValidatorRegistry",
       "address": "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
       "type": "Contract",
+      "template": "polygonposbridge/ValidatorRegistry",
       "sourceHashes": [
         "0xa7a26ec21e6beb982a3ab02a6e6c3d45d1812885147523f76ec9a1a55072dbcf"
       ],
       "proxyType": "immutable",
+      "description": "Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "description": "it can update the whitelist of validators",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1691243915,
       "sinceBlock": 17849216,
       "values": {
@@ -388,11 +397,13 @@
       "name": "WithdrawalManager",
       "address": "0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
       "type": "Contract",
+      "template": "polygonposbridge/WithdrawManager",
       "sourceHashes": [
         "0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0",
         "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
       ],
       "proxyType": "EIP897 proxy",
+      "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.",
       "sinceTimestamp": 1691243987,
       "sinceBlock": 17849222,
       "values": {
@@ -408,19 +419,6 @@
         "proxyType": 2
       },
       "derivedName": "WithdrawManager"
-    },
-    {
-      "name": "ValidatorShareFactory",
-      "address": "0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe388adb0a2a9179ef6156bc2aff8d97746405656abea331f24a11da4b622a864"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1691243819,
-      "sinceBlock": 17849208,
-      "values": { "$immutable": true },
-      "derivedName": "ValidatorShareFactory"
     },
     {
       "name": "StakeManager",
@@ -478,18 +476,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 24421,
+        "currentEpoch": 24591,
         "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "19420917234758353556456866",
+        "currentValidatorSetTotalStake": "19493182671715465932870450",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "218936315138744130106",
-          "123397913578441224841",
-          "50777457966269063059",
-          "16104893532627932222"
+          "209217921475560211751",
+          "109467320641385679508",
+          "86098662800150278851",
+          "46086307030217220592"
         ],
         "dynasty": 1,
-        "epoch": 24421,
+        "epoch": 24591,
         "eventsHub": "0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -516,7 +514,7 @@
         "registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 13608,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1577160442223515685783552",
+        "rewardPerStake": "1581090051881351129080087",
         "rootChain": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -526,7 +524,7 @@
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "19420917234758353556456866",
+          "amount": "19493182671715465932870450",
           "stakerCount": 12
         },
         "validatorThreshold": 15,
@@ -611,7 +609,12 @@
         {
           "permission": "interact",
           "from": "0x17174796E0eF24330aed565c87Ba5e85431DE19e",
-          "description": "can update the validator whitelist."
+          "description": "can update the validator registry address used to check whitelist inclusion."
+        },
+        {
+          "permission": "interact",
+          "from": "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
+          "description": "it can update the whitelist of validators"
         },
         {
           "permission": "interact",
@@ -933,7 +936,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 244210000,
+        "_nextHeaderBlock": 245910000,
         "$immutable": false,
         "$implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -942,8 +945,8 @@
           "_registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 244200000,
-        "getLastChildBlock": 10513436,
+        "currentHeaderBlock": 245900000,
+        "getLastChildBlock": 10600476,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -966,42 +969,6 @@
       "sinceBlock": 21296947,
       "values": { "$immutable": true, "CHAINID": 109, "networkId": "0x6d" },
       "derivedName": "ERC20PredicateBurnOnly"
-    },
-    {
-      "name": "ValidatorShare",
-      "address": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x53808537620653e3fb39027255cc047daae4c6cfb674c4b90c4e18831b27bcbb"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1732926827,
-      "sinceBlock": 21296946,
-      "values": {
-        "$immutable": true,
-        "activeAmount": 0,
-        "commissionRate_deprecated": 0,
-        "delegation": false,
-        "eventsHub": "0x0000000000000000000000000000000000000000",
-        "exchangeRate": 100,
-        "isOwner": false,
-        "lastCommissionUpdate_deprecated": 0,
-        "locked": false,
-        "minAmount": 0,
-        "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-        "rewardPerShare": 0,
-        "stakeManager": "0x0000000000000000000000000000000000000000",
-        "stakingLogger": "0x0000000000000000000000000000000000000000",
-        "totalStake_deprecated": 0,
-        "totalSupply": 0,
-        "validatorId": 0,
-        "validatorRewards_deprecated": 0,
-        "withdrawExchangeRate": 100,
-        "withdrawPool": 0,
-        "withdrawShares": 0
-      },
-      "errors": { "getRewardPerShare": "Processing error occurred." },
-      "derivedName": "ValidatorShare"
     },
     {
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -1529,9 +1496,6 @@
       "function transferOwnership(address newOwner)",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD": [
-      "function create(uint256 validatorId, address loggerAddress, address registry) returns (address)"
-    ],
     "0x65218A41Fb92637254B4f8c97448d3dF343A3064": [
       "constructor(address _proxyTo)",
       "event OwnerUpdate(address _new, address _old)",
@@ -1825,62 +1789,6 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function activeAmount() view returns (uint256)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address owner) view returns (uint256)",
-      "function buyVoucher(uint256 _amount, uint256 _minSharesToMint) returns (uint256 amountToDeposit)",
-      "function commissionRate_deprecated() view returns (uint256)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function delegation() view returns (bool)",
-      "function drain(address token, address destination, uint256 amount)",
-      "function eventsHub() view returns (address)",
-      "function exchangeRate() view returns (uint256)",
-      "function getLiquidRewards(address user) view returns (uint256)",
-      "function getRewardPerShare() view returns (uint256)",
-      "function getTotalStake(address user) view returns (uint256, uint256)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initalRewardPerShare(address) view returns (uint256)",
-      "function initialize(uint256 _validatorId, address _stakingLogger, address _stakeManager)",
-      "function isOwner() view returns (bool)",
-      "function lastCommissionUpdate_deprecated() view returns (uint256)",
-      "function lock()",
-      "function locked() view returns (bool)",
-      "function migrateIn(address user, uint256 amount)",
-      "function migrateOut(address user, uint256 amount)",
-      "function minAmount() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function restake() returns (uint256, uint256)",
-      "function rewardPerShare() view returns (uint256)",
-      "function sellVoucher(uint256 claimAmount, uint256 maximumSharesToBurn)",
-      "function sellVoucher_new(uint256 claimAmount, uint256 maximumSharesToBurn)",
-      "function slash(uint256 validatorStake, uint256 delegatedAmount, uint256 totalAmountToSlash) returns (uint256)",
-      "function stakeManager() view returns (address)",
-      "function stakingLogger() view returns (address)",
-      "function totalStake_deprecated() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unbondNonces(address) view returns (uint256)",
-      "function unbonds(address) view returns (uint256 shares, uint256 withdrawEpoch)",
-      "function unbonds_new(address, uint256) view returns (uint256 shares, uint256 withdrawEpoch)",
-      "function unlock()",
-      "function unstakeClaimTokens()",
-      "function unstakeClaimTokens_new(uint256 unbondNonce)",
-      "function updateDelegation(bool _delegation)",
-      "function validatorId() view returns (uint256)",
-      "function validatorRewards_deprecated() view returns (uint256)",
-      "function withdrawExchangeRate() view returns (uint256)",
-      "function withdrawPool() view returns (uint256)",
-      "function withdrawRewards()",
-      "function withdrawShares() view returns (uint256)"
-    ],
     "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB": [
       "constructor(address _governance)",
       "event ContractMapUpdated(bytes32 indexed key, address indexed previousContract, address indexed newContract)",
@@ -1944,14 +1852,17 @@
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
-    "polygonposbridge/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/Registry": "0x740dd1c9a6f29e9a794b82248a0b4db07a11d3016347bb97a121b714a5018529",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/SlashingManager": "0xff988e17661283d80f937c5ed6b0b648c510181283f32327373a7ece9c12584d",
-    "polygonposbridge/StakeManager_shibarium": "0x2a868550c0af0abf8568fe9be6450986f92458ecb37e98e76466260939dd17a9",
-    "polygonposbridge/StakeManagerExtension_shibarium": "0x7518d21a56a021e8ccb0b25b69ef63dde875cb5ebc09837dfe64b7acc9c27dd9",
+    "polygonposbridge/StakeManager_shibarium": "0x135726d9252c82cf09de9451e9c6de8adf313ab2fbf192e301d4e42f91fec8a2",
+    "polygonposbridge/StakeManagerExtension_shibarium": "0x677de9736569f920b2137c3fffcc33e745538b857e5bc56e01b4cd9326170710",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
-    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
+    "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
+    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
+    "polygonposbridge/ValidatorRegistry": "0xc97a67e64ddf8f3e5dc72e67748329f83b0761b4c53aec00099f26c864953730",
+    "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

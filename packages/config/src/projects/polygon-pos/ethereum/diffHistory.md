@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x037039735c1173bdb2e867327224cc45a0509714
+
+# Diff at Tue, 22 Apr 2025 11:50:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bbb76c9f77fad4b15762021b65f1caa97ff57da6 block: 22265851
+- current block number: 22265851
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22265851 (main branch discovery), not current.
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+      template:
++        "polygonposbridge/WithdrawManager"
+      description:
++        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager."
+    }
+```
+
+```diff
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      template:
++        "polygonposbridge/StakingNFT"
+    }
+```
+
 Generated with discovered.json: 0x1bd08702efaa31c97f10fec8b9b1e635f099082b
 
 # Diff at Mon, 14 Apr 2025 10:47:33 GMT:
