@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1e364d0ac4a5f2e107fe1c38d097a2ace9744ee0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added new roles to the ScrollOwner contract and its timelock controllers.
 
 ## Config/verification related changes
 

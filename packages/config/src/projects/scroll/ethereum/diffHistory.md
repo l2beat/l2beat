@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa668375aeb7b759453ec5f937692528e1ce169de
+Generated with discovered.json: 0xda82a90127bf377136b66b1c4e03893258af0182
 
-# Diff at Tue, 22 Apr 2025 16:43:16 GMT:
+# Diff at Tue, 22 Apr 2025 17:08:08 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 22297562
-- current block number: 22324112
+- current block number: 22325938
 
 ## Description
 
@@ -200,8 +200,6 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 +        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
       values.messageQueueV2:
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
-      values.miscData:
-+        {"lastCommittedBatchIndex":358169,"lastFinalizedBatchIndex":358166,"lastFinalizeTimestamp":1745316335,"flags":1,"reserved":0}
       values.systemConfig:
 +        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
     }

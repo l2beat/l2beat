@@ -115,7 +115,7 @@
         "isBatchFinalized",
         "withdrawRoots"
       ],
-      "ignoreInWatchMode": ["miscData","lastFinalizedBatchIndex"],
+      "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
       "fields": {
         "sequencers": {
           "handler": {
@@ -311,8 +311,16 @@
       }
     },
     "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": {
-      "ignoreMethods": ["estimateCrossDomainMessageFee", "getMessageEnqueueTimestamp", "getMessageRollingHash"],
-      "ignoreInWatchMode": ["getFirstUnfinalizedMessageEnqueueTime", "nextCrossDomainMessageIndex", "nextUnfinalizedQueueIndex"]
+      "ignoreMethods": [
+        "estimateCrossDomainMessageFee",
+        "getMessageEnqueueTimestamp",
+        "getMessageRollingHash"
+      ],
+      "ignoreInWatchMode": [
+        "getFirstUnfinalizedMessageEnqueueTime",
+        "nextCrossDomainMessageIndex",
+        "nextUnfinalizedQueueIndex"
+      ]
     }
   }
 }
