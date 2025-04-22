@@ -15,13 +15,15 @@ export const bridgesSummaryOthersColumns = [
     columnHelper,
     (row) => `/bridges/projects/${row.slug}`,
   ),
-  columnHelper.accessor((e) => e.destination, {
+  columnHelper.accessor((e) => adjustTableValue(e.destination), {
     header: 'Destination',
     meta: {
       tooltip: 'What chains can you get to using this bridge?',
     },
-    cell: (ctx) => <div>{ctx.row.original.destination[0]}</div>,
+    cell: (ctx) => <TableValueCell value={ctx.row.original.destination} />,
     sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.destination, b.original.destination),
   }),
   columnHelper.accessor((e) => e.tvs.breakdown?.total, {
     id: 'tvs',

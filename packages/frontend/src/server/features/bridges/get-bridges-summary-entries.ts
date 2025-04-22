@@ -5,6 +5,7 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
@@ -54,8 +55,11 @@ export interface BridgesSummaryEntry extends CommonBridgesEntry {
   livenessFailure: TableReadyValue | undefined
   sourceUpgradeability: TableReadyValue | undefined
   tvsOrder: number
-  destination: string[]
   otherConsiderations: ProjectTechnologyChoice[] | undefined
+  destination: {
+    value: string
+    description?: string
+  }
 }
 
 interface TvsData {
@@ -107,11 +111,25 @@ function getBridgesSummaryEntry(
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
       ]),
     },
-    destination: project.bridgeInfo.destination,
+    destination: getDestination(project.bridgeInfo.destination),
     validatedBy: project.bridgeRisks.validatedBy,
     livenessFailure: project.bridgeRisks.livenessFailure,
     sourceUpgradeability: project.bridgeRisks.sourceUpgradeability,
     otherConsiderations: project.bridgeTechnology.otherConsiderations,
     tvsOrder: bridgeTvs?.breakdown.total ?? -1,
+  }
+}
+
+function getDestination(destinations: string[]): {
+  value: string
+  description?: string
+} {
+  assert(destinations.length > 0, 'Invalid destination')
+  if (destinations.length === 1 && destinations[0]) {
+    return { value: destinations[0] }
+  }
+  return {
+    value: 'Various',
+    description: destinations.join(',\n'),
   }
 }

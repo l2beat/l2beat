@@ -22,18 +22,14 @@ export const bridgesSummarySingleChainColumns = [
   columnHelper.accessor((row) => row.name, {
     id: 'name',
     cell: (ctx) => {
-      const destination = ctx.row.original.destination
-      const destinationText =
-        destination.length === 1
-          ? destination[0]
-          : `${destination[0]} & ${destination.length - 1} more`
+      const destination = ctx.row.original.destination.value
       return (
         <TableLink href={`/bridges/projects/${ctx.row.original.slug}`}>
           <TwoRowCell className="space-y-0.5">
             <TwoRowCell.First>
               <ProjectNameCell project={ctx.row.original} />
             </TwoRowCell.First>
-            <TwoRowCell.Second>{destinationText}</TwoRowCell.Second>
+            <TwoRowCell.Second>to {destination}</TwoRowCell.Second>
           </TwoRowCell>
         </TableLink>
       )
