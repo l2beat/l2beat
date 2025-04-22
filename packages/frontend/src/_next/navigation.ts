@@ -1,7 +1,9 @@
 export function usePathname(): string {
   if (typeof window === 'undefined') {
     // @ts-expect-error how to type this?
-    return globalThis.__FIX_SSR_PATHNAME__ as string
+    const url = globalThis.globalThis.__FIX_SSR_URL__ as string
+    // Remove query params
+    return url.split('?')[0]!
   }
   return window.location.pathname
 }

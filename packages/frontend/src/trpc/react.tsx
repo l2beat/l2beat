@@ -9,9 +9,11 @@ import { useState } from 'react'
 import SuperJSON from 'superjson'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import React from 'react'
+import { env } from '~/env'
+import { useIsClient } from '~/hooks/use-is-client'
 import type { AppRouter } from '~/server/api/root'
 import { createQueryClient } from './query-client'
-import { env } from '~/env'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
@@ -41,6 +43,7 @@ export type RouterOutputs = inferRouterOutputs<AppRouter>
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient()
+  const isClient = useIsClient()
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
@@ -64,7 +67,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {isClient && <ReactQueryDevtools initialIsOpen={false} />}
       <api.Provider client={trpcClient} queryClient={queryClient}>
         {props.children}
       </api.Provider>
