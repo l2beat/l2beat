@@ -21,8 +21,8 @@ import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
+import { ZkCatalogProjectPage } from './zk-catalog/:slug/ZkCatalogProjectPage'
 import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
-import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
 export type Pages = typeof pages
 
 export type SsrData = {
