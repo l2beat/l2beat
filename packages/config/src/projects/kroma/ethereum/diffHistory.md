@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xdc7f49210c5c2da9fc43935014f2bae572e53240
+Generated with discovered.json: 0x9d624fc2bca5836bbec30177ddac0f18e40eb48a
+
+# Diff at Wed, 23 Apr 2025 09:15:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c841380b2b008a3fe6bc954d32bb0ad5d666f4f2 block: 22188901
+- current block number: 22330737
+
+## Description
+
+config: move ms names to ethereumConfig.json.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188901 (main branch discovery), not current.
+
+```diff
+    contract Succinct Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "Succinct Multisig"
+    }
+```
+
+Generated with discovered.json: 0x633b08017e36bb932364567e73e238acc4d10361
 
 # Diff at Thu, 03 Apr 2025 14:34:03 GMT:
 
