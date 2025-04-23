@@ -988,6 +988,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      abitype:
+        specifier: ^1.0.6
+        version: 1.0.6(typescript@5.6.3)(zod@3.23.8)
       express:
         specifier: ^5.0.0
         version: 5.0.1
