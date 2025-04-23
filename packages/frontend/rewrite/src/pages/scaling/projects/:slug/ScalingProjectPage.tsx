@@ -12,7 +12,9 @@ export function ScalingProjectPage({ projectEntry, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <TopNavLayout>
-        <NextScalingProjectPage projectEntry={projectEntry} />
+        <div className="smooth-scroll">
+          <NextScalingProjectPage projectEntry={projectEntry} />
+        </div>
       </TopNavLayout>
     </AppLayout>
   )
