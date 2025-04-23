@@ -2,7 +2,7 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { type BlobClient, BlobProvider, type RpcClient } from '@l2beat/shared'
+import type { EthereumDaProvider, RpcClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { ArbitrumT2IAnalyzer } from './ArbitrumT2IAnalyzer'
@@ -44,24 +44,21 @@ describe(ArbitrumT2IAnalyzer.name, () => {
     ) as { 1: string; 2: string; 3: string }
 
     const analyzer = mockAnalyzer({
-      blobClient: mockObject<BlobClient>({
-        getBlobsByVersionedHashesAndBlockNumber: mockFn().resolvesTo({
-          blobs: [
-            {
-              kzg_commitment: '0x123',
-              data: blobsData[1],
-            },
-            {
-              kzg_commitment: '0x123',
-              data: blobsData[2],
-            },
-            {
-              kzg_commitment: '0x123',
-              data: blobsData[3],
-            },
-          ],
-          blockNumber: 1,
-        }),
+      ethereumDaProvider: mockObject<EthereumDaProvider>({
+        getBlobsByVersionedHashesAndBlockNumber: mockFn().resolvesTo([
+          {
+            kzg_commitment: '0x123',
+            data: blobsData[1],
+          },
+          {
+            kzg_commitment: '0x123',
+            data: blobsData[2],
+          },
+          {
+            kzg_commitment: '0x123',
+            data: blobsData[3],
+          },
+        ]),
       }),
       rpcClient: mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
@@ -91,11 +88,11 @@ describe(ArbitrumT2IAnalyzer.name, () => {
 })
 
 function mockAnalyzer({
-  blobClient,
+  ethereumDaProvider,
   rpcClient,
-}: { blobClient?: BlobClient; rpcClient?: RpcClient }) {
+}: { ethereumDaProvider?: EthereumDaProvider; rpcClient?: RpcClient }) {
   return new ArbitrumT2IAnalyzer(
-    new BlobProvider(blobClient ?? mockObject<BlobClient>({})),
+    ethereumDaProvider ?? mockObject<EthereumDaProvider>({}),
     Logger.SILENT,
     rpcClient ?? mockObject<RpcClient>({}),
     mockObject<Database>({}),

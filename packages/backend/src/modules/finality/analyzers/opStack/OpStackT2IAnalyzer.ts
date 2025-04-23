@@ -6,7 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import type { Database } from '@l2beat/database'
-import type { BlobProvider, EVMTransaction, RpcClient } from '@l2beat/shared'
+import type {
+  EVMTransaction,
+  EthereumDaProvider,
+  RpcClient,
+} from '@l2beat/shared'
 import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
@@ -20,7 +24,7 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
   private readonly channelBank: ChannelBank
 
   constructor(
-    private readonly blobProvider: BlobProvider,
+    private readonly ethereumDaProvider: EthereumDaProvider,
     private readonly logger: Logger,
     provider: RpcClient,
     db: Database,
@@ -106,8 +110,8 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
           'Type 3 transaction missing blobVersionedHashes',
         )
         assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
-        const { blobs } =
-          await this.blobProvider.getBlobsByVersionedHashesAndBlockNumber(
+        const blobs =
+          await this.ethereumDaProvider.getBlobsByVersionedHashesAndBlockNumber(
             tx.blobVersionedHashes,
             tx.blockNumber,
           )
