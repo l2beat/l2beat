@@ -1,4 +1,3 @@
-import { scaleSymlog } from 'd3-scale'
 import { CartesianGrid, XAxis, YAxis, type YAxisProps } from 'recharts'
 import { getXAxisProps } from './get-x-axis-props'
 export interface CommonChartComponentsProps<
@@ -33,7 +32,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       mirror
       tickCount={3}
       dy={-10}
-      {...(scale === 'log' ? { scale: scaleSymlog() } : {})}
+      {...(scale === 'log' ? { scale: 'log' } : {})}
       {...rest}
     />,
     <XAxis key={'x-axis'} {...getXAxisProps(data)} />,
