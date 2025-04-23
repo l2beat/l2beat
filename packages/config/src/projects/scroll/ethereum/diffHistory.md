@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xda82a90127bf377136b66b1c4e03893258af0182
+Generated with discovered.json: 0x099f552fb63ff8aef65bd12fa544ee18e56b3b7d
 
-# Diff at Tue, 22 Apr 2025 17:08:08 GMT:
+# Diff at Wed, 23 Apr 2025 12:43:59 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 22297562
-- current block number: 22325938
+- current block number: 22331776
 
 ## Description
 
@@ -85,11 +85,6 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
       values.messageQueue:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
-+++ description: Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.
-+++ severity: HIGH
-      values.paused:
--        true
-+        false
     }
 ```
 
@@ -294,6 +289,30 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
  ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |    0
  ...-0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357.sol |  102 ++
  9 files changed, 3746 insertions(+), 146 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22297562 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: None
+      name:
+-        "TimelockSC"
++        "TimelockSCEmergency"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) {
+    +++ description: None
+      name:
+-        "TimelockSlow"
++        "TimelockSCSlow"
+    }
 ```
 
 Generated with discovered.json: 0x2887456bb2991e89b8f1b0fc8bc81c437d6fc89c

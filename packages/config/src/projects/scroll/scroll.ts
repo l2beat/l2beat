@@ -30,7 +30,7 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('scroll')
 
 const timelockSlowDelay = discovery.getContractValue<number>(
-  'TimelockSlow',
+  'TimelockSCSlow',
   'getMinDelay',
 )
 const timelockFastDelay = discovery.getContractValue<number>(
@@ -38,7 +38,7 @@ const timelockFastDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const timelockSCDelay = discovery.getContractValue<number>(
-  'TimelockSC',
+  'TimelockSCEmergency',
   'getMinDelay',
 )
 const timelockEmergencyDelay = discovery.getContractValue<number>(
@@ -640,7 +640,7 @@ export const scroll: ScalingProject = {
           description:
             'Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.',
         }),
-        discovery.getContractDetails('TimelockSlow', {
+        discovery.getContractDetails('TimelockSCSlow', {
           description: `${formatSeconds(
             timelockSlowDelay,
           )} timelock. Admin of the ScrollOwner contract, meaning it can assign and revoke roles. The SecurityCouncil can propose, cancel and execute transactions, and the ExecutorMultisig can execute them.`,
@@ -650,7 +650,7 @@ export const scroll: ScalingProject = {
             timelockFastDelay,
           )} timelock. Can add new sequencers and provers, update the gas oracle and permissions to update its values, the max gas limit, and gateways token mappings. The ScrollOpsMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them. Currently also has the Admin role in the ScrollOwner contract and can thus manage all roles including the ones that can upgrade all system contracts.`,
         }),
-        discovery.getContractDetails('TimelockSC', {
+        discovery.getContractDetails('TimelockSCEmergency', {
           description: `${formatSeconds(
             timelockSCDelay,
           )} timelock. Can upgrade all core system contracts via the ProxyAdmin. The SecurityCouncil can propose, cancel and execute transactions, and the ScrollExecutorMultisig can execute them.`,

@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22325938,
+  "blockNumber": 22331776,
   "configHash": "0xa326ebc98aef3fd8c6db7e2c3ba23ea66e9dff64bd92b1fbad4292670d7bc257",
   "entries": [
     {
@@ -62,7 +62,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TimelockSC",
+      "name": "TimelockSCEmergency",
       "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
       "type": "Contract",
       "sourceHashes": [
@@ -351,7 +351,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -446,7 +446,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TimelockSlow",
+      "name": "TimelockSCSlow",
       "address": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
       "type": "Contract",
       "sourceHashes": [
@@ -633,13 +633,13 @@
         ],
         "$upgradeCount": 2,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-        "estimateL2BaseFee": 39627954,
+        "estimateL2BaseFee": 39460809,
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1745338991,
+        "getFirstUnfinalizedMessageEnqueueTime": 1745403407,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 953906,
-        "nextUnfinalizedQueueIndex": 953904,
+        "nextCrossDomainMessageIndex": 953944,
+        "nextUnfinalizedQueueIndex": 953937,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1079,7 +1079,7 @@
         "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
         "messageQueue": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "paused": false
+        "paused": true
       },
       "fieldMeta": {
         "paused": {
@@ -1826,15 +1826,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 358184,
+        "lastFinalizedBatchIndex": 358232,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 358187,
-          "lastFinalizedBatchIndex": 358184,
-          "lastFinalizeTimestamp": 1745338103,
+          "lastCommittedBatchIndex": 358238,
+          "lastFinalizedBatchIndex": 358232,
+          "lastFinalizeTimestamp": 1745405495,
           "flags": 1,
           "reserved": 0
         },
@@ -2002,7 +2002,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 155,
+        "nonce": 156,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2349,7 +2349,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19133241783671,
+        "totalBridgedUSDC": 19330498677345,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
