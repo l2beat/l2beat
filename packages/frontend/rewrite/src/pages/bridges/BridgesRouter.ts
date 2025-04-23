@@ -4,7 +4,7 @@ import type { RenderFunction } from 'rewrite/src/ssr/server'
 import { validateRoute } from 'rewrite/src/ssr/validateRoute'
 import { z } from 'zod'
 import { getBridgesArchivedData } from './archived/getBridgesArchivedData'
-import { getBridgesProjectData } from './projects/:slug/getBridgesProjectData'
+import { getBridgesProjectData } from './project/getBridgesProjectData'
 import { getBridgesRiskData } from './risk/getBridgesRiskData'
 import { getBridgesSummaryData } from './summary/getBridgesSummaryData'
 
