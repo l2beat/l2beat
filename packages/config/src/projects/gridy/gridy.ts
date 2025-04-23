@@ -32,4 +32,18 @@ export const gridy: ScalingProject = underReviewL3({
   ecosystemInfo: {
     id: ProjectId('starknet'),
   },
+  chainConfig: {
+    name: 'gridy',
+    chainId: 6120767554663640178324841317716,
+    apis: [
+      {
+        type: 'starknet',
+        url: '',
+        callsPerMinute: 600,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
+  },
 })
