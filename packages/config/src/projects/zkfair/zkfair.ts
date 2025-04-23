@@ -171,7 +171,12 @@ export const zkfair: ScalingProject = {
     ],
     coingeckoPlatform: 'zkfair',
     apis: [
-      { type: 'rpc', url: 'https://rpc.zkfair.io', callsPerMinute: 1500 },
+      {
+        type: 'rpc',
+        url: 'https://rpc.zkfair.io',
+        callsPerMinute: 1500,
+        retryStrategy: 'UNRELIABLE',
+      },
       { type: 'blockscout', url: 'https://scan.zkfair.io/api/' },
     ],
   },
