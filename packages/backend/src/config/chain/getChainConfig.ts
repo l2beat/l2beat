@@ -62,8 +62,7 @@ export async function getChainConfig(
                   sinceBlock: multicallV3.sinceBlock,
                 }
               : undefined,
-            // TODO: add configuration param
-            retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
+            retryStrategy: api.retryStrategy ?? 'RELIABLE',
           })
           break
         case 'fuel':

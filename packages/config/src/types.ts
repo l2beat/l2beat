@@ -265,6 +265,7 @@ export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
+  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
 }
 
 export interface ChainExplorerApi<T extends string> {
