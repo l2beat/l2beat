@@ -49,12 +49,10 @@ const timelockEmergencyDelay = discovery.getContractValue<number>(
 const enforcedModeDelayParameters = discovery.getContractValue<{
   maxDelayEnterEnforcedMode: number
   maxDelayMessageQueue: number
-}>(
-  'SystemConfig',
-  'enforcedBatchParameters',
-)
+}>('SystemConfig', 'enforcedBatchParameters')
 
-const maxDelayEnterEnforcedMode = enforcedModeDelayParameters.maxDelayEnterEnforcedMode
+const maxDelayEnterEnforcedMode =
+  enforcedModeDelayParameters.maxDelayEnterEnforcedMode
 const maxDelayMessageQueue = enforcedModeDelayParameters.maxDelayMessageQueue
 
 const minSelfSequenceDelay = Math.min(
@@ -400,7 +398,8 @@ export const scroll: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(minSelfSequenceDelay),
+    sequencerFailure:
+      RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(minSelfSequenceDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   technology: {
