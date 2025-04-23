@@ -148,7 +148,6 @@ interface OpStackConfigCommon {
   nodeSourceLink?: string
   chainConfig?: ChainConfig
   hasProperSecurityCouncil?: boolean
-  usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
@@ -162,6 +161,8 @@ interface OpStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
   }
+  /** Set to true if projects posts blobs to Ethereum */
+  usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -350,63 +351,73 @@ function opStackCommon(
 function getDaTracking(
   templateVars: OpStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
+  // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
     return templateVars.nonTemplateDaTracking
   }
 
+  const systemConfig = templateVars.discovery
+
   const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSequencerSendingBlobTx: boolean
-    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  const sequencerInbox = templateVars.discovery.getContractValue<string>(
-    'SystemConfig',
-    'sequencerInbox',
-  )
-
-  const inboxStartBlock =
-    templateVars.discovery.getContractValueOrUndefined<number>(
+    templateVars.usesEthereumBlobs ??
+    systemConfig.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
       'SystemConfig',
-      'startBlock',
-    ) ?? 0
+      'opStackDA',
+    ).isSequencerSendingBlobTx
 
-  const sequencer = templateVars.discovery.getContractValue<string>(
-    'SystemConfig',
-    'batcherHash',
-  )
+  if (usesBlobs) {
+    const sequencerInbox = systemConfig.getContractValue<string>(
+      'SystemConfig',
+      'sequencerInbox',
+    )
 
-  return usesBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxStartBlock,
-          inbox: sequencerInbox,
-          sequencers: [sequencer],
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+    const inboxStartBlock =
+      systemConfig.getContractValueOrUndefined<number>(
+        'SystemConfig',
+        'startBlock',
+      ) ?? 0
+
+    const sequencer = systemConfig.getContractValue<string>(
+      'SystemConfig',
+      'batcherHash',
+    )
+
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxStartBlock,
+        inbox: sequencerInbox,
+        sequencers: [sequencer],
+      },
+    ]
+  }
+
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
@@ -816,7 +827,7 @@ function getTechnology(
   const portal = getOptimismPortal(templateVars)
 
   const usesBlobs =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
@@ -1144,7 +1155,7 @@ function getDAProvider(
   hostChainDA?: DAProvider,
 ): DAProvider {
   const postsToCelestia =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
@@ -1161,7 +1172,7 @@ function getDAProvider(
 
   if (daProvider === undefined) {
     const usesBlobs =
-      templateVars.usesBlobs ??
+      templateVars.usesEthereumBlobs ??
       templateVars.discovery.getContractValue<{
         isSequencerSendingBlobTx: boolean
       }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
@@ -1314,7 +1325,7 @@ function getTrackedTxs(
 
 function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
   const postsToCelestia =
-    templateVars.usesBlobs ??
+    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia

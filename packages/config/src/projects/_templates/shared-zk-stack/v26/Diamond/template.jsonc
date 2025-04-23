@@ -91,7 +91,7 @@
         "slot": 57,
         "returnType": "uint8"
       },
-      "returnType": "(UintPermrollupString)"
+      "edit": ["format", "UintPermrollupString"]
     },
     "getDAValidatorPair": {
       "severity": "HIGH"

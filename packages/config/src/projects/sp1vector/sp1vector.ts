@@ -22,6 +22,11 @@ export const sp1vector: BaseProject = {
     isUnderReview: false,
     isUnverified: false,
   },
+  display: {
+    description: 'Avail ZK light client implementation.',
+    links: {},
+    badges: [],
+  },
   proofVerification: {
     shortDescription: 'Avail ZK light client implementation.',
     aggregation: true,
