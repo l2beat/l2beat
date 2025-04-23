@@ -12,7 +12,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -172,15 +171,6 @@ export const degate: ScalingProject = {
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'Operator - DeGate design doc',
-          url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
           title: 'Operator - DeGate design doc',

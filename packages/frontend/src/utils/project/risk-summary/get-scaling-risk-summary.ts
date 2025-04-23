@@ -14,10 +14,6 @@ export function getScalingRiskSummarySection(
       value: project.scalingTechnology.stateCorrectness,
     },
     {
-      id: 'new-cryptography',
-      value: project.scalingTechnology.newCryptography,
-    },
-    {
       id: 'data-availability',
       value: project.scalingTechnology.dataAvailability,
     },

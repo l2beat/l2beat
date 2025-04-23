@@ -12,7 +12,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -356,7 +355,6 @@ export const scroll: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_SNARKS,
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

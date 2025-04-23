@@ -12,11 +12,6 @@ export function getScalingTechnologySection(
         'state-correctness',
         project.scalingTechnology.stateCorrectness,
       ),
-    project.scalingTechnology.newCryptography &&
-      makeTechnologyChoice(
-        'new-cryptography',
-        project.scalingTechnology.newCryptography,
-      ),
   ])
 
   return getTechnologySectionProps(project, items)

@@ -382,7 +382,6 @@ describe('layer2s', () => {
           }
 
           check('stateCorrectness')
-          check('newCryptography')
           check('dataAvailability')
           check('operator')
           check('forceTransactions')

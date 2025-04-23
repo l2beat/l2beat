@@ -487,7 +487,6 @@ export interface ProjectScalingTechnology {
   detailedDescription?: string
   architectureImage?: string
   stateCorrectness?: ProjectTechnologyChoice
-  newCryptography?: ProjectTechnologyChoice
   dataAvailability?: ProjectTechnologyChoice
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice

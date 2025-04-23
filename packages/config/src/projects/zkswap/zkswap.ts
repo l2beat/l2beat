@@ -7,7 +7,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -83,15 +82,6 @@ export const zkswap: ScalingProject = {
         {
           title: 'ZKSwap Introduces Practical ZK Rollups - Medium blog',
           url: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'ZKSwap Whitepaper - Medium blog',
-          url: 'https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d',
         },
       ],
     },

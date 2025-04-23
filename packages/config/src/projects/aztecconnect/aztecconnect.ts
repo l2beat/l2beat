@@ -5,7 +5,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -123,15 +122,6 @@ export const aztecconnect: ScalingProject = {
         {
           title: 'RollupProcessorV3.sol#L706 - Etherscan source code',
           url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'Verifier28x32.sol#L150 - Etherscan source code',
-          url: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
         },
       ],
     },

@@ -11,7 +11,6 @@ import {
   DA_MODES,
   EXITS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -230,16 +229,6 @@ export const phala: ScalingProject = {
           text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
         },
       ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          title: 'Op-Succinct architecture',
-        },
-      ],
-      risks: [],
     },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,

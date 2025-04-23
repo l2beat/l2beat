@@ -7,7 +7,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
@@ -157,7 +156,6 @@ export const deversifi: ScalingProject = {
   },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),

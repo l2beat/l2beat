@@ -14,7 +14,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -1045,7 +1044,6 @@ export const starknet: ScalingProject = {
         },
       ],
     },
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,

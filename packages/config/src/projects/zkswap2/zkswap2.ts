@@ -5,7 +5,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -74,15 +73,6 @@ export const zkswap2: ScalingProject = {
   },
   technology: {
     stateCorrectness: zkswap.technology?.stateCorrectness,
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'ZKSpace Whitepaper',
-          url: 'https://github.com/l2labs/zkspace-whitepaper',
-        },
-      ],
-    },
     dataAvailability: zkswap.technology?.dataAvailability,
     operator: zkswap.technology?.operator,
     forceTransactions: zkswap.technology?.forceTransactions,

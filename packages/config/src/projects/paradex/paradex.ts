@@ -12,7 +12,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   EXITS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -301,7 +300,6 @@ export const paradex: ScalingProject = {
   }),
   technology: {
     stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {

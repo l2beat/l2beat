@@ -15,7 +15,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -422,9 +421,6 @@ export const linea: ScalingProject = {
     },
   }),
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
     },

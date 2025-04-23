@@ -15,7 +15,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
@@ -277,16 +276,6 @@ export function polygonCDKStack(
             },
           ),
     technology: {
-      newCryptography: {
-        ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-        references: [
-          {
-            title:
-              'PolygonZkEVM.sol - Etherscan source code, verifyBatches() function',
-            url: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}#code`,
-          },
-        ],
-      },
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,

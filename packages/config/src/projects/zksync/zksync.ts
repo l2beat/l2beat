@@ -12,7 +12,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -243,19 +242,6 @@ export const zksync: ScalingProject = {
           title:
             'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
           url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'Cryptography used - ZKsync FAQ',
-          url: 'https://docs.lite.zksync.io/userdocs/security/#cryptography-used',
-        },
-        {
-          title: 'PlonkCore.sol#L1193 - Etherscan source code',
-          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
         },
       ],
     },

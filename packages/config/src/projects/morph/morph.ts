@@ -12,7 +12,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -202,9 +201,6 @@ export const morph: ScalingProject = {
     ],
   },
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    },
     stateCorrectness: {
       name: 'Single round fault proof system',
       description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \

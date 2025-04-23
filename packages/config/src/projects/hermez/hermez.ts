@@ -4,7 +4,6 @@ import {
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -78,20 +77,6 @@ export const hermez: ScalingProject = {
         {
           title: 'ZK proofs - Hermez documentation',
           url: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'ZK proofs - Hermez documentation',
-          url: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
-        },
-        {
-          title:
-            'Multi-party Computation for the Trusted Setup - Hermez documentation',
-          url: 'https://docs.hermez.io/#/about/security?id=multi-party-computation-for-the-trusted-setup',
         },
       ],
     },
