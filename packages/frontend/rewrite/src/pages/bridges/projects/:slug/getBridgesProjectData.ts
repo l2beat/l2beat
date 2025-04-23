@@ -1,0 +1,61 @@
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import type { RenderData } from 'rewrite/src/ssr/server'
+import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
+import { getCollection } from '~/content/get-collection'
+import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+
+import { ps } from '~/server/projects'
+
+export async function getBridgesProjectData(
+  manifest: Manifest,
+  slug: string,
+): Promise<RenderData | undefined> {
+  const project = await ps.getProject({
+    slug,
+    select: [
+      'display',
+      'statuses',
+      'tvlInfo',
+      'tvsConfig',
+      'bridgeInfo',
+      'bridgeRisks',
+      'bridgeTechnology',
+      'display',
+    ],
+    where: ['isBridge'],
+    optional: [
+      'chainConfig',
+      'archivedAt',
+      'isUpcoming',
+      'milestones',
+      'contracts',
+      'permissions',
+    ],
+  })
+
+  if (!project) return undefined
+
+  const [searchBarProjects, projectEntry] = await Promise.all([
+    getSearchBarProjects(),
+    getBridgesProjectEntry(project),
+  ])
+
+  return {
+    head: {
+      manifest,
+      title: `${project.name} - L2BEAT`,
+      description: project.display.description,
+    },
+    ssr: {
+      page: 'BridgesProjectPage',
+      props: {
+        projectEntry,
+        searchBarProjects,
+        terms: getCollection('glossary').map((term) => ({
+          id: term.id,
+          matches: [term.data.term, ...(term.data.match ?? [])],
+        })),
+      },
+    },
+  }
+}

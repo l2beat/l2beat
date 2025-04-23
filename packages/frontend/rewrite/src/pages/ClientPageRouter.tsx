@@ -1,5 +1,6 @@
 import { AboutUsPage } from './about/AboutUsPage'
 import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
+import { BridgesProjectPage } from './bridges/projects/:slug/BridgesProjectPage'
 import { BridgesRiskPage } from './bridges/risk/BridgesRiskPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
@@ -50,6 +51,7 @@ const pages = {
   BridgesSummaryPage,
   BridgesRiskPage,
   BridgesArchivedPage,
+  BridgesProjectPage,
   // Data Availability
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,

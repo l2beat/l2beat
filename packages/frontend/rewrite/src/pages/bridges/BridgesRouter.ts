@@ -1,7 +1,10 @@
 import type { Router } from 'express'
 import type { Manifest } from 'rewrite/src/common/Manifest'
 import type { RenderFunction } from 'rewrite/src/ssr/server'
+import { validateRoute } from 'rewrite/src/ssr/validateRoute'
+import { z } from 'zod'
 import { getBridgesArchivedData } from './archived/getBridgesArchivedData'
+import { getBridgesProjectData } from './projects/:slug/getBridgesProjectData'
 import { getBridgesRiskData } from './risk/getBridgesRiskData'
 import { getBridgesSummaryData } from './summary/getBridgesSummaryData'
 
@@ -31,4 +34,22 @@ export function BridgesRouter(
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
+
+  app.get(
+    '/bridges/projects/:slug',
+    validateRoute({
+      params: z.object({
+        slug: z.string(),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getBridgesProjectData(manifest, req.params.slug)
+      if (!data) {
+        res.status(404).send('Not found')
+        return
+      }
+      const html = render(data, req.originalUrl)
+      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    },
+  )
 }
