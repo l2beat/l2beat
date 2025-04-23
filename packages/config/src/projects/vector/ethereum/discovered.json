@@ -1,11 +1,11 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22330099,
-  "configHash": "0x51eabbcba00f31d3aa0e7b4ff95705394424f0165ea14853263fc8cb1d933ec7",
+  "blockNumber": 22332001,
+  "configHash": "0x81c80d4f75a96deede39d992f4e30e0dc947444485b31c1c5516670803ae9de5",
   "entries": [
     {
-      "name": "SP1Vector",
+      "name": "Vector",
       "address": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
       "type": "Contract",
       "template": "succinct/SP1Vector",
@@ -79,8 +79,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 324,
-        "latestBlock": 1265040,
+        "latestAuthoritySetId": 325,
+        "latestBlock": 1266240,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -95,8 +95,11 @@
       "name": "AvailBridgeV1",
       "address": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
       "type": "Contract",
-      "unverified": true,
       "template": "avail/AvailBridgeV1",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199"
+      ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.",
       "issuedPermissions": [
@@ -151,7 +154,7 @@
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1371,
+        "messageId": 1372,
         "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -470,6 +473,17 @@
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
       "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x054fd961708D8E2B9c10a63F6157c74458889F0a": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
     "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": [

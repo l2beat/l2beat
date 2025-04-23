@@ -3,7 +3,8 @@
   "names": {
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
     "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": "Avail Multisig 1",
-    "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": "Avail Multisig 2"
+    "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": "Avail Multisig 2",
+    "0x02993cdC11213985b9B13224f3aF289F03bf298d": "Vector"
   },
   "types": {
     "StarknetProgramHash": {

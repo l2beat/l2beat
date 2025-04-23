@@ -5,10 +5,5 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x054fd961708D8E2B9c10a63F6157c74458889F0a" // AvailBridgeV1
-  ],
-  "overrides": {
-    "0x054fd961708D8E2B9c10a63F6157c74458889F0a": {
-      "extends": "avail/AvailBridgeV1" // proxy unverified
-    }
-  }
+  ]
 }

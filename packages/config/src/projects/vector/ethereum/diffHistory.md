@@ -1,34 +1,21 @@
-Generated with discovered.json: 0x3f1944f60b6761574864c73fb437f1cf6653ae20
+Generated with discovered.json: 0x838bae90c425566dc146d74fe24be3a9af804335
 
-# Diff at Wed, 23 Apr 2025 13:20:56 GMT:
+# Diff at Wed, 23 Apr 2025 13:40:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2f39eabda7f7e886e8b7711bdb4fc317e976d746 block: 22188870
-- current block number: 22330099
+- current block number: 22332001
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
-    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
-      sourceHashes:
--        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199"]
-      unverified:
-+        true
-    }
-```
+colorize, bridge is verified.
 
 ## Source code changes
 
 ```diff
-.../TransparentUpgradeableProxy.p.sol => /dev/null | 581 ---------------------
- .../SP1 Multisig}/GnosisSafe.sol                   |   0
- .../SP1 Multisig}/GnosisSafeProxy.p.sol            |   0
- 3 files changed, 581 deletions(-)
+.../{.flat@22188870/Vector => .flat/SP1Vector}/ERC1967Proxy.p.sol         | 0
+ .../ethereum/{.flat@22188870/Vector => .flat/SP1Vector}/SP1Vector.sol     | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -36,15 +23,6 @@ Provide description of changes. This section will be preserved.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22188870 (main branch discovery), not current.
-
-```diff
-    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
-    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
-      name:
--        "Vector"
-+        "SP1Vector"
-    }
-```
 
 ```diff
     contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
