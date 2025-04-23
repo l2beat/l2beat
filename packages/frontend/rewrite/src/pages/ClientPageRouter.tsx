@@ -3,6 +3,7 @@ import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
 import { BridgesRiskPage } from './bridges/risk/BridgesRiskPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
+import { DataAvailabilityProjectPage } from './data-availability/project/DataAvailabilityProjectPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
 import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
 import { DataAvailabilityThroughputPage } from './data-availability/throughput/DataAvailabilityThroughputPage'
@@ -56,6 +57,7 @@ const pages = {
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
   DataAvailabilityThroughputPage,
+  DataAvailabilityProjectPage,
   // ZK Catalog
   ZkCatalogPage,
   ZkCatalogProjectPage,

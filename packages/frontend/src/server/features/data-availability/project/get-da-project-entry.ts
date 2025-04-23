@@ -36,6 +36,7 @@ interface CommonDaProjectPageEntry {
 }
 
 export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
+  entryType: 'common'
   selectedBridge: {
     name: string
     slug: string
@@ -65,6 +66,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
 }
 
 export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
+  entryType: 'ethereum'
   header: {
     links: ProjectLink[]
     tvs: number
@@ -144,6 +146,7 @@ export async function getDaProjectEntry(
     .at(-1)
 
   const result: DaProjectPageEntry = {
+    entryType: 'common',
     name: layer.name,
     slug: layer.slug,
     kind: layer.daLayer.type,
@@ -250,6 +253,7 @@ export async function getEthereumDaProjectEntry(
     .at(-1)
 
   return {
+    entryType: 'ethereum',
     name: layer.name,
     slug: layer.slug,
     kind: layer.daLayer.type,
