@@ -549,12 +549,10 @@ export async function getScalingProjectEntry(
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
         content: project.scalingTechnology.upgradesAndGovernance,
-        diagram: {
-          type: 'upgrades-and-governance',
-          slug:
-            project.scalingTechnology.upgradesAndGovernanceImage ??
-            project.slug,
-        },
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.statuses.isUnderReview,
       },

@@ -14,6 +14,7 @@ import { api } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
 import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
@@ -230,11 +231,10 @@ export async function getBridgesProjectEntry(
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
         content: project.bridgeTechnology.upgradesAndGovernance,
-        diagram: {
-          type: 'upgrades-and-governance',
-          slug:
-            project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
-        },
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.statuses.isUnderReview,
       },

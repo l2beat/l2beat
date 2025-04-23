@@ -17,6 +17,7 @@ import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
 import { ScalingDataAvailabilityPage } from './scaling/data-availability/ScalingDataAvailabilityPage'
 import { ScalingFinalityPage } from './scaling/finality/ScalingFinalityPage'
 import { ScalingLivenessPage } from './scaling/liveness/ScalingLivenessPage'
+import { ScalingProjectPage } from './scaling/projects/:slug/ScalingProjectPage'
 import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
@@ -44,6 +45,7 @@ const pages = {
   ScalingCostsPage,
   ScalingArchivedPage,
   ScalingUpcomingPage,
+  ScalingProjectPage,
   // Bridges
   BridgesSummaryPage,
   BridgesRiskPage,
