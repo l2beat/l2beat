@@ -23,6 +23,7 @@ import { fiefdom } from '../projects/fiefdom/fiefdom'
 import { forta } from '../projects/forta/forta'
 import { game7 } from '../projects/game7/game7'
 import { geist } from '../projects/geist/geist'
+import { gridy } from '../projects/gridy/gridy'
 import { ham } from '../projects/ham/ham'
 import { henez } from '../projects/henez/henez'
 import { hook } from '../projects/hook/hook'
@@ -49,7 +50,6 @@ import { rivalz } from '../projects/rivalz/rivalz'
 import { sanko } from '../projects/sanko/sanko'
 import { skynet } from '../projects/skynet/skynet'
 import { slingshot } from '../projects/slingshot/slingshot'
-import { songprotocol } from '../projects/songprotocol/songprotocol'
 import { spheron } from '../projects/spheron/spheron'
 import { stack } from '../projects/stack/stack'
 import { superposition } from '../projects/superposition/superposition'
@@ -88,6 +88,7 @@ export const layer3s: ScalingProject[] = [
   forta,
   game7,
   geist,
+  gridy,
   inevm,
   ham,
   henez,
@@ -121,7 +122,6 @@ export const layer3s: ScalingProject[] = [
   lumiterra,
   oursong,
   playblock,
-  songprotocol,
   spheron,
   superposition,
   syndr,

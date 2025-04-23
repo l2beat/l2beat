@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x748e597733cd3814243db93cd947dfbd9dc6f5aa
+
+# Diff at Tue, 22 Apr 2025 12:02:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 22281691
+- current block number: 22324341
+
+## Description
+
+Upgrade preparing the migration to Chainlink infra. A migrator role (RoninAdminMultisig) can move all funds to predefined CCIP escrows. Will be complete on 04-25. 
+
+## Watched changes
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2"
++        "0x05caa4ae4fc13e910efd2c6a0ae2a136990435283a1527cf1a5ccb577a91d52f"
+      sourceHashes.0:
+-        "0x2d39ee54cf7dc52198aeac3324e8b8034b0d5db06ad5192305aaa80c1e10fca6"
++        "0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2"
+      values.$implementation:
+-        "0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"
++        "0x450032864C52Cb9210da8e30cE97CEaC8e215953"
+      values.$pastUpgrades.6:
++        ["2023-10-24T03:52:23.000Z","0xbbbeadcbf7df225dfef18cb3add0f29cbd2e90921acb7a3851b3a250832d12fe",["0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403"]]
+      values.$pastUpgrades.5.2:
+-        "0xbbbeadcbf7df225dfef18cb3add0f29cbd2e90921acb7a3851b3a250832d12fe"
++        ["0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"]
+      values.$pastUpgrades.5.1:
+-        "2023-10-24T03:52:23.000Z"
++        "0x855dd3b1194e3b889f4667b6a0996220e350e034d35d3eab29b4f23bc205767e"
+      values.$pastUpgrades.5.0:
+-        ["0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403"]
++        "2024-08-06T08:48:47.000Z"
+      values.$pastUpgrades.4.2:
+-        ["0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"]
++        "0x8f2924a52e63564c9cb0b119d72dc8290daa39c59cbe02e7f1ab6b2160ac9aa4"
+      values.$pastUpgrades.4.1:
+-        "0x855dd3b1194e3b889f4667b6a0996220e350e034d35d3eab29b4f23bc205767e"
++        "2022-06-22T07:40:30.000Z"
+      values.$pastUpgrades.4.0:
+-        "2024-08-06T08:48:47.000Z"
++        ["0x2DBA725f0a3485382a7F125a31cBF4361539aF73"]
+      values.$pastUpgrades.3.2:
+-        "0x8f2924a52e63564c9cb0b119d72dc8290daa39c59cbe02e7f1ab6b2160ac9aa4"
++        ["0x450032864C52Cb9210da8e30cE97CEaC8e215953"]
+      values.$pastUpgrades.3.1:
+-        "2022-06-22T07:40:30.000Z"
++        "0x234e508f2cf87b9d204402ded64d6fa13a65ac85e77b206b0be5718b9ce2a3b5"
+      values.$pastUpgrades.3.0:
+-        ["0x2DBA725f0a3485382a7F125a31cBF4361539aF73"]
++        "2025-04-22T07:28:23.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.accessControl.0x600e5f1c60beb469a3fa6dd3814a4ae211cc6259a6d033bae218a742f2af01d3:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"]}
+      values.emergencyPauser:
+-        "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4"
++        "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062"
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauseEnforcer (0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../MainchainGateway/MainchainGatewayV3.sol        | 500 ++++++++++++++++-----
+ .../{.flat@22281691 => .flat}/PauseEnforcer.sol    |  94 +++-
+ 2 files changed, 461 insertions(+), 133 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281691 (main branch discovery), not current.
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2DA02aC5f19Ae362a4121718d990e655eB628D96","0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"]},"SENTRY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x944b1282cb9B3e62794f38733F3B6336536c30cc","0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c","0xcb8225AA9D1029Af2E8cA537027E26bbe3056353","0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33","0x47870D35cdfF193a428C98a3468c833c23488393"]}}
+    }
+```
+
 Generated with discovered.json: 0x1d7fdef9c8df53981983a1df1c870bb3e24998d1
 
 # Diff at Wed, 16 Apr 2025 12:55:36 GMT:

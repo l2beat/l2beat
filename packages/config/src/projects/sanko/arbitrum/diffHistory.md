@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x7ca7fc561d0b2df76ae6d4ed99cc4fe63bd0fa1c
+
+# Diff at Tue, 22 Apr 2025 12:29:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 312801994
+- current block number: 329029881
+
+## Description
+
+Upgrade to known version of the Bridge (adds decimal support for the gas token).
+
+## Watched changes
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.0:
+-        "0xc138999c828d091534e4fea5f3730160aa2a6366cea16b82a55b9c8de07670df"
++        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
+      values.$implementation:
+-        "0xC5Db571093C4600559e239497d147476F7543b15"
++        "0x1D45D50FcC5b04B18D4560017945ABf6F3bdC0d1"
+      values.$pastUpgrades.1:
++        ["2024-04-12T21:49:58.000Z","0x0d61063cc83825eb0ef98a007195e26311a83915486dbc7bd044b93f660db5da",["0xC5Db571093C4600559e239497d147476F7543b15"]]
+      values.$pastUpgrades.0.2.0:
+-        "0xC5Db571093C4600559e239497d147476F7543b15"
++        "0x1D45D50FcC5b04B18D4560017945ABf6F3bdC0d1"
+      values.$pastUpgrades.0.1:
+-        "2024-04-12T21:49:58.000Z"
++        "0x9b5789587c761c3bc4f69e37ae95cd838b66fbd89deb283bcb1ecbc1a644273c"
+      values.$pastUpgrades.0.0:
+-        "0x0d61063cc83825eb0ef98a007195e26311a83915486dbc7bd044b93f660db5da"
++        "2025-04-22T09:12:50.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.nativeTokenDecimals:
++        18
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol                         | 59 ++++++++++++++++++++--
+ 1 file changed, 54 insertions(+), 5 deletions(-)
+```
+
 Generated with discovered.json: 0xfc8b1e29b2faab92bd86fae6851cda9f8f151845
 
 # Diff at Thu, 06 Mar 2025 14:25:01 GMT:

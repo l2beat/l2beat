@@ -181,7 +181,7 @@
         "length": "{{ rollupCount }}",
         "pickFields": ["lastVerifiedBatch"]
       },
-      "returnType": "(IsGreaterThanOne[][])"
+      "edit": ["map", ["map", ["format", "IsGreaterThanOne"]]]
     }
   },
   "category": "shared"

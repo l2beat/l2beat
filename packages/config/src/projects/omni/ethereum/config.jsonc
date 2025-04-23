@@ -37,17 +37,17 @@
         "targetAddress": {
           "description": "Address of the target contract on GnosisChain",
           "severity": "HIGH",
-          "returnType": "(GnosisAddress)"
+          "edit": ["format", "GnosisAddress"]
         },
         "adapters": {
           "description": "Array of the adapters on GnosisChain",
           "severity": "HIGH",
-          "returnType": "(GnosisAddress[])"
+          "edit": ["map", ["format", "GnosisAddress"]]
         },
         "reporters": {
           "description": "Array of the reports on GnosisChain",
           "severity": "HIGH",
-          "returnType": "(GnosisAddress[])"
+          "edit": ["map", ["format", "GnosisAddress"]]
         },
         "threshold": {
           "description": "Threshold of the adapters on GnosisChain",

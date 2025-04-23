@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x246ce3d841f88bef0ecff6b8e8e524082ae48da6
+
+# Diff at Tue, 22 Apr 2025 13:32:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f16e1f98aeb4d48badc7b90f065b978ee3b08e04 block: 838575
+- current block number: 838575
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 838575 (main branch discovery), not current.
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.kintoMultisig2Permission:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"]
+      values.securityCouncilPermission:
+-        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
++        ["0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"]
+    }
+```
+
 Generated with discovered.json: 0x829ba9aab4cf209bfdb454b9f70af271365c954b
 
 # Diff at Wed, 16 Apr 2025 13:12:35 GMT:

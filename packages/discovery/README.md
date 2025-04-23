@@ -920,7 +920,237 @@ If a contract does not have a proxy, its source code is saved directly into the 
 
 You can configure the name of the output folder through the `--sources-folder` and `--flat-sources-folder`.
 
-## Type casters
+## Edit
+
+### In what situation would I use edit?
+
+Values returned from a handler are not always in the shape you want them to be. 
+That's problematic if you want to use a value in a description.
+Say for example the project has a method to return the entire configuration of the system.
+After calling it you get something like this:
+
+```json
+{
+  "systemConfig": {
+    "pauseDelay": 604800,
+    "ethToPause": 1000000000000000000
+  }
+}
+```
+
+You want to describe the ability to pause the system if you have enough ETH.
+Since the value is right there in the output, you'd want to access it somehow, but the following is not supported:
+
+```json
+{
+  "description": "To pause the system you need {{ systemConfig.ethToPause }} ETH."
+}
+```
+
+The solution is to use the `edit` feature, it allows you to transform the value of a field similar to filter chaining in `jq`.
+In this case, you want to `get` the `ethToPause` field from the `systemConfig` field and then type cast it with `Undecimal18`.
+
+```json
+{
+  "fields": {
+    "ETH_TO_PAUSE": {
+      "copy": "systemConfig",
+      "edit": ["pipe", ["get", "ethToPause"], ["format", "Undecimal18"]]
+    }
+  }
+}
+```
+
+### What's the idea behind the edit language?
+
+The edit language is called blip (Bracket LISP) and it takes inspiration from LISP and JQ as it's based on operations called filters.
+Filters are defined with lists, the first element defines the filter and the rest of the elements are the arguments.
+Just like in JQ, the dataflow is modelled with pipes, data output of the first filter is the input of the second filter.
+That way the language achieves composability, allowing you to build up a chain of filters.
+All filters have the input value piped in, perform processing and produce an output value.
+Where the input values comes from and where the output values goes depends on the context in which the filter is used in.
+In the first example, `["get", "systemConfig"]` is a filter that extracts the systemConfig object, and `["format", "Undecimal18"]` is a filter that formats its input.
+
+### Filters
+
+- `pipe`, chains multiple filters sequentially.
+- `map`, applies a filter to each element in an array.
+- `pick`, selects specific keys from an object.
+- `get`, retrieves a value using a key or index path.
+- `set`, updates a value at a specific key or index path.
+- `filter`, creates a new array with all elements that pass the filter.
+- `find`, returns the first element that passes the filter.
+- `format`, applies the selected type caster.
+- `if`, conditional logic (if/then/else).
+- `delete`, deletes removes keys/indices from objects/arrays.
+- `shape`, creates a new object from input values using specified keys.
+
+#### `pipe`
+
+Combines multiple filters into a single filter with pipes.
+The input to the filter is immediately passed to the first filter in the chain.
+Output of the first filter is passed to the second filter, and so on.
+Last filter's output is the output of the pipe.
+When no filters are specified, the input is passed through.
+
+- Input: `{ a: 1 }`
+- Program: `["pipe", ["get", "a"], ["=", 1]]`
+- Output: `true`
+
+#### `map`
+
+Applies a filter to each element of an array producing a new array.
+The input to the filter has to be an array, the produced value is always an array.
+The second argument is the filter to be applied.
+The second argument must be a single filter expression that will be applied to each element.
+
+- Input: `[1, 2, 3]`
+- Program: `["map", ["=", 2]]`
+- Output: `[false, true, false]`
+
+#### `pick`
+
+Takes an object as input and returns a new object that contains only the keys specified in the arguments.
+Requires an object as input.
+Multiple arguments are allowed.
+Arguments can be other filters that result in a string value that indicates the key to pick.
+If the key is not found in the input object, it is ignored.
+
+- Input: `{ a: 1, b: 2, c: 3 }`
+- Program: `["pick", "a", "c", "z"]`
+- Output: `{ a: 1, c: 3 }`
+
+- Input: `{ a: 1, b: 2, keyToPick: "a" }`
+- Program: `["pick", ["get", "keyToPick"]]`
+- Output: `{ a: 1 }`
+
+### `get`
+
+Accesses a property of an object or index of an array.
+The access is specified as a string for objects and a number for arrays.
+Types of accesses can be mixed.
+During runtime the access is checked to make sure the type is correct.
+Multiple arguments are allowed, the are applied from left to right.
+The filter behaves as if you called `<arg1>.<arg2>.<arg3>...` on the input.
+
+- Input: `{ a: 1, b: { c: 2 } }`
+- Program: `["get", "b", "c"]`
+- Output: `2`
+
+- Input: `[1, 2, 3]`
+- Program: `["get", 1]`
+- Output: `2`
+
+- Input: `[{ a: 1 }, { a: 2 }, { a: 3 }]`
+- Program: `["get", 1, "a"]`
+- Output: `2`
+
+### `set`
+
+Accesses a property of an object or index of an array in the same fashion as `get`.
+The found value is replaced with the value returned by the filter provided.
+Path can be a string or a number or an array of strings or numbers, look at `get` for more details.
+The third argument must be a literal value or a single filter expression.
+If it's a filter, it receives the original value at the specified path as its input before computing the new value.
+
+- Input: `{ a: 1, b: { c: 2 } }`
+- Program: `["set", ["b", "c"], "BLIP"]`
+- Output: `{ a: 1, b: { c: "BLIP" } }`
+
+- Input: `{ count: 5 }`
+- Program: `["set", "count", ["=", 1]]`
+- Output: `{ count: false }`
+
+### `filter`
+
+Filters an array based on a predicate which itself is a filter.
+If the predicate returns true the element is included in the output.
+If the predicate returns false the element is omitted from the output.
+The second argument must be a single filter expression that will be applied to each element.
+The result of the predicate has to be a boolean.
+
+- Input: `[1, 2, 3, 4, 5]`
+- Program: `["filter", ["=", 2]]`
+- Output: `[2]`
+
+### `find`
+
+Works like `filter` but returns the first element that passes the filter.
+If no element passes the filter the runtime throws an error.
+The second argument must be a single filter expression that will be applied to each element.
+
+- Input: `[{ a: 1, v: 42 }, { a: 2, v: 43 }, { a: 3, v: 43 }]`
+- Program: `["find", ["pipe", ["get", "v"], ["=", 43]]]`
+- Output: `{ a: 2, v: 43 }`
+
+### `format`
+
+Formats a value using a type caster.
+The argument is the name of the type caster to use.
+Only a single argument is allowed, it has to be a string.
+
+- Input: `60`
+- Program: `["format", "FormatSeconds"]`
+- Output: `1 minute`
+
+### `if`
+
+Takes three filters, the first is the condition, the second is the value if the condition is true, and the third is the value if the condition is false.
+The condition has to be a boolean.
+Filters producing the true and false values are lazily evaluated.
+If the true condition value is only a valid program when the condition is true it wont be evaluated if the condition doesn't pass.
+
+- Input: `{ hasA: true, a: 1 }`
+- Program: `["if", ["get", "hasA"], ["pick", "a"], ["pick", "b"]]`
+- Output: `{ a: 1 }`
+
+### `delete`
+
+Deletes properties of an object or elements of an array.
+Multiple arguments are allowed.
+Values are removed from the top level of the object or from the array.
+Removed indexes from an array are stable, meaning that the indices specified for deletion are resolved based on the original array state before any removals occur.
+This ensures that deletions do not shift subsequent indices during the process
+
+- Input: `{ a: 1, b: 2, c: 3 }`
+- Program: `["delete", "a", "b"]`
+- Output: `{ c: 3 }`
+
+- Input: `[1, 2, 3, 4]`
+- Program: `["delete", 1, 2]`
+- Output: `[1, 4]`
+
+### `shape`
+
+It takes values from the input object (processed in key insertion order) or elements from the input array (processed by index) and assigns them to the new keys specified in the arguments.
+Multiple arguments are allowed, the number of keys doesn't have to match the number of input values as long as it's shorter or equal.
+An argument can be a string or a two element array with the first element being the key and the second being the filter to be applied to the value.
+If an argument is a `[keyName, filter]` pair, the corresponding input value is passed through the filter before being assigned.
+
+- Input: `{ a: 1, b: 2, c: 3 }`
+- Program: `["shape", "NEWA", "b"]`
+- Output: `{ NEWA: 1, b: 2 }`
+
+- Input: `[1, 2, 3, 4]`
+- Program: `["shape", "a", ["b", ["=", 2]]]`
+- Output: `{ a: 1, b: true }`
+
+### Copy feature
+
+Copy is a useful feature when you have a value and want to create multiple views into it.
+You can define a field that will take it's value from the value of another field.
+The ability to use the `edit` feature is still available on such a field.
+
+Example configuration:
+
+```json
+"acccessControlTargets": {
+  "copy": "accessControl",
+  "edit": ["get", "targets"]
+}
+```
+
+## Formatting values
 
 ### Idea
 
@@ -931,115 +1161,123 @@ The simplest example is a value returned from a function like `getDelay()`.
 As human you understand that it returns the number of seconds representing the delay.
 But since values on chain are oriented towards being computer friendly, instead of seeing `"24 hours"` you'll get `86400`.
 
-Type casters are a feature of discovery aiming to allow you to overcome the problem of assigning meaning to computer friendly values.
-The core idea behind type casters is that every public getter has an entry in the ABI.
-Let's expand on the example provided above, in that case the ABI would be `function getDelay() view returns (uint256)`.
-After the keyword `returns` the language requires you to define the structure of returned data.
-We can change the mentioned type structure definition as long as the shape of the type is the same.
+Formatting values allows you to overcome the problem of assigning meaning to computer-friendly values.
+This is achieved using the format BLIP function within the `edit` field.
 
-If we define a virtual type called `FormatSeconds` we can overwrite the ABI with it to run arbitrary computation on the returned type.
-You can see how we can change the ABI to `function getDelay() view returns (FormatSeconds)` because we keep the shape of the return type the same.
-You can also notice that everything before the `returns` keyword is not an important part of the change.
-Because of that we can drop it leaving us with the following change `(uint256)` -> `(FormatSeconds)`.
+### Using the format function
 
-This solution also has one nice advantage, it allows the user to assign structure to values without one.
-Assume we have a function like this `function abc() view returns (uint256[])`.
-We know that the array _always_ has two entries, the first entry is the delay in seconds and the second one is some offset.
-With this knowledge we can assign additional structure like this `(uint256[])` -> `(uint256 delay, uint256 offset)`.
-If the structure ever changes the discovery will throw an error during the type applying phase if the shape has a mismatch.
-What this gives you is that the structure is represented in the resulting `discovered.json`.
+The `format` function takes a single argument: the name of a predefined formatting configuration.
+This configuration specifies which built-in caster to use and any arguments required by that caster.
 
-Instead of:
-
-```json
-"abc": [120, 1000]
-```
-
-You'll see:
-
+For example, to format a raw integer value representing ETH (with 18 decimals) into a human-readable string, you might use a configuration named `Undecimal18`:
 
 ```json
 {
-  "abc": {
-    "delay": 120,
-    "offset": 1000,
-  }
-}
-```
-
-### User documentation
-
-To overwrite the ABI, use the "returnType" field in the configuration for a specific field.
-For example:
-
-```json
-"Contract": {
   "fields": {
-    "abc": {
-      "returnType": "(uint256 delay, uint256 offset)"
+    "ETH_AMOUNT": {
+      "copy": "rawEthValue",
+      "edit": ["format", "Undecimal18"]
     }
   }
 }
 ```
 
-#### Undecimal new type
+(See the `edit` section for a more complex example using `pipe` and `get` before `format`)
 
-To create a new type, you need to define a predefined type caster and provide any necessary arguments.
-Let’s create a new type that parses the totalSupply() function where decimals() is 9.
-Using the Undecimal type caster, you can define it as follows:
+### Defining Formatting Configurations
+
+To use the `format` function with a custom behavior (like specifying the number of decimals for an Undecimal conversion or providing a mapping), you need to define a formatting configuration.
+These configurations specify which built-in caster to use and provide its arguments.
+
+The structure for defining a formatting configuration is:
+
+```json
+{
+  "ConfigurationName": {
+    "caster": "BuiltInCasterName",
+    "arg": { ...arguments for the caster... }
+  }
+}
+```
+
+Let's look at examples using common built-in casters:
+
+#### Undecimal Caster
+
+The Undecimal caster is used to divide a large integer (like a token amount) by 10 raised to the power of a specified number of decimals.
+To create a configuration that parses a value where decimals is 9:
+
 
 ```json
 {
   "Undecimal9": {
-    "typeCaster": "Undecimal",
+    "caster": "Undecimal",
     "arg": { "decimals": 9 }
   }
 }
 ```
 
-To use this new type, define the "returnType" as "(Undecimal9)".
-The value retrieved from the blockchain will be passed through this type caster, which will divide it by 10^9 using the Undecimal type caster.
+You would then use this configuration in an edit field like `["format", "Undecimal9"]`.
 
-#### Mapping new type
+#### Mapping Caster
 
-Let’s look at another example with a different type caster.
+The Mapping caster is used to map specific input values to predefined output values, typically strings.
+
 Suppose a value on the blockchain is a 4-byte hash representing a unique configuration, such as a version number.
-We query a function with the ABI function version() view returns (uint32).
-Based on information from a third party, we know that 3622689 corresponds to version "v2.1" and 25526433 corresponds to version "v3.0".
+We query a function with the ABI `function version() view returns (uint32)`.
+Based on information from a third party, we know that `3622689` corresponds to version `"v2.1"` and `25526433` corresponds to version `"v3.0"`.
 
-To map these integer values to their string representations, you can use the Mapping type caster. Define the type as follows:
+To map these integer values to their string representations, you can use the Mapping caster. Define the configuration as follows:
 
 ```json
 {
   "VersionMapping": {
-    "typeCaster": "Mapping",
-    "arg": { 
-      3622689: "v2.1",
-      25526433: "v3.0"
+    "caster": "Mapping",
+    "arg": {
+      "3622689": "v2.1",
+      "25526433": "v3.0"
     }
   }
 }
 ```
 
-You can then use this type caster in your configuration by setting the "returnType" to "(VersionMapping)".
+Note: Mapping keys must be strings in the configuration JSON, even if the input value is a number.
 
-#### Places for type definitions 
+You can then use this configuration in your edit field by setting the format argument to "VersionMapping".
 
-Types can be defined at three levels:
+#### FormatSeconds Caster
 
-- Global Types: These are defined once and are available across all discoveries, eliminating the need for repeated definitions.
-- Project Global Types: Defined within the configuration of an entire project, these types are available to all contracts within that project.
-- Contract Local Types: These are defined for a specific contract and are only available to fields within that contract.
+The FormatSeconds caster is a built-in caster that formats a number representing seconds into a human-readable duration string (e.g., "1 minute", "2 days").
+This caster does not require any arguments in its configuration.
+
+You would use this with `["format", "FormatSeconds"]`.
+
+### Assigning Structure
+
+Note that the `format` function is primarily for transforming the value itself (e.g., number to string, number to formatted number).
+If you need to assign names to elements within an array or object (like naming elements of a returned array `[120, 1000]` as `delay` and `offset`), this is done using the `shape` BLIP filter within the `edit` field, not the `format` filter.
+
+For example, transforming `[120, 1000]` into `{ "delay": 120, "offset": 1000 }` would use `["shape", "delay", "offset"]` in the `edit` field.
+You could combine `shape` and `format` in a `pipe` if needed, e.g., `["pipe", ["shape", "delay", "offset"], ["set", "delay", ["format", "FormatSeconds"]]]` to first structure the array and then format the `delay` field.
+Or simpler still, you could `["shape", ["delay", ["format", "FormatSeconds"]], "offset"]` to structure the array and format the `delay` field in one step.
+
+#### Places for Formatting Configuration Definitions
+
+Formatting configurations can be defined at three levels:
+
+- Global Configurations: These are defined once and are available across all discoveries, eliminating the need for repeated definitions.
+- Project Global Configurations: Defined within the configuration of an entire project, these configurations are available to all contracts within that project.
+- Contract Local Configurations: These are defined for a specific contract and are only available to fields within that contract.
 
 Shadowing Rules
 
-The shadowing rules for types follow a hierarchy where more narrowly scoped types override those with broader scope.
+The shadowing rules for configurations follow a hierarchy where more narrowly scoped configurations override those with broader scope.
 The precedence order is as follows: Global < Project Global < Contract Local
 
-How to Define Types
+#### How to Define Configurations
 
-- Global Types: Define these in the file located at packages/backend/discovery/globalTypes.jsonc.
-- Project Global Types: Define these within the configuration of a specific project in config.jsonc. Use the `"types"` key in the highest JSON scope.
-- Contract Local Types: Define these within the configuration of a specific contract in config.jsonc. For an example, refer to the configuration for PolygonRollupManager in shared-polygon-cdk.
+- Global Configurations: Define these in the file located at `globalConfig.jsonc`.
+- Project Global Configurations: Define these within the configuration of a specific project in `config.jsonc`.
+- Contract Local Configurations: Define these within the configuration of a specific contract in `config.jsonc`. Use the `"formatConfigs"` key within the contract's configuration object.
 
-This structure allows for clear and organized management of type definitions, ensuring that your types are applied precisely where needed.
+This structure allows for clear and organized management of formatting definitions, ensuring that your values are formatted precisely where needed using the `format` BLIP function.

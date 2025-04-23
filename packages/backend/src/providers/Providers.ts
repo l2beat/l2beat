@@ -7,6 +7,7 @@ import {
   CelestiaDaProvider,
   CirculatingSupplyProvider,
   CoingeckoQueryService,
+  type DaBlobProvider,
   DaProvider,
   EthereumDaProvider,
   PriceProvider,
@@ -14,7 +15,6 @@ import {
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
-import { BlobProviders } from './BlobProviders'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'
@@ -26,7 +26,6 @@ export class Providers {
   uops: UopsAnalyzers
   day: DayProviders
   circulatingSupply: CirculatingSupplyProvider
-  blob: BlobProviders | undefined
   da: DaProvider
   clients: Clients
   blockTimestamp: BlockTimestampProvider
@@ -53,21 +52,29 @@ export class Providers {
     )
     this.uops = new UopsAnalyzers(config.chainConfig)
     this.day = new DayProviders(config.chainConfig, this.clients.starkex)
-    this.blob =
-      config.finality && this.clients.blob
-        ? new BlobProviders(this.clients.blob)
-        : undefined
-    this.da = new DaProvider([
-      ...this.clients.blobscan.map(
-        (c) => new EthereumDaProvider(c.client, c.daLayer),
-      ),
-      ...this.clients.celestia.map(
-        (c) => new CelestiaDaProvider(c.client, c.daLayer),
-      ),
-      ...this.clients.avail.map(
-        (c) => new AvailDaProvider(c.client, c.daLayer),
-      ),
-    ])
+
+    const blobProviders: DaBlobProvider[] = []
+    if (this.clients.blobscan && this.clients.beacon) {
+      const ethereumRpc = this.clients.getRpcClient('ethereum')
+      blobProviders.push(
+        new EthereumDaProvider(
+          this.clients.blobscan,
+          this.clients.beacon,
+          ethereumRpc,
+          'ethereum',
+        ),
+      )
+    }
+    if (this.clients.celestia) {
+      blobProviders.push(
+        new CelestiaDaProvider(this.clients.celestia, 'celestia'),
+      )
+    }
+    if (this.clients.avail) {
+      blobProviders.push(new AvailDaProvider(this.clients.avail, 'avail'))
+    }
+    this.da = new DaProvider(blobProviders)
+
     this.blockTimestamp = new BlockTimestampProvider({
       indexerClients: this.clients.indexer,
       blockProviders: this.clients.block.map(
@@ -81,10 +88,5 @@ export class Providers {
   getPriceProviders() {
     assert(this.price, 'Price providers unintended access')
     return this.price
-  }
-
-  getBlobProviders() {
-    assert(this.blob, 'Blob providers unintended access')
-    return this.blob
   }
 }

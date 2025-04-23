@@ -23,7 +23,9 @@ const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
 const paused =
   discovery.getContractValue<boolean>('MainchainGateway', 'paused') === true
-const warningText = paused ? 'The bridge is currently paused.' : undefined
+const warningText = paused
+  ? 'The bridge is currently paused. A migration to a new messaging infrastructure and new escrows [is in progress](https://x.com/Ronin_Network/status/1914579206396371186).'
+  : undefined
 
 const pausable = {
   paused,
@@ -148,7 +150,7 @@ export const ronin: Bridge = {
         {
           ...discovery.getContractDetails(
             'MainchainGateway',
-            `Bridge V3 contract handling deposits and withdrawals.`,
+            `Bridge contract handling deposits and withdrawals. Currently being deprecated. An address with the Migrator role can move all funds to the new escrows.`,
           ),
           upgradableBy: [
             { name: 'MainchainBridgeManager Governors', delay: 'no' },
