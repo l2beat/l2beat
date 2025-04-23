@@ -117,11 +117,18 @@ function Display({
           </p>
           {copy}
         </p>
-        {'template' in selected && selected.template && (
-          <p className="font-mono text-aux-orange text-xs">
-            template/{selected.template}
-          </p>
-        )}
+        <div className="flex flex-row divide-x divide-coffee-400 font-mono text-xs">
+          {'proxyType' in selected && selected.proxyType && (
+            <p className="px-1 text-aux-cyan first:pl-0">
+              {selected.proxyType}
+            </p>
+          )}
+          {'template' in selected && selected.template && (
+            <p className="px-1 text-aux-orange first:pl-0">
+              template/{selected.template}
+            </p>
+          )}
+        </div>
         <div className="font-mono text-xs">
           <AddressDisplay
             simplified
