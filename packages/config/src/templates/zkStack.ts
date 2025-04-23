@@ -261,7 +261,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         ...(templateVars.additionalPurposes ?? []),
       ],
       upgradesAndGovernanceImage: 'zkstack',
-      ...templateVars.display,
       stack: 'ZK Stack',
       architectureImage:
         templateVars.daProvider !== undefined
@@ -288,6 +287,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         },
       },
       tvlWarning: templateVars.display.tvlWarning,
+      ...templateVars.display,
     },
     config: {
       associatedTokens: templateVars.associatedTokens,

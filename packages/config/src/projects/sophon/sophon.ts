@@ -22,6 +22,7 @@ export const sophon: ScalingProject = zkStackL2({
   display: {
     name: 'Sophon',
     slug: 'sophon',
+    architectureImage: 'zkstack-validium-vector',
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
