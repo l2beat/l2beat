@@ -103,7 +103,7 @@
             "maxLength": 20,
             "indices": "{{ verifierVersions }}"
           },
-          "returnType": "((uint64 startBatchIndex, address verifier)[])"
+          "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
         },
         "legacyVerifiersLength": {
           "handler": {

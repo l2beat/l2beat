@@ -275,16 +275,16 @@
         {
           "typeCaster": "Mapping",
           "arg": {
-            "0": "unknown",
-            "1": "pending",
-            "2": "active",
-            "3": "deactivated"
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         },
         {
           "typeCaster": "Mapping",
           "arg": {
-            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
           }
         }
       ],
@@ -796,7 +796,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "starknet/Starknet": "0xe5e581bc97212bd8b2b1d7cce1791fadc7a90c2a31cdf90222904c9cc7977815",
-    "starknet/StarknetERC20Bridge": "0xb2c38ccbfd4ccacff566b10cdf6b4c97da8815ad2e6e8f2654b20f95fd0c7078"
+    "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
+    "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183"
   }
 }

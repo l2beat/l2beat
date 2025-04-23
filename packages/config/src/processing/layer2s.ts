@@ -91,6 +91,7 @@ import { kontos } from '../projects/kontos/kontos'
 import { kroma } from '../projects/kroma/kroma'
 import { lachain } from '../projects/lachain/lachain'
 import { lambda } from '../projects/lambda/lambda'
+import { lasernet } from '../projects/lasernet/lasernet'
 import { layer2finance } from '../projects/layer2finance/layer2finance'
 import { layer2financezk } from '../projects/layer2financezk/layer2financezk'
 import { layerai } from '../projects/layerai/layerai'
@@ -313,6 +314,7 @@ export const layer2s: ScalingProject[] = [
   kroma,
   lachain,
   lambda,
+  lasernet,
   layer2finance,
   layer2financezk,
   layerai,

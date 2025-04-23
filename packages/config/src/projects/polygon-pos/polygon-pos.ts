@@ -159,7 +159,7 @@ export const polygonpos: ScalingProject = {
         RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
         ` In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of ${currentValidatorSetSize} members.`,
     },
-    proposerFailure: RISK_VIEW.PROPOSER_POLYGON_POS(
+    proposerFailure: RISK_VIEW.PROPOSER_POS(
       currentValidatorSetSize,
       currentValidatorSetCap,
     ),
