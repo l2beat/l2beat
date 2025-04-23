@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0100cdfeae283c9bddf8834f1b174c13b8f60200
+
+# Diff at Wed, 23 Apr 2025 08:06:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6e5adf99f3f9c590a23a72a038e9edd5f0bafc4a block: 22188866
+- current block number: 22188866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188866 (main branch discovery), not current.
+
+```diff
+    contract Succinct Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "Succinct Multisig"
+    }
+```
+
 Generated with discovered.json: 0x3f1ab78a7039f639a7a94a74f6f074e52b8eab2f
 
 # Diff at Thu, 03 Apr 2025 14:54:56 GMT:

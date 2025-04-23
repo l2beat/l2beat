@@ -1,3 +1,88 @@
+Generated with discovered.json: 0x39edb1b6036295aa9400fe0cd0d1c9eae3c49f56
+
+# Diff at Wed, 23 Apr 2025 08:06:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6e5adf99f3f9c590a23a72a038e9edd5f0bafc4a block: 22188870
+- current block number: 22330099
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Source code changes
+
+```diff
+.../Succinct Multisig => .flat/SP1 Multisig}/GnosisSafe.sol               | 0
+ .../Succinct Multisig => .flat/SP1 Multisig}/GnosisSafeProxy.p.sol        | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188870 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      name:
+-        "Vector"
++        "SP1Vector"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      name:
+-        "AvailMultisig"
++        "Avail Multisig 1"
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.1.description:
++        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
+    }
+```
+
+```diff
+    contract Succinct Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SP1VerifierGatewayMultisig"
++        "Succinct Multisig"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x194d174e8fec4d9db4b1fe53d82b96e689dc23a7
 
 # Diff at Thu, 03 Apr 2025 14:55:22 GMT:
