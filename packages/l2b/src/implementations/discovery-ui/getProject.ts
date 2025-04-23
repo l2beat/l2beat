@@ -190,6 +190,7 @@ function contractFromDiscovery(
     name: getContractName(contract),
     type: getContractType(contract),
     template: contract.template,
+    proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
     address: toAddress(chain, contract.address),

@@ -134,6 +134,7 @@ export interface ErrorFieldValue {
 
 export interface ApiProjectContract extends ApiAddressEntry {
   template?: string
+  proxyType?: string
   fields: Field[]
   abis: ApiAbi[]
   sources: { name: string; code: string }[]
