@@ -155,8 +155,8 @@ export const zkspace: ScalingProject = {
       },
     },
   ),
+  stateValidation: zkswap.stateValidation,
   technology: {
-    stateCorrectness: zkswap.technology?.stateCorrectness,
     dataAvailability: zkswap.technology?.dataAvailability,
     operator: zkswap.technology?.operator,
     forceTransactions: zkswap.technology?.forceTransactions,

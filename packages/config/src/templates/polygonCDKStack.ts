@@ -17,7 +17,7 @@ import {
   FRONTRUNNING_RISK,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
@@ -276,17 +276,6 @@ export function polygonCDKStack(
             },
           ),
     technology: {
-      stateCorrectness: templateVars.nonTemplateTechnology
-        ?.stateCorrectness ?? {
-        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-        references: explorerReferences(explorerUrl, [
-          {
-            title:
-              'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
-            address: safeGetImplementation(rollupManagerContract),
-          },
-        ]),
-      },
       dataAvailability:
         (templateVars.nonTemplateTechnology?.dataAvailability ??
         templateVars.daProvider !== undefined)
@@ -408,6 +397,16 @@ export function polygonCDKStack(
           title: 'Pessimistic Proofs',
           description:
             'The pessimistic proofs that are used to prove correct accounting in the shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
+        },
+        {
+          ...STATE_VALIDATION.VALIDITY_PROOFS,
+          references: explorerReferences(explorerUrl, [
+            {
+              title:
+                'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
+              address: safeGetImplementation(rollupManagerContract),
+            },
+          ]),
         },
       ],
     },

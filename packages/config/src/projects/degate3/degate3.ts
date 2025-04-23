@@ -17,7 +17,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   SOA,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -261,15 +261,6 @@ export const degate3: ScalingProject = {
     },
   ),
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'Operator - DeGate design doc',
-          url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
@@ -374,6 +365,15 @@ export const degate3: ScalingProject = {
         title: 'Verification Keys Generation',
         description:
           'Groth16 requires a circuit specific trusted setup, so they run their own ceremony. The first phase is run using Powers of Tau ceremony. Some of the instructions on how to regenerate the verification keys can be found [here](https://github.com/degatedev/trusted_setup/tree/master).',
+      },
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title: 'Operator - DeGate design doc',
+            url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
+          },
+        ],
       },
     ],
     proofVerification: {

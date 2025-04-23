@@ -6,7 +6,7 @@ import {
   DA_MODES,
   FORCE_TRANSACTIONS,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { getStage } from '../../common/stages/getStage'
@@ -115,16 +115,20 @@ export const aztecconnect: ScalingProject = {
         'https://github.com/AztecProtocol/aztec-connect/tree/v2.1',
     },
   ),
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title: 'RollupProcessorV3.sol#L706 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'RollupProcessorV3.sol#L706 - Etherscan source code',
-          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       description:

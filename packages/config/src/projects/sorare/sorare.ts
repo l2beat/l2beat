@@ -10,7 +10,7 @@ import {
   OPERATOR,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -123,8 +123,10 @@ export const sorare: ScalingProject = {
     },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
   },
+  stateValidation: {
+    categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
+  },
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),

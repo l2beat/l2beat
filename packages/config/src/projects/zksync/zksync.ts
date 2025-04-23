@@ -14,7 +14,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -230,21 +230,25 @@ export const zksync: ScalingProject = {
       },
     },
   ),
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title: 'Validity proofs - ZKsync FAQ',
+            url: 'https://docs.lite.zksync.io/userdocs/security/#validity-proofs',
+          },
+          {
+            title:
+              'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
+            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'Validity proofs - ZKsync FAQ',
-          url: 'https://docs.lite.zksync.io/userdocs/security/#validity-proofs',
-        },
-        {
-          title:
-            'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
-          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [

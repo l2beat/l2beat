@@ -16,7 +16,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ESCROW } from '../../common'
@@ -1035,15 +1035,6 @@ export const starknet: ScalingProject = {
     },
   ),
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'What is Starknet',
-          url: 'https://starkware.co/starknet/',
-        },
-      ],
-    },
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
@@ -1079,6 +1070,15 @@ export const starknet: ScalingProject = {
         description:
           'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
         risks: [],
+      },
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title: 'What is Starknet',
+            url: 'https://starkware.co/starknet/',
+          },
+        ],
       },
     ],
     proofVerification: {

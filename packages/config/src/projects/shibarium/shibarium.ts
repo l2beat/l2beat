@@ -108,27 +108,29 @@ export const shibarium: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description:
-        'As a fork of Polygon PoS, state updates are settled if signed by at least 2/3+1 of the Shibarium validators stake, without checking whether the state transition is valid. The validator set is gated by a whitelist, which is not public.',
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators on Shibarium decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
-        },
-      ],
-    },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'As a fork of Polygon PoS, state updates are settled if signed by at least 2/3+1 of the Shibarium validators stake, without checking whether the state transition is valid. The validator set is gated by a whitelist, which is not public.',
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators on Shibarium decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: {

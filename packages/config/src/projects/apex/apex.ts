@@ -8,7 +8,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -182,8 +182,10 @@ export const apex: ScalingProject = {
     },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   },
+  stateValidation: {
+    categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
+  },
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions:

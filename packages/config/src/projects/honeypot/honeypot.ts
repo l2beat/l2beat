@@ -133,26 +133,30 @@ export const honeypot: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(0),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'Fraud proofs',
+        description:
+          'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Honeypot DApp permits invalid state roots. Since Honeypot is immutable, this feature will not be added to the DApp.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid state root is submitted to the system by the configured Authority.',
+            isCritical: true,
+          },
+        ],
+        references: [
+          {
+            title:
+              'Authority.sol#L148 - Etherscan source code, submitClaim function',
+            url: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'Fraud proofs are in development',
-      description:
-        'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Honeypot DApp permits invalid state roots. Since Honeypot is immutable, this feature will not be added to the DApp.',
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'an invalid state root is submitted to the system by the configured Authority.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          title:
-            'Authority.sol#L148 - Etherscan source code, submitClaim function',
-          url: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [

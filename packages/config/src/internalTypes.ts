@@ -162,8 +162,6 @@ export interface ProjectScalingDisplay {
 }
 
 export interface ProjectScalingTechnology {
-  /** What state correctness mechanism is used in the project */
-  stateCorrectness?: ProjectTechnologyChoice
   /** What is the data availability choice for the project */
   dataAvailability?: ProjectTechnologyChoice
   /** What are the details about project operator(s) */

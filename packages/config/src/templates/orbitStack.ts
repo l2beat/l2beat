@@ -568,8 +568,6 @@ function orbitStackCommon(
             } as ProjectTechnologyChoice
           }
         })(),
-      stateCorrectness:
-        templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         daProvider.technology,

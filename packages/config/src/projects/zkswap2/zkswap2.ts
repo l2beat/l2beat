@@ -71,8 +71,8 @@ export const zkswap2: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
+  stateValidation: zkswap.stateValidation,
   technology: {
-    stateCorrectness: zkswap.technology?.stateCorrectness,
     dataAvailability: zkswap.technology?.dataAvailability,
     operator: zkswap.technology?.operator,
     forceTransactions: zkswap.technology?.forceTransactions,

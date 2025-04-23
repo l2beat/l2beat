@@ -183,28 +183,33 @@ export const fuel: ScalingProject = {
     },
     { rollupNodeLink: 'https://github.com/FuelLabs/network-watchtower' },
   ),
+  stateValidation: {
+    categories: [
+      {
+        title: 'Fraud proofs',
+        description: `Ultimately, Fuel will use one round fraud proofs with single round performed via a RISC-V-based zkVM. Currently, there is a ${formatSeconds(challengePeriod)} challenge period.`,
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid state root is submitted to the system by the proposer.',
+            isCritical: true,
+          },
+        ],
+        references: [
+          {
+            title:
+              'FuelChainState.sol - Etherscan source code, commit function',
+            url: 'https://etherscan.io/address/0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130#code',
+          },
+          {
+            title: 'Fuel docs - Hybrid proving',
+            url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#hybrid-proving',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'Fraud proofs are in development',
-      description: `Ultimately, Fuel will use one round fraud proofs with single round performed via a RISC-V-based zkVM. Currently, there is a ${formatSeconds(challengePeriod)} challenge period.`,
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'an invalid state root is submitted to the system by the proposer.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          title: 'FuelChainState.sol - Etherscan source code, commit function',
-          url: 'https://etherscan.io/address/0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130#code',
-        },
-        {
-          title: 'Fuel docs - Hybrid proving',
-          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#hybrid-proving',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
