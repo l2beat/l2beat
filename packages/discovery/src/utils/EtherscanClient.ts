@@ -8,7 +8,7 @@ import {
   stringAsInt,
 } from '@l2beat/shared-pure'
 
-import type { ContractSource } from './IEtherscanClient'
+import type { ContractSource, SourceProvider } from './IEtherscanClient'
 
 import type { HttpClient } from '@l2beat/shared'
 import { z } from 'zod'
@@ -47,6 +47,7 @@ export class EtherscanClient implements IEtherscanClient {
     protected readonly minTimestamp: UnixTime,
     protected readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
     protected readonly logger = Logger.SILENT,
+    protected readonly sourceFallbackProvider?: SourceProvider,
   ) {
     this.callWithRetries = this.rateLimiter.wrap(
       this.callWithRetries.bind(this),
@@ -61,8 +62,17 @@ export class EtherscanClient implements IEtherscanClient {
     url: string,
     apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
+    sourceFallbackProvider?: SourceProvider,
   ): EtherscanClient {
-    return new EtherscanClient(httpClient, url, apiKey, 0, unsupportedMethods)
+    return new EtherscanClient(
+      httpClient,
+      url,
+      apiKey,
+      0,
+      unsupportedMethods,
+      Logger.SILENT,
+      sourceFallbackProvider,
+    )
   }
 
   // Etherscan API is not stable enough to trust it to return "closest" block.
@@ -142,6 +152,10 @@ export class EtherscanClient implements IEtherscanClient {
       } catch (e) {
         console.error(e)
       }
+    }
+
+    if (this.sourceFallbackProvider) {
+      return this.sourceFallbackProvider.getContractSource(address)
     }
 
     return {

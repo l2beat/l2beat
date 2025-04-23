@@ -11,6 +11,8 @@ export interface EtherscanUnsupportedMethods {
   getContractCreation?: boolean
 }
 
+export type SourceProvider = Pick<IEtherscanClient, 'getContractSource'>
+
 interface EtherscanExplorerConfig {
   type: 'etherscan'
   url: string
@@ -68,6 +70,7 @@ export interface IEtherscanClient {
 export function getExplorerClient(
   httpClient: HttpClient,
   config: ExplorerConfig,
+  fallbackSourceProvider?: SourceProvider,
 ): IEtherscanClient {
   switch (config.type) {
     case 'etherscan': {
@@ -76,6 +79,7 @@ export function getExplorerClient(
         config.url,
         config.apiKey,
         config.unsupported,
+        fallbackSourceProvider,
       )
     }
     case 'routescan': {

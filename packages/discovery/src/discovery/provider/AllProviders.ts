@@ -4,7 +4,11 @@ import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import type { DiscoveryChainConfig } from '../../config/types'
-import { getExplorerClient } from '../../utils/IEtherscanClient'
+import {
+  type SourceProvider,
+  getExplorerClient,
+} from '../../utils/IEtherscanClient'
+import { SourcifyClient } from '../../utils/SourcifyClient'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { DiscoveryCache } from './DiscoveryCache'
 import { HighLevelProvider } from './HighLevelProvider'
@@ -33,6 +37,10 @@ export class AllProviders {
     private discoveryCache: DiscoveryCache,
   ) {
     for (const config of chainConfigs) {
+      let blobClient: BlobClient | undefined
+      let celestiaApiClient: CelestiaApiClient | undefined
+      let fallbackSourceProvider: SourceProvider | undefined
+
       const baseProvider = new providers.StaticJsonRpcProvider(
         config.rpcUrl,
         config.chainId,
@@ -45,9 +53,19 @@ export class AllProviders {
               config.chainId,
             )
 
-      const etherscanClient = getExplorerClient(http, config.explorer)
-      let blobClient: BlobClient | undefined
-      let celestiaApiClient: CelestiaApiClient | undefined
+      if (config.chainId) {
+        fallbackSourceProvider = new SourcifyClient(
+          http,
+          config.chainId,
+          Logger.SILENT,
+        )
+      }
+
+      const etherscanClient = getExplorerClient(
+        http,
+        config.explorer,
+        fallbackSourceProvider,
+      )
 
       const ethereumRpc = new RpcClient({
         url: config.rpcUrl,
