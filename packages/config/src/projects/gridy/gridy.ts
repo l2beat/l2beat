@@ -34,7 +34,7 @@ export const gridy: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'gridy',
-    chainId: 6120767554663640178324841317716,
+    chainId: undefined,
     apis: [
       {
         type: 'starknet',
