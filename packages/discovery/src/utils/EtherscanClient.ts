@@ -124,6 +124,18 @@ export class EtherscanClient implements IEtherscanClient {
   }
 
   async getContractSource(address: EthereumAddress): Promise<ContractSource> {
+    const source = await this._getContractSource(address)
+
+    if (this.sourceFallbackProvider && !source.isVerified) {
+      return this.sourceFallbackProvider.getContractSource(address)
+    }
+
+    return source
+  }
+
+  private async _getContractSource(
+    address: EthereumAddress,
+  ): Promise<ContractSource> {
     const response = await this.callWithRetries('contract', 'getsourcecode', {
       address: address.toString(),
     })
@@ -152,10 +164,6 @@ export class EtherscanClient implements IEtherscanClient {
       } catch (e) {
         console.error(e)
       }
-    }
-
-    if (this.sourceFallbackProvider) {
-      return this.sourceFallbackProvider.getContractSource(address)
     }
 
     return {
