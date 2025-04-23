@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xe86317b4792f23817c4f2e97ad5789c1a436b693
+
+# Diff at Wed, 23 Apr 2025 10:30:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@93a8fe870e4d8a2b82043676e31a0a9cc97507e7 block: 22297523
+- current block number: 22331112
+
+## Description
+
+Gov updated, EOA upgrader removed.
+
+## Watched changes
+
+```diff
+    contract undefined (0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.4:
+-        {"permission":"upgrade","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","via":[]}
+      issuedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.3.description:
+-        "disable the withdrawal limit."
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.2.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.2.description:
++        "disable the withdrawal limit."
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
 Generated with discovered.json: 0x40f7bbb604cfebe391ca1d0bbc2d85d1440a8500
 
 # Diff at Fri, 18 Apr 2025 17:58:18 GMT:
