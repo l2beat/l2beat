@@ -38,7 +38,7 @@ export const gridy: ScalingProject = underReviewL3({
     apis: [
       {
         type: 'starknet',
-        url: '',
+        url: 'https://replace.me',
         callsPerMinute: 600,
       },
     ],
