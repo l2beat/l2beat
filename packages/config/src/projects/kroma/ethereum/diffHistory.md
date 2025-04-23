@@ -1,14 +1,22 @@
-Generated with discovered.json: 0x9d624fc2bca5836bbec30177ddac0f18e40eb48a
+Generated with discovered.json: 0x22f4bf6776e2c3b2909acf8ae1c475f7fe81b067
 
-# Diff at Wed, 23 Apr 2025 09:15:58 GMT:
+# Diff at Wed, 23 Apr 2025 13:20:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c841380b2b008a3fe6bc954d32bb0ad5d666f4f2 block: 22188901
+- comparing to: main@2f39eabda7f7e886e8b7711bdb4fc317e976d746 block: 22188901
 - current block number: 22330737
 
 ## Description
 
 config: move ms names to ethereumConfig.json.
+
+## Source code changes
+
+```diff
+.../SP1VerifierGatewayMultisig => .flat/Succinct Multisig}/GnosisSafe.sol | 0
+ .../Succinct Multisig}/GnosisSafeProxy.p.sol                              | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -17,15 +25,15 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22188901 (main branch discovery), not current.
 
 ```diff
-    contract Succinct Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
     +++ description: None
       name:
 -        "Succinct Multisig 1"
-+        "Succinct Multisig"
++        "SP1VerifierGatewayMultisig"
     }
 ```
 
-Generated with discovered.json: 0x633b08017e36bb932364567e73e238acc4d10361
+Generated with discovered.json: 0xdc7f49210c5c2da9fc43935014f2bae572e53240
 
 # Diff at Thu, 03 Apr 2025 14:34:03 GMT:
 

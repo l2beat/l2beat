@@ -1,21 +1,34 @@
-Generated with discovered.json: 0x39edb1b6036295aa9400fe0cd0d1c9eae3c49f56
+Generated with discovered.json: 0x3f1944f60b6761574864c73fb437f1cf6653ae20
 
-# Diff at Wed, 23 Apr 2025 08:06:58 GMT:
+# Diff at Wed, 23 Apr 2025 13:20:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6e5adf99f3f9c590a23a72a038e9edd5f0bafc4a block: 22188870
+- comparing to: main@2f39eabda7f7e886e8b7711bdb4fc317e976d746 block: 22188870
 - current block number: 22330099
 
 ## Description
 
 Provide description of changes. This section will be preserved.
 
+## Watched changes
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      sourceHashes:
+-        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199"]
+      unverified:
++        true
+    }
+```
+
 ## Source code changes
 
 ```diff
-.../Succinct Multisig => .flat/SP1 Multisig}/GnosisSafe.sol               | 0
- .../Succinct Multisig => .flat/SP1 Multisig}/GnosisSafeProxy.p.sol        | 0
- 2 files changed, 0 insertions(+), 0 deletions(-)
+.../TransparentUpgradeableProxy.p.sol => /dev/null | 581 ---------------------
+ .../SP1 Multisig}/GnosisSafe.sol                   |   0
+ .../SP1 Multisig}/GnosisSafeProxy.p.sol            |   0
+ 3 files changed, 581 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -53,15 +66,6 @@ discovery. Values are for block 22188870 (main branch discovery), not current.
 +        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
-    }
-```
-
-```diff
-    contract Succinct Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
-    +++ description: None
-      name:
--        "SP1VerifierGatewayMultisig"
-+        "Succinct Multisig"
     }
 ```
 

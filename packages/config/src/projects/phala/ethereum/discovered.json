@@ -686,7 +686,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
