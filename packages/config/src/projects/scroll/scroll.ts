@@ -46,15 +46,16 @@ const timelockEmergencyDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
-const maxDelayMessageQueue = discovery.getContractValue<number>(
+const enforcedModeDelayParameters = discovery.getContractValue<{
+  maxDelayEnterEnforcedMode: number
+  maxDelayMessageQueue: number
+}>(
   'SystemConfig',
-  'maxDelayMessageQueue',
+  'enforcedBatchParameters',
 )
 
-const maxDelayEnterEnforcedMode = discovery.getContractValue<number>(
-  'SystemConfig',
-  'maxDelayEnterEnforcedMode',
-)
+const maxDelayEnterEnforcedMode = enforcedModeDelayParameters.maxDelayEnterEnforcedMode
+const maxDelayMessageQueue = enforcedModeDelayParameters.maxDelayMessageQueue
 
 const minSelfSequenceDelay = Math.min(
   maxDelayMessageQueue,
