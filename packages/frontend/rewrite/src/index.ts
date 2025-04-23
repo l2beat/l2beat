@@ -20,7 +20,7 @@ const app = express()
 if (isProduction) {
   app.use(compression())
   // TODO: immutable cache
-  app.use('/', sirv('./rewrite/dist/static', { extensions: [] }))
+  app.use('/', sirv('./rewrite/dist/static', { maxAge: 60 }))
 } else {
   app.use('/', express.static('./rewrite/static'))
   app.use((req, res, next) => {
@@ -77,10 +77,8 @@ function renderToHtml(data: RenderData, url: string) {
 }
 
 function getTemplate(manifest: Manifest) {
+  const matches = ['/index.css', '/index.js', '/icon.svg']
   let template = readFileSync('rewrite/index.html', 'utf-8')
-  const matches = [...template.matchAll(/"\/static\/.*"/g)].map((x) =>
-    x[0].slice(1, -1),
-  )
   for (const url of matches) {
     template = template.replace(url, manifest.getUrl(url))
   }
