@@ -2,7 +2,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -18,9 +17,8 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sophon: ScalingProject = zkStackL2({
   discovery,
-  additionalBadges: [BADGES.DA.Avail],
+  additionalBadges: [BADGES.DA.Avail], // TODO ADD AVAIL + VECTOR BADGE
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
     slug: 'sophon',
@@ -71,7 +69,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
       ],
     },
-    bridge: DA_BRIDGES.NONE,
+    bridge: DA_BRIDGES.VECTOR,
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -154,6 +152,14 @@ export const sophon: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Avail VectorX DA Bridge',
+      url: 'https://blog.availproject.org/avail-to-power-consumer-entertainment-onchain-with-sophon/', // TODO better announcement link
+      date: '2025-04-23T00:00:00.00Z',
+      description:
+        'Sophon is the first validium to integrate with the VectorX data availability bridge to Avail.',
+      type: 'general',
+    },
     {
       title: 'Mainnet public launch',
       url: 'https://x.com/sophon/status/1861771965284896996',
