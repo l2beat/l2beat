@@ -5,6 +5,7 @@ import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
 import { getColor } from './colors/colors'
+import { IconInitial } from '../../icons/IconInitial'
 
 export interface NodeViewProps {
   node: Node
@@ -12,7 +13,7 @@ export interface NodeViewProps {
 }
 
 export function NodeView(props: NodeViewProps) {
-  const { color, isDark } = getColor(props.node)
+  const { isDark } = getColor(props.node)
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
@@ -33,17 +34,22 @@ export function NodeView(props: NodeViewProps) {
     >
       <div
         className={clsx(
-          'mb-1 flex w-full items-center gap-1 px-2 font-medium text-sm',
+          'mb-1 flex w-full items-center justify-between gap-1 px-2 font-medium text-sm',
           fullHeight ? 'rounded-2xl' : 'rounded-t',
           isDark ? 'text-coffee-200' : 'text-black',
         )}
         style={{
           height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
-          background: color,
+          background: getTitleBackground(props.node),
         }}
       >
         <AddressIcon type={props.node.addressType} />
         <div className="truncate">{props.node.name}</div>
+        {props.node.isInitial ? (
+          <IconInitial className="text-aux-green" />
+        ) : (
+          <span></span>
+        )}
       </div>
       {props.node.fields
         .filter((field) => !props.node.hiddenFields.includes(field.name))
@@ -52,6 +58,25 @@ export function NodeView(props: NodeViewProps) {
         ))}
     </div>
   )
+}
+
+function getTitleBackground(node: Node): string {
+  const { color, isDark } = getColor(node)
+  if (!node.isInitial) {
+    return color
+  }
+
+  const baseColor = color
+
+  const contrastColorCSS = isDark
+    ? `color-mix(in oklch, ${baseColor}, black 15%)` // Mix dark color with white
+    : `color-mix(in oklch, ${baseColor}, white 15%)` // Mix light color with black
+
+  return `repeating-radial-gradient(
+    circle,
+    ${contrastColorCSS} 0px,
+    ${baseColor} 15px
+  )`
 }
 
 function NodeField(props: {
