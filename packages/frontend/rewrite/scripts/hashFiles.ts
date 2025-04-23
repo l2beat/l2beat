@@ -9,7 +9,7 @@ interface Manifest {
 }
 
 void addHashes({
-  prefix: '/static',
+  prefix: '/',
   inputDir: 'rewrite/static',
   outputDir: 'rewrite/dist/static',
   manifest: 'rewrite/dist/manifest.json',
