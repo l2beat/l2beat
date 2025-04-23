@@ -59,9 +59,9 @@ export const sophon: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
     layer: DA_LAYERS.AVAIL,
-    riskView: RISK_VIEW.DATA_AVAIL(false),
+    riskView: RISK_VIEW.DATA_AVAIL(true),
     technology: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
@@ -153,11 +153,11 @@ export const sophon: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Avail VectorX DA Bridge',
+      title: 'Avail Vector DA Bridge',
       url: 'https://blog.availproject.org/avail-to-power-consumer-entertainment-onchain-with-sophon/', // TODO better announcement link
       date: '2025-04-23T00:00:00.00Z',
       description:
-        'Sophon is the first validium to integrate with the VectorX data availability bridge to Avail.',
+        'Sophon is the first validium to integrate with the Vector data availability bridge to Avail.',
       type: 'general',
     },
     {
