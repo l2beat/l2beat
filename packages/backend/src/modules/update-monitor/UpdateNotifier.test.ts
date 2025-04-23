@@ -55,6 +55,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -143,6 +144,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -243,6 +245,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -336,6 +339,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -405,6 +409,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const reminders = {
@@ -502,6 +507,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const reminders = {
@@ -552,6 +558,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const reminders = {}
