@@ -19,7 +19,16 @@
       }
     },
     "getStaticConfig": {
-      "returnType": "(tuple(address commitStore, ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address prevOffRamp, address rmnProxy, address tokenAdminRegistry))"
+      "edit": [
+        "shape",
+        "commitStore",
+        ["chainSelector", ["format", "ChainIdMap"]],
+        ["sourceChainSelector", ["format", "ChainIdMap"]],
+        "onRamp",
+        "prevOffRamp",
+        "rmnProxy",
+        "tokenAdminRegistry"
+      ]
     }
   }
 }

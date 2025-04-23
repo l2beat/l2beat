@@ -23,6 +23,7 @@ import { fiefdom } from '../projects/fiefdom/fiefdom'
 import { forta } from '../projects/forta/forta'
 import { game7 } from '../projects/game7/game7'
 import { geist } from '../projects/geist/geist'
+import { gridy } from '../projects/gridy/gridy'
 import { ham } from '../projects/ham/ham'
 import { henez } from '../projects/henez/henez'
 import { hook } from '../projects/hook/hook'
@@ -87,6 +88,7 @@ export const layer3s: ScalingProject[] = [
   forta,
   game7,
   geist,
+  gridy,
   inevm,
   ham,
   henez,

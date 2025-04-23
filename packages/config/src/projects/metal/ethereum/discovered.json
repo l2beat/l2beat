@@ -1916,7 +1916,7 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
-    "gnosisSafeModules/LivenessModule": "0xafb9aa875756d89f2d9c8673f33aad5a3959f8bc2d5a538d4772d4a62e1902be",
+    "gnosisSafeModules/LivenessModule": "0x649656e7dda2f87bdeca0dc9a6bb23b2dc62c32ed6d1fdf245c3dcc2f6e80f74",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",

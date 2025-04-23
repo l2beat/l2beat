@@ -13,29 +13,12 @@ export async function GET(
   props: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await props.params
-  const searchParams = request.nextUrl.searchParams
-
-  const range = searchParams.get('range') as ActivityChartParams['range'] | null
-
-  const params: ActivityChartParams = {
-    filter: { type: 'projects', projectIds: [slug] },
-    range: range ?? '30d',
-    previewRecategorisation: false,
-  }
-  const parsedParams = ActivityChartParams.safeParse(params)
-  if (parsedParams.error) {
-    return NextResponse.json({
-      success: false,
-      errors: parsedParams.error.errors,
-    })
-  }
-
-  const response = await getCachedResponse(slug, parsedParams.data)
+  const response = await getCachedResponse(slug, request.nextUrl.searchParams)
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (slug: string, params: ActivityChartParams) => {
+  async (slug: string, searchParams: URLSearchParams) => {
     const isEthereum = slug === 'ethereum'
     const project = await ps.getProject({
       slug,
@@ -49,10 +32,26 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const { data } = await getActivityChart({
-      ...params,
-      filter: isEthereum ? { type: 'all' } : params.filter,
-    })
+    const range = searchParams.get('range') as
+      | ActivityChartParams['range']
+      | null
+
+    const params: ActivityChartParams = {
+      filter: isEthereum
+        ? { type: 'all' }
+        : { type: 'projects', projectIds: project ? [project.id] : [] },
+      range: range ?? '30d',
+      previewRecategorisation: false,
+    }
+    const parsedParams = ActivityChartParams.safeParse(params)
+    if (parsedParams.error) {
+      return {
+        success: false,
+        errors: parsedParams.error.errors,
+      } as const
+    }
+
+    const { data } = await getActivityChart(params)
 
     const oldestProjectData = data.at(0)
     const latestProjectData = data.at(-1)

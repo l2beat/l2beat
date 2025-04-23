@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 838575,
-  "configHash": "0xe9c235354927057c52aee349ed5bc3cd5cb0a4534b01f7e4e5c37a68481b4eaa",
+  "configHash": "0xfa9b077ce59775f629078fc12516c719ec5914d13f34c61ac68d2a2522d562c4",
   "entries": [
     {
       "name": "NioGuardians",
@@ -1360,7 +1360,9 @@
         "edScUPGRADER": 950400,
         "expiration": 604800,
         "initialAdminRole": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-        "kintoMultisig2Permission": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "kintoMultisig2Permission": [
+          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+        ],
         "minSetback": 432000,
         "OperationScheduled": [
           {
@@ -1586,7 +1588,9 @@
             }
           ]
         },
-        "securityCouncilPermission": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+        "securityCouncilPermission": [
+          "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+        ],
         "tadKintoAppRegistry": 1036800,
         "tadKintoID": 1036800,
         "tadKintoWalletFactory": 1036800,
