@@ -186,7 +186,7 @@ export const fuel: ScalingProject = {
   stateValidation: {
     categories: [
       {
-        title: 'Fraud proofs',
+        title: 'No state validation',
         description: `Ultimately, Fuel will use one round fraud proofs with single round performed via a RISC-V-based zkVM. Currently, there is a ${formatSeconds(challengePeriod)} challenge period.`,
         risks: [
           {

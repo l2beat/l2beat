@@ -96,7 +96,7 @@ export const bugbuster: ScalingProject = {
   stateValidation: {
     categories: [
       {
-        title: 'Fraud proofs',
+        title: 'No state validation',
         description:
           'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Bug Buster DApp permits invalid state roots.',
         risks: [

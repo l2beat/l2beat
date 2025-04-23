@@ -136,7 +136,7 @@ export const honeypot: ScalingProject = {
   stateValidation: {
     categories: [
       {
-        title: 'Fraud proofs',
+        title: 'No state validation',
         description:
           'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Honeypot DApp permits invalid state roots. Since Honeypot is immutable, this feature will not be added to the DApp.',
         risks: [
