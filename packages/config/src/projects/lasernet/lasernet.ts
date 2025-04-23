@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
@@ -7,12 +7,13 @@ export const lasernet: ScalingProject = underReviewL2({
   capability: 'universal',
   addedAt: UnixTime(1745311928),
   display: {
-    name: 'Lasernet by DIA',
+    name: 'Lasernet',
     slug: 'lasernet',
     description:
       'Lasernet is a new oracle architecture with an ETH layer-2 at its core. Lasernet brings fully on-chain, verifiable, and trustless data through its permissionless and modular design.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
+    category: 'Optimium',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://diadata.org/'],
       apps: ['https://diadata.org/app/'],
@@ -28,12 +29,23 @@ export const lasernet: ScalingProject = underReviewL2({
       ],
     },
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419'),
-      sinceTimestamp: UnixTime(1574851679),
-      tokens: '*',
-      chain: 'ethereum',
-    },
-  ],
+  chainConfig: {
+    name: 'lasernet',
+    chainId: 1050,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.diadata.org/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
+  },
 })
