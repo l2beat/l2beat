@@ -152,23 +152,18 @@ const SourcifySourcesSchema = z.record(
 type SourcifySources = z.infer<typeof SourcifySourcesSchema>
 
 const SourcifySourceSchema = z.object({
-  // abi
   abi: SourcifyAbiSchema,
   compilation: z.object({
     language: z.string(),
     compiler: z.string(),
-    // solidity version
     compilerVersion: z.string(),
     compilerSettings: z.object({
-      // remappings
       remappings: z.array(z.string()),
     }),
-    // name
     name: z.string(),
   }),
   creationBytecode: z.object({
     transformationValues: z.object({
-      // constructorArguments
       constructorArguments: z.string().optional(),
     }),
   }),
