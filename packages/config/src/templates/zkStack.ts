@@ -324,10 +324,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         secondLine: formatExecutionDelay(executionDelayS),
       },
       dataAvailability:
-        (templateVars.nonTemplateRiskView?.dataAvailability ??
-        daProvider !== undefined)
-          ? RISK_VIEW.DATA_EXTERNAL
-          : RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+        templateVars.nonTemplateRiskView?.dataAvailability ??
+        (daProvider !== undefined
+          ? daProvider?.riskView
+          : RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS),
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
         RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
