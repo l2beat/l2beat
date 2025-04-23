@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 
 import { AddressIcon } from '../../common/AddressIcon'
+import { IconInitial } from '../../icons/IconInitial'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
 import { getColor } from './colors/colors'
-import { IconInitial } from '../../icons/IconInitial'
 
 export interface NodeViewProps {
   node: Node
