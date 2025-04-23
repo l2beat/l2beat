@@ -11,6 +11,7 @@ import type { EthereumBlob } from './types'
 
 // each blob is 128 KiB so 131,072 B
 const BLOB_SIZE_BYTES = 131072n
+const BEACON_CHAIN_GENESIS_TIMESTAMP = 1606824023
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
@@ -78,8 +79,10 @@ export class EthereumDaProvider implements DaBlobProvider {
     blockNumber: number,
   ): Promise<EthereumBlob[]> {
     const block = await this.rpcClient.getBlock(blockNumber, true)
-    const blockId = await this.getBeaconBlockId(blockNumber)
-    const blockSidecar = await this.beaconChainClient.getBlockSidecar(blockId)
+    const slot = await this.getBeaconSlot(block.timestamp)
+    const blockSidecar = await this.beaconChainClient.getBlockSidecar(
+      slot.toString(),
+    )
 
     const blobs: EthereumBlob[] = []
     for (const tx of block.transactions) {
@@ -97,7 +100,7 @@ export class EthereumDaProvider implements DaBlobProvider {
         blobs.push({
           type: 'ethereum',
           daLayer: this.daLayer,
-          blockTimestamp: UnixTime.fromDate(new Date(block.timestamp)),
+          blockTimestamp: block.timestamp,
           size: BLOB_SIZE_BYTES,
           inbox: tx.to ?? '',
           sequencer: tx.from,
@@ -106,6 +109,10 @@ export class EthereumDaProvider implements DaBlobProvider {
     }
 
     return blobs
+  }
+
+  private getBeaconSlot(blockTimestamp: number): number {
+    return (blockTimestamp - BEACON_CHAIN_GENESIS_TIMESTAMP) / 12
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id

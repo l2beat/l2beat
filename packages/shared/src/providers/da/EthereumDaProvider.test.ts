@@ -90,9 +90,8 @@ describe(EthereumDaProvider.name, () => {
       })
 
       const mockRpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
         getBlock: mockFn().resolvesTo({
-          timestamp: mockDate,
+          timestamp: UnixTime.fromDate(mockDate),
           transactions: [
             {
               type: '0x3',
