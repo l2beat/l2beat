@@ -44,15 +44,10 @@ export interface TechnologyContractAddress {
 
 export interface ContractEntryProps {
   contract: TechnologyContract
-  type: 'permission' | 'contract'
   className?: string
 }
 
-export function ContractEntry({
-  contract,
-  type,
-  className,
-}: ContractEntryProps) {
+export function ContractEntry({ contract, className }: ContractEntryProps) {
   const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
   )
@@ -63,7 +58,7 @@ export function ContractEntry({
     (c) => c.type === 'permission',
   )
 
-  const { color, icon } = getCalloutProps(contract, type)
+  const { color, icon } = getCalloutProps(contract)
 
   const entries = [...contract.addresses, ...contract.admins]
   return (
@@ -169,16 +164,12 @@ export function ContractEntry({
   )
 }
 
-function getCalloutProps(
-  contract: TechnologyContract,
-  type: 'permission' | 'contract',
-) {
+function getCalloutProps(contract: TechnologyContract) {
   const isAnyAddressUnverified = contract.addresses.some(
     (c) => c.verificationStatus === 'unverified',
   )
-  const showRedBackground = type === 'contract' && isAnyAddressUnverified
 
-  if (showRedBackground) {
+  if (isAnyAddressUnverified) {
     return {
       color: 'red',
       icon: <UnverifiedIcon className="size-5 fill-red-300" />,
