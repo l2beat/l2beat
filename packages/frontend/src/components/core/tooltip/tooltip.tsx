@@ -67,7 +67,7 @@ const TooltipTrigger = ({
 TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName
 
 const tooltipContentVariants = cva(
-  'paragraph-13 z-110 origin-[--radix-tooltip-content-transform-origin] rounded-lg bg-surface-primary p-3 text-left font-medium normal-case text-primary shadow-popover animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-header-secondary',
+  'paragraph-13 z-110 origin-[--radix-tooltip-content-transform-origin] rounded-lg bg-surface-primary p-3 text-left font-medium normal-case text-primary shadow-popover animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-header-secondary max-sm:max-w-[100vw]',
   {
     variants: {
       fitContent: {
