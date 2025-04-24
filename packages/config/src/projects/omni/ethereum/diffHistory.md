@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0d61e03eaaafd1e5c6efeb69e56831e39d0d41f6
+Generated with discovered.json: 0xddbcfe1952dfcf29bf28d669db300cfe32ef277a
 
-# Diff at Thu, 24 Apr 2025 09:17:36 GMT:
+# Diff at Thu, 24 Apr 2025 09:30:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22281679
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0d61e03eaaafd1e5c6efeb69e56831e39d0d41f6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Merge xdai into omni (this) discovery to unite Gnosis bridge as one.
 
 ## Config/verification related changes
 
@@ -47,26 +47,52 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```
 
 ```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
 -   Status: DELETED
     contract AAVEInterestERC20 (0x87D48c565D0D85770406D248efd7dc3cbd41e729)
     +++ description: None
 ```
 
 ```diff
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      name:
+-        "HashiManager"
++        "HashiManager_Omni"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      name:
+-        "BridgeValidators"
++        "BridgeValidators_Omni"
+    }
+```
+
+```diff
 +   Status: CREATED
-    contract XDaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
+    contract DaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract HashiManager (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract BridgeValidators (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
     +++ description: None
 ```
 

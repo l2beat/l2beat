@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22337861,
-  "configHash": "0x629650c259ff685cf5ad4938929042751b3d9d8dc4b554484c3bff77eea99145",
+  "configHash": "0x96cbe1939bf74ae2af55984e4c026a174060045c5324fadc77a2e90b6086fddb",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -150,7 +150,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "XDaiForeignBridge",
+      "name": "DaiForeignBridge",
       "address": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
       "type": "Contract",
       "sourceHashes": [
@@ -280,7 +280,8 @@
         "nonce": 20,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "derivedName": "GnosisSafe",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ForeignAMB",
@@ -584,7 +585,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "HashiManager",
+      "name": "HashiManager_Omni",
       "address": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
       "type": "Contract",
       "sourceHashes": [
@@ -660,7 +661,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "HashiManager",
+      "name": "HashiManager_DAI",
       "address": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
       "type": "Contract",
       "sourceHashes": [
@@ -823,7 +824,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BridgeValidators",
+      "name": "BridgeValidators_DAI",
       "address": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
       "type": "Contract",
       "sourceHashes": [
@@ -889,7 +890,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BridgeValidators",
+      "name": "BridgeValidators_Omni",
       "address": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
       "type": "Contract",
       "sourceHashes": [
