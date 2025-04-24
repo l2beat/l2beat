@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 39627531,
-  "configHash": "0x1ed3e229acddd652753fac21d0fc5926eaa293687a196d3159e9c850ec73c3cb",
+  "blockNumber": 39725195,
+  "configHash": "0xc6da1627b6c8e15d1fa05693fb0bcabe0ccdff1f3f2dbfb33be1e3dd2eb190c5",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -22,7 +22,13 @@
     {
       "address": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
@@ -38,6 +44,7 @@
         "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
       ],
       "proxyType": "immutable",
+      "description": "Contract handling inbound messages for the Hashi protocol.",
       "values": {
         "$immutable": true,
         "HASHI": "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
@@ -79,7 +86,13 @@
     {
       "address": "0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "address": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
@@ -100,12 +113,24 @@
     {
       "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "address": "0x4701f5F0b1aE73d018F91C38808c3058925cA526",
@@ -204,7 +229,13 @@
     {
       "address": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "name": "SelectorTokenGasLimitManager",
@@ -224,15 +255,23 @@
       "derivedName": "SelectorTokenGasLimitManager"
     },
     {
-      "name": "HashiManager",
+      "name": "HashiManager_Gnosis",
       "address": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
       "type": "Contract",
+      "template": "gnosisbridge/HashiManager",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
         "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xb1F43dc8B57562e7FA48157D73102a8e4a94975A",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
@@ -270,19 +309,23 @@
       "fieldMeta": {
         "targetAddress": {
           "severity": "HIGH",
-          "description": "Address of the target contract on Ethereum"
+          "description": "Address of the target contract on GnosisChain"
         },
         "adapters": {
           "severity": "HIGH",
-          "description": "Array of the adapters on Ethereum"
+          "description": "Array of the adapters on GnosisChain"
         },
         "reporters": {
           "severity": "HIGH",
-          "description": "Array of the reporters on Ethereum"
+          "description": "Array of the reports on GnosisChain"
         },
         "threshold": {
           "severity": "HIGH",
-          "description": "Threshold of the adapters on Ethereum"
+          "description": "Threshold of the adapters on GnosisChain"
+        },
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
         }
       },
       "derivedName": "HashiManager",
@@ -417,6 +460,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "change the threshold and manage signers."
+        },
+        {
           "permission": "upgrade",
           "from": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
         },
@@ -497,24 +545,76 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BridgeValidators",
+      "name": "BridgeValidators_Gnosis",
       "address": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
       "type": "Contract",
+      "template": "gnosisbridge/BridgeValidators",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
         "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Custom Multisignature contract for Validator addresses.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+          "description": "change the threshold and manage signers.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0x258667E543C913264388B33328337257aF208a8f",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0xfA98B60E02A61B6590f073cAD56e68326652d094",
           "via": []
         }
       ],
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0xb056BFEdc397D427697a75E3ff115a0954de4791",
+        "$members": [
+          "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+          "0xfA98B60E02A61B6590f073cAD56e68326652d094",
+          "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
+          "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
+          "0x258667E543C913264388B33328337257aF208a8f",
+          "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
+          "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
+        ],
         "$pastUpgrades": [
           [
             "2020-01-17T10:51:35.000Z",
@@ -532,6 +632,7 @@
             ["0xb056BFEdc397D427697a75E3ff115a0954de4791"]
           ]
         ],
+        "$threshold": 4,
         "$upgradeCount": 3,
         "deployedAtBlock": 7904952,
         "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
@@ -543,19 +644,14 @@
         "implementation": "0xb056BFEdc397D427697a75E3ff115a0954de4791",
         "isInitialized": true,
         "owner": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-        "requiredSignatures": 4,
         "upgradeabilityOwner": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "validatorCount": 7,
-        "validatorList": [
-          "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
-          "0xfA98B60E02A61B6590f073cAD56e68326652d094",
-          "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
-          "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
-          "0x258667E543C913264388B33328337257aF208a8f",
-          "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
-          "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
-        ],
         "version": 6
+      },
+      "fieldMeta": {
+        "$members": {
+          "description": "Array of the signers in the validator multisig"
+        }
       },
       "derivedName": "BridgeValidators"
     },
@@ -577,9 +673,9 @@
         "$immutable": true,
         "GENESIS_TIME": 1606824023,
         "GENESIS_VALIDATORS_ROOT": "0x4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95",
-        "getCurrentEpoch": 359826,
+        "getCurrentEpoch": 361122,
         "guardian": "0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
-        "head": 11514432,
+        "head": 11555904,
         "heliosProgramVkey": "0x00ed996c6f79e241fd4879d34ebfef7514ad8b817d0b40ab82a9856460d298c0",
         "SECONDS_PER_SLOT": 12,
         "SLOTS_PER_EPOCH": 32,
@@ -615,6 +711,13 @@
         "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "values": {
         "$immutable": false,
@@ -659,13 +762,20 @@
         "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
       ],
       "proxyType": "immutable",
+      "description": "Contract handling outbound messages for the Hashi protocol.",
       "values": { "$immutable": true },
       "derivedName": "Yaho"
     },
     {
       "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "address": "0xBF3d6f830CE263CAE987193982192Cd990442B53",
@@ -878,7 +988,7 @@
         "gasLimitManager": "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20196,
+        "getCurrentDay": 20202,
         "implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -892,15 +1002,16 @@
     {
       "address": "0xfA98B60E02A61B6590f073cAD56e68326652d094",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+        }
+      ]
     },
     {
       "address": "0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1508,6 +1619,8 @@
     ]
   },
   "usedTemplates": {
+    "gnosisbridge/BridgeValidators": "0xcabf43eea0fee46dd0f2afc7e6b45929fb9ea4e588c91ce6e3328fbb590bfb3b",
+    "gnosisbridge/HashiManager": "0xb24fa0969d8719d206e37e5479bf6c335e46bf45a6e6ff17ac6d2e22f3ca507d",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"

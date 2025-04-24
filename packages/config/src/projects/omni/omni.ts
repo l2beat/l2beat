@@ -12,7 +12,7 @@ import {
 const discovery = new ProjectDiscovery('omni')
 const threshold = discovery.getContractValue<number>(
   'BridgeValidators_Omni',
-  'requiredSignatures',
+  '$threshold',
 )
 const size = discovery.getContractValue<number>(
   'BridgeValidators_Omni',
@@ -20,9 +20,11 @@ const size = discovery.getContractValue<number>(
 )
 const validatorsString = `${threshold} / ${size}`
 
-const paused =
+const omnipaused =
   discovery.getContractValue<number>('ForeignAMB', 'maxGasPerTx') < 21000
-const warningText = paused ? 'The bridge is currently paused.' : undefined
+const warningText = omnipaused
+  ? 'The Omni part of Gnosis Bridge is currently paused.'
+  : undefined
 
 export const omni: Bridge = {
   type: 'bridge',
