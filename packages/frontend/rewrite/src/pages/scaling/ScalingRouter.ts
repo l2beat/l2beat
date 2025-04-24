@@ -14,6 +14,7 @@ import { getScalingRiskData } from './risk/getScalingRiskData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
 import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
+import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 
 export function ScalingRouter(
   app: Router,
@@ -91,6 +92,25 @@ export function ScalingRouter(
     }),
     async (req, res) => {
       const data = await getScalingProjectData(manifest, req.params.slug)
+      if (!data) {
+        res.status(404).send('Not found')
+        return
+      }
+      const html = render(data, req.originalUrl)
+      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    },
+  )
+
+  app.get(
+    '/scaling/projects/:slug/tvs-breakdown',
+    validateRoute({
+      params: z.object({ slug: z.string() }),
+    }),
+    async (req, res) => {
+      const data = await getScalingProjectTvsBreakdownData(
+        manifest,
+        req.params.slug,
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
