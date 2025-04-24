@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22187210,
+  "blockNumber": 22337715,
   "configHash": "0xb807a30085eb7ed1936f84088fd7bf34a80c468770d60d9b046afe85cab43f0c",
   "entries": [
     {
@@ -48,7 +48,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "124018193097078690919536779",
+        "totalSupply": "124304317464901280698887174",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -166,6 +166,31 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Scroll_Adapter",
+      "address": "0x2DA799c2223c6ffB595e578903AE6b95839160d8",
+      "type": "Contract",
+      "template": "acrossv3/adapter",
+      "sourceHashes": [
+        "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1745335811,
+      "sinceBlock": 22325451,
+      "values": {
+        "$immutable": true,
+        "L1_GATEWAY_ROUTER": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+        "L1_SCROLL_MESSENGER": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "L2_GAS_PRICE_ORACLE": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+        "L2_MESSAGE_RELAY_GAS_LIMIT": 2000000,
+        "L2_TOKEN_RELAY_GAS_LIMIT": 250000
+      },
+      "derivedName": "Scroll_Adapter"
+    },
+    {
       "name": "Boba_Adapter",
       "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
       "type": "Contract",
@@ -269,7 +294,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1743669071,
+        "getCurrentTime": 1745483747,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -370,11 +395,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1743669071,
+        "getCurrentTime": 1745483747,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2450997,
+        "numberOfDeposits": 2519705,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -468,13 +493,13 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1743669071,
+        "getCurrentTime": 1745483747,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 206
+        "numProposals": 209
       },
       "derivedName": "GovernorV2"
     },
@@ -575,7 +600,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 811,
+        "nonce": 817,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -674,7 +699,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1743669071,
+        "getCurrentTime": 1745483747,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -815,35 +840,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 307,
+        "nonce": 309,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "Scroll_Adapter",
-      "address": "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F",
-      "type": "Contract",
-      "template": "acrossv3/adapter",
-      "sourceHashes": [
-        "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1721124335,
-      "sinceBlock": 20318360,
-      "values": {
-        "$immutable": true,
-        "L1_GATEWAY_ROUTER": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "L1_SCROLL_MESSENGER": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "L2_GAS_PRICE_ORACLE": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
-        "L2_MESSAGE_RELAY_GAS_LIMIT": 2000000,
-        "L2_TOKEN_RELAY_GAS_LIMIT": 250000
-      },
-      "derivedName": "Scroll_Adapter"
     },
     {
       "name": "CoveredCallFinancialProductLibrary",
@@ -896,7 +896,7 @@
           "57073": "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
           "59144": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE",
           "81457": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
-          "534352": "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F",
+          "534352": "0x2DA799c2223c6ffB595e578903AE6b95839160d8",
           "7777777": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
         },
         "bondAmount": "450000000000000000",
@@ -933,13 +933,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x80f3067533badd88fc32b98f9e4b290763fc77cc356981fcc0cf6d5bd14c67ef",
-          "relayerRefundRoot": "0xdec6bcf320d3a00a4c03498b6938c05d0a77f9544f75407e4d46bcfe20d9f512",
+          "poolRebalanceRoot": "0x55c765fb197fe1751412afaf650f9edde85a76e640bf9c7d159853fb9aa193e2",
+          "relayerRefundRoot": "0x61f9aaa1fb2425c7174e5cc5a3a6ff0c9a45a233cdb2d2b7ae392f829218365a",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 17,
-          "challengePeriodEndTimestamp": 1743669719
+          "challengePeriodEndTimestamp": 1745484791
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -1386,6 +1386,18 @@
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
     ],
+    "0x2DA799c2223c6ffB595e578903AE6b95839160d8": [
+      "constructor(address _l1GatewayRouter, address _l1ScrollMessenger, address _l2GasPriceOracle, uint32 _l2MessageRelayGasLimit, uint32 _l2TokenRelayGasLimit)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_GATEWAY_ROUTER() view returns (address)",
+      "function L1_SCROLL_MESSENGER() view returns (address)",
+      "function L2_GAS_PRICE_ORACLE() view returns (address)",
+      "function L2_MESSAGE_RELAY_GAS_LIMIT() view returns (uint32)",
+      "function L2_TOKEN_RELAY_GAS_LIMIT() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
+    ],
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
       "event MessageRelayed(address target, bytes message)",
@@ -1715,18 +1727,6 @@
     ],
     "0xB524735356985D2f267FA010D681f061DfF03715": [
       "constructor(address _singleton)"
-    ],
-    "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F": [
-      "constructor(address _l1GatewayRouter, address _l1ScrollMessenger, address _l2GasPriceOracle, uint32 _l2MessageRelayGasLimit, uint32 _l2TokenRelayGasLimit)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function L1_GATEWAY_ROUTER() view returns (address)",
-      "function L1_SCROLL_MESSENGER() view returns (address)",
-      "function L2_GAS_PRICE_ORACLE() view returns (address)",
-      "function L2_MESSAGE_RELAY_GAS_LIMIT() view returns (uint32)",
-      "function L2_TOKEN_RELAY_GAS_LIMIT() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
     "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58": [
       "function getStrikeForFinancialProduct(address financialProduct) view returns (tuple(uint256 rawValue))",

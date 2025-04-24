@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22297523,
+  "blockNumber": 22337719,
   "configHash": "0x968531bb76ec6bc00476672f98f1e86d3c87830b73538f2ea6818014d6788261",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -91,13 +91,7 @@
     {
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
@@ -147,11 +141,6 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
           "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
           "via": []
         }
@@ -159,10 +148,7 @@
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
       "values": {
-        "$admin": [
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
-        ],
+        "$admin": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
         "$immutable": false,
         "$implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
         "$pastUpgrades": [
@@ -365,7 +351,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 8093,
+        "l1ToL2MessageNonce": 8737,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -382,9 +368,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "113851972028654747998646526297950112613694452391891651524543775941673396190",
-        "stateBlockNumber": 604525,
-        "stateRoot": "2465094003022298983960508271829868787350468273188617980456169661174750300053",
+        "stateBlockHash": "1133088009328429489004006409885485098394571197569509381161242988136571613134",
+        "stateBlockNumber": 620225,
+        "stateRoot": "908818025637838095681079431712384272515555895228483688980483225509360789582",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -489,7 +475,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"

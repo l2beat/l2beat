@@ -112,5 +112,11 @@
     "address": "0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1StandardBridge_v2_2_0_zircuit": {
+    "hash": "0x4da64b64aa2ba04837c58c90080a550f82596377659251b91ef703b0acdb49da",
+    "address": "0x506aadcb7bF93E892a43208d879BAc076eBC97Ef",
+    "chain": "ethereum",
+    "blockNumber": 22336762
   }
 }
