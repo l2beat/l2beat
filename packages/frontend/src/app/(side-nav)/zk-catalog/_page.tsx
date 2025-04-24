@@ -50,7 +50,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                       width={18}
                       height={18}
                       alt={entry.name}
-                      src={`/icons/${entry.slug}.png`}
+                      src={entry.icon}
                       className="size-[18px]"
                     />
                     <span className="text-lg font-bold">{entry.name}</span>
@@ -64,7 +64,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                         width={18}
                         height={18}
                         alt={entry.name}
-                        src={`/icons/${entry.slug}.png`}
+                        src={entry.icon}
                         className="size-[18px]"
                       />
                       <span>{entry.name}</span>

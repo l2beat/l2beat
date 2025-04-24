@@ -24,10 +24,12 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
+import { getProjectIcon } from '../../utils/get-project-icon'
 
 export interface BridgesProjectEntry {
   name: string
   slug: string
+  icon: string
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   underReviewStatus: UnderReviewStatus
@@ -89,6 +91,7 @@ export async function getBridgesProjectEntry(
   const common: Omit<BridgesProjectEntry, 'sections'> = {
     name: project.name,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: project.statuses.isUnderReview,
       ...changes,

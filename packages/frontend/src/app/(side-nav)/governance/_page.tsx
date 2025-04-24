@@ -16,7 +16,7 @@ import type { GovernancePublicationEntry } from './_utils/get-governance-publica
 interface GovernancePageProps {
   publications: GovernancePublicationEntry[]
   events: GovernanceEventEntry[]
-  delegatedProjects: CollectionEntry<'delegated-projects'>[]
+  delegatedProjects: DelegatedProjectWithIcon[]
 }
 export function GovernancePage({
   publications,
@@ -43,9 +43,14 @@ export function GovernancePage({
   )
 }
 
+export interface DelegatedProjectWithIcon
+  extends CollectionEntry<'delegated-projects'> {
+  icon: string
+}
+
 function Header({
   delegatedProjects,
-}: { delegatedProjects: CollectionEntry<'delegated-projects'>[] }) {
+}: { delegatedProjects: DelegatedProjectWithIcon[] }) {
   return (
     <PrimaryCard className="md:p-8">
       <h1 className="mb-4 text-3xl font-bold md:hidden">Governance</h1>
@@ -73,7 +78,7 @@ function Header({
                     alt={`Logo of ${delegatedProject.data.name}`}
                     width={20}
                     height={20}
-                    src={`/icons/${delegatedProject.data.slug}.png`}
+                    src={delegatedProject.icon}
                   />
                   {delegatedProject.data.name}
                   <CustomLinkIcon className="fill-current" />

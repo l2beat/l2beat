@@ -4,6 +4,7 @@ import { getGovernanceEventEntries } from '~/app/(side-nav)/governance/_utils/ge
 import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 
 export async function getGovernanceData(
   manifest: Manifest,
@@ -23,7 +24,13 @@ export async function getGovernanceData(
     nearestEventIndex,
     nearestEventIndex + 8,
   )
-  const delegatedProjects = getCollection('delegated-projects')
+  const delegatedProjects = getCollection('delegated-projects').map(
+    (project) => ({
+      ...project,
+      icon: getProjectIcon(project.data.slug),
+    }),
+  )
+
   return {
     head: {
       manifest,
@@ -40,10 +47,7 @@ export async function getGovernanceData(
           id: term.id,
           matches: [term.data.term, ...(term.data.match ?? [])],
         })),
-        searchBarProjects: searchBarProjects.map((p) => ({
-          ...p,
-          iconUrl: manifest.getUrl(p.iconUrl),
-        })),
+        searchBarProjects,
       },
     },
   }

@@ -11,12 +11,14 @@ import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
+import { getProjectIcon } from '../../utils/get-project-icon'
 import {
   type CommonDaEntry,
-  getCommonDaEntry,
   getCommonDacDaEntry,
+  getCommonDaEntry,
 } from '../get-common-da-entry'
 import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
@@ -79,13 +81,13 @@ export interface DaSummaryEntry extends CommonDaEntry {
 }
 
 export interface DaBridgeSummaryEntry
-  extends Omit<CommonDaEntry, 'id' | 'tab'> {
+  extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon'> {
   tvs: {
     latest: number
     sevenDaysAgo: number
   }
   risks: RosetteValue[]
-  usedIn: UsedInProject[]
+  usedIn: UsedInProjectWithIcon[]
   dacInfo:
     | {
         memberCount: number
@@ -118,9 +120,12 @@ function getDaSummaryEntry(
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
       risks: mapBridgeRisksToRosetteValues(b.daBridge.risks),
-      usedIn: b.daBridge.usedIn.sort(
-        (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
-      ),
+      usedIn: b.daBridge.usedIn
+        .sort((a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest)
+        .map((project) => ({
+          ...project,
+          icon: getProjectIcon(project.slug),
+        })),
       dacInfo: undefined,
     }),
   )
@@ -135,9 +140,12 @@ function getDaSummaryEntry(
         layer.daLayer.usedWithoutBridgeIn.map((project) => project.id),
       ),
       risks: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
-      usedIn: layer.daLayer.usedWithoutBridgeIn.sort(
-        (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
-      ),
+      usedIn: layer.daLayer.usedWithoutBridgeIn
+        .sort((a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest)
+        .map((project) => ({
+          ...project,
+          icon: getProjectIcon(project.slug),
+        })),
       dacInfo: undefined,
     })
   }
@@ -196,7 +204,10 @@ function getDacEntry(
     tvs,
     risks: mapBridgeRisksToRosetteValues(project.customDa.risks),
     dacInfo,
-    usedIn,
+    usedIn: usedIn.map((project) => ({
+      ...project,
+      icon: getProjectIcon(project.slug),
+    })),
   }
 
   return {
@@ -225,6 +236,7 @@ function getEthereumEntry(
   return {
     id: ProjectId.ETHEREUM,
     slug: layer.slug,
+    icon: getProjectIcon(layer.slug),
     name: layer.name,
     nameSecondLine: layer.daLayer.type,
     href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
@@ -241,9 +253,12 @@ function getEthereumEntry(
         tvs: getTvs(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
         risks: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
         dacInfo: undefined,
-        usedIn: bridge.daBridge.usedIn.sort(
-          (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
-        ),
+        usedIn: bridge.daBridge.usedIn
+          .sort((a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest)
+          .map((project) => ({
+            ...project,
+            icon: getProjectIcon(project.slug),
+          })),
       },
     ],
     challengeMechanism: undefined,

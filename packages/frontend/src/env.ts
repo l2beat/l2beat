@@ -40,6 +40,7 @@ const SERVER_CONFIG = {
   VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
+  REWRITE: coerceBoolean.default('false'),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 

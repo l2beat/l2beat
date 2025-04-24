@@ -4,6 +4,7 @@ import type { VerifiersStatuses } from '~/server/features/zk-catalog/get-verifie
 import { getProofVerification } from '../../_utils/get-proof-verification'
 import { getTrustedSetup } from '../../_utils/get-trusted-setup'
 import type { ZkCatalogProofVerification } from '../../_utils/types'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 
 export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string
@@ -26,7 +27,7 @@ export function getZkCatalogProjectDetails(
 
   return {
     title: project.name,
-    icon: `/icons/${project.slug}.png`,
+    icon: getProjectIcon(project.slug),
     linkToMainProjectDetails: project.isScaling
       ? `/scaling/projects/${project.slug}`
       : undefined,

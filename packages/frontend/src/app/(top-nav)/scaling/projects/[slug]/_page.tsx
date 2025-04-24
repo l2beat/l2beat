@@ -37,6 +37,7 @@ export function ScalingProjectPage({
                   title: projectEntry.name,
                   slug: projectEntry.slug,
                   isUnderReview: !!projectEntry.underReviewStatus,
+                  icon: projectEntry.icon,
                 }}
                 sections={navigationSections}
               />

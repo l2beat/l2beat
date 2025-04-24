@@ -25,10 +25,7 @@ export async function getDataAvailabilityRiskData(
           id: term.id,
           matches: [term.data.term, ...(term.data.match ?? [])],
         })),
-        searchBarProjects: searchBarProjects.map((p) => ({
-          ...p,
-          iconUrl: manifest.getUrl(p.iconUrl),
-        })),
+        searchBarProjects,
       },
     },
   }

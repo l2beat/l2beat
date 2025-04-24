@@ -7,9 +7,11 @@ import type { RenderData } from '../../../ssr/server'
 export async function getScalingRiskData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const searchBarProjects = await getSearchBarProjects()
+  const [searchBarProjects, entries] = await Promise.all([
+    getSearchBarProjects(),
+    getScalingRiskEntries(),
+  ])
 
-  const entries = await getScalingRiskEntries()
   return {
     head: {
       manifest,
@@ -25,10 +27,7 @@ export async function getScalingRiskData(
           id: term.id,
           matches: [term.data.term, ...(term.data.match ?? [])],
         })),
-        searchBarProjects: searchBarProjects.map((p) => ({
-          ...p,
-          iconUrl: manifest.getUrl(p.iconUrl),
-        })),
+        searchBarProjects,
       },
     },
   }

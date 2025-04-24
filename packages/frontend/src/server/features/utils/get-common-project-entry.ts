@@ -5,6 +5,7 @@ import type { ProjectCountdownsWithContext } from '../scaling/utils/get-countdow
 
 export interface CommonProjectEntry {
   id: ProjectId
+  icon: string
   name: string
   nameSecondLine?: string
   shortName?: string

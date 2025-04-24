@@ -38,8 +38,8 @@ function PublicationCard({
 }) {
   return (
     <LinkWithThumbnail
+      {...publication.thumbnail}
       href={`/governance/publications/${publication.id}`}
-      src={`/meta-images/governance/publications/${publication.id}.png`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <p className="subtitle-12 uppercase text-purple-100 dark:text-pink-200">

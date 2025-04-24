@@ -15,12 +15,12 @@ export function EcosystemProjectsByRaas({
       <EcosystemWidgetTitle>RaaS Providers</EcosystemWidgetTitle>
       <table className="w-full">
         <tbody>
-          {Object.entries(projectsByRaas).map(([raas, projects]) => (
+          {Object.entries(projectsByRaas).map(([raas, { projects, icon }]) => (
             <tr key={raas}>
               <td className="w-full pb-1.5 pr-4">
                 <div className="flex items-center gap-1.5">
                   <Image
-                    src={`/icons/${raas.toLowerCase()}.png`}
+                    src={icon}
                     className="rounded-sm"
                     alt={raas}
                     width={20}

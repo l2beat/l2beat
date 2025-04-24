@@ -34,7 +34,7 @@ export function RegularDaProjectSummary({ project }: Props) {
   return (
     <FullPageHeader className="pb-4 pt-8 md:pb-8 md:pt-12">
       <section id="summary" className="w-full">
-        <ProjectHeader title={project.name} slug={project.slug} />
+        <ProjectHeader project={project} />
         {/* Details row */}
         <div className="mt-6 flex w-full flex-col gap-6 md:gap-8">
           {/* Links and stats */}

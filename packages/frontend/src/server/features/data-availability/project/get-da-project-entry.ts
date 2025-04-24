@@ -1,8 +1,9 @@
-import type { Project, ProjectStatuses, UsedInProject } from '@l2beat/config'
+import type { Project, ProjectStatuses } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
@@ -14,6 +15,7 @@ import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getProjectIcon } from '../../utils/get-project-icon'
 import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import {
   getDaProjectsTvs,
@@ -24,6 +26,7 @@ import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-se
 interface CommonDaProjectPageEntry {
   name: string
   slug: string
+  icon: string
   kind: string
   type: string
   description: string
@@ -50,7 +53,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     isNoBridge: boolean
     grissiniValues: RosetteValue[]
     tvs: number
-    usedIn: UsedInProject[]
+    usedIn: UsedInProjectWithIcon[]
   }[]
   header: {
     daLayerGrissiniValues: RosetteValue[]
@@ -60,7 +63,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     economicSecurity: number | undefined
     durationStorage: number | undefined
     maxThroughputPerSecond: number | undefined
-    usedIn: UsedInProject[]
+    usedIn: UsedInProjectWithIcon[]
   }
   sections: ProjectDetailsSection[]
 }
@@ -73,7 +76,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     economicSecurity: number | undefined
     durationStorage: number
     maxThroughputPerSecond: number | undefined
-    usedIn: UsedInProject[]
+    usedIn: UsedInProjectWithIcon[]
     bridgeName: string
     callout: {
       title: string
@@ -149,6 +152,7 @@ export async function getDaProjectEntry(
     entryType: 'common',
     name: layer.name,
     slug: layer.slug,
+    icon: getProjectIcon(layer.slug),
     kind: layer.daLayer.type,
     type: layer.daLayer.type,
     description: `${layer.display.description} ${selected?.display.description ?? ''}`,
@@ -167,9 +171,12 @@ export async function getDaProjectEntry(
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
       tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)).latest,
-      usedIn: bridge.daBridge.usedIn.sort(
-        (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
-      ),
+      usedIn: bridge.daBridge.usedIn
+        .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
+        .map((x) => ({
+          ...x,
+          icon: getProjectIcon(x.id),
+        })),
     })),
     header: {
       links: getProjectLinks(
@@ -184,9 +191,12 @@ export async function getDaProjectEntry(
       maxThroughputPerSecond: latestThroughput
         ? latestThroughput.size / latestThroughput.frequency
         : undefined,
-      usedIn: allUsedIn.sort(
-        (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
-      ),
+      usedIn: allUsedIn
+        .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
+        .map((x) => ({
+          ...x,
+          icon: getProjectIcon(x.id),
+        })),
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
@@ -203,7 +213,10 @@ export async function getDaProjectEntry(
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
-      usedIn: layer.daLayer.usedWithoutBridgeIn,
+      usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
+        ...x,
+        icon: getProjectIcon(x.id),
+      })),
     })
     result.projectVariants?.unshift({
       title: 'No DA Bridge',
@@ -244,9 +257,12 @@ export async function getEthereumDaProjectEntry(
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
-  const usedInByTvsDesc = bridge.daBridge.usedIn.sort(
-    (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
-  )
+  const usedInByTvsDesc = bridge.daBridge.usedIn
+    .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
+    .map((x) => ({
+      ...x,
+      icon: getProjectIcon(x.id),
+    }))
 
   const latestThroughput = layer.daLayer.throughput
     ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -256,6 +272,7 @@ export async function getEthereumDaProjectEntry(
     entryType: 'ethereum',
     name: layer.name,
     slug: layer.slug,
+    icon: getProjectIcon(layer.slug),
     kind: layer.daLayer.type,
     type: layer.daLayer.type,
     description: `${layer.display.description} ${bridge.display.description}`,

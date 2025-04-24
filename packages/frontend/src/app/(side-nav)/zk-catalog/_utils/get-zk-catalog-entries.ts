@@ -4,10 +4,12 @@ import { getProofVerification } from './get-proof-verification'
 import type { TrustedSetup } from './get-trusted-setup'
 import { getTrustedSetup } from './get-trusted-setup'
 import type { ZkCatalogProofVerification } from './types'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 
 export interface ZkCatalogEntry extends ZkCatalogProofVerification {
   name: string
   slug: string
+  icon: string
   trustedSetup: TrustedSetup
 }
 
@@ -23,6 +25,7 @@ export function getZkCatalogEntries(
       return {
         name: project.name,
         slug: project.slug,
+        icon: getProjectIcon(project.slug),
         trustedSetup: getTrustedSetup(proofVerification.verifiers),
         ...proofVerification,
       }

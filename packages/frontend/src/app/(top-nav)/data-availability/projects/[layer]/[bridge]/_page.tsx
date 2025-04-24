@@ -42,6 +42,7 @@ export function DataAvailabilityProjectPage({
                   title: projectEntry.name,
                   slug: projectEntry.slug,
                   isUnderReview: projectEntry.isUnderReview,
+                  icon: projectEntry.icon,
                 }}
                 sections={navigationSections}
                 projectVariants={projectEntry.projectVariants}

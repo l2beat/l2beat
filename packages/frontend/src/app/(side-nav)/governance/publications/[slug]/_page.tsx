@@ -31,11 +31,9 @@ export function GovernancePublicationPage({
             </p>
           )}
           <Image
+            {...publication.thumbnail}
             alt={`${publication.title} publication thumbnail`}
-            src={`/meta-images/governance/publications/${publication.id}.png`}
             className="mb-12 w-full rounded-lg"
-            width={1200}
-            height={674}
           />
           <Article>{publication.content}</Article>
         </div>
