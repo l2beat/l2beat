@@ -46,14 +46,14 @@
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "http://okx-defi-xlayer-dac1-pro:8444",
-            "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08"
-          ],
-          [
-            "http://okx-defi-xlayer-dac2-pro:8444",
-            "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"
-          ]
+          {
+            "url": "http://okx-defi-xlayer-dac1-pro:8444",
+            "addr": "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08"
+          },
+          {
+            "url": "http://okx-defi-xlayer-dac2-pro:8444",
+            "addr": "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"
+          }
         ],
         "owner": "0x491619874b866c3cDB7C8553877da223525ead01",
         "requiredAmountOfSignatures": 2

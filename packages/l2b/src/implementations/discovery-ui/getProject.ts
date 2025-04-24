@@ -269,7 +269,7 @@ function getAddresses(values: FieldValue[]) {
     } else if (value.type === 'array') {
       addresses.push(...getAddresses(value.values))
     } else if (value.type === 'object') {
-      addresses.push(...getAddresses(Object.values(value.value)))
+      addresses.push(...getAddresses(value.values.map(([_, value]) => value)))
     }
   }
   return addresses

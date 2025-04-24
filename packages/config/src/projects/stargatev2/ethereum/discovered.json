@@ -84,10 +84,10 @@
         "delegatesTokenMessaging": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "eid": 30101,
         "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getReceiveLibrary": [
-          "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
-          true
-        ],
+        "getReceiveLibrary": {
+          "lib": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "isDefault": true
+        },
         "getRegisteredLibraries": [
           "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
           "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
@@ -592,10 +592,10 @@
       "sinceBlock": 19093729,
       "values": {
         "$immutable": true,
-        "getExecutorConfig": [
-          10000,
-          "0x173272739Bd7Aa6e4e214714048a9fE699453059"
-        ],
+        "getExecutorConfig": {
+          "maxMessageSize": 10000,
+          "executor": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+        },
         "messageLibType": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
@@ -669,17 +669,17 @@
       "sinceBlock": 19093731,
       "values": {
         "$immutable": true,
-        "getUlnConfig": [
-          20,
-          2,
-          0,
-          0,
-          [
+        "getUlnConfig": {
+          "confirmations": 20,
+          "requiredDVNCount": 2,
+          "optionalDVNCount": 0,
+          "optionalDVNThreshold": 0,
+          "requiredDVNs": [
             "0x8FafAE7Dd957044088b3d0F67359C327c6200d18",
             "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
           ],
-          []
-        ],
+          "optionalDVNs": []
+        },
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }

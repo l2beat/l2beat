@@ -338,7 +338,7 @@ function opStackCommon(
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
-    stateValidation: getStateValidation(templateVars),
+    stateValidation: getStateValidation(templateVars, explorerUrl),
     riskView: getRiskView(templateVars, daProvider),
     stage:
       templateVars.stage ??
@@ -494,6 +494,7 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
 
 function getStateValidation(
   templateVars: OpStackConfigCommon,
+  explorerUrl: string | undefined,
 ): ProjectScalingStateValidation | undefined {
   if (templateVars.stateValidation !== undefined) {
     return templateVars.stateValidation
@@ -501,8 +502,34 @@ function getStateValidation(
 
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
-    case 'None':
-      return undefined
+    case 'None': {
+      const l2OutputOracle =
+        templateVars.l2OutputOracle ??
+        templateVars.discovery.getContract('L2OutputOracle')
+      return {
+        categories: [
+          {
+            title: 'No state validation',
+            description:
+              'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'an invalid state root is submitted to the system.',
+                isCritical: true,
+              },
+            ],
+            references: explorerReferences(explorerUrl, [
+              {
+                title:
+                  'L2OutputOracle.sol - source code, deleteL2Outputs function',
+                address: safeGetImplementation(l2OutputOracle),
+              },
+            ]),
+          },
+        ],
+      }
+    }
     case 'Permissioned': {
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
         'PermissionedDisputeGame',
@@ -833,7 +860,6 @@ function getTechnology(
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
   return {
-    stateCorrectness: getTechnologyStateCorrectness(templateVars, explorerUrl),
     dataAvailability: templateVars.nonTemplateTechnology?.dataAvailability ?? {
       ...technologyDA(daProvider, usesBlobs),
       references: [
@@ -920,103 +946,6 @@ function getTechnologyOperator(
     case 'Permissioned':
     case 'Permissionless':
       return OPERATOR.CENTRALIZED_OPERATOR
-  }
-}
-
-function getTechnologyStateCorrectness(
-  templateVars: OpStackConfigCommon,
-  explorerUrl: string | undefined,
-): ProjectTechnologyChoice | undefined {
-  if (templateVars.nonTemplateTechnology?.stateCorrectness !== undefined) {
-    return templateVars.nonTemplateTechnology.stateCorrectness
-  }
-
-  const fraudProofType = getFraudProofType(templateVars)
-  switch (fraudProofType) {
-    case 'None': {
-      const l2OutputOracle =
-        templateVars.l2OutputOracle ??
-        templateVars.discovery.getContract('L2OutputOracle')
-
-      return {
-        name: 'Fraud proofs are not enabled',
-        description:
-          'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'an invalid state root is submitted to the system.',
-            isCritical: true,
-          },
-        ],
-        references: explorerReferences(explorerUrl, [
-          {
-            title: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
-            address: safeGetImplementation(l2OutputOracle),
-          },
-        ]),
-      }
-    }
-    case 'Permissioned': {
-      const disputeGameFactory =
-        templateVars.discovery.getContract('DisputeGameFactory')
-      const permissionedDisputeGame = templateVars.discovery.getContract(
-        'PermissionedDisputeGame',
-      )
-      return {
-        name: 'Fraud proofs ensure state correctness',
-        description:
-          'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'no validator checks the published state. Fraud proofs assume at least one honest and able validator.',
-          },
-        ],
-        references: explorerReferences(explorerUrl, [
-          {
-            title:
-              'DisputeGameFactory.sol - Etherscan source code, create() function',
-            address: safeGetImplementation(disputeGameFactory),
-          },
-          {
-            title:
-              'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-            address: permissionedDisputeGame.address,
-          },
-        ]),
-      }
-    }
-    case 'Permissionless': {
-      const disputeGameFactory =
-        templateVars.discovery.getContract('DisputeGameFactory')
-      const faultDisputeGame =
-        templateVars.discovery.getContract('FaultDisputeGame')
-
-      return {
-        name: 'Fraud proofs ensure state correctness',
-        description:
-          'After some period of time, the published state root is assumed to be correct. During the challenge period, anyone is allowed to submit a fraud proof that shows that the state was incorrect.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'no validator checks the published state. Fraud proofs assume at least one honest and able validator.',
-          },
-        ],
-        references: explorerReferences(explorerUrl, [
-          {
-            title:
-              'DisputeGameFactory.sol - Etherscan source code, create() function',
-            address: safeGetImplementation(disputeGameFactory),
-          },
-          {
-            title:
-              'FaultDisputeGame.sol - Etherscan source code, attack() function',
-            address: faultDisputeGame.address,
-          },
-        ]),
-      }
-    }
   }
 }
 

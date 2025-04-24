@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x91b0d1beba6c6ba221938ff57aae761bf5b6f436
+
+# Diff at Thu, 24 Apr 2025 10:31:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21944318
+- current block number: 21944318
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      values.getReceiveLibrary:
+-        ["0xc02Ab410f0734EFa3F14628780e6e695156024C2",true]
++        {"lib":"0xc02Ab410f0734EFa3F14628780e6e695156024C2","isDefault":true}
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
++++ description: The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])
+      values.getExecutorConfig:
+-        [10000,"0x173272739Bd7Aa6e4e214714048a9fE699453059"]
++        {"maxMessageSize":10000,"executor":"0x173272739Bd7Aa6e4e214714048a9fE699453059"}
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
++++ description: The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.getUlnConfig:
+-        [20,2,0,0,["0x8FafAE7Dd957044088b3d0F67359C327c6200d18","0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],[]]
++        {"confirmations":20,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x8FafAE7Dd957044088b3d0F67359C327c6200d18","0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}
+    }
+```
+
 Generated with discovered.json: 0xe2d60e7879c6c8fa6b8d158e0a3b15c1c0a49821
 
 # Diff at Fri, 14 Mar 2025 12:28:48 GMT:

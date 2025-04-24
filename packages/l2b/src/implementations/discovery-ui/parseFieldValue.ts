@@ -60,12 +60,10 @@ export function parseFieldValue(
   if (typeof value === 'object' && value !== null) {
     return {
       type: 'object',
-      value: Object.fromEntries(
-        Object.entries(value).map(([key, value]) => [
-          key,
-          parseFieldValue(value, meta, chain),
-        ]),
-      ),
+      values: Object.entries(value).map(([key, value]) => [
+        parseFieldValue(key, meta, chain),
+        parseFieldValue(value, meta, chain),
+      ]),
     }
   }
 

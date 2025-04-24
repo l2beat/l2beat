@@ -253,9 +253,21 @@
         "indexRegistry": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
         "numRegistries": 3,
         "OPERATOR_CHURN_APPROVAL_TYPEHASH": "0x4d404e3276e7ac2163d8ee476afa6a41d1f68fb71f2d8b6546b24e55ce01b72a",
-        "operatorSetParamsQuorum1": [200, 11000, 50],
-        "operatorSetParamsQuorum2": [200, 11000, 50],
-        "operatorSetParamsQuorum3": [15, 11000, 667],
+        "operatorSetParamsQuorum1": {
+          "maxOperatorCount": 200,
+          "kickBIPsOfOperatorStake": 11000,
+          "kickBIPsOfTotalStake": 50
+        },
+        "operatorSetParamsQuorum2": {
+          "maxOperatorCount": 200,
+          "kickBIPsOfOperatorStake": 11000,
+          "kickBIPsOfTotalStake": 50
+        },
+        "operatorSetParamsQuorum3": {
+          "maxOperatorCount": 15,
+          "kickBIPsOfOperatorStake": 11000,
+          "kickBIPsOfTotalStake": 667
+        },
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
