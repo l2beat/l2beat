@@ -123,9 +123,9 @@ function NameWithProjectInfoTooltip({
   return (
     <Tooltip>
       <TooltipTrigger>{projectName}</TooltipTrigger>
-      <TooltipContent className="flex max-w-[348px] flex-col gap-2 px-[14px]">
-        <span className="text-lg font-bold">What is {projectName}?</span>
-        <p className="text-wrap text-[13px]">{project.description}</p>
+      <TooltipContent className="flex flex-col gap-2">
+        <span className="heading-18">What is {projectName}?</span>
+        <p>{project.description}</p>
         <div className="grid w-full grid-cols-6">
           {project.badges?.map((badge, key) => (
             <ProjectBadge
