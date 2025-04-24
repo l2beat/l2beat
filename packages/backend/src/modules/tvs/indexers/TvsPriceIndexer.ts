@@ -12,7 +12,7 @@ import type {
   Configuration,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
 export interface TvsPriceIndexerDeps
