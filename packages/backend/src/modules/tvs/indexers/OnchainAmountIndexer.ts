@@ -12,7 +12,7 @@ import type {
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula

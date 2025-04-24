@@ -49,7 +49,6 @@ export function PermissionsSection({
                       key={technologyContractKey(permission)}
                       contract={permission}
                       className="my-4"
-                      type="permission"
                     />
                   ))}
                 </div>
@@ -62,7 +61,6 @@ export function PermissionsSection({
                       key={technologyContractKey(permission)}
                       contract={permission}
                       className="my-4"
-                      type="permission"
                     />
                   ))}
                 </div>
@@ -85,7 +83,6 @@ export function PermissionsSection({
           key={technologyContractKey(permission)}
           contract={permission}
           className="my-4"
-          type="permission"
         />
       ))}
       {daSolution?.permissions.actors?.map((permission) => (
@@ -93,7 +90,6 @@ export function PermissionsSection({
           key={technologyContractKey(permission)}
           contract={permission}
           className="my-4"
-          type="permission"
         />
       ))}
     </ProjectSection>

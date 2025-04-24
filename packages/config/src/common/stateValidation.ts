@@ -1,7 +1,7 @@
-import type { ProjectTechnologyChoice } from '../types'
+import type { ProjectScalingStateValidationCategory } from '../types'
 
-const FRAUD_PROOFS: ProjectTechnologyChoice = {
-  name: 'Fraud proofs ensure state correctness',
+const FRAUD_PROOFS: ProjectScalingStateValidationCategory = {
+  title: 'Fraud proofs',
   description:
     'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
   risks: [
@@ -13,15 +13,15 @@ const FRAUD_PROOFS: ProjectTechnologyChoice = {
   references: [],
 }
 
-const VALIDITY_PROOFS: ProjectTechnologyChoice = {
-  name: 'Validity proofs ensure state correctness',
+const VALIDITY_PROOFS: ProjectScalingStateValidationCategory = {
+  title: 'Validity proofs',
   description:
     'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
   risks: [],
   references: [],
 }
 
-const STARKEX_VALIDITY_PROOFS: ProjectTechnologyChoice = {
+const STARKEX_VALIDITY_PROOFS: ProjectScalingStateValidationCategory = {
   ...VALIDITY_PROOFS,
   description:
     VALIDITY_PROOFS.description +
@@ -35,8 +35,8 @@ const STARKEX_VALIDITY_PROOFS: ProjectTechnologyChoice = {
   ],
 }
 
-const EXIT_FRAUD_PROOFS: ProjectTechnologyChoice = {
-  name: 'Fraud proofs apply to exits only',
+const EXIT_FRAUD_PROOFS: ProjectScalingStateValidationCategory = {
+  title: 'Fraud proofs',
   description:
     'The internal system state is not subject to any checks. Only exits from the system can be challenged. This places a much higher burden on potential validators, as they have to monitor all user activity and not only the single state.',
   risks: [
@@ -49,7 +49,7 @@ const EXIT_FRAUD_PROOFS: ProjectTechnologyChoice = {
   references: [],
 }
 
-export const STATE_CORRECTNESS = {
+export const STATE_VALIDATION = {
   FRAUD_PROOFS,
   VALIDITY_PROOFS,
   STARKEX_VALIDITY_PROOFS,

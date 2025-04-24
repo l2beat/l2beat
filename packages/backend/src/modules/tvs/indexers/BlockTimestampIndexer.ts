@@ -9,7 +9,7 @@ import {
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { BlockTimestampConfig } from '../types'
 
 interface BlockTimestampIndexerDeps

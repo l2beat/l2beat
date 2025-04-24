@@ -487,8 +487,6 @@ export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
   architectureImage?: string
-  stateCorrectness?: ProjectTechnologyChoice
-  newCryptography?: ProjectTechnologyChoice
   dataAvailability?: ProjectTechnologyChoice
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice
@@ -514,7 +512,7 @@ export interface ProjectScalingStateDerivation {
 }
 
 export interface ProjectScalingStateValidation {
-  description: string
+  description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
@@ -526,14 +524,19 @@ export interface ProjectScalingStateValidationCategory {
     | 'Prover Architecture'
     | 'Verification Keys Generation'
     | 'Proven Program'
+    | 'Validity proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
     | 'Pessimistic Proofs'
+    | 'Fraud proofs'
+    // Other
+    | 'No state validation'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
+  isIncomplete?: boolean
 }
 // #endregion
 

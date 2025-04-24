@@ -11,7 +11,6 @@ import {
   DA_MODES,
   EXITS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -197,50 +196,44 @@ export const phala: ScalingProject = {
       rollupNodeLink: 'https://github.com/succinctlabs/op-succinct/',
     },
   ),
-  technology: {
-    stateCorrectness: {
-      name: 'Validity proofs ensure state correctness',
-      description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+  stateValidation: {
+    categories: [
+      {
+        title: 'Validity proofs',
+        description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
         Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
-      references: [
-        {
-          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          title: 'Op-Succinct architecture',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'optimistic mode is enabled and no challenger checks the published state.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
-        },
-        {
-          category: 'Funds can be frozen if',
-          text: 'the permissioned proposer fails to publish state roots to the L1.',
-        },
-        {
-          category: 'Funds can be frozen if',
-          text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          title: 'Op-Succinct architecture',
-        },
-      ],
-      risks: [],
-    },
+        references: [
+          {
+            url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+            title: 'Op-Succinct architecture',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'optimistic mode is enabled and no challenger checks the published state.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'the permissioned proposer fails to publish state roots to the L1.',
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+          },
+        ],
+      },
+    ],
+  },
+  technology: {
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [

@@ -37,14 +37,12 @@ export function initActivityModule(
   config.activity.projects.forEach((project) => {
     switch (project.activityConfig.type) {
       case 'block': {
-        const blockTimestampProvider =
-          providers.block.getBlockTimestampProvider(project.chainName)
         const blockTargetIndexer = new BlockTargetIndexer(
           logger,
           clock,
-          blockTimestampProvider,
+          providers.blockTimestamp,
           database,
-          project.id,
+          project,
         )
 
         const provider = providers.block.getBlockProvider(project.chainName)
