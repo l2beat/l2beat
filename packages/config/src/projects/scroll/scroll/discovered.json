@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "scroll",
   "blockNumber": 14936183,
-  "configHash": "0x0bdadc7772d3994a81f30f5cfc84a73bd9f12ab268edb9136a11dadb2a9e5823",
+  "configHash": "0x0371b15c3fcf89d25e270ab859d9accd6d6f55859c0044c95864bf6e63b29505",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -114,10 +114,12 @@
       "name": "ScrollOwner",
       "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
       "type": "Contract",
+      "template": "scroll/ScrollOwner",
       "sourceHashes": [
         "0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952"
       ],
       "proxyType": "immutable",
+      "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -288,7 +290,8 @@
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
-      "derivedName": "ScrollOwner"
+      "derivedName": "ScrollOwner",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Scroll Security Council",
@@ -300,6 +303,35 @@
         "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732607988,
       "sinceBlock": 11413777,
@@ -339,10 +371,45 @@
       "name": "TimelockSCEmergency",
       "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1730295071,
       "sinceBlock": 10662938,
       "values": {
@@ -375,14 +442,32 @@
             "members": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
           }
         },
+        "Canceller": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": [
+          "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
+        "getMinDelayFormatted": "0s",
+        "Proposer": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        ]
       },
-      "derivedName": "TimelockController"
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "Scroll Multisig 1",
@@ -430,10 +515,50 @@
       "name": "TimelockFast",
       "address": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            {
+              "address": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+              "delay": 86400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1696918064,
       "sinceBlock": 5,
       "values": {
@@ -463,14 +588,29 @@
             "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
           }
         },
+        "Canceller": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 86400,
+        "getMinDelayFormatted": "1d",
+        "Proposer": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+        ]
       },
-      "derivedName": "TimelockController"
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GnosisSafeL2",
@@ -1230,10 +1370,45 @@
       "name": "TimelockEmergency",
       "address": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1730295517,
       "sinceBlock": 10663087,
       "values": {
@@ -1263,14 +1438,29 @@
             "members": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
           }
         },
+        "Canceller": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
+        "getMinDelayFormatted": "0s",
+        "Proposer": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"
+        ]
       },
-      "derivedName": "TimelockController"
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "0xaFb4c32eCb8e4a86363a2fb2Fa27982fbd21ac32",
@@ -1341,6 +1531,35 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1696921130,
       "sinceBlock": 196,
@@ -1608,6 +1827,41 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            {
+              "address": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "delay": 86400
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1696921121,
       "sinceBlock": 194,
@@ -2696,6 +2950,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "scroll/L1Timelock": "0xb57e87420738619ef30cc617f225e9a594dd80457a5840dde6f062afc582ca77",
+    "scroll/ScrollOwner": "0x6197b78c458a1a583f009be509dc59e102c54b021318fe65571972a5d4526620"
   }
 }

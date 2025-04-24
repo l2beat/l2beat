@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22331776,
-  "configHash": "0xa326ebc98aef3fd8c6db7e2c3ba23ea66e9dff64bd92b1fbad4292670d7bc257",
+  "blockNumber": 22340099,
+  "configHash": "0xeb426f02d60f578e47f4400159922e3ca204c91902a67c2466daf6e12d030d60",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -65,10 +65,45 @@
       "name": "TimelockSCEmergency",
       "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1730294447,
       "sinceBlock": 21078719,
       "values": {
@@ -101,82 +136,81 @@
             "members": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
           }
         },
+        "Canceller": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": [
+          "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
+        "getMinDelayFormatted": "0s",
+        "Proposer": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        ]
       },
-      "derivedName": "TimelockController"
-    },
-    {
-      "name": "L1MessageQueue",
-      "address": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x3e38728c8eff2d4e99a76036010214e6ece1aebfa85496f776910c3e674d90e0"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
-      ],
-      "ignoreInWatchMode": [
-        "nextCrossDomainMessageIndex",
-        "pendingQueueIndex",
-        "l2BaseFee",
-        "nextUnfinalizedQueueIndex"
-      ],
-      "sinceTimestamp": 1696782311,
-      "sinceBlock": 18306933,
-      "values": {
-        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0x137CC585F607EDeBBc3CA6360AffCFeab507B374",
-        "$pastUpgrades": [
-          [
-            "2023-10-08T16:25:11.000Z",
-            "0xdd4c82f4c38c76c6bb222f2b319e870ed48d8d4dc2a73e0baa5d560a286924b2",
-            ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
-          ],
-          [
-            "2024-02-22T08:20:23.000Z",
-            "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
-            ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
-          ],
-          [
-            "2024-08-20T23:36:35.000Z",
-            "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7",
-            ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-        "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 39343981,
-        "maxGasLimit": 10000000,
-        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 953885,
-        "nextUnfinalizedQueueIndex": 953885,
-        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 953885,
-        "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-        "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
-      "derivedName": "L1MessageQueueWithGasPriceOracle"
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "TimelockFast",
       "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            {
+              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+              "delay": 86400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1696782479,
       "sinceBlock": 18306947,
       "values": {
@@ -206,14 +240,29 @@
             "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
           }
         },
+        "Canceller": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 86400,
+        "getMinDelayFormatted": "1d",
+        "Proposer": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+        ]
       },
-      "derivedName": "TimelockController"
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "0x0f50874f227621Dea72482004639a9fFe440A4dA",
@@ -270,6 +319,66 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        },
+        {
+          "permission": "interact",
+          "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            {
+              "address": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
+        },
+        {
+          "permission": "act",
+          "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "delay": 259200
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732607939,
       "sinceBlock": 21270585,
@@ -381,23 +490,6 @@
       ]
     },
     {
-      "name": "Whitelist",
-      "address": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x118a84c5ed8e5625f8df5325e4bd028d66a65a2d08b9b7d3b72b6c9f7a955e95"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696782311,
-      "sinceBlock": 18306933,
-      "values": {
-        "$immutable": true,
-        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "whitelisted": ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
-      },
-      "derivedName": "Whitelist"
-    },
-    {
       "address": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -441,18 +533,53 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "TimelockSCSlow",
       "address": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            {
+              "address": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+              "delay": 259200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1729781135,
       "sinceBlock": 21036143,
       "values": {
@@ -485,14 +612,32 @@
             "members": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
           }
         },
+        "Canceller": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": [
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+        ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
+        "Proposer": ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        ]
       },
-      "derivedName": "TimelockController"
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "0x4970e361f6168a301D1036348d625A8930B1AaB7",
@@ -543,11 +688,12 @@
       "name": "MultipleVersionRollupVerifier",
       "address": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
       "type": "Contract",
+      "template": "scroll/MultipleVersionRollupVerifier",
       "sourceHashes": [
         "0x6e45af76d6f6e2d8cc55ec530468293a0af33a8ab5e385883527a3330ff21ed6"
       ],
       "proxyType": "immutable",
-      "description": "Used to update the verifier and keep track of current and old versions.",
+      "description": "Contract used to update the verifier and keep track of current and old versions.",
       "sinceTimestamp": 1722833675,
       "sinceBlock": 20460107,
       "values": {
@@ -586,7 +732,8 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "verifierVersions": [0, 1, 2, 3, 4, 6, 7]
       },
-      "derivedName": "MultipleVersionRollupVerifier"
+      "derivedName": "MultipleVersionRollupVerifier",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x5300000000000000000000000000000000000004",
@@ -597,11 +744,13 @@
       "name": "L1MessageQueueV2",
       "address": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
       "type": "Contract",
+      "template": "scroll/L1MessageQueue",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x99f1e9baeea6fd1f7773c90a40e71adfcfd2e28d14a59208a79323b7e36281a0"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -633,18 +782,19 @@
         ],
         "$upgradeCount": 2,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-        "estimateL2BaseFee": 39460809,
+        "estimateL2BaseFee": 39749455,
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1745403407,
+        "getFirstUnfinalizedMessageEnqueueTime": 1745498399,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 953944,
-        "nextUnfinalizedQueueIndex": 953937,
+        "nextCrossDomainMessageIndex": 954007,
+        "nextUnfinalizedQueueIndex": 953996,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
       },
-      "derivedName": "L1MessageQueueV2"
+      "derivedName": "L1MessageQueueV2",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ZkEvmVerifierV0",
@@ -669,50 +819,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1BatchBridgeGateway",
-      "address": "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xcba3cc3603700feae97964e6eff747508e82a958b820d7d48c7f7399faf4d771"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
-      "sinceTimestamp": 1716184139,
-      "sinceBlock": 19909154,
-      "values": {
-        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0x7999cdD5E2893475D89211A2E3FdA67a841E3233",
-        "$pastUpgrades": [
-          [
-            "2024-05-20T05:48:59.000Z",
-            "0x56e31c0072f983bfee035b6bf464b53b9d998afab20e0046cdc3fc209b4a191e",
-            ["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]
-          ],
-          [
-            "2024-05-20T06:38:59.000Z",
-            "0x3ee1ca7b7a92d6181b5a38859b4ae747c6fb4b42e4407c3a854f55b82564aba1",
-            ["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "counterpart": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
-        "KEEPER_ROLE": "0xfc8737ab85eb45125971625a9ebdb75cc78e01d5c1fa80c4c6e5203f47bc4fab",
-        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "queue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
-        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      },
-      "derivedName": "L1BatchBridgeGateway"
-    },
-    {
       "name": "L2ERC1155GatewayFallback",
       "address": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
       "type": "Contract",
@@ -732,11 +838,13 @@
       "name": "L1ERC721Gateway",
       "address": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
       "type": "Contract",
+      "template": "scroll/L1ERC721Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x2a543ae77e08fc2293b99836986b16db46b713eb958556cd1c95fcabce559b4b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC721 tokens from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -767,7 +875,8 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1ERC721Gateway"
+      "derivedName": "L1ERC721Gateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ZkEvmVerifierV1-1",
@@ -902,11 +1011,13 @@
       "name": "L1ScrollMessenger",
       "address": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
       "type": "Contract",
+      "template": "scroll/L1ScrollMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x3398c4e9f90ea456548cdcae1cc54faeeb87df22bb43f709500e759bb1ac5643"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -947,7 +1058,8 @@
         "rollup": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "xDomainMessageSender": "0x0000000000000000000000000000000000000001"
       },
-      "derivedName": "L1ScrollMessenger"
+      "derivedName": "L1ScrollMessenger",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3",
@@ -1036,11 +1148,13 @@
       "name": "EnforcedTxGateway",
       "address": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
       "type": "Contract",
+      "template": "scroll/EnforcedTxGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x7e017c785ff8a5c9fce815594b0d7e7ced85dbc125ae000cd7babf1cfaefabf9"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contracts to force L1 -> L2 messages with the proper sender.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1087,7 +1201,8 @@
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
         }
       },
-      "derivedName": "EnforcedTxGateway"
+      "derivedName": "EnforcedTxGateway",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x74b286304576625557629C47E9E8702383D9eF92",
@@ -1119,6 +1234,7 @@
       "name": "ScrollOwner",
       "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
       "type": "Contract",
+      "template": "scroll/ScrollOwner",
       "sourceHashes": [
         "0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952"
       ],
@@ -1127,17 +1243,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4",
           "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
         },
         {
@@ -1173,11 +1279,6 @@
         {
           "permission": "upgrade",
           "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x987e300fDfb06093859358522a79098848C33852",
           "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
         },
         {
@@ -1327,17 +1428,20 @@
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
-      "derivedName": "ScrollOwner"
+      "derivedName": "ScrollOwner",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1WETHGateway",
       "address": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
       "type": "Contract",
+      "template": "scroll/L1WETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb90cab5924c6894e3047536242125cdface40857b9c70a6551210bc6de166b42"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge WETH from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1369,7 +1473,8 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1WETHGateway"
+      "derivedName": "L1WETHGateway",
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "L2ERC721GatewayFallback",
@@ -1391,11 +1496,13 @@
       "name": "L1ETHGateway",
       "address": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
       "type": "Contract",
+      "template": "scroll/L1ETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xa874514fbf17dc321480a8270dcdc3a5a0d9b8e37ff5de1187df641cd4a2f6e4"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Deprecated: Contract used to bridge ETH from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1426,16 +1533,52 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1ETHGateway"
+      "derivedName": "L1ETHGateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "TimelockEmergency",
       "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
       "sinceTimestamp": 1730294447,
       "sinceBlock": 21078719,
       "values": {
@@ -1465,14 +1608,29 @@
             "members": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
           }
         },
+        "Canceller": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
+        "getMinDelayFormatted": "0s",
+        "Proposer": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"
+        ]
       },
-      "derivedName": "TimelockController"
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "derivedName": "TimelockController",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "SystemConfig",
@@ -1596,7 +1754,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -1679,48 +1837,6 @@
       "derivedName": "Safe"
     },
     {
-      "name": "OLD_L2GasPriceOracle",
-      "address": "0x987e300fDfb06093859358522a79098848C33852",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x5987f713ef726c459b82ad7473f780457f91510e0d04802551136d8133e531d1"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
-      "ignoreInWatchMode": ["l2BaseFee"],
-      "sinceTimestamp": 1696782311,
-      "sinceBlock": 18306933,
-      "values": {
-        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E",
-        "$pastUpgrades": [
-          [
-            "2023-10-08T16:25:11.000Z",
-            "0xf25a4fbbd1569b188ce8855ff12760904d976be976c35afeb4abd9566db5ca38",
-            ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "intrinsicParams": {
-          "txGas": 21000,
-          "txGasContractCreation": 53000,
-          "zeroGas": 4,
-          "nonZeroGas": 16
-        },
-        "l2BaseFee": 460000000,
-        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "whitelist": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
-      },
-      "derivedName": "L2GasPriceOracle"
-    },
-    {
       "address": "0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1729,11 +1845,13 @@
       "name": "pufETHEscrow",
       "address": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
       "type": "Contract",
+      "template": "scroll/L1CustomERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
       "sinceTimestamp": 1713173507,
       "sinceBlock": 19660037,
       "values": {
@@ -1762,17 +1880,20 @@
         "owner": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1CustomERC20Gateway"
+      "derivedName": "L1CustomERC20Gateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ScrollChain",
       "address": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
       "type": "Contract",
+      "template": "scroll/ScrollChain",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1826,15 +1947,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 358232,
+        "lastFinalizedBatchIndex": 358292,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 358238,
-          "lastFinalizedBatchIndex": 358232,
-          "lastFinalizeTimestamp": 1745405495,
+          "lastCommittedBatchIndex": 358304,
+          "lastFinalizedBatchIndex": 358292,
+          "lastFinalizeTimestamp": 1745499719,
           "flags": 1,
           "reserved": 0
         },
@@ -1861,12 +1982,8 @@
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
         "verifier": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
       },
-      "derivedName": "ScrollChain"
-    },
-    {
-      "address": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "derivedName": "ScrollChain",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD",
@@ -1887,11 +2004,13 @@
       "name": "L1CustomERC20Gateway",
       "address": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
       "type": "Contract",
+      "template": "scroll/L1CustomERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1922,7 +2041,8 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1CustomERC20Gateway"
+      "derivedName": "L1CustomERC20Gateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d",
@@ -1933,11 +2053,13 @@
       "name": "L1ERC1155Gateway",
       "address": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
       "type": "Contract",
+      "template": "scroll/L1ERC1155Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x35e9a9e7a691f357e642a73662c88a202224b73a44fc022f833ccc8aff9a4a64"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC1155 tokens from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1968,7 +2090,8 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1ERC1155Gateway"
+      "derivedName": "L1ERC1155Gateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
@@ -1985,6 +2108,35 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [{ "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x826714adD4dDA2b8750794A467C892c0Cd49216b"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1696661411,
       "sinceBlock": 18296928,
@@ -2034,7 +2186,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -2078,7 +2230,7 @@
       "derivedName": "ZkEvmVerifierV2"
     },
     {
-      "name": "",
+      "name": "PlonkVerifierPostEuclid",
       "address": "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582",
       "type": "Contract",
       "unverified": true,
@@ -2097,11 +2249,13 @@
       "name": "L1StandardERC20Gateway",
       "address": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
       "type": "Contract",
+      "template": "scroll/L1StandardERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x93fe70d828e5646f5acb7768083ab2e5b9cfb5b6691a5dff48ff3c188ffd05a7"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -2134,7 +2288,8 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1StandardERC20Gateway"
+      "derivedName": "L1StandardERC20Gateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
@@ -2189,15 +2344,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"
         },
         {
           "permission": "upgrade",
@@ -2226,10 +2373,6 @@
         {
           "permission": "upgrade",
           "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x987e300fDfb06093859358522a79098848C33852"
         },
         {
           "permission": "upgrade",
@@ -2284,6 +2427,41 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            {
+              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "delay": 86400
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1696660175,
       "sinceBlock": 18296825,
@@ -2311,11 +2489,13 @@
       "name": "L1USDCGateway",
       "address": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
       "type": "Contract",
+      "template": "scroll/L1USDCGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x390ebeb0e223ceead94e94a21c34b8bc5bde0351a7c29ca6b8abb4776ce58524"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge USDC tokens from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -2349,13 +2529,14 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19330498677345,
+        "totalBridgedUSDC": 19043693345038,
         "withdrawPaused": false
       },
-      "derivedName": "L1USDCGateway"
+      "derivedName": "L1USDCGateway",
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "",
+      "name": "ZkEvmVerifierPostEuclid",
       "address": "0xf5bABa891e6De03540ecfb1917B8F07112A45a83",
       "type": "Contract",
       "unverified": true,
@@ -2369,11 +2550,13 @@
       "name": "L1GatewayRouter",
       "address": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
       "type": "Contract",
+      "template": "scroll/L1GatewayRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x3257fd4336e925899e6352562238124ef46e51d144d4a4d12526837be49a062f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -2399,7 +2582,8 @@
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
-      "derivedName": "L1GatewayRouter"
+      "derivedName": "L1GatewayRouter",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0xF9062b8a30e0d7722960e305049FA50b86ba6253",
@@ -2503,12 +2687,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -2550,55 +2728,6 @@
     ],
     "0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": [
       "constructor(address _singleton)"
-    ],
-    "0x137CC585F607EDeBBc3CA6360AffCFeab507B374": [
-      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway)",
-      "error ErrorNotWhitelistedSender()",
-      "error ErrorZeroAddress()",
-      "event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap)",
-      "event DropTransaction(uint256 index)",
-      "event FinalizedDequeuedTransaction(uint256 finalizedIndex)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
-      "event ResetDequeuedTransaction(uint256 startIndex)",
-      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
-      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
-      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
-      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
-      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
-      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
-      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
-      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
-      "function dropCrossDomainMessage(uint256 _index)",
-      "function enforcedTxGateway() view returns (address)",
-      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
-      "function finalizePoppedCrossDomainMessage(uint256 _newFinalizedQueueIndexPlusOne)",
-      "function gasOracle() view returns (address)",
-      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
-      "function initialize(address _messenger, address _scrollChain, address _enforcedTxGateway, address _gasOracle, uint256 _maxGasLimit)",
-      "function initializeV2()",
-      "function initializeV3()",
-      "function isMessageDropped(uint256 _queueIndex) view returns (bool)",
-      "function isMessageSkipped(uint256 _queueIndex) view returns (bool)",
-      "function l2BaseFee() view returns (uint256)",
-      "function maxGasLimit() view returns (uint256)",
-      "function messageQueue(uint256) view returns (bytes32)",
-      "function messenger() view returns (address)",
-      "function nextCrossDomainMessageIndex() view returns (uint256)",
-      "function nextUnfinalizedQueueIndex() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingQueueIndex() view returns (uint256)",
-      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count, uint256 _skippedBitmap)",
-      "function renounceOwnership()",
-      "function resetPoppedCrossDomainMessage(uint256 _startIndex)",
-      "function scrollChain() view returns (address)",
-      "function setL2BaseFee(uint256 _newL2BaseFee)",
-      "function transferOwnership(address newOwner)",
-      "function updateGasOracle(address _newGasOracle)",
-      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
-      "function updateWhitelistChecker(address _newWhitelistChecker)",
-      "function whitelistChecker() view returns (address)"
     ],
     "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": [
       "constructor(address _singleton)"
@@ -2648,16 +2777,6 @@
       "function tokenMapping(address) view returns (address)",
       "function transferOwnership(address newOwner)",
       "function updateTokenMapping(address _l1Token, address _l2Token)"
-    ],
-    "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": [
-      "constructor(address _owner)",
-      "event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner)",
-      "event WhitelistStatusChanged(address indexed _account, bool _status)",
-      "function isSenderAllowed(address _sender) view returns (bool)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address _newOwner)",
-      "function updateWhitelistStatus(address[] _accounts, bool _status)"
     ],
     "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": [
       "constructor(address _verifier, bytes32 _verifierDigest)",
@@ -2925,12 +3044,6 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
-    "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function execute(address _target, bytes _data) payable",
@@ -3052,46 +3165,6 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateAccess(address _target, bytes4[] _selectors, bytes32 _role, bool _status)"
-    ],
-    "0x7999cdD5E2893475D89211A2E3FdA67a841E3233": [
-      "constructor(address _counterpart, address _router, address _messenger, address _queue)",
-      "error ErrorCallerNotMessenger()",
-      "error ErrorDepositAmountTooSmall()",
-      "error ErrorIncorrectMethodForETHDeposit()",
-      "error ErrorInsufficientMsgValueForBatchDepositFee()",
-      "error ErrorInvalidBatchConfig()",
-      "error ErrorNoPendingBatch()",
-      "error ErrorTokenNotSupported()",
-      "error ErrorTransferETHFailed()",
-      "event BatchDeposit(address indexed caller, address indexed l1Token, uint256 indexed batchIndex, address l2Token)",
-      "event Deposit(address indexed sender, address indexed token, uint256 indexed batchIndex, uint256 amount, uint256 fee)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function KEEPER_ROLE() view returns (bytes32)",
-      "function batches(address, uint256) view returns (uint128 amount, uint64 startTime, uint64 numDeposits, bytes32 hash)",
-      "function configs(address) view returns (uint96 feeAmountPerTx, uint96 minAmountPerTx, uint16 maxTxsPerBatch, uint24 maxDelayPerBatch, uint24 safeBridgeGasLimit)",
-      "function counterpart() view returns (address)",
-      "function depositERC20(address token, uint96 amount)",
-      "function depositETH() payable",
-      "function executeBatchDeposit(address token) payable",
-      "function feeVault() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _feeVault)",
-      "function messenger() view returns (address)",
-      "function queue() view returns (address)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function router() view returns (address)",
-      "function setBatchConfig(address token, tuple(uint96 feeAmountPerTx, uint96 minAmountPerTx, uint16 maxTxsPerBatch, uint24 maxDelayPerBatch, uint24 safeBridgeGasLimit) newConfig)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function tokens(address) view returns (uint128 pending, uint64 currentBatchIndex, uint64 pendingBatchIndex)"
     ],
     "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3216,12 +3289,6 @@
     ],
     "0x9479ABfebefEea3c846163012a472b44F305b3d7": [
       "constructor(address _singleton)"
-    ],
-    "0x987e300fDfb06093859358522a79098848C33852": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3707,30 +3774,25 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "event IntrinsicParamsUpdated(uint256 txGas, uint256 txGasContractCreation, uint256 zeroGas, uint256 nonZeroGas)",
-      "event L2BaseFeeUpdated(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateWhitelist(address _oldWhitelist, address _newWhitelist)",
-      "function calculateIntrinsicGasFee(bytes _message) view returns (uint256)",
-      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
-      "function initialize(uint64 _txGas, uint64 _txGasContractCreation, uint64 _zeroGas, uint64 _nonZeroGas)",
-      "function intrinsicParams() view returns (uint64 txGas, uint64 txGasContractCreation, uint64 zeroGas, uint64 nonZeroGas)",
-      "function l2BaseFee() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setIntrinsicParams(uint64 _txGas, uint64 _txGasContractCreation, uint64 _zeroGas, uint64 _nonZeroGas)",
-      "function setL2BaseFee(uint256 _newL2BaseFee)",
-      "function transferOwnership(address newOwner)",
-      "function updateWhitelist(address _newWhitelist)",
-      "function whitelist() view returns (address)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "scroll/EnforcedTxGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1CustomERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1ERC1155Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1ERC721Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1MessageQueue": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1ScrollMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1Timelock": "0xb57e87420738619ef30cc617f225e9a594dd80457a5840dde6f062afc582ca77",
+    "scroll/L1USDCGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1WETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/MultipleVersionRollupVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/ScrollChain": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/ScrollOwner": "0x6197b78c458a1a583f009be509dc59e102c54b021318fe65571972a5d4526620"
   }
 }
