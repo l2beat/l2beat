@@ -1,5 +1,3 @@
-import { existsSync, readFileSync } from 'fs'
-import path from 'path'
 import type {
   Milestone,
   Project,
@@ -7,13 +5,18 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { getCollection } from '~/content/get-collection'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
-import { getImageDimensions } from '~/utils/project/get-image-params'
+import {
+  getImageDimensions,
+  getImageParams,
+} from '~/utils/project/get-image-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { getActivityLatestUops } from '../scaling/activity/get-activity-latest-tps'
@@ -215,9 +218,13 @@ function getGovernanceLinks(
     .at(-1)
   assert(lastPublication, 'No last publication')
 
+  const bankImage = getImageParams('/ecosystems/governance-bank.png')
+  assert(bankImage, 'Bank image not found')
+
   return {
     topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
     proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
+    bankImage,
   }
 }

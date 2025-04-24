@@ -27,7 +27,6 @@ const MAX_PER_SOURCE = 10
 
 interface Props {
   tokens: ProjectTokens
-  placeholderIcon: string
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
@@ -36,7 +35,6 @@ interface Props {
 
 export function TokenCombobox({
   tokens,
-  placeholderIcon,
   value,
   setValue,
   className,
@@ -170,7 +168,7 @@ function TokenItem({ token }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
       <Image
-        src={token.iconUrl ?? '/images/token-placeholder.png'}
+        src={token.iconUrl}
         alt={token.name}
         width={18}
         height={18}

@@ -54,10 +54,8 @@ function PublicationHeader({
       <h1 className="md:heading-32 heading-24 mt-2">{publication.title}</h1>
       <div className="mt-6 flex items-center justify-start">
         <Image
+          {...publication.author.avatar}
           alt={`Avatar of ${publication.author.firstName} ${publication.author.lastName}`}
-          src={`/images/avatars/${publication.author.id}.png`}
-          width={128}
-          height={128}
           className="mr-2 size-10 rounded-full"
         />
         <div>

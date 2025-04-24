@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
+import type { ImageParams } from '~/utils/project/get-image-params'
 import { EcosystemWidget } from './ecosystem-widget'
 
 export interface EcosystemGovernanceLinks {
   review: string
   topDelegates: string
   proposals: string
+  bankImage: ImageParams
 }
 
 interface Props {
@@ -24,7 +26,11 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
         className,
       )}
     >
-      <GovernanceLink href={links.review} className="sm:row-span-2" />
+      <GovernanceLink
+        href={links.review}
+        bankImage={links.bankImage}
+        className="sm:row-span-2"
+      />
       <TopDelegatesLink href={links.topDelegates} />
       <ProposalsLink href={links.proposals} />
     </div>
@@ -33,8 +39,9 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
 
 function GovernanceLink({
   href,
+  bankImage,
   className,
-}: { href: string; className?: string }) {
+}: { href: string; bankImage: ImageParams; className?: string }) {
   return (
     <EcosystemWidget
       className={cn('flex flex-col overflow-hidden !pt-0', className)}
@@ -48,13 +55,7 @@ function GovernanceLink({
             L2BEAT Review
           </div>
         </div>
-        <Image
-          src="/ecosystems/governance-bank.png"
-          alt="Governance Bank"
-          className="py-4"
-          width={141}
-          height={130}
-        />
+        <Image {...bankImage} alt="Governance Bank" className="py-4" />
       </div>
 
       <Link
