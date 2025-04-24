@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 22336762,
-  "configHash": "0x122b354d68e8cebc2c543e399795d4c49d33df5d27161ab43d847065fded98e4",
+  "blockNumber": 22337725,
+  "configHash": "0x735835ccdc40d33677212c6d9e97b958492abffcba8ed3b09658d71e82380e2d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -686,10 +686,10 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 12758836,
-        "latestOutputIndex": 31850,
-        "nextBlockNumber": 12758837,
-        "nextOutputIndex": 31851,
+        "latestBlockNumber": 12769805,
+        "latestOutputIndex": 31852,
+        "nextBlockNumber": 12769806,
+        "nextOutputIndex": 31853,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,

@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22188866,
-  "configHash": "0xec853b51f2b71ea08675071071f732c3aa8ad6aa92f90b815482a2dc4a638d0b",
+  "configHash": "0x45aad21b8084fbd8a2b2bd5f18a06cc29a391fcdd2c23e473c5047397520421d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -686,7 +686,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig 1",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",

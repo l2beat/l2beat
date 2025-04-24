@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x84df678cbadb510ee62f657075480ec7ed86c930
+Generated with discovered.json: 0xd2b98cee46be677a29fb7fba20754a4948f35323
 
-# Diff at Wed, 23 Apr 2025 10:54:32 GMT:
+# Diff at Thu, 24 Apr 2025 08:36:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@93a8fe870e4d8a2b82043676e31a0a9cc97507e7 block: 22187210
-- current block number: 22331232
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22187210
+- current block number: 22337715
 
 ## Description
 
@@ -33,7 +33,7 @@ Upgrade the scroll adapter.
     +++ description: None
 ```
 
-Generated with discovered.json: 0x45888a83e1e720c9131ee7555495937934bf8b42
+Generated with discovered.json: 0x3af056119078158b8cac1d38813cd3898c8a4fda
 
 # Diff at Thu, 03 Apr 2025 08:31:29 GMT:
 

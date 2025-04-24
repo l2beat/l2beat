@@ -2,7 +2,7 @@
   "name": "l3x",
   "chain": "arbitrum",
   "blockNumber": 287771362,
-  "configHash": "0x4fa1357b85530ab6e29f8e863a6c45078d07a54456f25b64bc123925f2e96667",
+  "configHash": "0x829df80c371140d650e9ba104561ebacf52e8457068b72c5c2cc9619953756ef",
   "entries": [
     {
       "name": "Outbox",

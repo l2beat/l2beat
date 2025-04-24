@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22281679,
-  "configHash": "0xc9b7bdb1b2ebe875ead716812e9347068a128b2d01b665ca1301931d81d0690e",
+  "configHash": "0xae0740382df2ebdda34c2df28a63ee4627e73f4d9bf38308c01834e6806b5408",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -506,7 +506,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gnosis:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
+        "adapters": ["gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
@@ -514,8 +514,8 @@
         "implementation": "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "isInitialized": true,
         "owner": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-        "reporters": ["gnosis:0x0000000000000000000000000000000000000000"],
-        "targetAddress": "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "reporters": ["gno:0x0000000000000000000000000000000000000000"],
+        "targetAddress": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
         "targetChainId": 100,
         "threshold": 1,
         "upgradeabilityOwner": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
@@ -546,9 +546,7 @@
         }
       },
       "derivedName": "HashiManager",
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "gnosis" } }
-      ]
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
     },
     {
       "address": "0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8",

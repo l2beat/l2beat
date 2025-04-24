@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe86317b4792f23817c4f2e97ad5789c1a436b693
+Generated with discovered.json: 0xa5acd8e953e44b424458f0e539f3d1c0e0e37f68
 
-# Diff at Wed, 23 Apr 2025 10:30:22 GMT:
+# Diff at Thu, 24 Apr 2025 08:36:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@93a8fe870e4d8a2b82043676e31a0a9cc97507e7 block: 22297523
-- current block number: 22331112
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22297523
+- current block number: 22337719
 
 ## Description
 
@@ -46,7 +46,7 @@ Gov updated, EOA upgrader removed.
     }
 ```
 
-Generated with discovered.json: 0x40f7bbb604cfebe391ca1d0bbc2d85d1440a8500
+Generated with discovered.json: 0x89caf88c44bb5e49c837e20db90c1af5dee5a3a2
 
 # Diff at Fri, 18 Apr 2025 17:58:18 GMT:
 

@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21744154,
-  "configHash": "0x4993c8cd9b6e60f4e6be3d607d1d7da4adb0a25e5176e812a616bdb996efb68c",
+  "configHash": "0x3cc285f0dafb28100ddeb303ba93a386efe406562a2d5edc7b8fb86e9577a201",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -64,6 +64,15 @@ export function stackAutoLayout(baseNodes: readonly Node[]) {
   return nodeLocations
 }
 
+function getChain(address: string): string {
+  const [prefix] = address.split(':', 1)
+  if (prefix === undefined) {
+    throw new Error('Invalid address')
+  }
+
+  return prefix
+}
+
 function toLayoutNodes(baseNodes: readonly Node[]) {
   const nodes = baseNodes.map(
     (base): LayoutNode => ({
@@ -84,9 +93,10 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   const byId = new Map(nodes.map((x) => [x.id, x]))
 
   for (const node of nodes) {
+    const chainA = getChain(node.base.id)
     for (const field of node.base.fields) {
       const other = byId.get(field.target)
-      if (other && other !== node) {
+      if (other && other !== node && getChain(other.base.id) === chainA) {
         if (!node.connectionsOut.includes(other)) {
           node.connectionsOut.push(other)
         }
