@@ -2,13 +2,8 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22340099,
-  "configHash": "0xeb426f02d60f578e47f4400159922e3ca204c91902a67c2466daf6e12d030d60",
+  "configHash": "0x6a354846eae45b868f31699c53f7e9946b1acc66c1a04dc86eb1881916893cf2",
   "entries": [
-    {
-      "address": "0x0000000000000000000000000000000000000001",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "ZkEvmVerifierPostEuclid",
       "address": "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3",
@@ -48,11 +43,6 @@
     },
     {
       "address": "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -366,6 +356,118 @@
           "permission": "interact",
           "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
           "description": "update the minimum delay and manage all access control roles of the timelock."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -377,6 +479,10 @@
           "permission": "act",
           "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
           "delay": 259200
+        },
+        {
+          "permission": "act",
+          "from": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -518,12 +624,6 @@
     },
     {
       "address": "0x32E8B0B9783d65170fd37f79079d5707107cCc62",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "L2USDCGatewayFallback",
-      "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -736,11 +836,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x5300000000000000000000000000000000000004",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L1MessageQueueV2",
       "address": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
       "type": "Contract",
@@ -754,8 +849,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -819,22 +917,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L2ERC1155GatewayFallback",
-      "address": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
-    },
-    {
       "name": "L1ERC721Gateway",
       "address": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
       "type": "Contract",
@@ -848,8 +930,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -870,12 +955,15 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+        "counterpart": "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "L1ERC721Gateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -893,22 +981,6 @@
         "plonkVerifier": "0x03a72B00D036C479105fF98A1953b15d9c510110"
       },
       "derivedName": "ZkEvmVerifierV1"
-    },
-    {
-      "name": "L2CustomERC20GatewayFallback",
-      "address": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
     },
     {
       "name": "wstETHescrowLido",
@@ -937,7 +1009,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
+        "counterpart": "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
         "isDepositsEnabled": true,
@@ -948,28 +1020,16 @@
         "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
         "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
       },
-      "derivedName": "L1LidoGateway"
+      "derivedName": "L1LidoGateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x6626593C237f530D15aE9980A95ef938Ac15c35c",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "L2TokenFactoryFallback",
-      "address": "0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
     },
     {
       "name": "DaiEscrow",
@@ -983,8 +1043,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696920095,
@@ -1000,12 +1063,16 @@
           ]
         ],
         "$upgradeCount": 1,
-        "counterpart": "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
+        "counterpart": "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1CustomERC20Gateway"
+      "derivedName": "L1CustomERC20Gateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "L1ScrollMessenger",
@@ -1021,8 +1088,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1048,7 +1118,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "counterpart": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+        "counterpart": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
         "maxReplayTimes": 3,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1056,9 +1126,12 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "paused": false,
         "rollup": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-        "xDomainMessageSender": "0x0000000000000000000000000000000000000001"
+        "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
       },
       "derivedName": "L1ScrollMessenger",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1124,22 +1197,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L2WETHGatewayFallback",
-      "address": "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
-    },
-    {
       "address": "0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1158,8 +1215,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1215,22 +1275,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L2ScrollMessengerFallback",
-      "address": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
-    },
-    {
       "name": "ScrollOwner",
       "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
       "type": "Contract",
@@ -1240,78 +1284,6 @@
       ],
       "proxyType": "immutable",
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1426,7 +1398,8 @@
             }
           }
         },
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "sc": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
       },
       "derivedName": "ScrollOwner",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1445,8 +1418,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1467,30 +1443,17 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
-        "l2WETH": "0x5300000000000000000000000000000000000004",
+        "counterpart": "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
+        "l2WETH": "scr:0x5300000000000000000000000000000000000004",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "derivedName": "L1WETHGateway",
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "L2ERC721GatewayFallback",
-      "address": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "L1ETHGateway",
@@ -1502,12 +1465,15 @@
         "0xa874514fbf17dc321480a8270dcdc3a5a0d9b8e37ff5de1187df641cd4a2f6e4"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Deprecated: Contract used to bridge ETH from L1 to L2.",
+      "description": "Contract used to bridge ETH from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1636,16 +1602,21 @@
       "name": "SystemConfig",
       "address": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
       "type": "Contract",
+      "template": "scroll/SystemConfig",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xc6b44b4f580a4675d79b547ed6eef62882f9be3e0c86e18360e9ba5ead33755a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1742476115,
@@ -1678,7 +1649,8 @@
         },
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
-      "derivedName": "SystemConfig"
+      "derivedName": "SystemConfig",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PlonkVerifierV2",
@@ -1698,11 +1670,6 @@
           "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
         }
       ]
-    },
-    {
-      "address": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
@@ -1875,12 +1842,15 @@
           ]
         ],
         "$upgradeCount": 3,
-        "counterpart": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
+        "counterpart": "scr:0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "derivedName": "L1CustomERC20Gateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1897,8 +1867,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
@@ -2014,8 +1987,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -2036,12 +2012,15 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+        "counterpart": "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "derivedName": "L1CustomERC20Gateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -2063,8 +2042,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -2085,12 +2067,15 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+        "counterpart": "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "L1ERC1155Gateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -2192,22 +2177,6 @@
       "derivedName": "Safe"
     },
     {
-      "name": "L2TokenImplementationFallback",
-      "address": "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
-    },
-    {
       "address": "0xc8B6bF89877337188Ea84eA93547687225389553",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2259,8 +2228,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -2281,36 +2253,23 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
-        "l2TokenFactory": "0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
-        "l2TokenImplementation": "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
+        "counterpart": "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
+        "l2TokenFactory": "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
+        "l2TokenImplementation": "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "derivedName": "L1StandardERC20Gateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "L2StandardERC20GatewayFallback",
-      "address": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
     },
     {
       "address": "0xE2e6345baAD18f779167443Dc4886495507b3249",
@@ -2499,8 +2458,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["totalBridgedUSDC"],
@@ -2523,9 +2485,9 @@
         ],
         "$upgradeCount": 2,
         "circleCaller": "0x0000000000000000000000000000000000000000",
-        "counterpart": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
+        "counterpart": "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
         "depositPaused": false,
-        "l2USDC": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "l2USDC": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
@@ -2533,6 +2495,9 @@
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -2560,8 +2525,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -3044,14 +3012,6 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
-    "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
-    ],
     "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3064,27 +3024,11 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
-    "0x64CCBE37c9A82D85A1F2E74649b7A42923067988": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
-    ],
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3124,27 +3068,11 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
-    "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
-    ],
     "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": [
       "constructor()",
@@ -3171,14 +3099,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc": [
       "constructor(address _messageQueue, address _feeVault)",
@@ -3539,14 +3459,6 @@
       "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
-    ],
     "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": [
       "constructor(address _verifier, bytes32 _verifierDigest)",
       "error VerificationFailed()",
@@ -3641,14 +3553,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0xEB803eb3F501998126bf37bB823646Ed3D59d072": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -3779,20 +3683,21 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "scroll/EnforcedTxGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1CustomERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1ERC1155Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1ERC721Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/EnforcedTxGateway": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
+    "scroll/L1CustomERC20Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
+    "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
+    "scroll/L1ERC721Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "scroll/L1GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1MessageQueue": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1ScrollMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1MessageQueue": "0x5d61d5187a0d2a5e1f20249aaa1b3c232575d4a903e0542d90d15fcc01bcf10a",
+    "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
+    "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
     "scroll/L1Timelock": "0xb57e87420738619ef30cc617f225e9a594dd80457a5840dde6f062afc582ca77",
-    "scroll/L1USDCGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/L1WETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/MultipleVersionRollupVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/ScrollChain": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/ScrollOwner": "0x6197b78c458a1a583f009be509dc59e102c54b021318fe65571972a5d4526620"
+    "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
+    "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
+    "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
+    "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
+    "scroll/ScrollOwner": "0x23b707ff346dc330561f8c88bc2b9313aa905247314abd332301e097d6127cff",
+    "scroll/SystemConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

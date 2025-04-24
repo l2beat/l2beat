@@ -16,9 +16,16 @@
           "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
         }
       }
+    },
+    "sc": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD" // Security Council
+      },
+      "permissions": [{ "type": "act" }]
     }
-    //   "executors": {
-    //     "handler": {
+    // "executors": {
+    //   "handler": {
     //       "type": "scrollAccessControl",
     //       "pickRoleMembers": "SECURITY_COUNCIL_NO_DELAY_ROLE"
     //     },

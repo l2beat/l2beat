@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "scroll",
   "blockNumber": 14936183,
-  "configHash": "0x0371b15c3fcf89d25e270ab859d9accd6d6f55859c0044c95864bf6e63b29505",
+  "configHash": "0x68c1877549f36978559c5acc6d200f0b5d3f6c253f84c6ca13e554370fba7e63",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -21,8 +21,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696919085,
@@ -120,63 +123,6 @@
       ],
       "proxyType": "immutable",
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-          "via": [{ "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xd29687c813D741E2F938F4aC377128810E217b1b",
-          "via": [{ "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -288,7 +234,8 @@
             }
           }
         },
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "sc": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
       },
       "derivedName": "ScrollOwner",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -324,9 +271,101 @@
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "update the minimum delay and manage all access control roles of the timelock."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "via": [
+            { "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+          "via": [
+            { "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
+          "via": [
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+        },
         {
           "permission": "act",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
@@ -655,8 +694,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" }
+          ]
         }
       ],
       "sinceTimestamp": 1725377334,
@@ -733,8 +775,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917917,
@@ -799,8 +844,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917920,
@@ -851,8 +899,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917920,
@@ -961,8 +1012,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917917,
@@ -1017,8 +1071,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917917,
@@ -1060,41 +1117,6 @@
       "sinceBlock": 8963444,
       "values": {
         "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "TIMELOCK_ADMIN_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
-            ]
-          },
-          "PROPOSER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
-            ]
-          },
-          "EXECUTOR_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-              "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
-            ]
-          },
-          "CANCELLER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-              "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
-            ]
-          }
-        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -1116,8 +1138,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917920,
@@ -1277,8 +1302,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1716184347,
@@ -1662,8 +1690,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" }
+          ]
         }
       ],
       "sinceTimestamp": 1725336741,
@@ -1762,8 +1793,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
+          ]
         }
       ],
       "sinceTimestamp": 1696917917,
@@ -2952,6 +2986,6 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "scroll/L1Timelock": "0xb57e87420738619ef30cc617f225e9a594dd80457a5840dde6f062afc582ca77",
-    "scroll/ScrollOwner": "0x6197b78c458a1a583f009be509dc59e102c54b021318fe65571972a5d4526620"
+    "scroll/ScrollOwner": "0x23b707ff346dc330561f8c88bc2b9313aa905247314abd332301e097d6127cff"
   }
 }

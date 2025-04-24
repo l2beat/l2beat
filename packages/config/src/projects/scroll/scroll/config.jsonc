@@ -58,46 +58,6 @@
           }
         }
       }
-    },
-    "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
-      // TimelockSlow
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0x1f807E2E8ab2e61230a0A9C271F90242831278b4": {
-      // TimelockFast
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376": {
-      // TimelockSC
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": {
-      // TimelockEmergency
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
     }
   }
 }

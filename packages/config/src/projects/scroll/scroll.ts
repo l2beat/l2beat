@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -409,7 +410,7 @@ export const scroll: ScalingProject = {
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
+      ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
           title:
@@ -419,22 +420,29 @@ export const scroll: ScalingProject = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+      description:
+        FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract').description +
+        ` The enforced liveness mechanism is activated if either an L1 message has not been finalized for more than ${formatSeconds(
+          maxDelayMessageQueue,
+        )} or a batch has not been finalized for more than ${formatSeconds(
+          maxDelayEnterEnforcedMode,
+        )}. When activated, transactions that were directly posted to the smart contract can be forcefully included by anyone on the host chain, which finalizes their ordering.`,
       references: [
         {
           title: 'EnforcedTxGateway.sol - Etherscan source code',
           url: 'https://etherscan.io/address/0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc#code',
         },
         {
-          title: 'EnforcedTxGateway - Etherscan proxy contract',
-          url: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
+          title: 'L1MessageQueueV2 - Etherscan proxy contract',
+          url: 'https://etherscan.io/address/0xEfA158006b072793a49E622B26761cD0eC38591d',
         },
       ],
     },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('zk'),
-        risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+        risks: [],
         references: [
           {
             title:

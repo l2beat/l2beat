@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3e0743d5dc421632e6c7a02bb3394ff157e511ad
+Generated with discovered.json: 0xd792f76b2846553f804d9953f4059f566f115f2a
 
-# Diff at Thu, 24 Apr 2025 16:52:29 GMT:
+# Diff at Thu, 24 Apr 2025 19:54:19 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 14489756
@@ -30,36 +30,12 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      receivedPermissions.10:
-+        {"permission":"upgrade","from":"0x64CCBE37c9A82D85A1F2E74649b7A42923067988","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.9:
-+        {"permission":"upgrade","from":"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.8:
-+        {"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.7:
-+        {"permission":"upgrade","from":"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.6:
-+        {"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.5.from:
--        "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
-+        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
-      receivedPermissions.4.from:
--        "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
-+        "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
-      receivedPermissions.3.from:
--        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
-+        "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
-      receivedPermissions.3.via.0.address:
--        "0xA76acF000C890b0DD7AEEf57627d9899F955d026"
-+        "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
-      receivedPermissions.2.from:
--        "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
-+        "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
-      receivedPermissions.2.via.0.address:
--        "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
-+        "0xA76acF000C890b0DD7AEEf57627d9899F955d026"
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","via":[{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]},{"permission":"upgrade","from":"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]},{"permission":"upgrade","from":"0x6EA73e05AdC79974B931123675ea8F78FfdacDF0","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]},{"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]},{"permission":"upgrade","from":"0xd29687c813D741E2F938F4aC377128810E217b1b","via":[{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]},{"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
       values.accessControl:
 +        {"roles":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"]},"SECURITY_COUNCIL_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]},"SCROLL_MULTISIG_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"EMERGENCY_MULTISIG_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_1DAY_DELAY_TOLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_7DAY_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"emergency-nodelay":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"]},"ops-fast":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"]}},"targets":{"0xA76acF000C890b0DD7AEEf57627d9899F955d026":{"upgrade(address,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"upgradeAndCall(address,address,bytes)":["SECURITY_COUNCIL_NO_DELAY_ROLE"]},"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81":{"upgrade(address,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"upgradeAndCall(address,address,bytes)":["SECURITY_COUNCIL_NO_DELAY_ROLE"]},"0x5300000000000000000000000000000000000003":{"updateWhitelistStatus(address[],bool)":["emergency-nodelay"]},"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC":{"setPause(bool)":["emergency-nodelay"]},"0x33B60d5Dd260d453cAC3782b0bDC01ce84672142":{"pauseDeposit(bool)":["emergency-nodelay"],"pauseWithdraw(bool)":["emergency-nodelay"],"updateCircleCaller(address)":["ops-fast"]},"0x5300000000000000000000000000000000000002":{"setOverhead(uint256)":["ops-fast"],"setCommitScalar(uint256)":["ops-fast"],"setBlobScalar(uint256)":["ops-fast"]},"0x5300000000000000000000000000000000000005":{"updateMinWithdrawAmount(uint256)":["ops-fast"],"updateRecipient(address)":["ops-fast"]},"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79":{"setERC20Gateway(address[],address[])":["ops-fast"]},"0x64CCBE37c9A82D85A1F2E74649b7A42923067988":{"updateTokenMapping(address,address)":["ops-fast"]},"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582":{"updateTokenMapping(address,address)":["ops-fast"]},"0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc":{"updateTokenMapping(address,address)":["ops-fast"]},"0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4":{"transferOwnership(address)":["ops-fast"]},"0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE":{"transferOwnership(address)":["ops-fast"]},"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC":{"withdrawFailedAmount(address,address)":["ops-fast"],"grantRole(bytes32,address)":["ops-fast"],"revokeRole(bytes32,address)":["ops-fast"]}}}
+      values.sc:
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
       template:
 +        "scroll/ScrollOwner"
       description:
@@ -73,9 +49,56 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"cancel queued transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"propose transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]}]
++        [{"permission":"upgrade","from":"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"cancel queued transactions."},{"permission":"upgrade","from":"0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"propose transactions."},{"permission":"upgrade","from":"0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"upgrade","from":"0x6EA73e05AdC79974B931123675ea8F78FfdacDF0","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xd29687c813D741E2F938F4aC377128810E217b1b","via":[{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]},{"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"upgrade","from":"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"upgrade","from":"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"upgrade","from":"0x64CCBE37c9A82D85A1F2E74649b7A42923067988","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]},{"permission":"upgrade","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","via":[{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]}]
       directlyReceivedPermissions:
-+        [{"permission":"act","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]
++        [{"permission":"act","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"},{"permission":"act","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}]
+    }
+```
+
+```diff
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.1:
++        {"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}
+      issuedPermissions.0.via.0.address:
+-        "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
++        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.1:
++        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
+    }
+```
+
+```diff
+    contract L2ETHGateway (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.1:
++        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
+    }
+```
+
+```diff
+    contract L2ScrollMessenger (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.1:
++        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
     }
 ```
 
@@ -85,8 +108,6 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
       name:
 -        "TimelockController"
 +        "TimelockSCSlow"
-      values.accessControl:
-+        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f","0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]}}
     }
 ```
 
@@ -112,6 +133,31 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
       directlyReceivedPermissions.1.from:
 -        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
 +        "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
+    }
+```
+
+```diff
+    contract SCRToken (0xd29687c813D741E2F938F4aC377128810E217b1b) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.1:
++        {"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}
+      issuedPermissions.0.via.0.address:
+-        "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"
++        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.1:
++        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
     }
 ```
 
