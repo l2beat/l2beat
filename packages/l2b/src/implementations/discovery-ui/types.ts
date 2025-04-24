@@ -119,7 +119,7 @@ export interface ArrayFieldValue {
 
 export interface ObjectFieldValue {
   type: 'object'
-  value: Record<string, FieldValue>
+  values: [FieldValue, FieldValue][]
 }
 
 export interface UnknownFieldValue {
