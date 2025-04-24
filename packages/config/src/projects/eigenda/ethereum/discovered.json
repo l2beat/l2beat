@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 22208508,
-  "configHash": "0x976c744e670b0487562abb088a46a8a0ce758deebc874a0aa3bec5b2c1bec607",
+  "configHash": "0x50f7895ba1256f58a2d1053384bd46e5665eef304646fbe36b6526533d86a8a1",
   "entries": [
     {
       "name": "StakeRegistry",
@@ -253,9 +253,21 @@
         "indexRegistry": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
         "numRegistries": 3,
         "OPERATOR_CHURN_APPROVAL_TYPEHASH": "0x4d404e3276e7ac2163d8ee476afa6a41d1f68fb71f2d8b6546b24e55ce01b72a",
-        "operatorSetParamsQuorum1": [200, 11000, 50],
-        "operatorSetParamsQuorum2": [200, 11000, 50],
-        "operatorSetParamsQuorum3": [15, 11000, 667],
+        "operatorSetParamsQuorum1": {
+          "maxOperatorCount": 200,
+          "kickBIPsOfOperatorStake": 11000,
+          "kickBIPsOfTotalStake": 50
+        },
+        "operatorSetParamsQuorum2": {
+          "maxOperatorCount": 200,
+          "kickBIPsOfOperatorStake": 11000,
+          "kickBIPsOfTotalStake": 50
+        },
+        "operatorSetParamsQuorum3": {
+          "maxOperatorCount": 15,
+          "kickBIPsOfOperatorStake": 11000,
+          "kickBIPsOfTotalStake": 667
+        },
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -3861,21 +3873,21 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/AVSDirectory": "0x64bb2968e22526b012e2decf5baf51792d075cf490ff570f873bb41571d1419c",
-    "eigenlayer/BLSApkRegistry": "0x9eb1145b304b8d7e443251d089d0ea7b26847544169c0a1a0496c69084785d01",
-    "eigenlayer/DelegationManager": "0xbf68134119d7ec2c2315a88d9acc166fce1c46a5944f8a0143bc865027f8cb37",
-    "eigenlayer/EIGEN token": "0x47e8d9424417c42741f398c8658e6026cd9ea74999d2a731ce8122d9dc8ef38f",
-    "eigenlayer/EigenDAServiceManager": "0x5ed490118ea7d3a485828140f85a422e05086bae6c357ffa3cf49b4ff2561c69",
-    "eigenlayer/EigenPod": "0xf1664ec978336d2388aa04d09a42a0d6cda369013ee287a07e5752866e132863",
-    "eigenlayer/EigenPodManager": "0xe3b067c4b72df8f2cd693e6f77aa9ca50ca4a4ced8e65cc957dd896402df348b",
-    "eigenlayer/EjectionManager": "0x0bd8e9c51e2cdbbc28c51bd06e83ace005b89360429127fe7a4042ba62a1cd70",
-    "eigenlayer/PauserRegistry": "0xbb7357541420bd5d75058baa8b0f31ba4519999522581aca69be708a14c2b51f",
-    "eigenlayer/RegistryCoordinator": "0x588347997ac210f7acfa214a12827eaae3a07b30562c6fd8eae8a56c2a6ca2f0",
-    "eigenlayer/StakeRegistry": "0x37d1f6d9aa87f3d97c754b39665e2ce339ec5a6b02ff50f3133901488f71b647",
-    "eigenlayer/Strategy": "0xccdbab3e2ea3619b64aec17409b7bf3e60691e7d54afd87365c4172652bc7de8",
-    "eigenlayer/StrategyManager": "0x962a1a3da7cfc4cfdbc46e7e321d555efe65353cc2b2a981f90e24cfa6f81de7",
-    "eigenlayer/TimelockControllerOwning": "0xe95940c75a4423f0389d5dc3424817e7e51f65cbe1a33c902eed04279a0e55ad",
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "eigenlayer/AVSDirectory": "0xc57750a5155e09049ae1ea4afd500090b460c5844ccb1d2d973da7af0d8d96f7",
+    "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/DelegationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/EIGEN token": "0x47c3793e522d863027dd4d7d9ae9f79149767db55e073a2fb68ac71a6be7412b",
+    "eigenlayer/EigenDAServiceManager": "0x2d11dbc84d77f4f12aa67ed1e3f678e4954d53b2e03973f5dd6a24faacf0afbc",
+    "eigenlayer/EigenPod": "0x272665b09a47d2ea7de03261d45c149901717f76ba1cbaf1e015c17a1778a868",
+    "eigenlayer/EigenPodManager": "0xf1378651f0f74d64b9ef4ecb62fc6b0908c5fa61d0228aea84689e975859f4cf",
+    "eigenlayer/EjectionManager": "0xe9a60b43999e814f77706e311fc4de0bc270faf2aeb8edd76afc4bc1d38936df",
+    "eigenlayer/PauserRegistry": "0x0ec68cbcfada757ce4d184b3ad2f6f8d08d51e01ea981090e78323d850557281",
+    "eigenlayer/RegistryCoordinator": "0x20f2acaa365af18611d618b040f8539a3fd3086fa7c793921a5d2903290db765",
+    "eigenlayer/StakeRegistry": "0x354e5717008504cef09d88027f76fe2fe308210a96b59fce263f4d8ec5868080",
+    "eigenlayer/Strategy": "0x5b542b237664461cc9425426a34e0cf216d43947d261781837a5c00bbebfbc9b",
+    "eigenlayer/StrategyManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/TimelockControllerOwning": "0x59a5edadc54910cb1de46acbf90c6438938dc8cfdcf165be92fe954134783f2c",
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

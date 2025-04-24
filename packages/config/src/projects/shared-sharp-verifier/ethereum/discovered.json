@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 21973570,
-  "configHash": "0x67e83b12016a307c4b7eae8ffb0e849fb5da92795edc5d7a727056331d7d7c20",
+  "configHash": "0x7679528e2b3e7faf6b83c03870b1d3f4642f487271e4dcba7349eed05f9421d0",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",
@@ -2117,12 +2117,12 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "shared-sharp-verifier/CairoBootloaderProgram": "0x297b13fa028d44d752d6d2e714a8aa1af656a391c3908d030942e99640d465c1",
-    "shared-sharp-verifier/CpuFrilessVerifier": "0x9743f45aa5e3e4b7a70ebd8da1df45c344111bb438fb3541e48beb706bd1963e",
-    "shared-sharp-verifier/ignoreComputeSpam": "0xb6d0251f6417a2cf19ef641f784d6f71a0577e534ea30ee39cceeb7a2fbd6217",
-    "shared-sharp-verifier/MemoryPageFactRegistry": "0xfef666a0338bbc0e5cfd6b39579578c0fbe06ac069d7808574d8278a15b5fe41",
-    "shared-sharp-verifier/SHARPVerifier": "0x5326cec0022941eb20d3c6611dd5310a7918f4c1f4beb6d43cb0c489e375e242",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x345f8f82fc7212a66c1e5b2beb152daa26f1010581a0286fd5cff8c05be8de3a"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "shared-sharp-verifier/CairoBootloaderProgram": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0x472c63729146d653de2dafc032021def31a3227f6c7bcb2dfd6fb7cc96c442fa",
+    "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
+    "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-sharp-verifier/SHARPVerifier": "0x1b6d2df648136e7e01e2f7dc4237e03ea8b9060aafee56c40b8cf45179dd5016",
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x38e64c0bdc916fd8608162ff858b98f8da01ce76b5b786f5725572f8f2d785e9"
   }
 }

@@ -7,6 +7,82 @@
       "handler": {
         "type": "accessControl"
       }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
+        }
+      ]
+    },
+    "isPaused_GENERAL": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [1]
+      }
+    },
+    "isPaused_L1_L2": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [2]
+      }
+    },
+    "isPaused_L2_L1": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [3]
+      }
+    },
+    "isPaused_BLOB_SUBMISSION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [4]
+      }
+    },
+    "isPaused_CALLDATA_SUBMISSION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [5]
+      }
+    },
+    "isPaused_FINALIZATION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [6]
+      }
+    },
+    "isPaused_INITIATE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [7]
+      }
+    },
+    "isPaused_COMPLETE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [8]
+      }
     }
   }
 }

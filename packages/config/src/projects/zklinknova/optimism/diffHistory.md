@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x089808f694055a1a43aca5ca4d5cd729f6bac7d0
+
+# Diff at Thu, 10 Apr 2025 14:43:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 133041012
+- current block number: 133041012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x7958651df6cefab3f877a52c33d50f0969bfa147
 
 # Diff at Tue, 11 Mar 2025 08:13:24 GMT:

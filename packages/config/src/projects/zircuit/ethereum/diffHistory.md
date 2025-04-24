@@ -1,4 +1,192 @@
-Generated with discovered.json: 0x7beddc4fca1b38b330fb8df2efc03ca9b07e0c9d
+Generated with discovered.json: 0xad866826772fccc82cf7b232810d6d2fc79170b7
+
+# Diff at Thu, 24 Apr 2025 08:37:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22029918
+- current block number: 22337725
+
+## Description
+
+Upgrades to most system contracts with minor changes:
+- 7702 compatibility
+- library (Math)
+- gas limit and l2 gas calculations
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.0:
+-        "0xb7c0fa59b37014e507a0e86791007823e5a5548fe3523b6fcf3fb383c0e8c24e"
++        "0x67780cfd4e258f37c824b516a488799359ec5e535fb56f62fbd71765730fa32b"
+      values.$implementation:
+-        "0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20"
++        "0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a"
+      values.$pastUpgrades.4:
++        ["2024-07-16T08:48:59.000Z","0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196",["0x304a52C8354f323672191Ebf1347Cd3d494Ea830"]]
+      values.$pastUpgrades.3.2:
+-        ["0x304a52C8354f323672191Ebf1347Cd3d494Ea830"]
++        "2024-07-17T12:11:35.000Z"
+      values.$pastUpgrades.3.1:
+-        "2024-07-16T08:48:59.000Z"
++        "0x472c4b57b3828c3f8a846702da5707eccb216d672b4ede4eb4186ffe606b14b3"
+      values.$pastUpgrades.3.0:
+-        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
++        ["0xde8B916B972cE3c27C21157Fc2b107c413062b9d"]
+      values.$pastUpgrades.2.2:
+-        "2024-07-17T12:11:35.000Z"
++        "2025-04-23T14:46:59.000Z"
+      values.$pastUpgrades.2.1:
+-        "0x472c4b57b3828c3f8a846702da5707eccb216d672b4ede4eb4186ffe606b14b3"
++        ["0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a"]
+      values.$pastUpgrades.2.0:
+-        ["0xde8B916B972cE3c27C21157Fc2b107c413062b9d"]
++        "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f"
+      values.$upgradeCount:
+-        4
++        5
+      values.version:
+-        "2.0.2"
++        "2.1.0"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.0:
+-        "0x1e3673770550301c22eadd847cc822cfbc995c36019d1dfce07b2ec9cffd930f"
++        "0x931681cb03b7ea6b4521cf57be98c5303f045f088c4cb9e282b889be911da623"
+      values.$implementation:
+-        "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"
++        "0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F"
+      values.$pastUpgrades.1:
++        ["2024-07-02T16:12:35.000Z","0xba20c00dc03b009737ebbcaa3db1263524a1322c5984a4f51fbf7c4ebc979575",["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]]
+      values.$pastUpgrades.0.2:
+-        "0xba20c00dc03b009737ebbcaa3db1263524a1322c5984a4f51fbf7c4ebc979575"
++        "2025-04-23T14:46:59.000Z"
+      values.$pastUpgrades.0.1:
+-        "2024-07-02T16:12:35.000Z"
++        ["0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F"]
+      values.$pastUpgrades.0.0:
+-        ["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]
++        "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f"
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.TX_BASE_GAS:
++        21000
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minimumGasLimit:
+-        9000000
++        7000000
+      values.resourceConfig.maxResourceLimit:
+-        8000000
++        6000000
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.0:
+-        "0x751d149755c8de663c6b1eb488f5d145ad3e9aa81561545e375a6cb8adbd0f6c"
++        "0x4da64b64aa2ba04837c58c90080a550f82596377659251b91ef703b0acdb49da"
+      values.$implementation:
+-        "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b"
++        "0x506aadcb7bF93E892a43208d879BAc076eBC97Ef"
+      values.$pastUpgrades.5:
++        ["2024-07-16T08:48:59.000Z","0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196",["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]]
+      values.$pastUpgrades.4.2.0:
+-        "0xE14b12F4843447114A093D99Dc9322b93a967DE6"
++        "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"
+      values.$pastUpgrades.4.1:
+-        "2024-07-16T08:48:59.000Z"
++        "2024-07-17T12:11:35.000Z"
+      values.$pastUpgrades.4.0:
+-        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
++        "0x472c4b57b3828c3f8a846702da5707eccb216d672b4ede4eb4186ffe606b14b3"
+      values.$pastUpgrades.3.2.0:
+-        "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"
++        "0x7409668285336dBBe720bE3525AEe372Fce4c2ab"
+      values.$pastUpgrades.3.1:
+-        "2024-07-17T12:11:35.000Z"
++        "2024-07-02T16:11:59.000Z"
+      values.$pastUpgrades.3.0:
+-        "0x472c4b57b3828c3f8a846702da5707eccb216d672b4ede4eb4186ffe606b14b3"
++        "0xd13642194be1a1b8947f8d3cd1504ec56ca67f4ba953cc45e4f135fb118a46f7"
+      values.$pastUpgrades.2.2:
+-        ["0x7409668285336dBBe720bE3525AEe372Fce4c2ab"]
++        "2024-07-16T08:48:59.000Z"
+      values.$pastUpgrades.2.1:
+-        "2024-07-02T16:11:59.000Z"
++        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
+      values.$pastUpgrades.2.0:
+-        "0xd13642194be1a1b8947f8d3cd1504ec56ca67f4ba953cc45e4f135fb118a46f7"
++        ["0x0Fc6203310c494963eBAdd1157780a613B67eCDf"]
+      values.$pastUpgrades.1.2:
+-        "2024-07-16T08:48:59.000Z"
++        "2025-04-23T14:46:59.000Z"
+      values.$pastUpgrades.1.1:
+-        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
++        "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f"
+      values.$pastUpgrades.1.0.0:
+-        "0x0Fc6203310c494963eBAdd1157780a613B67eCDf"
++        "0x506aadcb7bF93E892a43208d879BAc076eBC97Ef"
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "2.1.0"
++        "2.2.0"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.0:
+-        "0x7328459427570e205526a415613989750227c38d95138613a718c573132fdd17"
++        "0x937e394859daaa4d66de4cbe3e6770d80adf639ecc5d3394774676870cda8d62"
+      values.$implementation:
+-        "0x3B21dC86c412aC34fF4c679497b274509D73cDcC"
++        "0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb"
+      values.$pastUpgrades.1:
++        ["2025-04-23T14:46:59.000Z","0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",["0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "2.1.0"
++        "2.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1CrossDomainMessenger.sol                     | 504 ++++++++++++++++++++-
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  34 +-
+ .../L1StandardBridge/L1StandardBridge.sol          |  28 +-
+ .../OptimismPortal/OptimismPortal.sol              |  37 +-
+ 4 files changed, 557 insertions(+), 46 deletions(-)
+```
+
+Generated with discovered.json: 0x8b1025d2cfd986891f8457295fc23c3cb43e74f3
 
 # Diff at Wed, 19 Mar 2025 13:05:56 GMT:
 

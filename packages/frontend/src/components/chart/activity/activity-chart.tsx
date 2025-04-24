@@ -1,7 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -127,7 +127,9 @@ export function ActivityChart({
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
           },
         })}
-        <ChartTooltip content={<CustomTooltip syncedUntil={syncedUntil} />} />
+        <ChartTooltip
+          content={<ActivityCustomTooltip syncedUntil={syncedUntil} />}
+        />
         <defs>
           {type === 'Rollups' && (
             <>
@@ -155,7 +157,7 @@ export function ActivityChart({
   )
 }
 
-function CustomTooltip({
+export function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
@@ -179,8 +181,15 @@ function CustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = meta[entry.name!]!
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.type === 'none'
+            )
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}
@@ -213,8 +222,15 @@ function CustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = meta[entry.name!]!
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.type === 'none'
+            )
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

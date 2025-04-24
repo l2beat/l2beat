@@ -8,6 +8,7 @@
       "priceId": "degen-base",
       "symbol": "DEGEN",
       "name": "Degen",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
@@ -28,8 +29,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -37,6 +37,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -87,8 +88,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -96,6 +96,7 @@
       "priceId": "tn100x",
       "symbol": "TN100X",
       "name": "The Next 100x Memecoin on Base",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35729/large/patch-transparent-blue.png?1729878068",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x5B5dee44552546ECEA05EDeA01DCD7Be7aa6144A",
@@ -116,8 +117,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35729/large/patch-transparent-blue.png?1729878068"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -125,6 +125,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
@@ -145,8 +146,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+      "isAssociated": false
     }
   ]
 }

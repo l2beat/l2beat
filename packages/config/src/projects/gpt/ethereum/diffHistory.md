@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x52aaa9f17bfc9b1df8324e3a29dcef4668a1ca37
+
+# Diff at Thu, 24 Apr 2025 10:30:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://gpt-mainnet-da-2.eu-north-2.gateway.fm/","0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"]
++        {"url":"https://gpt-mainnet-da-2.eu-north-2.gateway.fm/","addr":"0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"}
+      values.members.0:
+-        ["https://gpt-mainnet-da-1.eu-north-2.gateway.fm/","0x208C0bCD77F921209932081c27C543098838BF9e"]
++        {"url":"https://gpt-mainnet-da-1.eu-north-2.gateway.fm/","addr":"0x208C0bCD77F921209932081c27C543098838BF9e"}
+    }
+```
+
+Generated with discovered.json: 0xd9a61cc06242ff7816742beee45953e8da45cd47
+
+# Diff at Thu, 10 Apr 2025 14:42:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
 Generated with discovered.json: 0x83c303b75cfdddc281166d80ac4f2e6ab8682707
 
 # Diff at Wed, 19 Mar 2025 13:04:46 GMT:

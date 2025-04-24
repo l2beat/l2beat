@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xe55fc5e613096cc5fec9b0993aefd5463dfb161a
+
+# Diff at Thu, 24 Apr 2025 10:31:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://witnesschain-da-2.eu-north-2.gateway.fm/","0xef5F06e5C0493601829DacFA23f2fe30303b0166"]
++        {"url":"https://witnesschain-da-2.eu-north-2.gateway.fm/","addr":"0xef5F06e5C0493601829DacFA23f2fe30303b0166"}
+      values.members.0:
+-        ["https://witnesschain-da-1.eu-north-2.gateway.fm/","0xcc543F5a2052eDf584216093A0547c4Acd84B80b"]
++        {"url":"https://witnesschain-da-1.eu-north-2.gateway.fm/","addr":"0xcc543F5a2052eDf584216093A0547c4Acd84B80b"}
+    }
+```
+
+Generated with discovered.json: 0xb759955217c52ccc0c2b35f015714a2c86a4d427
+
+# Diff at Thu, 10 Apr 2025 14:43:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
 Generated with discovered.json: 0x8d99b7e69070fcf57144e5a43e2fde91d82d4c5f
 
 # Diff at Wed, 19 Mar 2025 13:05:53 GMT:

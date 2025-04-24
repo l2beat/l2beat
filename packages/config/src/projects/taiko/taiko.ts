@@ -12,8 +12,8 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -346,10 +346,11 @@ export const taiko: ScalingProject = {
       rollupNodeLink: 'https://github.com/taikoxyz/simple-taiko-node',
     },
   ),
-  technology: {
-    stateCorrectness: {
-      name: 'Multi-tier proof system',
-      description: `
+  stateValidation: {
+    categories: [
+      {
+        title: 'Fraud proofs',
+        description: `
 Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
 Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
 
@@ -362,23 +363,26 @@ For the Minority guardian tier, *validity* and *contest bonds* are set to ${Mino
 
 It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
 If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
-      references: [
-        {
-          title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          url: 'https://etherscan.io/address/0x44d307a9ec47aA55a7a30849d065686753C86Db6#code#F1#L26',
-        },
-        {
-          title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'a malicious block is proven by a compromised SGX instance or approved by Guardians.',
-        },
-      ],
-    },
+        references: [
+          {
+            title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
+            url: 'https://etherscan.io/address/0x44d307a9ec47aA55a7a30849d065686753C86Db6#code#F1#L26',
+          },
+          {
+            title: 'TaikoL1.sol - Etherscan source code, liveness bond',
+            url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'a malicious block is proven by a compromised SGX instance or approved by Guardians.',
+          },
+        ],
+      },
+    ],
+  },
+  technology: {
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
       description:
@@ -441,6 +445,10 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
           ...upgradesTaikoMultisig,
         }),
         discovery.getContractDetails('Risc0Verifier', {
+          description: 'Verifier contract for ZK-proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('RiscZeroGroth16Verifier', {
           description: 'Verifier contract for ZK-proven batches.',
           ...upgradesTaikoMultisig,
         }),
@@ -535,7 +543,7 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
       type: 'general',
     },
     {
-      title: 'Taiko Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
       description: 'Taiko is deployed on Ethereum mainnet.',

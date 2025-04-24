@@ -1,7 +1,6 @@
 export * from './block/BlockProvider'
 export * from './price/PriceProvider'
 export * from './circulating-supply/CirculatingSupplyProvider'
-export * from './blob/BlobProvider'
 export * from './da/types'
 export * from './da/AvailDaProvider'
 export * from './da/EthereumDaProvider'

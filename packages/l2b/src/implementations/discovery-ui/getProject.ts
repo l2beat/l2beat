@@ -1,12 +1,15 @@
 import {
   type ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryOutput,
   type EntryParameters,
   type TemplateService,
   getChainShortName,
+  makeEntryColorConfig,
+  makeEntryStructureConfig,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
+import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
@@ -28,7 +31,7 @@ import type {
 
 interface ProjectData {
   chain: string
-  config: DiscoveryConfig
+  config: ConfigRegistry
   discovery: DiscoveryOutput
 }
 
@@ -63,29 +66,40 @@ export function getProject(
   )
 
   const response: ApiProjectResponse = { entries: [] }
+  const meta = getMeta(data.map((x) => x.discovery))
   for (const { chain, config, discovery } of data) {
-    const meta = getMeta([discovery])
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
-        const contarctConfig = config.for(entry.address)
+        const contractConfig = makeEntryStructureConfig(
+          config.structure,
+          entry.address,
+        )
+
         if (entry.template !== undefined) {
           const templateValues = templateService.loadContractTemplate(
             entry.template,
           )
-          contarctConfig.pushValues(templateValues)
+          contractConfig.pushValues(templateValues)
         }
+
+        const contractColorConfig = makeEntryColorConfig(
+          config.color,
+          entry.address,
+          templateService.loadContractTemplateColor(entry.template),
+        )
 
         return contractFromDiscovery(
           chain,
           meta,
           entry,
-          contarctConfig,
+          contractConfig,
+          contractColorConfig,
           discovery.abis,
         )
       })
       .sort(orderAddressEntries)
-    const initialAddresses = config.initialAddresses.map(
+    const initialAddresses = config.structure.initialAddresses.map(
       (address) => `${getChainShortName(chain)}:${address}`,
     )
 
@@ -137,16 +151,18 @@ function contractFromDiscovery(
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: EntryParameters,
   contractConfig: ContractConfig,
+  contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
+    const fieldColor = contractColorConfig.fields[name]
     return {
-      description: field?.description,
+      description: fieldColor?.description,
       handler: field?.handler,
       ignoreInWatchMode: contractConfig.ignoreInWatchMode?.includes(name),
       ignoreRelatives: contractConfig.ignoreRelatives?.includes(name),
-      severity: field?.severity,
+      severity: fieldColor?.severity,
     }
   }
 
@@ -154,7 +170,7 @@ function contractFromDiscovery(
     .map(
       ([name, value]): Field => ({
         name,
-        value: fixAddresses(parseFieldValue(value, meta), chain),
+        value: parseFieldValue(value, meta, chain),
         ...getFieldInfo(name),
       }),
     )
@@ -174,6 +190,7 @@ function contractFromDiscovery(
     name: getContractName(contract),
     type: getContractType(contract),
     template: contract.template,
+    proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
     address: toAddress(chain, contract.address),
@@ -201,31 +218,6 @@ function abiEntry(entry: string): ApiAbiEntry {
       ? iface.getSighash(entry.slice(9))
       : undefined,
   }
-}
-
-function fixAddresses(value: FieldValue, chain: string): FieldValue {
-  if (value.type === 'object') {
-    return {
-      type: 'object',
-      value: Object.fromEntries(
-        Object.entries(value.value).map(([key, value]) => [
-          key,
-          fixAddresses(value, chain),
-        ]),
-      ),
-    }
-  } else if (value.type === 'array') {
-    return {
-      type: 'array',
-      values: value.values.map((value) => fixAddresses(value, chain)),
-    }
-  } else if (value.type === 'address') {
-    return {
-      ...value,
-      address: toAddress(chain, value.address),
-    }
-  }
-  return value
 }
 
 function populateReferencedBy(chains: ApiProjectChain[]) {
@@ -277,7 +269,7 @@ function getAddresses(values: FieldValue[]) {
     } else if (value.type === 'array') {
       addresses.push(...getAddresses(value.values))
     } else if (value.type === 'object') {
-      addresses.push(...getAddresses(Object.values(value.value)))
+      addresses.push(...getAddresses(value.values.map(([_, value]) => value)))
     }
   }
   return addresses

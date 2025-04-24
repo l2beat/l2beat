@@ -1,6 +1,6 @@
 import {
   ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   TemplateService,
   getChainConfig,
   getDiscoveryPaths,
@@ -54,7 +54,7 @@ export const RefreshDiscovery = command({
         .readAllChains()
         .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
     )
-    const toRefresh: { config: DiscoveryConfig; reason: string }[] = []
+    const toRefresh: { config: ConfigRegistry; reason: string }[] = []
     let foundFrom = false
     for (const config of chainConfigs) {
       if (args.from !== undefined) {

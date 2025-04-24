@@ -3,7 +3,7 @@ import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
-import type { ProjectTechnologyChoice } from '../../types'
+import type { ProjectScalingStateValidationCategory } from '../../types'
 
 const discovery = new ProjectDiscovery('zircuit')
 
@@ -22,8 +22,8 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
 // we should update the opstack.ts or not use it anymore
-const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
-  name: 'Validity proofs (when available) ensure state correctness, but not DA', // proof is the only input to the Verifier
+const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
+  title: 'Validity proofs', // proof is the only input to the Verifier
   description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid. Moreover, the system doesn't check that the transactions applied to the state are the ones published by the sequencer.`,
   risks: [
     {
@@ -84,8 +84,8 @@ export const zircuit: ScalingProject = opStackL2({
   genesisTimestamp,
   // Chain ID: 48900
   isNodeAvailable: 'UnderReview',
-  nonTemplateTechnology: {
-    stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
+  stateValidation: {
+    categories: [ZIRCUIT_STATE_VALIDATION],
   },
   activityConfig: {
     // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount
@@ -173,7 +173,7 @@ export const zircuit: ScalingProject = opStackL2({
   ],
   milestones: [
     {
-      title: 'Zircuit Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',
       date: '2024-08-05T00:00:00.00Z',
       description: 'Zircuit is live on mainnet.',

@@ -31,7 +31,7 @@
 
     "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e": "KintoSecurityCouncil_L2Alias"
   },
-  "maxAddresses": 200, // bumped from default 100 mainly due to the sanctioned to the eoas
+  "maxAddresses": 200, // bumped from default 100 mainly due to the sanctioned eoas
   "types": {
     "SignerPolicyToThreshold": {
       "typeCaster": "Mapping",
@@ -42,15 +42,6 @@
         "3": 1 // not accurate, using worst case (ALL_SIGNERS)
       }
     }
-    // "RoleName": {
-    //   "typeCaster": "Mapping",
-    //   "arg": {
-    //     "0": "ADMIN_ROLE",
-    //     "18446744073709551615": "PUBLIC_ROLE",
-    //     "1635978423191113331": "NIO_GOVERNOR_ROLE",
-    //     "8663528507529876195": "UPGRADER_ROLE"
-    //   }
-    // }
   },
   "overrides": {
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
@@ -89,7 +80,7 @@
             "method": "signerPolicy",
             "args": []
           },
-          "returnType": "(SignerPolicyToThreshold)"
+          "edit": ["format", "SignerPolicyToThreshold"]
         }
       }
     },
@@ -134,16 +125,18 @@
       "fields": {
         // improvised semi-hardcoded (needs better tooling)
         "securityCouncilPermission": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
-          },
+          "copy": "accessControl",
+          "edit": [
+            "pipe",
+            ["get", "roles", "SECURITY_COUNCIL_ROLE", "members"],
+            ["map", ["get", "member"]]
+          ],
           "permissions": [
-            // role UPGRADER
+            // role ADMIN
             {
               "type": "interact",
-              "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
-              "delay": "{{edScUPGRADER}}"
+              "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
+              "delay": "{{edScADMIN}}"
             },
             // role SECURITY_COUNCIL
             {
@@ -151,80 +144,108 @@
               "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
               "delay": "{{edScSECURITY_COUNCIL}}"
             },
-            // role ADMIN
+            // role SANCTIONER_ROLE
             {
               "type": "interact",
-              "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
-              "delay": "{{edScADMIN}}"
-            }
-          ]
-        },
-        "kintoMultisig2Permission": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
-          },
-          "permissions": [
+              "description": "confirm sanctions, making them permanent without providing an exit window.",
+              "delay": "{{edScSANCTIONER}}"
+            },
             // role UPGRADER
             {
               "type": "interact",
               "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
-              "delay": "{{edKintoMultisig2UPGRADER}}"
-            },
+              "delay": "{{edScUPGRADER}}"
+            }
+          ]
+        },
+        "kintoMultisig2Permission": {
+          "copy": "accessControl",
+          "edit": [
+            "pipe",
+            ["get", "roles", "RECOVERY_APPROVER_ROLE", "members"],
+            ["map", ["get", "member"]]
+          ],
+          "permissions": [
             // role ADMIN
             {
               "type": "interact",
-              "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+              "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
               "delay": "{{edKintoMultisig2ADMIN}}"
+            },
+            // role RECOVERY_APPROVER
+            {
+              "type": "interact",
+              "description": "approve smart wallet recoveries for any KintoWallet.",
+              "delay": "{{edKintoMultisig2RECOVERY_APPROVER}}"
             }
           ]
         },
         "tadKintoWalletFactory": {
           "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
           "severity": "HIGH",
-          "handler": {
-            "type": "call",
-            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
-            "args": ["0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"]
-          }
+          "copy": "accessControl",
+          "edit": [
+            "get",
+            "targets",
+            "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+            "adminDelay"
+          ]
         },
         "tadKintoAppRegistry": {
           "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
           "severity": "HIGH",
-          "handler": {
-            "type": "call",
-            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
-            "args": ["0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"]
-          }
+          "copy": "accessControl",
+          "edit": [
+            "get",
+            "targets",
+            "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+            "adminDelay"
+          ]
         },
         "tadKintoID": {
           "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
           "severity": "HIGH",
-          "handler": {
-            "type": "call",
-            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
-            "args": ["0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"]
-          }
+          "copy": "accessControl",
+          "edit": [
+            "get",
+            "targets",
+            "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+            "adminDelay"
+          ]
         },
-        "edKintoMultisig2UPGRADER": {
-          "severity": "HIGH",
-          "description": "Current execution delay for target calls.",
-          "handler": {
-            "type": "event",
-            "select": ["delay"],
-            "set": {
-              "event": "RoleGranted",
-              "where": [
-                "and",
-                ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
-                ["=", "#roleId", "8663528507529876195"]
-              ]
-            }
-          }
-        },
+        // role revoked
+        // "edKintoMultisig2UPGRADER": {
+        //   "severity": "HIGH",
+        //   "description": "Current execution delay for target calls.",
+        //   "handler": {
+        //     "type": "event",
+        //     "select": ["delay"],
+        //     "set": {
+        //       "event": "RoleGranted",
+        //       "where": [
+        //         "and",
+        //         ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+        //         ["=", "#roleId", "8663528507529876195"]
+        //       ]
+        //     }
+        //   }
+        // },
         "edKintoMultisig2ADMIN": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls.",
+          "copy": "accessControl",
+          "edit": [
+            "pipe",
+            ["get", "roles", "ADMIN_ROLE", "members"],
+            [
+              "find",
+              ["=", "#member", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"]
+            ],
+            ["get", "executionDelay"]
+          ]
+        },
+        "edKintoMultisig2RECOVERY_APPROVER": {
+          "description": "Current execution delay for target calls.",
           "handler": {
             "type": "event",
             "select": ["delay"],
@@ -233,7 +254,7 @@
               "where": [
                 "and",
                 ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
-                ["=", "#roleId", 0]
+                ["=", "#roleId", "2827137176883084373"]
               ]
             }
           }
@@ -241,37 +262,46 @@
         "edScADMIN": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls.",
-          "handler": {
-            "type": "event",
-            "select": ["delay"],
-            "set": {
-              "event": "RoleGranted",
-              "where": [
-                "and",
-                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
-                ["=", "#roleId", 0]
-              ]
-            }
-          }
+          "copy": "accessControl",
+          "edit": [
+            "pipe",
+            ["get", "roles", "ADMIN_ROLE", "members"],
+            [
+              "find",
+              ["=", "#member", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"]
+            ],
+            ["get", "executionDelay"]
+          ]
         },
         "edScUPGRADER": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls.",
-          "handler": {
-            "type": "event",
-            "select": ["delay"],
-            "set": {
-              "event": "RoleGranted",
-              "where": [
-                "and",
-                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
-                ["=", "#roleId", "8663528507529876195"]
-              ]
-            }
-          }
+          "copy": "accessControl",
+          "edit": [
+            "pipe",
+            ["get", "roles", "UPGRADER_ROLE", "members"],
+            [
+              "find",
+              ["=", "#member", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"]
+            ],
+            ["get", "executionDelay"]
+          ]
         },
         "edScSECURITY_COUNCIL": {
           "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "copy": "accessControl",
+          "edit": [
+            "pipe",
+            ["get", "roles", "SECURITY_COUNCIL_ROLE", "members"],
+            [
+              "find",
+              ["=", "#member", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"]
+            ],
+            ["get", "executionDelay"]
+          ]
+        },
+        "edScSANCTIONER": {
           "description": "Current execution delay for target calls.",
           "handler": {
             "type": "event",
@@ -281,7 +311,7 @@
               "where": [
                 "and",
                 ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
-                ["=", "#roleId", "14661544942390944024"]
+                ["=", "#roleId", "565311800027786426"]
               ]
             }
           }

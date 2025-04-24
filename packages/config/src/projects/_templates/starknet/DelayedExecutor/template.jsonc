@@ -12,7 +12,7 @@
         "method": "executionDelay",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": ["format", "FormatSeconds"]
     }
   }
 }

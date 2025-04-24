@@ -12,10 +12,9 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -356,24 +355,13 @@ export const scroll: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title:
-            'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           title:
             'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
         },
       ],
     },
@@ -383,7 +371,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
         },
       ],
     },
@@ -442,6 +430,16 @@ export const scroll: ScalingProject = {
         title: 'Verification Keys Generation',
         description:
           'SNARK verification keys can be generated and checked against Ethereum verifier contract using [this guide](https://github.com/scroll-tech/scroll-prover#verifier-contract). The system requires a trusted setup.',
+      },
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title:
+              'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
+            url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+          },
+        ],
       },
     ],
     proofVerification: {

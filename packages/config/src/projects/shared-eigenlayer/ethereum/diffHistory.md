@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x48c05ac0ec0a7e77271908a5708c20c08d5315c6
+
+# Diff at Thu, 10 Apr 2025 14:43:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208559
+- current block number: 22208559
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208559 (main branch discovery), not current.
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x6f045accbeda91e5e00575229b980c74c9bedb90
 
 # Diff at Sun, 06 Apr 2025 08:04:37 GMT:

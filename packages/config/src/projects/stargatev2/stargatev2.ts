@@ -13,7 +13,6 @@ const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
-const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
 const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
 const discovery_mantle = new ProjectDiscovery('stargatev2', 'mantle')
 
@@ -31,21 +30,22 @@ const discoveredDelegates = [
 const discoveredSendLib = <string>(
   discovery.getContractValue('EndpointV2', 'getSendLibrary')
 )
-const discoveredReceiveLib = <[string, boolean]>(
+const discoveredReceiveLib = <{ lib: string; isDefault: boolean }>(
   discovery.getContractValue('EndpointV2', 'getReceiveLibrary')
 )
-const discoveredUlnConfig: [
-  number, // confirmations
-  number, // requiredDVNCount
-  number, // optionalDVNCount
-  number, // optionalDVNThreshold
-  string[], // requiredDVNs (addresses)
-  string[], // optionalDVNs (addresses)
-] = discovery.getContractValue('ReceiveUln302', 'getUlnConfig')
-const discoveredExecutorConfig: [number, string] = discovery.getContractValue(
-  'SendUln302',
-  'getExecutorConfig',
-)
+const discoveredUlnConfig = discovery.getContractValue<{
+  confirmations: number
+  requiredDVNCount: number
+  optionalDVNCount: number
+  optionalDVNThreshold: number
+  requiredDVNs: string[]
+  optionalDVNs: string[]
+}>('ReceiveUln302', 'getUlnConfig')
+
+const discoveredExecutorConfig = discovery.getContractValue<{
+  maxMessageSize: number
+  executor: string
+}>('SendUln302', 'getExecutorConfig')
 
 export const stargatev2: Bridge = {
   type: 'bridge',
@@ -128,15 +128,15 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     },
     validation: (() => {
       assert(
-        discoveredUlnConfig[1] === 2 && // requiredDVNCount
-          discoveredUlnConfig[4][0] ===
+        discoveredUlnConfig.requiredDVNCount === 2 &&
+          discoveredUlnConfig.requiredDVNs[0] ===
             '0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
-          discoveredUlnConfig[4][1] ===
+          discoveredUlnConfig.requiredDVNs[1] ===
             '0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
         'Update the validation, poO and permissions sections, the security config of Stargatev2 has changed.',
       )
       assert(
-        discoveredExecutorConfig[1] ===
+        discoveredExecutorConfig.executor ===
           '0x173272739Bd7Aa6e4e214714048a9fE699453059', // LayerZero Executor
         'The configured Executor for Stargatev2 changed: Review the permissions section.',
       )
@@ -255,21 +255,6 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Scroll.',
       }),
-      discovery_metis.getEscrowDetails({
-        address: EthereumAddress('0x36ed193dc7160D3858EC250e69D12B03Ca087D08'),
-        tokens: ['WETH'],
-        description: 'Stargate liquidity pool for ETH on Metis.',
-      }),
-      discovery_metis.getEscrowDetails({
-        address: EthereumAddress('0xD9050e7043102a0391F81462a3916326F86331F0'),
-        tokens: ['Metis'],
-        description: 'Stargate liquidity pool for METIS on Metis.',
-      }),
-      discovery_metis.getEscrowDetails({
-        address: EthereumAddress('0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125'),
-        tokens: ['USDT'],
-        description: 'Stargate liquidity pool for USDT on Metis.',
-      }),
       discovery_linea.getEscrowDetails({
         address: EthereumAddress('0x81F6138153d473E8c5EcebD3DC8Cd4903506B075'),
         tokens: ['ETH'],
@@ -320,7 +305,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     },
     ...(() => {
       assert(
-        EthereumAddress(discoveredReceiveLib[0]) ===
+        EthereumAddress(discoveredReceiveLib.lib) ===
           discovery.getContract('ReceiveUln302').address &&
           EthereumAddress(discoveredSendLib) ===
             discovery.getContract('SendUln302').address,

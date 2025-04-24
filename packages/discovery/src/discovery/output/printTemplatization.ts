@@ -1,13 +1,13 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { partition } from 'lodash'
-import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { getShapeFromAnalyzedContract } from '../analysis/findShape'
 
 export function printTemplatization(
-  logger: DiscoveryLogger,
+  logger: Logger,
   analyses: Analysis[],
   verbose: boolean,
   templateService: TemplateService,
@@ -21,13 +21,13 @@ export function printTemplatization(
   if (untemplatized.length === 0) {
     const rawLog = `All ${templatized.length} contracts are templatized`
     const log = chalk.bgMagenta(chalk.greenBright(chalk.bold(rawLog)))
-    logger.log(log)
+    logger.info(log)
   }
 
   if (templatized.length === 0) {
     const rawLog = `All ${untemplatized.length} contracts are untemplatized`
     const log = chalk.bgCyanBright(chalk.redBright(chalk.bold(rawLog)))
-    logger.log(log)
+    logger.info(log)
   }
 
   const logs = []
@@ -38,6 +38,7 @@ export function printTemplatization(
         templateService,
         contract,
       )
+
       const firstLinePrefix = i === templatized.length - 1 ? `└─` : `├─`
       const nestedLinePrefix = i === templatized.length - 1 ? `  ` : `│ `
       const indent = ' '.repeat(2)
@@ -48,13 +49,19 @@ export function printTemplatization(
           ? chalk.green(template)
           : chalk.yellow(template)
 
-      const nestedLines = matchedShape
-        ? [
-            matchedShape.description,
-            `${matchedShape.chain} @ ${matchedShape.blockNumber} (${matchedShape.address})`,
-            `hash: ${matchedShape.hash}`,
-          ]
-        : []
+      const nestedLines = []
+      if (matchedShape !== undefined) {
+        const [shapeFileName, { chain, blockNumber, hash, address }] =
+          matchedShape
+
+        nestedLines.push(
+          ...[
+            shapeFileName,
+            `${chain} @ ${blockNumber} (${address})`,
+            `hash: ${hash}`,
+          ],
+        )
+      }
 
       const shapeData = nestedLines.map((line, index) => {
         const isLastLine = index === nestedLines.length - 1
@@ -85,6 +92,6 @@ export function printTemplatization(
   }
 
   if (logs.length > 0) {
-    logger.log(formatAsciiBorder(logs, true))
+    logger.info(formatAsciiBorder(logs, true))
   }
 }

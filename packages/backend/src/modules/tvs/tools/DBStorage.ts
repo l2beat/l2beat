@@ -10,6 +10,7 @@ export class DBStorage implements DataStorage {
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly preloadOnly: boolean = false,
   ) {}
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
@@ -58,7 +59,7 @@ export class DBStorage implements DataStorage {
   ): Promise<number | undefined> {
     const price = this.prices.get(timestamp)?.get(configurationId)
 
-    if (price !== undefined) {
+    if (price !== undefined || this.preloadOnly) {
       return Promise.resolve(price)
     }
 
@@ -98,7 +99,7 @@ export class DBStorage implements DataStorage {
   ): Promise<bigint | undefined> {
     const amount = this.amounts.get(timestamp)?.get(configurationId)
 
-    if (amount !== undefined) {
+    if (amount !== undefined || this.preloadOnly) {
       return Promise.resolve(amount)
     }
 
@@ -129,5 +130,15 @@ export class DBStorage implements DataStorage {
     }
 
     return fallback?.amount
+  }
+
+  async getTimestamp(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
+    return await this.db.tvsBlockTimestamp.findBlockNumberByChainAndTimestamp(
+      chain,
+      timestamp,
+    )
   }
 }

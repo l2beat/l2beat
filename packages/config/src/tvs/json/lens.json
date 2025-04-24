@@ -1,0 +1,61 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "lens",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "lens-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE5ecd226b3032910CEaa43ba92EE8232f8237553",
+        "chain": "lens",
+        "decimals": 18,
+        "sinceTimestamp": 1740140786
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lens-LGHO",
+      "priceId": "gho",
+      "symbol": "LGHO",
+      "name": "Lens Wrapped GHO",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+        "chain": "ethereum",
+        "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+        "decimals": 18,
+        "sinceTimestamp": 1739358395
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "lens-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884",
+        "chain": "lens",
+        "decimals": 6,
+        "sinceTimestamp": 1743699600
+      }
+    }
+  ]
+}

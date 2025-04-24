@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 22208513,
-  "configHash": "0x0b2a47bb76f19eb9b026810468a91345d8b2db74f9be6b3117ebee27dff94eb4",
+  "configHash": "0xf62c37c0a7af7082439a5603aca8c1789cf49d0f97124f4522d7744b6e0513a6",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -128,7 +128,6 @@
         "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
       ],
       "proxyType": "immutable",
-      "displayName": "LightlinkMultisig",
       "description": "Custom multisig implementation with a hardcoded n/2+1 threshold.",
       "receivedPermissions": [
         {
@@ -1171,16 +1170,16 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "lightlink/CanonicalStateChain": "0x42b3266e50dabce089070ea82d582ff24059484a1c9c17ed18b3b03b9aca3df8",
-    "lightlink/ChainOracle": "0xb64f3873a84aacd7abfa1a8de00a1fcf40e58e20f71b881c8c791940ec233e61",
-    "lightlink/Challenge": "0xdcb2d992b0ec031b3ea66e2a72f2f5c901f68231f201cc17993f2b13e6ebc244",
-    "lightlink/L1BridgeRegistry": "0x03bfd7764060fab451eb4e49b4c1576143cb2d058087846124a273e163152adb",
-    "lightlink/L1ERC20Predicate": "0x1af6dde39b656b446ea274487e7557e41d3216c7df34b24b2494d92686fe8d06",
-    "lightlink/LightLinkPortal": "0x5b643ee65a5d04e1b6d394d4b68be2dc8fb15e5fcf044b859e53294ba3589a27",
-    "lightlink/Multisig": "0x014d248c1ff2c716fd7dd2a43514a66460a953218c4693cb98a9b283e627e21d",
-    "lightlink/SystemConfig": "0x13288d411fa1ab4d8e80eb3af80d254696dc3910ad4697dd495f12ecff3dac61",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "lightlink/CanonicalStateChain": "0x3b6fde3b310dbaa9964ef71d58b9514400670ddd3c9dfe0ba0aa5bb1be76af09",
+    "lightlink/ChainOracle": "0x870f35a4e6e0e77a4cd9ff56eba0915681a357b424cf69c228f813c688c8cae3",
+    "lightlink/Challenge": "0x23f7c0733d2edd0df0ea033af0dc580473b61dfbc1b55578638212e9f4ea8cb6",
+    "lightlink/L1BridgeRegistry": "0x22b6405c6788f017cfdab3e63d88e07ce0a6d7eec6ef511e75af6078c8817490",
+    "lightlink/L1ERC20Predicate": "0x6a57dee3263b656900be8c12a13454969e34d21ffd23e69508d15fb4c40e89bc",
+    "lightlink/LightLinkPortal": "0xf7c4101b38e12213a1d1684cd0de7548309e8a2320bab53e7de198bd44669c03",
+    "lightlink/Multisig": "0x8deaf124d7a4cb0393fa56f749f94abafe7497820679b99110101c8c5d9ea629",
+    "lightlink/SystemConfig": "0x848fd23fbc0ff3a3b507b613b825f3cbfcc97aada56b8d205b1e802eba0f7225",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75"
   }
 }

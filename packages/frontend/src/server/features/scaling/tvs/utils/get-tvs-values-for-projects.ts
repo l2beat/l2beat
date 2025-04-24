@@ -1,44 +1,42 @@
-import type { ValueRecord } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectValueRecord } from '@l2beat/database'
+import type { ProjectId, ProjectValueType } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import type { TvsProject } from './get-tvs-projects'
+import { getRangeWithMax } from '~/utils/range/range'
+import { fillTvsValuesForTimestamps } from './fill-tvs-values-for-timestamps'
 import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
-import { getValuesStatus } from './get-tvs-values-status'
 import type { TvsChartRange } from './range'
-import { getRangeConfig } from './range'
+import { rangeToResolution } from './range'
 
 export async function getTvsValuesForProjects(
-  projects: TvsProject[],
+  projectIds: ProjectId[],
   range: TvsChartRange,
+  type?: ProjectValueType,
 ) {
   const db = getDb()
-  const { days, resolution } = getRangeConfig(range)
+  const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: target,
+  })
 
-  const from =
-    days !== null &&
-    UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
-      days * UnixTime.DAY
-
-  // NOTE: This cannot be optimized using from because the values need to be interpolated
-  const valueRecords = await db.value.getForProjects(
-    projects.map((p) => p.projectId),
+  const valueRecords = await db.tvsProjectValue.getByProjectsForType(
+    projectIds,
+    type ?? 'SUMMARY',
+    [from, to],
   )
 
-  const valuesByProject = groupBy(valueRecords, 'projectId')
+  const valuesByProject = groupBy(valueRecords, (v) => v.project)
 
-  const result: Dictionary<Dictionary<ValueRecord[]>> = {}
+  const result: Dictionary<Dictionary<ProjectValueRecord>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const project = projects.find((p) => p.projectId === projectId)
-    assert(project, `Project ${projectId.toString()} not found`)
-
-    const valuesByTimestamp = groupBy(projectValues, 'timestamp')
-    const status = getValuesStatus(project, valuesByTimestamp, target)
-
-    const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
+    const valuesByTimestamp: Record<string, ProjectValueRecord> = {}
+    for (const value of projectValues) {
+      valuesByTimestamp[value.timestamp.toString()] = value
+    }
 
     let minTimestamp = projectValues[0]?.timestamp
 
@@ -59,44 +57,15 @@ export async function getTvsValuesForProjects(
 
     const timestamps = generateTimestamps([minTimestamp, target], resolution, {
       addTarget: true,
-    }).filter((t) => t <= target)
+    })
 
-    for (const timestamp of timestamps) {
-      const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(
-        (v) => {
-          if (status.excluded.has(v.dataSource)) {
-            return false
-          }
-          const projectSource = project.sources.get(v.dataSource)
-          if (!projectSource) {
-            return false
-          }
+    const latestKnownProjectValue = projectValues.at(-1)
 
-          return timestamp >= projectSource.minTimestamp
-        },
-      )
-
-      const interpolatedValues = status.lagging
-        .filter((l) => timestamp > l.latestTimestamp)
-        .map((l) => {
-          const record = valuesByTimestamp[l.latestTimestamp.toString()]?.find(
-            (v) => l.id === v.dataSource,
-          )
-          assert(
-            record,
-            `Value should be defined for ${
-              l.id
-            } at ${l.latestTimestamp.toString()} in project ${projectId}`,
-          )
-          return record
-        })
-
-      valuesByTimestampForProject[timestamp.toString()] = [
-        ...values,
-        ...interpolatedValues,
-      ]
-    }
-
+    const valuesByTimestampForProject = fillTvsValuesForTimestamps(
+      valuesByTimestamp,
+      timestamps,
+      latestKnownProjectValue,
+    )
     result[projectId] = valuesByTimestampForProject
   }
 

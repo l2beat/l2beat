@@ -1,9 +1,8 @@
-[
-  {
+{
+  "L1AssetRouter": {
     "hash": "0x1912c5e1125a20bfd6b933a66a437e3d04e2404549b86b88ceadb233eff05477",
-    "description": "L1AssetRouter",
     "address": "0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}

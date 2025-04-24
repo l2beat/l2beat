@@ -8,6 +8,7 @@
       "priceId": "polychain-monsters",
       "symbol": "PMON",
       "name": "Polkamon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
@@ -28,8 +29,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/logo-protocol-monster-labs-light-regular_3x-1.png?1725627826"
+      "isAssociated": true
     }
   ]
 }

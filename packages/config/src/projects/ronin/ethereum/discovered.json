@@ -1,8 +1,8 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 21378535,
-  "configHash": "0xf82b6e477d9ba48eb63135a09c73d60814a5fb00359ece939edefd5f97ced0f4",
+  "blockNumber": 22324341,
+  "configHash": "0x16c7eab9df2af0a59a82f1c2c97c7d0f5283fc355b258bfdbcc0d4a50ae1f69f",
   "entries": [
     {
       "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
@@ -263,14 +263,14 @@
           "0x18471CC6d2d427077CAA7896D7956cD066CAbe49",
           "0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9",
           "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031",
-          "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b"
+          "0xCfD1C43CdB2bD66c7B66a7aBe66Fb6BE497d7f86"
         ],
         "$threshold": 3,
         "domainSeparator": "0x260019f7a2799f89a2c91d123a9a78a94ce81ef7e965cb34ba0364d12a9526d4",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -316,7 +316,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2",
-        "0x2d39ee54cf7dc52198aeac3324e8b8034b0d5db06ad5192305aaa80c1e10fca6"
+        "0x05caa4ae4fc13e910efd2c6a0ae2a136990435283a1527cf1a5ccb577a91d52f"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -332,7 +332,7 @@
       "values": {
         "_MAX_PERCENTAGE": 1000000,
         "$admin": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
-        "$implementation": "0xD6c4986bbe09f2dDb262B4611b0BA06891be605e",
+        "$implementation": "0x450032864C52Cb9210da8e30cE97CEaC8e215953",
         "$pastUpgrades": [
           [
             "2022-06-22T07:40:30.000Z",
@@ -363,9 +363,14 @@
             "2024-08-30T03:41:35.000Z",
             "0x167c741a87278fa0a50f0ed15e89edd1d05ed43a5808476e564347f1d34f784d",
             ["0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"]
+          ],
+          [
+            "2025-04-22T07:28:23.000Z",
+            "0x234e508f2cf87b9d204402ded64d6fa13a65ac85e77b206b0be5718b9ce2a3b5",
+            ["0x450032864C52Cb9210da8e30cE97CEaC8e215953"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -379,17 +384,21 @@
               "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
               "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
             ]
+          },
+          "0x600e5f1c60beb469a3fa6dd3814a4ae211cc6259a6d033bae218a742f2af01d3": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 99293,
+        "depositCount": 111275,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
-        "emergencyPauser": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+        "emergencyPauser": "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062",
         "getHighTierVoteWeightThreshold": [90, 100],
         "getThreshold": { "num_": 70, "denom_": 100 },
         "minimumVoteWeight": 1540,
         "nonce": 2,
-        "paused": false,
+        "paused": true,
         "roninChainId": 2020,
         "WITHDRAWAL_UNLOCKER_ROLE": "0x5e5712e902fff5e704bc4d506ad976718319e019e9d2a872528a01a85db433e4",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -452,11 +461,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xA441f1399C8c023798586fbbBcF35f27279638a1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -497,7 +501,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2728790155190780839876210"
+        "totalSupply": "2771882619555079121155112"
       },
       "derivedName": "WETH9"
     },
@@ -522,6 +526,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xCfD1C43CdB2bD66c7B66a7aBe66Fb6BE497d7f86",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xD9d5b3E58fa693B468a20C716793B18A1195380a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -535,44 +544,6 @@
       "address": "0xe38aFbE7738b6Ec4280A6bCa1176c1C1A928A19C",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PauseEnforcer",
-      "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x38ea3c443d8341f4b59ebeae4d05a6064ff361f2f672ae8e49e2a96514a2261d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1679637023,
-      "sinceBlock": 16895391,
-      "values": {
-        "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x2DA02aC5f19Ae362a4121718d990e655eB628D96",
-              "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
-            ]
-          },
-          "SENTRY_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x944b1282cb9B3e62794f38733F3B6336536c30cc",
-              "0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c",
-              "0xcb8225AA9D1029Af2E8cA537027E26bbe3056353",
-              "0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33",
-              "0x47870D35cdfF193a428C98a3468c833c23488393"
-            ]
-          }
-        },
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "emergency": false,
-        "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
-        "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
-      },
-      "derivedName": "PauseEnforcer"
     },
     {
       "address": "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
@@ -608,6 +579,44 @@
       "address": "0xF0c48B7F020BB61e6A3500AbC4b4954Bde7A2039",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PauseEnforcer",
+      "address": "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x04786884835383dc206e2fb6c6e28f47e9cdd0358b00ada3c70bef8568f1e2cf"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743765359,
+      "sinceBlock": 22195196,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x2DA02aC5f19Ae362a4121718d990e655eB628D96",
+              "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
+            ]
+          },
+          "SENTRY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x944b1282cb9B3e62794f38733F3B6336536c30cc",
+              "0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c",
+              "0xcb8225AA9D1029Af2E8cA537027E26bbe3056353",
+              "0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33",
+              "0x47870D35cdfF193a428C98a3468c833c23488393"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "emergency": false,
+        "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
+        "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
+      },
+      "derivedName": "PauseEnforcer"
     },
     {
       "address": "0xf4682B9263d1ba9bd9Db09dA125708607d1eDd3a",
@@ -756,6 +765,124 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
+    "0x450032864C52Cb9210da8e30cE97CEaC8e215953": [
+      "constructor()",
+      "error ErrContractTypeNotFound(uint8 contractType)",
+      "error ErrERC1155MintingFailed()",
+      "error ErrERC20MintingFailed()",
+      "error ErrERC721MintingFailed()",
+      "error ErrEmptyArray()",
+      "error ErrInvalidChainId(bytes4 msgSig, uint256 actual, uint256 expected)",
+      "error ErrInvalidInfo()",
+      "error ErrInvalidOrder(bytes4 msgSig)",
+      "error ErrInvalidPercentage()",
+      "error ErrInvalidReceipt()",
+      "error ErrInvalidReceiptKind()",
+      "error ErrInvalidRequest()",
+      "error ErrInvalidSigner(address signer, uint256 weight, tuple(uint8 v, bytes32 r, bytes32 s) sig)",
+      "error ErrInvalidThreshold(bytes4 msgSig)",
+      "error ErrInvalidTokenStandard()",
+      "error ErrLengthMismatch(bytes4 msgSig)",
+      "error ErrNotWhitelistedToken(address token)",
+      "error ErrNullHighTierVoteWeightProvided(bytes4 msgSig)",
+      "error ErrNullMinVoteWeightProvided(bytes4 msgSig)",
+      "error ErrNullTotalWeightProvided(bytes4 msgSig)",
+      "error ErrQueryForApprovedWithdrawal()",
+      "error ErrQueryForInsufficientVoteWeight()",
+      "error ErrQueryForProcessedWithdrawal()",
+      "error ErrReachedDailyWithdrawalLimit()",
+      "error ErrRestricted(bytes4 fnSig, uint8 standard)",
+      "error ErrTokenCouldNotTransfer(tuple(uint8 erc, uint256 id, uint256 quantity) tokenInfo, address to, address token)",
+      "error ErrTokenCouldNotTransferFrom(tuple(uint8 erc, uint256 id, uint256 quantity) tokenInfo, address from, address to, address token)",
+      "error ErrUnauthorized(bytes4 msgSig, uint8 expectedRole)",
+      "error ErrUnexpectedInternalCall(bytes4 msgSig, uint8 expectedContractType, address actual)",
+      "error ErrUnsupportedStandard()",
+      "error ErrUnsupportedToken()",
+      "error ErrWhitelistWrappedTokenInstead()",
+      "error ErrZeroCodeContract(address addr)",
+      "event ContractUpdated(uint8 indexed contractType, address indexed addr)",
+      "event DailyWithdrawalLimitsUpdated(address[] tokens, uint256[] limits)",
+      "event DepositRequested(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
+      "event HighTierThresholdsUpdated(address[] tokens, uint256[] thresholds)",
+      "event HighTierVoteWeightThresholdUpdated(uint256 indexed nonce, uint256 indexed numerator, uint256 indexed denominator, uint256 previousNumerator, uint256 previousDenominator)",
+      "event Initialized(uint8 version)",
+      "event LockedThresholdsUpdated(address[] tokens, uint256[] thresholds)",
+      "event Paused(address account)",
+      "event Restricted(address indexed by, bytes4 indexed fnSig, uint8 enumBitmap)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event ThresholdUpdated(uint256 indexed nonce, uint256 indexed numerator, uint256 indexed denominator, uint256 previousNumerator, uint256 previousDenominator)",
+      "event TokenMapped(address[] mainchainTokens, address[] roninTokens, uint8[] standards)",
+      "event UnRestricted(address indexed by, bytes4 indexed fnSig)",
+      "event UnlockFeePercentagesUpdated(address[] tokens, uint256[] percentages)",
+      "event Unpaused(address account)",
+      "event WhitelistUpdated(address indexed by, address[] tokens, address[] recipients, uint64[] remoteChainSelectors)",
+      "event WithdrawalLocked(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
+      "event WithdrawalUnlocked(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
+      "event Withdrew(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
+      "event WrappedNativeTokenContractUpdated(address weth)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function WITHDRAWAL_UNLOCKER_ROLE() view returns (bytes32)",
+      "function _MAX_PERCENTAGE() view returns (uint256)",
+      "function checkHighTierVoteWeightThreshold(uint256 _voteWeight) view returns (bool)",
+      "function checkThreshold(uint256 _voteWeight) view returns (bool)",
+      "function dailyWithdrawalLimit(address) view returns (uint256)",
+      "function depositCount() view returns (uint256)",
+      "function emergencyPauser() view returns (address)",
+      "function getContract(uint8 contractType) view returns (address contract_)",
+      "function getHighTierVoteWeightThreshold() view returns (uint256, uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoninToken(address mainchainToken) view returns (tuple(uint8 erc, address tokenAddr) token)",
+      "function getThreshold() view returns (uint256 num_, uint256 denom_)",
+      "function getWhitelistedAddresses(address[] tokens) view returns (address[] whitelisteds, uint64[] remoteChainSelectors)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function highTierThreshold(address) view returns (uint256)",
+      "function initializeV5(address migrator, address newEmergencyPauser, address[] tokens, address[] recipients, uint64[] remoteChainSelectors)",
+      "function lastDateSynced(address) view returns (uint256)",
+      "function lastSyncedWithdrawal(address) view returns (uint256)",
+      "function lockedThreshold(address) view returns (uint256)",
+      "function mapTokens(address[] _mainchainTokens, address[] _roninTokens, uint8[] _standards)",
+      "function mapTokensAndThresholds(address[] _mainchainTokens, address[] _roninTokens, uint8[] _standards, uint256[][4] _thresholds)",
+      "function migrateERC20(address[] tokens, uint256[] amounts)",
+      "function minimumVoteWeight() view returns (uint256)",
+      "function nonce() view returns (uint256)",
+      "function onBridgeOperatorsAdded(address[] operators, uint96[] weights, bool[] addeds) returns (bytes4)",
+      "function onBridgeOperatorsRemoved(address[] operators, bool[] removeds) returns (bytes4)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function reachedWithdrawalLimit(address _token, uint256 _quantity) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function requestDepositFor(tuple(address recipientAddr, address tokenAddr, tuple(uint8 erc, uint256 id, uint256 quantity) info) _request) payable",
+      "function restrict(bytes4 fnSig, uint8 enumBitmap)",
+      "function restricted(bytes4 fnSig, uint8 standard) view returns (bool yes)",
+      "function revokeRole(bytes32 role, address account)",
+      "function roninChainId() view returns (uint256)",
+      "function setContract(uint8 contractType, address addr)",
+      "function setDailyWithdrawalLimits(address[] _tokens, uint256[] _limits)",
+      "function setEmergencyPauser(address _addr)",
+      "function setHighTierThresholds(address[] _tokens, uint256[] _thresholds)",
+      "function setHighTierVoteWeightThreshold(uint256 _numerator, uint256 _denominator) returns (uint256 _previousNum, uint256 _previousDenom)",
+      "function setLockedThresholds(address[] _tokens, uint256[] _thresholds)",
+      "function setThreshold(uint256 num, uint256 denom)",
+      "function setUnlockFeePercentages(address[] _tokens, uint256[] _percentages)",
+      "function setWrappedNativeTokenContract(address _wrappedToken)",
+      "function submitWithdrawal(tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) _receipt, tuple(uint8 v, bytes32 r, bytes32 s)[] _signatures) returns (bool _locked)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unlockFeePercentages(address) view returns (uint256)",
+      "function unlockWithdrawal(tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
+      "function unpause()",
+      "function whitelist(address[] tokens, address[] recipients, uint64[] remoteChainSelectors)",
+      "function withdrawalHash(uint256) view returns (bytes32)",
+      "function withdrawalLocked(uint256) view returns (bool)",
+      "function wrappedNativeToken() view returns (address)"
+    ],
     "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": [
       "constructor(address _singleton)"
     ],
@@ -787,117 +914,6 @@
       "event Transfer(address indexed src, address indexed dst, uint256 wad)",
       "event Deposit(address indexed dst, uint256 wad)",
       "event Withdrawal(address indexed src, uint256 wad)"
-    ],
-    "0xD6c4986bbe09f2dDb262B4611b0BA06891be605e": [
-      "constructor()",
-      "error ErrContractTypeNotFound(uint8 contractType)",
-      "error ErrERC1155MintingFailed()",
-      "error ErrERC20MintingFailed()",
-      "error ErrERC721MintingFailed()",
-      "error ErrEmptyArray()",
-      "error ErrInvalidChainId(bytes4 msgSig, uint256 actual, uint256 expected)",
-      "error ErrInvalidInfo()",
-      "error ErrInvalidOrder(bytes4 msgSig)",
-      "error ErrInvalidPercentage()",
-      "error ErrInvalidReceipt()",
-      "error ErrInvalidReceiptKind()",
-      "error ErrInvalidRequest()",
-      "error ErrInvalidSigner(address signer, uint256 weight, tuple(uint8 v, bytes32 r, bytes32 s) sig)",
-      "error ErrInvalidThreshold(bytes4 msgSig)",
-      "error ErrInvalidTokenStandard()",
-      "error ErrLengthMismatch(bytes4 msgSig)",
-      "error ErrNullHighTierVoteWeightProvided(bytes4 msgSig)",
-      "error ErrNullMinVoteWeightProvided(bytes4 msgSig)",
-      "error ErrNullTotalWeightProvided(bytes4 msgSig)",
-      "error ErrQueryForApprovedWithdrawal()",
-      "error ErrQueryForInsufficientVoteWeight()",
-      "error ErrQueryForProcessedWithdrawal()",
-      "error ErrReachedDailyWithdrawalLimit()",
-      "error ErrTokenCouldNotTransfer(tuple(uint8 erc, uint256 id, uint256 quantity) tokenInfo, address to, address token)",
-      "error ErrTokenCouldNotTransferFrom(tuple(uint8 erc, uint256 id, uint256 quantity) tokenInfo, address from, address to, address token)",
-      "error ErrUnauthorized(bytes4 msgSig, uint8 expectedRole)",
-      "error ErrUnexpectedInternalCall(bytes4 msgSig, uint8 expectedContractType, address actual)",
-      "error ErrUnsupportedStandard()",
-      "error ErrUnsupportedToken()",
-      "error ErrZeroCodeContract(address addr)",
-      "event ContractUpdated(uint8 indexed contractType, address indexed addr)",
-      "event DailyWithdrawalLimitsUpdated(address[] tokens, uint256[] limits)",
-      "event DepositRequested(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
-      "event HighTierThresholdsUpdated(address[] tokens, uint256[] thresholds)",
-      "event HighTierVoteWeightThresholdUpdated(uint256 indexed nonce, uint256 indexed numerator, uint256 indexed denominator, uint256 previousNumerator, uint256 previousDenominator)",
-      "event Initialized(uint8 version)",
-      "event LockedThresholdsUpdated(address[] tokens, uint256[] thresholds)",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event ThresholdUpdated(uint256 indexed nonce, uint256 indexed numerator, uint256 indexed denominator, uint256 previousNumerator, uint256 previousDenominator)",
-      "event TokenMapped(address[] mainchainTokens, address[] roninTokens, uint8[] standards)",
-      "event UnlockFeePercentagesUpdated(address[] tokens, uint256[] percentages)",
-      "event Unpaused(address account)",
-      "event WithdrawalLocked(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
-      "event WithdrawalUnlocked(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
-      "event Withdrew(bytes32 receiptHash, tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
-      "event WrappedNativeTokenContractUpdated(address weth)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function WITHDRAWAL_UNLOCKER_ROLE() view returns (bytes32)",
-      "function _MAX_PERCENTAGE() view returns (uint256)",
-      "function checkHighTierVoteWeightThreshold(uint256 _voteWeight) view returns (bool)",
-      "function checkThreshold(uint256 _voteWeight) view returns (bool)",
-      "function dailyWithdrawalLimit(address) view returns (uint256)",
-      "function depositCount() view returns (uint256)",
-      "function emergencyPauser() view returns (address)",
-      "function getContract(uint8 contractType) view returns (address contract_)",
-      "function getHighTierVoteWeightThreshold() view returns (uint256, uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getRoninToken(address mainchainToken) view returns (tuple(uint8 erc, address tokenAddr) token)",
-      "function getThreshold() view returns (uint256 num_, uint256 denom_)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function highTierThreshold(address) view returns (uint256)",
-      "function initialize(address _roleSetter, address _wrappedToken, uint256 _roninChainId, uint256 _numerator, uint256 _highTierVWNumerator, uint256 _denominator, address[][3] _addresses, uint256[][4] _thresholds, uint8[] _standards) payable",
-      "function initializeV2(address bridgeManagerContract)",
-      "function initializeV3()",
-      "function initializeV4(address)",
-      "function lastDateSynced(address) view returns (uint256)",
-      "function lastSyncedWithdrawal(address) view returns (uint256)",
-      "function lockedThreshold(address) view returns (uint256)",
-      "function mapTokens(address[] _mainchainTokens, address[] _roninTokens, uint8[] _standards)",
-      "function mapTokensAndThresholds(address[] _mainchainTokens, address[] _roninTokens, uint8[] _standards, uint256[][4] _thresholds)",
-      "function minimumVoteWeight() view returns (uint256)",
-      "function nonce() view returns (uint256)",
-      "function onBridgeOperatorsAdded(address[] operators, uint96[] weights, bool[] addeds) returns (bytes4)",
-      "function onBridgeOperatorsRemoved(address[] operators, bool[] removeds) returns (bytes4)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function reachedWithdrawalLimit(address _token, uint256 _quantity) view returns (bool)",
-      "function receiveEther() payable",
-      "function renounceRole(bytes32 role, address account)",
-      "function requestDepositFor(tuple(address recipientAddr, address tokenAddr, tuple(uint8 erc, uint256 id, uint256 quantity) info) _request) payable",
-      "function revokeRole(bytes32 role, address account)",
-      "function roninChainId() view returns (uint256)",
-      "function setContract(uint8 contractType, address addr)",
-      "function setDailyWithdrawalLimits(address[] _tokens, uint256[] _limits)",
-      "function setEmergencyPauser(address _addr)",
-      "function setHighTierThresholds(address[] _tokens, uint256[] _thresholds)",
-      "function setHighTierVoteWeightThreshold(uint256 _numerator, uint256 _denominator) returns (uint256 _previousNum, uint256 _previousDenom)",
-      "function setLockedThresholds(address[] _tokens, uint256[] _thresholds)",
-      "function setThreshold(uint256 num, uint256 denom)",
-      "function setUnlockFeePercentages(address[] _tokens, uint256[] _percentages)",
-      "function setWrappedNativeTokenContract(address _wrappedToken)",
-      "function submitWithdrawal(tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) _receipt, tuple(uint8 v, bytes32 r, bytes32 s)[] _signatures) returns (bool _locked)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unlockFeePercentages(address) view returns (uint256)",
-      "function unlockWithdrawal(tuple(uint256 id, uint8 kind, tuple(address addr, address tokenAddr, uint256 chainId) mainchain, tuple(address addr, address tokenAddr, uint256 chainId) ronin, tuple(uint8 erc, uint256 id, uint256 quantity) info) receipt)",
-      "function unpause()",
-      "function withdrawalHash(uint256) view returns (bytes32)",
-      "function withdrawalLocked(uint256) view returns (bool)",
-      "function wrappedNativeToken() view returns (address)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -948,15 +964,20 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4": [
-      "constructor(address _target, address _admin, address[] _sentries)",
+    "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": [
+      "constructor(address target_, address[] admins, address[] sentries)",
+      "error ErrNotOnEmergencyPause()",
+      "error ErrTargetIsNotOnPaused()",
+      "error ErrTargetIsOnPaused()",
       "event EmergencyPaused(address account)",
       "event EmergencyUnpaused(address account)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TargetChanged(address target)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
       "function SENTRY_ROLE() view returns (bytes32)",
+      "function changeTarget(address _target)",
       "function emergency() view returns (bool)",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
@@ -965,16 +986,16 @@
       "function grantSentry(address _sentry)",
       "function hasRole(bytes32 role, address account) view returns (bool)",
       "function renounceRole(bytes32 role, address account)",
-      "function resetEmergency()",
       "function revokeRole(bytes32 role, address account)",
       "function revokeSentry(address _sentry)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function target() view returns (address)",
       "function triggerPause()",
+      "function triggerRestrict(bytes4 fnSig, uint8 enumBitmap)",
       "function triggerUnpause()"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

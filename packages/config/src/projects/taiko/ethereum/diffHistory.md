@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x90c8a861a277d7e1eac093afd8611e7a56decbbb
+
+# Diff at Thu, 24 Apr 2025 10:31:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22297586
+- current block number: 22297586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22297586 (main branch discovery), not current.
+
+```diff
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6) {
+    +++ description: None
+      values.active_tiers.4:
+-        ["0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"]
++        "0x746965725f736778000000000000000000000000000000000000000000000000"
+      values.active_tiers.3:
+-        ["0x746965725f736778000000000000000000000000000000000000000000000000"]
++        "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"
+      values.active_tiers.2:
+-        ["0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"]
++        "0x746965725f677561726469616e00000000000000000000000000000000000000"
+      values.active_tiers.1:
+-        ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
++        "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
+      values.active_tiers.0:
+-        ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"]
++        "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x1bfe906931f5a55c95b8a523287b23652159e3aa
+
+# Diff at Fri, 18 Apr 2025 18:11:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 21973872
+- current block number: 22297586
+
+## Description
+
+Update RiscZeroGroth16Verifier.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.verifier_RISCZERO_GROTH16_VERIFIER:
+-        "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9"
++        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21973872 => .flat}/RiscZeroGroth16Verifier.sol         | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+```
+
+Generated with discovered.json: 0x905eec349be76b315b91b7ffab9eb55ce7e13103
+
+# Diff at Thu, 10 Apr 2025 14:43:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21973872
+- current block number: 21973872
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973872 (main branch discovery), not current.
+
+```diff
+    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      displayName:
+-        "SP1Verifier"
+    }
+```
+
 Generated with discovered.json: 0xe8b260db4ece65e96c52859473309acd07b7c026
 
 # Diff at Thu, 03 Apr 2025 14:55:22 GMT:

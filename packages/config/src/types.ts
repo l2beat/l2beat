@@ -1,5 +1,4 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { TokenId, stringAs } from '@l2beat/shared-pure'
 import {
   type ChainId,
   EthereumAddress,
@@ -7,8 +6,10 @@ import {
   type StringWithAutocomplete,
   type Token,
   type TokenBridgedUsing,
+  TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
+  stringAs,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -72,6 +73,7 @@ export interface BaseProject {
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
+  colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
 
@@ -126,6 +128,10 @@ export interface BaseProject {
 }
 
 // #region common data
+export interface ProjectColors {
+  primary: string
+  secondary: string
+}
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
@@ -252,12 +258,14 @@ export type ChainApiConfig =
   | ChainExplorerApi<'etherscan'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
+  | ChainExplorerApi<'routescan'>
   | ChainStarkexApi
 
 export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
+  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
 }
 
 export interface ChainExplorerApi<T extends string> {
@@ -290,6 +298,7 @@ export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
+  livenessFailure?: TableReadyValue
 }
 
 export interface ProjectBridgeTechnology {
@@ -300,6 +309,9 @@ export interface ProjectBridgeTechnology {
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
   detailedDescription?: string
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 // #endregion
 
@@ -321,7 +333,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
-  daLayer: string
+  daLayer: string | undefined
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
@@ -475,8 +487,6 @@ export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
   architectureImage?: string
-  stateCorrectness?: ProjectTechnologyChoice
-  newCryptography?: ProjectTechnologyChoice
   dataAvailability?: ProjectTechnologyChoice
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice
@@ -502,7 +512,7 @@ export interface ProjectScalingStateDerivation {
 }
 
 export interface ProjectScalingStateValidation {
-  description: string
+  description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
@@ -514,14 +524,19 @@ export interface ProjectScalingStateValidationCategory {
     | 'Prover Architecture'
     | 'Verification Keys Generation'
     | 'Proven Program'
+    | 'Validity proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
     | 'Pessimistic Proofs'
+    | 'Fraud proofs'
+    // Other
+    | 'No state validation'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
+  isIncomplete?: boolean
 }
 // #endregion
 
@@ -771,6 +786,8 @@ export interface BlockActivityConfig {
   type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
+  // how many blocks to fetch in single indexer tick
+  batchSize?: number
 }
 
 export type AdjustCount =
@@ -885,28 +902,24 @@ export interface AvailDaTrackingConfig {
 
 export interface ProjectEcosystemInfo {
   id: ProjectId
-  sinceTimestamp: UnixTime
+  sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemConfig {
-  colors: {
-    primary: `#${string}`
-    secondary: `#${string}`
-  }
-  ecosystemToken?: {
-    name: string
-    chain: string
+  token: {
+    tokenId: string
+    projectId: ProjectId
     description: string
   }
-  links?: {
+  links: {
+    buildOn: string
+    learnMore: string
+    governanceTopDelegates: string
+    governanceProposals: string
     tools?: string[]
-    forBuilders?: string
     grants?: string
-    governanceTopDelegates?: string
-    governanceLatestProposals?: string
   }
-  governanceReviews: boolean
 }
 // #endregion
 
@@ -1110,6 +1123,8 @@ export const CirculatingSupplyAmountFormulaSchema = z.object({
   untilTimestamp: z.number().optional(),
   apiId: z.string(),
   decimals: z.number(),
+  address: stringAs(EthereumAddress), // for frontend only
+  chain: z.string(), // for frontend only
 })
 
 export type ConstAmountFormula = z.infer<typeof ConstAmountFormulaSchema>

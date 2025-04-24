@@ -8,7 +8,6 @@ import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
-import { SyncOptimizer } from '../tvl/utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
@@ -17,6 +16,7 @@ import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
+import { SyncOptimizer } from './tools/SyncOptimizer'
 import {
   createAmountConfig,
   generateConfigurationId,
@@ -149,7 +149,7 @@ export function initTvsModule(
 
   for (const project of config.tvs.projects) {
     const dbStorage = new DBStorage(database, logger)
-    const valueService = new ValueService(dbStorage)
+    const valueService = new ValueService(dbStorage, logger)
 
     const amountSources = project.amountSources.map((source) => {
       const indexer = amountIndexers.get(source)

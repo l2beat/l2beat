@@ -8,9 +8,9 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -90,7 +90,7 @@ export const metis: ScalingProject = {
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
       },
     ],
@@ -126,25 +126,29 @@ export const metis: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root onchain, and potentially slash honest Sequencer.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid state root is submitted to the system.',
+            isCritical: true,
+          },
+        ],
+        references: [
+          {
+            title: 'MVM_Verifier.sol#L133 - Metis source code',
+            url: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'No automatic onchain fraud proof system',
-      description:
-        'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root onchain, and potentially slash honest Sequencer.',
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'an invalid state root is submitted to the system.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          title: 'MVM_Verifier.sol#L133 - Metis source code',
-          url: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
-        },
-      ],
-    },
     dataAvailability: {
       name: 'Data is recorded off-chain in MEMO',
       description:
@@ -307,7 +311,7 @@ export const metis: ScalingProject = {
   },
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
       date: '2021-11-19T00:00:00Z',
       description:

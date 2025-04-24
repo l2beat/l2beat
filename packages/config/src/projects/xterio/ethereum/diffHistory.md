@@ -1,4 +1,85 @@
-Generated with discovered.json: 0xb8541fdf8e12a8313d04f393f8a8e26b1533f670
+Generated with discovered.json: 0x5ab1198f0ac9b4834e1f198800fa09ebdda0b2ad
+
+# Diff at Fri, 18 Apr 2025 18:48:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 22208349
+- current block number: 22297620
+
+## Description
+
+upgrade to 'special' OptiPortal without deposited tx mechanism and with a permissioned withdrawEth function.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortalAdminWithdraw"
+      sourceHashes.1:
+-        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
++        "0x106b0e020294fd04557c64727796c1a7afc80dba9c83e38e52b5282d4d1531f5"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled."
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.to:
+-        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
++        "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787"
+      issuedPermissions.1.via.0:
+-        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}
+      issuedPermissions.0.permission:
+-        "guard"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787"
++        "0x8f33C32503B860eDd31BeC1c80669aFee40901f3"
+      issuedPermissions.0.description:
++        "withdraw all ETH without proof."
+      values.$implementation:
+-        "0xb6a5DCc244EfAbE3194cf5e5590a463f44eD5784"
++        "0xEdE953bab7C50B2e5150316Ae0574F0cbA4068a9"
+      values.$pastUpgrades.1:
++        ["2024-05-24T08:53:23.000Z","0xc93dc2274b4ce4975aae8b5d6ffde3b52c6457d4c11400d710a63142d369fa83",["0xb6a5DCc244EfAbE3194cf5e5590a463f44eD5784"]]
+      values.$pastUpgrades.0.2:
+-        "0xc93dc2274b4ce4975aae8b5d6ffde3b52c6457d4c11400d710a63142d369fa83"
++        ["0xEdE953bab7C50B2e5150316Ae0574F0cbA4068a9"]
+      values.$pastUpgrades.0.1:
+-        "2024-05-24T08:53:23.000Z"
++        "0x28fc02b17e9d4fc1107f498afbce93158b39649d34acf6f709626e3a326037ad"
+      values.$pastUpgrades.0.0:
+-        ["0xb6a5DCc244EfAbE3194cf5e5590a463f44eD5784"]
++        "2025-04-16T15:34:35.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.privilegedAddress:
++        "0x8f33C32503B860eDd31BeC1c80669aFee40901f3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x8f33C32503B860eDd31BeC1c80669aFee40901f3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal/OptimismPortal.sol              |   28 +-
+ .../projects/xterio/ethereum/.flat/Safe/Safe.sol   | 1088 ++++++++++++++++++++
+ .../xterio/ethereum/.flat/Safe/SafeProxy.p.sol     |   37 +
+ 3 files changed, 1144 insertions(+), 9 deletions(-)
+```
+
+Generated with discovered.json: 0x62b9ac5f263a51313722499882de9b8fe37c5308
 
 # Diff at Sun, 06 Apr 2025 08:20:47 GMT:
 

@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xb1fcd5618fc592a4b1642505c3fa8072d9791908
+Generated with discovered.json: 0x97c0de29d9b91cb36254cb1db33373db5a204784
+
+# Diff at Mon, 14 Apr 2025 12:39:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22d5bd9958c2ffcb130d83154e0650da7c63f262 block: 21428646
+- current block number: 22267281
+
+## Description
+
+signer changes.
+
+## Watched changes
+
+```diff
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      values.$members.3:
+-        "0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+      values.$members.2:
+-        "0x6976498e37E4941E167161fC3BC5191EEDc302ab"
++        "0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+      values.$members.1:
+-        "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd"
++        "0x6976498e37E4941E167161fC3BC5191EEDc302ab"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x3447edefb63d95aaa0d0e1606dd0288fecd55e4b
 
 # Diff at Thu, 27 Mar 2025 11:14:04 GMT:
 

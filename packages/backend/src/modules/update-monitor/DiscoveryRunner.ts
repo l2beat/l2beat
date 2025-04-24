@@ -1,10 +1,10 @@
-import type { Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryEngine,
-  DiscoveryLogger,
   type DiscoveryOutput,
+  type TemplateService,
   flattenDiscoveredSources,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
@@ -36,6 +36,7 @@ export class DiscoveryRunner {
   constructor(
     private readonly allProviders: AllProviders,
     private readonly discoveryEngine: DiscoveryEngine,
+    private readonly templateService: TemplateService,
     readonly chain: string,
   ) {}
 
@@ -44,22 +45,30 @@ export class DiscoveryRunner {
   }
 
   private async discover(
-    config: DiscoveryConfig,
+    config: ConfigRegistry,
     blockNumber: number,
   ): Promise<DiscoveryRunResult> {
     const provider = this.allProviders.get(config.chain, blockNumber)
-    const result = await this.discoveryEngine.discover(provider, config)
+    const result = await this.discoveryEngine.discover(
+      provider,
+      config.structure,
+    )
 
     setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 
-    const discovery = toRawDiscoveryOutput(config, blockNumber, result)
-    const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
+    const discovery = toRawDiscoveryOutput(
+      this.templateService,
+      config,
+      blockNumber,
+      result,
+    )
+    const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
 
     return { discovery, flatSources }
   }
 
   async discoverWithRetry(
-    config: DiscoveryConfig,
+    config: ConfigRegistry,
     blockNumber: number,
     logger: Logger,
     maxRetries = MAX_RETRIES,

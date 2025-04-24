@@ -15,3 +15,4 @@
 
 - [Permissions section](./l2b_specs/permissions.md)
 - [Finality page](./l2b_specs/finality.md)
+- [Contracts section](./l2b_specs/contracts.md)

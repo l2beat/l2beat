@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -11,7 +11,7 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
-  addedAt: UnixTime(1721214420), // 2024-07-17T11:07:00Z
+  addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
@@ -36,6 +36,9 @@ export const zeronetwork: ScalingProject = zkStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   chainConfig: {
     name: 'zeronetwork',
     chainId: 543210,
@@ -50,6 +53,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
     ],
   },
   diamondContract: discovery.getContract('ZeroNetworkZkEvm'),
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -113,7 +117,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://zero.network/blog/zer-mainnet-welcome-to-a-world-without-gas-fees',
       date: '2024-11-12T00:00:00Z',
       description: 'ZERϴ launches their mainnet.',

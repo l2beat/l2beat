@@ -24,6 +24,8 @@ import {
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
+import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
 const args = {
@@ -47,14 +49,19 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
-    const localExecutor = new LocalExecutor(ps, env, logger)
+    const localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    const localExecutor = new LocalExecutor(ps, env, logger, localStorage)
+    const timestamp =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-    let projects: Project<'tvlConfig', 'chainConfig'>[] | undefined
+    let projects: Project<'tvlConfig', 'chainConfig' | 'isBridge'>[] | undefined
+
+    const start = Date.now()
 
     if (!args.project) {
       projects = await ps.getProjects({
         select: ['tvlConfig'],
-        optional: ['chainConfig'],
+        optional: ['chainConfig', 'isBridge'],
       })
 
       if (!projects) {
@@ -65,7 +72,7 @@ const cmd = command({
       const project = await ps.getProject({
         id: ProjectId(args.project),
         select: ['tvlConfig'],
-        optional: ['chainConfig'],
+        optional: ['chainConfig', 'isBridge'],
       })
 
       if (!project) {
@@ -82,47 +89,52 @@ const cmd = command({
 
     const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
 
-    let totalTvs = 0
-    const timestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
+    logger.info(`Generating new TVS config for projects (${projects.length})`)
+    const regeneratedProjects = await Promise.all(
+      projects.map(async (project) => {
+        return await generateConfigForProject(
+          project,
+          chains,
+          logger,
+          localStorage,
+        )
+      }),
+    )
 
-    for (const project of projects) {
-      logger.info(`Generating TVS config for project ${project.id}`)
-      const tvsConfig = await generateConfigForProject(project, chains, logger)
+    logger.info('Executing TVS to exclude zero-valued tokens')
+    const tvs = await localExecutor.getTvs(
+      regeneratedProjects.map((p) => ({
+        ...p,
+        tokens: p.tokens.filter((token) =>
+          isInTokenSyncRange(token, timestamp),
+        ),
+      })),
+      timestamp,
+      false,
+    )
 
+    for (const project of regeneratedProjects) {
       let newConfig: TvsToken[] = []
-      const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
+      const filePath = `./../config/src/tvs/json/${project.projectId.replace('=', '').replace(';', '')}.json`
 
-      if (tvsConfig.tokens.length > 0) {
-        logger.info('Executing TVS to exclude zero-valued tokens')
-        const tvs = await localExecutor.run(tvsConfig, timestamp, false)
+      if (project.tokens.length > 0) {
+        const tvsForProject = tvs.get(project.projectId)
+        assert(tvsForProject)
 
-        const valueForProject = tvs.reduce((acc, token) => {
-          return acc + token.valueForProject
-        }, 0)
+        const projectConfig = projects.find((p) => p.id === project.projectId)
+        assert(projectConfig, `${project.projectId} config not found`)
 
-        const valueForSummary = tvs.reduce((acc, token) => {
-          return acc + token.valueForSummary
-        }, 0)
-
-        totalTvs += valueForSummary
-
-        logger.info(`TVS for project ${toDollarString(valueForProject)}`)
-        logger.info(`Total TVS ${toDollarString(totalTvs)}`)
-
-        newConfig = tvs
+        newConfig = tvsForProject
           .filter((token) => token.value !== 0 || args.includeZeroAmounts)
           .map((token) => token.tokenId)
           .sort((a, b) => a.localeCompare(b))
           .map((tokenId) => {
-            const tokenConfig = tvsConfig.tokens.find((t) => t.id === tokenId)
+            const tokenConfig = project.tokens.find((t) => t.id === tokenId)
             assert(tokenConfig, `${tokenId} config not found`)
             return tokenConfig
           })
       } else {
-        logger.info('No tokens found')
         if (fs.existsSync(filePath)) {
-          logger.info(`Deleting file: ${filePath}`)
           fs.unlinkSync(filePath)
         }
       }
@@ -135,11 +147,12 @@ const cmd = command({
       )
 
       if (mergedTokens.length > 0) {
-        logger.info(`Writing results to file: ${filePath}`)
-        writeToFile(filePath, project.id, mergedTokens)
+        writeToFile(filePath, project.projectId, mergedTokens)
       }
     }
 
+    const duration = (Date.now() - start) / 1000
+    logger.info(`TVS config generation completed in ${duration.toFixed(2)}s`)
     process.exit(0)
   },
 })
@@ -150,6 +163,7 @@ async function generateConfigForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
   chains: Map<string, ChainConfig>,
   logger: Logger,
+  localStorage: LocalStorage,
 ) {
   const env = getEnv()
 
@@ -168,7 +182,7 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, chains, logger, rpc)
+  return mapConfig(project, chains, logger, localStorage, rpc)
 }
 
 function initLogger(env: Env) {
@@ -236,14 +250,4 @@ function mergeWithExistingConfig(
   })
 
   return Array.from(resultMap.values()).sort((a, b) => a.id.localeCompare(b.id))
-}
-
-function toDollarString(value: number) {
-  if (value > 1e9) {
-    return `$${(value / 1e9).toFixed(2)}B`
-  } else if (value > 1e6) {
-    return `$${(value / 1e6).toFixed(2)}M`
-  } else {
-    return `$${value.toFixed(2)}`
-  }
 }

@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0xbed8b815bffe3380a587e295653c1552872982691cf07e6eb096ee5be604a556",
+  "configHash": "0x2a6f37b61d15bd830983f6930355f80eee2ad2682e07d2057a56b0f6732a9a67",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -64,7 +64,6 @@
         "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -248,26 +247,26 @@
         "getAmountOfMembers": 5,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://dac1-zkevm.astar.network",
-            "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
-          ],
-          [
-            "https://dac3-zkevm.astar.network",
-            "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
-          ],
-          [
-            "https://dac2-zkevm.astar.network",
-            "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
-          ],
-          [
-            "https://dac4-zkevm.astar.network",
-            "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
-          ],
-          [
-            "https://dac0-zkevm.astar.network",
-            "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
-          ]
+          {
+            "url": "https://dac1-zkevm.astar.network",
+            "addr": "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
+          },
+          {
+            "url": "https://dac3-zkevm.astar.network",
+            "addr": "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
+          },
+          {
+            "url": "https://dac2-zkevm.astar.network",
+            "addr": "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
+          },
+          {
+            "url": "https://dac4-zkevm.astar.network",
+            "addr": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
+          },
+          {
+            "url": "https://dac0-zkevm.astar.network",
+            "addr": "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
+          }
         ],
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "requiredAmountOfSignatures": 3
@@ -605,10 +604,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "polygon-cdk/PolygonDataCommittee": "0xfdd0edf47a38318651165ce286364aef1d10e081bd028bd87b1d37e369f74913",
-    "polygon-cdk/PolygonZkEVM": "0xa5e14ba8c6f4f08fbf0a0563e2b3a245b53f98592b0f5c183ed637422e7aeed9",
-    "polygon-cdk/Verifier": "0x156dd18408212b6f9819278c83e38b5262986c093c695670634cfe4daeb25053"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
+    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
+    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
   }
 }

@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "category": "ether",
       "source": "canonical",
       "amount": {
@@ -17,8 +18,7 @@
         "decimals": 18,
         "sinceTimestamp": 1739109131
       },
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -26,6 +26,7 @@
       "priceId": "magic",
       "symbol": "MAGIC",
       "name": "MAGIC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
@@ -36,8 +37,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/18623/large/magic.png?1696518095"
+      "isAssociated": true
     }
   ]
 }

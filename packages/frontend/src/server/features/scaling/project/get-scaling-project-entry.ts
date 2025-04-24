@@ -22,7 +22,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
-import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
+import { getBadgeWithParamsAndLink } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -30,14 +30,13 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
-import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
+import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
-import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
@@ -106,10 +105,10 @@ export async function getScalingProjectEntry(
     | 'scalingRisks'
     | 'scalingStage'
     | 'scalingTechnology'
-    | 'tvlInfo'
-    | 'tvlConfig',
+    | 'tvlInfo',
     // optional
     | 'contracts'
+    | 'tvsConfig'
     | 'permissions'
     | 'scalingDa'
     | 'customDa'
@@ -128,14 +127,14 @@ export async function getScalingProjectEntry(
     ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
-
+  const category = isProjectOther(project.scalingInfo)
+    ? 'Other'
+    : project.scalingInfo.type
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    category: isProjectOther(project.scalingInfo)
-      ? 'Other'
-      : project.scalingInfo.type,
+    category,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -172,7 +171,7 @@ export async function getScalingProjectEntry(
           }
         : undefined,
     badges: project.display.badges
-      .map((badge) => getBadgeWithParams(badge, project))
+      .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
   }
@@ -234,7 +233,7 @@ export async function getScalingProjectEntry(
             projectId: project.id,
           })
         : undefined,
-      getTokensForProject(project.id),
+      getTokensForProject(project),
     ])
 
   const sections: ProjectDetailsSection[] = []
@@ -429,19 +428,6 @@ export async function getScalingProjectEntry(
             ? project.scalingStage.additionalConsiderations
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
-      },
-    })
-  }
-
-  const technologySection = getScalingTechnologySection(project)
-  if (technologySection) {
-    sections.push({
-      type: 'TechnologySection',
-      props: {
-        id: 'technology',
-        title: 'Technology',
-        ...technologySection,
-        hostChainWarning,
       },
     })
   }

@@ -1,8 +1,10 @@
 import type { BridgeCategory, TableReadyValue } from '@l2beat/config'
+import type { TabbedBridgeEntries } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
+import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import { get7dTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
@@ -14,7 +16,7 @@ export interface BridgesArchivedEntry extends CommonBridgesEntry {
 }
 
 export async function getBridgesArchivedEntries(): Promise<
-  BridgesArchivedEntry[]
+  TabbedBridgeEntries<BridgesArchivedEntry>
 > {
   const [tvs7dBreakdown, projectsChangeReport, projects] = await Promise.all([
     get7dTvsBreakdown({ type: 'bridge' }),
@@ -25,7 +27,7 @@ export async function getBridgesArchivedEntries(): Promise<
     }),
   ])
 
-  return projects
+  const entries = projects
     .map((project) => {
       const tvs = tvs7dBreakdown.projects[project.id.toString()]
       const changes = projectsChangeReport.getChanges(project.id)
@@ -38,4 +40,6 @@ export async function getBridgesArchivedEntries(): Promise<
       }
     })
     .sort(compareTvs)
+
+  return groupByBridgeTabs(entries)
 }

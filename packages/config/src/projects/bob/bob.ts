@@ -1,7 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,19 +8,17 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: ScalingProject = opStackL2({
-  addedAt: UnixTime(1704267653), // 2024-01-03T07:40:53Z
+  addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'BOB',
     slug: 'bob',
-    tvlWarning: {
-      value:
-        'The total TVS doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
-      sentiment: 'warning',
-    },
     description:
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
     links: {

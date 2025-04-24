@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -41,7 +46,7 @@ assert(
 )
 
 export const zksync2: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
+  addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
   discovery,
   display: {
     name: 'ZKsync Era',
@@ -95,6 +100,9 @@ export const zksync2: ScalingProject = zkStackL2({
     ],
   },
   associatedTokens: ['ZK'],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
@@ -136,6 +144,7 @@ export const zksync2: ScalingProject = zkStackL2({
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
     }),
   ],
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -388,6 +397,14 @@ export const zksync2: ScalingProject = zkStackL2({
     lag: 0,
   },
   milestones: [
+    {
+      title: 'ZK token minter key compromised',
+      url: 'https://x.com/zksync/status/1912165357642473488',
+      date: '2025-04-13T00:00:00Z',
+      description:
+        '1/1 signer key of a ZK airdrop admin multisig is compromised. ZKsync deploys TransactionFilterer.',
+      type: 'incident',
+    },
     {
       title: 'Onchain Governance Launch',
       url: 'https://blog.zknation.io/zksync-governance-system/',

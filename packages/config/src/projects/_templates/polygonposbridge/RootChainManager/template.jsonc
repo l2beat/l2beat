@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
+  "fields": {
+    "PREDICATES": {
+      "handler": {
+        "type": "event",
+        "select": "predicateAddress",
+        "add": { "event": "PredicateRegistered" }
+      }
+    }
+  }
+}

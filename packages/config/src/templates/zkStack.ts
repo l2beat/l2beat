@@ -37,6 +37,7 @@ import type {
   ProjectActivityConfig,
   ProjectContract,
   ProjectDaTrackingConfig,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectPermissions,
@@ -92,7 +93,6 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
@@ -102,6 +102,9 @@ export interface ZkStackConfigCommon {
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  ecosystemInfo?: ProjectEcosystemInfo
+  /** Set to true if projects posts blobs to Ethereum */
+  usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -258,7 +261,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         ...(templateVars.additionalPurposes ?? []),
       ],
       upgradesAndGovernanceImage: 'zkstack',
-      ...templateVars.display,
       stack: 'ZK Stack',
       architectureImage:
         templateVars.daProvider !== undefined
@@ -285,6 +287,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         },
       },
       tvlWarning: templateVars.display.tvlWarning,
+      ...templateVars.display,
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -302,16 +305,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         },
       ),
       daTracking: getDaTracking(templateVars),
-      trackedTxs:
-        daProvider !== undefined
-          ? undefined
-          : (templateVars.nonTemplateTrackedTxs ?? []),
+      trackedTxs: templateVars.nonTemplateTrackedTxs, // difficult to templatize as upgrades are not synced
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    ecosystemInfo: templateVars.ecosystemInfo,
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
@@ -323,10 +324,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         secondLine: formatExecutionDelay(executionDelayS),
       },
       dataAvailability:
-        (templateVars.nonTemplateRiskView?.dataAvailability ??
-        daProvider !== undefined)
-          ? RISK_VIEW.DATA_EXTERNAL
-          : RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+        templateVars.nonTemplateRiskView?.dataAvailability ??
+        (daProvider !== undefined
+          ? daProvider?.riskView
+          : RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS),
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
         RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
@@ -592,50 +593,57 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
 function getDaTracking(
   templateVars: ZkStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
+  // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
     return templateVars.nonTemplateDaTracking
   }
 
-  const validatorTimelock =
-    templateVars.discovery.getContractDetails('ValidatorTimelock').address
+  if (templateVars.usesEthereumBlobs) {
+    const validatorTimelock =
+      templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
-  const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
-    'ValidatorTimelock',
-    'validatorsVTL',
-  )
+    const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
+      'ValidatorTimelock',
+      'validatorsVTL',
+    )
 
-  const inboxDeploymentBlockNumber =
-    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
+    const inboxDeploymentBlockNumber =
+      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
-  return templateVars.usesBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxDeploymentBlockNumber,
-          inbox: validatorTimelock,
-          sequencers: validatorsVTL,
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
+        inbox: validatorTimelock,
+        sequencers: validatorsVTL,
+      },
+    ]
+  }
+
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }

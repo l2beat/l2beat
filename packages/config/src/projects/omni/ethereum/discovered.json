@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 22123489,
-  "configHash": "0x03437d5155b6d53b819823e432d35273c501c9b112dbc99300eff71782a83aca",
+  "blockNumber": 22281679,
+  "configHash": "0xae0740382df2ebdda34c2df28a63ee4627e73f4d9bf38308c01834e6806b5408",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -23,6 +23,25 @@
       "address": "0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Yaru",
+      "address": "0x30f64a297cc66a873FB603d1e89D5891962C25ba",
+      "type": "Contract",
+      "template": "gnosisbridge/Yaru",
+      "sourceHashes": [
+        "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1726020995,
+      "sinceBlock": 20724328,
+      "values": {
+        "$immutable": true,
+        "HASHI": "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+        "SOURCE_CHAIN_ID": 100,
+        "YAHO": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
+      },
+      "derivedName": "Yaru"
     },
     {
       "address": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
@@ -46,7 +65,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OmniBridgeGovernance",
+      "name": "Gnosis Bridge Multisig",
       "address": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -86,7 +105,7 @@
           "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
           "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
           "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
-          "0xd945325557f1FB4374fBf10Ae86D385632Df870A",
+          "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
           "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
           "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
           "0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -98,7 +117,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 85,
+        "nonce": 86,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -139,7 +158,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 18,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -251,7 +270,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Hashi Multisig",
       "address": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -288,6 +307,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TokenFactory",
       "address": "0x71d5ba4e37de72415F685490B684538Aae8f0424",
       "type": "Contract",
@@ -304,6 +328,26 @@
         "tokenImage": "0x7c24d0061b484B267F286aa2DCe891220Db254b3"
       },
       "derivedName": "TokenFactory"
+    },
+    {
+      "name": "LayerZeroAdapter",
+      "address": "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfe0e5c810459ca8daab7faf04bce3cf62afcbce5c1feb22e05e5b989136d1b32"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1727855615,
+      "sinceBlock": 20876445,
+      "values": {
+        "$immutable": true,
+        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "LAYER_ZERO_ENDPOINT": "0x1a44076050125825900e736c501f859c50fE728c",
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "owner": "0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+        "PROVIDER": "layer-zero"
+      },
+      "derivedName": "LayerZeroAdapter"
     },
     {
       "name": "PermittableToken",
@@ -366,7 +410,7 @@
       "derivedName": "AAVEInterestERC20"
     },
     {
-      "name": "MultiTokenMediator",
+      "name": "ForeignOmnibridge",
       "address": "0x88ad09518695c6c3712AC10a214bE5109a655671",
       "type": "Contract",
       "sourceHashes": [
@@ -462,7 +506,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
+        "adapters": ["gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
@@ -470,8 +514,8 @@
         "implementation": "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "isInitialized": true,
         "owner": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-        "reporters": ["0x0000000000000000000000000000000000000000"],
-        "targetAddress": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "reporters": ["gno:0x0000000000000000000000000000000000000000"],
+        "targetAddress": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
         "targetChainId": 100,
         "threshold": 1,
         "upgradeabilityOwner": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
@@ -479,7 +523,30 @@
         "yaho": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
         "yaru": "0x30f64a297cc66a873FB603d1e89D5891962C25ba"
       },
-      "derivedName": "HashiManager"
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
+        },
+        "targetAddress": {
+          "severity": "HIGH",
+          "description": "Address of the target contract on GnosisChain"
+        },
+        "adapters": {
+          "severity": "HIGH",
+          "description": "Array of the adapters on GnosisChain"
+        },
+        "reporters": {
+          "severity": "HIGH",
+          "description": "Array of the reports on GnosisChain"
+        },
+        "threshold": {
+          "severity": "HIGH",
+          "description": "Threshold of the adapters on GnosisChain"
+        }
+      },
+      "derivedName": "HashiManager",
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
     },
     {
       "address": "0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8",
@@ -492,6 +559,19 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Hashi",
+      "address": "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1720770791,
+      "sinceBlock": 20289052,
+      "values": { "$immutable": true },
+      "derivedName": "Hashi"
+    },
+    {
       "address": "0xB1dD1828794075f7521365163A93DE9e68e3c49f",
       "type": "EOA",
       "proxyType": "EOA"
@@ -502,9 +582,28 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xb8173f558f75EE263013fd6294177bf75279a21e",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Yaho",
+      "address": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+      "type": "Contract",
+      "template": "gnosisbridge/Yaho",
+      "sourceHashes": [
+        "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1720772543,
+      "sinceBlock": 20289197,
+      "values": { "$immutable": true },
+      "derivedName": "Yaho"
     },
     {
       "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
@@ -522,22 +621,12 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -709,6 +798,21 @@
       "function setTargetAddress(address targetAddress_)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
+    "0x30f64a297cc66a873FB603d1e89D5891962C25ba": [
+      "constructor(address hashi, address yaho_, uint256 sourceChainId)",
+      "error CallFailed()",
+      "error InvalidToChainId(uint256 chainId, uint256 expectedChainId)",
+      "error MessageIdAlreadyExecuted(uint256 messageId)",
+      "error ThresholdNotMet()",
+      "event MessageExecuted(uint256 indexed messageId, tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "function HASHI() view returns (address)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function YAHO() view returns (address)",
+      "function calculateMessageHash(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message) pure returns (bytes32)",
+      "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
+      "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
+      "function executed(uint256) view returns (bool)"
+    ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -784,6 +888,38 @@
       "function setTokenImage(address _tokenImage)",
       "function tokenImage() view returns (address)",
       "function transferOwnership(address _newOwner)"
+    ],
+    "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": [
+      "constructor(address lzEndpoint, address delegate)",
+      "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
+      "error InvalidBlockHeaderRLP()",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error NoPeer(uint32 eid)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error UnauthorizedLayerZeroReceive()",
+      "event HashStored(uint256 indexed id, bytes32 indexed hash)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event ReporterSet(uint256 indexed chainId, uint32 indexed endpointId, address indexed reporter)",
+      "function LAYER_ZERO_ENDPOINT() view returns (address)",
+      "function PROVIDER() view returns (string)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function chainIds(uint32) view returns (uint256)",
+      "function enabledReporters(uint32) view returns (address)",
+      "function endpoint() view returns (address)",
+      "function getHash(uint256 domain, uint256 id) view returns (bytes32)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32, bytes _message, address, bytes) payable",
+      "function nextNonce(uint32, bytes32) pure returns (uint64 nonce)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function proveAncestralBlockHashes(uint256 chainId, bytes[] blockHeaders)",
+      "function renounceOwnership()",
+      "function setDelegate(address _delegate)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setReporterByChain(uint256 chainId, uint32 endpointId, address reporter)",
+      "function transferOwnership(address newOwner)"
     ],
     "0x7c24d0061b484B267F286aa2DCe891220Db254b3": [
       "function mintingFinished() view returns (bool)",
@@ -957,6 +1093,35 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
+    "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
+      "error AdaptersDisagree(address adapterOne, address adapterTwo)",
+      "error HashNotAvailableInAdapter(address adapter)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error NoAdaptersGiven()",
+      "function checkHashWithThresholdFromAdapters(uint256 domain, uint256 id, uint256 threshold, address[] adapters) view returns (bool)",
+      "function getHash(uint256 domain, uint256 id, address[] adapters) view returns (bytes32 hash)",
+      "function getHashFromAdapter(uint256 domain, uint256 id, address adapter) view returns (bytes32)",
+      "function getHashesFromAdapters(uint256 domain, uint256 id, address[] adapters) view returns (bytes32[])"
+    ],
+    "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": [
+      "error InvalidMessage(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error MessageHashNotFound(uint256 messageId)",
+      "error NoAdaptersGiven()",
+      "error NoMessageIdsGiven()",
+      "error NoMessagesGiven()",
+      "error NoReportersGiven()",
+      "error UnequalArrayLengths(uint256 arrayOne, uint256 arrayTwo)",
+      "event MessageDispatched(uint256 indexed messageId, tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "function calculateMessageHash(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message) pure returns (bytes32)",
+      "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
+      "function currentNonce() view returns (uint256)",
+      "function dispatchMessage(uint256 targetChainId, uint256 threshold, address receiver, bytes data, address[] reporters, address[] adapters) returns (uint256)",
+      "function dispatchMessageToAdapters(uint256 targetChainId, uint256 threshold, address receiver, bytes data, address[] reporters, address[] adapters) payable returns (uint256, bytes32[])",
+      "function dispatchMessagesToAdapters(uint256 targetChainId, uint256[] thresholds, address[] receivers, bytes[] data, address[] reporters, address[] adapters) payable returns (uint256[], bytes32[])",
+      "function getPendingMessageHash(uint256 messageId) view returns (bytes32)",
+      "function relayMessagesToAdapters(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) payable returns (bytes32[])"
+    ],
     "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218": [
       "function validatorCount() view returns (uint256)",
       "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
@@ -1040,6 +1205,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
+    "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

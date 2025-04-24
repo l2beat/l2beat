@@ -5,12 +5,8 @@ import { HighlightablePrimaryCard } from '~/components/primary-card/highlightabl
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { env } from '~/env'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
-import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get-7d-tvs-breakdown'
+import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -55,7 +51,7 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = await ps.getProject({
     slug: params.slug,
-    select: ['tvlConfig', 'tvlInfo'],
+    select: ['tvsConfig', 'tvlInfo'],
     optional: ['chainConfig', 'milestones', 'contracts'],
     where: ['isScaling'],
   })
@@ -65,7 +61,7 @@ export default async function Page(props: Props) {
   }
 
   const projects7dData = await get7dTvsBreakdown({ type: 'layer2' })
-  const project7dData = projects7dData.projects[project.id.toString()]!
+  const project7dData = projects7dData.projects[project.id.toString()]
   if (!project7dData) {
     notFound()
   }
@@ -75,20 +71,16 @@ export default async function Page(props: Props) {
       dataTimestamp,
       breakdown: { canonical, native, external },
     },
+    projectTokens,
   ] = await Promise.all([
     getTvsBreakdownForProject(project),
+    getTokensForProject(project),
     api.tvs.chart.prefetch({
       filter: { type: 'projects', projectIds: [project.id.toString()] },
       excludeAssociatedTokens: false,
       range: '1y',
     }),
   ])
-
-  const tokens: ProjectTokens = {
-    canonical: canonical.map((t) => breakdownToToken(t, 'canonical')),
-    native: native.map((t) => breakdownToToken(t, 'native')),
-    external: external.map((t) => breakdownToToken(t, 'external')),
-  }
 
   return (
     <>
@@ -102,7 +94,7 @@ export default async function Page(props: Props) {
           <ProjectStackedTvsChart
             projectId={project.id}
             milestones={project.milestones ?? []}
-            tokens={tokens}
+            tokens={projectTokens}
           />
           <HorizontalSeparator className="my-4" />
           <TvsBreakdownSummaryBox
@@ -145,19 +137,4 @@ export default async function Page(props: Props) {
       <RequestTokenBox />
     </>
   )
-}
-
-function breakdownToToken(
-  t: BaseAssetBreakdownData & { iconUrl: string; name: string; symbol: string },
-  source: 'canonical' | 'native' | 'external',
-): ProjectToken {
-  return {
-    assetId: t.assetId,
-    iconUrl: t.iconUrl,
-    symbol: t.symbol,
-    name: t.name,
-    address: t.tokenAddress ?? 'native',
-    chain: t.chain.name,
-    source,
-  }
 }

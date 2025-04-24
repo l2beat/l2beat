@@ -22,10 +22,6 @@ export function getCommonScalingEntry({
   changes: ProjectChanges | undefined
   syncWarning?: string
 }): CommonScalingEntry {
-  const isRollup =
-    project.scalingInfo.type === 'Optimistic Rollup' ||
-    project.scalingInfo.type === 'ZK Rollup'
-
   return {
     id: project.id,
     slug: project.slug,
@@ -48,11 +44,7 @@ export function getCommonScalingEntry({
         otherMigration: project.statuses.otherMigration,
       },
     },
-    tab: project.scalingInfo.isOther
-      ? 'others'
-      : isRollup
-        ? 'rollups'
-        : 'validiumsAndOptimiums',
+    tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
@@ -69,7 +61,7 @@ export function getCommonScalingEntry({
         id: 'hostChain',
         value: project.scalingInfo.hostChain.name,
       },
-      { id: 'daLayer', value: project.scalingInfo.daLayer },
+      { id: 'daLayer', value: project.scalingInfo.daLayer ?? 'Unknown' },
       {
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',
@@ -85,9 +77,23 @@ export function getCommonScalingEntry({
     ],
     description: project.display?.description,
     badges: project.display.badges
-      .map((badge) => getBadgeWithParams(badge, project))
+      .map((badge) => getBadgeWithParams(badge))
       .filter((b) => b !== undefined),
   }
+}
+
+export function getScalingTab(
+  project: Project<'scalingInfo'>,
+): 'rollups' | 'validiumsAndOptimiums' | 'others' {
+  const isRollup =
+    project.scalingInfo.type === 'Optimistic Rollup' ||
+    project.scalingInfo.type === 'ZK Rollup'
+
+  return project.scalingInfo.isOther
+    ? 'others'
+    : isRollup
+      ? 'rollups'
+      : 'validiumsAndOptimiums'
 }
 
 function getStageOrder(stage: string | undefined): number {

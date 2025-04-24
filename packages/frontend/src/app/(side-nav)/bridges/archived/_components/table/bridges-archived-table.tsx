@@ -5,16 +5,16 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 
-import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { bridgesArchivedColumns } from './columns'
+import { getBridgesArchivedColumns } from './columns'
 
 export interface Props {
   entries: BridgesArchivedEntry[]
+  isOthers?: boolean
 }
 
-export function BridgesArchivedTable({ entries }: Props) {
+export function BridgesArchivedTable({ entries, isOthers }: Props) {
   const filterEntries = useFilterEntries()
 
   const filteredEntries = useMemo(
@@ -24,7 +24,7 @@ export function BridgesArchivedTable({ entries }: Props) {
 
   const activeTable = useTable({
     data: filteredEntries,
-    columns: bridgesArchivedColumns,
+    columns: getBridgesArchivedColumns(isOthers),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -41,10 +41,5 @@ export function BridgesArchivedTable({ entries }: Props) {
     },
   })
 
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <TableFilters entries={entries} />
-      <BasicTable table={activeTable} />
-    </div>
-  )
+  return <BasicTable table={activeTable} />
 }

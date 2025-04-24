@@ -46,6 +46,18 @@ describe('getProjects', () => {
     }
   })
 
+  describe('every non-ecosystem project has statuses and display', () => {
+    for (const project of projects) {
+      if (project.ecosystemConfig) {
+        continue
+      }
+      it(project.name, () => {
+        expect(project.statuses).not.toEqual(undefined)
+        expect(project.display).not.toEqual(undefined)
+      })
+    }
+  })
+
   it('every project can be serialized', () => {
     function findNonSerializable(
       value: unknown,
@@ -175,9 +187,16 @@ describe('getProjects', () => {
               })
             }
 
-            it(`contracts[${chain}][${i}] name isn't empty`, () => {
-              expect(contract.name.trim().length).toBeGreaterThan(0)
+            it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
+              assert(
+                contract.name.trim().length > 0,
+                [
+                  `contract [${chain}:${contract.address}] name is empty`,
+                  `this is most likely because it's unverified and the name needs to be assigned manually`,
+                ].join('\n'),
+              )
             })
+
             const upgradableBy = contract.upgradableBy
             const permissionsForChain = (project.permissions ?? {})[chain]
             const all = [
@@ -485,6 +504,46 @@ describe('getProjects', () => {
         }
       }
     })
+
+    describe('every appId is unique for Avail projects', () => {
+      const appIds = new Map<string, string>()
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          it(project.id, () => {
+            assert(project.daTrackingConfig) // type issue
+            for (const config of project.daTrackingConfig) {
+              if (config.type === 'avail') {
+                assert(
+                  !appIds.has(config.appId),
+                  `Duplicate appId (${config.appId}) detected [${project.id}, ${appIds.get(config.appId)}]`,
+                )
+                appIds.set(config.appId, project.id)
+              }
+            }
+          })
+        }
+      }
+    })
+
+    describe('every namespace is unique for Celestia projects', () => {
+      const namespaces = new Map<string, string>()
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          it(project.id, () => {
+            assert(project.daTrackingConfig) // type issue
+            for (const config of project.daTrackingConfig) {
+              if (config.type === 'celestia') {
+                assert(
+                  !namespaces.has(config.namespace),
+                  `Duplicate namespace (${config.namespace}) detected [${project.id}, ${namespaces.get(config.namespace)}]`,
+                )
+                namespaces.set(config.namespace, project.id)
+              }
+            }
+          })
+        }
+      }
+    })
   })
 
   describe('all new projects are discovery driven', () => {
@@ -514,7 +573,7 @@ describe('getProjects', () => {
   })
 
   describe('badges', () => {
-    const signularBadges = [
+    const singularBadges = [
       'Infra',
       'RaaS',
       'DA',
@@ -523,7 +582,7 @@ describe('getProjects', () => {
       'L3ParentChain',
     ]
 
-    for (const badge of signularBadges) {
+    for (const badge of singularBadges) {
       it(`has maximum one ${badge} badge`, () => {
         for (const project of projects) {
           const badges = project.display?.badges?.filter(

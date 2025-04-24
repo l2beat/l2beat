@@ -1,8 +1,8 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 22166672,
-  "configHash": "0xe12aa54ceef74a78c86ca84f2c03047c4da057abb9009e82d2eec27b36587b02",
+  "blockNumber": 22322978,
+  "configHash": "0xffa5a9599dd584433290443e1c4b3e6be79827897a93a3704154c7420509dbd6",
   "entries": [
     {
       "name": "ZKFairAdmin",
@@ -328,26 +328,26 @@
         "committeeHash": "0xba409e01b8959e09c11202ce45dd3e4ac8aa7e21440e86c1e9dc924369151fca",
         "getAmountOfMembers": 5,
         "members": [
-          [
-            "http://43.129.159.5:8444",
-            "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
-          ],
-          [
-            "http://129.226.185.196:8444",
-            "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
-          ],
-          [
-            "http://43.155.22.171:8444",
-            "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
-          ],
-          [
-            "http://119.28.1.197:8444",
-            "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
-          ],
-          [
-            "http://43.129.158.203:8444",
-            "0xFe1da7CAd939805d4A889822357c348177a5118d"
-          ]
+          {
+            "url": "http://43.129.159.5:8444",
+            "addr": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
+          },
+          {
+            "url": "http://129.226.185.196:8444",
+            "addr": "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
+          },
+          {
+            "url": "http://43.155.22.171:8444",
+            "addr": "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
+          },
+          {
+            "url": "http://119.28.1.197:8444",
+            "addr": "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
+          },
+          {
+            "url": "http://43.129.158.203:8444",
+            "addr": "0xFe1da7CAd939805d4A889822357c348177a5118d"
+          }
         ],
         "owner": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
         "requiredAmountOfSignatures": 3
@@ -358,7 +358,7 @@
       "derivedName": "CDKDataCommittee"
     },
     {
-      "name": "Bridge",
+      "name": "OldBridge",
       "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
       "type": "Contract",
       "unverified": true,
@@ -410,6 +410,17 @@
       "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Bridge",
+      "address": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742988323,
+      "sinceBlock": 22130765,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
@@ -789,7 +800,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

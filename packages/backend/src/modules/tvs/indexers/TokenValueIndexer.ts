@@ -9,9 +9,9 @@ import type {
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import type { ValueService } from '../services/ValueService'
 import type { DBStorage } from '../tools/DBStorage'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import {
   createAmountConfig,
   createPriceConfigId,

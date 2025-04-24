@@ -53,6 +53,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     for (const chain of data.entries) {
       const hueShift = chain.project.startsWith('shared') ? 90 : 0
 
+      const initialAddresses = chain.initialContracts.map((x) => x.address)
       for (const contract of [
         ...chain.initialContracts,
         ...chain.discoveredContracts,
@@ -64,6 +65,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const fallback = `${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
         const node: Node = {
           id: contract.address,
+          isInitial: initialAddresses.includes(contract.address),
           name: contract.name ?? fallback,
           addressType: contract.type,
           address,
@@ -72,6 +74,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           hueShift,
           data: null,
           fields: toNodeFields(contract.fields),
+          hiddenFields: [],
         }
         nodes.push(node)
       }
@@ -80,6 +83,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
         const node: Node = {
           id: eoa.address,
+          isInitial: false,
           name: eoa.name ?? fallback,
           addressType: 'EOA',
           address,
@@ -88,6 +92,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           hueShift,
           data: null,
           fields: [],
+          hiddenFields: [],
         }
         nodes.push(node)
       }
@@ -145,7 +150,7 @@ function getNodeFields(
   }
 
   if (value.type === 'object') {
-    return Object.entries(value.value).flatMap(([key, value]) =>
+    return value.values.flatMap(([key, value]) =>
       getNodeFields(`${path}.${key}`, value, bannedKeys, bannedValues),
     )
   } else if (value.type === 'array') {

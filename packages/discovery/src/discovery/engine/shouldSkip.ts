@@ -1,17 +1,19 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { StructureConfig } from '../config/StructureConfig'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 
 export function shouldSkip(
   address: EthereumAddress,
-  config: DiscoveryConfig,
+  config: StructureConfig,
+  sharedModuleIndex: Set<EthereumAddress>,
   depth: number,
   counter: number,
 ): string | undefined {
-  if (config.for(address).ignoreDiscovery) {
+  if (makeEntryStructureConfig(config, address).ignoreDiscovery) {
     return 'ignored'
   }
 
-  if (config.isInSharedModules(address)) {
+  if (sharedModuleIndex.has(address)) {
     return 'part of a shared module'
   }
 

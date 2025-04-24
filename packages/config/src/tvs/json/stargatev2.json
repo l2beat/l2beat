@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -132,8 +133,7 @@
             "priceId": "ethereum"
           }
         ]
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      }
     },
     {
       "mode": "auto",
@@ -141,6 +141,7 @@
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -193,8 +194,7 @@
             "priceId": "mantle-staked-ether"
           }
         ]
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066"
+      }
     },
     {
       "mode": "auto",
@@ -202,60 +202,18 @@
       "priceId": "metis-token",
       "symbol": "Metis",
       "name": "Metis Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
-            "chain": "ethereum",
-            "escrowAddress": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
-            "decimals": 18,
-            "sinceTimestamp": 1716837335
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "metis",
-            "escrowAddress": "0xD9050e7043102a0391F81462a3916326F86331F0",
-            "decimals": 18,
-            "sinceTimestamp": 1716837016
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "chain": "ethereum",
+        "escrowAddress": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+        "decimals": 18,
+        "sinceTimestamp": 1716837335
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "valueForSummary": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "metis-token",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
-              "chain": "ethereum",
-              "escrowAddress": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
-              "decimals": 18,
-              "sinceTimestamp": 1716837335
-            }
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1716837016
-            },
-            "priceId": "metis-token"
-          }
-        ]
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -263,6 +221,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -369,8 +328,7 @@
             "priceId": "usd-coin"
           }
         ]
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+      }
     },
     {
       "mode": "auto",
@@ -378,6 +336,7 @@
       "priceId": "mantle-bridged-usdc-mantle",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35296/large/USDC_Icon.png?1708082083",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
@@ -398,8 +357,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35296/large/USDC_Icon.png?1708082083"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -407,6 +365,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -426,14 +385,6 @@
             "escrowAddress": "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
             "decimals": 6,
             "sinceTimestamp": 1716837018
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-            "chain": "metis",
-            "escrowAddress": "0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125",
-            "decimals": 6,
-            "sinceTimestamp": 1716837024
           }
         ]
       },
@@ -465,20 +416,9 @@
               "sinceTimestamp": 1716837018
             },
             "priceId": "tether"
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1716837024
-            },
-            "priceId": "tether"
           }
         ]
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
+      }
     },
     {
       "mode": "auto",
@@ -486,6 +426,7 @@
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
@@ -506,8 +447,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -515,6 +455,7 @@
       "priceId": "mantle-bridged-usdt-mantle",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
@@ -535,44 +476,15 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "stargatev2-WETH-1",
-      "priceId": "ethereum",
-      "symbol": "WETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x420000000000000000000000000000000000000A",
-        "chain": "metis",
-        "escrowAddress": "0x36ed193dc7160D3858EC250e69D12B03Ca087D08",
-        "decimals": 18,
-        "sinceTimestamp": 1716837010
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716837010
-        },
-        "priceId": "ethereum"
-      },
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
-    },
-    {
-      "mode": "auto",
-      "id": "stargatev2-WETH-2",
+      "id": "stargatev2-WETH",
       "priceId": "wrapped-ether-mantle-bridge",
       "symbol": "WETH",
       "name": "Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31013/large/wrapped-eth-mantle-bridge.png?1696529850",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
@@ -593,8 +505,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31013/large/wrapped-eth-mantle-bridge.png?1696529850"
+      "isAssociated": false
     }
   ]
 }

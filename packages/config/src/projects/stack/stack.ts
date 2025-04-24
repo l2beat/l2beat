@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('stack', 'base')
 
 export const stack: ScalingProject = opStackL3({
   addedAt: UnixTime(1710853988), // 2024-03-19T13:13:08Z
+  archivedAt: UnixTime(1744629590), // 2025-04-14T11:20:00.000Z
   discovery,
   additionalBadges: [
     BADGES.DA.Celestia,

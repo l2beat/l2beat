@@ -12,20 +12,31 @@ export const superchain: BaseProject = {
     description: 'The Superchain is a network of OP Stack chains.',
     links: {
       websites: ['https://superchain.eco'],
+      documentation: [
+        'https://docs.optimism.io/',
+        'https://docs.optimism.io/superchain/superchain-explainer',
+      ],
+      explorers: ['https://thesuperscan.io/'],
     },
     badges: [BADGES.Infra.Superchain, BADGES.Stack.OPStack],
   },
+  colors: {
+    primary: '#F00000',
+    secondary: '#F93E3F',
+  },
   ecosystemConfig: {
-    colors: {
-      primary: '#F00',
-      secondary: '#F93E3F',
+    links: {
+      buildOn: 'https://superchain.eco/develop',
+      learnMore: 'https://superchain.eco/',
+      governanceTopDelegates:
+        'https://vote.optimism.io/delegates?orderBy=most_voting_power',
+      governanceProposals: 'https://vote.optimism.io/proposals',
     },
-    ecosystemToken: {
-      name: 'OP',
-      chain: 'ethereum',
+    token: {
+      tokenId: 'optimism-OP',
+      projectId: ProjectId('optimism'),
       description:
         'OP is the governance token for the Optimism Collective and the Superchain ecosystem. It is used for voting on protocol upgrades, treasury allocations, and other governance decisions across the Superchain network of OP Stack chains.',
     },
-    governanceReviews: true,
   },
 }

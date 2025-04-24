@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22208565,
-  "configHash": "0x83f0de540128072806b294d672f8ee7844a63fb01b66e6d70779f4ba04bfe7ff",
+  "blockNumber": 22281621,
+  "configHash": "0x7510b3bddc3abb6e188549888ae3f786660fc3bc39064686cf2e21fd804c6932",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -395,10 +395,21 @@
             "chainId": 1217,
             "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
+          },
+          {
+            "chainId": 2904,
+            "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
+          },
+          {
+            "chainId": 375,
+            "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0x6ec9117dCFBe2E8Dd747c9D45034E2DF9C7d2da0"
           }
         ],
         "getAllZKChainChainIDs": [
-          324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217
+          324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217,
+          2904, 375
         ],
         "getAllZKChains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -412,7 +423,9 @@
           "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
           "0xF2704433d11842d15aa76BBF0E00407267a99C92",
           "0xc29d04A93F893700015138E3E334eB828dAC3cef",
-          "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
+          "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
+          "0x742A28e22277945BBAAa34810393bf6e8512576C",
+          "0x270bF3978FeA60719Dd25A400EbE6969bF451493"
         ],
         "L1_CHAIN_ID": 1,
         "l1CtmDeployer": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
@@ -643,7 +656,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 186,
+        "nonce": 189,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -697,22 +710,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001",
-          "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f",
-          "0x160669864cDe95c190364ad01eDfbAA32E9DA430",
-          "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf",
-          "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D",
-          "0xb799FF3DeF706045B5061B22d748E8F52737415d",
-          "0x227230CD05e89f41E67df3E5fC61B18411d147A9",
-          "0x7461633b1Fc7CdAa64A5B7bAb1b1F0145Acd7953"
-        ],
-        "$threshold": 5,
+        "$members": ["0x9f708301AA8CB86A06D23152fE67F2bFaa094cA1"],
+        "$threshold": 1,
         "domainSeparator": "0x567c3af0158b9327873cbee71998af25aff119723a8693a6fcdba100bf3024e2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 4,
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe",
@@ -787,12 +791,12 @@
         ],
         "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "chainCount": 13,
-        "getAggregatedRoot": "0x619372ea4d229fc7921bbdcd7b46a64f151d566c0bf6d43cf1807bc6aa4629ad",
+        "chainCount": 15,
+        "getAggregatedRoot": "0x5054187811209ac55f16381dbcbbfb219fd033e43b680f7649de648ba69daaa6",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "sharedTree": { "_height": 4, "_leafNumber": 13 }
+        "sharedTree": { "_height": 4, "_leafNumber": 15 }
       },
       "derivedName": "MessageRoot",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
@@ -1144,11 +1148,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "0x7461633b1Fc7CdAa64A5B7bAb1b1F0145Acd7953",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x78834238C8F4CA04c73256D221cd6a1d29b9A81c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1323,6 +1322,11 @@
       },
       "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "0x9f708301AA8CB86A06D23152fE67F2bFaa094cA1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001",
@@ -3012,22 +3016,22 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0x91f63b61f586400a5d16bbe6888e7044e78a334f3c590d4392a40e5f8a0a1dfd",
-    "shared-zk-stack/Guardians": "0xa9db374eee5c5539d49661c37b377921cd849648da2f635ff2fa631715585cbc",
-    "shared-zk-stack/SecurityCouncil": "0x2d620c0be0c12a18cbb02aed91ed5681e263af71360d6404ff5dc03cb9f4a4cf",
-    "shared-zk-stack/v26/BridgeHub": "0xd466c97e05612a433cb5abad2e27fe48d5c46296663ff0501a49a288efd77ba3",
-    "shared-zk-stack/v26/ChainTypeManager": "0xc0c68bb4b177aebd5e44acf8482df16e8a3b50b9c99b570a0773a3e4c2e924ff",
-    "shared-zk-stack/v26/CTMDeploymentTracker": "0x031626cf83c8d90e0bbba30181def35c6b4eebf6c85c66c85322f7dcb5c0d68a",
-    "shared-zk-stack/v26/L1AssetRouter": "0x61e94b7742e84945b3af3c17cd45294e6f2421180eac8788d267a598422100c0",
-    "shared-zk-stack/v26/L1GenesisUpgrade": "0x5cf4c40d7725942034b3d1644c21b83c09bbddf5ee69461c9e7c584f3e1a4dde",
-    "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
-    "shared-zk-stack/v26/L1Nullifier": "0x2d1bc5b5d93b8426fb6e6f34b6ad5c8d90d87a39df65ee3fbc9909f1536d1ed6",
-    "shared-zk-stack/v26/MessageRoot": "0x1767029a6621737d6bf6e18cae938df805aed751f467045f51a07e2f158879fc",
-    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0xb5b3d7af257c0763b905ea426fc85ecaf082f2a8ff5e77463c171e037d6e1b82",
-    "shared-zk-stack/v26/RollupDAManager": "0x2c5397a501bde4a5f5360bc2709eef55cb3d83718996ba894494a0a5f24480f5",
-    "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0xf0529192bd3663a9f0d22f9d6221b3b70a7b5bf83f48481fdf672ede9d755121",
+    "shared-zk-stack/Guardians": "0x930c8157109c56bfeaf429f0178d7025d6b21175c4f0c9d57ad594991cc7076d",
+    "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
+    "shared-zk-stack/v26/BridgeHub": "0x559212a74df83ff51b4487146cd68a95d9d0f0c1a468e7eb0a60153c2cef184d",
+    "shared-zk-stack/v26/ChainTypeManager": "0xf23c99e1690902672fae5cf818f324272b9712393b6d2811bb1a90e1acc1cf3e",
+    "shared-zk-stack/v26/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
+    "shared-zk-stack/v26/L1AssetRouter": "0x4530b565b0dd64d0a259a829b0966d9bad2fa221c992d87478f69a5d1b62fb76",
+    "shared-zk-stack/v26/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
+    "shared-zk-stack/v26/L1NativeTokenVault": "0x7bd47f45f2baddec3c33a5404c10844207f831a2d96e1465df80445d277f32d1",
+    "shared-zk-stack/v26/L1Nullifier": "0xe61bb02b35569663b7e4c0f4bb6d67ae0e8872aa070cbbb5cfe0855f8269d6e4",
+    "shared-zk-stack/v26/MessageRoot": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
+    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x845f5c52bb56cdad184c9075a1d06fe4283a7dd9197c0e9dccc748bb3f80ae85",
+    "shared-zk-stack/v26/RollupDAManager": "0x1f13223d5cafcdf085f21bbe6e4a988bc53d13fce1257c48f223e38ac6a11eb9",
+    "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

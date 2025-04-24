@@ -224,6 +224,29 @@ describe(DBStorage.name, () => {
       expect(tvsPrice.getPrice).toHaveBeenCalledWith(configId, timestamp)
     })
 
+    it('returns undefined when not in memory and preloadOnly is set', async () => {
+      const timestamp = UnixTime(100)
+      const configId = 'config1'.repeat(2)
+
+      const tvsPrice = mockObject<Database['tvsPrice']>({
+        getPrice: mockFn().resolvesTo(undefined),
+      })
+
+      const storage = new DBStorage(
+        mockObject<Database>({
+          tvsPrice,
+        }),
+        Logger.SILENT,
+        true,
+      )
+      ;(storage as any).prices = new Map([[timestamp, new Map()]])
+
+      const result = await storage.getPrice(configId, timestamp)
+
+      expect(result).toEqual(undefined)
+      expect(tvsPrice.getPrice).not.toHaveBeenCalled()
+    })
+
     it('falls back to latest price when not in memory and not in DB', async () => {
       const timestamp = UnixTime(100)
       const latestTimestamp = UnixTime(50)

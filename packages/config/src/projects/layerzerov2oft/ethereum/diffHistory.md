@@ -1,4 +1,60 @@
-Generated with discovered.json: 0x44d02a4d1efc21b90f5f2f0b444553d2d390bcd0
+Generated with discovered.json: 0xcde83e025e3f3be2a1f67950ef9306f141c9def1
+
+# Diff at Thu, 24 Apr 2025 10:30:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22174829
+- current block number: 22174829
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
++++ description: The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed.
++++ severity: HIGH
+      values.defaultReceiveLib_rsETH:
+-        ["0xc02Ab410f0734EFa3F14628780e6e695156024C2",true]
++        {"lib":"0xc02Ab410f0734EFa3F14628780e6e695156024C2","isDefault":true}
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
++++ description: The default executor can be different for every OApp. In practice it is the same for most OApps. (LayerZero Executor) Should be reviewed if changed.
++++ severity: HIGH
+      values.defaultExecutor_ENA:
+-        [10000,"0x173272739Bd7Aa6e4e214714048a9fE699453059"]
++        {"maxMessageSize":10000,"executor":"0x173272739Bd7Aa6e4e214714048a9fE699453059"}
++++ description: The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_CYBER:
+-        [15,2,0,0,["0x589dEDbD617e0CBcB916A9223F4d1300c294236b","0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x589dEDbD617e0CBcB916A9223F4d1300c294236b","0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"],"optionalDVNs":[]}
++++ description: The verification config of the ENAOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_ENA:
+-        [15,2,0,0,["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],"optionalDVNs":[]}
++++ description: The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_sfrxETH:
+-        [15,2,0,0,["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],"optionalDVNs":[]}
++++ description: The verification config of the USDT0OFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_USDT0:
+-        [15,2,0,0,["0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],"optionalDVNs":[]}
+    }
+```
+
+Generated with discovered.json: 0xbfb2c8c436d4d43b9767005df6943ba704382723
 
 # Diff at Tue, 01 Apr 2025 15:04:02 GMT:
 

@@ -1,118 +1,94 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 import type { CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
-import { MultipleEscrowsCell } from '../cells/multiple-escrows-cell'
 import { TokenAddressCell } from '../cells/token-address-cell'
-import { TokenCanonicalAmountCell } from '../cells/token-canonical-amount-cell'
-import { TokenCanonicalValueCell } from '../cells/token-canonical-value-cell'
+import { TokenAmountCell } from '../cells/token-amount-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
+import { TokenValueCell } from '../cells/token-value-cell'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
-export function getCanonicallyBridgedColumns(showSharedEscrowTooltip: boolean) {
-  return [
-    columnHelper.display({
-      id: 'token',
-      header: 'Token',
-      cell: (ctx) => {
-        // Do not bloat table if parent row is expanded
-        const parentRow = ctx.row.getParentRow()
+export const canonicallyBridgedColumns = [
+  columnHelper.display({
+    id: 'token',
+    header: 'Token',
+    cell: (ctx) => {
+      return <TokenNameCell {...ctx.row.original} />
+    },
+  }),
+  columnHelper.display({
+    id: 'contract',
+    header: 'Contract',
+    cell: (ctx) => {
+      const { address } = ctx.row.original
+      if (!address) return '-'
 
-        if (parentRow?.getIsExpanded()) {
-          return null
-        }
+      if (address === 'multiple')
+        return <div className="text-xs font-medium">Multiple</div>
 
-        return <TokenNameCell {...ctx.row.original} />
-      },
-    }),
-    columnHelper.display({
-      id: 'value',
-      header: 'Value',
-      meta: {
-        align: 'right',
-      },
-      cell: (ctx) => {
-        const isParentMultiEscrow = Boolean(
-          ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-        )
+      return <TokenAddressCell address={address.address} url={address.url} />
+    },
+  }),
+  columnHelper.display({
+    id: 'escrow',
+    header: 'Escrow',
+    cell: (ctx) => {
+      const { escrow } = ctx.row.original
+      if (!escrow) return '-'
 
-        const { usdValue } = ctx.row.original
+      if (escrow === 'multiple')
+        return <div className="text-xs font-medium">Multiple</div>
 
-        return (
-          <TokenCanonicalValueCell
-            usdValue={usdValue}
-            isDescendant={isParentMultiEscrow}
+      return (
+        <TokenAddressCell
+          address={escrow.address}
+          url={escrow.url}
+          name={escrow.name}
+        />
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'value',
+    header: 'Value',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => {
+      return <TokenValueCell {...ctx.row.original} />
+    },
+  }),
+  columnHelper.display({
+    id: 'amount',
+    header: 'Amount',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => <TokenAmountCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
+    id: 'expand',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => {
+      if (!ctx.row.getCanExpand()) return null
+      const isExpended = ctx.row.getIsExpanded()
+      const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
+
+      return (
+        <button
+          onClick={toggleExpandedHandler}
+          className="h-full cursor-pointer px-2 align-middle"
+        >
+          <ChevronIcon
+            className={cn(
+              'w-[10px]   transition-transform duration-300',
+              isExpended && 'rotate-180',
+            )}
           />
-        )
-      },
-    }),
-    columnHelper.display({
-      id: 'amount',
-      header: 'Amount',
-      meta: {
-        align: 'right',
-        tooltip:
-          showSharedEscrowTooltip &&
-          'The amount of tokens locked in the escrow. Does not account for differences due to pending deposits and withdrawals.',
-      },
-      cell: (ctx) => {
-        const isParentMultiEscrow = Boolean(
-          ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-        )
-
-        const { amount, escrows } = ctx.row.original
-
-        const isPreminted = escrows.some((escrow) => escrow.isPreminted)
-
-        return (
-          <TokenCanonicalAmountCell
-            amount={amount}
-            isPreminted={isPreminted}
-            isDescendant={isParentMultiEscrow}
-          />
-        )
-      },
-    }),
-    columnHelper.display({
-      id: 'escrow',
-      header: 'Escrow',
-      meta: {
-        headClassName: 'md:pl-6',
-        cellClassName: 'md:pl-6',
-      },
-      cell: (ctx) => {
-        const value = ctx.row.original
-        const isExpended = ctx.row.getIsExpanded()
-        const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
-
-        if (value.escrows.length > 1) {
-          return (
-            <MultipleEscrowsCell
-              setIsExpanded={toggleExpandedHandler}
-              isExpanded={isExpended}
-            />
-          )
-        }
-
-        return (
-          <TokenAddressCell
-            name={value.escrows[0]?.name}
-            address={value.escrows[0]!.escrowAddress}
-            url={value.escrows[0]?.url}
-          />
-        )
-      },
-    }),
-    columnHelper.display({
-      id: 'contract',
-      header: 'Contract',
-      cell: (ctx) => {
-        const value = ctx.row.original
-
-        return value.tokenAddress ? (
-          <TokenAddressCell address={value.tokenAddress} url={value.url} />
-        ) : (
-          '-'
-        )
-      },
-    }),
-  ]
-}
+        </button>
+      )
+    },
+  }),
+]

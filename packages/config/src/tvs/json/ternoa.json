@@ -8,6 +8,7 @@
       "priceId": "aave",
       "symbol": "AAVE",
       "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -17,8 +18,7 @@
         "chain": "ternoa",
         "decimals": 18,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354"
+      }
     },
     {
       "mode": "auto",
@@ -26,6 +26,7 @@
       "priceId": "ankr",
       "symbol": "ANKR",
       "name": "Ankr Network",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -35,8 +36,7 @@
         "chain": "ternoa",
         "decimals": 18,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928"
+      }
     },
     {
       "mode": "auto",
@@ -44,6 +44,7 @@
       "priceId": "coin-capsule",
       "symbol": "CAPS",
       "name": "Capsule Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
@@ -54,8 +55,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -63,6 +63,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -72,8 +73,7 @@
         "chain": "ternoa",
         "decimals": 18,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
+      }
     },
     {
       "mode": "auto",
@@ -81,6 +81,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "category": "ether",
       "source": "canonical",
       "amount": {
@@ -90,8 +91,7 @@
         "decimals": 18,
         "sinceTimestamp": 1735650935
       },
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -99,6 +99,7 @@
       "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -108,8 +109,7 @@
         "chain": "ternoa",
         "decimals": 18,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745"
+      }
     },
     {
       "mode": "auto",
@@ -117,6 +117,7 @@
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -126,8 +127,25 @@
         "chain": "ternoa",
         "decimals": 18,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/32440/large/polygon.png?1698233684"
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-RNDR",
+      "priceId": "render-token",
+      "symbol": "RNDR",
+      "name": "Render Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11636/large/rndr.png?1696511529",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x31FAA1A7fc42510D846736e8fC2aF9D76aab9bC6",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1735650935
+      }
     },
     {
       "mode": "auto",
@@ -135,6 +153,7 @@
       "priceId": "the-sandbox",
       "symbol": "SAND",
       "name": "SAND",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -144,8 +163,43 @@
         "chain": "ternoa",
         "decimals": 18,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971"
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-TEL",
+      "priceId": "telcoin",
+      "symbol": "TEL",
+      "name": "Telcoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1899/large/tel.png?1696502892",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x42a4Ab13B8c2cF350f35b0FB68484042480Ed521",
+        "chain": "ternoa",
+        "decimals": 2,
+        "sinceTimestamp": 1735650935
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-UOS",
+      "priceId": "ultra",
+      "symbol": "UOS",
+      "name": "Ultra Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4480/large/Ultra.png?1696505069",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8bFB2223b87E03aD701Ce5D00C2817637BdE2845",
+        "chain": "ternoa",
+        "decimals": 4,
+        "sinceTimestamp": 1735650935
+      }
     },
     {
       "mode": "auto",
@@ -153,6 +207,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -162,8 +217,7 @@
         "chain": "ternoa",
         "decimals": 6,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
+      }
     },
     {
       "mode": "auto",
@@ -171,6 +225,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -180,8 +235,7 @@
         "chain": "ternoa",
         "decimals": 8,
         "sinceTimestamp": 1735650935
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
+      }
     }
   ]
 }

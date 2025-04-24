@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0xc7394bb2b3addb99ed0818a407a7f1355c3c58ba9858634a42919318e5a75ace",
+  "configHash": "0x8b60732e570b6962ca6e7f111b8f19b097f80c2dd35cf8fcb97bf16da08c6a6e",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -494,7 +494,6 @@
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
       "proxyType": "immutable",
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -699,66 +698,66 @@
         "paused": false,
         "rewardPerBlock": "41168150680000000",
         "sequencers": [
-          [
-            "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
-            "0xEcA7Ae7dE0d1978DF299a547Ee66c4503fBa474D",
-            "0x0000000000000000000000000000000000000000",
-            2
-          ],
-          [
-            "0xe8D97563Cfd919F1B9F7cE0049346e8796148CD5",
-            "0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04",
-            "0x0000000000000000000000000000000000000000",
-            2
-          ],
-          [
-            "0x24194DFB135B33507a8F05C3F9Ada922F40CE3Ff",
-            "0xAfF606251d8540f97Ca2Db12774C0147A170aB9e",
-            "0x0000000000000000000000000000000000000000",
-            2
-          ],
-          [
-            "0x735Aad08c5eF7620b6422E85613f8335Ec07b573",
-            "0x31e623DCb8B43aD4d05aAA6209574cf336980590",
-            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
-            2
-          ],
-          [
-            "0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
-            "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
-            "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
-            2
-          ],
-          [
-            "0x490e02f5D3c88Cf3A16d5f265378Af962a5A999E",
-            "0xEc05be638D1941c788244603AEbB5B937cD72C21",
-            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
-            2
-          ],
-          [
-            "0xb6112C3613B2B6E2dB0ee0216e7D20399777114D",
-            "0x652016b5718cB79d3FA360701F2d30982d7c4D7B",
-            "0x0000000000000000000000000000000000000000",
-            2
-          ],
-          [
-            "0xbd3BaD2a57C49E5B3Bb4b05a737cC3673a9E9f55",
-            "0xD4Eec5110Df06888211275594F340C43cD882f00",
-            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
-            2
-          ],
-          [
-            "0x9D56F28b85Eddc058Fc911e8c6393Bd0BD4835A5",
-            "0xaDd60572c4F39c5c9D7053A7F9e16B5d59Be6563",
-            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
-            2
-          ],
-          [
-            "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
-            "0x8594f6eB82e4140a3b7A2c045d85f02a6c2DCDf2",
-            "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
-            2
-          ]
+          {
+            "owner": "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
+            "signer": "0xEcA7Ae7dE0d1978DF299a547Ee66c4503fBa474D",
+            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "status": 2
+          },
+          {
+            "owner": "0xe8D97563Cfd919F1B9F7cE0049346e8796148CD5",
+            "signer": "0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04",
+            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "status": 2
+          },
+          {
+            "owner": "0x24194DFB135B33507a8F05C3F9Ada922F40CE3Ff",
+            "signer": "0xAfF606251d8540f97Ca2Db12774C0147A170aB9e",
+            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "status": 2
+          },
+          {
+            "owner": "0x735Aad08c5eF7620b6422E85613f8335Ec07b573",
+            "signer": "0x31e623DCb8B43aD4d05aAA6209574cf336980590",
+            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "status": 2
+          },
+          {
+            "owner": "0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
+            "signer": "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
+            "rewardRecipient": "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
+            "status": 2
+          },
+          {
+            "owner": "0x490e02f5D3c88Cf3A16d5f265378Af962a5A999E",
+            "signer": "0xEc05be638D1941c788244603AEbB5B937cD72C21",
+            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "status": 2
+          },
+          {
+            "owner": "0xb6112C3613B2B6E2dB0ee0216e7D20399777114D",
+            "signer": "0x652016b5718cB79d3FA360701F2d30982d7c4D7B",
+            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "status": 2
+          },
+          {
+            "owner": "0xbd3BaD2a57C49E5B3Bb4b05a737cC3673a9E9f55",
+            "signer": "0xD4Eec5110Df06888211275594F340C43cD882f00",
+            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "status": 2
+          },
+          {
+            "owner": "0x9D56F28b85Eddc058Fc911e8c6393Bd0BD4835A5",
+            "signer": "0xaDd60572c4F39c5c9D7053A7F9e16B5d59Be6563",
+            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "status": 2
+          },
+          {
+            "owner": "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
+            "signer": "0x8594f6eB82e4140a3b7A2c045d85f02a6c2DCDf2",
+            "rewardRecipient": "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
+            "status": 2
+          }
         ],
         "signerUpdateThrottle": 1,
         "totalSequencers": 10,
@@ -1457,8 +1456,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2"
   }
 }

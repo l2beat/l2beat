@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "optimism",
   "blockNumber": 133912814,
-  "configHash": "0x28e36a616751ba84ecdd9b30ad0d9981ac9bbb3732cb066d05a9a197c6d7353f",
+  "configHash": "0xeb44e5ab274982c9c6d385a9bb8e3518812ad9d321ed545c72d643bf911ee54b",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -1060,6 +1060,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

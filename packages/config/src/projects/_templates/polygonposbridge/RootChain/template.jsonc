@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can delete arbitrary checkpoints."
+        }
+      ]
+    }
+  },
+  "ignoreMethods": ["headerBlocks"],
+  "ignoreInWatchMode": [
+    "_nextHeaderBlock",
+    "getLastChildBlock",
+    "currentHeaderBlock"
+  ],
+  "category": "core"
+}

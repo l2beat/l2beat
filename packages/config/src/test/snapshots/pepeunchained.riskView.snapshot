@@ -8,7 +8,7 @@
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
-    orderHint: -604800
+    orderHint: -86400
     secondLine: undefined
     sentiment: "bad"
     value: "None"
@@ -29,7 +29,7 @@
   stateValidation: {
     description: "Currently the system permits invalid state roots. More details in project overview."
     orderHint: -Infinity
-    secondLine: "7d challenge period"
+    secondLine: "1d challenge period"
     sentiment: "bad"
     value: "None"
   }

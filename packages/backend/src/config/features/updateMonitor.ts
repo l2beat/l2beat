@@ -17,6 +17,14 @@ export function getUpdateMonitorConfig(
 ): UpdateMonitorConfig {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
+
+  const allChains = configReader.readAllChains()
+  const enabledChains = allChains.filter((chain) =>
+    flags.isEnabled('updateMonitor', chain),
+  )
+  const disabledChains = allChains.filter(
+    (chain) => !flags.isEnabled('updateMonitor', chain),
+  )
   return {
     configReader,
     paths,
@@ -24,10 +32,10 @@ export function getUpdateMonitorConfig(
       ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
       : undefined,
     discord: getDiscordConfig(env, isLocal),
-    chains: configReader
-      .readAllChains()
-      .filter((chain) => flags.isEnabled('updateMonitor', chain))
-      .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
+    chains: enabledChains.map((chain) =>
+      getChainDiscoveryConfig(env, chain, chains),
+    ),
+    disabledChains,
     cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
     cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     updateMessagesRetentionPeriodDays: env.integer(
@@ -78,7 +86,10 @@ function getChainDiscoveryConfig(
     : undefined
 
   const explorerApi = chainConfig.apis.find(
-    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+    (x) =>
+      x.type === 'etherscan' ||
+      x.type === 'routescan' ||
+      x.type === 'blockscout',
   )
 
   if (!explorerApi) {
@@ -109,7 +120,7 @@ function getChainDiscoveryConfig(
     ]),
     multicall: multicallConfig,
     explorer:
-      explorerApi.type === 'blockscout'
+      explorerApi.type === 'blockscout' || explorerApi.type === 'routescan'
         ? {
             type: explorerApi.type,
             url: explorerApi.url,

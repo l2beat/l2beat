@@ -170,7 +170,7 @@ export class RpcClient extends ClientCore implements BlockClient {
   }
 
   isMulticallDeployed(blockNumber: number) {
-    return (
+    return !!(
       this.$.multicallClient && this.$.multicallClient.sinceBlock <= blockNumber
     )
   }

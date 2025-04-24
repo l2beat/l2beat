@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('abstract')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const abstract: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1724863689), // 2024-08-28T16:48:09Z
+  addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
   display: {
     name: 'Abstract',
     slug: 'abstract',
@@ -32,6 +32,9 @@ export const abstract: ScalingProject = zkStackL2({
         'https://youtube.com/@AbstractBlockchain',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
   chainConfig: {
     name: 'abstract',
@@ -63,6 +66,7 @@ export const abstract: ScalingProject = zkStackL2({
       },
     }),
   ],
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -109,7 +113,7 @@ export const abstract: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/AbstractChain/status/1883939915169423777',
       date: '2025-01-27T00:00:00Z',
       description: 'Abstract launches their mainnet, opening for all users.',

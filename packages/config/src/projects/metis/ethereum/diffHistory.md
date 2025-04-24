@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x29434752bd18560c7eab8450475962ebc1b66a04
+
+# Diff at Thu, 10 Apr 2025 14:42:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      displayName:
+-        "AddressManager"
+    }
+```
+
 Generated with discovered.json: 0xf7f50a04d1d35a796525334d58176e1e4a621155
 
 # Diff at Thu, 27 Mar 2025 11:14:40 GMT:

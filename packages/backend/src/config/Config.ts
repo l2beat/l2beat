@@ -1,7 +1,6 @@
 import type {
   ChainConfig,
   OnchainVerifier,
-  Project,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
   ProjectFinalityConfig,
@@ -12,12 +11,7 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type {
-  AmountConfigEntry,
-  PriceConfigEntry,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -37,7 +31,6 @@ export interface Config {
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
   readonly health: HealthConfig
-  readonly tvl: TvlConfig | false
   readonly tvs: TvsConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
@@ -64,7 +57,7 @@ export interface Config {
 export interface ApiConfig {
   readonly port: number
   readonly cache: {
-    readonly tvl: boolean
+    readonly tvs: boolean
     readonly liveness: boolean
     readonly verifiers: boolean
   }
@@ -93,16 +86,6 @@ export interface ClockConfig {
   readonly safeTimeOffsetSeconds: number
   readonly hourlyCutoffDays: number
   readonly sixHourlyCutoffDays: number
-}
-
-export interface TvlConfig {
-  readonly prices: PriceConfigEntry[]
-  readonly amounts: AmountConfigEntry[]
-  readonly chains: ChainTvlConfig[]
-  readonly projects: Project<'tvlConfig', 'chainConfig'>[]
-  // used by value indexer
-  readonly maxTimestampsToAggregateAtOnce: number
-  readonly tvlCleanerEnabled: boolean
 }
 
 export interface TvsConfig {
@@ -158,6 +141,11 @@ export interface EtherscanChainConfig {
   readonly url: string
 }
 
+export interface RoutescanChainConfig {
+  readonly type: 'routescan'
+  readonly url: string
+}
+
 export interface ChainTvlConfig {
   readonly name: string
   readonly providerUrl: string
@@ -166,6 +154,7 @@ export interface ChainTvlConfig {
   readonly blockExplorerConfig:
     | EtherscanChainConfig
     | BlockscoutChainConfig
+    | RoutescanChainConfig
     | undefined
   readonly multicallConfig: MulticallConfigEntry[]
 }
@@ -184,8 +173,6 @@ export interface ActivityConfigProject {
   id: ProjectId
   chainName: string
   activityConfig: ProjectActivityConfig
-  /** @deprecated This should somehow be configured differently */
-  batchSize: number
 }
 
 export interface MetricsAuthConfig {
@@ -200,6 +187,7 @@ export interface UpdateMonitorConfig {
   readonly cacheEnabled?: boolean
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
+  readonly disabledChains: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
 }

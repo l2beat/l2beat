@@ -30,7 +30,9 @@ export function loadNodes(
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
     const height =
-      HEADER_HEIGHT + node.fields.length * FIELD_HEIGHT + BOTTOM_PADDING
+      HEADER_HEIGHT +
+      (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+      BOTTOM_PADDING
     const savedColor = saved?.colors?.[node.id]
     const color = typeof savedColor === 'number' ? savedColor : node.color
     return { ...node, color, box: { x, y, width, height: height } }
@@ -79,12 +81,14 @@ function idToUnknown(id: string): Node {
   return {
     id,
     address,
+    isInitial: false,
     addressType: 'Unknown',
     name,
     box: { x: 0, y: 0, width: 0, height: 0 },
     color: 0,
     hueShift: 0,
     fields: [],
+    hiddenFields: [],
     data: null,
   }
 }

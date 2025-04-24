@@ -1,4 +1,39 @@
-Generated with discovered.json: 0x350a94dcefafa1b5617b2bb91b49a5cc66163bfd
+Generated with discovered.json: 0xd2b98cee46be677a29fb7fba20754a4948f35323
+
+# Diff at Thu, 24 Apr 2025 08:36:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22187210
+- current block number: 22337715
+
+## Description
+
+Upgrade the scroll adapter.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Scroll_Adapter (0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.534352:
+-        "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F"
++        "0x2DA799c2223c6ffB595e578903AE6b95839160d8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll_Adapter (0x2DA799c2223c6ffB595e578903AE6b95839160d8)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3af056119078158b8cac1d38813cd3898c8a4fda
 
 # Diff at Thu, 03 Apr 2025 08:31:29 GMT:
 

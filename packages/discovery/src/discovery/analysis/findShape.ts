@@ -1,5 +1,5 @@
+import { undefinedIfEmpty } from '@l2beat/shared-pure'
 import { hashFirstSource } from '../../flatten/utils'
-import { undefinedIfEmpty } from '../output/toDiscoveryOutput'
 import type { AnalyzedContract } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
 

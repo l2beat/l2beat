@@ -1,9 +1,8 @@
-[
-  {
+{
+  "EigenPod": {
     "hash": "0xda9b2195cd2d07052198378564d56758772451df9c7849c8d958ef8e2207e059",
-    "description": "EigenPod",
     "address": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}

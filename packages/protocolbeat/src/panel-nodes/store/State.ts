@@ -41,9 +41,11 @@ export interface State {
 export interface Node {
   readonly id: string
   readonly address: string
+  readonly isInitial: boolean
   readonly addressType: ApiAddressType
   readonly name: string
   readonly fields: Field[]
+  readonly hiddenFields: string[]
   readonly box: Box
   readonly color: number
   readonly hueShift: number

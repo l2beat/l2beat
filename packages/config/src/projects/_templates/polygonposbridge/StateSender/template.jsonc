@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.",
+  "fields": {
+    "REGISTRATIONS": {
+      "handler": {
+        "type": "event",
+        "select": "sender",
+        "add": {
+          "event": "RegistrationUpdated"
+        }
+      }
+    }
+  },
+  "ignoreInWatchMode": ["counter"],
+  "ignoreRelatives": ["REGISTRATIONS"],
+  "category": "core"
+}

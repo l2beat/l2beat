@@ -7,7 +7,7 @@ const discovery = new ProjectDiscovery('soneium')
 const genesisTimestamp = UnixTime(1733498411)
 
 export const soneium = opStackL2({
-  addedAt: UnixTime(1724842746),
+  addedAt: UnixTime(1736812800), // 14.01.2025
   discovery,
   genesisTimestamp,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -35,10 +35,9 @@ export const soneium = opStackL2({
       ],
     },
   },
+  hasSuperchainScUpgrades: true,
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1733134753),
   },
   finality: {
     type: 'OPStack',

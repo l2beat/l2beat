@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": [
+    "token",
+    "tokenMatic",
+    "migration",
+    "validatorShareFactory"
+  ],
+  "ignoreMethods": [
+    "getValidatorContract",
+    "delegatedAmount",
+    "isValidator",
+    "latestSignerUpdateEpoch",
+    "signers",
+    "validatorAuction",
+    "validators",
+    "validatorStake",
+    "validatorStateChanges",
+    "accountStateRoot",
+    "validatorReward"
+  ],
+  "ignoreInWatchMode": [
+    "currentEpoch",
+    "currentValidatorSetTotalStake",
+    "epoch",
+    "rewardPerStake",
+    "totalRewardsLiquidated",
+    "totalStaked",
+    "validatorState",
+    "totalHeimdallFee",
+    "NFTCounter",
+    "delegatorsReward"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can replace all validators."
+        }
+      ]
+    }
+  },
+  "category": "core"
+}

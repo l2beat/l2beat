@@ -97,7 +97,7 @@ const isPostBoLD = discovery.getContractValue<boolean>(
 )
 
 export const nova: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1660003200), // 2022-08-09T00:00:00Z
   additionalBadges: [
     BADGES.VM.WasmVM,
     BADGES.Stack.Nitro,
@@ -250,7 +250,7 @@ export const nova: ScalingProject = orbitStackL2({
       type: 'general',
     },
     {
-      title: 'Mainnet for everyone',
+      title: 'Arbitrum Nova Public Mainnet launch',
       description:
         'Whitelist got removed, there are no restrictions on who can transact with the network.',
       date: '2022-08-09T00:00:00Z',

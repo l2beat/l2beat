@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0x8a1d6f7152080e87d3d1fc6904cb58997193287b6e17de5a33c3d1ff19d67f48",
+  "configHash": "0xb58f1d09f1a7506ad6e79c78571300b9631bedac8d853d08a3834aac643e8207",
   "entries": [
     {
       "address": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
@@ -364,6 +364,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

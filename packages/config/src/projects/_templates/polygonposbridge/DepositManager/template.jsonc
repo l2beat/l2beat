@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
+  "ignoreMethods": ["deposits"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the root chain it references."
+        }
+      ]
+    }
+  }
+}

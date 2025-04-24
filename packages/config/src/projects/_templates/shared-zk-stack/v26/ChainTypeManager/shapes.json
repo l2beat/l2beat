@@ -1,9 +1,8 @@
-[
-  {
+{
+  "ChainTypeManager": {
     "hash": "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37",
-    "description": "ChainTypeManager",
     "address": "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}

@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x530adf61b69d6f2470ebb8db19f01f0f043246bc
+Generated with discovered.json: 0xd1d35f2cd13a220b0671424f099f5a61502806e8
+
+# Diff at Thu, 24 Apr 2025 10:30:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22208508
+- current block number: 22208508
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208508 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum1:
+-        [200,11000,50]
++        {"maxOperatorCount":200,"kickBIPsOfOperatorStake":11000,"kickBIPsOfTotalStake":50}
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum2:
+-        [200,11000,50]
++        {"maxOperatorCount":200,"kickBIPsOfOperatorStake":11000,"kickBIPsOfTotalStake":50}
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum3:
+-        [15,11000,667]
++        {"maxOperatorCount":15,"kickBIPsOfOperatorStake":11000,"kickBIPsOfTotalStake":667}
+    }
+```
+
+Generated with discovered.json: 0xeeda554cfd0b24ba60f05f4cf57200af98ed40d1
 
 # Diff at Sun, 06 Apr 2025 07:54:21 GMT:
 
