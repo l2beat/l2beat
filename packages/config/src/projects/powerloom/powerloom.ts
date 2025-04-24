@@ -52,7 +52,7 @@ export const powerloom: ScalingProject = underReviewL2({
     {
       address: EthereumAddress('0x53b168016aA2E3469B5D76315311aAC4Ce0020DB'), // bridge
       sinceTimestamp: UnixTime(1741768931),
-      tokens: '*',
+      tokens: ['POWER'],
       chain: 'ethereum',
     },
   ],
