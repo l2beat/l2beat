@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x5975bcf5cce26254adb33721cf73c4156a210ba6
+
+# Diff at Wed, 23 Apr 2025 13:20:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2f39eabda7f7e886e8b7711bdb4fc317e976d746 block: 22188866
+- current block number: 22188866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188866 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "SP1VerifierGatewayMultisig"
+    }
+```
+
 Generated with discovered.json: 0x3f1ab78a7039f639a7a94a74f6f074e52b8eab2f
 
 # Diff at Thu, 03 Apr 2025 14:54:56 GMT:
