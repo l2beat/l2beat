@@ -10,7 +10,6 @@ import { assert } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
-import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
@@ -26,7 +25,6 @@ type ProjectParams = {
   isVerified: boolean
   architectureImage?: string
   contracts?: ProjectContracts
-  daSolution?: DaSolution
 }
 
 type ContractsSection = Omit<
@@ -42,10 +40,7 @@ export function getContractsSection(
   if (!projectParams.contracts) {
     return undefined
   }
-  if (
-    Object.values(projectParams.contracts.addresses).flat().length === 0 &&
-    projectParams.daSolution?.contracts?.length === 0
-  ) {
+  if (Object.values(projectParams.contracts.addresses).flat().length === 0) {
     return undefined
   }
   const projectChangeReport = projectParams.id
@@ -70,27 +65,6 @@ export function getContractsSection(
       },
     ),
   )
-
-  const daSolution =
-    projectParams.daSolution?.contracts &&
-    projectParams.daSolution.contracts.length !== 0
-      ? {
-          layerName: projectParams.daSolution.layerName,
-          bridgeName: projectParams.daSolution.bridgeName,
-          hostChainName: projectParams.daSolution.hostChainName,
-          layerSlug: projectParams.daSolution.layerSlug,
-          bridgeSlug: projectParams.daSolution.bridgeSlug,
-          contracts: projectParams.daSolution.contracts.flatMap((contract) => {
-            return makeTechnologyContract(
-              contract,
-              projectParams,
-              !contract.isVerified,
-              projectChangeReport,
-              contractUtils,
-            )
-          }),
-        }
-      : undefined
 
   const escrows =
     projectParams.contracts.escrows
@@ -120,7 +94,6 @@ export function getContractsSection(
       projectParams.architectureImage ?? projectParams.slug,
     ),
     isUnderReview: projectParams.isUnderReview,
-    daSolution,
   }
 }
 
