@@ -175,7 +175,7 @@ export async function getDaProjectEntry(
         .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
         .map((x) => ({
           ...x,
-          icon: getProjectIcon(x.id),
+          icon: getProjectIcon(x.slug),
         })),
     })),
     header: {
@@ -195,7 +195,7 @@ export async function getDaProjectEntry(
         .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
         .map((x) => ({
           ...x,
-          icon: getProjectIcon(x.id),
+          icon: getProjectIcon(x.slug),
         })),
     },
     sections,
@@ -215,7 +215,7 @@ export async function getDaProjectEntry(
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
       usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
         ...x,
-        icon: getProjectIcon(x.id),
+        icon: getProjectIcon(x.slug),
       })),
     })
     result.projectVariants?.unshift({
@@ -261,7 +261,7 @@ export async function getEthereumDaProjectEntry(
     .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
     .map((x) => ({
       ...x,
-      icon: getProjectIcon(x.id),
+      icon: getProjectIcon(x.slug),
     }))
 
   const latestThroughput = layer.daLayer.throughput

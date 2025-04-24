@@ -27,6 +27,7 @@ const MAX_PER_SOURCE = 10
 
 interface Props {
   tokens: ProjectTokens
+  placeholderIcon: string
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
@@ -35,6 +36,7 @@ interface Props {
 
 export function TokenCombobox({
   tokens,
+  placeholderIcon,
   value,
   setValue,
   className,

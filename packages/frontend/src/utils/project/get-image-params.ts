@@ -17,12 +17,7 @@ export interface ImageParams {
 
 export function getImageParams(filePath: string): ImageParams | undefined {
   if (env.REWRITE) {
-    try {
-      const image = manifest.getImage(filePath)
-      return image
-    } catch {
-      return undefined
-    }
+    return manifest.getImage(filePath)
   }
   try {
     const imgBuffer = readFileSync(

@@ -9,6 +9,7 @@ import type { TechnologySectionProps } from '~/components/projects/sections/tech
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { getDiagramParams } from '../get-diagram-params'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getTechnologySectionProps } from './get-technology-section-props'
@@ -124,6 +125,7 @@ function getPublicDaSection(
                 name: daSolution.layerName,
                 slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
                 type: 'data-availability',
+                icon: getProjectIcon(daSolution.layerSlug),
               },
             }
           : undefined,

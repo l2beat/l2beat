@@ -7,10 +7,13 @@ const manifest = getManifest(
   path.join(process.cwd(), 'rewrite'),
 )
 export function getProjectIcon(slug: string) {
+  return getStaticAsset(`/icons/${slug}.png`)
+}
+
+export function getStaticAsset(path: string) {
   if (env.REWRITE) {
-    const image = manifest.getUrl(`/icons/${slug}.png`)
-    return image
+    return manifest.getUrl(path)
   }
 
-  return `/icons/${slug}.png`
+  return path
 }

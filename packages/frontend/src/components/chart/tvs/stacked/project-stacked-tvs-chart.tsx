@@ -138,6 +138,7 @@ function DefaultChart({
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox
+              placeholderIcon={getProjectIcon(projectId)}
               tokens={tokens}
               value={token}
               setValue={setToken}
