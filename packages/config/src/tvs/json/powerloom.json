@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "powerloom",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "powerloom-POWER",
+      "priceId": "powerloom",
+      "symbol": "POWER",
+      "name": "Powerloom Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53319/large/powerloom-200px.png?1736086027",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x429F0d8233e517f9acf6F0C8293BF35804063a83",
+        "chain": "ethereum",
+        "escrowAddress": "0x53b168016aA2E3469B5D76315311aAC4Ce0020DB",
+        "decimals": 18,
+        "sinceTimestamp": 1741768931
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
