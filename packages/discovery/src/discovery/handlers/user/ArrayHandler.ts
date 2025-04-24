@@ -128,6 +128,7 @@ export class ArrayHandler implements Handler {
         field: this.field,
         value,
         error: 'Too many values. Provide a higher maxLength value',
+        fragment: arrayFragment,
       }
     }
     return {
