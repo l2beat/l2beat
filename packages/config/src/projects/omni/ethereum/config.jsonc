@@ -38,7 +38,7 @@
       ],
       "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
       "fields": {
-        "validavalidatorContract": {
+        "validatorContract": {
           "permissions": [
             {
               "type": "validateBridge3"
@@ -96,7 +96,7 @@
       "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
       "proxyType": "Eternal Storage proxy",
       "fields": {
-        "validavalidatorContract": {
+        "validatorContract": {
           "permissions": [
             {
               "type": "validateBridge3"

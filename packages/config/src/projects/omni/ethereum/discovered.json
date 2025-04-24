@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22337861,
-  "configHash": "0xdeb3c04a812f8c2e55938074639ff8c3a7100a86e918a8e85679ee329fbb6dfb",
+  "configHash": "0xc4c264f9efbcf2c3f234f5c3edabbe17ecee25fc24c4cd7367bc57dce800de54",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -201,6 +201,11 @@
           "permission": "upgrade",
           "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "via": []
         }
       ],
       "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
@@ -341,6 +346,11 @@
         {
           "permission": "upgrade",
           "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "via": []
+        },
+        {
+          "permission": "validateBridge3",
+          "to": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "via": []
         }
       ],
@@ -935,6 +945,12 @@
           "via": []
         }
       ],
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+        }
+      ],
       "sinceTimestamp": 1539028018,
       "sinceBlock": 6478411,
       "values": {
@@ -1012,6 +1028,12 @@
           "permission": "upgrade",
           "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
         }
       ],
       "sinceTimestamp": 1579258396,

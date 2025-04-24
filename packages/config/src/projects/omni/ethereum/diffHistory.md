@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6b83ad0c054ef3a4d715395f2d9277a436e98e8d
+Generated with discovered.json: 0xe53fd40aa3e894ac87894b331ecf942f28195630
 
-# Diff at Thu, 24 Apr 2025 15:22:55 GMT:
+# Diff at Thu, 24 Apr 2025 15:45:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22281679
@@ -119,6 +119,8 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```diff
     contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
     +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+      issuedPermissions.2:
++        {"permission":"validateBridge3","to":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064","via":[]}
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}
       issuedPermissions.0.permission:
@@ -237,6 +239,8 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 +        "gnosisbridge/BridgeValidators"
       description:
 +        "Custom Multisignature contract for Validator addresses."
+      receivedPermissions:
++        [{"permission":"validateBridge3","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"}]
     }
 ```
 
