@@ -14,7 +14,7 @@ export const spire: ScalingProject = upcomingL2({
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
-      websites: ['https://www.spire.dev/'],
+      websites: ['https://spire.dev/'],
       documentation: ['https://docs.spire.dev/'],
       repositories: ['https://github.com/spire-labs'],
       socialMedia: ['https://x.com/Spire_Labs', 'https://paragraph.com/@spire'],
