@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 22273219,
-  "configHash": "0x7efa8f6e5b4d36040cc93be6f55ba8f25868462b46761f875960e3427b990ac3",
+  "configHash": "0x2e835bb9046f32bf64c1996af8cb9b426e09c963519c0399a923452f5c128927",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -12,7 +12,6 @@ import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
-import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
@@ -78,7 +77,6 @@ export class Application {
         providers,
         trackedTxsModule?.indexer,
       ),
-      initTvlModule(config, logger, database, providers, clock),
       initTvsModule(config, logger, database, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createDaBeatModule(config, logger, peripherals, providers, clock),

@@ -2,7 +2,7 @@
   "name": "blast",
   "chain": "ethereum",
   "blockNumber": 21084957,
-  "configHash": "0xeb25936629041449ea31d2586b7457ba446d7a74283003ec3b45d2aca1941cd7",
+  "configHash": "0x7edd1b646e319b25be653fd865436006092b0c127c81c39e1d172d068818e6fe",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

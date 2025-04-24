@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 22029918,
-  "configHash": "0x122b354d68e8cebc2c543e399795d4c49d33df5d27161ab43d847065fded98e4",
+  "blockNumber": 22337725,
+  "configHash": "0x735835ccdc40d33677212c6d9e97b958492abffcba8ed3b09658d71e82380e2d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -21,7 +21,7 @@
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0xb7c0fa59b37014e507a0e86791007823e5a5548fe3523b6fcf3fb383c0e8c24e"
+        "0x67780cfd4e258f37c824b516a488799359ec5e535fb56f62fbd71765730fa32b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
@@ -42,7 +42,7 @@
       "sinceBlock": 20219921,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20",
+        "$implementation": "0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a",
         "$pastUpgrades": [
           [
             "2024-07-02T16:13:23.000Z",
@@ -63,22 +63,27 @@
             "2025-02-12T09:23:47.000Z",
             "0x19e7944c32b28126488482597f707797b60c4c3201abacdba5b9ea00b31cfbb4",
             ["0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20"]
+          ],
+          [
+            "2025-04-23T14:46:59.000Z",
+            "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",
+            ["0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "guardian": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 287624,
-          "prevBlockNum": 22029680,
+          "prevBoughtGas": 395077,
+          "prevBlockNum": 22336247,
           "prevTxCount": 1
         },
         "paused": false,
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "systemConfig": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-        "version": "2.0.2"
+        "version": "2.1.0"
       },
       "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -90,7 +95,7 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x1e3673770550301c22eadd847cc822cfbc995c36019d1dfce07b2ec9cffd930f"
+        "0x931681cb03b7ea6b4521cf57be98c5303f045f088c4cb9e282b889be911da623"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -106,17 +111,24 @@
       "sinceBlock": 20219927,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
+        "$implementation": "0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F",
         "$pastUpgrades": [
           [
             "2024-07-02T16:12:35.000Z",
             "0xba20c00dc03b009737ebbcaa3db1263524a1322c5984a4f51fbf7c4ebc979575",
             ["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]
+          ],
+          [
+            "2025-04-23T14:46:59.000Z",
+            "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",
+            ["0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
+        "ENCODING_OVERHEAD": 260,
+        "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637747",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638484",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -130,7 +142,8 @@
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-        "version": "2.3.0"
+        "TX_BASE_GAS": 21000,
+        "version": "2.4.0"
       },
       "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
@@ -245,7 +258,7 @@
         "l1StandardBridge": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "L2_OUTPUT_ORACLE_SLOT": "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815",
         "l2OutputOracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-        "minimumGasLimit": 9000000,
+        "minimumGasLimit": 7000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -258,7 +271,7 @@
         "overhead": 0,
         "owner": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "resourceConfig": {
-          "maxResourceLimit": 8000000,
+          "maxResourceLimit": 6000000,
           "elasticityMultiplier": 10,
           "baseFeeMaxChangeDenominator": 8,
           "maxTransactionLimit": 8,
@@ -291,7 +304,7 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x751d149755c8de663c6b1eb488f5d145ad3e9aa81561545e375a6cb8adbd0f6c"
+        "0x4da64b64aa2ba04837c58c90080a550f82596377659251b91ef703b0acdb49da"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
@@ -307,7 +320,7 @@
       "sinceBlock": 20219925,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b",
+        "$implementation": "0x506aadcb7bF93E892a43208d879BAc076eBC97Ef",
         "$pastUpgrades": [
           [
             "2024-07-02T16:11:59.000Z",
@@ -333,9 +346,14 @@
             "2025-02-12T09:23:47.000Z",
             "0x19e7944c32b28126488482597f707797b60c4c3201abacdba5b9ea00b31cfbb4",
             ["0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b"]
+          ],
+          [
+            "2025-04-23T14:46:59.000Z",
+            "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",
+            ["0x506aadcb7bF93E892a43208d879BAc076eBC97Ef"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "accessController": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "messenger": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "MESSENGER": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
@@ -343,7 +361,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000010",
         "paused": false,
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-        "version": "2.1.0"
+        "version": "2.2.0"
       },
       "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
@@ -668,10 +686,10 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 10909936,
-        "latestOutputIndex": 31471,
-        "nextBlockNumber": 10909937,
-        "nextOutputIndex": 31472,
+        "latestBlockNumber": 12769805,
+        "latestOutputIndex": 31852,
+        "nextBlockNumber": 12769806,
+        "nextOutputIndex": 31853,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -699,7 +717,7 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x7328459427570e205526a415613989750227c38d95138613a718c573132fdd17"
+        "0x937e394859daaa4d66de4cbe3e6770d80adf639ecc5d3394774676870cda8d62"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
@@ -714,22 +732,27 @@
       "sinceBlock": 20219929,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
+        "$implementation": "0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb",
         "$pastUpgrades": [
           [
             "2024-07-02T16:12:11.000Z",
             "0xd6346f4354e7b4f58d6ef747d0ac04afa4c80319963ac187a69403ff1dcebdc8",
             ["0x3B21dC86c412aC34fF4c679497b274509D73cDcC"]
+          ],
+          [
+            "2025-04-23T14:46:59.000Z",
+            "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",
+            ["0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "messenger": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "MESSENGER": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "paused": false,
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-        "version": "2.1.0"
+        "version": "2.2.0"
       },
       "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
@@ -895,7 +918,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1014,19 +1037,29 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x3B21dC86c412aC34fF4c679497b274509D73cDcC": [
+    "0x506aadcb7bF93E892a43208d879BAc076eBC97Ef": [
       "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error FailedInnerCall()",
       "error InvalidInitialization()",
       "error NotInitializing()",
-      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
-      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "error SafeERC20FailedOperation(address token)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
       "event Initialized(uint64 version)",
       "function MESSENGER() view returns (address)",
       "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
-      "function deposits(address, address, uint256) view returns (bool)",
-      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
+      "function accessController() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
       "function initialize(address _messenger, address _superchainConfig)",
       "function messenger() view returns (address)",
       "function otherBridge() view returns (address)",
@@ -1049,6 +1082,34 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OutOfGas()",
+      "event GasBurned(uint256 gasAmount, address indexed sender)",
+      "event Initialized(uint64 version)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
+      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Oracle() view returns (address)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum, uint16 prevTxCount)",
+      "function paused() view returns (bool paused_)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)"
     ],
     "0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
       "constructor()",
@@ -1158,39 +1219,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "event FailedRelayedMessage(bytes32 indexed msgHash)",
-      "event Initialized(uint64 version)",
-      "event RelayedMessage(bytes32 indexed msgHash)",
-      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
-      "event SentMessageExtension1(address indexed sender, uint256 value)",
-      "function MESSAGE_VERSION() view returns (uint16)",
-      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
-      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
-      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
-      "function OTHER_MESSENGER() view returns (address)",
-      "function PORTAL() view returns (address)",
-      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
-      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
-      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
-      "function RELAY_RESERVED_GAS() view returns (uint64)",
-      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
-      "function failedMessages(bytes32) view returns (bool)",
-      "function initialize(address _superchainConfig, address _portal)",
-      "function messageNonce() view returns (uint256)",
-      "function otherMessenger() view returns (address)",
-      "function paused() view returns (bool)",
-      "function portal() view returns (address)",
-      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
-      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
-      "function successfulMessages(bytes32) view returns (bool)",
-      "function superchainConfig() view returns (address)",
-      "function version() view returns (string)",
-      "function xDomainMessageSender() view returns (address)"
     ],
     "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0": [
       "constructor(address _admin)",
@@ -1339,33 +1367,41 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
-    "0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20": [
+    "0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F": [
       "constructor()",
       "error InvalidInitialization()",
       "error NotInitializing()",
-      "error OutOfGas()",
-      "event GasBurned(uint256 gasAmount, address indexed sender)",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
       "event Initialized(uint64 version)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Oracle() view returns (address)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum, uint16 prevTxCount)",
-      "function paused() view returns (bool paused_)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 value)",
+      "function ENCODING_OVERHEAD() view returns (uint64)",
+      "function FLOOR_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function PORTAL() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function TX_BASE_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize(address _superchainConfig, address _portal)",
+      "function messageNonce() view returns (uint256)",
+      "function otherMessenger() view returns (address)",
+      "function paused() view returns (bool)",
+      "function portal() view returns (address)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
       "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() view returns (string)"
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
     ],
     "0xC25D093D3A3f58952252D2e763BEAF2559dc9737": [
       "constructor(address _admin)",
@@ -1392,6 +1428,26 @@
     ],
     "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a": [
       "function digest() view returns (bytes32)"
+    ],
+    "0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event Initialized(uint64 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function deposits(address, address, uint256) view returns (bool)",
+      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
+      "function initialize(address _messenger, address _superchainConfig)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function superchainConfig() view returns (address)",
+      "function version() view returns (string)"
     ],
     "0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4": [
       "constructor()",
@@ -1436,36 +1492,6 @@
       "function verifyV2(bytes bundleProof, bytes publicInput) view",
       "function version() view returns (string)",
       "function withdrawalKeepalivePeriodSeconds() view returns (uint256)"
-    ],
-    "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error AddressInsufficientBalance(address account)",
-      "error FailedInnerCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error SafeERC20FailedOperation(address token)",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event Initialized(uint64 version)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function accessController() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function initialize(address _messenger, address _superchainConfig)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function paused() view returns (bool)",
-      "function superchainConfig() view returns (address)",
-      "function version() view returns (string)"
     ],
     "0xf885DA6A3B4c93905b02f36f9a13680922A554b0": [
       "constructor()",

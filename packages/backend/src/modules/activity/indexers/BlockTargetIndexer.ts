@@ -1,9 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import type { BlockTimestampProvider } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
+import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
-import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 
 export class BlockTargetIndexer extends RootIndexer {
   // used only for runtime invalidation protection
@@ -14,12 +15,12 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly clock: Clock,
     private readonly blockTimestampProvider: BlockTimestampProvider,
     private readonly db: Database,
-    private projectId: ProjectId,
+    private readonly config: ActivityConfigProject,
   ) {
     super(
       logger.tag({
-        tag: projectId,
-        project: projectId,
+        tag: config.id,
+        project: config.id,
       }),
       {
         tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
@@ -38,7 +39,10 @@ export class BlockTargetIndexer extends RootIndexer {
     this.logger.info('Getting block number for timestamp', { timestamp })
 
     const blockNumber =
-      await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
+      await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+        timestamp,
+        this.config.chainName,
+      )
 
     await this.checkBlockNumber(blockNumber)
 
@@ -53,7 +57,7 @@ export class BlockTargetIndexer extends RootIndexer {
   private async checkBlockNumber(blockNumber: number) {
     if (this.blockHeight === -1) {
       const lastProcessedBlock = await this.db.activity.getLatestProcessedBlock(
-        this.projectId,
+        this.config.id,
       )
       if (lastProcessedBlock) {
         this.blockHeight = lastProcessedBlock

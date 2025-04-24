@@ -2,7 +2,7 @@
   "name": "everclear",
   "chain": "ethereum",
   "blockNumber": 22122719,
-  "configHash": "0x32b579385679ce8f2bff8583561d2c515006ec1f02d6857020c1496c9eb4ffd0",
+  "configHash": "0xc67a07a55789228af46ba986914a6a9fc3a88892f3536d12215e253b427c5a97",
   "entries": [
     {
       "name": "OneStepProverHostIo",
