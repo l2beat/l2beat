@@ -10,15 +10,6 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('omni')
-const threshold = discovery.getContractValue<number>(
-  'BridgeValidators_Omni',
-  '$threshold',
-)
-const size = discovery.getContractValue<number>(
-  'BridgeValidators_Omni',
-  'validatorCount',
-)
-const validatorsString = `${threshold} / ${size}`
 
 const omnipaused =
   discovery.getContractValue<number>('ForeignAMB', 'maxGasPerTx') < 21000
@@ -82,7 +73,7 @@ export const omni: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: `${validatorsString} Validator MultiSig`,
+      description: `${discovery.getMultisigStats('BridgeValidators_DAI')} Validator MultiSig`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -102,14 +93,13 @@ export const omni: Bridge = {
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
-      description:
-        'This is a Lock-Mint bridge that takes ownership of tokens in escrow contracts on Ethereum and mints "representation tokens" on Gnosis Chain. When bridging back to Ethereum, tokens are burned on Gnosis Chain and then released from the escrow on Ethereum. Tokens in Ethereum escrow are not effectively locked, as they can be invested in DeFi protocols to generate yield. Bridge contract enables its owner (Gnosis Bridge Multisig) to set separate external contract with investment logic. The addition of Hashi (EVM Hash Oracle Aggregator) and light clients for bridge validation is being tested.',
+      description: `The Gnosis bridge is comprised of two standard multisig-validated token bridges (Omni and xDAI) with similar architecture and validators. While the xDAI bridge is only used for bridging DAI-related tokens (xDAI is Gnosis Chains gas token), the Omni bridge can be used to bridge many other ERC-20 tokens. Both bridges on ethereum are served by external validators that sign bridge messages via custom multisigs. Assets that are locked in one of the escrows on ethereum can be 'invested' by permissioned actors to generate yield. In the case of DAI / sDAI (Spark protocol), the yield is handed down to sDAI users on Gnosis Chain. The addition of Hashi (EVM Hash Oracle Aggregator) and light clients for message validation is being tested but remains optional for now.`,
       references: [],
       risks: [],
     },
     validation: {
       name: 'Incoming transfers are externally verified',
-      description: `Incoming messages to Ethereum are managed by the Arbitrary Message Bridge (AMB), a trusted message relaying mechanism currently validated by a ${validatorsString} Validator MultiSig. The Gnosis Bridge Multisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omnibridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction but tokens on Gnosis are burned and tokens on Ethereum are released from escrow. Outgoing messages are verified on Gnosis chain using a ZK Ethereum light client.`,
+      description: `Incoming messages to Ethereum are validated by Multisigs with publicly known entities as their signers.  The DAI bridge validators are validated by the ${discovery.getMultisigStats('BridgeValidators_DAI')} BridgeValidators_DAI Multisig and the Omni bridge by the ${discovery.getMultisigStats('BridgeValidators_Omni')} BridgeValidators_Omni Multisig. Only messages signed by at least the threshold amount of validators from the respective multisig are accepted for releasing funds from the escrow contract or for executing messages.`,
       references: [
         {
           title: 'Gnosis bridge documentation',
@@ -123,15 +113,11 @@ export const omni: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'validators relay a fake message to Gnosis chain to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          text: 'validators sign a malicious message to mint or release tokens that they did not burn or lock on the other side.',
         },
         {
           category: 'Funds can be stolen if',
-          text: 'validators relay a fake message to Ethereum chain allowing a user to withdraw tokens from Ethereum escrow when equivalent amount of tokens has not been deposited and burned on Gnosis chain.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: "there's an exploit in contracts that invest user deposit.",
+          text: "there's an exploit in external contracts that are used to invest user deposits.",
         },
         {
           category: 'Funds can be frozen if',

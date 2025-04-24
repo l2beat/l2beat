@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7da1055d2b6c3e66ca48e48faaf0e818f4185d7a
+Generated with discovered.json: 0x1959ce0e8a9b058e9e4548ca111ae34d1c77c923
 
-# Diff at Thu, 24 Apr 2025 13:21:47 GMT:
+# Diff at Thu, 24 Apr 2025 15:22:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 39627531
@@ -17,10 +17,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 39627531 (main branch discovery), not current.
 
 ```diff
-    contract undefined (0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d) {
+    contract Giveth EOA 2 (0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "Giveth EOA 2"
     }
 ```
 
@@ -33,34 +33,34 @@ discovery. Values are for block 39627531 (main branch discovery), not current.
 ```
 
 ```diff
-    contract undefined (0x258667E543C913264388B33328337257aF208a8f) {
+    contract Safe EOA 2 (0x258667E543C913264388B33328337257aF208a8f) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "Safe EOA 2"
     }
 ```
 
 ```diff
-    contract undefined (0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6) {
+    contract Gateway EOA 2 (0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "Gateway EOA 2"
     }
 ```
 
 ```diff
-    contract undefined (0x459A3bd49F1ff109bc90b76125533699AaAAf9A6) {
+    contract Protofire EOA 2 (0x459A3bd49F1ff109bc90b76125533699AaAAf9A6) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "Protofire EOA 2"
     }
 ```
 
 ```diff
-    contract undefined (0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0) {
+    contract CoW Protocol EOA 2 (0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "CoW Protocol EOA 2"
     }
 ```
 
@@ -129,22 +129,8 @@ discovery. Values are for block 39627531 (main branch discovery), not current.
       name:
 -        "BridgeValidators"
 +        "BridgeValidators_Gnosis"
-      issuedPermissions.8:
-+        {"permission":"validateBridge3","to":"0x258667E543C913264388B33328337257aF208a8f","via":[]}
-      issuedPermissions.7:
-+        {"permission":"validateBridge3","to":"0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0","via":[]}
-      issuedPermissions.6:
-+        {"permission":"validateBridge3","to":"0xfA98B60E02A61B6590f073cAD56e68326652d094","via":[]}
-      issuedPermissions.5:
-+        {"permission":"validateBridge3","to":"0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe","via":[]}
-      issuedPermissions.4:
-+        {"permission":"validateBridge3","to":"0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6","via":[]}
-      issuedPermissions.3:
-+        {"permission":"validateBridge3","to":"0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d","via":[]}
-      issuedPermissions.2:
-+        {"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}
       issuedPermissions.1:
-+        {"permission":"validateBridge3","to":"0x459A3bd49F1ff109bc90b76125533699AaAAf9A6","via":[]}
++        {"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}
       issuedPermissions.0.permission:
 -        "upgrade"
 +        "interact"
@@ -185,18 +171,18 @@ discovery. Values are for block 39627531 (main branch discovery), not current.
 ```
 
 ```diff
-    contract undefined (0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe) {
+    contract Gnosis DAO EOA 2 (0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "Gnosis DAO EOA 2"
     }
 ```
 
 ```diff
-    contract undefined (0xfA98B60E02A61B6590f073cAD56e68326652d094) {
+    contract Karpatkey EOA (0xfA98B60E02A61B6590f073cAD56e68326652d094) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"validateBridge3","from":"0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"}]
+      name:
++        "Karpatkey EOA"
     }
 ```
 

@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22337861,
-  "configHash": "0x3a69d04f12ecfb37db885a7703ef5ff8954093b4ad238eab7d32d3035707f797",
+  "configHash": "0xdeb3c04a812f8c2e55938074639ff8c3a7100a86e918a8e85679ee329fbb6dfb",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -10,15 +10,10 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Giveth EOA 2",
       "address": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
@@ -26,26 +21,16 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Safe EOA 1",
       "address": "0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
+      "name": "Safe EOA 2",
       "address": "0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Yaru",
@@ -88,15 +73,10 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Gateway EOA 2",
       "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Gnosis Bridge Multisig",
@@ -190,15 +170,10 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "Protofire EOA 2",
       "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
@@ -435,15 +410,10 @@
       "derivedName": "ForeignAMB"
     },
     {
+      "name": "Protofire EOA 1",
       "address": "0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf",
@@ -461,15 +431,10 @@
       "proxyType": "EOA"
     },
     {
+      "name": "CoW Protocol EOA 1",
       "address": "0x587C0d02B40822f15f05301d87c16f6a08AaDDde",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
@@ -521,15 +486,10 @@
       "derivedName": "Safe"
     },
     {
+      "name": "CoW Protocol EOA 2",
       "address": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
@@ -687,15 +647,10 @@
       "derivedName": "ForeignOmnibridge"
     },
     {
+      "name": "Gateway EOA 1",
       "address": "0x90776017057b84bc47D7e7383b65C463C80a6cdd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "HashiManager_Omni",
@@ -777,15 +732,10 @@
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
     },
     {
+      "name": "Gnosis DAO EOA 1",
       "address": "0x97630E2aE609D4104aBdA91F3066C556403182dd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "HashiManager_DAI",
@@ -925,15 +875,10 @@
       "derivedName": "Yaho"
     },
     {
+      "name": "Gnosis DAO EOA 2",
       "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0xBF3d6f830CE263CAE987193982192Cd990442B53",
@@ -941,15 +886,10 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Giveth EOA 1",
       "address": "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
@@ -992,41 +932,6 @@
         {
           "permission": "upgrade",
           "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x587C0d02B40822f15f05301d87c16f6a08AaDDde",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x90776017057b84bc47D7e7383b65C463C80a6cdd",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x97630E2aE609D4104aBdA91F3066C556403182dd",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xfA98B60E02A61B6590f073cAD56e68326652d094",
           "via": []
         }
       ],
@@ -1107,41 +1012,6 @@
           "permission": "upgrade",
           "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x258667E543C913264388B33328337257aF208a8f",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xfA98B60E02A61B6590f073cAD56e68326652d094",
-          "via": []
         }
       ],
       "sinceTimestamp": 1579258396,
@@ -1199,19 +1069,10 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Karpatkey EOA",
       "address": "0xfA98B60E02A61B6590f073cAD56e68326652d094",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge3",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
-        },
-        {
-          "permission": "validateBridge3",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1819,7 +1680,7 @@
     ]
   },
   "usedTemplates": {
-    "gnosisbridge/BridgeValidators": "0xcabf43eea0fee46dd0f2afc7e6b45929fb9ea4e588c91ce6e3328fbb590bfb3b",
+    "gnosisbridge/BridgeValidators": "0x356534465ab0329c89ea80ed97f0ee0b0ca948e3dadde05fe442c4709d352d27",
     "gnosisbridge/HashiManager": "0xb24fa0969d8719d206e37e5479bf6c335e46bf45a6e6ff17ac6d2e22f3ca507d",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",

@@ -10,12 +10,7 @@
         "method": "validatorList",
         "args": []
       },
-      "description": "Array of the signers in the validator multisig",
-      "permissions": [
-        {
-          "type": "validateBridge3"
-        }
-      ]
+      "description": "Array of the signers in the validator multisig"
     },
     "$threshold": {
       "handler": {
