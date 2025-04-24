@@ -197,10 +197,10 @@
         "getAmountOfMembers": 1,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://dac.ternoa-mainnet.zeeve.online",
-            "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"
-          ]
+          {
+            "url": "https://dac.ternoa-mainnet.zeeve.online",
+            "addr": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"
+          }
         ],
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC",
         "requiredAmountOfSignatures": 1

@@ -101,8 +101,13 @@ const requiredSignatures = discovery.getContractValue<number>(
 
 // format: [ [ip, address], ... ]
 const dacMembers = discovery
-  .getContractValue<string[][]>('ZKFairValidiumDAC', 'members')
-  .map((e) => e[1])
+  .getContractValue<
+    {
+      url: string
+      addr: string
+    }[]
+  >('ZKFairValidiumDAC', 'members')
+  .map((e) => e.addr)
 
 export const zkfair: ScalingProject = {
   type: 'layer2',
