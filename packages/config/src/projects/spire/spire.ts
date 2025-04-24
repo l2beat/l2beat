@@ -17,10 +17,7 @@ export const spire: ScalingProject = upcomingL2({
       websites: ['https://www.spire.dev/'],
       documentation: ['https://docs.spire.dev/'],
       repositories: ['https://github.com/spire-labs'],
-      socialMedia: [
-        'https://x.com/Spire_Labs',
-        'https://paragraph.com/@spire',
-      ],
+      socialMedia: ['https://x.com/Spire_Labs', 'https://paragraph.com/@spire'],
     },
   },
 })
