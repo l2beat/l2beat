@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x1959ce0e8a9b058e9e4548ca111ae34d1c77c923
+Generated with discovered.json: 0x92286ed5478bf371d1870708f02033bc65c82620
 
-# Diff at Thu, 24 Apr 2025 15:22:55 GMT:
+# Diff at Thu, 24 Apr 2025 15:50:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 39627531
@@ -125,7 +125,7 @@ discovery. Values are for block 39627531 (main branch discovery), not current.
 
 ```diff
     contract BridgeValidators_Gnosis (0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
-    +++ description: Custom Multisignature contract for Validator addresses.
+    +++ description: Custom multisignature contract for Validator addresses.
       name:
 -        "BridgeValidators"
 +        "BridgeValidators_Gnosis"
@@ -148,7 +148,7 @@ discovery. Values are for block 39627531 (main branch discovery), not current.
       template:
 +        "gnosisbridge/BridgeValidators"
       description:
-+        "Custom Multisignature contract for Validator addresses."
++        "Custom multisignature contract for Validator addresses."
       fieldMeta:
 +        {"$members":{"description":"Array of the signers in the validator multisig"}}
     }

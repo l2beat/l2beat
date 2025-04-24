@@ -8,10 +8,6 @@
     "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418", // LayerZero Adapter for Hashi
     "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016" // SdaiForeignBridge
   ],
-  "names": {
-    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig",
-    "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "Hashi Multisig"
-  },
   "overrides": {
     "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": {
       // sub MS
@@ -19,6 +15,7 @@
     },
     "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
       // XDaiForeignBridge
+      "category": "core",
       "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
       "displayName": "DaiForeignBridge",
       "proxyType": "Eternal Storage proxy",
@@ -77,6 +74,7 @@
     },
     "0x88ad09518695c6c3712AC10a214bE5109a655671": {
       // ForeignOmnibridge
+      "category": "core",
       "description": "Token bridge implementation and escrow for ERC-20 tokens.",
       "proxyType": "Eternal Storage proxy",
       "ignoreMethods": ["getCurrentDay"],
@@ -93,6 +91,7 @@
     },
     "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": {
       // ForeignAMB
+      "category": "core",
       "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
       "proxyType": "Eternal Storage proxy",
       "fields": {

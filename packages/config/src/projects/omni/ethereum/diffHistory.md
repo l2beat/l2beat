@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe53fd40aa3e894ac87894b331ecf942f28195630
+Generated with discovered.json: 0xa83cbc41b40a496c5dcdb3e274efe8c4467793b8
 
-# Diff at Thu, 24 Apr 2025 15:45:02 GMT:
+# Diff at Thu, 24 Apr 2025 15:59:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22281679
@@ -130,6 +130,8 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 +        "change external validation logic refered to by this contract (e.g. Hashi)."
       description:
 +        "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -167,6 +169,8 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 +        "change all critical configurations like yield farming for escrowed funds and limits."
       description:
 +        "Token bridge implementation and escrow for ERC-20 tokens."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -211,7 +215,7 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 
 ```diff
     contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
-    +++ description: Custom Multisignature contract for Validator addresses.
+    +++ description: Custom multisignature contract for Validator addresses.
       name:
 -        "BridgeValidators"
 +        "BridgeValidators_Omni"
@@ -238,7 +242,7 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
       template:
 +        "gnosisbridge/BridgeValidators"
       description:
-+        "Custom Multisignature contract for Validator addresses."
++        "Custom multisignature contract for Validator addresses."
       receivedPermissions:
 +        [{"permission":"validateBridge3","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"}]
     }
@@ -267,7 +271,7 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
-    +++ description: Custom Multisignature contract for Validator addresses.
+    +++ description: Custom multisignature contract for Validator addresses.
 ```
 
 Generated with discovered.json: 0x2722dba24d027c899a6f9429eaaf5d71cf354d07

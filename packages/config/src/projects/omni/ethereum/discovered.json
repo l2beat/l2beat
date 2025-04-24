@@ -292,7 +292,8 @@
         "version": 9,
         "versionRecipient": "1.0.1"
       },
-      "derivedName": "XDaiForeignBridge"
+      "derivedName": "XDaiForeignBridge",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GnosisSafe",
@@ -417,7 +418,8 @@
         "validatorContract": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
         "version": 6
       },
-      "derivedName": "ForeignAMB"
+      "derivedName": "ForeignAMB",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Protofire EOA 1",
@@ -654,7 +656,8 @@
         "upgradeabilityOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "version": 6
       },
-      "derivedName": "ForeignOmnibridge"
+      "derivedName": "ForeignOmnibridge",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Gateway EOA 1",
@@ -931,7 +934,7 @@
         "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom Multisignature contract for Validator addresses.",
+      "description": "Custom multisignature contract for Validator addresses.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1016,7 +1019,7 @@
         "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom Multisignature contract for Validator addresses.",
+      "description": "Custom multisignature contract for Validator addresses.",
       "issuedPermissions": [
         {
           "permission": "interact",

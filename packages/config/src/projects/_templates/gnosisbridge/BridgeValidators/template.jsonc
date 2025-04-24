@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Custom Multisignature contract for Validator addresses.",
+  "description": "Custom multisignature contract for Validator addresses.",
   "ignoreRelatives": ["F_ADDR"],
   "ignoreMethods": ["requiredSignatures", "validatorList"],
   "fields": {

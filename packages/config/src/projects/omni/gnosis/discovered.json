@@ -529,7 +529,7 @@
         "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom Multisignature contract for Validator addresses.",
+      "description": "Custom multisignature contract for Validator addresses.",
       "issuedPermissions": [
         {
           "permission": "interact",
