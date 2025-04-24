@@ -10,12 +10,11 @@ export const surge: ScalingProject = upcomingL2({
     name: 'Surge',
     slug: 'surge',
     description:
-      'Surge is based rollup showcasing the Nethermind client's Gigagas performance, built on the Taiko stack.',
+      "Surge is based rollup showcasing the Nethermind client's Gigagas performance, built on the Taiko stack.",
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: 'Surge',
     links: {
-      websites: ['https://www.surge.wtf/'],
+      websites: ['https://surge.wtf/'],
       repositories: ['https://github.com/nethermindEth/surge'],
       socialMedia: ['https://x.com/NethermindEth'],
     },
