@@ -1,8 +1,8 @@
-# TVL documentation
+# TVS documentation
 
 ## Introduction
 
-L2BEAT is tracking TVL of L2 projects, you can take a look at [Value Locked Page](https://l2beat.com/scaling/tvl). You can also see more detailed breakdown when you click on one of the projects, e.g. [Arbitrum](https://l2beat.com/scaling/projects/arbitrum/tvl-breakdown)
+L2BEAT is tracking TVS of L2 projects, you can take a look at [Value Locked Page](https://l2beat.com/scaling/tvs). You can also see more detailed breakdown when you click on one of the projects, e.g. [Arbitrum](https://l2beat.com/scaling/projects/arbitrum/tvs-breakdown)
 
 As you can see there are three types of value - the `source`:
 
@@ -10,11 +10,11 @@ As you can see there are three types of value - the `source`:
 - `external` - Externally Bridged Value - bridged from other chain via non-canonical bridge
 - `native` - Natively Minted Value - minted natively on this chain
 
-Each token can also have one of three methods of calculating its contribution to TVL - the `supply`:
+Each token can also have one of three methods of calculating its contribution to TVS - the `supply`:
 
 - `totalSupply` - tracks the total supply of the token
 - `circulatingSupply` - tracks the circulating supply of the token
-- `zero` - does not contribute to TVL by itself
+- `zero` - does not contribute to TVS by itself
 
 All this is achieved via proper configuration files in our repository.
 
