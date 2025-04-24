@@ -30,7 +30,6 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
-import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -429,19 +428,6 @@ export async function getScalingProjectEntry(
             ? project.scalingStage.additionalConsiderations
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
-      },
-    })
-  }
-
-  const technologySection = getScalingTechnologySection(project)
-  if (technologySection) {
-    sections.push({
-      type: 'TechnologySection',
-      props: {
-        id: 'technology',
-        title: 'Technology',
-        ...technologySection,
-        hostChainWarning,
       },
     })
   }

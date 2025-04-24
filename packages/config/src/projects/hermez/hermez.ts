@@ -4,10 +4,9 @@ import {
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -71,30 +70,20 @@ export const hermez: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title: 'ZK proofs - Hermez documentation',
+            url: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'ZK proofs - Hermez documentation',
-          url: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'ZK proofs - Hermez documentation',
-          url: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
-        },
-        {
-          title:
-            'Multi-party Computation for the Trusted Setup - Hermez documentation',
-          url: 'https://docs.hermez.io/#/about/security?id=multi-party-computation-for-the-trusted-setup',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [

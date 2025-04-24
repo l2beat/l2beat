@@ -15,10 +15,9 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -422,12 +421,6 @@ export const linea: ScalingProject = {
     },
   }),
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    },
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
@@ -511,6 +504,7 @@ export const linea: ScalingProject = {
         description:
           'Given that the circuit is not public, the generation of the verification keys is not public either.',
       },
+      STATE_VALIDATION.VALIDITY_PROOFS,
     ],
     proofVerification: {
       shortDescription: 'Linea is a universal ZK-EVM rollup on Ethereum.',
