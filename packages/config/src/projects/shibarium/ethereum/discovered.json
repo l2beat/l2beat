@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
   "chain": "ethereum",
-  "blockNumber": 22324571,
+  "blockNumber": 22337733,
   "configHash": "0x3dfc254d7cc44a3b99ccf9e2c4bffafbf0013b204d3dbb73b10ff0bbdfc80c2d",
   "entries": [
     {
@@ -292,7 +292,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 39885,
+        "counter": 39893,
         "isOwner": false,
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "REGISTRATIONS": [
@@ -482,18 +482,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 24623,
+        "currentEpoch": 24653,
         "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "19154505151732809502015528",
+        "currentValidatorSetTotalStake": "19129853420889152873015528",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "268830399801586530098",
-          "138833435412259294029",
-          "167686519152220809617",
-          "63346933985394395116"
+          "325341007234289128853",
+          "6501646530511494472",
+          "245029039561654077767",
+          "2183291536449315348"
         ],
         "dynasty": 1,
-        "epoch": 24623,
+        "epoch": 24653,
         "eventsHub": "0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -520,7 +520,7 @@
         "registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 13608,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1581833792689281142735699",
+        "rewardPerStake": "1582538833747945943164700",
         "rootChain": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -530,7 +530,7 @@
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "19154505151732809502015528",
+          "amount": "19129853420889152873015528",
           "stakerCount": 12
         },
         "validatorThreshold": 15,
@@ -944,7 +944,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 246230000,
+        "_nextHeaderBlock": 246530000,
         "$immutable": false,
         "$implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -953,8 +953,8 @@
           "_registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 246220000,
-        "getLastChildBlock": 10616860,
+        "currentHeaderBlock": 246520000,
+        "getLastChildBlock": 10632220,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
