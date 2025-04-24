@@ -599,7 +599,6 @@ describe(UpdateNotifier.name, () => {
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       const message = discordClient.sendMessage.calls[0]?.args[0] as string
-      console.log(message)
       expect(message).toInclude(
         ':warning: Disabled chains: `optimism`, `arbitrum`',
       )
