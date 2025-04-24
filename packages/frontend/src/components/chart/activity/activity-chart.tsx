@@ -222,7 +222,11 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.type === 'none'
+            )
               return null
             const config = meta[entry.name]
             assert(config, 'No config')
