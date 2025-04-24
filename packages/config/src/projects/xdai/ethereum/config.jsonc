@@ -10,16 +10,10 @@
     // mind that these addresses could not be used by the project anymore. Decide
     // for yourself whether keep them here or should they be removed or fetched
     // from some fields of other contracts.
-    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-    "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-    "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473",
-    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016", // SDaiForeignBridge
   ],
   "names": {
-    "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473": "DaiForeignBridge",
-    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": "SDaiForeignBridge",
-    "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "BridgeValidators",
-    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "GnosisBridgeGovernanceMultisig"
+    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig"
   },
   "overrides": {
     "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": {

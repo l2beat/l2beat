@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x0d61e03eaaafd1e5c6efeb69e56831e39d0d41f6
+
+# Diff at Thu, 24 Apr 2025 09:17:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22281679
+- current block number: 22337861
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281679 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"}
+      receivedPermissions.0.from:
+-        "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
++        "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
+    }
+```
+
+```diff
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"}
+      receivedPermissions.2.from:
+-        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.1.from:
+-        "0x88ad09518695c6c3712AC10a214bE5109a655671"
++        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.0.from:
+-        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
++        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AAVEInterestERC20 (0x87D48c565D0D85770406D248efd7dc3cbd41e729)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XDaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2722dba24d027c899a6f9429eaaf5d71cf354d07
 
 # Diff at Thu, 24 Apr 2025 07:16:50 GMT:
