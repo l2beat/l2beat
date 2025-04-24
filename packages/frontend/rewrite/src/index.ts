@@ -20,7 +20,12 @@ const app = express()
 if (isProduction) {
   app.use(compression())
   // TODO: immutable cache
-  app.use('/', sirv('./rewrite/dist/static', { maxAge: 60 }))
+  app.use(
+    '/',
+    sirv('./rewrite/dist/static', { maxAge: 31536000, immutable: true }),
+  )
+  // This is done to delay moving markdown to server side
+  app.use('/', sirv('./rewrite/static', { maxAge: 3600 }))
 } else {
   app.use('/', express.static('./rewrite/static'))
   app.use((req, res, next) => {
