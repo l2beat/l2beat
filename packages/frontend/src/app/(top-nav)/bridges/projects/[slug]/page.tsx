@@ -54,7 +54,7 @@ export default async function Page(props: Props) {
     select: [
       'display',
       'statuses',
-      'tvlInfo',
+      'tvsInfo',
       'tvsConfig',
       'bridgeInfo',
       'bridgeRisks',

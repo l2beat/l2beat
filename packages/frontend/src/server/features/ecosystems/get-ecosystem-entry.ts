@@ -99,7 +99,7 @@ export async function getEcosystemEntry(
       'ecosystemInfo',
     ],
     optional: [
-      'tvlInfo',
+      'tvsInfo',
       'tvsConfig',
       'scalingDa',
       'scalingStage',
