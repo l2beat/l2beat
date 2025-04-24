@@ -15,8 +15,6 @@ import {
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
-import { FunctionFragment, ParamType } from 'ethers/lib/utils'
 
 export type ArrayHandlerDefinition = z.infer<typeof ArrayHandlerDefinition>
 export const ArrayHandlerDefinition = z.strictObject({
