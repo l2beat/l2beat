@@ -180,7 +180,7 @@ export function polygonCDKStack(
           ? 'polygon-cdk-validium'
           : 'polygon-cdk-rollup',
       stack: 'Polygon',
-      tvlWarning: templateVars.display.tvlWarning,
+      tvsWarning: templateVars.display.tvsWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod,
         warnings: {

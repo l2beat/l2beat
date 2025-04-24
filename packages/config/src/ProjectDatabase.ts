@@ -31,6 +31,7 @@ const schema = {
   colors: 'TEXT',
   milestones: 'TEXT',
   chainConfig: 'TEXT',
+  escrows: 'TEXT',
 
   bridgeInfo: 'TEXT',
   bridgeRisks: 'TEXT',
@@ -48,8 +49,7 @@ const schema = {
 
   proofVerification: 'TEXT',
 
-  tvlInfo: 'TEXT',
-  tvlConfig: 'TEXT',
+  tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
   livenessInfo: 'TEXT',
