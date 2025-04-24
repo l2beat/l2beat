@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 22029918,
-  "configHash": "0x122b354d68e8cebc2c543e399795d4c49d33df5d27161ab43d847065fded98e4",
+  "configHash": "0x735835ccdc40d33677212c6d9e97b958492abffcba8ed3b09658d71e82380e2d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

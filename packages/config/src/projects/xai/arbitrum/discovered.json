@@ -2,7 +2,7 @@
   "name": "xai",
   "chain": "arbitrum",
   "blockNumber": 324577860,
-  "configHash": "0xba2e9ba30d0231859f21b854c6f6457a55bc719e509595bfe4deb02a240331aa",
+  "configHash": "0x0531d3ca20123e09b37a03eb3118d5b4b39761ff59a06e567aeda9f62c874893",
   "entries": [
     {
       "name": "XaiMultisig2",
