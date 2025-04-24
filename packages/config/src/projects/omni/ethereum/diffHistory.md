@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9e9bf9c6da6cbe603e3537d2fc45f94e2b4b87cf
+Generated with discovered.json: 0x41e5983f0c408ee1c361f236615cb5b3e3b7180d
 
-# Diff at Thu, 24 Apr 2025 11:17:56 GMT:
+# Diff at Thu, 24 Apr 2025 11:45:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22281679
@@ -33,6 +33,14 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba) {
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+      description:
++        "Contract handling inbound messages for the Hashi protocol."
+    }
+```
+
+```diff
     contract undefined (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E) {
     +++ description: None
       receivedPermissions.1:
@@ -54,25 +62,41 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```diff
     contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
     +++ description: None
-      receivedPermissions.6:
+      receivedPermissions.9:
 +        {"permission":"upgrade","from":"0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"}
-      receivedPermissions.5:
+      receivedPermissions.8:
 +        {"permission":"interact","from":"0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E","description":"change the threshold and manage signers."}
-      receivedPermissions.4:
+      receivedPermissions.7:
 +        {"permission":"upgrade","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"}
-      receivedPermissions.3:
+      receivedPermissions.6:
 +        {"permission":"upgrade","from":"0x88ad09518695c6c3712AC10a214bE5109a655671"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e","description":"change external validation logic refered to by this contract (e.g. Hashi)."}
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
       receivedPermissions.2.from:
 -        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
 +        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-      receivedPermissions.1.from:
--        "0x88ad09518695c6c3712AC10a214bE5109a655671"
-+        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+      receivedPermissions.2.description:
++        "change the threshold and manage signers."
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.description:
++        "change all critical configurations like yield farming for escrowed funds and limits."
       receivedPermissions.0.permission:
 -        "upgrade"
 +        "interact"
+      receivedPermissions.0.from:
+-        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
++        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
       receivedPermissions.0.description:
-+        "change the threshold and manage signers."
++        "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references."
     }
 ```
 
@@ -95,8 +119,23 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```diff
     contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
     +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "change external validation logic refered to by this contract (e.g. Hashi)."
       description:
 +        "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging."
+    }
+```
+
+```diff
+    contract Hashi Multisig (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD","description":"change critical configurations of the Hashi protocol like the validation contract addresses."},{"permission":"interact","from":"0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9","description":"change critical configurations of the Hashi protocol like the validation contract addresses."}]
     }
 ```
 
@@ -117,6 +156,13 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
 ```diff
     contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
     +++ description: Token bridge implementation and escrow for ERC-20 tokens.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "change all critical configurations like yield farming for escrowed funds and limits."
       description:
 +        "Token bridge implementation and escrow for ERC-20 tokens."
     }
@@ -128,10 +174,28 @@ discovery. Values are for block 22281679 (main branch discovery), not current.
       name:
 -        "HashiManager"
 +        "HashiManager_Omni"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "0x670a3e447F4DE92C012777Ac5591D81E12aD0957"
+      issuedPermissions.0.description:
++        "change critical configurations of the Hashi protocol like the validation contract addresses."
       template:
 +        "gnosisbridge/HashiManager"
       description:
 +        "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator."
+    }
+```
+
+```diff
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+      description:
++        "Contract handling outbound messages for the Hashi protocol."
     }
 ```
 
