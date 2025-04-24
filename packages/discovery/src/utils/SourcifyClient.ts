@@ -125,7 +125,7 @@ function decodeSourcifySource(
 ) {
   const amountOfSources = Object.keys(sources).length
 
-  if (amountOfSources < 1) {
+  if (amountOfSources === 1) {
     const extension = solidityVersion.startsWith('vyper') ? 'vy' : 'sol'
     // biome-ignore lint/style/noNonNullAssertion: we've checked the length
     const onlySource = Object.values(sources)[0]!
