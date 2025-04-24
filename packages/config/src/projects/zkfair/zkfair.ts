@@ -14,7 +14,7 @@ import {
   FRONTRUNNING_RISK,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -207,17 +207,21 @@ export const zkfair: ScalingProject = {
   stage: {
     stage: 'NotApplicable',
   },
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title:
+              'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
+            url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title:
-            'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
-          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [

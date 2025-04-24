@@ -11,10 +11,9 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -216,19 +215,22 @@ export const dydx: ScalingProject = {
     },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   },
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.STARKEX_VALIDITY_PROOFS,
+        references: [
+          ...(STATE_VALIDATION.STARKEX_VALIDITY_PROOFS.references ?? []),
+          {
+            title:
+              'UpdatePerpetualState.sol#L125 - Etherscan source code, verifyFact function call',
+            url: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      references: [
-        ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS.references,
-        {
-          title:
-            'UpdatePerpetualState.sol#L125 - Etherscan source code, verifyFact function call',
-          url: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
-        },
-      ],
-    },
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       references: [
