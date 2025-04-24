@@ -17,7 +17,7 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sophon: ScalingProject = zkStackL2({
   discovery,
-  additionalBadges: [BADGES.DA.Avail], // TODO ADD AVAIL + VECTOR BADGE
+  additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
   display: {
     name: 'Sophon',

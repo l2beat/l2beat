@@ -1,22 +1,14 @@
-Generated with discovered.json: 0x838bae90c425566dc146d74fe24be3a9af804335
+Generated with discovered.json: 0x722c5427f7de3cf013a4f947677ab9d1bbf40a65
 
-# Diff at Wed, 23 Apr 2025 13:40:09 GMT:
+# Diff at Thu, 24 Apr 2025 05:13:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2f39eabda7f7e886e8b7711bdb4fc317e976d746 block: 22188870
-- current block number: 22332001
+- comparing to: main@6466cdaa8544f9f09e2fd2435efdaa3e02a1919f block: 22188870
+- current block number: 22336710
 
 ## Description
 
-colorize, bridge is verified.
-
-## Source code changes
-
-```diff
-.../{.flat@22188870/Vector => .flat/SP1Vector}/ERC1967Proxy.p.sol         | 0
- .../ethereum/{.flat@22188870/Vector => .flat/SP1Vector}/SP1Vector.sol     | 0
- 2 files changed, 0 insertions(+), 0 deletions(-)
-```
+Add the Avail bridge (uses vector and is shared by L2s for merkle proofs)... config: colorize, bridge is verified.
 
 ## Config/verification related changes
 
