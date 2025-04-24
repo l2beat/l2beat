@@ -10,7 +10,7 @@
     // mind that these addresses could not be used by the project anymore. Decide
     // for yourself whether keep them here or should they be removed or fetched
     // from some fields of other contracts.
-    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016", // SDaiForeignBridge
+    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016" // SDaiForeignBridge
   ],
   "names": {
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig"

@@ -137,16 +137,8 @@
     },
     "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": {
       // BridgeValidators omni
-      "description": "Custom Multisignature contract for Validators.",
       "displayName": "BridgeValidators_Omni",
-      "proxyType": "Eternal Storage proxy",
-      "fields": {
-        "validatorList": {
-          "description": "Array of the signers in the validator multisig",
-          "severity": "MEDIUM",
-          "type": "PERMISSION"
-        }
-      }
+      "proxyType": "Eternal Storage proxy"
     }
   }
 }

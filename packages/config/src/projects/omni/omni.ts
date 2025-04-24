@@ -11,11 +11,11 @@ import {
 
 const discovery = new ProjectDiscovery('omni')
 const threshold = discovery.getContractValue<number>(
-  'BridgeValidators',
+  'BridgeValidators_Omni',
   'requiredSignatures',
 )
 const size = discovery.getContractValue<number>(
-  'BridgeValidators',
+  'BridgeValidators_Omni',
   'validatorCount',
 )
 const validatorsString = `${threshold} / ${size}`
