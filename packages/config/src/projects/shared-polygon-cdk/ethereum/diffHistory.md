@@ -1,3 +1,158 @@
+Generated with discovered.json: 0x1702b5d59b68ee6112e17a0a2aa46e5431325cc7
+
+# Diff at Thu, 24 Apr 2025 10:30:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22244012
+- current block number: 22244012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22244012 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.isVerifyingBatches:
+-        [[true],[true],[true],[false],[true],[true],[true],[true],[true],[true],[true],[true],[true],[false],[false],[true],[false]]
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.16:
+-        ["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC","chainID":938,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.15:
+-        ["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x88AaB361f108C3c959F2928Da3cD8e47298016B5","chainID":4913,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.14:
+-        ["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","chainID":3776,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.13:
+-        ["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8","chainID":623,"verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupTypeID":7,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.12:
+-        ["0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",623,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238","chainID":1702448187,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.11:
+-        ["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",196,"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",13,8,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x7449449460b5B732A9754CA3d9A7916122A9190d","chainID":801,"verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","forkID":12,"rollupTypeID":10,"rollupVerifierType":1,"programVKey":"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10:
+-        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB","chainID":2355,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9:
+-        ["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7","chainID":9369,"verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","forkID":12,"rollupTypeID":10,"rollupVerifierType":1,"programVKey":"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.8:
+-        ["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0xB234F18738d9531CAD6ae6d9A587d09fe200272C","chainID":999,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.7:
+-        ["0x88AaB361f108C3c959F2928Da3cD8e47298016B5",4913,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858","chainID":1511670449,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6:
+-        ["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x78253E2E6120164bd826668A4C96Db20f78A94c9","chainID":31415,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.5:
+-        ["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","chainID":196,"verifier":"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB","forkID":13,"rollupTypeID":8,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4:
+-        ["0xb1714954bBc0162A36FB44934F3216aCE81C40d7",3344,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x519E42c24163192Dca44CD3fBDCEBF6be9130987","chainID":1101,"verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupTypeID":6,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.3:
+-        ["0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",9369,"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,10,1,"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"]
++        {"rollupContract":"0x92726F7dE49300DBdb60930066bc1d0803c0740B","chainID":994873017,"verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupTypeID":7,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2:
+-        ["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789","chainID":752025,"verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupTypeID":7,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.1:
+-        ["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,6,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"rollupContract":"0xb1714954bBc0162A36FB44934F3216aCE81C40d7","chainID":3344,"verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupTypeID":7,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.0:
+-        ["0x7449449460b5B732A9754CA3d9A7916122A9190d",801,"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,10,1,"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"]
++        {"rollupContract":"0xA87df42CD53E998b3A610B8bCe3719871b0bb940","chainID":511252203,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.9:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",8,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","verifier":"0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be","forkID":8,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.8:
+-        ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","verifier":"0xc521580cd8586Cc688A7430F9DcE0f6A803F2883","forkID":11,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5:
+-        ["0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,1,false,"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"]
++        {"consensusImplementation":"0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",11,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","forkID":12,"rollupVerifierType":1,"obsolete":false,"programVKey":"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3:
+-        ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",13,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","verifier":"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8","forkID":7,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2:
+-        ["0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,1,false,"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"]
++        {"consensusImplementation":"0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1:
+-        ["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","forkID":12,"rollupVerifierType":1,"obsolete":false,"programVKey":"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0:
+-        ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"consensusImplementation":"0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","verifier":"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB","forkID":13,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      fieldMeta.isVerifyingBatches:
+-        {"description":"Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1."}
+      usedTypes:
+-        [{"typeCaster":"GreaterThan","arg":{"value":1}}]
+    }
+```
+
 Generated with discovered.json: 0xd4ebc0afa9d7d855e18a59d05550a109d713a4f0
 
 # Diff at Fri, 11 Apr 2025 06:50:27 GMT:

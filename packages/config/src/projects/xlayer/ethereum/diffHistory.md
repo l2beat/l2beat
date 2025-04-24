@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xc617973fa211beabde967ff10eaa2b0bc858e13a
+
+# Diff at Thu, 24 Apr 2025 10:31:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22166659
+- current block number: 22166659
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166659 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+      values.members.1:
+-        ["http://okx-defi-xlayer-dac1-pro:8444","0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08"]
++        {"url":"http://okx-defi-xlayer-dac1-pro:8444","addr":"0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08"}
+      values.members.0:
+-        ["http://okx-defi-xlayer-dac2-pro:8444","0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"]
++        {"url":"http://okx-defi-xlayer-dac2-pro:8444","addr":"0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"}
+    }
+```
+
 Generated with discovered.json: 0xcb4831d7fee1d641ee6425b336c909c0659afc6f
 
 # Diff at Thu, 10 Apr 2025 14:43:34 GMT:
