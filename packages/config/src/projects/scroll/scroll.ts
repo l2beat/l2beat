@@ -387,17 +387,6 @@ export const scroll: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   technology: {
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title:
-            'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
