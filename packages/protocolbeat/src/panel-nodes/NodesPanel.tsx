@@ -150,7 +150,7 @@ function getNodeFields(
   }
 
   if (value.type === 'object') {
-    return Object.entries(value.value).flatMap(([key, value]) =>
+    return value.values.flatMap(([key, value]) =>
       getNodeFields(`${path}.${key}`, value, bannedKeys, bannedValues),
     )
   } else if (value.type === 'array') {
