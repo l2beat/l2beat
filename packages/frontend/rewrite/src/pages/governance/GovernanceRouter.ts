@@ -4,7 +4,7 @@ import { z } from 'zod'
 import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderFunction } from '../../ssr/server'
 import { getGovernanceData } from './getGovernanceData'
-import { getGovernancePublicationData } from './publications/:id/getGovernancePublicationData'
+import { getGovernancePublicationData } from './publication/getGovernancePublicationData'
 import { getGovernancePublicationsData } from './publications/getGovernancePublicationsData'
 
 export function GovernanceRouter(
