@@ -1,4 +1,3 @@
-import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import {
   assert,
@@ -7,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'

@@ -8,16 +8,18 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { LocalStorage } from './LocalStorage'
-import { mapConfig } from './mapConfig'
+import type { LocalStorage } from '../LocalStorage'
+import { getLegacyConfig } from './getLegacyConfig'
+import { mapLegacyConfig } from './mapLegacyConfig'
 
-describe(mapConfig.name, () => {
+describe(mapLegacyConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
     const ps = new ProjectService()
     const arbitrum = await ps.getProject({
       id: ProjectId('arbitrum'),
-      select: ['tvlConfig', 'chainConfig'],
+      select: ['escrows', 'chainConfig', 'tvsInfo'],
     })
+
     assert(arbitrum, 'Arbitrum not found')
 
     const projectsWithChain = (
@@ -30,8 +32,12 @@ describe(mapConfig.name, () => {
       getAddress: mockFn().resolvesTo(undefined),
     })
 
-    const result = await mapConfig(
+    const tokens = await ps.getTokens()
+    const legacyConfig = getLegacyConfig(arbitrum, tokens)
+
+    const result = await mapLegacyConfig(
       arbitrum,
+      legacyConfig,
       chains,
       Logger.SILENT,
       mockLocalStorage,

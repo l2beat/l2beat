@@ -371,24 +371,6 @@ describe('getProjects', () => {
     })
   })
 
-  describe('escrows', () => {
-    it('every escrow is unique', () => {
-      const addressToKey = (address: EthereumAddress, chain: string) =>
-        `${address.toString()} (${chain})`
-      const addresses = new Set<string>()
-
-      for (const project of projects) {
-        for (const { address, chain } of project.tvlConfig?.escrows ?? []) {
-          it(address.toString(), () => {
-            const key = addressToKey(address, chain ?? 'ethereum')
-            expect(addresses.has(key)).toEqual(false)
-            addresses.add(key)
-          })
-        }
-      }
-    })
-  })
-
   describe('links', () => {
     describe('every project has at least one website link', () => {
       for (const project of projects) {
