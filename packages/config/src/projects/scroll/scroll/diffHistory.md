@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3385df7ad660a4e88c4ce2cd133a881efc586827
+Generated with discovered.json: 0xc90e8db2e6bbe4b62ed1991b5a6f95ab26b4cfa3
 
-# Diff at Fri, 25 Apr 2025 15:53:42 GMT:
+# Diff at Fri, 25 Apr 2025 16:00:13 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 14489756
@@ -348,6 +348,14 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 
 ```diff
     contract undefined (0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ProposalTypesConfigurator (0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E) {
     +++ description: None
       category:
 +        {"name":"Spam","priority":-1}

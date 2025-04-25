@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "scroll",
   "blockNumber": 14980764,
-  "configHash": "0x1165fdc32d352316c1ecd256e2434dc0045174038a2eacfc7af4ad8d6b85b7b2",
+  "configHash": "0x09dc597a976c63e4b30d2abbff8f20a854170242a026b518f2ec0db90df9e7d5",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -2090,7 +2090,8 @@
         "governor": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
         "PERCENT_DIVISOR": 10000
       },
-      "derivedName": "ProposalTypesConfigurator"
+      "derivedName": "ProposalTypesConfigurator",
+      "category": { "name": "Spam", "priority": -1 }
     }
   ],
   "abis": {
