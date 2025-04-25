@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x66e5bcd6226e1b6671d88f68361f1c80dd1a87a4
+Generated with discovered.json: 0xd663d54367c290e07e8f52020efe0a305031a2a4
 
-# Diff at Fri, 25 Apr 2025 12:05:47 GMT:
+# Diff at Fri, 25 Apr 2025 12:13:47 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 22297562
@@ -892,6 +892,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 
 ```diff
     contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
     +++ description: None
       category:
 +        {"name":"Spam","priority":-1}

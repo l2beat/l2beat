@@ -28,6 +28,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('scroll')
+const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
 
 const enforcedModeDelayParameters = discovery.getContractValue<{
   maxDelayEnterEnforcedMode: number
@@ -621,6 +622,7 @@ export const scroll: ScalingProject = {
   },
   permissions: {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
+    [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
   },
   milestones: [
     {

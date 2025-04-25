@@ -68,7 +68,7 @@
         }
       ]
     },
-    "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd":{
+    "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": {
       // TimelockSCSlow
       "fields": {
         "timelockAdminAC": {
@@ -87,9 +87,9 @@
             }
           ]
         }
+      }
     },
-  },
-    "0x0e58939204eEDa84F796FBc86840A50af10eC4F4":{
+    "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": {
       // TimelockFast
       "fields": {
         "timelockAdminAC": {
@@ -118,7 +118,7 @@
         }
       }
     },
-    "0x826714adD4dDA2b8750794A467C892c0Cd49216b":{
+    "0x826714adD4dDA2b8750794A467C892c0Cd49216b": {
       // TimelockEmergency
       "fields": {
         "timelockAdminAC": {
@@ -135,13 +135,13 @@
               "type": "interact",
               "description": "remove permissioned batchers and provers to the whitelist, and update the sequencer address."
             },
-              {
-                "type": "interact",
-                "description": "revert unfinalized batches."
-              }
+            {
+              "type": "interact",
+              "description": "revert unfinalized batches."
+            }
           ]
         }
-    },
+      }
     },
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": {
       // pufETHEscrow
@@ -175,6 +175,10 @@
     },
     "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828": {
       "description": "Contract used to verify zk proofs given the aggregate proof and the public input hash."
+    },
+    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": {
+      // feeVault
+      "category": "spam"
     },
     // SC Members not needed in actors
     "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": {

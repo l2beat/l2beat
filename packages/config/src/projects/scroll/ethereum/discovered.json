@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22345882,
-  "configHash": "0x38ca327254ac42d456379d409600bfdc5291d0ad541ca2b21eb9f602ef3c71e0",
+  "configHash": "0x3ddf234dee24ee53f148bb359eea785bc1f66e50e55c0432315fafa4fd84761f",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -2123,7 +2123,8 @@
         "nonce": 43,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "derivedName": "GnosisSafe",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x9106372987a14400F283bc1AfC122A57130c18a3",
