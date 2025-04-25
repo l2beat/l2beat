@@ -15,7 +15,7 @@
         "chain": "arbitrum",
         "escrowAddress": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
         "decimals": 18,
-        "sinceTimestamp": 1724863522
+        "sinceTimestamp": 1729290000
       },
       "valueForProject": {
         "type": "calculation",
@@ -30,7 +30,7 @@
               "chain": "arbitrum",
               "decimals": 18,
               "escrowAddress": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
-              "sinceTimestamp": 1724863522
+              "sinceTimestamp": 1729290000
             }
           },
           {
@@ -42,7 +42,7 @@
               "chain": "apechain",
               "escrowAddress": "0xe4103e80c967f58591a1d7cA443ed7E392FeD862",
               "decimals": 18,
-              "sinceTimestamp": 1724863522
+              "sinceTimestamp": 1729290000
             }
           }
         ]

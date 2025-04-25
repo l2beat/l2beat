@@ -14,19 +14,15 @@
       "handler": {
         "type": "call",
         "method": "getStaticConfig",
-        "args": [],
-        "pickFields": ["commitStore"]
-      }
+        "args": []
+      },
+      "edit": ["get", "commitStore"]
     },
     "getStaticConfig": {
       "edit": [
-        "shape",
-        "commitStore",
-        ["chainSelector", ["format", "ChainIdMap"]],
-        ["sourceChainSelector", ["format", "ChainIdMap"]],
-        "onRamp",
-        "prevOffRamp",
-        "armProxy"
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["set", "sourceChainSelector", ["format", "ChainIdMap"]]
       ]
     }
   }

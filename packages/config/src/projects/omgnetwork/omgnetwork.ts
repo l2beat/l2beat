@@ -5,7 +5,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -73,11 +73,15 @@ export const omgnetwork: ScalingProject = {
         ' The details are unknown.',
     },
   },
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.EXIT_FRAUD_PROOFS,
+        isIncomplete: true,
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,
-      isIncomplete: true,
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
       isIncomplete: true,

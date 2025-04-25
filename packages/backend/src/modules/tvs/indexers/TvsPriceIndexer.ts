@@ -1,4 +1,3 @@
-import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
 import type { PriceProvider } from '@l2beat/shared'
 import {
@@ -7,12 +6,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
 export interface TvsPriceIndexerDeps

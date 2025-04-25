@@ -4,7 +4,7 @@ import type { FieldValue } from '../api/types'
 import { AddressDisplay } from './AddressDisplay'
 
 export interface FieldValueDisplayProps {
-  name?: string
+  name?: FieldValue
   topLevel?: boolean
   value: FieldValue
 }
@@ -84,7 +84,7 @@ export function FieldValueDisplay({
       inlineDisplay = <span className="text-coffee-600">empty array</span>
     }
   } else if (value.type === 'object') {
-    const entries = Object.entries(value.value)
+    const entries = value.values
     if (entries.length !== 0) {
       blockDisplay = (
         <ul className="list-disc pl-4 marker:font-mono marker:text-coffee-600 marker:text-xs">
@@ -111,15 +111,22 @@ export function FieldValueDisplay({
     )
   }
 
+  const nameNode = name ? (
+    /* Render the field name as a value so it can be, e.g., an address.     *
+     * Use topLevel=true to avoid the surrounding <li>.                     */
+    <FieldValueDisplay value={name} topLevel />
+  ) : null
+
+  /* ──────────────────────────────── */
   return (
     <li className="text-sm">
-      {name && (
+      {nameNode && (
         <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-2">
-          <p className="w-max font-mono text-xs">{name}:</p>
+          {nameNode}
           {inlineDisplay}
         </div>
       )}
-      {!name && inlineDisplay && <div>{inlineDisplay}</div>}
+      {!nameNode && inlineDisplay && <div>{inlineDisplay}</div>}
       {blockDisplay}
     </li>
   )

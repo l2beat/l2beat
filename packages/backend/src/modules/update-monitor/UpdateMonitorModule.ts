@@ -45,6 +45,7 @@ export function createUpdateMonitorModule(
     chainConverter,
     logger,
     updateMessagesService,
+    config.updateMonitor.disabledChains,
   )
 
   // TODO: get rid of that once we achieve full library separation

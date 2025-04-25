@@ -12,7 +12,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   EXITS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -22,7 +21,7 @@ import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
-import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
+import { STATE_VALIDATION } from '../../common/stateValidation'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -299,9 +298,10 @@ export const paradex: ScalingProject = {
       delayWith30DExitWindow: false,
     },
   }),
+  stateValidation: {
+    categories: [STATE_VALIDATION.VALIDITY_PROOFS],
+  },
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {

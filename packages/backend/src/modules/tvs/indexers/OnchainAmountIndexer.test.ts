@@ -7,7 +7,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import { OnchainAmountIndexer } from './OnchainAmountIndexer'
 
 describe(OnchainAmountIndexer.name, () => {

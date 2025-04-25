@@ -30,7 +30,7 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
       : undefined
 
   return (
-    <div className="flex flex-col py-1">
+    <div className="flex flex-col">
       <div
         className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-baseline')}
       >
@@ -38,9 +38,10 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
           stage={stageConfig.stage}
           isAppchain={isAppchain}
           className="font-medium"
+          appchainClassName="text-sm md:text-sm font-bold"
           inline
         />
-        <div className="inline-block font-bold">
+        <div className="heading-16 inline-block">
           {getStageName(stageConfig.stage)}
         </div>
       </div>
@@ -48,12 +49,7 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
       !!stageConfig.additionalConsiderations ? (
         isAppchain ? (
           <div className="mt-2">
-            <span
-              className={cn(
-                'font-medium',
-                getStageTextClassname(stageConfig.stage),
-              )}
-            >
+            <span className={getStageTextClassname(stageConfig.stage)}>
               Appchain
             </span>
             : {stageConfig.additionalConsiderations.short}
@@ -82,14 +78,14 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
                   ? RoundedWarningIcon
                   : UnderReviewIcon
               }
-              className="mb-4"
+              className="mb-4 px-3 py-2"
               text={stageConfig.message.text}
               ignoreMarkdown
             />
           )}
           {stageConfig.missing && (
-            <div className="text-sm">
-              <span className="mb-2 block leading-tight">
+            <div>
+              <span className="label-value-14-bold mb-2 block">
                 Items missing for{' '}
                 <span
                   className={getColorClassName(stageConfig.missing.nextStage)}
@@ -118,10 +114,10 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
       <Callout
         color="blue"
         body="Please mind, stages do not reflect rollup security"
-        icon={<InfoIcon className="-mt-px size-4 fill-blue-600" />}
+        icon={<InfoIcon className="mt-px size-4 fill-blue-600" />}
         className={cn(
-          '!gap-1 p-3 text-[13px] font-medium',
-          stageConfig.stage !== 'Stage 2' && 'mt-4',
+          '!gap-1 px-3 py-2',
+          stageConfig.stage !== 'Stage 2' && 'mt-3',
         )}
       />
     </div>

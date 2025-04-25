@@ -1,4 +1,34 @@
-Generated with discovered.json: 0xa74852ec3f05d0bdfe5963f75a2d4982c82ee563
+Generated with discovered.json: 0x159ac2c3000d7e845d3924a0212c44b5bee16fa8
+
+# Diff at Thu, 24 Apr 2025 10:31:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22187530
+- current block number: 22187530
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22187530 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://dac2.wirexpaychain.zeeve.online","0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"]
++        {"url":"https://dac2.wirexpaychain.zeeve.online","addr":"0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"}
+      values.members.0:
+-        ["https://dac.wirexpaychain.zeeve.online","0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"]
++        {"url":"https://dac.wirexpaychain.zeeve.online","addr":"0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"}
+    }
+```
+
+Generated with discovered.json: 0x3357802216bc5d73e12eb1c83d68dd743d5d81aa
 
 # Diff at Thu, 10 Apr 2025 14:43:31 GMT:
 

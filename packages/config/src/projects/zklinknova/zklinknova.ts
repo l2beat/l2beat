@@ -11,7 +11,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -404,7 +403,6 @@ export const zklinknova: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,

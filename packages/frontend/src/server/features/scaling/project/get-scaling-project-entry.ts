@@ -30,7 +30,6 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
-import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -106,7 +105,7 @@ export async function getScalingProjectEntry(
     | 'scalingRisks'
     | 'scalingStage'
     | 'scalingTechnology'
-    | 'tvlInfo',
+    | 'tvsInfo',
     // optional
     | 'contracts'
     | 'tvsConfig'
@@ -150,7 +149,7 @@ export async function getScalingProjectEntry(
               ...tvsProjectStats.breakdown,
               totalChange: tvsProjectStats.change.total,
             },
-            warning: project.tvlInfo.warnings[0],
+            warning: project.tvsInfo.warnings[0],
             tokens: {
               breakdown: {
                 ...tvsProjectStats.breakdown,
@@ -164,10 +163,10 @@ export async function getScalingProjectEntry(
                       tvsProjectStats.associated.total /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
-                    associatedTokens: project.tvlInfo.associatedTokens,
+                    associatedTokens: project.tvsInfo.associatedTokens,
                   }),
               ]),
-              associatedTokens: project.tvlInfo.associatedTokens,
+              associatedTokens: project.tvsInfo.associatedTokens,
             },
           }
         : undefined,
@@ -286,7 +285,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         tokens,
         tvsProjectStats,
-        tvlInfo: project.tvlInfo,
+        tvsInfo: project.tvsInfo,
       },
     })
   }
@@ -433,19 +432,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const technologySection = getScalingTechnologySection(project)
-  if (technologySection) {
-    sections.push({
-      type: 'TechnologySection',
-      props: {
-        id: 'technology',
-        title: 'Technology',
-        ...technologySection,
-        hostChainWarning,
-      },
-    })
-  }
-
   const dataAvailabilitySection = getDataAvailabilitySection(
     project,
     daSolution,
@@ -496,7 +482,7 @@ export async function getScalingProjectEntry(
   const operatorSection = getOperatorSection(project)
   if (operatorSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'operator',
         title: 'Operator',
@@ -521,7 +507,7 @@ export async function getScalingProjectEntry(
   const withdrawalsSection = getWithdrawalsSection(project)
   if (withdrawalsSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'withdrawals',
         title: 'Withdrawals',
@@ -534,7 +520,7 @@ export async function getScalingProjectEntry(
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   if (otherConsiderationsSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'other-considerations',
         title: 'Other considerations',
@@ -570,7 +556,6 @@ export async function getScalingProjectEntry(
       hostChain: hostChain?.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
-      daSolution,
     },
     contractUtils,
   )
@@ -597,7 +582,6 @@ export async function getScalingProjectEntry(
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
       architectureImage: project.scalingTechnology.architectureImage,
-      daSolution,
     },
     contractUtils,
     projectsChangeReport,

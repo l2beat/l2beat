@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 22273522,
-  "configHash": "0x7778ef766bb14b5e6e5d355615391a64f3442f80c71f2a93c39116678646f0a2",
+  "configHash": "0x154cc8a962dfc4c95be5aa2da0b90c39d9f5bad433fe176032642eea8ef8cdcf",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -419,7 +419,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "12d 21h",
+        "timeSinceLastL2beatInteraction": "14d 18h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -504,8 +504,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "optimism:0x4200000000000000000000000000000000000007",
-        "otherMessenger": "optimism:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "oeth:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "oeth:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "PORTAL": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
@@ -520,7 +520,7 @@
       },
       "derivedName": "L1CrossDomainMessenger",
       "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "oeth" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -884,15 +884,15 @@
         "$upgradeCount": 7,
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "OTHER_BRIDGE": "optimism:0x4200000000000000000000000000000000000014",
-        "otherBridge": "optimism:0x4200000000000000000000000000000000000014",
+        "OTHER_BRIDGE": "oeth:0x4200000000000000000000000000000000000014",
+        "otherBridge": "oeth:0x4200000000000000000000000000000000000014",
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.1"
       },
       "derivedName": "L1ERC721Bridge",
       "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "oeth" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -1266,18 +1266,18 @@
         "$implementation": "0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l2TokenBridge": "optimism:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "oeth:0x4200000000000000000000000000000000000010",
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "OTHER_BRIDGE": "optimism:0x4200000000000000000000000000000000000010",
-        "otherBridge": "optimism:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "oeth:0x4200000000000000000000000000000000000010",
+        "otherBridge": "oeth:0x4200000000000000000000000000000000000010",
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.2.2"
       },
       "derivedName": "L1StandardBridge",
       "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "oeth" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },

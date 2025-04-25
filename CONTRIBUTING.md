@@ -73,7 +73,7 @@ General token prerequisites (without these your token CANNOT be added):
 2. Add your token to the list (`packages/config/src/tokens/tokens.jsonc`). The order of the tokens should be kept alphabetical.
 3. Run `pnpm tokens` in the `packages/config/` directory.
 
-Refer to the [docs - tvl.md](docs/tvl.md) for further token insights.
+Refer to the [docs - tvs.md](docs/tvs.md) for further token insights.
 
 ## Add your project to the website
 

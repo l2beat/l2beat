@@ -76,14 +76,18 @@ export const layer2aWithDups = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'Fraud proofs',
+        description:
+          'Ultimately, Layer2a will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        risks: [],
+        references: [],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'Fraud proofs are in development',
-      description:
-        'Ultimately, Layer2a will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
-      risks: [],
-      references: [],
-    },
     dataAvailability: { ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL },
     operator: { ...OPERATOR.CENTRALIZED_SEQUENCER },
     forceTransactions: {

@@ -2,7 +2,7 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 22297572,
-  "configHash": "0x3b194055eb0e90c4361fc55c31d020bee72fae0355c55d51da7574efeca92135",
+  "configHash": "0x4ba6365c2825fc122160d4a925fb057314dfb9fb415c720a58282c24c512a8a9",
   "entries": [
     {
       "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",

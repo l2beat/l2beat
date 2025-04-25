@@ -2,10 +2,9 @@
 
 source .env
 
-FEATURES_NAMES=("da" "tvl" "finality" "tvs")
+FEATURES_NAMES=("da" "finality" "tvs")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability"
-    "IndexerState IndexerConfiguration BlockTimestamp Amount Price Value"
     "IndexerState IndexerConfiguration Liveness Finality"
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue"
 )

@@ -13,8 +13,12 @@
     "0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig",
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
-  "sharedModules": ["shared-zk-stack"],
+  "sharedModules": ["shared-zk-stack"], // TEMPORARY until FE logic is changed
+  // "sharedModules": ["shared-zk-stack", "vector"],
   "overrides": {
+    "0x8f50d93B9955B285f787043B30B5F51D09bE0120": {
+      "ignoreRelatives": ["bridge", "vectorx"] // TEMPORARY until FE logic is changed
+    },
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       // local override over the template to fetch the validators from the shared contract
       "fields": {

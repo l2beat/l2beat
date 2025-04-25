@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 82818646,
-  "configHash": "0x72afbee758e360346c4e4f8120b8f3560555b7b85a34495bb52d2ac41e21b7da",
+  "configHash": "0x4bcf0268e0e107cfbe5e98de468e740441e051f14d6b155618f49b7163404159",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
