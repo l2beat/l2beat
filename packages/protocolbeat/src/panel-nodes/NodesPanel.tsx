@@ -151,7 +151,12 @@ function getNodeFields(
 
   if (value.type === 'object') {
     return value.values.flatMap(([key, value]) =>
-      getNodeFields(`${path}.${key}`, value, bannedKeys, bannedValues),
+      getNodeFields(
+        `${path}.${extractFieldValue(key)}`,
+        value,
+        bannedKeys,
+        bannedValues,
+      ),
     )
   } else if (value.type === 'array') {
     return value.values.flatMap((value, i) =>
@@ -174,6 +179,17 @@ function getNodeFields(
     ]
   } else {
     return []
+  }
+}
+
+function extractFieldValue(value: FieldValue): string {
+  switch (value.type) {
+    case 'string':
+      return value.value
+    case 'address':
+      return value.address
+    default:
+      return ''
   }
 }
 

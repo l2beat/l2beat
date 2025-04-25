@@ -103,24 +103,24 @@ function RosetteTooltipContent() {
       }}
       className="w-[300px]"
     >
-      <p className="font-medium text-primary">{selectedRisk.name}</p>
+      <p className="label-value-14-medium mb-2">{selectedRisk.name}</p>
       <SentimentText
         sentiment={selectedRisk.sentiment ?? 'neutral'}
         vibrant={true}
-        className="mb-2 flex items-center gap-1 text-lg font-bold"
+        className="heading-18 mb-2 flex items-center gap-1"
       >
         {selectedRisk.value}
       </SentimentText>
       {selectedRisk.warning && (
         <WarningBar
-          className="mb-2"
+          className="mb-2 px-3 py-2"
           icon={RoundedWarningIcon}
           text={selectedRisk.warning.value}
           color={sentimentToWarningBarColor(selectedRisk.warning.sentiment)}
           ignoreMarkdown
         />
       )}
-      <span className="text-xs">{selectedRisk.description}</span>
+      <span>{selectedRisk.description}</span>
     </TooltipContent>
   )
 }

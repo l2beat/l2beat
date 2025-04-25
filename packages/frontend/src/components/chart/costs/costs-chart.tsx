@@ -228,21 +228,21 @@ function CustomTooltip({
   }, 0)
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-44 flex-col gap-1">
-        <div>
+      <div className="flex min-w-44 flex-col">
+        <div className="label-value-14-medium mb-3 text-secondary">
           {formatTimestamp(label, {
             mode: resolution === 'daily' ? 'date' : 'datetime',
             longMonthName: resolution === 'daily',
           })}
         </div>
-        <div className="flex w-full items-center justify-between gap-2 text-xs text-secondary">
+        <div className="heading-16 flex w-full items-center justify-between gap-2">
           <span>Total</span>
-          <span className="whitespace-nowrap font-bold tabular-nums text-primary">
+          <span className="whitespace-nowrap tabular-nums text-primary">
             {formatCostValue(total, unit, 'total')}
           </span>
         </div>
-        <HorizontalSeparator />
-        <div>
+        <HorizontalSeparator className="mt-1.5" />
+        <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
             if (entry.value === undefined) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
@@ -256,11 +256,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="label-value-15-medium whitespace-nowrap">
                   {entry.name === 'posted' || entry.name === 'notSyncedPosted'
                     ? formatBytes(entry.value)
                     : formatCostValue(entry.value, unit, 'total')}
