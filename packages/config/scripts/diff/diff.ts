@@ -80,7 +80,8 @@ function addedOrRemoved(
 
 function diffProjects(before: Project, after: Project): FieldDiff[] {
   const result: FieldDiff[] = []
-  for (const field in before) {
+  const allFields = new Set([...Object.keys(before), ...Object.keys(after)])
+  for (const field of allFields) {
     const output = diffLines(
       JSON.stringify(toCanonicalJson(before[field]), null, 2),
       JSON.stringify(toCanonicalJson(after[field]), null, 2),
@@ -137,6 +138,9 @@ function processDiffOutput(
 }
 
 function toCanonicalJson(value: unknown) {
+  if (value === undefined) {
+    return null
+  }
   if (typeof value !== 'object' || value === null) {
     return value
   }

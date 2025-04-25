@@ -33,6 +33,7 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
       return {
         id: encodeChainAddress(chain, contract.address),
         address: contract.address,
+        isInitial: false,
         addressType,
         name,
         box: { x: 0, y: 0, width: 0, height: 0 },
@@ -50,6 +51,7 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
       (eoa): Node => ({
         id: encodeChainAddress(chain, eoa.address),
         address: eoa.address,
+        isInitial: false,
         addressType: 'EOA',
         name: `EOA ${eoa.address.slice(0, 6)}…${eoa.address.slice(-4)}`,
         box: { x: 0, y: 0, width: 0, height: 0 },

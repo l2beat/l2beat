@@ -2,7 +2,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -18,12 +17,12 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sophon: ScalingProject = zkStackL2({
   discovery,
-  additionalBadges: [BADGES.DA.Avail],
+  additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
     slug: 'sophon',
+    architectureImage: 'zkstack-validium-vector',
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
@@ -61,9 +60,9 @@ export const sophon: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
     layer: DA_LAYERS.AVAIL,
-    riskView: RISK_VIEW.DATA_AVAIL(false),
+    riskView: RISK_VIEW.DATA_AVAIL(true),
     technology: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
@@ -71,7 +70,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
       ],
     },
-    bridge: DA_BRIDGES.NONE,
+    bridge: DA_BRIDGES.VECTOR,
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -90,7 +89,6 @@ export const sophon: ScalingProject = zkStackL2({
         'stAZUR',
         'stAVAIL',
         'OPN',
-        'USDC',
       ], // 'SOPH' not on CG yet
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
@@ -155,6 +153,14 @@ export const sophon: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Avail Vector DA Bridge',
+      url: 'https://blog.availproject.org/avail-to-power-consumer-entertainment-onchain-with-sophon/', // TODO better announcement link
+      date: '2025-04-23T00:00:00.00Z',
+      description:
+        'Sophon is the first validium to integrate with the Vector data availability bridge to Avail.',
+      type: 'general',
+    },
     {
       title: 'Mainnet public launch',
       url: 'https://x.com/sophon/status/1861771965284896996',

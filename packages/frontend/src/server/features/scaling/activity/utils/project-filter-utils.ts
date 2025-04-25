@@ -18,7 +18,8 @@ export function createActivityProjectsFilter(
 ): (project: Project<'scalingInfo' | 'statuses'>) => boolean {
   switch (filter.type) {
     case 'all':
-      return () => true
+      return (project) =>
+        !(previewRecategorisation && project.statuses.isUnderReview)
     case 'rollups':
       return (project) =>
         !isProjectOther(project.scalingInfo, previewRecategorisation) &&

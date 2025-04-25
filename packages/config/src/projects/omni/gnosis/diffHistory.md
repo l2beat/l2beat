@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x826800f5ebfe971aec956682e4dae389e0d3aaa4
+Generated with discovered.json: 0x4977b3aabc95c21faa7d333e667319fe563a0290
+
+# Diff at Thu, 24 Apr 2025 07:18:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5e04a862ca14d0cf2b0f2109c8f3cf63d05c6b32 block: 39627531
+- current block number: 39627531
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 39627531 (main branch discovery), not current.
+
+```diff
+    contract HashiManager (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: None
++++ description: Array of the adapters on Ethereum
++++ severity: HIGH
+      values.adapters.0:
+-        "ethereum:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"
++        "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"
++++ description: Array of the reporters on Ethereum
++++ severity: HIGH
+      values.reporters.0:
+-        "ethereum:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"
++        "eth:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"
++++ description: Address of the target contract on Ethereum
++++ severity: HIGH
+      values.targetAddress:
+-        "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      usedTypes.0.arg.prefix:
+-        "ethereum"
++        "eth"
+    }
+```
+
+Generated with discovered.json: 0x07d276e18de5145485ad7f9345eba8e3e84b0714
 
 # Diff at Wed, 16 Apr 2025 13:18:21 GMT:
 

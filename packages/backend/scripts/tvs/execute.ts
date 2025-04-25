@@ -312,8 +312,20 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              value: '$' + formatNumberWithCommas(t.value),
               amount: formatNumberWithCommas(t.amount),
+              value: '$' + formatNumberWithCommas(t.value),
+              ...(t.valueForProject !== t.value
+                ? {
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
+                : {}),
+              ...(t.valueForSummary !== t.valueForProject
+                ? {
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
+                : {}),
             }
           }),
       },
@@ -326,8 +338,20 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              value: '$' + formatNumberWithCommas(t.value),
               amount: formatNumberWithCommas(t.amount),
+              value: '$' + formatNumberWithCommas(t.value),
+              ...(t.valueForProject !== t.value
+                ? {
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
+                : {}),
+              ...(t.valueForSummary !== t.valueForProject
+                ? {
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
+                : {}),
             }
           }),
       },
@@ -340,8 +364,20 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              value: '$' + formatNumberWithCommas(t.value),
               amount: formatNumberWithCommas(t.amount),
+              value: '$' + formatNumberWithCommas(t.value),
+              ...(t.valueForProject !== t.value
+                ? {
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
+                : {}),
+              ...(t.valueForSummary !== t.valueForProject
+                ? {
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
+                : {}),
             }
           }),
       },

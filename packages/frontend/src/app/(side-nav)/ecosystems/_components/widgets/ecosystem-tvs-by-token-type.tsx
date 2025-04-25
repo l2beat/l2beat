@@ -1,4 +1,5 @@
 'use client'
+import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
@@ -172,8 +173,10 @@ export function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-36 flex-col gap-1">
         {payload.map((entry) => {
-          if (entry.value === undefined) return null
-          const config = meta[entry.name!]!
+          if (entry.name === undefined || entry.value === undefined) return null
+          const config = meta[entry.name]
+          assert(config, 'No config')
+
           return (
             <div
               key={entry.name}

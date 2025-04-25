@@ -123,8 +123,7 @@ export async function getDaProjectEntry(
       }),
     ])
 
-  const layerTvs =
-    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
+  const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
@@ -242,8 +241,7 @@ export async function getEthereumDaProjectEntry(
     }),
   ])
 
-  const layerTvs =
-    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
+  const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 

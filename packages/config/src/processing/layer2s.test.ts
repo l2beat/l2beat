@@ -381,8 +381,6 @@ describe('layer2s', () => {
             })
           }
 
-          check('stateCorrectness')
-          check('newCryptography')
           check('dataAvailability')
           check('operator')
           check('forceTransactions')
@@ -520,7 +518,9 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         if (!layer2.stateValidation) continue
 
-        expect(layer2.stateValidation?.description.endsWith('.')).toEqual(true)
+        if (layer2.stateValidation.description) {
+          expect(layer2.stateValidation.description.endsWith('.')).toEqual(true)
+        }
         layer2.stateValidation?.categories.forEach((category) => {
           expect(category.description.endsWith('.')).toEqual(true)
         })

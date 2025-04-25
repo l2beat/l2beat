@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x2da36a98d4c4ec8cf75426cba9dbe2c080c79038
+Generated with discovered.json: 0x2722dba24d027c899a6f9429eaaf5d71cf354d07
+
+# Diff at Thu, 24 Apr 2025 07:16:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5e04a862ca14d0cf2b0f2109c8f3cf63d05c6b32 block: 22281679
+- current block number: 22281679
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281679 (main branch discovery), not current.
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "gnosis:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++        "gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++++ description: Array of the reports on GnosisChain
++++ severity: HIGH
+      values.reporters.0:
+-        "gnosis:0x0000000000000000000000000000000000000000"
++        "gno:0x0000000000000000000000000000000000000000"
++++ description: Address of the target contract on GnosisChain
++++ severity: HIGH
+      values.targetAddress:
+-        "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
++        "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+      usedTypes.0.arg.prefix:
+-        "gnosis"
++        "gno"
+    }
+```
+
+Generated with discovered.json: 0x19261fa1b71a8457c50d6306634ede012c1dc78f
 
 # Diff at Wed, 16 Apr 2025 13:11:21 GMT:
 

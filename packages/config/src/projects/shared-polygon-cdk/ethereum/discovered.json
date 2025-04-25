@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 22244012,
-  "configHash": "0x690996684fa4788caa9da109da10466adbe71ac4a392dbfd5a7e913d67326aeb",
+  "configHash": "0x6b740adab8a9a0edfa200644b7003fe05a45f33950e2c73dd30488b658e72fea",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -502,25 +502,6 @@
         "getRollupExitRoot": "0x85c5cacd28ad0986361c0654ccb1e7ba3caaeeea7c4e27a1fe4879ee33381ca7",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "isVerifyingBatches": [
-          [true],
-          [true],
-          [true],
-          [false],
-          [true],
-          [true],
-          [true],
-          [true],
-          [true],
-          [true],
-          [true],
-          [true],
-          [true],
-          [false],
-          [false],
-          [true],
-          [false]
-        ],
         "lastAggregationTimestamp": 1744353575,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17],
@@ -528,242 +509,242 @@
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 17,
         "rollupsDataV2": [
-          [
-            "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-            1101,
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            6,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-            3776,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-            196,
-            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
-            13,
-            8,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
-            4913,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
-            1511670449,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-            1702448187,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-            994873017,
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            7,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
-            31415,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
-            511252203,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-            2355,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
-            999,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
-            938,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
-            752025,
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            7,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
-            9369,
-            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-            12,
-            10,
-            1,
-            "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
-          ],
-          [
-            "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
-            623,
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            7,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
-            3344,
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            7,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x7449449460b5B732A9754CA3d9A7916122A9190d",
-            801,
-            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-            12,
-            10,
-            1,
-            "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
-          ]
+          {
+            "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+            "chainID": 1101,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 6,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+            "chainID": 3776,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+            "chainID": 196,
+            "verifier": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            "forkID": 13,
+            "rollupTypeID": 8,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
+            "chainID": 4913,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+            "chainID": 1511670449,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+            "chainID": 1702448187,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+            "chainID": 994873017,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+            "chainID": 31415,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
+            "chainID": 511252203,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+            "chainID": 2355,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
+            "chainID": 999,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
+            "chainID": 938,
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+            "chainID": 752025,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+            "chainID": 9369,
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupTypeID": 10,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          },
+          {
+            "rollupContract": "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+            "chainID": 623,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
+            "chainID": 3344,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "0x7449449460b5B732A9754CA3d9A7916122A9190d",
+            "chainID": 801,
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupTypeID": 10,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          }
         ],
         "rollupTypeCount": 10,
         "rollupTypes": [
-          [
-            "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
-            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
-            7,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
-            8,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
-            11,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            12,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
-            13,
-            0,
-            false,
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-            12,
-            1,
-            false,
-            "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
-          ],
-          [
-            "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-            12,
-            1,
-            false,
-            "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
-          ]
+          {
+            "consensusImplementation": "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
+            "verifier": "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+            "forkID": 7,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+            "forkID": 8,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+            "forkID": 11,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "verifier": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            "forkID": 13,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupVerifierType": 1,
+            "obsolete": false,
+            "programVKey": "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
+          },
+          {
+            "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupVerifierType": 1,
+            "obsolete": false,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          }
         ],
         "totalSequencedBatches": 702532,
         "totalVerifiedBatches": 702034,
@@ -785,15 +766,11 @@
         "rollupTypes": {
           "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
         },
-        "isVerifyingBatches": {
-          "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1."
-        },
         "pessimisticProofSenders": {
           "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
       "derivedName": "PolygonRollupManager",
-      "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }],
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1737,8 +1714,8 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x92aeca1bb56e793c55e70cc6e4aae76578f5e47d5112483916c542be5eee9ddf",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x4be7947ee5f0407be5c3881d8da19fc790036e07baedd5ba5c618ce25e6d63e8",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0xc9535092402045470b254bc911e193803f0a82bc0e78932c1c810ce000a79c63",
     "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
-    "polygon-cdk/Timelock": "0xe0aeb97ea2d17d5fca19d26982c3a5c34745dd2f238167e3d76fedb715ce3a76"
+    "polygon-cdk/Timelock": "0x78901e9bf86645856ac7e8fb50da9c1b6d749c8a1e7ee7f2d432ab6ab0d71c34"
   }
 }

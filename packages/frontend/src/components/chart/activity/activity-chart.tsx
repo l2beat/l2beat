@@ -1,7 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -167,22 +167,25 @@ export function ActivityCustomTooltip({
   if (!active || !payload || typeof timestamp !== 'number') return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-40 flex-col gap-1 sm:w-60">
-        <div className="mb-1 whitespace-nowrap">
+      <div className="flex w-40 flex-col sm:w-60">
+        <div className="label-value-14-medium mb-3 whitespace-nowrap text-secondary">
           {formatTimestamp(timestamp, {
             longMonthName: true,
           })}
         </div>
-        <div className="flex w-full items-center justify-between gap-2">
-          <div className="flex items-center gap-1">
-            <span className="text-sm text-secondary">Average UOPS</span>
-          </div>
-        </div>
-        <HorizontalSeparator className="mb-1" />
-        <div>
+        <span className="heading-16">Average UOPS</span>
+        <HorizontalSeparator className="mt-1.5" />
+        <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = meta[entry.name!]!
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.type === 'none'
+            )
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}
@@ -193,11 +196,11 @@ export function ActivityCustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </div>
-                <span className="whitespace-nowrap font-bold tabular-nums">
+                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
                   {syncedUntil && syncedUntil < timestamp
                     ? 'Not synced'
                     : formatActivityCount(entry.value)}
@@ -207,16 +210,19 @@ export function ActivityCustomTooltip({
           })}
         </div>
 
-        <div className="mt-2 flex w-full items-center justify-between gap-2">
-          <div className="flex items-center gap-1">
-            <span className="text-sm text-secondary">Operations count</span>
-          </div>
-        </div>
-        <HorizontalSeparator className="mb-1" />
-        <div>
+        <span className="heading-16 mt-3">Operations count</span>
+        <HorizontalSeparator className="mt-1.5" />
+        <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = meta[entry.name!]!
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.type === 'none'
+            )
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}
@@ -227,11 +233,11 @@ export function ActivityCustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </div>
-                <span className="whitespace-nowrap font-bold tabular-nums">
+                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
                   {syncedUntil && syncedUntil < timestamp
                     ? 'Not synced'
                     : formatInteger(entry.value * UnixTime.DAY)}

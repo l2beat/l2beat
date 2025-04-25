@@ -5,19 +5,15 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
-import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { badgesCompareFn } from '../common/badges'
 import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
-import { getTokenList } from '../tokens/tokens'
 import {
   type BaseProject,
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
-  type ProjectEscrow,
   type ProjectLivenessInfo,
-  type ProjectTvlConfig,
-  type ProjectTvlEscrow,
   ProjectTvsConfigSchema,
   type TvsToken,
 } from '../types'
@@ -41,18 +37,11 @@ import { getVM } from './utils/getVM'
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
-  const chains = [...refactored, ...layer2s, ...layer3s, ...bridges]
-    .map((p) => p.chainConfig)
-    .filter((c) => c !== undefined)
-  const tokenList = getTokenList(chains)
-
   const daBridges = refactored.filter((p) => p.daBridge)
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], daBridges, tokenList)))
-    .concat(
-      layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges, tokenList)),
-    )
-    .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], daBridges)))
+    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges)))
+    .concat(bridges.map((p) => bridgeToProject(p)))
     .concat(ecosystems)
 }
 
@@ -60,7 +49,6 @@ function layer2Or3ToProject(
   p: ScalingProject,
   layer2s: ScalingProject[],
   daBridges: BaseProject[],
-  tokenList: Token[],
 ): BaseProject {
   return {
     id: p.id,
@@ -137,11 +125,10 @@ function layer2Or3ToProject(
       upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     customDa: p.customDa,
-    tvlInfo: {
+    tvsInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
-      warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
+      warnings: [p.display.tvsWarning].filter((x) => x !== undefined),
     },
-    tvlConfig: getTvlConfig(p, tokenList),
     tvsConfig: getTvsConfig(p),
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
@@ -163,6 +150,7 @@ function layer2Or3ToProject(
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasActivity: p.config.activityConfig ? true : undefined,
+    escrows: p.config.escrows,
   }
 }
 
@@ -203,7 +191,7 @@ function getFinality(
   return {}
 }
 
-function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
+function bridgeToProject(p: Bridge): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -230,17 +218,18 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     bridgeTechnology: {
       ...p.technology,
       detailedDescription: p.display.detailedDescription,
+      upgradesAndGovernance: p.upgradesAndGovernance,
+      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     contracts: p.contracts,
     permissions: p.permissions,
     discoveryInfo: getDiscoveryInfo(p),
     bridgeRisks: p.riskView,
-    tvlInfo: {
+    tvsInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
     tvsConfig: getTvsConfig(p),
-    tvlConfig: getTvlConfig(p, tokenList),
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags
@@ -318,24 +307,6 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-function getTvlConfig(
-  project: ScalingProject | Bridge,
-  tokenList: Token[],
-): ProjectTvlConfig {
-  const tokens = project.chainConfig
-    ? tokenList.filter(
-        (t) =>
-          t.supply !== 'zero' && t.chainId === project.chainConfig?.chainId,
-      )
-    : []
-
-  return {
-    escrows: project.config.escrows.map((e) => toProjectEscrow(e, tokenList)),
-    tokens,
-    associatedTokens: project.config.associatedTokens ?? [],
-  }
-}
-
 export function getDiscoveryInfo(
   project: ScalingProject | Bridge,
 ): ProjectDiscoveryInfo {
@@ -348,34 +319,6 @@ export function getDiscoveryInfo(
     contractsDiscoDriven,
     permissionsDiscoDriven,
     isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
-  }
-}
-
-function toProjectEscrow(
-  escrow: ProjectEscrow,
-  tokenList: Token[],
-): ProjectTvlEscrow {
-  return {
-    address: escrow.address,
-    sinceTimestamp: escrow.sinceTimestamp,
-    chain: escrow.chain,
-    includeInTotal: escrow.includeInTotal,
-    source: escrow.source,
-    bridgedUsing: escrow.bridgedUsing,
-    sharedEscrow: escrow.sharedEscrow,
-    tokens: tokenList
-      .filter(
-        (token) =>
-          token.chainId === escrow.chainId &&
-          (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
-          !escrow.excludedTokens?.includes(token.symbol) &&
-          (!token.untilTimestamp ||
-            token.untilTimestamp > escrow.sinceTimestamp),
-      )
-      .map((token) => ({
-        ...token,
-        isPreminted: !!escrow.premintedTokens?.includes(token.symbol),
-      })),
   }
 }
 

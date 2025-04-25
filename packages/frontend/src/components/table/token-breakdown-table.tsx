@@ -1,5 +1,7 @@
+import { assert } from '@l2beat/shared-pure'
 import type { Table as TanstackTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
 import { cn } from '~/utils/cn'
 import {
   Table,
@@ -14,15 +16,17 @@ import { TableEmptyState } from './table-empty-state'
 
 interface Props<T> {
   table: TanstackTable<T>
+  renderSubComponent: (props: { row: Row<T> }) => React.ReactElement
   className?: string
 }
 
-export function TokenTable<T>({ table }: Props<T>) {
+export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
   if (table.getRowCount() === 0) {
     return <TableEmptyState />
   }
 
-  const headers = table.getHeaderGroups()[0]!
+  const headers = table.getHeaderGroups()[0]
+  assert(headers, 'No table headers')
 
   return (
     <Table>
@@ -52,16 +56,12 @@ export function TokenTable<T>({ table }: Props<T>) {
           ))}
         </TableHeaderRow>
       </TableHeader>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
+      {table.getRowModel().rows.map((row) => (
+        <TableBody key={`row-${row.id}`} className="group">
           <TableRow
             slug={undefined}
             key={row.id}
-            className={cn(
-              'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
-              (row.getIsExpanded() || row.getParentRow()?.getIsExpanded()) &&
-                'bg-[#CB980029]/20 hover:bg-black/[0.1] dark:hover:bg-white/[0.1]',
-            )}
+            className="border-b border-b-black/10 group-hover:bg-black/5 dark:border-b-zinc-700 dark:group-hover:bg-white/5 md:border-b-0"
           >
             {row.getVisibleCells().map((cell) => {
               return (
@@ -78,8 +78,19 @@ export function TokenTable<T>({ table }: Props<T>) {
               )
             })}
           </TableRow>
-        ))}
-      </TableBody>
+          {row.getIsExpanded() && (
+            <TableRow
+              slug={undefined}
+              key={`${row.id}-expanded`}
+              className="group-hover:bg-black/5 dark:border-b-zinc-700 dark:group-hover:bg-white/5 md:border-b-0"
+            >
+              <TableCell colSpan={row.getVisibleCells().length}>
+                {renderSubComponent({ row })}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      ))}
     </Table>
   )
 }

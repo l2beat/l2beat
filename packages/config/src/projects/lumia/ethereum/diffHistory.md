@@ -1,4 +1,34 @@
-Generated with discovered.json: 0x9c7444d0ab6b04595d4a006c73efcc8c0609b084
+Generated with discovered.json: 0xc84e03c6da834aa3bbe391b4aa5da3c0f1b546b5
+
+# Diff at Thu, 24 Apr 2025 10:30:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21981677
+- current block number: 21981677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981677 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://prism-da-2.eu-north-2.gateway.fm/","0xf1cACD549400824D54c8794e63C5368C296FDA00"]
++        {"url":"https://prism-da-1.eu-north-2.gateway.fm/","addr":"0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"}
+      values.members.0:
+-        ["https://prism-da-1.eu-north-2.gateway.fm/","0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"]
++        {"url":"https://prism-da-2.eu-north-2.gateway.fm/","addr":"0xf1cACD549400824D54c8794e63C5368C296FDA00"}
+    }
+```
+
+Generated with discovered.json: 0x77d780f19ae4c3edad1919d89cef8d0eb6d38e2e
 
 # Diff at Thu, 10 Apr 2025 14:42:41 GMT:
 

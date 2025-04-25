@@ -1,4 +1,70 @@
-Generated with discovered.json: 0xb09d3ca12c8534e7baa49b0d44d2ffd08991e582
+Generated with discovered.json: 0xbcbe4025d922c24764f460dc2c2b5aad21be68ed
+
+# Diff at Thu, 24 Apr 2025 07:16:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5e04a862ca14d0cf2b0f2109c8f3cf63d05c6b32 block: 22273522
+- current block number: 22273522
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273522 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "optimism:0x4200000000000000000000000000000000000007"
++        "oeth:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "optimism:0x4200000000000000000000000000000000000007"
++        "oeth:0x4200000000000000000000000000000000000007"
+      usedTypes.0.arg.prefix:
+-        "optimism"
++        "oeth"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "optimism:0x4200000000000000000000000000000000000014"
++        "oeth:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "optimism:0x4200000000000000000000000000000000000014"
++        "oeth:0x4200000000000000000000000000000000000014"
+      usedTypes.0.arg.prefix:
+-        "optimism"
++        "oeth"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "optimism:0x4200000000000000000000000000000000000010"
++        "oeth:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "optimism:0x4200000000000000000000000000000000000010"
++        "oeth:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "optimism:0x4200000000000000000000000000000000000010"
++        "oeth:0x4200000000000000000000000000000000000010"
+      usedTypes.0.arg.prefix:
+-        "optimism"
++        "oeth"
+    }
+```
+
+Generated with discovered.json: 0xb3cd8d378fcca754fe83317ffe7020f56a9ebe92
 
 # Diff at Tue, 15 Apr 2025 09:37:32 GMT:
 

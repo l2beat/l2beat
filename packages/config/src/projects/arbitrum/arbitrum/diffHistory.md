@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x651e65c40fdb19782c59666767006705c59ca8c8
+
+# Diff at Tue, 22 Apr 2025 12:26:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 316974509
+- current block number: 329029286
+
+## Description
+
+signer changes in a MS designated the nominee vetter for SC elections.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) {
+    +++ description: None
+      values.$members.5:
+-        "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
+      values.$members.4:
+-        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
++        "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
+      values.$members.3:
+-        "0xa98290a7A282d8249544D35b288E160A5580D57E"
++        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
+      values.$members.2:
+-        "0x25032D068633cfbe52c134EBdD965b2C2B4C2710"
++        "0xa98290a7A282d8249544D35b288E160A5580D57E"
+      values.$members.1:
+-        "0x0adc7D8eB4C01219858a579C9539780CD9575035"
++        "0x25032D068633cfbe52c134EBdD965b2C2B4C2710"
+      values.$members.0:
+-        "0xC3514C143Df27eB29AC4c56c59A260713B841BDd"
++        "0x0adc7D8eB4C01219858a579C9539780CD9575035"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x823619ec8bd720017887d3c7717c07e43b75469f
 
 # Diff at Thu, 10 Apr 2025 14:43:46 GMT:

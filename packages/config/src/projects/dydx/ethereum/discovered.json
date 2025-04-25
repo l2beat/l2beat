@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0xca2bde9e210432f11239c26033092211b6a404c5008d0086ecac1d76c520357b",
+  "configHash": "0xa5cc5daf37cc181c062f5a3be15a6e77de5c0bcc715a217c6cd7026af5743cdc",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -2595,6 +2595,6 @@
     ]
   },
   "usedTemplates": {
-    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7"
+    "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663"
   }
 }

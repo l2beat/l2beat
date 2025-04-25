@@ -5,12 +5,12 @@ import { HttpClient } from '@l2beat/shared'
 import { boolean, command, flag, positional } from 'cmd-ts'
 import { rimraf } from 'rimraf'
 import { getChainConfigs } from '../config/config.discovery'
-import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
 import { ConfigRegistry } from '../discovery/config/ConfigRegistry'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
 import { discover } from '../discovery/runDiscovery'
+import { configureLogger } from './logger'
 import { ChainValue, EthereumAddressValue } from './types'
 
 export const SingleDiscoveryCommand = command({
@@ -25,7 +25,7 @@ export const SingleDiscoveryCommand = command({
     }),
   },
   handler: async ({ address, chain, overwriteCache }) => {
-    const logger = Logger.DEBUG.for('SingleDiscovery')
+    const logger = configureLogger(Logger.DEBUG.for('SingleDiscovery'))
     logger.info('Starting')
 
     const chainConfigs = getChainConfigs()
@@ -41,7 +41,7 @@ export const SingleDiscoveryCommand = command({
       paths,
       chainConfigs,
       projectConfig,
-      DiscoveryLogger.CLI,
+      Logger.INFO,
       undefined,
       http,
       overwriteCache,
@@ -52,16 +52,10 @@ export const SingleDiscoveryCommand = command({
 
     await rimraf(rootFolder)
 
-    await saveDiscoveryResult(
-      result,
-      projectConfig,
-      blockNumber,
-      DiscoveryLogger.CLI,
-      {
-        paths: { ...paths, discovery: rootFolder },
-        templatesFolder,
-      },
-    )
+    await saveDiscoveryResult(result, projectConfig, blockNumber, Logger.INFO, {
+      paths: { ...paths, discovery: rootFolder },
+      templatesFolder,
+    })
 
     logger.info(
       'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',

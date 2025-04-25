@@ -172,11 +172,11 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="text-secondary">
+      <div className="label-value-14-medium text-secondary">
         {formatTimestamp(label, { longMonthName: true })}
       </div>
-      <HorizontalSeparator className="my-1" />
-      <div>
+      <HorizontalSeparator className="my-2" />
+      <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
@@ -191,9 +191,11 @@ function CustomTooltip({
                   type={configEntry.indicatorType}
                   backgroundColor={configEntry.color}
                 />
-                <span className="text-secondary">{configEntry.label}</span>
+                <span className="label-value-14-medium">
+                  {configEntry.label}
+                </span>
               </div>
-              <span className="font-medium tabular-nums text-primary">
+              <span className="label-value-15-medium tabular-nums text-primary">
                 {(entry.value ?? 0).toFixed(2)} {unit}
               </span>
             </div>

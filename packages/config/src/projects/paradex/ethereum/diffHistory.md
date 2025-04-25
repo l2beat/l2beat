@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xa5acd8e953e44b424458f0e539f3d1c0e0e37f68
+
+# Diff at Thu, 24 Apr 2025 08:36:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22297523
+- current block number: 22337719
+
+## Description
+
+Gov updated, EOA upgrader removed.
+
+## Watched changes
+
+```diff
+    contract undefined (0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.4:
+-        {"permission":"upgrade","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","via":[]}
+      issuedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.3.description:
+-        "disable the withdrawal limit."
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.2.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.2.description:
++        "disable the withdrawal limit."
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
+Generated with discovered.json: 0x89caf88c44bb5e49c837e20db90c1af5dee5a3a2
+
+# Diff at Fri, 18 Apr 2025 17:58:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 22281682
+- current block number: 22297523
+
+## Description
+
+signer changes in the governing MSigs, USDC bridge still EOA-governed though.
+
+## Watched changes
+
+```diff
+    contract undefined (0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c) {
+    +++ description: None
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."}
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
+-        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.5:
+-        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.4.description:
+-        "enable the withdrawal limit."
+      issuedPermissions.3.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.2.to:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+      issuedPermissions.1.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.0.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.TOKEN_ADMIN.members.0:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}
+      values.$members.5:
+-        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
+      values.$members.4:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
+      values.$members.3:
+-        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
++        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.$members.2:
+-        "0xd123e24C318a14BaF01f487d59D8Ce3F8E1aeE5C"
++        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xfa1a198116bb60f60bdd28e2356a011725028810
 
 # Diff at Wed, 16 Apr 2025 12:53:38 GMT:

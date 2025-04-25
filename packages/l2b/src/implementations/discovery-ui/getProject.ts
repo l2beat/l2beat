@@ -66,8 +66,8 @@ export function getProject(
   )
 
   const response: ApiProjectResponse = { entries: [] }
+  const meta = getMeta(data.map((x) => x.discovery))
   for (const { chain, config, discovery } of data) {
-    const meta = getMeta([discovery])
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
@@ -170,7 +170,7 @@ function contractFromDiscovery(
     .map(
       ([name, value]): Field => ({
         name,
-        value: fixAddresses(parseFieldValue(value, meta), chain),
+        value: parseFieldValue(value, meta, chain),
         ...getFieldInfo(name),
       }),
     )
@@ -190,6 +190,7 @@ function contractFromDiscovery(
     name: getContractName(contract),
     type: getContractType(contract),
     template: contract.template,
+    proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
     address: toAddress(chain, contract.address),
@@ -217,31 +218,6 @@ function abiEntry(entry: string): ApiAbiEntry {
       ? iface.getSighash(entry.slice(9))
       : undefined,
   }
-}
-
-function fixAddresses(value: FieldValue, chain: string): FieldValue {
-  if (value.type === 'object') {
-    return {
-      type: 'object',
-      value: Object.fromEntries(
-        Object.entries(value.value).map(([key, value]) => [
-          key,
-          fixAddresses(value, chain),
-        ]),
-      ),
-    }
-  } else if (value.type === 'array') {
-    return {
-      type: 'array',
-      values: value.values.map((value) => fixAddresses(value, chain)),
-    }
-  } else if (value.type === 'address') {
-    return {
-      ...value,
-      address: toAddress(chain, value.address),
-    }
-  }
-  return value
 }
 
 function populateReferencedBy(chains: ApiProjectChain[]) {
@@ -293,7 +269,7 @@ function getAddresses(values: FieldValue[]) {
     } else if (value.type === 'array') {
       addresses.push(...getAddresses(value.values))
     } else if (value.type === 'object') {
-      addresses.push(...getAddresses(Object.values(value.value)))
+      addresses.push(...getAddresses(value.values.map(([_, value]) => value)))
     }
   }
   return addresses

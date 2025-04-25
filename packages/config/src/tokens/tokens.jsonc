@@ -1472,6 +1472,10 @@
       "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC"
     },
     {
+      "symbol": "POWER",
+      "address": "0x429F0d8233e517f9acf6F0C8293BF35804063a83"
+    },
+    {
       "symbol": "POWR",
       "address": "0x595832F8FC6BF59c85C527fEC3740A1b7a361269"
     },
@@ -2214,6 +2218,21 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "APE",
+      "coingeckoId": "apecoin",
+      "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+      "source": "external",
+      "supply": "totalSupply", // preminted to Apechain L3
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "FLY",
       "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",

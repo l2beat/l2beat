@@ -26,7 +26,9 @@ export function createTvsProjectsFilter(
 ): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
   switch (filter.type) {
     case 'layer2':
-      return (project) => !!project.scalingInfo
+      return (project) =>
+        !!project.scalingInfo &&
+        !(previewRecategorisation && project.statuses.isUnderReview)
     case 'bridge':
       return (project) => !!project.isBridge
     case 'projects':

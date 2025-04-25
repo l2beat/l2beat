@@ -1,5 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -83,12 +84,17 @@ export function TvsCustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-28 flex-col gap-1">
-        <div>{formatTimestamp(label, { longMonthName: true })}</div>
-        <div>
+      <div className="flex min-w-28 flex-col">
+        <div className="label-value-14-medium mb-3 text-secondary">
+          {formatTimestamp(label, { longMonthName: true })}
+        </div>
+        <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}
@@ -99,11 +105,11 @@ export function TvsCustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="label-value-15-medium whitespace-nowrap">
                   {formatCurrency(entry.value, unit)}
                 </span>
               </div>

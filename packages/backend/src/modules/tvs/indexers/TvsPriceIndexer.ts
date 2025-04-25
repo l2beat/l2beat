@@ -1,4 +1,3 @@
-import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
 import type { PriceProvider } from '@l2beat/shared'
 import {
@@ -7,12 +6,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
 export interface TvsPriceIndexerDeps
@@ -37,7 +37,14 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   ) {
     const adjustedTo = this.$.priceProvider.getAdjustedTo(from, to)
 
-    // TODO: return if range too small
+    if (this.isEmptyRange(from, adjustedTo)) {
+      this.logger.info('No timestamps to sync in range', {
+        from,
+        to,
+        adjustedTo,
+      })
+      return () => Promise.resolve(to)
+    }
 
     this.logger.info('Fetching prices', {
       from,
@@ -105,6 +112,12 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
       return adjustedTo
     }
+  }
+
+  private isEmptyRange(from: number, adjustedTo: number) {
+    return (
+      this.$.syncOptimizer.getTimestampsToSync(from, adjustedTo, 1).length === 0
+    )
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

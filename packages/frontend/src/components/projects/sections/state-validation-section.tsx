@@ -3,6 +3,7 @@ import { DiagramImage } from '~/components/diagram-image'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import { HorizontalSeparator } from '../../core/horizontal-separator'
 import { Markdown } from '../../markdown/markdown'
+import { SectionIncompleteNote } from './contracts/section-incomplete-note'
 import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'
 import { RiskList } from './risk-list'
@@ -29,10 +30,14 @@ export function StateValidationSection({
         </figure>
       )}
       <div className="flex flex-col gap-6">
-        <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
-          {stateValidation.description}
-        </Markdown>
-        <HorizontalSeparator />
+        {stateValidation.description && (
+          <>
+            <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+              {stateValidation.description}
+            </Markdown>
+            <HorizontalSeparator />
+          </>
+        )}
         {stateValidation.categories.map((category) => (
           <Category key={category.title} category={category} />
         ))}
@@ -54,6 +59,7 @@ function Category({ category }: CategoryProps) {
   return (
     <div>
       <span className="text-lg font-bold md:text-xl">{category.title}</span>
+      {category.isIncomplete && <SectionIncompleteNote />}
       <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
         {category.description}
       </Markdown>

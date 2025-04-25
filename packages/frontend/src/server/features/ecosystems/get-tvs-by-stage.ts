@@ -1,5 +1,5 @@
 import type { Project, Stage } from '@l2beat/config'
-import type { SevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
+import type { SevenDayTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
 
 export type TvsByStage = Record<Stage | 'NotApplicable', number>
 

@@ -20,7 +20,7 @@ export function TableFilterValue({ values, filterId }: Props) {
   const value =
     values.length > 1
       ? `${values.length} ${filterIdToValues[filterId]}`
-      : values[0]!
+      : values[0]
 
   if (
     values.every(

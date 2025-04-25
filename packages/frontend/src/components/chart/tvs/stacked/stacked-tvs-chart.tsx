@@ -119,19 +119,19 @@ function CustomTooltip({
   const reversedPayload = [...payload].reverse()
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-36 flex-col gap-1 xs:!w-56">
-        <div>
+      <div className="flex w-36 flex-col xs:!w-56">
+        <div className="label-value-14-medium mb-3 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
-        <div className="flex w-full items-center justify-between gap-2 text-xs text-secondary">
+        <div className="heading-16 flex w-full items-center justify-between gap-2">
           <span className="[@media(min-width:600px)]:hidden">Total</span>
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
           </span>
           <span className="text-primary">{formatCurrency(total, unit)}</span>
         </div>
-        <HorizontalSeparator />
-        <div>
+        <HorizontalSeparator className="mt-1.5" />
+        <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
             if (entry.value === undefined) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
@@ -145,11 +145,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="label-value-15-medium whitespace-nowrap">
                   {formatCurrency(entry.value, unit)}
                 </span>
               </div>

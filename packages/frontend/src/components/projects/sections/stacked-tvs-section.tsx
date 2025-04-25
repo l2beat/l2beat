@@ -1,10 +1,10 @@
-import type { Milestone, ProjectTvlInfo } from '@l2beat/config'
+import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
 import Link from 'next/link'
 import { TvsBreakdownSummaryBox } from '~/app/(top-nav)/scaling/projects/[slug]/tvs-breakdown/_components/tvs-breakdown-summary-box'
 import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get-7d-tvs-breakdown'
 import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
@@ -15,7 +15,7 @@ export interface StackedTvsSectionProps extends ProjectSectionProps {
   projectId: string
   milestones: Milestone[]
   tvsProjectStats: ProjectSevenDayTvsBreakdown
-  tvlInfo: ProjectTvlInfo
+  tvsInfo: ProjectTvsInfo
   tvsBreakdownUrl?: string
 }
 
@@ -24,7 +24,7 @@ export function StackedTvsSection({
   milestones,
   tokens,
   tvsProjectStats,
-  tvlInfo,
+  tvsInfo,
   tvsBreakdownUrl,
   ...sectionProps
 }: StackedTvsSectionProps) {
@@ -56,7 +56,7 @@ export function StackedTvsSection({
               value: tvsProjectStats.breakdown.native,
               change: tvsProjectStats.change.native,
             }}
-            warning={tvlInfo?.warnings[0]}
+            warning={tvsInfo?.warnings[0]}
           />
           {tvsBreakdownUrl && (
             <div className="w-full md:hidden">

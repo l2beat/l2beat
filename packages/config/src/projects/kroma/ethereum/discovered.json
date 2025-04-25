@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22188901,
-  "configHash": "0x3569c6cfa9bf554f1e1bfe199cbfd36a11bdbacdf8d4d24cedbdd31daeb3ff24",
+  "blockNumber": 22330737,
+  "configHash": "0x013f02e5b6d6a6070cfd82e2fd17963c352818e048a5def4b1b53b27787e2dbc",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -119,12 +119,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 24903000,
-        "latestOutputIndex": 13835,
-        "nextBlockNumber": 24904800,
-        "nextFinalizeOutputIndex": 13667,
-        "nextOutputIndex": 13836,
-        "nextOutputMinL2Timestamp": 1743689989,
+        "latestBlockNumber": 25758000,
+        "latestOutputIndex": 14310,
+        "nextBlockNumber": 25759800,
+        "nextFinalizeOutputIndex": 14142,
+        "nextOutputIndex": 14311,
+        "nextOutputMinL2Timestamp": 1745399989,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -322,7 +322,7 @@
         ],
         "$upgradeCount": 2,
         "activatedValidatorCount": 9,
-        "activatedValidatorTotalWeight": "31723384761745083215624839",
+        "activatedValidatorTotalWeight": "31619924081214869050881424",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -336,7 +336,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x16876e5c608cec36968517A9Eb345269D308D94a",
+        "nextValidator": "0x3A68B16303AF7969aE0E84DEd82dbF865D725547",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -408,7 +408,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 22187836
+          "prevBlockNum": 22317805
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -567,13 +567,31 @@
       "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
-        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
-        "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
-        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
-        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
-        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
+        "oldVerifier": {
+          "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+          "frozen": true
+        },
+        "oldVerifier2": {
+          "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+          "frozen": true
+        },
+        "oldVerifier3": {
+          "prover": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
+          "frozen": true
+        },
+        "oldVerifier4": {
+          "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+          "frozen": true
+        },
+        "oldVerifier5": {
+          "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "frozen": true
+        },
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0x0000000000000000000000000000000000000000", false]
+        "verifier": {
+          "prover": "0x0000000000000000000000000000000000000000",
+          "frozen": false
+        }
       },
       "fieldMeta": {
         "verifier": {
@@ -738,7 +756,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4346,
+        "messageNonce": 4352,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1281,7 +1299,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22188901,
+        "clock": 22330737,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1318,7 +1336,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig 1",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1670,7 +1688,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22188901,
+        "clock": 22330737,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -2713,7 +2731,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
+    "global/Timelock": "0x2a557f1c66ae4b55d5b565ca43f14de3cffa034ccf145cec23f477a3730ecf2d",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",

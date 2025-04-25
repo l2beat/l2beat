@@ -1,4 +1,5 @@
 import path from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import type {
@@ -6,7 +7,6 @@ import type {
   DiscoveryModuleConfig,
 } from '../config/types'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
-import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
@@ -28,6 +28,7 @@ export async function runDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
   chainConfigs: DiscoveryChainConfig[],
+  logger: Logger,
 ): Promise<void> {
   const projectConfig = configReader.readConfig(
     config.project,
@@ -41,7 +42,6 @@ export async function runDiscovery(
           .blockNumber
       : undefined)
 
-  const logger = DiscoveryLogger.CLI
   const { result, blockNumber, providerStats } = await discover(
     paths,
     chainConfigs,
@@ -93,6 +93,7 @@ export async function dryRunDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
   chainConfigs: DiscoveryChainConfig[],
+  logger: Logger,
 ): Promise<void> {
   const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
   const blockNumber = await provider.getBlockNumber()
@@ -112,6 +113,7 @@ export async function dryRunDiscovery(
       blockNumber,
       http,
       config.overwriteCache,
+      logger,
     ),
     justDiscover(
       paths,
@@ -120,6 +122,7 @@ export async function dryRunDiscovery(
       blockNumberYesterday,
       http,
       config.overwriteCache,
+      logger,
     ),
   ])
 
@@ -139,12 +142,13 @@ async function justDiscover(
   blockNumber: number,
   http: HttpClient,
   overwriteCache: boolean,
+  logger: Logger,
 ): Promise<DiscoveryOutput> {
   const { result } = await discover(
     paths,
     chainConfigs,
     config,
-    DiscoveryLogger.CLI,
+    logger,
     blockNumber,
     http,
     overwriteCache,
@@ -158,7 +162,7 @@ export async function discover(
   paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
   config: ConfigRegistry,
-  logger: DiscoveryLogger,
+  logger: Logger,
   blockNumber: number | undefined,
   http: HttpClient,
   overwriteChache: boolean,

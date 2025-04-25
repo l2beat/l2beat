@@ -57,7 +57,7 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
       <TooltipTrigger disabledOnMobile className="h-full">
         <TableLink href={href}>{content}</TableLink>
       </TooltipTrigger>
-      <TooltipContent className="max-w-[360px]">
+      <TooltipContent>
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
       </TooltipContent>
     </Tooltip>

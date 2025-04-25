@@ -33,17 +33,17 @@
         "targetAddress": {
           "description": "Address of the target contract on GnosisChain",
           "severity": "HIGH",
-          "returnType": "(GnosisAddress)"
+          "edit": ["format", "GnosisAddress"]
         },
         "adapters": {
           "description": "Array of the adapters on GnosisChain",
           "severity": "HIGH",
-          "returnType": "(GnosisAddress[])"
+          "edit": ["map", ["format", "GnosisAddress"]]
         },
         "reporters": {
           "description": "Array of the reports on GnosisChain",
           "severity": "HIGH",
-          "returnType": "(GnosisAddress[])"
+          "edit": ["map", ["format", "GnosisAddress"]]
         },
         "threshold": {
           "description": "Threshold of the adapters on GnosisChain",
@@ -102,7 +102,7 @@
         "withinLimit",
         "getCurrentDay"
       ],
-      "ignoreInWatchMode": ["maxAvailablePerTx"]
+      "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"]
     },
     "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
       // BridgeValidators

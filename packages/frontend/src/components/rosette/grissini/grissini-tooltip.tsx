@@ -8,7 +8,7 @@ export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
     return (
       <div className="w-[300px]">
         <div className="mb-4">
-          <span className="text-base font-bold">Risk analysis</span> is{' '}
+          <span className="heading-16">Risk analysis</span> is{' '}
           <UnderReviewBadge />
         </div>
 
@@ -25,7 +25,7 @@ export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
   if (hasNoBridge) {
     return (
       <div className="w-[300px]">
-        <span className="text-base font-bold">
+        <span className="heading-16">
           <span className="mr-2">Risk analysis</span>
         </span>
 
@@ -39,7 +39,7 @@ export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <span className="text-base font-bold">
+      <span className="heading-16">
         <span className="mr-2">Risk analysis</span>
       </span>
 

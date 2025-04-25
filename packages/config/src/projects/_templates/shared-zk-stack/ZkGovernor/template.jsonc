@@ -24,7 +24,7 @@
         "method": "quorum",
         "args": ["{{ clock }}"]
       },
-      "returnType": "(Undecimal24)"
+      "edit": ["format", "Undecimal24"]
     },
     "proposalThreshold_MTokens": {
       "handler": {
@@ -32,7 +32,7 @@
         "method": "proposalThreshold",
         "args": []
       },
-      "returnType": "(Undecimal24)"
+      "edit": ["format", "Undecimal24"]
     },
     "accessControl": {
       "handler": {
