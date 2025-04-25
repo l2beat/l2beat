@@ -214,10 +214,10 @@ export function invertMeta(
   return result
 }
 
-function isEmptyObject(obj: object): boolean {
+export function isEmptyObject(obj: object): boolean {
   return (
     Object.keys(obj).length === 0 ||
-    Object.values(obj).every((value) => value === undefined || value === false)
+    Object.values(obj).every((value) => value === undefined)
   )
 }
 
