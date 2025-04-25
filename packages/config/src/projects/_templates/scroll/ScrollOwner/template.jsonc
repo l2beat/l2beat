@@ -18,6 +18,7 @@
         }
       }
     },
+    // Ideally this is uncommented but there is no wait to give granular (by function) act permissions
     // "executor": {
     //   "copy": "accessControl",
     //   "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
@@ -26,12 +27,60 @@
     "scNoDelay": {
       "copy": "accessControl",
       "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
-      "permissions": [{ "type": "interact", "description": "upgrade all core contracts of the system." }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade all core contracts of the system."
+        },
+        {
+          "type": "interact",
+          "description": "disable enforced batch mode."
+        },
+        {
+          "type": "interact",
+          "description": "update ScrollChain zk proof verifier."
+        }
+      ]
     },
     "opsFast": {
       "copy": "accessControl",
       "edit": ["get", "roles", "ops-fast", "members"],
-      "permissions": [{ "type": "interact", "description": "update the minimum delay message queue parameters and enforced mode parameters." }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the minimum delay message queue parameters and enforced mode parameters."
+        },
+        {
+          "type": "interact",
+          "description": "add permissioned batchers and provers to the whitelist."
+        },
+        {
+          "type": "interact",
+          "description": "update the L1ScrollMessenger fee vault address."
+        },
+        {
+          "type": "interact",
+          "description": "set ERC20 gateways in the L1GatewayRouter."
+        }
+      ]
+    },
+    "opsNoDelay": {
+      "copy": "accessControl",
+      "edit": ["get", "roles", "emergency-nodelay", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the L1 -> L2 messenger and enforced transaction mode."
+        },
+        {
+          "type": "interact",
+          "description": "remove permissioned batchers and provers to the whitelist, and update the sequencer address."
+        },
+        {
+          "type": "interact",
+          "description": "revert unfinalized batches."
+        }
+      ]
     }
   }
 }
