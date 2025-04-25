@@ -199,6 +199,7 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1725811535),
+          untilTimestamp: UnixTime(1744056299), // april 9 2025
           programHashes: [
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
@@ -209,8 +210,29 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1725811535),
+          untilTimestamp: UnixTime(1744056299), // april 9 2025
           programHashes: [
             '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1744056299),
+          programHashes: [
+            '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1744056299),
+          programHashes: [
+            '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator
           ],
         },
       },
