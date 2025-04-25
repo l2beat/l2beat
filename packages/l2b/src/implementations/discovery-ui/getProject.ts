@@ -115,15 +115,17 @@ export function getProject(
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
         .filter((x) => x.address !== EthereumAddress.ZERO)
-        .map(
-          (x): ApiAddressEntry => ({
+        .map((x): ApiAddressEntry => {
+          const roles = getRoles(x)
+          return {
             name: x.name || undefined,
-            type: 'EOA',
+            type: roles.length > 0 ? 'EOAPermissioned' : 'EOA',
+            roles: roles,
             description: x.description,
             referencedBy: [],
             address: toAddress(chain, x.address),
-          }),
-        )
+          }
+        })
         .sort(orderAddressEntries),
       blockNumber: discovery.blockNumber,
     } satisfies ApiProjectChain
@@ -131,6 +133,13 @@ export function getProject(
   }
   populateReferencedBy(response.entries)
   return response
+}
+
+function getRoles(entry: EntryParameters): string[] {
+  const roles = entry.receivedPermissions?.map((p) => p.permission)
+  const notRoles = ['member', 'act', 'interact']
+
+  return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
 }
 
 function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
@@ -189,6 +198,7 @@ function contractFromDiscovery(
   return {
     name: getContractName(contract),
     type: getContractType(contract),
+    roles: getRoles(contract),
     template: contract.template,
     proxyType: contract.proxyType,
     description: contract.description,

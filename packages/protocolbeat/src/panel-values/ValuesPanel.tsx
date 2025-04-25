@@ -117,6 +117,14 @@ function Display({
           </p>
           {copy}
         </p>
+        {selected.roles.length > 0 && (
+          <div className="flex flex-row divide-x divide-coffee-400 font-mono text-sm">
+            {'Roles:'}
+            {selected.roles.map((role) => (
+              <p className="px-1 text-aux-teal ">{role}</p>
+            ))}
+          </div>
+        )}
         <div className="flex flex-row divide-x divide-coffee-400 font-mono text-xs">
           {'proxyType' in selected && selected.proxyType && (
             <p className="px-1 text-aux-cyan first:pl-0">
