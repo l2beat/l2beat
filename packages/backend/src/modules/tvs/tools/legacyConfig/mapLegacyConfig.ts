@@ -10,8 +10,7 @@ import type {
   ValueFormula,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, TokenId } from '@l2beat/shared-pure'
-import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import type { ProjectTvsConfig } from '../../types'
 import type { LocalStorage } from '../LocalStorage'

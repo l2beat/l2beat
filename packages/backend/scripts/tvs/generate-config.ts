@@ -15,8 +15,8 @@ import {
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import {
   assert,
+  type LegacyToken,
   ProjectId,
-  type Token,
   type TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -173,7 +173,7 @@ run(cmd, process.argv.slice(2))
 
 async function generateConfigForProject(
   project: Project<'escrows' | 'tvsInfo', 'chainConfig'>,
-  tokens: Token[],
+  tokens: LegacyToken[],
   chains: Map<string, ChainConfig>,
   logger: Logger,
   localStorage: LocalStorage,

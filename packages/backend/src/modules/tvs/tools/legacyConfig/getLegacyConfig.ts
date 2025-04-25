@@ -1,10 +1,10 @@
 import type { Project, ProjectEscrow } from '@l2beat/config'
-import type { Token } from '@l2beat/shared-pure'
+import type { LegacyToken } from '@l2beat/shared-pure'
 import type { LegacyEscrow, LegacyProjectConfig } from './types'
 
 export function getLegacyConfig(
   project: Project<'escrows' | 'tvsInfo', 'chainConfig'>,
-  tokenList: Token[],
+  tokenList: LegacyToken[],
 ): LegacyProjectConfig {
   const tokens = project.chainConfig
     ? tokenList.filter(
@@ -22,7 +22,7 @@ export function getLegacyConfig(
 
 function toLegacyEscrow(
   escrow: ProjectEscrow,
-  tokenList: Token[],
+  tokenList: LegacyToken[],
 ): LegacyEscrow {
   return {
     address: escrow.address,

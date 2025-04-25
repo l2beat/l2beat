@@ -1,5 +1,5 @@
 import { join } from 'path'
-import type { AssetId, ProjectId, Token } from '@l2beat/shared-pure'
+import type { AssetId, LegacyToken, ProjectId } from '@l2beat/shared-pure'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject } from './types'
 
@@ -60,11 +60,11 @@ export class ProjectService {
     return result as Project<K, O>[]
   }
 
-  async getToken(id: AssetId): Promise<Token | undefined> {
+  async getToken(id: AssetId): Promise<LegacyToken | undefined> {
     return await this.db.getToken(id)
   }
 
-  async getTokens(): Promise<Token[]> {
+  async getTokens(): Promise<LegacyToken[]> {
     return await this.db.getTokens()
   }
 }

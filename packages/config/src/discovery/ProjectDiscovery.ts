@@ -12,7 +12,7 @@ import {
 import {
   assert,
   EthereumAddress,
-  type TokenBridgedUsing,
+  type LegacyTokenBridgedUsing,
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
@@ -140,7 +140,7 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     includeInTotal?: boolean
     source?: ProjectEscrow['source']
-    bridgedUsing?: TokenBridgedUsing
+    bridgedUsing?: LegacyTokenBridgedUsing
     isHistorical?: boolean
     untilTimestamp?: UnixTime
     sharedEscrow?: SharedEscrow
