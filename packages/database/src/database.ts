@@ -17,11 +17,6 @@ import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
-import { AmountRepository } from './tvl/amount/repository'
-import { BlockTimestampRepository } from './tvl/block-timestamp/repository'
-import { PriceRepository } from './tvl/price/repository'
-import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
-import { ValueRepository } from './tvl/value/repository'
 import { TvsAmountRepository } from './tvs/amount/repository'
 import { TvsBlockTimestampRepository } from './tvs/block-timestamp/repository'
 import { TvsPriceRepository } from './tvs/price/repository'
@@ -54,14 +49,6 @@ export function createDatabase(config?: PoolConfig) {
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
-    // #endregion
-
-    // #region TVL
-    amount: new AmountRepository(db),
-    blockTimestamp: new BlockTimestampRepository(db),
-    price: new PriceRepository(db),
-    tvlCleaner: new TvlCleanerRepository(db),
-    value: new ValueRepository(db),
     // #endregion
 
     // #region UIF
