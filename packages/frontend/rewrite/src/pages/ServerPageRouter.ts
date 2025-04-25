@@ -3,6 +3,7 @@ import type { Manifest } from '../../../src/utils/Manifest'
 import type { RenderFunction } from '../ssr/server'
 import { AboutUsRouter } from './about/AboutUsRouter'
 import { BridgesRouter } from './bridges/BridgesRouter'
+import { DaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
 import { DataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { DonateRouter } from './donate/DonateRouter'
 import { EcosystemsRouter } from './ecosystems/EcosystemsRouter'
@@ -31,4 +32,5 @@ export function ServerPageRouter(
   AboutUsRouter(app, manifest, render)
   DonateRouter(app, manifest, render)
   GlossaryRouter(app, manifest, render)
+  DaRiskFrameworkRouter(app, manifest, render)
 }

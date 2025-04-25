@@ -3,6 +3,7 @@ import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
 import { BridgesRiskPage } from './bridges/risk/BridgesRiskPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
+import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityProjectPage } from './data-availability/project/DataAvailabilityProjectPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
 import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
@@ -75,6 +76,7 @@ const pages = {
   GlossaryPage,
   AboutUsPage,
   DonatePage,
+  DaRiskFrameworkPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
