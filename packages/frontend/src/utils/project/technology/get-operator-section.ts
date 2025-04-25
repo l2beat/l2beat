@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import { getTechnologyChoicesSectionProps } from './get-technology-choices-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export function getOperatorSection(
@@ -16,5 +16,5 @@ export function getOperatorSection(
       ),
   ].filter(notUndefined)
 
-  return getTechnologySectionProps(project, items)
+  return getTechnologyChoicesSectionProps(project, items)
 }

@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
-import type { TechnologyChoice } from '../../../components/projects/sections/technology-section'
+import type { TechnologyChoice } from '../../../components/projects/sections/technology-choices-section'
 
-export function getTechnologySectionProps(
+export function getTechnologyChoicesSectionProps(
   project: Project<'statuses' | 'scalingTechnology'>,
   items: TechnologyChoice[],
 ): { items: TechnologyChoice[]; isUnderReview: boolean } | undefined {

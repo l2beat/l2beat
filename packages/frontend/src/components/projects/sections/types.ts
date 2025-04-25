@@ -17,7 +17,7 @@ import type { StackedTvsSectionProps } from './stacked-tvs-section'
 import type { StageSectionProps } from './stage-section'
 import type { StateDerivationSectionProps } from './state-derivation-section'
 import type { StateValidationSectionProps } from './state-validation-section'
-import type { TechnologySectionProps } from './technology-section'
+import type { TechnologyChoicesSectionProps } from './technology-choices-section'
 import type { ThroughputSectionProps } from './throughput/throughput-section'
 import type { TvsSectionProps } from './tvs-section'
 
@@ -114,9 +114,9 @@ interface ProjectDetailsStageSection {
   props: ProjectDetailsProps<StageSectionProps>
 }
 
-interface ProjectDetailsTechnologySection {
-  type: 'TechnologySection'
-  props: ProjectDetailsProps<TechnologySectionProps>
+interface ProjectDetailsTechnologyChoicesSection {
+  type: 'TechnologyChoicesSection'
+  props: ProjectDetailsProps<TechnologyChoicesSectionProps>
 }
 
 interface ProjectDetailsStateDerivationSection {
@@ -176,7 +176,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsRiskAnalysisSection
   | L3ProjectDetailsRiskAnalysisSection
   | ProjectDetailsStageSection
-  | ProjectDetailsTechnologySection
+  | ProjectDetailsTechnologyChoicesSection
   | ProjectDetailsStateDerivationSection
   | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
