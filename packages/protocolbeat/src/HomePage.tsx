@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getProjects } from './api/api'
 import type { ApiProjectEntry } from './api/types'
@@ -8,12 +8,22 @@ import { IconStarFull } from './icons/IconStarFull'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Autofocus the input when the component mounts
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
+
   return (
     <div className="mx-auto max-w-screen-md p-4">
       <h1 className="my-8 flex justify-center">
         <img className="w-[200px] md:w-[400px]" src="/logo.svg" alt="DSCVRY" />
       </h1>
       <input
+        ref={inputRef}
         className="mx-auto mb-8 block w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400 "
         placeholder="Filter projects"
         value={search}
