@@ -2,7 +2,7 @@
   "name": "superlumio",
   "chain": "ethereum",
   "blockNumber": 22046075,
-  "configHash": "0xcf9ae1b91c3fb11a1a8de9589c273dc02f0bc5df1aa54b06dd7f6b00ec92cb3c",
+  "configHash": "0x055e39c26f7ed5f76322cd4ef512a8da5e04d1100417ec46469c7df865af43e9",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

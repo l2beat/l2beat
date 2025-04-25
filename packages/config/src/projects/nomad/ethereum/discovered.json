@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 21937195,
-  "configHash": "0x76cb83f7ea251b2b86d0483d22097d6e5f13a30b57ee8c91ed06476d6b77e900",
+  "configHash": "0xad993d0e28eed1e00d288706e550a38513423e806bb23e870453c9d9ea4725c0",
   "entries": [
     {
       "name": "ReplicaBeaconProxy",

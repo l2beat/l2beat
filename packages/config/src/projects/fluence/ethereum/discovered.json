@@ -2,7 +2,7 @@
   "name": "fluence",
   "chain": "ethereum",
   "blockNumber": 22122735,
-  "configHash": "0x613f93cb5b301d38647f227fbc3a06acce521e7705679b32f329128099a20a20",
+  "configHash": "0x92ca0f085268f93e55d757ea3f43adc7c313ce944198fae25da06f111e93a8ba",
   "entries": [
     {
       "name": "OneStepProverHostIo",

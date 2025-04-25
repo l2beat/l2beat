@@ -10,9 +10,9 @@
       "handler": {
         "type": "call",
         "args": [],
-        "method": "getDynamicConfig",
-        "pickFields": ["priceRegistry"]
-      }
+        "method": "getDynamicConfig"
+      },
+      "edit": ["get", "priceRegistry"]
     },
     "getStaticConfig": {
       "edit": [

@@ -7,7 +7,11 @@ export {
   generatePermissionConfigHash,
 } from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
-export { getChainConfig, getChainShortName } from './config/config.discovery'
+export {
+  getChainConfig,
+  getChainShortName,
+  isChainShortName,
+} from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,

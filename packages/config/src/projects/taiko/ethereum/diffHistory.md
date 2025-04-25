@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x6548b306610540e3f6e5a5c43bd86283a498ee92
+Generated with discovered.json: 0x90c8a861a277d7e1eac093afd8611e7a56decbbb
+
+# Diff at Thu, 24 Apr 2025 10:31:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22297586
+- current block number: 22297586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22297586 (main branch discovery), not current.
+
+```diff
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6) {
+    +++ description: None
+      values.active_tiers.4:
+-        ["0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"]
++        "0x746965725f736778000000000000000000000000000000000000000000000000"
+      values.active_tiers.3:
+-        ["0x746965725f736778000000000000000000000000000000000000000000000000"]
++        "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"
+      values.active_tiers.2:
+-        ["0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"]
++        "0x746965725f677561726469616e00000000000000000000000000000000000000"
+      values.active_tiers.1:
+-        ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
++        "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
+      values.active_tiers.0:
+-        ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"]
++        "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x1bfe906931f5a55c95b8a523287b23652159e3aa
 
 # Diff at Fri, 18 Apr 2025 18:11:13 GMT:
 

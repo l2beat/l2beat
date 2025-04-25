@@ -2,7 +2,7 @@
   "name": "bob",
   "chain": "ethereum",
   "blockNumber": 22187675,
-  "configHash": "0x52204df44c3593f4162ee1d9ba00a4845507746ea800383010bf34971864ee09",
+  "configHash": "0xed9da0f9159c83a9d2ccc376d4022f3d5e0a8d7ea0d8e9a2e871a5156f582bc1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

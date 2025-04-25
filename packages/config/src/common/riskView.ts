@@ -237,14 +237,14 @@ export function DATA_CELESTIA(isUsingBlobstream: boolean): TableReadyValue {
 
 export function DATA_AVAIL(isUsingVector: boolean): TableReadyValue {
   const additional = isUsingVector
-    ? ' Transaction data is checked against the Vector bridge data roots, signed off by Vector validators.'
+    ? ' Transaction data is checked against the Vector bridge data roots, signed off by Avail validators.'
     : ' Transaction data is not checked against the Vector bridge data roots onchain, but L2 nodes can verify data availability by running an Avail light client.'
   return {
     value: 'External',
     description:
       `Proof construction and state derivation fully rely on data that is posted on Avail.` +
       additional,
-    sentiment: 'bad',
+    sentiment: isUsingVector ? 'warning' : 'bad',
   }
 }
 

@@ -149,6 +149,7 @@ import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
+import { powerloom } from '../projects/powerloom/powerloom'
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -180,6 +181,7 @@ import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
 import { specular } from '../projects/specular/specular'
+import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
 import { studiochain } from '../projects/studiochain/studiochain'
@@ -372,6 +374,7 @@ export const layer2s: ScalingProject[] = [
   polygonpos2,
   polygonzkevm,
   polynomial,
+  powerloom,
   prom,
   publicgoodsnetwork,
   puffer,
@@ -404,6 +407,7 @@ export const layer2s: ScalingProject[] = [
   sorare,
   sovrun,
   specular,
+  spire,
   starknet,
   status,
   studiochain,

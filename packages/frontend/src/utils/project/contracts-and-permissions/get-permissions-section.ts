@@ -1,7 +1,6 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
-import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
@@ -15,7 +14,6 @@ type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
   id: ProjectId
   permissions?: Record<string, ProjectPermissions> | 'UnderReview'
-  daSolution?: DaSolution
   isUnderReview: boolean
   hostChain?: string
 }
@@ -55,8 +53,7 @@ export function getPermissionsSection(
     projectParams.permissions !== 'UnderReview' &&
     Object.values(projectParams.permissions).every((p) =>
       permissionsAreEmpty(p),
-    ) &&
-    permissionsAreEmpty(projectParams.daSolution?.permissions)
+    )
   ) {
     return undefined
   }
@@ -70,7 +67,7 @@ export function getPermissionsSection(
     return { ...section, isUnderReview: true }
   }
 
-  if (!projectParams.permissions && !projectParams.daSolution?.permissions) {
+  if (!projectParams.permissions) {
     return undefined
   }
 
@@ -94,7 +91,6 @@ export function getPermissionsSection(
   return {
     ...section,
     permissionsByChain,
-    daSolution: getDaSolution(projectParams, contractUtils),
   }
 }
 
@@ -113,32 +109,6 @@ function getGroupedTechnologyContracts(
         toTechnologyContract(projectParams, permission, contractUtils),
       ) ?? [],
   }
-}
-
-function getDaSolution(
-  projectParams: ProjectParams,
-  contractUtils: ContractUtils,
-): PermissionSection['daSolution'] {
-  return projectParams.daSolution
-    ? {
-        layerName: projectParams.daSolution.layerName,
-        bridgeName: projectParams.daSolution.bridgeName,
-        layerSlug: projectParams.daSolution.layerSlug,
-        bridgeSlug: projectParams.daSolution.bridgeSlug,
-        hostChainName: projectParams.daSolution.hostChainName,
-        permissions: {
-          roles:
-            projectParams.daSolution.permissions?.roles?.flatMap((permission) =>
-              toTechnologyContract(projectParams, permission, contractUtils),
-            ) ?? [],
-          actors:
-            projectParams.daSolution.permissions?.actors?.flatMap(
-              (permission) =>
-                toTechnologyContract(projectParams, permission, contractUtils),
-            ) ?? [],
-        },
-      }
-    : undefined
 }
 
 function toTechnologyContract(

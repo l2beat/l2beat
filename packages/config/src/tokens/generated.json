@@ -4329,6 +4329,20 @@
       "supply": "zero"
     },
     {
+      "name": "Powerloom Token",
+      "coingeckoId": "powerloom",
+      "address": "0x429F0d8233e517f9acf6F0C8293BF35804063a83",
+      "symbol": "POWER",
+      "decimals": 18,
+      "deploymentTimestamp": 1734666671,
+      "coingeckoListingTimestamp": 1736467200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53319/large/powerloom-200px.png?1736086027",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Premia",
       "coingeckoId": "premia",
       "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70",

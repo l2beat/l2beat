@@ -14,7 +14,7 @@ import {
   FRONTRUNNING_RISK,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -101,8 +101,13 @@ const requiredSignatures = discovery.getContractValue<number>(
 
 // format: [ [ip, address], ... ]
 const dacMembers = discovery
-  .getContractValue<string[][]>('ZKFairValidiumDAC', 'members')
-  .map((e) => e[1])
+  .getContractValue<
+    {
+      url: string
+      addr: string
+    }[]
+  >('ZKFairValidiumDAC', 'members')
+  .map((e) => e.addr)
 
 export const zkfair: ScalingProject = {
   type: 'layer2',
@@ -171,7 +176,12 @@ export const zkfair: ScalingProject = {
     ],
     coingeckoPlatform: 'zkfair',
     apis: [
-      { type: 'rpc', url: 'https://rpc.zkfair.io', callsPerMinute: 1500 },
+      {
+        type: 'rpc',
+        url: 'https://rpc.zkfair.io',
+        callsPerMinute: 1500,
+        retryStrategy: 'UNRELIABLE',
+      },
       { type: 'blockscout', url: 'https://scan.zkfair.io/api/' },
     ],
   },
@@ -202,17 +212,21 @@ export const zkfair: ScalingProject = {
   stage: {
     stage: 'NotApplicable',
   },
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title:
+              'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
+            url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title:
-            'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
-          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [

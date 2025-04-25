@@ -39,7 +39,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
-      select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvlInfo'],
+      select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvsInfo'],
       whereNot: ['archivedAt', 'isUpcoming'],
     }),
   ])
@@ -83,7 +83,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
                 stablecoin: 0,
               },
           change7d: latestTvs?.change.total ?? 0,
-          associatedTokens: project.tvlInfo.associatedTokens,
+          associatedTokens: project.tvsInfo.associatedTokens,
         },
       }
     })

@@ -1,4 +1,48 @@
-Generated with discovered.json: 0x0b3d25ed69814c6fb756c24c2c0090adb9937059
+Generated with discovered.json: 0x1805c3ccfef3c269f15939674254509419a81156
+
+# Diff at Thu, 24 Apr 2025 10:31:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22322978
+- current block number: 22322978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
++++ description: URL and address of the DAC member
+      values.members.4:
+-        ["http://119.28.1.197:8444","0x9d8616545C9941138832EebC58Cb498E0ef21a13"]
++        {"url":"http://43.155.22.171:8444","addr":"0x9231622437bD57349cC9a15CDEc5383627DEbA17"}
++++ description: URL and address of the DAC member
+      values.members.3:
+-        ["http://43.155.22.171:8444","0x9231622437bD57349cC9a15CDEc5383627DEbA17"]
++        {"url":"http://43.129.158.203:8444","addr":"0xFe1da7CAd939805d4A889822357c348177a5118d"}
++++ description: URL and address of the DAC member
+      values.members.2:
+-        ["http://43.129.159.5:8444","0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"]
++        {"url":"http://119.28.1.197:8444","addr":"0x9d8616545C9941138832EebC58Cb498E0ef21a13"}
++++ description: URL and address of the DAC member
+      values.members.1:
+-        ["http://43.129.158.203:8444","0xFe1da7CAd939805d4A889822357c348177a5118d"]
++        {"url":"http://129.226.185.196:8444","addr":"0x061D273bEf947BD0ef2B828526e710eEa0f297ae"}
++++ description: URL and address of the DAC member
+      values.members.0:
+-        ["http://129.226.185.196:8444","0x061D273bEf947BD0ef2B828526e710eEa0f297ae"]
++        {"url":"http://43.129.159.5:8444","addr":"0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"}
+    }
+```
+
+Generated with discovered.json: 0xb4441644e04fc493c663f3a3cba3886d6f40cfbd
 
 # Diff at Tue, 22 Apr 2025 07:14:25 GMT:
 

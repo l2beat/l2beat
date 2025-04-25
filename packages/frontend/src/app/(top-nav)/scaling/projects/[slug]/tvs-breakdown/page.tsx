@@ -51,7 +51,7 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = await ps.getProject({
     slug: params.slug,
-    select: ['tvsConfig', 'tvlInfo'],
+    select: ['tvsConfig', 'tvsInfo'],
     optional: ['chainConfig', 'milestones', 'contracts'],
     where: ['isScaling'],
   })
@@ -114,7 +114,7 @@ export default async function Page(props: Props) {
               value: project7dData.breakdown.native,
               change: project7dData.change.native,
             }}
-            warning={project.tvlInfo?.warnings[0]}
+            warning={project.tvsInfo?.warnings[0]}
           />
         </PrimaryCard>
 
