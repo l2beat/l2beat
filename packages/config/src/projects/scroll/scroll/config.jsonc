@@ -58,6 +58,55 @@
           }
         }
       }
+    },
+    "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
+    },
+    "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
+    },
+    "0x64CCBE37c9A82D85A1F2E74649b7A42923067988": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
+    },
+    "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
+    },
+    "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
+    },
+    "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
+    },
+    "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
     }
   }
 }

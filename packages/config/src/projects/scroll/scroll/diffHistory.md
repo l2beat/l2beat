@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8032e7486c215fa59f11d00cb8be1458f1d509aa
+Generated with discovered.json: 0x0af05bcf452977490ada72509a78b1967d87163c
 
-# Diff at Fri, 25 Apr 2025 11:13:56 GMT:
+# Diff at Fri, 25 Apr 2025 12:35:37 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 14489756
@@ -49,7 +49,7 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"cancel queued transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"upgrade","from":"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"propose transactions."},{"permission":"upgrade","from":"0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xd29687c813D741E2F938F4aC377128810E217b1b","via":[{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"},{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]},{"permission":"upgrade","from":"0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x6EA73e05AdC79974B931123675ea8F78FfdacDF0","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","via":[{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"},{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]},{"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x64CCBE37c9A82D85A1F2E74649b7A42923067988","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]}]
++        [{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"cancel queued transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"upgrade","from":"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"propose transactions."},{"permission":"upgrade","from":"0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"execute transactions that are ready."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xd29687c813D741E2F938F4aC377128810E217b1b","via":[{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"},{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]},{"permission":"upgrade","from":"0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x6EA73e05AdC79974B931123675ea8F78FfdacDF0","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","via":[{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"},{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]},{"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"upgrade","from":"0x64CCBE37c9A82D85A1F2E74649b7A42923067988","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"},{"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"},{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]}]
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]
     }
@@ -85,6 +85,12 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```
 
 ```diff
+-   Status: DELETED
+    contract  (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367)
+    +++ description: None
+```
+
+```diff
     contract L2ETHGateway (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
     +++ description: None
       issuedPermissions.0.to:
@@ -94,6 +100,11 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 +        {"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}
       issuedPermissions.0.via.1:
 +        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
+      values.counterpart:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
@@ -107,6 +118,11 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 +        {"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}
       issuedPermissions.0.via.1:
 +        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
+      values.counterpart:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
@@ -117,6 +133,12 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 -        "TimelockController"
 +        "TimelockSCSlow"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905)
+    +++ description: None
 ```
 
 ```diff
@@ -161,6 +183,12 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```
 
 ```diff
+-   Status: DELETED
+    contract  (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9)
+    +++ description: None
+```
+
+```diff
     contract L2GatewayRouter (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
     +++ description: None
       issuedPermissions.0.to:
@@ -170,6 +198,11 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 +        {"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}
       issuedPermissions.0.via.1:
 +        {"address":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"}
+      values.counterpart:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
++        "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
@@ -205,12 +238,6 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract  (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract L2CustomERC20Gateway (0x64CCBE37c9A82D85A1F2E74649b7A42923067988)
     +++ description: None
 ```
@@ -235,19 +262,7 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract  (0xb2b10a289A229415a124EFDeF310C10cb004B6ff)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract MasterMinter (0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6)
     +++ description: None
 ```
 
