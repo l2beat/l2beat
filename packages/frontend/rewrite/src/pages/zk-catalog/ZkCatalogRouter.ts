@@ -3,8 +3,8 @@ import { validateRoute } from 'rewrite/src/ssr/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderFunction } from '../../ssr/server'
-import { getZkCatalogProjectData } from './:slug/getZkCatalogProjectData'
 import { getZkCatalogData } from './getZkCatalogData'
+import { getZkCatalogProjectData } from './project/getZkCatalogProjectData'
 
 export function ZkCatalogRouter(
   app: Router,
