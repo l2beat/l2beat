@@ -2,7 +2,7 @@ import type { Router } from 'express'
 import { validateRoute } from 'rewrite/src/ssr/validateRoute'
 import { z } from 'zod'
 import { env } from '~/env'
-import type { Manifest } from '../../common/Manifest'
+import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderFunction } from '../../ssr/server'
 import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 

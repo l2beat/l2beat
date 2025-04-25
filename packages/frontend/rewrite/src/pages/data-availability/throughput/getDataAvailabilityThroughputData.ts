@@ -1,7 +1,7 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilityThroughputData(
   manifest: Manifest,

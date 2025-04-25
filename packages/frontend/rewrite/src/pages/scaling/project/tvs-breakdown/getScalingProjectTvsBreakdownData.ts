@@ -1,7 +1,7 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingProjectTvsBreakdownData as nextGetScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectTvsBreakdownData(
   manifest: Manifest,

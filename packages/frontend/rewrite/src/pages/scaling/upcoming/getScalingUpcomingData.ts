@@ -1,7 +1,7 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingUpcomingEntries } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingUpcomingData(
   manifest: Manifest,

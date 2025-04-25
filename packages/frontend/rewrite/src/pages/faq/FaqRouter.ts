@@ -1,5 +1,5 @@
 import type { Router } from 'express'
-import type { Manifest } from '../../common/Manifest'
+import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderFunction } from '../../ssr/server'
 import { getFaqData } from './getFaqData'
 

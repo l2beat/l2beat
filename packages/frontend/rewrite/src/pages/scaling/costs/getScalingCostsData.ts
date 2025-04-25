@@ -1,8 +1,8 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingCostsData(
   manifest: Manifest,

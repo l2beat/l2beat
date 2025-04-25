@@ -1,9 +1,9 @@
 import { getCollection } from '~/content/get-collection'
 
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getGovernancePublicationsData(
   manifest: Manifest,

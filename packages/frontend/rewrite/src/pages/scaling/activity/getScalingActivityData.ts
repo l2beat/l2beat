@@ -1,8 +1,8 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingActivityData(
   manifest: Manifest,

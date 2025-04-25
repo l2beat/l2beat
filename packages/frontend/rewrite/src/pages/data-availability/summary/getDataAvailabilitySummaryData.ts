@@ -1,8 +1,8 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilitySummaryData(
   manifest: Manifest,

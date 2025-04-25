@@ -1,7 +1,7 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingSummaryData(
   manifest: Manifest,

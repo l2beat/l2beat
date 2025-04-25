@@ -1,8 +1,8 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { ps } from '~/server/projects'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesProjectData(
   manifest: Manifest,

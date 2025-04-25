@@ -1,11 +1,11 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
+import type { Manifest } from '~/utils/Manifest'
 
 import { ps } from '~/server/projects'
 

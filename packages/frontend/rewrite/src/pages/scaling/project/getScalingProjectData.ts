@@ -1,8 +1,8 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ps } from '~/server/projects'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectData(
   manifest: Manifest,

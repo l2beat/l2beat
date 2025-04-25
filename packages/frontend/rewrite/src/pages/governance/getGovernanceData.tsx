@@ -1,10 +1,10 @@
-import type { Manifest } from 'rewrite/src/common/Manifest'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getGovernanceEventEntries } from '~/app/(side-nav)/governance/_utils/get-governance-event-entries'
 import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
 import { getCollection } from '~/content/get-collection'
 import { getProjectIcon } from '~/server/features/utils/get-project-icon'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getGovernanceData(
   manifest: Manifest,

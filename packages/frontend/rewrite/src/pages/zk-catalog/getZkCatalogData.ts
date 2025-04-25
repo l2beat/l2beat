@@ -2,7 +2,7 @@ import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import { getZkCatalogEntries } from '~/app/(side-nav)/zk-catalog/_utils/get-zk-catalog-entries'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
-import type { Manifest } from '../../common/Manifest'
+import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderData } from '../../ssr/server'
 
 export async function getZkCatalogData(

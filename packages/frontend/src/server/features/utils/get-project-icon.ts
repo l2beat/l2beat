@@ -1,19 +1,19 @@
 import path from 'path'
-import { getManifest } from 'rewrite/src/common/Manifest'
 import { env } from '~/env'
+import { getManifest } from '~/utils/Manifest'
 
-const manifest = getManifest(
-  env.NODE_ENV === 'production',
-  path.join(process.cwd(), 'rewrite'),
-)
 export function getProjectIcon(slug: string) {
   return getStaticAsset(`/icons/${slug}.png`)
 }
 
-export function getStaticAsset(path: string) {
+export function getStaticAsset(filePath: string) {
   if (env.REWRITE) {
-    return manifest.getUrl(path)
+    const manifest = getManifest(
+      env.NODE_ENV === 'production',
+      path.join(process.cwd(), 'rewrite'),
+    )
+    return manifest.getUrl(filePath)
   }
 
-  return path
+  return filePath
 }

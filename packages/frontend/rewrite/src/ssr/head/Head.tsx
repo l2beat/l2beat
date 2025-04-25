@@ -1,4 +1,4 @@
-import type { Manifest } from '../../common/Manifest'
+import type { Manifest } from '../../../../src/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
 

@@ -1,13 +1,8 @@
 import { readFileSync } from 'fs'
-import path from 'path'
 import imageSize from 'image-size'
-import { getManifest } from 'rewrite/src/common/Manifest'
+import path from 'path'
 import { env } from '~/env'
-
-const manifest = getManifest(
-  env.NODE_ENV === 'production',
-  path.join(process.cwd(), 'rewrite'),
-)
+import { getManifest } from '~/utils/Manifest'
 
 export interface ImageParams {
   width: number
@@ -17,6 +12,10 @@ export interface ImageParams {
 
 export function getImageParams(filePath: string): ImageParams | undefined {
   if (env.REWRITE) {
+    const manifest = getManifest(
+      env.NODE_ENV === 'production',
+      path.join(process.cwd(), 'rewrite'),
+    )
     return manifest.getImage(filePath)
   }
   try {
