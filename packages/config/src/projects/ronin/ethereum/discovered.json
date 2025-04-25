@@ -1,7 +1,7 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 22346449,
+  "blockNumber": 22346547,
   "configHash": "0x16c7eab9df2af0a59a82f1c2c97c7d0f5283fc355b258bfdbcc0d4a50ae1f69f",
   "entries": [
     {
@@ -501,7 +501,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2823665413518755356539346"
+        "totalSupply": "2823083246601126011714542"
       },
       "derivedName": "WETH9"
     },
