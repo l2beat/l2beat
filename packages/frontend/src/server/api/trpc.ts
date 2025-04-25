@@ -1,6 +1,5 @@
 import { initTRPC } from '@trpc/server'
 import { ZodError } from 'zod'
-
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
     ...opts,
@@ -8,6 +7,10 @@ export const createTRPCContext = (opts: { headers: Headers }) => {
 }
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer: {
+    serialize: JSON.stringify,
+    deserialize: JSON.parse,
+  },
   errorFormatter({ shape, error }) {
     return {
       ...shape,

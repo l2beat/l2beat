@@ -52,6 +52,10 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
+          transformer: {
+            serialize: JSON.stringify,
+            deserialize: JSON.parse,
+          },
           url: getBaseUrl() + '/api/trpc',
           headers: () => {
             const headers = new Headers()
