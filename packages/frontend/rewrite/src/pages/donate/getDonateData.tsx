@@ -1,10 +1,9 @@
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 
 export async function getDonateData(manifest: Manifest): Promise<RenderData> {
-  const searchBarProjects = await getSearchBarProjects()
+  const appLayoutProps = await getAppLayoutProps()
 
   return {
     head: {
@@ -16,12 +15,8 @@ export async function getDonateData(manifest: Manifest): Promise<RenderData> {
     ssr: {
       page: 'DonatePage',
       props: {
+        ...appLayoutProps,
         qrCodeUrl: manifest.getUrl('/images/qr-codes/donate.png'),
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

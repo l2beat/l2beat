@@ -1,8 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
@@ -17,8 +16,8 @@ export async function getDataAvailabilityProjectData(
     bridge: string
   },
 ): Promise<RenderData | undefined> {
-  const [searchBarProjects, projectEntry] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, projectEntry] = await Promise.all([
+    getAppLayoutProps(),
     getProjectEntry(params),
   ])
   if (!projectEntry) return undefined
@@ -32,12 +31,8 @@ export async function getDataAvailabilityProjectData(
     ssr: {
       page: 'DataAvailabilityProjectPage',
       props: {
+        ...appLayoutProps,
         projectEntry,
-        searchBarProjects,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
       },
     },
   }

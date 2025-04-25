@@ -1,7 +1,6 @@
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 
@@ -9,11 +8,11 @@ export async function getDataAvailabilitySummaryData(
   manifest: Manifest,
 ): Promise<RenderData> {
   const [
-    searchBarProjects,
+    appLayoutProps,
     { publicSystems, customSystems },
     throughputSummaryData,
   ] = await Promise.all([
-    getSearchBarProjects(),
+    getAppLayoutProps(),
     getDaSummaryEntries(),
     getDaThroughputSummary(),
   ])
@@ -28,14 +27,10 @@ export async function getDataAvailabilitySummaryData(
     ssr: {
       page: 'DataAvailabilitySummaryPage',
       props: {
+        ...appLayoutProps,
         publicSystems,
         customSystems,
         throughputSummaryData,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

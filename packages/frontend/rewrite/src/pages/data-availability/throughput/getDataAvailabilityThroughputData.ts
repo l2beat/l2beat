@@ -1,14 +1,13 @@
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 
 export async function getDataAvailabilityThroughputData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, entries] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
     getDaThroughputEntries(),
   ])
 
@@ -17,17 +16,13 @@ export async function getDataAvailabilityThroughputData(
       manifest,
       title: 'Data Availability Throughput - L2BEAT',
       description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        'Compare data throughput and capacity across different data availability solutions.',
     },
     ssr: {
       page: 'DataAvailabilityThroughputPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

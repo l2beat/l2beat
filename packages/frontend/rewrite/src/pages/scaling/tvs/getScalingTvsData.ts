@@ -1,35 +1,30 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData } from '../../../ssr/server'
 
 export async function getScalingTvsData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, entries] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
     getScalingTvsEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'TVS - L2BEAT',
+      title: 'Total Value Secured - L2BEAT',
       description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        'Track and compare the total value secured by different Ethereum scaling solutions.',
     },
     ssr: {
       page: 'ScalingTvsPage',
       props: {
+        ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

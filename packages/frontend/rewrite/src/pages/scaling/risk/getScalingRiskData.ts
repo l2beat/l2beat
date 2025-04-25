@@ -1,33 +1,28 @@
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData } from '../../../ssr/server'
 
 export async function getScalingRiskData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, entries] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
     getScalingRiskEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'Risk - L2BEAT',
+      title: 'Scaling Risk Analysis - L2BEAT',
       description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        'Detailed risk analysis of Ethereum scaling solutions, examining their security models and potential vulnerabilities.',
     },
     ssr: {
       page: 'ScalingRiskPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

@@ -1,6 +1,5 @@
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import { getZkCatalogEntries } from '~/app/(side-nav)/zk-catalog/_utils/get-zk-catalog-entries'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
 import type { Manifest } from '../../common/Manifest'
@@ -9,8 +8,8 @@ import type { RenderData } from '../../ssr/server'
 export async function getZkCatalogData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, verifiers, projects] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, verifiers, projects] = await Promise.all([
+    getAppLayoutProps(),
     getVerifiers(),
     ps.getProjects({
       select: ['proofVerification'],
@@ -29,12 +28,8 @@ export async function getZkCatalogData(
     ssr: {
       page: 'ZkCatalogPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

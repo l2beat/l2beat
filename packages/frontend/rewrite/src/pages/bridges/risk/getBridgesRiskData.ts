@@ -1,32 +1,28 @@
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
-import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData } from '../../../ssr/server'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { RenderData } from 'rewrite/src/ssr/server'
+import { getBridgesRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 
 export async function getBridgesRiskData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, entries] = await Promise.all([
-    getSearchBarProjects(),
-    getBridgeRiskEntries(),
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
+    getBridgesRiskEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'Bridge Risks - L2BEAT',
-      description: 'L2BEAT - detailed risk analysis of Ethereum bridges.',
+      title: 'Bridge Risk Analysis - L2BEAT',
+      description:
+        'Detailed risk analysis of Ethereum bridges, examining their security models and potential vulnerabilities.',
     },
     ssr: {
       page: 'BridgesRiskPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

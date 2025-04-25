@@ -1,4 +1,4 @@
-import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
+import { getBridgesRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesRiskPage } from './_page'
 
@@ -9,7 +9,7 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const entries = await getBridgeRiskEntries()
+  const entries = await getBridgesRiskEntries()
 
   return <BridgesRiskPage entries={entries} />
 }

@@ -1,33 +1,28 @@
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData } from '../../../ssr/server'
 
 export async function getScalingLivenessData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, entries] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
     getScalingLivenessEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'Liveness - L2BEAT',
+      title: 'Scaling Liveness - L2BEAT',
       description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        'Compare liveness and uptime metrics across different Ethereum scaling solutions.',
     },
     ssr: {
       page: 'ScalingLivenessPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

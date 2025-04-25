@@ -1,27 +1,20 @@
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 
 export async function getAboutUsData(manifest: Manifest): Promise<RenderData> {
-  const searchBarProjects = await getSearchBarProjects()
+  const appLayoutProps = await getAppLayoutProps()
 
   return {
     head: {
       manifest,
-      title: 'About us - L2BEAT',
+      title: 'About Us - L2BEAT',
       description:
-        'About us - L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you can learn more about who we are and what we do.',
     },
     ssr: {
       page: 'AboutUsPage',
-      props: {
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
-      },
+      props: appLayoutProps,
     },
   }
 }

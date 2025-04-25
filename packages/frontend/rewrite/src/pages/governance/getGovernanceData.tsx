@@ -1,15 +1,15 @@
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getGovernanceEventEntries } from '~/app/(side-nav)/governance/_utils/get-governance-event-entries'
 import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 
 export async function getGovernanceData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const searchBarProjects = await getSearchBarProjects()
+  const appLayoutProps = await getAppLayoutProps()
   const publications = getCollection('publications')
     .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .slice(0, 4)
@@ -40,14 +40,10 @@ export async function getGovernanceData(
     ssr: {
       page: 'GovernancePage',
       props: {
+        ...appLayoutProps,
         publications: publicationEntries,
         events: eventEntries,
         delegatedProjects,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

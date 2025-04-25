@@ -1,14 +1,14 @@
 import { getCollection } from '~/content/get-collection'
 
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 
 export async function getGovernancePublicationsData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const searchBarProjects = await getSearchBarProjects()
+  const appLayoutProps = await getAppLayoutProps()
   const publications = getCollection('publications')
     .sort((b, a) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
     .map(getGovernancePublicationEntry)
@@ -22,12 +22,8 @@ export async function getGovernancePublicationsData(
     ssr: {
       page: 'GovernancePublicationsPage',
       props: {
+        ...appLayoutProps,
         publications,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

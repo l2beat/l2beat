@@ -1,33 +1,28 @@
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData } from '../../../ssr/server'
 
 export async function getBridgesSummaryData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const [searchBarProjects, entries] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
     getBridgesSummaryEntries(),
   ])
 
   return {
     head: {
       manifest,
-      title: 'Bridges - L2BEAT',
+      title: 'Bridge Summary - L2BEAT',
       description:
-        'L2BEAT - the leading analytics and research website about Ethereum bridges.',
+        'Compare different Ethereum bridges by their security, technology, and risk.',
     },
     ssr: {
       page: 'BridgesSummaryPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
       },
     },
   }

@@ -1,31 +1,29 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
+import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { RenderData } from 'rewrite/src/ssr/server'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import type { Manifest } from '../../../common/Manifest'
-import type { RenderData } from '../../../ssr/server'
 
 export async function getScalingActivityData(
   manifest: Manifest,
 ): Promise<RenderData> {
-  const searchBarProjects = await getSearchBarProjects()
-  const entries = await getScalingActivityEntries()
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
+    getScalingActivityEntries(),
+  ])
+
   return {
     head: {
       manifest,
-      title: 'Activity - L2BEAT',
+      title: 'Scaling Activity - L2BEAT',
       description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        'Track and compare transaction activity across different Ethereum scaling solutions.',
     },
     ssr: {
       page: 'ScalingActivityPage',
       props: {
+        ...appLayoutProps,
         entries,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
-        searchBarProjects,
         milestones: HOMEPAGE_MILESTONES,
       },
     },

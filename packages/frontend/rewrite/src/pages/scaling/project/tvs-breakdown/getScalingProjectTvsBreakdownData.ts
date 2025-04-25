@@ -1,15 +1,14 @@
 import type { Manifest } from 'rewrite/src/common/Manifest'
+import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { RenderData } from 'rewrite/src/ssr/server'
-import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
-import { getCollection } from '~/content/get-collection'
 import { getScalingProjectTvsBreakdownData as nextGetScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
 
 export async function getScalingProjectTvsBreakdownData(
   manifest: Manifest,
   slug: string,
 ): Promise<RenderData | undefined> {
-  const [searchBarProjects, tvsBreakdownData] = await Promise.all([
-    getSearchBarProjects(),
+  const [appLayoutProps, tvsBreakdownData] = await Promise.all([
+    getAppLayoutProps(),
     nextGetScalingProjectTvsBreakdownData(slug),
   ])
 
@@ -27,11 +26,7 @@ export async function getScalingProjectTvsBreakdownData(
       page: 'ScalingProjectTvsBreakdownPage',
       props: {
         tvsBreakdownData,
-        searchBarProjects,
-        terms: getCollection('glossary').map((term) => ({
-          id: term.id,
-          matches: [term.data.term, ...(term.data.match ?? [])],
-        })),
+        ...appLayoutProps,
       },
     },
   }
