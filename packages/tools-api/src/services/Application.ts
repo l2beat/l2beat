@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Config } from '../config/types'
 import { AddressService } from '../domain/AddressService'
-import { SignatureClient } from '../domain/SignatureClient'
+import { Decoder } from '../domain/Decoder'
+import { SignatureService } from '../domain/SignatureService'
 import { createHttpServer } from './HttpServer'
 import { AlchemyClient } from './api/AlchemyClient'
 import { EtherscanClient } from './api/EtherscanClient'
@@ -17,17 +18,15 @@ export class Application {
 
     const openChainClient = new OpenChainClient()
     const fourByteClient = new FourByteClient()
-    const signatureClient = new SignatureClient(
+    const signatureService = new SignatureService(
       openChainClient,
       fourByteClient,
+      config.discovered,
       logger,
     )
 
     const alchemyClient = new AlchemyClient(config.alchemyApiKey)
     const etherscanClient = new EtherscanClient(config.etherscanApiKey)
-
-    const httpServer = createHttpServer(config, logger.for('Router'))
-
     const addressService = new AddressService(
       alchemyClient,
       etherscanClient,
@@ -35,18 +34,21 @@ export class Application {
       config.tokens,
     )
 
+    const decoder = new Decoder(addressService, signatureService)
+
+    const httpServer = createHttpServer(config, logger.for('Router'))
+
     this.start = async () => {
       await httpServer.start()
       appLogger.info('Started')
 
-      console.log(await signatureClient.lookup('0x95512306'))
-      console.log(
-        await addressService.lookup(
-          'eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          config.chains[0]!,
-        ),
-      )
+      const decoded = await decoder.decode({
+        to: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        chain: config.chains[0]!,
+        data: '0xa9059cbb0000000000000000000000005318ffc5b00c9335511205f6ff460472673f410e0000000000000000000000000000000000000000000000000000000000f646e0',
+      })
+      console.log(JSON.stringify(decoded, null, 2))
     }
   }
 }
