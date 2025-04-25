@@ -1,7 +1,7 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 22324341,
+  "blockNumber": 22346547,
   "configHash": "0x16c7eab9df2af0a59a82f1c2c97c7d0f5283fc355b258bfdbcc0d4a50ae1f69f",
   "entries": [
     {
@@ -270,7 +270,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -391,14 +391,14 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 111275,
+        "depositCount": 111277,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062",
         "getHighTierVoteWeightThreshold": [90, 100],
         "getThreshold": { "num_": 70, "denom_": 100 },
         "minimumVoteWeight": 1540,
         "nonce": 2,
-        "paused": true,
+        "paused": false,
         "roninChainId": 2020,
         "WITHDRAWAL_UNLOCKER_ROLE": "0x5e5712e902fff5e704bc4d506ad976718319e019e9d2a872528a01a85db433e4",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -501,7 +501,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2771882619555079121155112"
+        "totalSupply": "2823083246601126011714542"
       },
       "derivedName": "WETH9"
     },
