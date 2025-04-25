@@ -17,7 +17,7 @@ export async function getScalingProjectData(
       'scalingRisks',
       'scalingStage',
       'scalingTechnology',
-      'tvlInfo',
+      'tvsInfo',
     ],
     optional: [
       'contracts',

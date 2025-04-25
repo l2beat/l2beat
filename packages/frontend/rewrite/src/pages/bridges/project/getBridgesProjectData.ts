@@ -13,7 +13,7 @@ export async function getBridgesProjectData(
     select: [
       'display',
       'statuses',
-      'tvlInfo',
+      'tvsInfo',
       'tvsConfig',
       'bridgeInfo',
       'bridgeRisks',
