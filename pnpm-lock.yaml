@@ -571,9 +571,6 @@ importers:
       compression:
         specifier: ^1.8.0
         version: 1.8.0
-      d3-scale:
-        specifier: ^4.0.2
-        version: 4.0.2
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -637,9 +634,6 @@ importers:
       sqlite3:
         specifier: 5.1.7
         version: 5.1.7
-      superjson:
-        specifier: ^2.2.1
-        version: 2.2.1
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.5.4
@@ -2799,8 +2793,8 @@ packages:
   '@radix-ui/react-switch@1.1.2':
     resolution: {integrity: sha512-zGukiWHjEdBCRyXvKR6iXAQG6qXm2esuAD6kDOi9Cn+1X6ev3ASo4+CsYaD6Fov9r/AQFekqnD/7+V0Cs6/98g==}
     peerDependencies:
-      '@types/react': 19.0.8
-      '@types/react-dom': 19.0.3
+      '@types/react': '*'
+      '@types/react-dom': '*'
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
     peerDependenciesMeta:
@@ -4216,10 +4210,6 @@ packages:
     resolution: {integrity: sha512-TG2hpqe4ELx54QER/S3HQ9SRVnQnGBtKUz5bLQWtYAQ+o6GpgMs6sYUvaiJjVxb+UXwhRhAEP3m7LbsIZ77Hmw==}
     engines: {node: '>= 0.8'}
 
-  copy-anything@3.0.5:
-    resolution: {integrity: sha512-yCEafptTtb4bk7GLEQoM8KVJpxAfdBJYaXyzQEgQQQgYrZiDp8SJmGKlYza6CYjEDNstAdNdKA3UuoULlEbS6w==}
-    engines: {node: '>=12.13'}
-
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -5576,10 +5566,6 @@ packages:
   is-weakset@2.0.3:
     resolution: {integrity: sha512-LvIm3/KWzS9oRFHugab7d+M/GcBXuXX5xZkzPmN+NxihdQlZUQ4dWuSV1xR/sq6upL1TJEDrfBgRepHFdBtSNQ==}
     engines: {node: '>= 0.4'}
-
-  is-what@4.1.16:
-    resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
-    engines: {node: '>=12.13'}
 
   is-windows@1.0.2:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
@@ -7310,10 +7296,6 @@ packages:
     resolution: {integrity: sha512-6WTxW1EB6yCxV5VFOIPQruWGHqc3yI7hEmZK6h+pyk69Lk/Ut7rLUY6W/ONF2MjBuGjvmMiIpsrVJ2vjrHlslA==}
     engines: {node: '>=6.4.0 <13 || >=14'}
     deprecated: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
-
-  superjson@2.2.1:
-    resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
-    engines: {node: '>=16'}
 
   supertest@6.3.4:
     resolution: {integrity: sha512-erY3HFDG0dPnhw4U+udPfrzXa4xhSG+n4rxfRuZWCUvjFWwKl+OxWf/7zk50s84/fAAs7vf5QAb9uRa0cCykxw==}
@@ -11451,10 +11433,6 @@ snapshots:
       depd: 2.0.0
       keygrip: 1.1.0
 
-  copy-anything@3.0.5:
-    dependencies:
-      is-what: 4.1.16
-
   core-util-is@1.0.3: {}
 
   crc-32@1.2.2: {}
@@ -13192,8 +13170,6 @@ snapshots:
     dependencies:
       call-bind: 1.0.7
       get-intrinsic: 1.2.4
-
-  is-what@4.1.16: {}
 
   is-windows@1.0.2: {}
 
@@ -15081,10 +15057,6 @@ snapshots:
       semver: 7.6.3
     transitivePeerDependencies:
       - supports-color
-
-  superjson@2.2.1:
-    dependencies:
-      copy-anything: 3.0.5
 
   supertest@6.3.4:
     dependencies:
