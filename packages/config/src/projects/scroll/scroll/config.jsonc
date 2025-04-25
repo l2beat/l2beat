@@ -25,6 +25,22 @@
     "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "Scroll USDC"
   },
   "overrides": {
+    "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14":{
+      "fields": {
+        "timelockAdminAC": {
+          "handler": {
+            "type": "accessControl",
+          "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+        },
+        "permissions": [
+          {
+            "type": "act",
+            "delay": "{{getMinDelay}}"
+          }
+        ]
+      },
+    },
+  },
     "0x5300000000000000000000000000000000000000": {
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
       "ignoreMethods": ["branches"],

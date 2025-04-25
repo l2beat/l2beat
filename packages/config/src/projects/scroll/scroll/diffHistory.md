@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x381a8469b44c0e9e9b64aadf915c52dc02bc4e2f
+Generated with discovered.json: 0x3385df7ad660a4e88c4ce2cd133a881efc586827
 
-# Diff at Fri, 25 Apr 2025 15:44:29 GMT:
+# Diff at Fri, 25 Apr 2025 15:53:42 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 14489756
@@ -109,9 +109,9 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"cancel queued transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"propose transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"execute transactions that are ready."},{"permission":"interact","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","description":"upgrade all core contracts of the system.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","description":"disable enforced batch mode.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","description":"update ScrollChain zk proof verifier.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]}]
++        [{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"cancel queued transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"propose transactions."},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"execute transactions that are ready."},{"permission":"interact","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","description":"upgrade all core contracts of the system.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","description":"disable enforced batch mode.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","description":"update ScrollChain zk proof verifier.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","description":"can configure contract settings such as voting delay, quorum, contract manager.","via":[{"address":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]}]
       directlyReceivedPermissions:
-+        [{"permission":"act","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]
++        [{"permission":"act","from":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"},{"permission":"act","from":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]
     }
 ```
 
@@ -127,7 +127,7 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
     contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
     +++ description: Used to propose and manage onchain governance proposals.
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"can configure contract settings such as voting delay, quorum, contract manager.","via":[]}
++        {"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"can configure contract settings such as voting delay, quorum, contract manager.","via":[{"address":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]}
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]}
       issuedPermissions.0.permission:
@@ -241,8 +241,10 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
       name:
 -        "TimelockController"
 +        "TimelockSCSlow"
-      receivedPermissions:
-+        [{"permission":"interact","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","description":"can configure contract settings such as voting delay, quorum, contract manager."}]
+      values.timelockAdminAC:
++        ["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200},{"permission":"interact","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","description":"can configure contract settings such as voting delay, quorum, contract manager."}]
     }
 ```
 

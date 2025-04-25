@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "scroll",
   "blockNumber": 14980764,
-  "configHash": "0xc98fe42aa041177dd4e1e43439b855577128a87bdb285ca3101e6282885e272c",
+  "configHash": "0x1165fdc32d352316c1ecd256e2434dc0045174038a2eacfc7af4ad8d6b85b7b2",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -387,12 +387,28 @@
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "update the minimum delay and manage all access control roles of the timelock."
+        },
+        {
+          "permission": "interact",
+          "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "via": [
+            {
+              "address": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "delay": 259200
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+        },
+        {
+          "permission": "act",
+          "from": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "delay": 259200
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -832,14 +848,19 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351",
-          "description": "can propose new onchain governance proposals without the required threshold of votes.",
-          "via": []
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "via": [
+            {
+              "address": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "delay": 259200
+            }
+          ]
         },
         {
           "permission": "interact",
-          "to": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "to": "0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351",
+          "description": "can propose new onchain governance proposals without the required threshold of votes.",
           "via": []
         },
         {
@@ -1234,7 +1255,12 @@
         "0x1cf2a567f0dfcae3ac31fabbc74c453ddb5a347a26f76dbc26fc2171094a9153"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "delay": 259200
+        },
         {
           "permission": "interact",
           "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
@@ -1250,7 +1276,11 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": [
+          "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        ]
       },
       "derivedName": "TimelockController"
     },
