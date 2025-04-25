@@ -617,6 +617,7 @@ export const scroll: ScalingProject = {
   contracts: {
     addresses: {
       [discovery.chain]: discovery.getDiscoveredContracts(),
+      [l2Discovery.chain]: l2Discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
