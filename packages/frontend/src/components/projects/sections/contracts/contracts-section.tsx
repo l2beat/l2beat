@@ -1,7 +1,6 @@
 'use client'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
-import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
@@ -17,9 +16,6 @@ export interface ContractsSectionProps {
   sectionOrder: string
   nested?: boolean
   contracts: Record<string, TechnologyContract[]>
-  daSolution?: DaSolutionWith<{
-    contracts: TechnologyContract[]
-  }>
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   diagram?: DiagramParams
@@ -29,7 +25,6 @@ export interface ContractsSectionProps {
 export function ContractsSection(props: ContractsSectionProps) {
   if (
     Object.keys(props.contracts).length === 0 &&
-    props.daSolution?.contracts.length === 0 &&
     props.escrows.length === 0 &&
     props.risks.length === 0 &&
     !props.isUnderReview
@@ -92,24 +87,6 @@ export function ContractsSection(props: ContractsSectionProps) {
             )
           },
         )}
-      {props.daSolution && props.daSolution.contracts.length > 0 && (
-        <>
-          <h3 className="font-bold">
-            The project uses {props.daSolution.layerName} with the{' '}
-            {props.daSolution.bridgeName} DA Bridge that consist of the
-            following contracts on the {props.daSolution.hostChainName}:
-          </h3>
-          <div className="my-4">
-            {props.daSolution.contracts.map((contract) => (
-              <ContractEntry
-                key={technologyContractKey(contract)}
-                contract={contract}
-                className="my-4"
-              />
-            ))}
-          </div>
-        </>
-      )}
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>

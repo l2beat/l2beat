@@ -556,7 +556,6 @@ export async function getScalingProjectEntry(
       hostChain: hostChain?.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
-      daSolution,
     },
     contractUtils,
   )
@@ -583,7 +582,6 @@ export async function getScalingProjectEntry(
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
       architectureImage: project.scalingTechnology.architectureImage,
-      daSolution,
     },
     contractUtils,
     projectsChangeReport,
