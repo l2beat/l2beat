@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xfb2947d7fc4402e39bc23f3201934a45ae120ff6
+Generated with discovered.json: 0x58bdfc96896c1387d7229597437c5076edf0d65a
 
-# Diff at Thu, 24 Apr 2025 20:04:29 GMT:
+# Diff at Fri, 25 Apr 2025 08:22:47 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 22297562
-- current block number: 22340099
+- current block number: 22344793
 
 ## Description
 
@@ -13,82 +13,92 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ## Watched changes
 
 ```diff
--   Status: DELETED
-    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B)
+    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
     +++ description: None
+      values.estimateCrossDomainMessageFee.4:
+-        157149392
++        100000000
+      values.estimateCrossDomainMessageFee.3:
+-        0
++        200000000
+      values.estimateCrossDomainMessageFee.2:
+-        39287348
++        300000000
+      values.estimateCrossDomainMessageFee.1:
+-        78574696
++        400000000
+      values.estimateCrossDomainMessageFee.0:
+-        117862044
++        0
+      values.l2BaseFee:
+-        39287348
++        100000000
+      values.nextCrossDomainMessageIndex:
+-        953735
++        953885
+      values.nextUnfinalizedQueueIndex:
+-        953734
++        953885
+      values.pendingQueueIndex:
+-        953734
++        953885
+    }
 ```
 
 ```diff
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
-      receivedPermissions.17.from:
--        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+      receivedPermissions.21.from:
+-        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
++        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
+      receivedPermissions.20.from:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
 +        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
-      receivedPermissions.16.from:
--        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
+      receivedPermissions.19.from:
+-        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
 +        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
-      receivedPermissions.15.permission:
--        "interact"
-+        "upgrade"
-      receivedPermissions.15.from:
--        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
+      receivedPermissions.18.from:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
 +        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
-      receivedPermissions.15.description:
--        "propose transactions."
-      receivedPermissions.15.via:
-+        [{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]
-      receivedPermissions.14.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.14.from:
+      receivedPermissions.17.from:
+-        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0x987e300fDfb06093859358522a79098848C33852"
+      receivedPermissions.16.from:
 -        "0x987e300fDfb06093859358522a79098848C33852"
-+        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
-      receivedPermissions.14.via:
--        [{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]
-      receivedPermissions.14.description:
-+        "propose transactions."
-      receivedPermissions.3.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.3.from:
++        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      receivedPermissions.15.from:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+      receivedPermissions.14.from:
+-        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      receivedPermissions.13.from:
+-        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
++        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
+      receivedPermissions.12.from:
+-        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
++        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      receivedPermissions.11.from:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      receivedPermissions.10.from:
+-        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      receivedPermissions.9.from:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
-+        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
-      receivedPermissions.3.via:
--        [{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]
-      receivedPermissions.3.description:
-+        "cancel queued transactions."
-      receivedPermissions.2.description:
--        "cancel queued transactions."
-+        "update the minimum delay and manage all access control roles of the timelock."
-      receivedPermissions.2.via:
-+        [{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]
-      receivedPermissions.1.permission:
--        "interact"
-+        "upgrade"
-      receivedPermissions.1.from:
--        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
-      receivedPermissions.1.description:
--        "update the minimum delay and manage all access control roles of the timelock."
-      receivedPermissions.1.via.1:
-+        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
-      receivedPermissions.1.via.0.address:
--        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
-+        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
     }
-```
-
-```diff
--   Status: DELETED
-    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37)
-    +++ description: None
 ```
 
 ```diff
     contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
     +++ description: Contract used to update the verifier and keep track of current and old versions.
       values.latestVerifier.6:
-+        {"startBatchIndex":0,"verifier":"0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357"}
++        {"startBatchIndex":0,"verifier":"0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828"}
       values.legacyVerifiersLength.6:
 +        0
       values.verifierVersions.6:
@@ -98,16 +108,18 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 
 ```diff
     contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
-    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+    +++ description: None
       sourceHashes.1:
 -        "0xe550fda323606a4b4fd2a05cf45dda231290e1d57a077828632c098fa0579161"
 +        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
       sourceHashes.0:
 -        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
-+        "0x3398c4e9f90ea456548cdcae1cc54faeeb87df22bb43f709500e759bb1ac5643"
++        "0x0a1aa34da20ecb18034b84d08a6f6c0a3b5f5b865aaf9fbd37ef7c766dfdc5a8"
       values.$implementation:
 -        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
-+        "0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868"
++        "0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"
+      values.$pastUpgrades.3:
++        ["2025-04-25T07:06:59.000Z","0x783703d4e94de48edb75261149a540cbf7abb7ef077865c11080e622a508ab86",["0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"]]
       values.$pastUpgrades.2:
 +        ["2023-10-08T16:25:23.000Z","0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e",["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]]
       values.$pastUpgrades.1.2.0:
@@ -130,31 +142,15 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 +        ["0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868"]
       values.$upgradeCount:
 -        2
-+        3
-      values.counterpart:
--        "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
-+        "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
++        4
       values.messageQueue:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
-      values.prevReplayIndex:
--        [0,0,0,0,0]
-      values.xDomainMessageSender:
--        "0x0000000000000000000000000000000000000001"
-+        "scr:0x0000000000000000000000000000000000000001"
+      values.enforcedTxGateway:
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
       values.messageQueueV1:
 +        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
       values.messageQueueV2:
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
-      errors:
--        {"prevReplayIndex":"Processing error occurred."}
-      template:
-+        "scroll/L1ScrollMessenger"
-      description:
-+        "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
-      usedTypes:
-+        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
-      category:
-+        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -175,6 +171,11 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
       values.messageQueue:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
++++ description: Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.
++++ severity: HIGH
+      values.paused:
+-        true
++        false
       template:
 +        "scroll/EnforcedTxGateway"
       description:
@@ -184,12 +185,6 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
       category:
 +        {"name":"Local Infrastructure","priority":5}
     }
-```
-
-```diff
--   Status: DELETED
-    contract L2ScrollMessengerFallback (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC)
-    +++ description: None
 ```
 
 ```diff
@@ -207,13 +202,11 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 +        {"updateMessageQueueParameters((uint32,uint112,uint112))":["ops-fast"],"updateEnforcedBatchParameters((uint24,uint24))":["ops-fast"],"updateSigner(address)":["emergency-nodelay"]}
       values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d:
 +        {"setPause(bool)":["emergency-nodelay"]}
+      values.executor:
+-        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
+      values.executors:
++        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
     }
-```
-
-```diff
--   Status: DELETED
-    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852)
-    +++ description: None
 ```
 
 ```diff
@@ -289,15 +282,46 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ```diff
     contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
     +++ description: None
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515"}
+      directlyReceivedPermissions.14:
++        {"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"}
+      directlyReceivedPermissions.13.from:
+-        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
++        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
+      directlyReceivedPermissions.12.from:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+      directlyReceivedPermissions.11.from:
+-        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
       directlyReceivedPermissions.10.from:
 -        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
-+        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
       directlyReceivedPermissions.9.from:
 -        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
-+        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "0x987e300fDfb06093859358522a79098848C33852"
       directlyReceivedPermissions.8.from:
 -        "0x987e300fDfb06093859358522a79098848C33852"
-+        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      directlyReceivedPermissions.7.from:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+      directlyReceivedPermissions.6.from:
+-        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      directlyReceivedPermissions.5.from:
+-        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
++        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
+      directlyReceivedPermissions.4.from:
+-        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
++        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      directlyReceivedPermissions.3.from:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      directlyReceivedPermissions.2.from:
+-        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
       directlyReceivedPermissions.1.from:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
@@ -305,8 +329,26 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ```
 
 ```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.2:
+-        "0xE2e6345baAD18f779167443Dc4886495507b3249"
++        "0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae"
+      values.$members.1:
+-        "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
++        "0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
 +   Status: CREATED
-    contract ZkEvmVerifierPostEuclid (0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357)
+    contract ZkEvmVerifierPostEuclid (0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828)
     +++ description: None
 ```
 
@@ -324,25 +366,23 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 
 ```diff
 +   Status: CREATED
-    contract ZkEvmVerifierPostEuclid (0xf5bABa891e6De03540ecfb1917B8F07112A45a83)
+    contract  (0x9F66505cB1626D06B50EF2597f41De6686e8f79a)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../EnforcedTxGateway/EnforcedTxGateway.sol        |  79 +-
- .../L1MessageQueueV2/L1MessageQueueV2.sol}         | 867 +++++++--------------
- .../TransparentUpgradeableProxy.p.sol              |   2 +-
- .../L1ScrollMessenger/L1ScrollMessenger.sol        |  43 +-
- .../L2ScrollMessengerFallback.sol => /dev/null     | 469 -----------
- .../ScrollChain/ScrollChain.sol                    | 652 +++++++++++++---
- .../SystemConfig/SystemConfig.sol}                 | 212 ++---
- .../TransparentUpgradeableProxy.p.sol              |   2 +-
- .../.flat@22297562/Whitelist.sol => /dev/null      |  97 ---
- ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |   0
- ...-0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357.sol | 102 +++
- 11 files changed, 1091 insertions(+), 1434 deletions(-)
+.../EnforcedTxGateway/EnforcedTxGateway.sol        |   79 +-
+ .../.flat/L1MessageQueueV2/L1MessageQueueV2.sol    | 1013 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++++++++++++
+ .../L1ScrollMessenger/L1ScrollMessenger.sol        |   50 +-
+ .../ScrollChain/ScrollChain.sol                    |  652 ++++++++++---
+ .../ethereum/.flat/SystemConfig/SystemConfig.sol   |  545 +++++++++++
+ .../SystemConfig/TransparentUpgradeableProxy.p.sol |  729 ++++++++++++++
+ ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |    0
+ ...-0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828.sol |  102 ++
+ 9 files changed, 3750 insertions(+), 149 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -376,7 +416,7 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions:
 +        [{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"propose transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}]
       directlyReceivedPermissions:
-+        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock."}]
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"act","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]
       fieldMeta:
 +        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
       category:
@@ -393,18 +433,20 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.estimateCrossDomainMessageFee:
-+        [0,39287348,78574696,117862044,157149392]
++        [117862044,78574696,39287348,0,157149392]
       values.getCrossDomainMessage:
-+        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"]
++        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894"]
       values.isMessageDropped:
 +        [false,false,false,false,false]
       values.isMessageSkipped:
 +        [false,false,false,false,false]
       values.messageQueue:
-+        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"]
++        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894"]
       errors:
 +        {"estimateCrossDomainMessageFee":"Processing error occurred.","getCrossDomainMessage":"Processing error occurred.","isMessageDropped":"Processing error occurred.","isMessageSkipped":"Processing error occurred.","messageQueue":"Processing error occurred."}
     }
@@ -444,9 +486,9 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"upgrade","from":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"cancel queued transactions."},{"permission":"upgrade","from":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"upgrade","from":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"upgrade","from":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"propose transactions."},{"permission":"upgrade","from":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"upgrade","from":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"upgrade","from":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"cancel queued transactions."},{"permission":"upgrade","from":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"upgrade","from":"0x987e300fDfb06093859358522a79098848C33852","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"propose transactions."},{"permission":"upgrade","from":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"upgrade","from":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"upgrade","from":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]},{"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]},{"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]}]
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"cancel queued transactions."},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"propose transactions."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"cancel queued transactions."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"propose transactions."},{"permission":"upgrade","from":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]},{"permission":"upgrade","from":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x987e300fDfb06093859358522a79098848C33852","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}]
       directlyReceivedPermissions:
-+        [{"permission":"act","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"},{"permission":"act","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200},{"permission":"act","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}]
++        [{"permission":"act","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"},{"permission":"act","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]
     }
 ```
 
@@ -522,6 +564,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -569,6 +613,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -587,6 +633,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.prevReplayIndex:
@@ -608,6 +656,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       fieldMeta:
@@ -620,8 +670,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
       receivedPermissions:
 -        [{"permission":"upgrade","from":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x987e300fDfb06093859358522a79098848C33852","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
-      values.sc:
-+        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      values.executor:
++        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
       template:
 +        "scroll/ScrollOwner"
       category:
@@ -635,6 +685,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -666,6 +718,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       template:
@@ -716,10 +770,12 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.estimateCrossDomainMessageFee:
-+        [0,460000000,920000000,1380000000,1840000000]
++        [460000000,1840000000,0,920000000,1380000000]
       errors:
 +        {"estimateCrossDomainMessageFee":"Processing error occurred."}
     }
@@ -748,6 +804,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.provers:
@@ -775,6 +833,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -797,6 +857,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -824,6 +886,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Safe (0xC3eA7C657884BB380B66D79C36aDCb5658b01896) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
 -   Status: DELETED
     contract L2TokenImplementationFallback (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69)
     +++ description: None
@@ -844,6 +914,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -896,6 +968,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.counterpart:
@@ -921,6 +995,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.to:
 -        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
 +        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      issuedPermissions.0.via.2:
++        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       template:

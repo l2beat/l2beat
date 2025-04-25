@@ -1,9 +1,14 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22340099,
+  "blockNumber": 22344793,
   "configHash": "0x6a354846eae45b868f31699c53f7e9946b1acc66c1a04dc86eb1881916893cf2",
   "entries": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "ZkEvmVerifierPostEuclid",
       "address": "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3",
@@ -89,6 +94,10 @@
       ],
       "directlyReceivedPermissions": [
         {
+          "permission": "act",
+          "from": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+        },
+        {
           "permission": "interact",
           "from": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
           "description": "update the minimum delay and manage all access control roles of the timelock."
@@ -152,6 +161,89 @@
       },
       "derivedName": "TimelockController",
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "L1MessageQueueWithGasPriceOracle",
+      "address": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x3e38728c8eff2d4e99a76036010214e6ece1aebfa85496f776910c3e674d90e0"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
+        }
+      ],
+      "sinceTimestamp": 1696782311,
+      "sinceBlock": 18306933,
+      "values": {
+        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "0x137CC585F607EDeBBc3CA6360AffCFeab507B374",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:11.000Z",
+            "0xdd4c82f4c38c76c6bb222f2b319e870ed48d8d4dc2a73e0baa5d560a286924b2",
+            ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
+            ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
+          ],
+          [
+            "2024-08-20T23:36:35.000Z",
+            "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7",
+            ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+        "estimateCrossDomainMessageFee": [
+          0, 100000000, 200000000, 300000000, 400000000
+        ],
+        "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
+        "getCrossDomainMessage": [
+          "0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320",
+          "0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894",
+          "0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae",
+          "0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6",
+          "0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"
+        ],
+        "isMessageDropped": [false, false, false, false, false],
+        "isMessageSkipped": [false, false, false, false, false],
+        "l2BaseFee": 100000000,
+        "maxGasLimit": 10000000,
+        "messageQueue": [
+          "0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320",
+          "0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894",
+          "0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae",
+          "0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6",
+          "0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"
+        ],
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "nextCrossDomainMessageIndex": 953885,
+        "nextUnfinalizedQueueIndex": 953885,
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "pendingQueueIndex": 953885,
+        "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+        "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
+      },
+      "errors": {
+        "estimateCrossDomainMessageFee": "Processing error occurred.",
+        "getCrossDomainMessage": "Processing error occurred.",
+        "isMessageDropped": "Processing error occurred.",
+        "isMessageSkipped": "Processing error occurred.",
+        "messageQueue": "Processing error occurred."
+      },
+      "derivedName": "L1MessageQueueWithGasPriceOracle"
     },
     {
       "name": "TimelockFast",
@@ -359,10 +451,20 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -370,7 +472,8 @@
           "from": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -378,7 +481,8 @@
           "from": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -386,7 +490,8 @@
           "from": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -394,7 +499,8 @@
           "from": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -402,7 +508,8 @@
           "from": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -410,7 +517,8 @@
           "from": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -418,7 +526,17 @@
           "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x987e300fDfb06093859358522a79098848C33852",
+          "via": [
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -426,7 +544,8 @@
           "from": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -434,7 +553,8 @@
           "from": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -442,7 +562,8 @@
           "from": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -450,7 +571,8 @@
           "from": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -458,7 +580,8 @@
           "from": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         },
         {
@@ -466,7 +589,8 @@
           "from": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
           "via": [
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" },
-            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" }
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
           ]
         }
       ],
@@ -479,10 +603,6 @@
           "permission": "act",
           "from": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
           "delay": 259200
-        },
-        {
-          "permission": "act",
-          "from": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -510,7 +630,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe",
@@ -520,24 +640,6 @@
           "href": "https://scroll.io/gov-docs/content/security-council"
         }
       ]
-    },
-    {
-      "name": "ZkEvmVerifierPostEuclid",
-      "address": "0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1743130295,
-      "sinceBlock": 22142542,
-      "values": {
-        "$immutable": true,
-        "plonkVerifier": "0xf5bABa891e6De03540ecfb1917B8F07112A45a83",
-        "verifierDigest1": "0x0043d85dd5779b2834d37514b1e8a731bc745eb6c9207b250084f46f723c1367",
-        "verifierDigest2": "0x0038553adf417a6a3df35d2fdfd14b892f1e49ba18937ece7960c1e7cee6e3dc"
-      },
-      "derivedName": "ZkEvmVerifierPostEuclid"
     },
     {
       "name": "Scroll Multisig 1",
@@ -566,7 +668,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 22,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -594,6 +696,22 @@
           "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
         }
       ]
+    },
+    {
+      "name": "Whitelist",
+      "address": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x118a84c5ed8e5625f8df5325e4bd028d66a65a2d08b9b7d3b72b6c9f7a955e95"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696782311,
+      "sinceBlock": 18306933,
+      "values": {
+        "$immutable": true,
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "derivedName": "Whitelist"
     },
     {
       "address": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
@@ -626,6 +744,24 @@
       "address": "0x32E8B0B9783d65170fd37f79079d5707107cCc62",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ZkEvmVerifierPostEuclid",
+      "address": "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1745397227,
+      "sinceBlock": 22330536,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "0x9F66505cB1626D06B50EF2597f41De6686e8f79a",
+        "verifierDigest1": "0x005df630e095f46df0109f12181a4bf4ff6a2e401e78f12f556b15c622d90660",
+        "verifierDigest2": "0x0025771eef6c3413bbf64d460556238de411a9154ceb1e00ac91c73e0bfb30d3"
+      },
+      "derivedName": "ZkEvmVerifierPostEuclid"
     },
     {
       "address": "0x383C148ba96956F985F6141B2D119add1C34e3B7",
@@ -825,7 +961,7 @@
           },
           {
             "startBatchIndex": 0,
-            "verifier": "0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357"
+            "verifier": "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828"
           }
         ],
         "legacyVerifiersLength": [0, 0, 0, 0, 0, 0, 0],
@@ -851,6 +987,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -880,13 +1017,13 @@
         ],
         "$upgradeCount": 2,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-        "estimateL2BaseFee": 39749455,
+        "estimateL2BaseFee": 39370282,
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1745498399,
+        "getFirstUnfinalizedMessageEnqueueTime": 1745543555,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 954007,
-        "nextUnfinalizedQueueIndex": 953996,
+        "nextCrossDomainMessageIndex": 954034,
+        "nextUnfinalizedQueueIndex": 954016,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -932,6 +1069,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1045,6 +1183,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1078,18 +1217,17 @@
       "name": "L1ScrollMessenger",
       "address": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
       "type": "Contract",
-      "template": "scroll/L1ScrollMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x3398c4e9f90ea456548cdcae1cc54faeeb87df22bb43f709500e759bb1ac5643"
+        "0x0a1aa34da20ecb18034b84d08a6f6c0a3b5f5b865aaf9fbd37ef7c766dfdc5a8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1099,7 +1237,7 @@
       "sinceBlock": 18306934,
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868",
+        "$implementation": "0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -1115,24 +1253,28 @@
             "2025-04-22T06:01:35.000Z",
             "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21",
             ["0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868"]
+          ],
+          [
+            "2025-04-25T07:06:59.000Z",
+            "0x783703d4e94de48edb75261149a540cbf7abb7ef077865c11080e622a508ab86",
+            ["0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"]
           ]
         ],
-        "$upgradeCount": 3,
-        "counterpart": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+        "$upgradeCount": 4,
+        "counterpart": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+        "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
         "maxReplayTimes": 3,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "paused": false,
+        "prevReplayIndex": [0, 0, 0, 0, 0],
         "rollup": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-        "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
+        "xDomainMessageSender": "0x0000000000000000000000000000000000000001"
       },
-      "derivedName": "L1ScrollMessenger",
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "errors": { "prevReplayIndex": "Processing error occurred." },
+      "derivedName": "L1ScrollMessenger"
     },
     {
       "address": "0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3",
@@ -1217,6 +1359,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1253,7 +1396,7 @@
         "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
         "messageQueue": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "paused": true
+        "paused": false
       },
       "fieldMeta": {
         "paused": {
@@ -1273,6 +1416,22 @@
       "address": "0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L2ScrollMessengerFallback",
+      "address": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "derivedName": "Fallback"
     },
     {
       "name": "ScrollOwner",
@@ -1399,7 +1558,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "sc": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        "executors": ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
       },
       "derivedName": "ScrollOwner",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1420,6 +1579,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1471,6 +1631,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1614,6 +1775,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1651,6 +1813,11 @@
       },
       "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PlonkVerifierV2",
@@ -1798,15 +1965,77 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
     },
     {
+      "name": "L2GasPriceOracle",
+      "address": "0x987e300fDfb06093859358522a79098848C33852",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x5987f713ef726c459b82ad7473f780457f91510e0d04802551136d8133e531d1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+          "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
+            { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
+            { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
+          ]
+        }
+      ],
+      "sinceTimestamp": 1696782311,
+      "sinceBlock": 18306933,
+      "values": {
+        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:11.000Z",
+            "0xf25a4fbbd1569b188ce8855ff12760904d976be976c35afeb4abd9566db5ca38",
+            ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "estimateCrossDomainMessageFee": [
+          0, 460000000, 920000000, 1380000000, 1840000000
+        ],
+        "intrinsicParams": {
+          "txGas": 21000,
+          "txGasContractCreation": 53000,
+          "zeroGas": 4,
+          "nonZeroGas": 16
+        },
+        "l2BaseFee": 460000000,
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "whitelist": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
+      },
+      "errors": {
+        "estimateCrossDomainMessageFee": "Processing error occurred."
+      },
+      "derivedName": "L2GasPriceOracle"
+    },
+    {
       "address": "0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "",
+      "address": "0x9F66505cB1626D06B50EF2597f41De6686e8f79a",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1745397191,
+      "sinceBlock": 22330533,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "pufETHEscrow",
@@ -1869,6 +2098,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -1920,15 +2150,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 358292,
+        "lastFinalizedBatchIndex": 358328,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 358304,
-          "lastFinalizedBatchIndex": 358292,
-          "lastFinalizeTimestamp": 1745499719,
+          "lastCommittedBatchIndex": 358349,
+          "lastFinalizedBatchIndex": 358328,
+          "lastFinalizeTimestamp": 1745545835,
           "flags": 1,
           "reserved": 0
         },
@@ -1989,6 +2219,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -2044,6 +2275,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -2139,7 +2371,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 156,
+        "nonce": 157,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2174,7 +2406,8 @@
         "nonce": 6,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "derivedName": "Safe",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xc8B6bF89877337188Ea84eA93547687225389553",
@@ -2210,6 +2443,11 @@
       "derivedName": ""
     },
     {
+      "address": "0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xD83C4892BB5aA241B63d8C4C134920111E142A20",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2230,6 +2468,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -2272,11 +2511,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xE2e6345baAD18f779167443Dc4886495507b3249",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2301,6 +2535,10 @@
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+        },
         {
           "permission": "upgrade",
           "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
@@ -2332,6 +2570,10 @@
         {
           "permission": "upgrade",
           "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x987e300fDfb06093859358522a79098848C33852"
         },
         {
           "permission": "upgrade",
@@ -2429,17 +2671,17 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0xFCf6364F5157901f533DD3615A5d8c375F13c072",
-          "0xE2e6345baAD18f779167443Dc4886495507b3249",
+          "0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
           "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
           "0xfc31892C5500AbE00974280b28907BaA9190E384",
-          "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
+          "0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
         ],
-        "$threshold": 4,
+        "$threshold": 3,
         "domainSeparator": "0x0b2d8b018b82a6f3df3603b40beb281bc01da06566bbb8ecc16a0f0a2dbea20f",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 19,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2460,6 +2702,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -2491,7 +2734,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19043693345038,
+        "totalBridgedUSDC": 19056672316424,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway",
@@ -2499,17 +2742,6 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "ZkEvmVerifierPostEuclid",
-      "address": "0xf5bABa891e6De03540ecfb1917B8F07112A45a83",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1743130259,
-      "sinceBlock": 22142539,
-      "values": { "$immutable": true },
-      "derivedName": ""
     },
     {
       "name": "L1GatewayRouter",
@@ -2527,6 +2759,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" },
             { "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6" },
             { "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }
           ]
@@ -2655,6 +2888,12 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
+    "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -2697,16 +2936,57 @@
     "0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": [
       "constructor(address _singleton)"
     ],
+    "0x137CC585F607EDeBBc3CA6360AffCFeab507B374": [
+      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway)",
+      "error ErrorNotWhitelistedSender()",
+      "error ErrorZeroAddress()",
+      "event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap)",
+      "event DropTransaction(uint256 index)",
+      "event FinalizedDequeuedTransaction(uint256 finalizedIndex)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
+      "event ResetDequeuedTransaction(uint256 startIndex)",
+      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
+      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
+      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
+      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
+      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
+      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
+      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
+      "function dropCrossDomainMessage(uint256 _index)",
+      "function enforcedTxGateway() view returns (address)",
+      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
+      "function finalizePoppedCrossDomainMessage(uint256 _newFinalizedQueueIndexPlusOne)",
+      "function gasOracle() view returns (address)",
+      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
+      "function initialize(address _messenger, address _scrollChain, address _enforcedTxGateway, address _gasOracle, uint256 _maxGasLimit)",
+      "function initializeV2()",
+      "function initializeV3()",
+      "function isMessageDropped(uint256 _queueIndex) view returns (bool)",
+      "function isMessageSkipped(uint256 _queueIndex) view returns (bool)",
+      "function l2BaseFee() view returns (uint256)",
+      "function maxGasLimit() view returns (uint256)",
+      "function messageQueue(uint256) view returns (bytes32)",
+      "function messenger() view returns (address)",
+      "function nextCrossDomainMessageIndex() view returns (uint256)",
+      "function nextUnfinalizedQueueIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count, uint256 _skippedBitmap)",
+      "function renounceOwnership()",
+      "function resetPoppedCrossDomainMessage(uint256 _startIndex)",
+      "function scrollChain() view returns (address)",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
+      "function transferOwnership(address newOwner)",
+      "function updateGasOracle(address _newGasOracle)",
+      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
+      "function updateWhitelistChecker(address _newWhitelistChecker)",
+      "function whitelistChecker() view returns (address)"
+    ],
     "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": [
       "constructor(address _singleton)"
-    ],
-    "0x1Dc65f7ab1964Ec328F6249d1a68d0c1633a1357": [
-      "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2)",
-      "error VerificationFailed()",
-      "function plonkVerifier() view returns (address)",
-      "function verifierDigest1() view returns (bytes32)",
-      "function verifierDigest2() view returns (bytes32)",
-      "function verify(bytes bundleProof, bytes publicInput) view"
     ],
     "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": [
       "constructor(address _singleton)"
@@ -2746,11 +3026,29 @@
       "function transferOwnership(address newOwner)",
       "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
+    "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner)",
+      "event WhitelistStatusChanged(address indexed _account, bool _status)",
+      "function isSenderAllowed(address _sender) view returns (bool)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address _newOwner)",
+      "function updateWhitelistStatus(address[] _accounts, bool _status)"
+    ],
     "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": [
       "constructor(address _verifier, bytes32 _verifierDigest)",
       "error VerificationFailed()",
       "function plonkVerifier() view returns (address)",
       "function verifierDigest() view returns (bytes32)",
+      "function verify(bytes bundleProof, bytes publicInput) view"
+    ],
+    "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828": [
+      "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2)",
+      "error VerificationFailed()",
+      "function plonkVerifier() view returns (address)",
+      "function verifierDigest1() view returns (bytes32)",
+      "function verifierDigest2() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
     ],
     "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
@@ -3074,6 +3372,14 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": [
       "constructor()",
       "event GrantAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)",
@@ -3201,6 +3507,46 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b": [
+      "constructor(address _counterpart, address _rollup, address _messageQueueV1, address _messageQueueV2, address _enforcedTxGateway)",
+      "error ErrorForbidToCallMessageQueue()",
+      "error ErrorZeroAddress()",
+      "event FailedRelayedMessage(bytes32 indexed messageHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RelayedMessage(bytes32 indexed messageHash)",
+      "event SentMessage(address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
+      "event Unpaused(address account)",
+      "event UpdateFeeVault(address _oldFeeVault, address _newFeeVault)",
+      "event UpdateMaxReplayTimes(uint256 oldMaxReplayTimes, uint256 newMaxReplayTimes)",
+      "function counterpart() view returns (address)",
+      "function dropMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message)",
+      "function enforcedTxGateway() view returns (address)",
+      "function feeVault() view returns (address)",
+      "function initialize(address _counterpart, address _feeVault, address _rollup, address _messageQueue)",
+      "function isL1MessageDropped(bytes32) view returns (bool)",
+      "function isL2MessageExecuted(bytes32) view returns (bool)",
+      "function maxReplayTimes() view returns (uint256)",
+      "function messageQueueV1() view returns (address)",
+      "function messageQueueV2() view returns (address)",
+      "function messageSendTimestamp(bytes32) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function prevReplayIndex(uint256) view returns (uint256)",
+      "function relayMessageWithProof(address _from, address _to, uint256 _value, uint256 _nonce, bytes _message, tuple(uint256 batchIndex, bytes merkleProof) _proof)",
+      "function renounceOwnership()",
+      "function replayMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message, uint32 _newGasLimit, address _refundAddress) payable",
+      "function replayStates(bytes32) view returns (uint128 times, uint128 lastIndex)",
+      "function rollup() view returns (address)",
+      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit, address _refundAddress) payable",
+      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit) payable",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeVault(address _newFeeVault)",
+      "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
     "0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": [
       "constructor(address _singleton)"
     ],
@@ -3209,6 +3555,12 @@
     ],
     "0x9479ABfebefEea3c846163012a472b44F305b3d7": [
       "constructor(address _singleton)"
+    ],
+    "0x987e300fDfb06093859358522a79098848C33852": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3419,45 +3771,6 @@
     ],
     "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": [
       "constructor(address _singleton)"
-    ],
-    "0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868": [
-      "constructor(address _counterpart, address _rollup, address _messageQueueV1, address _messageQueueV2)",
-      "error ErrorForbidToCallMessageQueue()",
-      "error ErrorZeroAddress()",
-      "event FailedRelayedMessage(bytes32 indexed messageHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RelayedMessage(bytes32 indexed messageHash)",
-      "event SentMessage(address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
-      "event Unpaused(address account)",
-      "event UpdateFeeVault(address _oldFeeVault, address _newFeeVault)",
-      "event UpdateMaxReplayTimes(uint256 oldMaxReplayTimes, uint256 newMaxReplayTimes)",
-      "function counterpart() view returns (address)",
-      "function dropMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message)",
-      "function feeVault() view returns (address)",
-      "function initialize(address _counterpart, address _feeVault, address _rollup, address _messageQueue)",
-      "function isL1MessageDropped(bytes32) view returns (bool)",
-      "function isL2MessageExecuted(bytes32) view returns (bool)",
-      "function maxReplayTimes() view returns (uint256)",
-      "function messageQueueV1() view returns (address)",
-      "function messageQueueV2() view returns (address)",
-      "function messageSendTimestamp(bytes32) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function prevReplayIndex(uint256) view returns (uint256)",
-      "function relayMessageWithProof(address _from, address _to, uint256 _value, uint256 _nonce, bytes _message, tuple(uint256 batchIndex, bytes merkleProof) _proof)",
-      "function renounceOwnership()",
-      "function replayMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message, uint32 _newGasLimit, address _refundAddress) payable",
-      "function replayStates(bytes32) view returns (uint128 times, uint128 lastIndex)",
-      "function rollup() view returns (address)",
-      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit, address _refundAddress) payable",
-      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit) payable",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFeeVault(address _newFeeVault)",
-      "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
-      "function xDomainMessageSender() view returns (address)"
     ],
     "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": [
       "constructor(address _verifier, bytes32 _verifierDigest)",
@@ -3678,6 +3991,26 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event IntrinsicParamsUpdated(uint256 txGas, uint256 txGasContractCreation, uint256 zeroGas, uint256 nonZeroGas)",
+      "event L2BaseFeeUpdated(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateWhitelist(address _oldWhitelist, address _newWhitelist)",
+      "function calculateIntrinsicGasFee(bytes _message) view returns (uint256)",
+      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
+      "function initialize(uint64 _txGas, uint64 _txGasContractCreation, uint64 _zeroGas, uint64 _nonZeroGas)",
+      "function intrinsicParams() view returns (uint64 txGas, uint64 txGasContractCreation, uint64 zeroGas, uint64 nonZeroGas)",
+      "function l2BaseFee() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setIntrinsicParams(uint64 _txGas, uint64 _txGasContractCreation, uint64 _zeroGas, uint64 _nonZeroGas)",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
+      "function transferOwnership(address newOwner)",
+      "function updateWhitelist(address _newWhitelist)",
+      "function whitelist() view returns (address)"
     ]
   },
   "usedTemplates": {
@@ -3690,14 +4023,13 @@
     "scroll/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "scroll/L1GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "scroll/L1MessageQueue": "0x5d61d5187a0d2a5e1f20249aaa1b3c232575d4a903e0542d90d15fcc01bcf10a",
-    "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
     "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
     "scroll/L1Timelock": "0xb57e87420738619ef30cc617f225e9a594dd80457a5840dde6f062afc582ca77",
     "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
     "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
     "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
-    "scroll/ScrollOwner": "0x23b707ff346dc330561f8c88bc2b9313aa905247314abd332301e097d6127cff",
+    "scroll/ScrollOwner": "0x45116870d6ece70ac1aff025c8606737e8873880c44190161fb5690b8a89eb30",
     "scroll/SystemConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }
