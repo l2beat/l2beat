@@ -73,20 +73,13 @@ export const scroll: ScalingProject = {
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
-        'https://ondora.xyz/network/scroll',
-        'https://scroll.l2scan.co/',
         'https://okx.com/web3/explorer/scroll',
-        'https://scroll.nftscan.com/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
-        'https://github.com/scroll-tech/scroll-prover',
-        'https://github.com/scroll-tech/zkevm-circuits',
-        'https://github.com/scroll-tech/zkevm-specs',
-        'https://github.com/scroll-tech/scroll-zkevm',
+        'https://github.com/scroll-tech/zkvm-prover',
         'https://github.com/scroll-tech/go-ethereum',
         'https://github.com/scroll-tech/frontends',
-        'https://github.com/scroll-tech/scroll-contract-deploy-demo',
         'https://github.com/scroll-tech',
       ],
       socialMedia: [
