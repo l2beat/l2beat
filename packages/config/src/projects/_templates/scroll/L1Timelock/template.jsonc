@@ -63,6 +63,12 @@
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute transactions that are ready."
+        }
+      ],
       "severity": "HIGH"
     }
   }
