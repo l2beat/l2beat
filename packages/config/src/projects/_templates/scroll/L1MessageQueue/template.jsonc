@@ -5,8 +5,13 @@
   // L1MessageQueueV2
   "ignoreMethods": [
     "estimateCrossDomainMessageFee",
+    "getCrossDomainMessage",
+    "isMessageDropped",
+    "isMessageSkipped",
+    "messageQueue",
     "getMessageEnqueueTimestamp",
-    "getMessageRollingHash"
+    "getMessageRollingHash",
+    "estimateL2BaseFee"
   ],
   "ignoreInWatchMode": [
     "getFirstUnfinalizedMessageEnqueueTime",
