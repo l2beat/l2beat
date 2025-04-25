@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x58bdfc96896c1387d7229597437c5076edf0d65a
+Generated with discovered.json: 0x123437c7b6c67feccc1dddce19cfef81a118d55b
 
-# Diff at Fri, 25 Apr 2025 08:22:47 GMT:
+# Diff at Fri, 25 Apr 2025 09:36:59 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@883eec4b9450268891e59913a801e0da5ddff219 block: 22297562
-- current block number: 22344793
+- comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 22297562
+- current block number: 22345182
 
 ## Description
 
@@ -13,85 +13,33 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ## Watched changes
 
 ```diff
-    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+-   Status: DELETED
+    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B)
     +++ description: None
-      values.estimateCrossDomainMessageFee.4:
--        157149392
-+        100000000
-      values.estimateCrossDomainMessageFee.3:
--        0
-+        200000000
-      values.estimateCrossDomainMessageFee.2:
--        39287348
-+        300000000
-      values.estimateCrossDomainMessageFee.1:
--        78574696
-+        400000000
-      values.estimateCrossDomainMessageFee.0:
--        117862044
-+        0
-      values.l2BaseFee:
--        39287348
-+        100000000
-      values.nextCrossDomainMessageIndex:
--        953735
-+        953885
-      values.nextUnfinalizedQueueIndex:
--        953734
-+        953885
-      values.pendingQueueIndex:
--        953734
-+        953885
-    }
 ```
 
 ```diff
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
-      receivedPermissions.23:
-+        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
-      receivedPermissions.22:
-+        {"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"},{"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"},{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
-      receivedPermissions.21.from:
--        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
-+        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
-      receivedPermissions.20.from:
--        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
-+        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
-      receivedPermissions.19.from:
--        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
-+        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
       receivedPermissions.18.from:
 -        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
-+        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
       receivedPermissions.17.from:
 -        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
-+        "0x987e300fDfb06093859358522a79098848C33852"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
       receivedPermissions.16.from:
 -        "0x987e300fDfb06093859358522a79098848C33852"
-+        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      receivedPermissions.15.from:
--        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-+        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
-      receivedPermissions.14.from:
--        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
-+        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
-      receivedPermissions.13.from:
--        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
-+        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
-      receivedPermissions.12.from:
--        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
-+        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
-      receivedPermissions.11.from:
--        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
-+        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
-      receivedPermissions.10.from:
--        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
-+        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
       receivedPermissions.9.from:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37)
+    +++ description: None
 ```
 
 ```diff
@@ -108,7 +56,7 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 
 ```diff
     contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
-    +++ description: None
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
       sourceHashes.1:
 -        "0xe550fda323606a4b4fd2a05cf45dda231290e1d57a077828632c098fa0579161"
 +        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
@@ -143,14 +91,32 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
       values.$upgradeCount:
 -        2
 +        4
+      values.counterpart:
+-        "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
++        "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
       values.messageQueue:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.prevReplayIndex:
+-        [0,0,0,0,0]
+      values.xDomainMessageSender:
+-        "0x0000000000000000000000000000000000000001"
++        "scr:0x0000000000000000000000000000000000000001"
       values.enforcedTxGateway:
 +        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
       values.messageQueueV1:
 +        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
       values.messageQueueV2:
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+      errors:
+-        {"prevReplayIndex":"Processing error occurred."}
+      template:
++        "scroll/L1ScrollMessenger"
+      description:
++        "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -188,6 +154,12 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ```
 
 ```diff
+-   Status: DELETED
+    contract L2ScrollMessengerFallback (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC)
+    +++ description: None
+```
+
+```diff
     contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
       values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes):
@@ -202,11 +174,13 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 +        {"updateMessageQueueParameters((uint32,uint112,uint112))":["ops-fast"],"updateEnforcedBatchParameters((uint24,uint24))":["ops-fast"],"updateSigner(address)":["emergency-nodelay"]}
       values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d:
 +        {"setPause(bool)":["emergency-nodelay"]}
-      values.executor:
--        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
-      values.executors:
-+        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
     }
+```
+
+```diff
+-   Status: DELETED
+    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852)
+    +++ description: None
 ```
 
 ```diff
@@ -282,46 +256,15 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ```diff
     contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
     +++ description: None
-      directlyReceivedPermissions.15:
-+        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515"}
-      directlyReceivedPermissions.14:
-+        {"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"}
-      directlyReceivedPermissions.13.from:
--        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
-+        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
-      directlyReceivedPermissions.12.from:
--        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
-+        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
-      directlyReceivedPermissions.11.from:
--        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
-+        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
       directlyReceivedPermissions.10.from:
 -        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
-+        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
       directlyReceivedPermissions.9.from:
 -        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
-+        "0x987e300fDfb06093859358522a79098848C33852"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
       directlyReceivedPermissions.8.from:
 -        "0x987e300fDfb06093859358522a79098848C33852"
-+        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      directlyReceivedPermissions.7.from:
--        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-+        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
-      directlyReceivedPermissions.6.from:
--        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
-+        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
-      directlyReceivedPermissions.5.from:
--        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
-+        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
-      directlyReceivedPermissions.4.from:
--        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
-+        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
-      directlyReceivedPermissions.3.from:
--        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
-+        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
-      directlyReceivedPermissions.2.from:
--        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
-+        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
       directlyReceivedPermissions.1.from:
 -        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
 +        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
@@ -373,16 +316,18 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ## Source code changes
 
 ```diff
-.../EnforcedTxGateway/EnforcedTxGateway.sol        |   79 +-
- .../.flat/L1MessageQueueV2/L1MessageQueueV2.sol    | 1013 ++++++++++++++++++++
- .../TransparentUpgradeableProxy.p.sol              |  729 ++++++++++++++
- .../L1ScrollMessenger/L1ScrollMessenger.sol        |   50 +-
- .../ScrollChain/ScrollChain.sol                    |  652 ++++++++++---
- .../ethereum/.flat/SystemConfig/SystemConfig.sol   |  545 +++++++++++
- .../SystemConfig/TransparentUpgradeableProxy.p.sol |  729 ++++++++++++++
- ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |    0
- ...-0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828.sol |  102 ++
- 9 files changed, 3750 insertions(+), 149 deletions(-)
+.../EnforcedTxGateway/EnforcedTxGateway.sol        |  79 +-
+ .../L1MessageQueueV2/L1MessageQueueV2.sol}         | 867 +++++++--------------
+ .../TransparentUpgradeableProxy.p.sol              |   2 +-
+ .../L1ScrollMessenger/L1ScrollMessenger.sol        |  50 +-
+ .../L2ScrollMessengerFallback.sol => /dev/null     | 469 -----------
+ .../ScrollChain/ScrollChain.sol                    | 652 +++++++++++++---
+ .../SystemConfig/SystemConfig.sol}                 | 212 ++---
+ .../TransparentUpgradeableProxy.p.sol              |   2 +-
+ .../.flat@22297562/Whitelist.sol => /dev/null      |  97 ---
+ ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |   0
+ ...-0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828.sol | 102 +++
+ 11 files changed, 1095 insertions(+), 1437 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -390,6 +335,14 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22297562 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
 
 ```diff
     contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
@@ -438,15 +391,15 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.estimateCrossDomainMessageFee:
-+        [117862044,78574696,39287348,0,157149392]
++        [0,39287348,78574696,117862044,157149392]
       values.getCrossDomainMessage:
-+        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894"]
++        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"]
       values.isMessageDropped:
 +        [false,false,false,false,false]
       values.isMessageSkipped:
 +        [false,false,false,false,false]
       values.messageQueue:
-+        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894"]
++        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"]
       errors:
 +        {"estimateCrossDomainMessageFee":"Processing error occurred.","getCrossDomainMessage":"Processing error occurred.","isMessageDropped":"Processing error occurred.","isMessageSkipped":"Processing error occurred.","messageQueue":"Processing error occurred."}
     }
@@ -483,6 +436,22 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract undefined (0x0f50874f227621Dea72482004639a9fFe440A4dA) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       receivedPermissions:
@@ -493,10 +462,34 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
     +++ description: None
       values.whitelisted:
 -        ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
+    }
+```
+
+```diff
+    contract undefined (0x30315233090F675520eef5CBd7A6cf7d185af443) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract undefined (0x383C148ba96956F985F6141B2D119add1C34e3B7) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -534,6 +527,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
     +++ description: Contract used to update the verifier and keep track of current and old versions.
       description:
@@ -543,6 +544,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 +        "scroll/MultipleVersionRollupVerifier"
       category:
 +        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV0 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -645,9 +654,25 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Safe (0x69C2eD64171bF5737c2B78bdF722e68a032B2825) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
 -   Status: DELETED
     contract L2WETHGatewayFallback (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9)
     +++ description: None
+```
+
+```diff
+    contract undefined (0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
@@ -762,6 +787,38 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Safe (0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
     +++ description: None
       name:
@@ -775,9 +832,17 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
       values.estimateCrossDomainMessageFee:
-+        [460000000,1840000000,0,920000000,1380000000]
++        [0,460000000,920000000,1380000000,1840000000]
       errors:
 +        {"estimateCrossDomainMessageFee":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract undefined (0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -945,6 +1010,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract undefined (0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
     +++ description: None
       directlyReceivedPermissions.14:
@@ -1008,7 +1081,15 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x2887456bb2991e89b8f1b0fc8bc81c437d6fc89c
+```diff
+    contract undefined (0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x0e01527d127d533aa4b14eb56b065292878e5616
 
 # Diff at Fri, 18 Apr 2025 18:06:50 GMT:
 

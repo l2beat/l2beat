@@ -99,35 +99,78 @@
     },
     "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
       // PlonkVerifierV0
+      "category": "spam",
       "manualSourcePaths": {
         "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
       }
     },
     "0x2293cd12e8564e8219d314b075867c2f66ac6941": {
       // PlonkVerifierV1
+      "category": "spam",
       "manualSourcePaths": {
         "0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
       }
     },
     "0x03a72B00D036C479105fF98A1953b15d9c510110": {
+      "category": "spam",
       // PlonkVerifierV1-1
       "manualSourcePaths": {
         "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
       }
     },
     "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": {
+      "category": "spam",
       // PlonkVerifierV2
       "manualSourcePaths": {
         "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
       }
     },
     "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
+      "category": "spam",
       // PlonkVerifierV2-1
       "manualSourcePaths": {
         "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
       }
     },
+    // SC Members not needed in actors
     "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": {
+      "category": "spam"
+    },
+    "0x0f50874f227621Dea72482004639a9fFe440A4dA": {
+      "category": "spam"
+    },
+    "0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d": {
+      "category": "spam"
+    },
+    "0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a": {
+      "category": "spam"
+    },
+    "0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4": {
+      "category": "spam"
+    },
+    "0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": {
+      "category": "spam"
+    },
+    "0x30315233090F675520eef5CBd7A6cf7d185af443": {
+      "category": "spam"
+    },
+    "0x9479ABfebefEea3c846163012a472b44F305b3d7": {
+      "category": "spam"
+    },
+    "0x383C148ba96956F985F6141B2D119add1C34e3B7": {
+      "category": "spam"
+    },
+    "0x69C2eD64171bF5737c2B78bdF722e68a032B2825": {
+      "category": "spam"
+    },
+    "0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": {
+      "category": "spam"
+    },
+    "0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": {
+      "category": "spam"
+    },
+    // Do not show old verifiers
+    "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": {
       "category": "spam"
     }
   }
