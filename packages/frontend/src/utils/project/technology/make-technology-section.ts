@@ -1,6 +1,6 @@
 import type { ProjectTechnologyChoice } from '@l2beat/config'
 import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
-import type { TechnologyChoice } from '../../../components/projects/sections/technology-section'
+import type { TechnologyChoice } from '../../../components/projects/sections/technology-choices-section'
 
 export function makeTechnologyChoice(
   id: string,

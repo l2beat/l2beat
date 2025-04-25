@@ -12,7 +12,7 @@ import type { TechnologyRisk } from './risk-list'
 import { RiskList } from './risk-list'
 import type { ProjectSectionProps } from './types'
 
-export interface TechnologySectionProps extends ProjectSectionProps {
+export interface TechnologyChoicesSectionProps extends ProjectSectionProps {
   items: TechnologyChoice[]
   hostChainWarning?: HostChainRisksWarningProps
 }
@@ -28,11 +28,11 @@ export interface TechnologyChoice {
   relatedProjectBanner?: ProjectDetailsRelatedProjectBannerProps
 }
 
-export function TechnologySection({
+export function TechnologyChoicesSection({
   items,
   hostChainWarning,
   ...sectionProps
-}: TechnologySectionProps) {
+}: TechnologyChoicesSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
