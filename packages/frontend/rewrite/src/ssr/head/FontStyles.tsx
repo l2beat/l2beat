@@ -22,5 +22,20 @@ export function FontStyles({
     )
     .join('')
 
-  return <style dangerouslySetInnerHTML={{ __html: fontStyles }} />
+  return (
+    <>
+      {fonts.map((font) =>
+        font.src.map((source) => (
+          <link
+            key={source.path}
+            rel="preload"
+            href={manifest.getUrl(source.path)}
+            as="font"
+            type="font/woff2"
+          />
+        )),
+      )}
+      <style dangerouslySetInnerHTML={{ __html: fontStyles }} />
+    </>
+  )
 }
