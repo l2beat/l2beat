@@ -10,6 +10,7 @@ import { EcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { FaqRouter } from './faq/FaqRouter'
 import { GlossaryRouter } from './glossary/GlossaryRouter'
 import { GovernanceRouter } from './governance/GovernanceRouter'
+import { MutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { ScalingRouter } from './scaling/ScalingRouter'
 import { ZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
@@ -33,4 +34,5 @@ export function ServerPageRouter(
   DonateRouter(app, manifest, render)
   GlossaryRouter(app, manifest, render)
   DaRiskFrameworkRouter(app, manifest, render)
+  MutlisigReportRouter(app, manifest, render)
 }

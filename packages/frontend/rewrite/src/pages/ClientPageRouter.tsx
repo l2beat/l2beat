@@ -15,6 +15,7 @@ import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
 import { GovernancePublicationPage } from './governance/publications/:id/GovernancePublicationPage'
 import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
+import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -77,6 +78,7 @@ const pages = {
   AboutUsPage,
   DonatePage,
   DaRiskFrameworkPage,
+  MultisigReportPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
