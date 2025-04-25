@@ -23,6 +23,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -235,7 +236,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "sc": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+        "executor": ["0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]
       },
       "derivedName": "ScrollOwner",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -277,7 +278,8 @@
           "from": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -285,7 +287,8 @@
           "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
           "via": [
             { "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -293,7 +296,8 @@
           "from": "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -301,7 +305,8 @@
           "from": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -309,7 +314,8 @@
           "from": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -317,7 +323,8 @@
           "from": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -325,7 +332,8 @@
           "from": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -333,7 +341,8 @@
           "from": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -341,7 +350,8 @@
           "from": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -349,7 +359,8 @@
           "from": "0xd29687c813D741E2F938F4aC377128810E217b1b",
           "via": [
             { "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         },
         {
@@ -357,15 +368,12 @@
           "from": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
           "via": [
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" },
-            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" }
+            { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
-        },
         {
           "permission": "act",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
@@ -443,6 +451,10 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+        },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
@@ -696,6 +708,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" }
           ]
@@ -777,6 +790,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -846,6 +860,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -901,6 +916,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -1014,6 +1030,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -1073,6 +1090,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -1140,6 +1158,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -1304,6 +1323,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -1692,6 +1712,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" }
           ]
@@ -1795,6 +1816,7 @@
           "permission": "upgrade",
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "via": [
+            { "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" },
             { "address": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B" },
             { "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }
           ]
@@ -2986,6 +3008,6 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "scroll/L1Timelock": "0xb57e87420738619ef30cc617f225e9a594dd80457a5840dde6f062afc582ca77",
-    "scroll/ScrollOwner": "0x23b707ff346dc330561f8c88bc2b9313aa905247314abd332301e097d6127cff"
+    "scroll/ScrollOwner": "0xa59600c1471ade2a4b20da14b76131d95f8ac8f828eb15bfaffd2e653be76149"
   }
 }

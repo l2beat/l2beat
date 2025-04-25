@@ -47,13 +47,11 @@ const upgradesSC = {
   upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
 }
 
-// // TODO: add usage in conditional statement
-// const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
-//   'EnforcedTxGateway',
-//   'paused',
-// )
+const upgradeDelay = discovery.getContractValue<number>(
+  'TimelockSCEmergency',
+  'getMinDelay',
+)
 
-const upgradeDelay = 0
 const finalizationPeriod = 0
 
 export const scroll: ScalingProject = {
@@ -449,7 +447,7 @@ export const scroll: ScalingProject = {
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV7Codec.sol#L7).',
   },
   stateValidation: {
     description:
@@ -458,17 +456,17 @@ export const scroll: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          'The prover code can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/prover).',
+          'The prover code can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/prover).',
       },
       {
         title: 'ZK Circuits',
         description:
-          'Scroll circuits are based on the Halo2 proof system and are designed to replicate the behavior of the EVM. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.5/zkevm-circuits) while the code for the aggregation circuits can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.5/aggregator).',
+          'Scroll circuits are [openvm](https://book.openvm.dev/) based Guest Programs based on the Halo2 proof system. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
       },
       {
         title: 'Verification Keys Generation',
         description:
-          'SNARK verification keys can be generated and checked against Ethereum verifier contract using [this guide](https://github.com/scroll-tech/scroll-prover#verifier-contract). The system requires a trusted setup.',
+          'SNARK verification keys can be generated and checked against Ethereum verifier contract using [this guide](https://github.com/scroll-tech/openvm/blob/66a8134a515c9f699d572e7f681311a04df3aef8/book/src/advanced-usage/sdk.md?plain=1#L99). The system requires a trusted setup.',
       },
       {
         ...STATE_VALIDATION.VALIDITY_PROOFS,
@@ -599,6 +597,23 @@ export const scroll: ScalingProject = {
               name: 'Main verifier',
               ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/zkevm-circuits',
+            },
+          ],
+        },
+        {
+          name: 'PlonkVerifierPostEuclid',
+          description:
+            'Scroll verifier proving bundles (group of batches). Corresponds to openvm zkVM Circuits (Euclid upgrade).',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x9F66505cB1626D06B50EF2597f41De6686e8f79a',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main verifier',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
+              link: 'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits',
             },
           ],
         },

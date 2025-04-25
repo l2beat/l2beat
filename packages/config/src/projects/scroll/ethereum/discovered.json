@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22345182,
-  "configHash": "0x76e5a1899f8e6884f7b25c5abe488a440d615d343b38a1b1934754cb5769f9bd",
+  "configHash": "0xe588ce9814ac52514b8ac10d06c8301bb1f700397e218455941fc2acbdfed91e",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -20,7 +20,8 @@
         "verifierDigest1": "0x001e7bcb266824cb08ad303990e90a9c4b901eaaa52e562e513df47d4c168949",
         "verifierDigest2": "0x0038553adf417a6a3df35d2fdfd14b892f1e49ba18937ece7960c1e7cee6e3dc"
       },
-      "derivedName": "ZkEvmVerifierPostEuclid"
+      "derivedName": "ZkEvmVerifierPostEuclid",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PlonkVerifierV1-1",
@@ -615,7 +616,8 @@
         "plonkVerifier": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
         "verifierDigest": "0x30513ba1873ce1b9598c4faf101dccd32498e93c39e1f31a423390cbb1f81f7a"
       },
-      "derivedName": "ZkEvmVerifierV2"
+      "derivedName": "ZkEvmVerifierV2",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x30315233090F675520eef5CBd7A6cf7d185af443",
@@ -636,6 +638,7 @@
         "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
       ],
       "proxyType": "immutable",
+      "description": "Contract used to verify zk proofs given the aggregate proof and the public input hash.",
       "sinceTimestamp": 1745397227,
       "sinceBlock": 22330536,
       "values": {
@@ -783,7 +786,8 @@
         "$immutable": true,
         "plonkVerifier": "0x2293cd12e8564e8219d314b075867c2f66ac6941"
       },
-      "derivedName": "ZkEvmVerifierV1"
+      "derivedName": "ZkEvmVerifierV1",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PlonkVerifierV0",
@@ -1004,7 +1008,8 @@
         "$immutable": true,
         "plonkVerifier": "0x03a72B00D036C479105fF98A1953b15d9c510110"
       },
-      "derivedName": "ZkEvmVerifierV1"
+      "derivedName": "ZkEvmVerifierV1",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "wstETHescrowLido",
@@ -1202,22 +1207,6 @@
       },
       "derivedName": "Safe",
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "L2ETHGatewayFallback",
-      "address": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696927307,
-      "sinceBlock": 18318929,
-      "values": {
-        "$immutable": true,
-        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      },
-      "derivedName": "Fallback"
     },
     {
       "address": "0x6F166508d423169A3C7cb3e7856Ba4bf9Fb2cCed",
@@ -1531,12 +1520,15 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
+        "counterpart": "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "derivedName": "L1ETHGateway",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1857,7 +1849,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "",
+      "name": "PlonkVerifierPostEuclid-2",
       "address": "0x9F66505cB1626D06B50EF2597f41De6686e8f79a",
       "type": "Contract",
       "unverified": true,
@@ -2259,7 +2251,8 @@
         "plonkVerifier": "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
         "verifierDigest": "0x0a1904dbfff4614fb090b4b3864af4874f12680c32f07889e9ede8665097e5ec"
       },
-      "derivedName": "ZkEvmVerifierV2"
+      "derivedName": "ZkEvmVerifierV2",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PlonkVerifierPostEuclid",
@@ -2270,7 +2263,8 @@
       "sinceTimestamp": 1743130487,
       "sinceBlock": 22142558,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f",
@@ -2608,11 +2602,6 @@
       },
       "derivedName": "L1GatewayRouter",
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "0xF9062b8a30e0d7722960e305049FA50b86ba6253",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf",
@@ -3116,14 +3105,6 @@
       "function updateEnforcedBatchParameters(tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) _params)",
       "function updateMessageQueueParameters(tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) _params)",
       "function updateSigner(address _newSigner)"
-    ],
-    "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3745,7 +3726,7 @@
     "scroll/L1CustomERC20Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ERC721Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1ETHGateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "scroll/L1MessageQueue": "0x5d61d5187a0d2a5e1f20249aaa1b3c232575d4a903e0542d90d15fcc01bcf10a",
     "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",

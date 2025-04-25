@@ -53,6 +53,7 @@
     "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "PlonkVerifierV2-1", // DarwinV2
     "0xf5bABa891e6De03540ecfb1917B8F07112A45a83": "ZkEvmVerifierPostEuclid",
     "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "PlonkVerifierPostEuclid",
+    "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": "PlonkVerifierPostEuclid-2",
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow"
@@ -97,40 +98,8 @@
       },
       "category": "bridge-external"
     },
-    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
-      // PlonkVerifierV0
-      "category": "spam",
-      "manualSourcePaths": {
-        "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
-      }
-    },
-    "0x2293cd12e8564e8219d314b075867c2f66ac6941": {
-      // PlonkVerifierV1
-      "category": "spam",
-      "manualSourcePaths": {
-        "0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
-      }
-    },
-    "0x03a72B00D036C479105fF98A1953b15d9c510110": {
-      "category": "spam",
-      // PlonkVerifierV1-1
-      "manualSourcePaths": {
-        "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
-      }
-    },
-    "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": {
-      "category": "spam",
-      // PlonkVerifierV2
-      "manualSourcePaths": {
-        "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
-      }
-    },
-    "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
-      "category": "spam",
-      // PlonkVerifierV2-1
-      "manualSourcePaths": {
-        "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
-      }
+    "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828": {
+      "description": "Contract used to verify zk proofs given the aggregate proof and the public input hash."
     },
     // SC Members not needed in actors
     "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": {
@@ -169,8 +138,61 @@
     "0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": {
       "category": "spam"
     },
-    // Do not show old verifiers
+    /* ---- Do not show old verifiers ---- */
+    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
+      // PlonkVerifierV0
+      "category": "spam",
+      "manualSourcePaths": {
+        "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
+      }
+    },
+    "0x2293cd12e8564e8219d314b075867c2f66ac6941": {
+      // PlonkVerifierV1
+      "category": "spam",
+      "manualSourcePaths": {
+        "0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
+      }
+    },
+    "0x03a72B00D036C479105fF98A1953b15d9c510110": {
+      "category": "spam",
+      // PlonkVerifierV1-1
+      "manualSourcePaths": {
+        "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
+      }
+    },
+    "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": {
+      "category": "spam",
+      // PlonkVerifierV2
+      "manualSourcePaths": {
+        "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
+      }
+    },
+    "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
+      "category": "spam",
+      // PlonkVerifierV2-1
+      "manualSourcePaths": {
+        "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
+      }
+    },
     "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": {
+      "category": "spam"
+    },
+    "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": {
+      "category": "spam"
+    },
+    "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": {
+      "category": "spam"
+    },
+    "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": {
+      "category": "spam"
+    },
+    "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": {
+      "category": "spam"
+    },
+    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": {
+      "category": "spam"
+    },
+    "0x63FB51C55d9605a75F8872C80De260a00fACfaA2": {
       "category": "spam"
     }
   }

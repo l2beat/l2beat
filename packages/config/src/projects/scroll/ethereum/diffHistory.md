@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x123437c7b6c67feccc1dddce19cfef81a118d55b
+Generated with discovered.json: 0x6b08fc9e1d60e49f6bddf56bcffba7d39d3f75ea
 
-# Diff at Fri, 25 Apr 2025 09:36:59 GMT:
+# Diff at Fri, 25 Apr 2025 11:11:34 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 22297562
@@ -292,7 +292,7 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ```diff
 +   Status: CREATED
     contract ZkEvmVerifierPostEuclid (0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828)
-    +++ description: None
+    +++ description: Contract used to verify zk proofs given the aggregate proof and the public input hash.
 ```
 
 ```diff
@@ -309,7 +309,7 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 
 ```diff
 +   Status: CREATED
-    contract  (0x9F66505cB1626D06B50EF2597f41De6686e8f79a)
+    contract PlonkVerifierPostEuclid-2 (0x9F66505cB1626D06B50EF2597f41De6686e8f79a)
     +++ description: None
 ```
 
@@ -335,6 +335,14 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22297562 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierPostEuclid (0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
 
 ```diff
     contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
@@ -478,6 +486,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract undefined (0x30315233090F675520eef5CBd7A6cf7d185af443) {
     +++ description: None
       category:
@@ -523,6 +539,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 +        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
       category:
 +        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -588,6 +612,14 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 +        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
       category:
 +        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -659,6 +691,12 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       category:
 +        {"name":"Spam","priority":-1}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract L2ETHGatewayFallback (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0)
+    +++ description: None
 ```
 
 ```diff
@@ -747,10 +785,15 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 +        {"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}
       issuedPermissions.0.via.1:
 +        {"address":"0x798576400F7D662961BA15C6b3F3d813447a26a6"}
+      values.counterpart:
+-        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
++        "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
       template:
 +        "scroll/L1ETHGateway"
       description:
 +        "Contract used to bridge ETH from L1 to L2."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
       category:
 +        {"name":"Canonical Bridges","priority":2}
     }
@@ -965,11 +1008,21 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
     contract PlonkVerifierPostEuclid (0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582) {
     +++ description: None
       name:
 -        ""
 +        "PlonkVerifierPostEuclid"
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
