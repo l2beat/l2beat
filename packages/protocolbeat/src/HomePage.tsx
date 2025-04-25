@@ -12,9 +12,7 @@ export function HomePage() {
 
   // Autofocus the input when the component mounts
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
+    inputRef.current?.focus()
   }, [])
 
   return (
@@ -40,7 +38,7 @@ function AllProjects(props: { search: string }) {
     queryFn: getProjects,
   })
   const [favorites, setFavorites] = useState<string[]>(readFavorites)
-  const [selectedIndex, setSelectedIndex] = useState<number>(-1)
+  const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const navigate = useNavigate()
 
   // Create refs for favorites and projects lists
@@ -68,11 +66,7 @@ function AllProjects(props: { search: string }) {
 
   // Reset selection when search changes
   useEffect(() => {
-    if (result.isSuccess) {
-      const search = props.search.toLowerCase()
-      const filtered = result.data.filter((x) => matchesFilter(search, x))
-      setSelectedIndex(filtered.length === 1 ? 0 : -1)
-    }
+    setSelectedIndex(0)
   }, [props.search, result.isSuccess, result.data])
 
   // Scroll selected item into view when selection changes
@@ -108,15 +102,11 @@ function AllProjects(props: { search: string }) {
 
       const search = props.search.toLowerCase()
       const filtered = result.data.filter((x) => matchesFilter(search, x))
-      const breakIndex = filtered.filter((x) =>
-        favorites.includes(x.name),
-      ).length
+      const favoriteList = filtered.filter((x) => favorites.includes(x.name))
+      const otherList = filtered.filter((x) => !favorites.includes(x.name))
+      const breakIndex = favoriteList.length
 
       if (filtered.length === 0) return
-
-      if (selectedIndex === -1) {
-        setSelectedIndex(0)
-      }
 
       switch (e.key) {
         case 'ArrowDown': {
@@ -155,7 +145,6 @@ function AllProjects(props: { search: string }) {
           e.preventDefault()
 
           setSelectedIndex(Math.min(selectedIndex + 1, filtered.length - 1))
-
           break
         }
 
@@ -170,11 +159,13 @@ function AllProjects(props: { search: string }) {
           if (selectedIndex >= 0) {
             e.preventDefault()
 
-            if (
-              selectedIndex < filtered.length &&
-              filtered[selectedIndex]?.name !== undefined
-            ) {
-              navigate(`/ui/p/${filtered[selectedIndex].name}`)
+            const favoriteIndex = selectedIndex
+            const otherIndex = selectedIndex - favoriteList.length
+            if (favoriteList[favoriteIndex]?.name !== undefined) {
+              navigate(`/ui/p/${favoriteList[favoriteIndex].name}`)
+            }
+            if (otherList[otherIndex]?.name !== undefined) {
+              navigate(`/ui/p/${otherList[otherIndex].name}`)
             }
           }
           break
