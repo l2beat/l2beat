@@ -13,6 +13,7 @@ import { TvsBreakdownSummaryBox } from './_components/tvs-breakdown-summary-box'
 
 export function ScalingProjectTvsBreakdownPage({
   project,
+  icon,
   dataTimestamp,
   breakdown,
   projectTokens,
@@ -23,6 +24,7 @@ export function ScalingProjectTvsBreakdownPage({
       <TvsBreakdownPageHeader
         title={project.name}
         slug={project.slug}
+        icon={icon}
         tvsBreakdownTimestamp={dataTimestamp}
       />
       <div className="md:space-y-6">

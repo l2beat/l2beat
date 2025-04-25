@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
 import { externalLinks } from '~/consts/external-links'
+import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { EcosystemsIcon } from '~/icons/pages/ecosystems'
@@ -13,7 +14,6 @@ import { MobileTopNavbar } from './mobile/mobile-top-navbar'
 import { NavSidebar } from './sidebar/nav-sidebar'
 import { TopNavbar } from './top-nav/top-navbar'
 import type { NavGroup } from './types'
-import { env } from '~/env'
 
 interface Props {
   children: ReactNode

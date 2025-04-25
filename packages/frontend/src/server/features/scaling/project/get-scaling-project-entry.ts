@@ -260,6 +260,7 @@ export async function getScalingProjectEntry(
     ? {
         hostChainName: hostChain.name,
         hostChainSlug: hostChain.slug,
+        hostChainIcon: getProjectIcon(hostChain.slug),
       }
     : undefined
   const hostChainRisksSummary =
@@ -269,6 +270,7 @@ export async function getScalingProjectEntry(
       ? {
           hostChainName: hostChain.name,
           hostChainSlug: hostChain.slug,
+          hostChainIcon: getProjectIcon(hostChain.slug),
           riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
             .length,
         }

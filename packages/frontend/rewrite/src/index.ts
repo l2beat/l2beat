@@ -1,10 +1,10 @@
 import './dotenv'
 
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import compression from 'compression'
 import express from 'express'
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
 import sirv from 'sirv'
 import { appRouter } from '~/server/api/root'
 import { type Manifest, getManifest } from './common/Manifest'

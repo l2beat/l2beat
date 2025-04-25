@@ -5,12 +5,12 @@ import { AboutUsRouter } from './about/AboutUsRouter'
 import { BridgesRouter } from './bridges/BridgesRouter'
 import { DataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { DonateRouter } from './donate/DonateRouter'
+import { EcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { FaqRouter } from './faq/FaqRouter'
 import { GlossaryRouter } from './glossary/GlossaryRouter'
+import { GovernanceRouter } from './governance/GovernanceRouter'
 import { ScalingRouter } from './scaling/ScalingRouter'
 import { ZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
-import { GovernanceRouter } from './governance/GovernanceRouter'
-import { EcosystemsRouter } from './ecosystems/EcosystemsRouter'
 
 export function ServerPageRouter(
   app: Router,

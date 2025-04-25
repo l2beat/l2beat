@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { getCollection } from '~/content/get-collection'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { GovernancePage } from './_page'
 import { getGovernanceEventEntries } from './_utils/get-governance-event-entries'
 import { getGovernancePublicationEntry } from './_utils/get-governance-publication-entry'
-import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance - L2BEAT',

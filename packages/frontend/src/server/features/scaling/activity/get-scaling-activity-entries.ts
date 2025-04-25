@@ -5,13 +5,13 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getProjectIcon } from '../../utils/get-project-icon'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import type { ActivityProjectTableData } from './get-activity-table-data'
 import { getActivityTable } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivitySyncWarning } from './utils/is-activity-synced'
-import { getProjectIcon } from '../../utils/get-project-icon'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({

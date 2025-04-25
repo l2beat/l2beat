@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { getProjectIcon } from '../../utils/get-project-icon'
 import { getTvsBreakdownForProject } from '../tvs/breakdown/get-tvs-breakdown-for-project'
 import type { BreakdownRecord } from '../tvs/breakdown/types'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
@@ -13,6 +14,7 @@ export interface ScalingProjectTvsBreakdownData {
     'tvsConfig' | 'tvlInfo',
     'chainConfig' | 'milestones' | 'contracts'
   >
+  icon: string
   dataTimestamp: number
   breakdown: BreakdownRecord
   project7dData: ProjectSevenDayTvsBreakdown
@@ -46,6 +48,7 @@ export async function getScalingProjectTvsBreakdownData(
 
   return {
     project,
+    icon: getProjectIcon(project.slug),
     dataTimestamp,
     breakdown,
     project7dData,

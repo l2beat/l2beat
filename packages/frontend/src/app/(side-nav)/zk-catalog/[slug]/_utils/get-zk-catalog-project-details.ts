@@ -1,10 +1,10 @@
 import type { Project } from '@l2beat/config'
 import { getCollectionEntry } from '~/content/get-collection'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import type { VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from '../../_utils/get-proof-verification'
 import { getTrustedSetup } from '../../_utils/get-trusted-setup'
 import type { ZkCatalogProofVerification } from '../../_utils/types'
-import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 
 export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string

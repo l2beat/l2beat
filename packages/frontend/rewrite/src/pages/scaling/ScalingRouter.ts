@@ -10,11 +10,11 @@ import { getScalingDataAvailabilityData } from './data-availability/getScalingDa
 import { getScalingFinalityData } from './finality/getScalingFinalityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
+import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
 import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
-import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 
 export function ScalingRouter(
   app: Router,

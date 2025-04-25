@@ -17,8 +17,8 @@ import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/get-project-icon'
 import {
   type CommonDaEntry,
-  getCommonDacDaEntry,
   getCommonDaEntry,
+  getCommonDacDaEntry,
 } from '../get-common-da-entry'
 import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'

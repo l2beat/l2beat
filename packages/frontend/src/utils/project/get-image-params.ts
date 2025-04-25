@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
-import imageSize from 'image-size'
 import path from 'path'
+import imageSize from 'image-size'
 import { getManifest } from 'rewrite/src/common/Manifest'
 import { env } from '~/env'
 
