@@ -8,6 +8,7 @@ import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabil
 import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
 import { DataAvailabilityThroughputPage } from './data-availability/throughput/DataAvailabilityThroughputPage'
 import { DonatePage } from './donate/DonatePage'
+import { EcosystemProjectPage } from './ecosystems/project/EcosystemProjectPage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
@@ -63,6 +64,8 @@ const pages = {
   // ZK Catalog
   ZkCatalogPage,
   ZkCatalogProjectPage,
+  // Ecosystems
+  EcosystemProjectPage,
   // Governance
   GovernancePage,
   GovernancePublicationsPage,

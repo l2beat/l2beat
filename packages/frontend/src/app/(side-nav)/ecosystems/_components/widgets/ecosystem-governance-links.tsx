@@ -15,10 +15,15 @@ export interface EcosystemGovernanceLinks {
 
 interface Props {
   links: EcosystemGovernanceLinks
+  topDelegatesBackgroundImage: string
   className?: string
 }
 
-export function EcosystemGovernanceLinks({ links, className }: Props) {
+export function EcosystemGovernanceLinks({
+  links,
+  topDelegatesBackgroundImage,
+  className,
+}: Props) {
   return (
     <div
       className={cn(
@@ -31,7 +36,10 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
         bankImage={links.bankImage}
         className="sm:row-span-2"
       />
-      <TopDelegatesLink href={links.topDelegates} />
+      <TopDelegatesLink
+        href={links.topDelegates}
+        backgroundImage={topDelegatesBackgroundImage}
+      />
       <ProposalsLink href={links.proposals} />
     </div>
   )
@@ -55,7 +63,13 @@ function GovernanceLink({
             L2BEAT Review
           </div>
         </div>
-        <Image {...bankImage} alt="Governance Bank" className="py-4" />
+        <Image
+          {...bankImage}
+          width={bankImage.width / 3}
+          height={bankImage.height / 3}
+          alt="Governance Bank"
+          className="py-4"
+        />
       </div>
 
       <Link
@@ -71,8 +85,9 @@ function GovernanceLink({
 
 function TopDelegatesLink({
   href,
+  backgroundImage,
   className,
-}: { href: string; className?: string }) {
+}: { href: string; backgroundImage: string; className?: string }) {
   return (
     <EcosystemWidget asChild>
       <CustomLink
@@ -84,7 +99,10 @@ function TopDelegatesLink({
           className,
         )}
       >
-        <div className="absolute inset-0 origin-left rounded-lg bg-[url(/ecosystems/governance-delegates.png)] bg-cover transition-all ease-in-out group-hover:scale-125" />
+        <div
+          className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        />
         <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black"></div>
         <div className="relative flex h-full flex-col justify-center">
           <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">

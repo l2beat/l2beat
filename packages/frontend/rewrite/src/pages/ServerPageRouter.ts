@@ -10,6 +10,7 @@ import { GlossaryRouter } from './glossary/GlossaryRouter'
 import { ScalingRouter } from './scaling/ScalingRouter'
 import { ZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 import { GovernanceRouter } from './governance/GovernanceRouter'
+import { EcosystemsRouter } from './ecosystems/EcosystemsRouter'
 
 export function ServerPageRouter(
   app: Router,
@@ -24,6 +25,7 @@ export function ServerPageRouter(
   BridgesRouter(app, manifest, render)
   DataAvailabilityRouter(app, manifest, render)
   ZkCatalogRouter(app, manifest, render)
+  EcosystemsRouter(app, manifest, render)
   GovernanceRouter(app, manifest, render)
   FaqRouter(app, manifest, render)
   AboutUsRouter(app, manifest, render)
