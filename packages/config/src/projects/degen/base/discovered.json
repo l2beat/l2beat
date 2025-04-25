@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 28317484,
-  "configHash": "0xf3981278ec47b7e0ab9c5bd536a1cbc643d2cda5942dbe3bce82da40609fdaeb",
+  "configHash": "0x7a9fc1e2d41cd9b697a164bc14d46f97378d2c55f0815748f315466dd1f5a9b4",
   "entries": [
     {
       "address": "0x001271c57AeC639952B5201D052767c316755512",

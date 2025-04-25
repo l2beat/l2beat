@@ -9,7 +9,6 @@ import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfig } from './features/finality'
 import { getTrackedTxsConfig } from './features/trackedTxs'
-import { getTvlConfig } from './features/tvl'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
 import { getVerifiersConfig } from './features/verifiers'
@@ -87,7 +86,7 @@ export async function makeConfig(
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
       cache: {
-        tvl: flags.isEnabled('cache', 'tvl'),
+        tvs: flags.isEnabled('cache', 'tvs'),
         liveness: flags.isEnabled('cache', 'liveness'),
         verifiers: flags.isEnabled('cache', 'verifiers'),
       },
@@ -103,9 +102,6 @@ export async function makeConfig(
           user: env.string('METRICS_AUTH_USER'),
           pass: env.string('METRICS_AUTH_PASS'),
         },
-    tvl:
-      flags.isEnabled('tvl') &&
-      (await getTvlConfig(ps, flags, env, chains, minTimestampOverride)),
     tvs:
       flags.isEnabled('tvs') &&
       (await getTvsConfig(

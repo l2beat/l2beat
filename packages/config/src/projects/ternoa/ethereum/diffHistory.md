@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xcbe40dcf1147be8a3aebdb7b1a434ae5d178905e
+Generated with discovered.json: 0xe0a5cb6193bc16f41087ed371f0b454baf40d9bf
+
+# Diff at Thu, 24 Apr 2025 10:31:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22208591
+- current block number: 22208591
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208591 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      values.members.0:
+-        ["https://dac.ternoa-mainnet.zeeve.online","0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"]
++        {"url":"https://dac.ternoa-mainnet.zeeve.online","addr":"0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"}
+    }
+```
+
+Generated with discovered.json: 0x4e0c1e28ca95053064654d4076b29d9d631f4b55
 
 # Diff at Thu, 10 Apr 2025 14:43:27 GMT:
 

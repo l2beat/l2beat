@@ -96,32 +96,34 @@ export const immutablezkevm: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description: `Immutable zkEVM bridge makes use of Axelar network (a Cosmos chain) to transfer assets between Ethereum and Immutable zkEVM. As in any standard Cosmos chain, validators are bonded by staking tokens and can be slashed by social consensus for misbehaviour. 
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description: `Immutable zkEVM bridge makes use of Axelar network (a Cosmos chain) to transfer assets between Ethereum and Immutable zkEVM. As in any standard Cosmos chain, validators are bonded by staking tokens and can be slashed by social consensus for misbehaviour. 
 
 A deposit starts by a user depositing tokens on the Bridge contract and then the tokens are minted on the destination chain.
 
 Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mechanism that controls outflows of the bridge escrow. The ProxyAdmin or an address with the rate_control role can define so-called buckets for each token: Each bucket has a capacity and a refill rate. All withdrawals that exceed the tokens bucket capacity trigger the withdrawal queue, which delays subsequent withdrawals of *any* of the bridges' assets for a time defined in withdrawalDelay (currently ${formatSeconds(
-        withdrawalDelay,
-      )}).`,
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators on Axelar decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: "validators relay a withdraw request that wasn't originated on the source chain.",
-        },
-      ],
-    },
+          withdrawalDelay,
+        )}).`,
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators on Axelar decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: "validators relay a withdraw request that wasn't originated on the source chain.",
+          },
+        ],
+      },
+    ],
   },
   permissions: {
     [discovery.chain]: {

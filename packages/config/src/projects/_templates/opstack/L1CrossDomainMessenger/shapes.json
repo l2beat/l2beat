@@ -112,5 +112,11 @@
     "address": "0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1CrossDomainMessenger_v2_4_0_zircuit": {
+    "hash": "0x931681cb03b7ea6b4521cf57be98c5303f045f088c4cb9e282b889be911da623",
+    "address": "0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F",
+    "chain": "ethereum",
+    "blockNumber": 22336762
   }
 }

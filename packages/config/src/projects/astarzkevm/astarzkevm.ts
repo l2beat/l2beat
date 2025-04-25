@@ -2,7 +2,6 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  NEW_CRYPTOGRAPHY,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
@@ -114,11 +113,6 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       },
     }),
   ],
-  nonTemplateTechnology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-    },
-  },
   stateDerivation: {
     nodeSoftware:
       'Node software can be found [here](https://github.com/0xPolygon/cdk-validium-node).',

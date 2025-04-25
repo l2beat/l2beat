@@ -2,7 +2,7 @@
   "name": "winr",
   "chain": "arbitrum",
   "blockNumber": 315644762,
-  "configHash": "0x722fc80de27821ffa76fdfd4a5730b655da2a7beaa192d9fa0a77f679d51a107",
+  "configHash": "0x43906f0316f01e6450a63d2e7ee8f4a73b31d1477fda40d3b8b1e1c3ae9ccbc6",
   "entries": [
     {
       "name": "ChallengeManager",

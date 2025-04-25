@@ -9,7 +9,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   SOA,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -116,16 +116,20 @@ export const fuelv1: ScalingProject = {
       },
     },
   ),
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.FRAUD_PROOFS,
+        references: [
+          {
+            title: 'Background - Fuel documentation',
+            url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.FRAUD_PROOFS,
-      references: [
-        {
-          title: 'Background - Fuel documentation',
-          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [

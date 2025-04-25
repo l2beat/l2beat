@@ -57,7 +57,7 @@ export default async function Page(props: Props) {
       'scalingRisks',
       'scalingStage',
       'scalingTechnology',
-      'tvlInfo',
+      'tvsInfo',
     ],
     optional: [
       'contracts',

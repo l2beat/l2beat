@@ -24,7 +24,6 @@
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
-    "@l2beat/backend-shared": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/discovery": "workspace:*",

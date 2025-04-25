@@ -3,11 +3,10 @@ import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { BADGES } from '../../common/badges'
 import { EXITS } from '../../common/exits'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
-import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
 import { OPERATOR } from '../../common/operator'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
-import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
+import { STATE_VALIDATION } from '../../common/stateValidation'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -178,30 +177,21 @@ export const termstructure: ScalingProject = {
       },
     },
   ),
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title:
+              'RollupFacet.sol - Etherscan source code, verifyOneBlock function',
+            url: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title:
-            'RollupFacet.sol - Etherscan source code, verifyOneBlock function',
-          url: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          title: 'Verifier.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE',
-        },
-        {
-          title: 'EvacuVerifier.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467#code',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [

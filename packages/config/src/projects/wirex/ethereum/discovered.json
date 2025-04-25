@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 22187530,
-  "configHash": "0xc8edb4d48e51233d23613f38685512a2e695bfd0453b1797fdddb43c1b56b85c",
+  "configHash": "0x9a048493bb8318f1155b62a35c3c3a3feb4c677ccddc78513ff66620aab9f3a5",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -101,14 +101,14 @@
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://dac.wirexpaychain.zeeve.online",
-            "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
-          ],
-          [
-            "https://dac2.wirexpaychain.zeeve.online",
-            "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
-          ]
+          {
+            "url": "https://dac.wirexpaychain.zeeve.online",
+            "addr": "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
+          },
+          {
+            "url": "https://dac2.wirexpaychain.zeeve.online",
+            "addr": "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
+          }
         ],
         "owner": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
         "requiredAmountOfSignatures": 1

@@ -1,4 +1,3 @@
-import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type {
   BalanceOfEscrowAmountFormula,
   TotalSupplyAmountFormula,
@@ -6,13 +5,14 @@ import type {
 import type { BalanceProvider, TotalSupplyProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula

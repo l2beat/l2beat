@@ -52,7 +52,7 @@ export function ScalingProjectTvsBreakdownPage({
               value: project7dData.breakdown.native,
               change: project7dData.change.native,
             }}
-            warning={project.tvlInfo?.warnings[0]}
+            warning={project.tvsInfo?.warnings[0]}
           />
         </PrimaryCard>
 

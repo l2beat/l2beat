@@ -5,7 +5,7 @@ import { Markdown } from '~/components/markdown/markdown'
 import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import { UnderReviewCallout } from '../under-review-callout'
-import { TechnologyIncompleteNote } from './contracts/technology-incomplete-note'
+import { SectionIncompleteNote } from './contracts/section-incomplete-note'
 import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'
 import type { TechnologyRisk } from './risk-list'
@@ -41,7 +41,7 @@ export function TechnologySection({
           <h3 id={item.id} className="text-lg font-bold md:text-xl">
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
-          {item.isIncomplete && <TechnologyIncompleteNote />}
+          {item.isIncomplete && <SectionIncompleteNote />}
           {item.isUnderReview ? (
             <UnderReviewCallout />
           ) : (

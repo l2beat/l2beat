@@ -167,7 +167,7 @@
   "xterio.png": "979bc5c2572521ed4dc4e6b10c78f3f0",
   "sxt.png": "a5cba4fca88b3efea8f24bf4b1458f60",
   "sanko.png": "fc2166dff268960d3c174a1bb0b09a32",
-  "myshell.png": "418c5049a379fc9c0738e748505ab40f",
+  "myshell.png": "b6ba7c4afa0e1258a1ab6a7c530f2945",
   "teva.png": "e78be9a92cbbafe18b97a764b1ce7ee4",
   "stargatev2.png": "6ca2fd735fc03d20d2bb658091c80505",
   "form.png": "27635d27d7efef2d8e6e6f3ab8d6015b",
@@ -206,7 +206,7 @@
   "edu-chain.png": "53a68251cf04d7c46c2ba25ec208ff6d",
   "fiefdom.png": "d849fd6945e21a3bacf0752dc9adc54f",
   "superposition.png": "57330043d78e0c44dd2bc02c860bfb28",
-  "syndr.png": "6755eaa647d5c39018b828df68c384a8",
+  "syndr.png": "5beb50ee2b7eedaea5c234eafbc2b5d2",
   "gpt.png": "4f1f5fc3a4360ff0a56606f5c76efa23",
   "wirex.png": "d4a5dfca3b3d2d88ee7999a8450b28f0",
   "witness.png": "c3c00460efca01baa599701bbfa93140",
@@ -375,7 +375,9 @@
   "studiochain.png": "d3b2b9d5d955d2a59e4e2db8814a40c5",
   "sovrun.png": "91e7469bf9f46f7f82bf8c5abf9e5693",
   "mawari.png": "84762e4876763e4645264671c35e568b",
+  "powerloom.png": "f12ca733883584c7c0e44784fa71d343",
   "lasernet.png": "b2ce8b128ce3becc954fed26eadf1d0b",
   "gridy.png": "5fd11e17150a65728d07f738a7576b2c",
-  "karnot.png": "87c4bee833f03f59bd3dcb92244e0938"
+  "karnot.png": "87c4bee833f03f59bd3dcb92244e0938",
+  "spire.png": "17ddc76d95f48dbc8cea31385ed82152"
 }

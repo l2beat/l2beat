@@ -11,7 +11,7 @@ import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 
 export interface ScalingProjectTvsBreakdownData {
   project: Project<
-    'tvsConfig' | 'tvlInfo',
+    'tvsConfig' | 'tvsInfo',
     'chainConfig' | 'milestones' | 'contracts'
   >
   icon: string
@@ -26,7 +26,7 @@ export async function getScalingProjectTvsBreakdownData(
 ): Promise<ScalingProjectTvsBreakdownData | undefined> {
   const project = await ps.getProject({
     slug,
-    select: ['tvsConfig', 'tvlInfo'],
+    select: ['tvsConfig', 'tvsInfo'],
     optional: ['chainConfig', 'milestones', 'contracts'],
     where: ['isScaling'],
   })

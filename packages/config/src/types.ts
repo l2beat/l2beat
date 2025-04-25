@@ -4,8 +4,6 @@ import {
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
-  type Token,
-  type TokenBridgedUsing,
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
@@ -76,6 +74,7 @@ export interface BaseProject {
   colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
+  escrows?: ProjectEscrow[]
 
   // bridge data
   bridgeInfo?: ProjectBridgeInfo
@@ -98,8 +97,7 @@ export interface BaseProject {
   proofVerification?: ProjectProofVerification
 
   // feature configs
-  tvlInfo?: ProjectTvlInfo
-  tvlConfig?: ProjectTvlConfig
+  tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
   activityConfig?: ProjectActivityConfig
   livenessInfo?: ProjectLivenessInfo
@@ -265,6 +263,7 @@ export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
+  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
 }
 
 export interface ChainExplorerApi<T extends string> {
@@ -486,8 +485,6 @@ export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
   architectureImage?: string
-  stateCorrectness?: ProjectTechnologyChoice
-  newCryptography?: ProjectTechnologyChoice
   dataAvailability?: ProjectTechnologyChoice
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice
@@ -513,7 +510,7 @@ export interface ProjectScalingStateDerivation {
 }
 
 export interface ProjectScalingStateValidation {
-  description: string
+  description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
@@ -525,14 +522,19 @@ export interface ProjectScalingStateValidationCategory {
     | 'Prover Architecture'
     | 'Verification Keys Generation'
     | 'Proven Program'
+    | 'Validity proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
     | 'Pessimistic Proofs'
+    | 'Fraud proofs'
+    // Other
+    | 'No state validation'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
+  isIncomplete?: boolean
 }
 // #endregion
 
@@ -720,29 +722,9 @@ export interface RequiredTool {
 // #endregion
 
 // #region feature configs
-export interface ProjectTvlInfo {
+export interface ProjectTvsInfo {
   associatedTokens: string[]
   warnings: WarningWithSentiment[]
-}
-
-/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlConfig {
-  escrows: ProjectTvlEscrow[]
-  tokens: Token[]
-  associatedTokens: string[]
-}
-
-/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlEscrow {
-  address: EthereumAddress
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-  tokens: (Token & { isPreminted: boolean })[]
-  chain: string
-  includeInTotal?: boolean
-  source?: ProjectEscrowSource
-  bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: SharedEscrow
 }
 
 export type ProjectEscrowSource = 'canonical' | 'external' | 'native'

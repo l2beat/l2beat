@@ -2,7 +2,7 @@
   "name": "transporter",
   "chain": "ethereum",
   "blockNumber": 21387870,
-  "configHash": "0x5242a82823a9f108886f4c61da4bd425c88cbe0529986060db1d5b04d4efd6c2",
+  "configHash": "0x8344167821a47a11a072f2cdd73861b1326cbcbe1b9b127dd9238fcbed4b6ebc",
   "entries": [
     {
       "address": "0x00E64619Bb29f7E1d4E1CC9f21ecEA05189fd8ab",
@@ -55,7 +55,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -109,7 +109,7 @@
       "sinceBlock": 20768590,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d"],
+        "commitStore": "0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -177,7 +177,7 @@
       "sinceBlock": 18679422,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76"],
+        "commitStore": "0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -292,7 +292,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -364,7 +364,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -717,7 +717,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -812,13 +812,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "6069284993557205397",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "polygon"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "polygon"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -901,7 +904,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -940,7 +943,7 @@
       "sinceBlock": 20078659,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53"],
+        "commitStore": "0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -1043,13 +1046,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "7612558325653340534",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "3849287863852499584"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "3849287863852499584"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -1119,7 +1125,7 @@
       "sinceBlock": 20741134,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114"],
+        "commitStore": "0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -1226,7 +1232,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -1414,7 +1420,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -1458,7 +1464,7 @@
       "sinceBlock": 20835515,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x0f89C7c0586536B618e0469402e1c8234bc52959"],
+        "commitStore": "0x0f89C7c0586536B618e0469402e1c8234bc52959",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -1526,7 +1532,7 @@
       "sinceBlock": 20864802,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210"],
+        "commitStore": "0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -1630,13 +1636,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8667689676942179987",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "4348158687435793198"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "4348158687435793198"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -1712,13 +1721,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "6025757153756508639",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "optimism"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "optimism"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -1786,13 +1798,16 @@
         "getNopFeesJuels": 7,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "3442214000781872274",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "polygon"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "polygon"
+        },
         "tokenAddresses": [
           "0xd2a530170D71a9Cfe1651Fb468E2B98F7Ed7456b",
           "0x888888435FDe8e7d4c54cAb67f206e4199454c60",
@@ -1895,13 +1910,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "5119465909359307679",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "13204309965629103672"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "13204309965629103672"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -1951,7 +1969,7 @@
       "sinceBlock": 18722112,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB"],
+        "commitStore": "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -2054,13 +2072,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8402227807934267995",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "3993510008929295315"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "3993510008929295315"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -2100,7 +2121,7 @@
       "sinceBlock": 21375925,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9"],
+        "commitStore": "0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -2173,7 +2194,7 @@
       "sinceBlock": 20768520,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72"],
+        "commitStore": "0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -2275,7 +2296,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -2343,7 +2364,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -2405,13 +2426,16 @@
         "getNopFeesJuels": 12,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "5533284220220343876",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "avalanche"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "avalanche"
+        },
         "tokenAddresses": [
           "0xd2a530170D71a9Cfe1651Fb468E2B98F7Ed7456b",
           "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -2486,7 +2510,7 @@
       "sinceBlock": 20736973,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x9f592c28590595F3F78a8881E8Dbb9984ed705cD"],
+        "commitStore": "0x9f592c28590595F3F78a8881E8Dbb9984ed705cD",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -2646,13 +2670,16 @@
         "getNopFeesJuels": 5,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "3062195338419324034",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "blast"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "blast"
+        },
         "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
@@ -2716,13 +2743,16 @@
         "getNopFeesJuels": 3,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8652370149156686284",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "mode"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "mode"
+        },
         "tokenAddresses": [
           "0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
@@ -2810,7 +2840,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -2885,13 +2915,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "9001515110652431367",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "17198166215261833993"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "17198166215261833993"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -2931,7 +2964,7 @@
       "sinceBlock": 20916633,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xA48269e5c9A234daBfEBE98b82390Be705536d1c"],
+        "commitStore": "0xA48269e5c9A234daBfEBE98b82390Be705536d1c",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -3040,13 +3073,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "-537137076689519053",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "7937294810946806131"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "7937294810946806131"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -3114,7 +3150,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -3158,7 +3194,7 @@
       "sinceBlock": 20882017,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x83F3DA5aa2C7534d694B0acde7624573c830250D"],
+        "commitStore": "0x83F3DA5aa2C7534d694B0acde7624573c830250D",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -3226,7 +3262,7 @@
       "sinceBlock": 18679364,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE"],
+        "commitStore": "0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -3336,7 +3372,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -3403,7 +3439,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -3447,7 +3483,7 @@
       "sinceBlock": 20979594,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802"],
+        "commitStore": "0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -3525,7 +3561,7 @@
       "sinceBlock": 21217782,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159"],
+        "commitStore": "0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -3629,13 +3665,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "5328206254976685675",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "4627098889531055414"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "4627098889531055414"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -3692,7 +3731,7 @@
       "sinceBlock": 20876075,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb"],
+        "commitStore": "0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -3796,13 +3835,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8660900075589950796",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x4545F9a17DA50110632C14704a15d893BF9CBD27",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "blast"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x4545F9a17DA50110632C14704a15d893BF9CBD27",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "blast"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -3847,7 +3889,7 @@
       "sinceBlock": 20839987,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x0d26BaE784c8986502E072F4e73B6168e2052045"],
+        "commitStore": "0x0d26BaE784c8986502E072F4e73B6168e2052045",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -3966,13 +4008,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "9155537919962347042",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x925228D7B82d883Dde340A55Fe8e6dA56244A22C",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "arbitrum"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x925228D7B82d883Dde340A55Fe8e6dA56244A22C",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "arbitrum"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -4017,7 +4062,7 @@
       "sinceBlock": 20886516,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe"],
+        "commitStore": "0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -4123,7 +4168,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -4203,13 +4248,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8972427796133023851",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "1556008542357238666"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "1556008542357238666"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -4254,7 +4302,7 @@
       "sinceBlock": 20867607,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A"],
+        "commitStore": "0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -4327,7 +4375,7 @@
       "sinceBlock": 20885990,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3"],
+        "commitStore": "0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -4431,13 +4479,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8627867648284147876",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "celo"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "celo"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -4523,13 +4574,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8478823942722882922",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "metis"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "metis"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -4598,7 +4652,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -4642,7 +4696,7 @@
       "sinceBlock": 20833956,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x95deB0c4bB9168202d50E874865f9A1842b82D64"],
+        "commitStore": "0x95deB0c4bB9168202d50E874865f9A1842b82D64",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -4710,7 +4764,7 @@
       "sinceBlock": 18693525,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75"],
+        "commitStore": "0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -5062,7 +5116,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -5129,7 +5183,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -5191,13 +5245,16 @@
         "getNopFeesJuels": 8,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "5574763350941150069",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "optimism"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "optimism"
+        },
         "tokenAddresses": [
           "0xb2F30A7C980f052f02563fb518dcc39e6bf38175",
           "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -5296,7 +5353,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -5369,7 +5426,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -5408,7 +5465,7 @@
       "sinceBlock": 21266945,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xdCF6F209d36d93A26B251D2CFE994bEF02954110"],
+        "commitStore": "0xdCF6F209d36d93A26B251D2CFE994bEF02954110",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -5570,7 +5627,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -5637,13 +5694,16 @@
         "getNopFeesJuels": 10,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "7787117620321869576",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "bnb"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "bnb"
+        },
         "tokenAddresses": [
           "0xE46a5E19B19711332e33F33c2DB3eA143e86Bc10",
           "0x5F2F8818002dc64753daeDF4A6CB2CcB757CD220",
@@ -5739,13 +5799,16 @@
         "getNopFeesJuels": 12,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "7790755646165257025",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "arbitrum"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "arbitrum"
+        },
         "tokenAddresses": [
           "0x72e364F2ABdC788b7E918bc238B21f109Cd634D7",
           "0xCA160D11087E03fd398d40f561cd4768825f4958",
@@ -5926,13 +5989,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "3152963225854414347",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "bnb"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "bnb"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -6000,7 +6066,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6039,7 +6105,7 @@
       "sinceBlock": 21113427,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xE41677500B425999cB4133950ca3aB79eA7470a6"],
+        "commitStore": "0xE41677500B425999cB4133950ca3aB79eA7470a6",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -6143,13 +6209,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8530505109565302546",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0xD54C93A99CBCb8D865E13DA321B540171795A89f",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "1562403441176082196"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0xD54C93A99CBCb8D865E13DA321B540171795A89f",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "1562403441176082196"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -6218,7 +6287,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -6285,7 +6354,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6357,7 +6426,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6444,7 +6513,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6531,7 +6600,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6598,7 +6667,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6666,7 +6735,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -6733,7 +6802,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -6795,13 +6864,16 @@
         "getNopFeesJuels": 8,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "6721686683798657176",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "metis"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "metis"
+        },
         "tokenAddresses": [
           "0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "0x911D86C72155c33993d594B0Ec7E6206B4C803da",
@@ -6973,7 +7045,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -7223,13 +7295,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "7313876024673996332",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "avalanche"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "avalanche"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -7269,7 +7344,7 @@
       "sinceBlock": 18679345,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x4af4B497c998007eF83ad130318eB2b925a79dc8"],
+        "commitStore": "0x4af4B497c998007eF83ad130318eB2b925a79dc8",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -7358,7 +7433,7 @@
       "sinceBlock": 20333885,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194"],
+        "commitStore": "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -7425,7 +7500,7 @@
       "sinceBlock": 20839936,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x01346721418045A6c07b71052e452eF8615e9084"],
+        "commitStore": "0x01346721418045A6c07b71052e452eF8615e9084",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -7529,13 +7604,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "5907514206169247750",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "base"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "base"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -7611,13 +7689,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "4528799954045174320",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "3016212468291539606"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "3016212468291539606"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -7672,7 +7753,7 @@
       "sinceBlock": 20834533,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xA4755Cd68CA2092447c8c842659a2931f9110320"],
+        "commitStore": "0xA4755Cd68CA2092447c8c842659a2931f9110320",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -7783,13 +7864,16 @@
         "getNopFeesJuels": 5,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "9387240620851702847",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "wemix"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "wemix"
+        },
         "tokenAddresses": [
           "0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "0x66cC3FD40612F9c591F977ce026Ef1C79520C472",
@@ -7843,7 +7927,7 @@
       "sinceBlock": 20134985,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x3d8a95adA63D406ee8232562AbD83CEdb0B90466"],
+        "commitStore": "0x3d8a95adA63D406ee8232562AbD83CEdb0B90466",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -7948,7 +8032,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -8026,7 +8110,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.2.0"
       },
       "derivedName": "CommitStore",
@@ -8075,7 +8159,7 @@
       "sinceBlock": 19884781,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x831097033C88c82a7F1897b168Aa88cC44540C8f"],
+        "commitStore": "0x831097033C88c82a7F1897b168Aa88cC44540C8f",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -8165,13 +8249,16 @@
         "getNopFeesJuels": 7,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "7849691023360194947",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "1562403441176082196"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "1562403441176082196"
+        },
         "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
@@ -8298,13 +8385,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8673070954851735184",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "6422105447186081193"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "6422105447186081193"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -8372,7 +8462,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -8411,7 +8501,7 @@
       "sinceBlock": 20886382,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8"],
+        "commitStore": "0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -8507,7 +8597,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -8574,7 +8664,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -8649,13 +8739,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "6851250836236890743",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "2049429975587534727"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "2049429975587534727"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -8731,13 +8824,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8979579730937917132",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "6916147374840168594"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "6916147374840168594"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -8886,7 +8982,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -8961,13 +9057,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "6895317321399404724",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "5406759801798337480"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "5406759801798337480"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -9007,7 +9106,7 @@
       "sinceBlock": 21230508,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99"],
+        "commitStore": "0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -9116,13 +9215,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8511794098972569593",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "wemix"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "wemix"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -9167,7 +9269,7 @@
       "sinceBlock": 20886600,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3"],
+        "commitStore": "0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -9235,7 +9337,7 @@
       "sinceBlock": 18679490,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x8DC27D621c41a32140e22E2a4dAf1259639BAe04"],
+        "commitStore": "0x8DC27D621c41a32140e22E2a4dAf1259639BAe04",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -9330,13 +9432,16 @@
         "getNopFeesJuels": 10,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "6048353126226522899",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "base"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "base"
+        },
         "tokenAddresses": [
           "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "0xCA160D11087E03fd398d40f561cd4768825f4958",
@@ -9473,7 +9578,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -9687,7 +9792,7 @@
       "sinceBlock": 19991853,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e"],
+        "commitStore": "0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -9754,7 +9859,7 @@
       "sinceBlock": 19470078,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x118a9389960F86390A4F14ce4C95D6ff076C6bFC"],
+        "commitStore": "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -9857,13 +9962,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8975874544082727209",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "mode"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "mode"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -9941,13 +10049,16 @@
         "getNopFeesJuels": 6,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8473851210096107215",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "celo"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "celo"
+        },
         "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
@@ -9988,7 +10099,7 @@
       "sinceBlock": 18679497,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749"],
+        "commitStore": "0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 28800,
           "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -10055,7 +10166,7 @@
       "sinceBlock": 21217743,
       "values": {
         "$immutable": true,
-        "commitStore": ["0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9"],
+        "commitStore": "0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -10123,7 +10234,7 @@
       "sinceBlock": 20834218,
       "values": {
         "$immutable": true,
-        "commitStore": ["0x52275dC17f9eD92230C8C4d57fD36d128701f694"],
+        "commitStore": "0x52275dC17f9eD92230C8C4d57fD36d128701f694",
         "getAllRateLimitTokens": { "sourceTokens": [], "destTokens": [] },
         "getDynamicConfig": {
           "permissionLessExecutionThresholdSeconds": 3600,
@@ -10227,13 +10338,16 @@
         },
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8541954876373105184",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0xF538dA6c673A30338269655f4e019B71ba58CFd4",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "gnosis"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0xF538dA6c673A30338269655f4e019B71ba58CFd4",
+          "rmnProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "gnosis"
+        },
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
@@ -10296,13 +10410,16 @@
         "getNopFeesJuels": 8,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "7239507343604429084",
-        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "linkToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "staticConfigAddresses": [
-          "0x0000000000000000000000000000000000000000",
-          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
-        ],
-        "staticConfigChains": ["ethereum", "gnosis"],
+        "staticConfigAddresses": {
+          "prevOnRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "staticConfigChains": {
+          "chainSelector": "ethereum",
+          "destChainSelector": "gnosis"
+        },
         "tokenAddresses": ["0x0AA1e96D2a46Ec6beB2923dE1E61Addf5F5f1dce"],
         "tokenPools": ["0xa17698199466E71bAFC31F226db341B7840701E7"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
@@ -10376,7 +10493,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -10443,7 +10560,7 @@
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "paused": false,
-        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
         "typeAndVersion": "CommitStore 1.5.0"
       },
       "derivedName": "CommitStore",
@@ -19210,12 +19327,12 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "transporter/CommitStoreV1": "0x18731396811da2fca54c85ef37f8aac976daf36a800429c988b86cf999f7c689",
+    "transporter/CommitStoreV1": "0x1ece386a05791f14e597cf46a5683c96874556a32171cecee941f10b3e55aa5f",
     "transporter/ManyChainMultiSig": "0x21581960386f06fc34963035830a3ca548780df8068db571d08450196a3a0d15",
-    "transporter/OffRampV1": "0xc861904c85dd0e3a079ba1ef57850f46a91f575e9d1b048cbe2fdf06342fe043",
-    "transporter/OfframpV2": "0x6c3b99af075f702770e642a3faf59f00154b32e5c443fac1e3600e1b9087dbe6",
-    "transporter/OnRampV1": "0x1d749e2ec182a83a70586d0fd3906c6e0261335013dd45b36b6f79bcf45cd1f8",
-    "transporter/OnRampV3": "0x402e94bcbce7eaecbd7ede47cd64925938661cb02c4fe0048942112a62b87012",
+    "transporter/OffRampV1": "0x728a2acf1dc05efa76c7d11920525e16aadf1ac9448875c17eeeaf351416e090",
+    "transporter/OfframpV2": "0x728a2acf1dc05efa76c7d11920525e16aadf1ac9448875c17eeeaf351416e090",
+    "transporter/OnRampV1": "0xcc8428194e26169a3cd1cd63731820f4c409a83c37c7ff6e1dc60a2ca546a291",
+    "transporter/OnRampV3": "0x49fc7dbebec4a000c681301b944f8abe47c22e5699d44b6b030f986133da4d15",
     "transporter/PriceRegistry": "0x1446d2e81e0804c808246c6c31122a8823aa7c974e2487647d7502d530d9b46f",
     "transporter/RouterV1_0_0": "0xf8d34f96cc84ee703e4b5e8abae8b3836dd27a2f239144af40b3dcf1ff6fb8af",
     "transporter/RouterV1_2_0": "0x3015fdf1e7a78e71377f5cdd6e0b0cd46de5678925d8342e711c92db79e48ead"

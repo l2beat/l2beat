@@ -119,7 +119,7 @@ export interface ArrayFieldValue {
 
 export interface ObjectFieldValue {
   type: 'object'
-  value: Record<string, FieldValue>
+  values: [FieldValue, FieldValue][]
 }
 
 export interface UnknownFieldValue {
@@ -134,6 +134,7 @@ export interface ErrorFieldValue {
 
 export interface ApiProjectContract extends ApiAddressEntry {
   template?: string
+  proxyType?: string
   fields: Field[]
   abis: ApiAbi[]
   sources: { name: string; code: string }[]

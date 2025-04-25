@@ -37,7 +37,7 @@ export class Providers {
     readonly logger: Logger,
   ) {
     this.clients = initClients(config, logger)
-    this.block = new BlockProviders(this.clients.block, this.clients.indexer)
+    this.block = new BlockProviders(this.clients.block)
     this.circulatingSupply = new CirculatingSupplyProvider(
       new CoingeckoQueryService(
         this.clients.coingecko,

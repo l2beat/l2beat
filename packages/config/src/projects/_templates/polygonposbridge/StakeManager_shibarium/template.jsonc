@@ -28,7 +28,8 @@
     "totalStaked",
     "validatorState",
     "totalHeimdallFee",
-    "NFTCounter"
+    "NFTCounter",
+    "delegatorsReward"
   ],
   "fields": {
     "owner": {

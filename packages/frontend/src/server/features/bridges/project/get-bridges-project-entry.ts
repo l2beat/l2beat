@@ -64,7 +64,7 @@ export interface BridgesProjectEntry {
 export async function getBridgesProjectEntry(
   project: Project<
     | 'statuses'
-    | 'tvlInfo'
+    | 'tvsInfo'
     | 'tvsConfig'
     | 'bridgeInfo'
     | 'bridgeRisks'
@@ -114,10 +114,10 @@ export async function getBridgesProjectEntry(
                       tvsProjectStats.associated.total /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
-                    associatedTokens: project.tvlInfo.associatedTokens,
+                    associatedTokens: project.tvsInfo.associatedTokens,
                   }),
               ]),
-              associatedTokens: project.tvlInfo.associatedTokens,
+              associatedTokens: project.tvsInfo.associatedTokens,
             },
             tvsBreakdown: {
               ...tvsProjectStats.breakdown,

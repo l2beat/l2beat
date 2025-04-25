@@ -1,4 +1,37 @@
-Generated with discovered.json: 0x72a36ad8a06ee3e054c978f3c39ac0f9171d8c46
+Generated with discovered.json: 0xdb469a019ccf8d75ae2e8d365966cfbf6e62db12
+
+# Diff at Thu, 24 Apr 2025 10:30:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21766766
+- current block number: 21766766
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      values.members.2:
+-        ["http://da2.silicon.network:8444","0x88eb99475d70cCdB891171344c7Ee90688Fa134c"]
++        {"url":"http://da2.silicon.network:8444","addr":"0x88eb99475d70cCdB891171344c7Ee90688Fa134c"}
+      values.members.1:
+-        ["http://silicon-mainnet-da-3.nodeinfra.com:8444","0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"]
++        {"url":"http://da1.silicon.network:8444","addr":"0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"}
+      values.members.0:
+-        ["http://da1.silicon.network:8444","0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"]
++        {"url":"http://silicon-mainnet-da-3.nodeinfra.com:8444","addr":"0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"}
+    }
+```
+
+Generated with discovered.json: 0x7fda88dffb4e775f0674b352ac22b1e389237ead
 
 # Diff at Thu, 10 Apr 2025 14:43:13 GMT:
 
