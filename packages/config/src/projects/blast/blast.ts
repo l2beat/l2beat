@@ -26,7 +26,7 @@ export const blast: ScalingProject = opStackL2({
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
-    tvlWarning: {
+    tvsWarning: {
       value: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },

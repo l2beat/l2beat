@@ -23,7 +23,7 @@ export const grvt: ScalingProject = zkStackL2({
   display: {
     name: 'GRVT',
     slug: 'grvt',
-    tvlWarning: {
+    tvsWarning: {
       value:
         'L2BEAT is currently unable to track the TVL of the GRVT Validium due to the lack of a public rpc / explorer.',
       sentiment: 'neutral',

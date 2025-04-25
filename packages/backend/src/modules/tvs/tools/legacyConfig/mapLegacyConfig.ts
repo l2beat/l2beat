@@ -6,22 +6,22 @@ import type {
   ChainConfig,
   ElasticChainEscrow,
   Project,
-  ProjectTvlEscrow,
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, TokenId } from '@l2beat/shared-pure'
-import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import type { ProjectTvsConfig } from '../types'
-import type { LocalStorage } from './LocalStorage'
-import { getTimeRangeIntersection } from './getTimeRangeIntersection'
-import { getAggLayerTokens } from './sharedEscrows/getAggLayerTokens'
-import { getElasticChainTokens } from './sharedEscrows/getElasticChainTokens'
+import type { ProjectTvsConfig } from '../../types'
+import type { LocalStorage } from '../LocalStorage'
+import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
+import { getAggLayerTokens } from '../sharedEscrows/getAggLayerTokens'
+import { getElasticChainTokens } from '../sharedEscrows/getElasticChainTokens'
+import type { LegacyEscrow, LegacyProjectConfig } from './types'
 
-export async function mapConfig(
-  project: Project<'tvlConfig', 'chainConfig'>,
+export async function mapLegacyConfig(
+  project: Project<'escrows', 'chainConfig'>,
+  legacyConfig: LegacyProjectConfig,
   chains: Map<string, ChainConfig>,
   logger: Logger,
   localStorage: LocalStorage,
@@ -29,11 +29,13 @@ export async function mapConfig(
 ): Promise<ProjectTvsConfig> {
   const tokens: TvsToken[] = []
 
-  for (const legacyToken of project.tvlConfig.tokens) {
-    tokens.push(createToken(project, legacyToken))
+  for (const legacyToken of legacyConfig.tokens) {
+    tokens.push(
+      createToken(project, legacyConfig.associatedTokens, legacyToken),
+    )
   }
 
-  const sharedEscrows = project.tvlConfig.escrows.filter((e) => e.sharedEscrow)
+  const sharedEscrows = legacyConfig.escrows.filter((e) => e.sharedEscrow)
 
   for (const escrow of sharedEscrows) {
     assert(escrow.sharedEscrow)
@@ -49,7 +51,8 @@ export async function mapConfig(
     if (escrow.sharedEscrow.type === 'AggLayer') {
       const aggLayerL2Tokens = await getAggLayerTokens(
         project,
-        escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+        legacyConfig.associatedTokens,
+        escrow as LegacyEscrow & { sharedEscrow: AggLayerEscrow },
         chainOfL1Escrow,
         rpcClient,
         localStorage,
@@ -61,7 +64,8 @@ export async function mapConfig(
     if (escrow.sharedEscrow.type === 'ElasticChain') {
       const elasticChainTokens = await getElasticChainTokens(
         project,
-        escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+        legacyConfig.associatedTokens,
+        escrow as LegacyEscrow & { sharedEscrow: ElasticChainEscrow },
         chainOfL1Escrow,
         rpcClient,
         localStorage,
@@ -71,9 +75,7 @@ export async function mapConfig(
     }
   }
 
-  const nonSharedEscrows = project.tvlConfig.escrows.filter(
-    (e) => !e.sharedEscrow,
-  )
+  const nonSharedEscrows = legacyConfig.escrows.filter((e) => !e.sharedEscrow)
   const bySource = groupBy(
     nonSharedEscrows.map((e) => ({
       ...e,
@@ -93,7 +95,12 @@ export async function mapConfig(
       const tokensByCoingeckoId = groupBy(symbolTokens, 'coingeckoId')
 
       for (const sameIdTokens of Object.values(tokensByCoingeckoId)) {
-        const token = mergeTokensWithSameId(project, chains, sameIdTokens)
+        const token = mergeTokensWithSameId(
+          project,
+          legacyConfig.associatedTokens,
+          chains,
+          sameIdTokens,
+        )
         tokens.push(token)
       }
     }
@@ -106,8 +113,9 @@ export async function mapConfig(
 }
 
 export function createEscrowToken(
-  project: Project<'tvlConfig'>,
-  escrow: ProjectTvlEscrow,
+  project: Project<'escrows', 'chainConfig'>,
+  associatedTokens: string[],
+  escrow: LegacyEscrow,
   chainOfEscrow: ChainConfig,
   legacyToken: LegacyToken & { isPreminted?: boolean },
 ): TvsToken {
@@ -194,14 +202,13 @@ export function createEscrowToken(
     ...(valueForSummary ? { valueForSummary } : {}),
     category: legacyToken.category,
     source: escrow.source ?? 'canonical',
-    isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-      legacyToken.symbol,
-    ),
+    isAssociated: associatedTokens.includes(legacyToken.symbol),
   }
 }
 
 export function createToken(
-  project: Project<'tvlConfig', 'chainConfig'>,
+  project: Project<'escrows', 'chainConfig'>,
+  associatedTokens: string[],
   legacyToken: LegacyToken,
 ): TvsToken {
   assert(
@@ -280,9 +287,7 @@ export function createToken(
     amount: amountFormula,
     category: legacyToken.category,
     source: legacyToken.source,
-    isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-      legacyToken.symbol,
-    ),
+    isAssociated: associatedTokens.includes(legacyToken.symbol),
   }
 }
 
@@ -312,14 +317,21 @@ function deduplicateTokens(tokens: TvsToken[]) {
 }
 
 function mergeTokensWithSameId(
-  project: Project<'tvlConfig', 'chainConfig'>,
+  project: Project<'escrows', 'chainConfig'>,
+  associatedTokens: string[],
   chains: Map<string, ChainConfig>,
-  sameIdTokens: (LegacyToken & { escrow: ProjectTvlEscrow })[],
+  sameIdTokens: (LegacyToken & { escrow: LegacyEscrow })[],
 ): TvsToken {
   if (sameIdTokens.length === 1) {
     const tokenData = sameIdTokens[0]
     const chain = getChain(tokenData.chainName, chains)
-    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+    const token = createEscrowToken(
+      project,
+      associatedTokens,
+      tokenData.escrow,
+      chain,
+      tokenData,
+    )
 
     return token
   }
@@ -329,7 +341,13 @@ function mergeTokensWithSameId(
 
   for (const tokenData of sameIdTokens) {
     const chain = getChain(tokenData.chainName, chains)
-    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+    const token = createEscrowToken(
+      project,
+      associatedTokens,
+      tokenData.escrow,
+      chain,
+      tokenData,
+    )
     amounts.push(token.amount)
 
     if (token.valueForSummary) {
@@ -348,6 +366,7 @@ function mergeTokensWithSameId(
   const chain = getChain(firstTokenData.chainName, chains)
   const baseToken = createEscrowToken(
     project,
+    associatedTokens,
     firstTokenData.escrow,
     chain,
     firstTokenData,

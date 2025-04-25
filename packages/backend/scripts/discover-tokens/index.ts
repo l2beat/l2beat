@@ -7,6 +7,7 @@ import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
 import { chunk, groupBy } from 'lodash'
+import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import {
   OUTPUT_PATH,
   PROCESSED_ESCROWS_PATH,
@@ -22,15 +23,16 @@ const MIN_MISSING_VALUE = 10_000
 async function main() {
   const ps = new ProjectService()
   const projects = await ps.getProjects({
-    select: ['tvlConfig'],
+    select: ['escrows', 'tvsInfo', 'chainConfig'],
   })
   const tokenList = await ps.getTokens()
 
   const escrowsByChain = groupBy(
     projects
-      .flatMap((p) =>
-        p.tvlConfig.escrows.flatMap((e) => ({ ...e, projectId: p.id })),
-      )
+      .flatMap((p) => {
+        const legacyConfig = getLegacyConfig(p, tokenList)
+        return legacyConfig.escrows.flatMap((e) => ({ ...e, projectId: p.id }))
+      })
       .filter((e) => e.chain !== 'mantle' && e.chain !== 'nova'),
     'chain',
   )

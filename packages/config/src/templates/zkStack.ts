@@ -286,7 +286,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           },
         },
       },
-      tvlWarning: templateVars.display.tvlWarning,
+      tvsWarning: templateVars.display.tvsWarning,
       ...templateVars.display,
     },
     config: {

@@ -10,17 +10,25 @@ visible benefits.
 You can check the detailed steps on how to add new tokens in the tvl.md file in the repository.
 */
 
-import { assert, AssetId, type Token, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  type LegacyToken,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import type { ChainConfig } from '../types'
 import generated from './generated.json'
 import { GeneratedToken } from './types'
 
-export function getTokenList(chains: ChainConfig[]): Token[] {
+export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
   return generated.tokens.map((t) => toToken(GeneratedToken.parse(t), chains))
 }
 
-function toToken(generated: GeneratedToken, chains: ChainConfig[]): Token {
+function toToken(
+  generated: GeneratedToken,
+  chains: ChainConfig[],
+): LegacyToken {
   const chain = chains.find((c) => c.chainId === +generated.chainId)
   assert(chain, `Chain nor found for ${generated.symbol}`)
   assert(

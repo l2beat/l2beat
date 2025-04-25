@@ -133,7 +133,7 @@ export interface ProjectScalingDisplay {
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */
-  tvlWarning?: WarningWithSentiment
+  tvsWarning?: WarningWithSentiment
   /** A warning displayed above the description of the project */
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
