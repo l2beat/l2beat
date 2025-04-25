@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -114,10 +114,10 @@ export const grvt: ScalingProject = zkStackL2({
       query: {
         formula: 'sharedBridge',
         chainId,
-        address: discovery.getContract('ValidatorTimelock').address,
-        selector: '0x6edd4f12',
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0x98f81962',
         functionSignature:
-          'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
+          'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: trackedTxsSince,
       },
     },
@@ -129,10 +129,10 @@ export const grvt: ScalingProject = zkStackL2({
       query: {
         formula: 'sharedBridge',
         chainId,
-        address: discovery.getContract('ValidatorTimelock').address,
-        selector: '0xc37533bb',
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xe12a6137',
         functionSignature:
-          'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
+          'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: trackedTxsSince,
       },
     },
@@ -144,10 +144,10 @@ export const grvt: ScalingProject = zkStackL2({
       query: {
         formula: 'sharedBridge',
         chainId,
-        address: discovery.getContract('ValidatorTimelock').address,
-        selector: '0x6f497ac6',
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xcf02827d',
         functionSignature:
-          'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
+          'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: trackedTxsSince,
       },
     },
