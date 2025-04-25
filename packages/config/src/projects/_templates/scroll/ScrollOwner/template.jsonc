@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "accessControl": {
       "handler": {
@@ -17,10 +18,20 @@
         }
       }
     },
-    "executor": {
+    // "executor": {
+    //   "copy": "accessControl",
+    //   "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
+    //   "permissions": [{ "type": "act" }]
+    // },
+    "scNoDelay": {
       "copy": "accessControl",
       "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
-      "permissions": [{ "type": "act" }]
+      "permissions": [{ "type": "interact", "description": "upgrade all core contracts of the system." }]
+    },
+    "opsFast": {
+      "copy": "accessControl",
+      "edit": ["get", "roles", "ops-fast", "members"],
+      "permissions": [{ "type": "interact", "description": "update the minimum delay message queue parameters and enforced mode parameters." }]
     }
   }
 }
