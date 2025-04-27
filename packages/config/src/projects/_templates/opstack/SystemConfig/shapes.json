@@ -112,5 +112,11 @@
     "address": "0x760C48C62A85045A6B69f07F4a9f22868659CbCc",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "SystemConfig_v2_5_0": {
+    "hash": "0x921de6fc906d159fdcef862d2b9559063f5e7b9b7588fa5f33153360ddf296e7",
+    "address": "0x340f923E5c7cbB2171146f64169EC9d5a9FfE647",
+    "chain": "ethereum",
+    "blockNumber": 22346130
   }
 }
