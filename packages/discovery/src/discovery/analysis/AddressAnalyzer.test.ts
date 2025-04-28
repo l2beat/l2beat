@@ -73,6 +73,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: undefined,
         deploymentBlockNumber: undefined,
         targetsMeta: undefined,
+        implementationNames: undefined,
         address,
       })
     })
@@ -180,6 +181,10 @@ describe(AddressAnalyzer.name, () => {
           $implementation: implementation.toString(),
           $admin: admin.toString(),
           owner: owner.toString(),
+        },
+        implementationNames: {
+          [address.toString()]: 'Proxy1',
+          [implementation.toString()]: 'Impl1',
         },
         abis: sources.abis,
         sourceBundles: sources.sources,
@@ -299,6 +304,10 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin.toString(),
           owner: owner.toString(),
         },
+        implementationNames: {
+          [address.toString()]: 'Test',
+          [implementation.toString()]: 'Test2',
+        },
         abis: sources.abis,
         sourceBundles: sources.sources,
         targetsMeta: {
@@ -413,6 +422,9 @@ describe(AddressAnalyzer.name, () => {
           $implementation: implementation.toString(),
           $admin: admin.toString(),
           owner: owner.toString(),
+        },
+        implementationNames: {
+          [address.toString()]: 'Test',
         },
         abis: sources.abis,
         sourceBundles: sources.sources,
