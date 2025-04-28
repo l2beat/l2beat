@@ -130,7 +130,6 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_B,
-          derivedName: 'Something not B',
           proxyType: CONTRACT_B.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
@@ -190,7 +189,6 @@ describe(processAnalysis.name, () => {
           type: 'Contract',
           address: ADDRESS_B,
           proxyType: CONTRACT_B.proxyType,
-          derivedName: 'Something not B',
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
           sinceBlock: baseContract.deploymentBlockNumber,
