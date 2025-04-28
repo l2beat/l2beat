@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 838575,
+  "blockNumber": 845013,
   "configHash": "0x912d150d4fad8a815a3d4f2df0831e6dd6f744b5baa0d97dd5bb435c8166dbb9",
   "entries": [
     {
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1744808717,
+        "clock": 1745841339,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -64,7 +64,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1744808717,
+        "clock": 1745841339,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -280,7 +280,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "29902281717232600475",
+        "getDeposit": "29725237579713080475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -351,13 +351,6 @@
         "0xc04b35188931b9e8fc65adf08c2b701d5ec4d4776ecac7b19256f900184e935a"
       ],
       "proxyType": "Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -581,7 +574,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4833,
+        "getNonce": 4859,
         "getOwnersCount": 4,
         "inRecovery": 0,
         "insurancePolicy": 0,
@@ -625,7 +618,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 48133,
+        "globalMessageCount": 49647,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -662,19 +655,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply", "appCount"],
       "sinceTimestamp": 1704852483,
       "sinceBlock": 126,
@@ -927,14 +907,6 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "description": "change the beacon implementation.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1703803644,
       "sinceBlock": 65,
       "values": {
@@ -954,20 +926,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "0x87f0eE85bF3198654900a422832157abBba30828",
@@ -1113,7 +1072,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75635
+        "totalWallets": 75670
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory",
@@ -1193,7 +1152,7 @@
           "via": []
         }
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
@@ -1760,31 +1719,8 @@
         },
         {
           "permission": "interact",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "transfer KYC NFTs to a different address.",
-          "via": []
-        },
-        {
-          "permission": "interact",
           "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
@@ -1908,7 +1844,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1744805949,
+        "lastMonitoredAt": 1745841188,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3222,7 +3158,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75304,
+        "totalSupply": 75338,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"

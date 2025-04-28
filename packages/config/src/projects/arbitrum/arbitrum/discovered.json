@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 329029286,
+  "blockNumber": 331086890,
   "configHash": "0x7e8b479a2700967f8d0ae1fe4fe3caae2d94a492187b8bd51b8dc52612590d25",
   "entries": [
     {
@@ -81,7 +81,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 32307,
+        "exitNum": 32480,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway",
@@ -177,12 +177,6 @@
         {
           "permission": "interact",
           "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
           "description": "propose transactions.",
           "via": []
         },
@@ -1409,7 +1403,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2046,
+        "exitNum": 2047,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway",
@@ -1588,18 +1582,16 @@
           ]
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "propose transactions."
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200
+        },
+        {
+          "permission": "interact",
+          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "description": "propose transactions."
         }
       ],
       "sinceTimestamp": 1692138965,
