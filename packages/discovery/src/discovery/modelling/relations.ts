@@ -39,26 +39,10 @@ const permissionTemplate: InlineTemplate = {
 permission(
   &permission.to,
   "&permission.type",
-  &permission.from).`,
+  &permission.from,
+  &permission.delay,
+  &permission.description|quote|orNil).`,
   when: () => true,
-}
-const permissionDescriptionTemplate: InlineTemplate = {
-  content: `
-permissionDescription(
-  &permission.to,
-  "&permission.type",
-  &permission.from,
-  "&permission.description").`,
-  when: (_, p) => p?.description !== undefined,
-}
-const permissionDelayTemplate: InlineTemplate = {
-  content: `
-permissionDelay(
-  &permission.to,
-  "&permission.type",
-  &permission.from,
-  &permission.delay).`,
-  when: (_, p) => p?.delay !== undefined && p.delay !== 0,
 }
 const permissionConditionTemplate: InlineTemplate = {
   content: `
@@ -66,6 +50,8 @@ permissionCondition(
   &permission.to,
   "&permission.type",
   &permission.from,
+  &permission.delay,
+  &permission.description|quote|orNil,
   "&permission.condition").`,
   when: (_, p) => p?.condition !== undefined,
 }
@@ -134,8 +120,6 @@ export function buildPermissionsModel(
 
     for (const template of [
       permissionTemplate,
-      permissionDescriptionTemplate,
-      permissionDelayTemplate,
       permissionConditionTemplate,
     ]) {
       const to = String(valuesWithPermission['permission.to']).toLowerCase()
