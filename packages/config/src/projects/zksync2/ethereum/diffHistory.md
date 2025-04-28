@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x6e08569bfa61bb905be3ca25503b694413dd59a7
+
+# Diff at Fri, 25 Apr 2025 13:36:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c29f37e6f9358f91b847d140615c705e0d4deb52 block: 22297690
+- current block number: 22346378
+
+## Description
+
+TX filterer removed.
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
+      issuedPermissions.2.to:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
+      issuedPermissions.1.to:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      issuedPermissions.0.to:
+-        "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f"
++        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      issuedPermissions.0.description:
+-        "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
++        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TransactionFilterer (0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1ae30409af0dfa266658881479c867798211bc6c
 
 # Diff at Fri, 18 Apr 2025 18:39:54 GMT:

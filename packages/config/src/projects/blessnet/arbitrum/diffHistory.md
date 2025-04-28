@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x2e7724ce92b3fad5685fa54c301cc7c3f691f775
+
+# Diff at Fri, 25 Apr 2025 13:56:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c29f37e6f9358f91b847d140615c705e0d4deb52 block: 322452556
+- current block number: 330085907
+
+## Description
+
+Upgrade to known bridge implementation with minimal changes.
+
+## Watched changes
+
+```diff
+    contract Bridge (0xC1bf6E0Ac80e92A331c4D448652C4824D4195459) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.0:
+-        "0x6cdca102c8d3b82c196bf1961cd07e35b44717396edbfdd3241adc89ab895438"
++        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
+      values.$implementation:
+-        "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB"
++        "0xeF960375235AbFab045c4A7324295612739569EB"
+      values.$pastUpgrades.1:
++        ["2024-08-09T00:09:45.000Z","0x74a7d47d00c5aaffa51d86eb0d5ac1273332a17730ccbd9ee303253521f03a15",["0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB"]]
+      values.$pastUpgrades.0.2.0:
+-        "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB"
++        "0xeF960375235AbFab045c4A7324295612739569EB"
+      values.$pastUpgrades.0.1:
+-        "2024-08-09T00:09:45.000Z"
++        "0x1886d4d0e9c54cd3e04d16cad30e1f4041ae2a109c2341587f8c5736e4ad6ca0"
+      values.$pastUpgrades.0.0:
+-        "0x74a7d47d00c5aaffa51d86eb0d5ac1273332a17730ccbd9ee303253521f03a15"
++        "2025-04-24T21:39:59.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.nativeTokenDecimals:
++        18
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol                         | 37 +++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 5 deletions(-)
+```
+
 Generated with discovered.json: 0xdd14a69beb24e5cb61e9808820318c156c3f8589
 
 # Diff at Mon, 31 Mar 2025 12:44:02 GMT:

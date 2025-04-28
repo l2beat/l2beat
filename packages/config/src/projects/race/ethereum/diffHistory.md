@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xd928d644549cf33e731f53b7daf29bdfd058ed0a
+
+# Diff at Fri, 25 Apr 2025 13:19:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@652ccb636c46013db1624f1ac3562cb4dcbc059b block: 21242938
+- current block number: 22346290
+
+## Description
+
+Upgrade SystemConfig to known implementation.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2"
++        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.2:
++        ["2025-04-24T15:12:59.000Z","0x1219b34d44c22cc95607948fa43919e4015c77fb6ae8aeda540a4fbf11636242",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.1:
++        ["2024-07-08T08:29:23.000Z","0x3d2be3c5ca9e5dd726fde8d99662c3a271b676377d58e6784617cab843668e9c",["0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2"]]
+      values.$pastUpgrades.0.2:
+-        "2024-07-08T08:29:23.000Z"
++        "0x1219b34d44c22cc95607948fa43919e4015c77fb6ae8aeda540a4fbf11636242"
+      values.$pastUpgrades.0.1.0:
+-        "0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2"
++        "0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+      values.$pastUpgrades.0.0:
+-        "0x3d2be3c5ca9e5dd726fde8d99662c3a271b676377d58e6784617cab843668e9c"
++        "2025-04-24T15:12:59.000Z"
+      values.$upgradeCount:
+-        1
++        3
+      values.L2_OUTPUT_ORACLE_SLOT:
+-        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
+-        "0x8bF8442d49d52377d735a90F19657a29f29aA83c"
+      values.version:
+-        "1.12.0"
++        "2.3.0"
+      values.basefeeScalar:
++        1101
+      values.blobbasefeeScalar:
++        659851
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "0x0000000000000000000000000000000000000000"
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+      values.maximumGasLimit:
++        200000000
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1502 +++++++++++++++++++-
+ 1 file changed, 1462 insertions(+), 40 deletions(-)
+```
+
 Generated with discovered.json: 0x5e91dd37ddeb5c6a836774a60053eb242a5ffe67
 
 # Diff at Thu, 27 Mar 2025 11:14:56 GMT:
