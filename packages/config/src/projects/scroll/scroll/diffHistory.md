@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5067863236b8db7bad0bdaaf19bf9843d61f82be
+Generated with discovered.json: 0x3b4f0a01e6d2764c7b4d9c2e95064ed9c372de23
 
-# Diff at Mon, 28 Apr 2025 10:03:16 GMT:
+# Diff at Mon, 28 Apr 2025 10:39:37 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@a68d2e28c8787c5d6b9533bafbaed67dd065d75c block: 14489756
-- current block number: 15048261
+- current block number: 15048934
 
 ## Description
 
@@ -403,7 +403,7 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract MasterMinter (0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE)
-    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+    +++ description: Manager contract for minter management [sic].
 ```
 
 ```diff

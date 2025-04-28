@@ -68,81 +68,6 @@
         }
       ]
     },
-    // "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": {
-    //   // TimelockSCSlow
-    //   "fields": {
-    //     "timelockAdminAC": {
-    //       "handler": {
-    //         "type": "accessControl",
-    //         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
-    //       },
-    //       "permissions": [
-    //         {
-    //           "type": "interact",
-    //           "description": "disable enforced batch mode."
-    //         },
-    //         {
-    //           "type": "interact",
-    //           "description": "update ScrollChain zk proof verifier."
-    //         }
-    //       ]
-    //     }
-    //   }
-    // },
-    // "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": {
-    //   // TimelockFast
-    //   "fields": {
-    //     "timelockAdminAC": {
-    //       "handler": {
-    //         "type": "accessControl",
-    //         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
-    //       },
-    //       "permissions": [
-    //         {
-    //           "type": "interact",
-    //           "description": "update the minimum delay message queue parameters and enforced mode parameters."
-    //         },
-    //         {
-    //           "type": "interact",
-    //           "description": "add permissioned batchers and provers to the whitelist."
-    //         },
-    //         {
-    //           "type": "interact",
-    //           "description": "update the L1ScrollMessenger fee vault address.",
-    //         },
-    //         {
-    //           "type": "interact",
-    //           "description": "set ERC20 gateways in the L1GatewayRouter."
-    //         }
-    //       ]
-    //     }
-    //   }
-    // },
-    // "0x826714adD4dDA2b8750794A467C892c0Cd49216b": {
-    //   // TimelockEmergency
-    //   "fields": {
-    //     "timelockAdminAC": {
-    //       "handler": {
-    //         "type": "accessControl",
-    //         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
-    //       },
-    //       "permissions": [
-    //         {
-    //           "type": "interact",
-    //           "description": "pause the L1 -> L2 messenger and enforced transaction mode."
-    //         },
-    //         {
-    //           "type": "interact",
-    //           "description": "remove permissioned batchers and provers to the whitelist, and update the sequencer address."
-    //         },
-    //         {
-    //           "type": "interact",
-    //           "description": "revert unfinalized batches."
-    //         }
-    //       ]
-    //     }
-    //   }
-    // },
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": {
       // pufETHEscrow
       "ignoreRelatives": ["owner", "$admin", "counterpart"],
@@ -216,6 +141,11 @@
     },
     "0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": {
       "category": "spam"
+    },
+    "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": {
+      "manualSourcePaths": {
+        "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.3.0/bundle/verifier.bin"
+      }
     },
     /* ---- Do not show old verifiers ---- */
     "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {

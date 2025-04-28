@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22366841,
-  "configHash": "0x893e9088d6cee391217cba7bfa703c12a6d447a0c1d5eccb15f26b34d1d2a37e",
+  "blockNumber": 22367020,
+  "configHash": "0x03017f4f169b2abc9989558860e3b7b2c35af0d57528aa4e4d320b14932d8bcb",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -987,11 +987,11 @@
         "$upgradeCount": 2,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1745817119,
+        "getFirstUnfinalizedMessageEnqueueTime": 1745832287,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 954164,
-        "nextUnfinalizedQueueIndex": 954151,
+        "nextCrossDomainMessageIndex": 954165,
+        "nextUnfinalizedQueueIndex": 954163,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1983,12 +1983,20 @@
       "name": "PlonkVerifierPostEuclid-2",
       "address": "0x9F66505cB1626D06B50EF2597f41De6686e8f79a",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x9c0d03d74376d16f2c9a220788c40085cec0fe424187af4e2154464ba928b36a"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1745397191,
       "sinceBlock": 22330533,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.3.0/bundle/verifier.bin"
+        }
+      ]
     },
     {
       "name": "pufETHEscrow",
@@ -2092,15 +2100,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 358502,
+        "lastFinalizedBatchIndex": 358511,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 358511,
-          "lastFinalizedBatchIndex": 358502,
-          "lastFinalizeTimestamp": 1745818979,
+          "lastCommittedBatchIndex": 358514,
+          "lastFinalizedBatchIndex": 358511,
+          "lastFinalizeTimestamp": 1745834879,
           "flags": 1,
           "reserved": 0
         },
