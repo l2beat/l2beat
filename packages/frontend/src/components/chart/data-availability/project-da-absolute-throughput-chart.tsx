@@ -1,10 +1,9 @@
 'use client'
 
 import type { ProjectId } from '@l2beat/shared-pure'
-import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 
 import type { Milestone } from '@l2beat/config'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -54,7 +53,16 @@ export function ProjectDaAbsoluteThroughputChart({
   showMax,
   milestones,
 }: Props) {
-  const { denominator, unit } = getDaDataParams(dataWithConfiguredThroughputs)
+  const max = useMemo(() => {
+    return dataWithConfiguredThroughputs
+      ? Math.max(
+          ...dataWithConfiguredThroughputs.map(([_, ...rest]) =>
+            Math.max(...rest.filter((x) => x !== null)),
+          ),
+        )
+      : undefined
+  }, [dataWithConfiguredThroughputs])
+  const { denominator, unit } = getDaDataParams(max)
 
   const chartData = useMemo(() => {
     return dataWithConfiguredThroughputs?.map(
@@ -171,7 +179,7 @@ function CustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
 
           return (
             <div

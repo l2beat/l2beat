@@ -1,10 +1,9 @@
 'use client'
 
-import { assert } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import { useMemo } from 'react'
-import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
+import { Bar, BarChart } from 'recharts'
 
 import {
   ChartContainer,
@@ -108,7 +107,7 @@ function CustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
 
           return (
             <div

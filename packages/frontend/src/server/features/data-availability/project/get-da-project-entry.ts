@@ -117,6 +117,10 @@ export async function getDaProjectEntry(
         range: 'max',
         projectId: layer.id,
       }),
+      api.da.projectChartByProject.prefetch({
+        range: '30d',
+        daLayer: layer.id,
+      }),
     ])
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)

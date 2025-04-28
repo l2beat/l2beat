@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x2aa5f7d4e0b61560f1718fa99124f2a72100e00e
+
+# Diff at Fri, 25 Apr 2025 13:39:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c29f37e6f9358f91b847d140615c705e0d4deb52 block: 22144824
+- current block number: 22346393
+
+## Description
+
+Added 8d delay to the DelayedExecutor and added it as STRK bridge admin.
+
+## Watched changes
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      receivedPermissions.1.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.1.delay:
++        259200
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      directlyReceivedPermissions.1.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      directlyReceivedPermissions.1.delay:
++        259200
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","delay":259200,"via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","0xCA112018fEB729458b628AadC8f996f9deCbCa0c"]
+      values.accessControl.UPGRADE_GOVERNOR.members.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+    }
+```
+
 Generated with discovered.json: 0x127cc98189d50193a7a6417b9b4f7f20bc6b7f3e
 
 # Diff at Thu, 10 Apr 2025 14:43:23 GMT:

@@ -4,6 +4,7 @@ import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
 import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
@@ -39,9 +40,9 @@ const getCachedProjectDaThroughputChartData = cache(
     projectId,
   }: ProjectDaThroughputChartParams): Promise<ProjectDaThroughputChartData> => {
     const db = getDb()
-    const days = rangeToDays(range)
-    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
-    const from = days ? to - days * UnixTime.DAY : null
+    const [from, to] = getRangeWithMax(range, 'daily', {
+      offset: -1 * UnixTime.DAY,
+    })
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
       [projectId],
       [from, to],

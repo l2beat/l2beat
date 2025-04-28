@@ -23,9 +23,7 @@ const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
 const paused =
   discovery.getContractValue<boolean>('MainchainGateway', 'paused') === true
-const warningText = paused
-  ? 'The bridge is currently paused. A migration to a new messaging infrastructure and new escrows [is in progress](https://x.com/Ronin_Network/status/1914579206396371186).'
-  : undefined
+// const warningText = paused ? 'The bridge is currently paused.' : undefined
 
 const pausable = {
   paused,
@@ -36,10 +34,12 @@ export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  isUnderReview: true,
   display: {
     name: 'Ronin V3',
     slug: 'ronin',
-    warning: warningText,
+    warning:
+      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Stand by while we review the new integration with Chainlink CCIP.',
     links: {
       websites: ['https://bridge.roninchain.com/'],
       apps: ['https://bridge.roninchain.com/'],
