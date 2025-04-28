@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Part of CCTP",
+  "ignoreInWatchMode": ["nextAvailableNonce"]
+}
