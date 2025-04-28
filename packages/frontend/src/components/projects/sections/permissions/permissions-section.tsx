@@ -1,5 +1,3 @@
-import { isEmpty } from 'lodash'
-import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
@@ -11,16 +9,12 @@ export interface PermissionsSectionProps extends ProjectSectionProps {
     string,
     { roles: TechnologyContract[]; actors: TechnologyContract[] }
   >
-  daSolution?: DaSolutionWith<{
-    permissions: { roles: TechnologyContract[]; actors: TechnologyContract[] }
-  }>
   permissionedEntities?: { name: string; href: string; key?: string }[]
 }
 
 export function PermissionsSection({
   permissionsByChain,
   permissionedEntities,
-  daSolution,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
@@ -69,29 +63,6 @@ export function PermissionsSection({
           )
         })}
       </div>
-      {daSolution &&
-        (!isEmpty(daSolution.permissions.actors) ||
-          !isEmpty(daSolution.permissions.roles)) && (
-          <h3 className="mt-4 font-bold">
-            The project uses {daSolution.layerName} with the{' '}
-            {daSolution.bridgeName} DA Bridge that consist of the following
-            permissions on the {daSolution.hostChainName}:
-          </h3>
-        )}
-      {daSolution?.permissions.roles?.map((permission) => (
-        <ContractEntry
-          key={technologyContractKey(permission)}
-          contract={permission}
-          className="my-4"
-        />
-      ))}
-      {daSolution?.permissions.actors?.map((permission) => (
-        <ContractEntry
-          key={technologyContractKey(permission)}
-          contract={permission}
-          className="my-4"
-        />
-      ))}
     </ProjectSection>
   )
 }

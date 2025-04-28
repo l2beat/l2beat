@@ -18,7 +18,7 @@ import { StackedTvsSection } from './sections/stacked-tvs-section'
 import { StageSection } from './sections/stage-section'
 import { StateDerivationSection } from './sections/state-derivation-section'
 import { StateValidationSection } from './sections/state-validation-section'
-import { TechnologySection } from './sections/technology-section'
+import { TechnologyChoicesSection } from './sections/technology-choices-section'
 import { ThroughputSection } from './sections/throughput/throughput-section'
 import { TvsSection } from './sections/tvs-section'
 import type { ProjectDetailsSection } from './sections/types'
@@ -137,9 +137,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'TechnologySection':
+          case 'TechnologyChoicesSection':
             return (
-              <TechnologySection
+              <TechnologyChoicesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

@@ -6,6 +6,10 @@ import { TvsPriceRepository } from './repository'
 describeDatabase(TvsPriceRepository.name, (db) => {
   const repository = db.tvsPrice
 
+  beforeEach(async () => {
+    await repository.deleteAll()
+  })
+
   describe(TvsPriceRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const records = [

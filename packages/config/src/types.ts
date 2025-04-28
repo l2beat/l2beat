@@ -4,8 +4,6 @@ import {
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
-  type Token,
-  type TokenBridgedUsing,
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
@@ -76,6 +74,7 @@ export interface BaseProject {
   colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
+  escrows?: ProjectEscrow[]
 
   // bridge data
   bridgeInfo?: ProjectBridgeInfo
@@ -98,8 +97,7 @@ export interface BaseProject {
   proofVerification?: ProjectProofVerification
 
   // feature configs
-  tvlInfo?: ProjectTvlInfo
-  tvlConfig?: ProjectTvlConfig
+  tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
   activityConfig?: ProjectActivityConfig
   livenessInfo?: ProjectLivenessInfo
@@ -724,29 +722,9 @@ export interface RequiredTool {
 // #endregion
 
 // #region feature configs
-export interface ProjectTvlInfo {
+export interface ProjectTvsInfo {
   associatedTokens: string[]
   warnings: WarningWithSentiment[]
-}
-
-/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlConfig {
-  escrows: ProjectTvlEscrow[]
-  tokens: Token[]
-  associatedTokens: string[]
-}
-
-/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlEscrow {
-  address: EthereumAddress
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-  tokens: (Token & { isPreminted: boolean })[]
-  chain: string
-  includeInTotal?: boolean
-  source?: ProjectEscrowSource
-  bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: SharedEscrow
 }
 
 export type ProjectEscrowSource = 'canonical' | 'external' | 'native'

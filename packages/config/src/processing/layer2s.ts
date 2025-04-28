@@ -181,11 +181,13 @@ import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
 import { specular } from '../projects/specular/specular'
+import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
 import { studiochain } from '../projects/studiochain/studiochain'
 import { superlumio } from '../projects/superlumio/superlumio'
 import { superseed } from '../projects/superseed/superseed'
+import { surge } from '../projects/surge/surge'
 import { swan } from '../projects/swan/swan'
 import { swell } from '../projects/swell/swell'
 import { sxnetwork } from '../projects/sxnetwork/sxnetwork'
@@ -406,11 +408,13 @@ export const layer2s: ScalingProject[] = [
   sorare,
   sovrun,
   specular,
+  spire,
   starknet,
   status,
   studiochain,
   superlumio,
   superseed,
+  surge,
   swan,
   swell,
   sxnetwork,

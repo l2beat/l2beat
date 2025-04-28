@@ -12,6 +12,7 @@ import {
   getTargetsMeta,
   interpolateString,
   invertMeta,
+  isEmptyObject,
   mergeContractMeta,
   mergePermissions,
 } from './metaUtils'
@@ -583,6 +584,16 @@ describe('metaUtils', () => {
       expect(() => interpolateString(description, analysis)).toThrow(
         'Value for variable "{{ missingValue }}" in contract field not found in contract analysis',
       )
+    })
+  })
+  describe('isEmptyObject', () => {
+    it('should return false even if the object contains only false values', () => {
+      const obj = { a: false, b: undefined }
+      expect(isEmptyObject(obj)).toEqual(false)
+    })
+    it('should return true if the object is empty', () => {
+      const obj = { a: undefined }
+      expect(isEmptyObject(obj)).toEqual(true)
     })
   })
 })

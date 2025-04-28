@@ -85,7 +85,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           id: eoa.address,
           isInitial: false,
           name: eoa.name ?? fallback,
-          addressType: 'EOA',
+          addressType: eoa.type,
           address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
           color: 0,
@@ -150,8 +150,13 @@ function getNodeFields(
   }
 
   if (value.type === 'object') {
-    return Object.entries(value.value).flatMap(([key, value]) =>
-      getNodeFields(`${path}.${key}`, value, bannedKeys, bannedValues),
+    return value.values.flatMap(([key, value]) =>
+      getNodeFields(
+        `${path}.${extractFieldValue(key)}`,
+        value,
+        bannedKeys,
+        bannedValues,
+      ),
     )
   } else if (value.type === 'array') {
     return value.values.flatMap((value, i) =>
@@ -174,6 +179,17 @@ function getNodeFields(
     ]
   } else {
     return []
+  }
+}
+
+function extractFieldValue(value: FieldValue): string {
+  switch (value.type) {
+    case 'string':
+      return value.value
+    case 'address':
+      return value.address
+    default:
+      return ''
   }
 }
 

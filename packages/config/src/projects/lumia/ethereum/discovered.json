@@ -84,14 +84,14 @@
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://prism-da-2.eu-north-2.gateway.fm/",
-            "0xf1cACD549400824D54c8794e63C5368C296FDA00"
-          ],
-          [
-            "https://prism-da-1.eu-north-2.gateway.fm/",
-            "0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"
-          ]
+          {
+            "url": "https://prism-da-2.eu-north-2.gateway.fm/",
+            "addr": "0xf1cACD549400824D54c8794e63C5368C296FDA00"
+          },
+          {
+            "url": "https://prism-da-1.eu-north-2.gateway.fm/",
+            "addr": "0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"
+          }
         ],
         "owner": "0x258862dec9a77db57b398c441390783293E2a7A1",
         "requiredAmountOfSignatures": 1

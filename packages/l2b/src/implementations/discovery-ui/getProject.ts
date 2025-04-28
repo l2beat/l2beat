@@ -18,9 +18,9 @@ import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import type {
-  AddressFieldValue,
   ApiAbiEntry,
   ApiAddressEntry,
+  ApiAddressReference,
   ApiAddressType,
   ApiProjectChain,
   ApiProjectContract,
@@ -115,15 +115,17 @@ export function getProject(
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
         .filter((x) => x.address !== EthereumAddress.ZERO)
-        .map(
-          (x): ApiAddressEntry => ({
+        .map((x): ApiAddressEntry => {
+          const roles = getRoles(x)
+          return {
             name: x.name || undefined,
-            type: 'EOA',
+            type: roles.length > 0 ? 'EOAPermissioned' : 'EOA',
+            roles: roles,
             description: x.description,
             referencedBy: [],
             address: toAddress(chain, x.address),
-          }),
-        )
+          }
+        })
         .sort(orderAddressEntries),
       blockNumber: discovery.blockNumber,
     } satisfies ApiProjectChain
@@ -131,6 +133,13 @@ export function getProject(
   }
   populateReferencedBy(response.entries)
   return response
+}
+
+function getRoles(entry: EntryParameters): string[] {
+  const roles = entry.receivedPermissions?.map((p) => p.permission)
+  const notRoles = ['member', 'act', 'interact']
+
+  return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
 }
 
 function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
@@ -189,6 +198,7 @@ function contractFromDiscovery(
   return {
     name: getContractName(contract),
     type: getContractType(contract),
+    roles: getRoles(contract),
     template: contract.template,
     proxyType: contract.proxyType,
     description: contract.description,
@@ -221,30 +231,40 @@ function abiEntry(entry: string): ApiAbiEntry {
 }
 
 function populateReferencedBy(chains: ApiProjectChain[]) {
-  const referencedBy = new Map<string, AddressFieldValue[]>()
+  const referencedBy = new Map<string, ApiAddressReference[]>()
   for (const chain of chains) {
     for (const contract of [
       ...chain.initialContracts,
       ...chain.discoveredContracts,
     ]) {
-      const field: AddressFieldValue = {
-        type: 'address',
-        name: contract.name,
-        address: contract.address,
-        addressType: contract.type,
-      }
-      const relatives = getAddresses(
-        contract.fields.map((x) => x.value),
-      ).filter((x, i, a) => a.indexOf(x) === i)
-      for (const relative of relatives) {
-        if (relative === contract.address) {
-          continue
-        }
-        const refs = referencedBy.get(relative)
-        if (refs) {
-          refs.push(field)
-        } else {
-          referencedBy.set(relative, [field])
+      for (const field of contract.fields) {
+        const addresses = getAddresses([field.value])
+        for (const address of addresses) {
+          if (address === contract.address) {
+            continue
+          }
+
+          const ref: ApiAddressReference = {
+            type: 'address',
+            name: contract.name,
+            address: contract.address,
+            addressType: contract.type,
+            fieldNames: [field.name],
+          }
+
+          const existingRef = referencedBy
+            .get(address)
+            ?.find((r) => r.address === contract.address)
+
+          if (existingRef) {
+            if (!existingRef.fieldNames.includes(field.name)) {
+              existingRef.fieldNames.push(field.name)
+            }
+          } else {
+            const refs = referencedBy.get(address) || []
+            refs.push(ref)
+            referencedBy.set(address, refs)
+          }
         }
       }
     }
@@ -269,7 +289,7 @@ function getAddresses(values: FieldValue[]) {
     } else if (value.type === 'array') {
       addresses.push(...getAddresses(value.values))
     } else if (value.type === 'object') {
-      addresses.push(...getAddresses(Object.values(value.value)))
+      addresses.push(...getAddresses(value.values.map(([_, value]) => value)))
     }
   }
   return addresses

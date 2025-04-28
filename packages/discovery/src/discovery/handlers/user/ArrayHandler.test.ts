@@ -2,7 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
-import { ArrayHandler } from './ArrayHandler'
+import { toFunctionFragment } from '../utils/toFunctionFragment'
+import { ArrayHandler, getArrayFragment } from './ArrayHandler'
 
 describe(ArrayHandler.name, () => {
   describe('dependencies', () => {
@@ -154,6 +155,7 @@ describe(ArrayHandler.name, () => {
 
   describe('execute', () => {
     const method = 'function owners(uint256 index) view returns (address)'
+    const arrayFragment = getArrayFragment(toFunctionFragment(method))
     const address = EthereumAddress.random()
     const owners = [
       EthereumAddress.random(),
@@ -187,6 +189,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
@@ -215,6 +218,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
         ignoreRelative: true,
       })
@@ -245,6 +249,7 @@ describe(ArrayHandler.name, () => {
       })
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
@@ -302,6 +307,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: owners.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
@@ -346,6 +352,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
         value: new Array(100).fill('0x' + '0'.repeat(40)),
       })
@@ -368,6 +375,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
         value: new Array(15).fill('0x' + '0'.repeat(40)),
       })
@@ -396,6 +404,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: [owners[0]!.toString(), owners[2]!.toString()],
         ignoreRelative: undefined,
       })
@@ -429,6 +438,7 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: [
           owners[0],
           owners[2],
@@ -466,6 +476,7 @@ describe(ArrayHandler.name, () => {
       })
       expect(result).toEqual({
         field: 'owners',
+        fragment: arrayFragment,
         value: [owners[0]!.toString(), owners[2]!.toString()],
         ignoreRelative: undefined,
       })

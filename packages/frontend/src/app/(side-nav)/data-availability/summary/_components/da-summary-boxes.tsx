@@ -189,7 +189,7 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
       <TooltipTrigger>
         <Breakdown className="mt-1 h-1 w-full md:h-2" gap={0} values={items} />
       </TooltipTrigger>
-      <TooltipContent className="flex flex-col">
+      <TooltipContent className="flex flex-col gap-2">
         {items.map((s) => (
           <div
             key={s.label}
@@ -197,9 +197,11 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
           >
             <div className="flex items-baseline gap-1">
               <div className={cn('size-2.5 rounded-sm', s.className)} />
-              <span>{s.label}</span>
+              <span className="label-value-14-medium">{s.label}</span>
             </div>
-            <span className="font-medium">{s.percentage.toFixed(1)}%</span>
+            <span className="label-value-15-medium">
+              {s.percentage.toFixed(1)}%
+            </span>
           </div>
         ))}
       </TooltipContent>

@@ -105,14 +105,14 @@
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://gpt-mainnet-da-1.eu-north-2.gateway.fm/",
-            "0x208C0bCD77F921209932081c27C543098838BF9e"
-          ],
-          [
-            "https://gpt-mainnet-da-2.eu-north-2.gateway.fm/",
-            "0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"
-          ]
+          {
+            "url": "https://gpt-mainnet-da-1.eu-north-2.gateway.fm/",
+            "addr": "0x208C0bCD77F921209932081c27C543098838BF9e"
+          },
+          {
+            "url": "https://gpt-mainnet-da-2.eu-north-2.gateway.fm/",
+            "addr": "0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"
+          }
         ],
         "owner": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
         "requiredAmountOfSignatures": 1

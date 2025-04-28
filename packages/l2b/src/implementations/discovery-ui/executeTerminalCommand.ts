@@ -20,6 +20,8 @@ export function executeTerminalCommand(command: string, res: Response): void {
     },
   })
 
+  sendSSE(res, `Running command: ${command}\n`)
+
   proc.stdout.on('data', (data) => {
     const text = data.toString()
     sendSSE(res, text)

@@ -3,7 +3,6 @@ import type {
   ChainConfig,
   ElasticChainEscrow,
   Project,
-  ProjectTvlEscrow,
   TvsToken,
 } from '@l2beat/config'
 import { type RpcClient, encodeTotalSupply } from '@l2beat/shared'
@@ -14,7 +13,8 @@ import { toMulticallConfigEntry } from '../../../../peripherals/multicall/Multic
 import type { MulticallRequest } from '../../../../peripherals/multicall/types'
 import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
-import { createEscrowToken } from '../mapConfig'
+import { createEscrowToken } from '../legacyConfig/mapLegacyConfig'
+import type { LegacyEscrow } from '../legacyConfig/types'
 import { isEmptyAddress } from './isEmptyAddress'
 
 export const bridgeInterface = new utils.Interface([
@@ -22,8 +22,9 @@ export const bridgeInterface = new utils.Interface([
 ])
 
 export async function getElasticChainTokens(
-  project: Project<'tvlConfig', 'chainConfig'>,
-  escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+  project: Project<'escrows', 'chainConfig'>,
+  associatedTokens: string[],
+  escrow: LegacyEscrow & { sharedEscrow: ElasticChainEscrow },
   chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
   localStorage: LocalStorage,
@@ -147,9 +148,7 @@ export async function getElasticChainTokens(
       iconUrl: token.iconUrl,
       category: token.category,
       source: 'canonical' as const,
-      isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-        token.symbol,
-      ),
+      isAssociated: associatedTokens.includes(token.symbol),
       amount: {
         type: 'totalSupply' as const,
         address: item.address,
@@ -195,7 +194,13 @@ export async function getElasticChainTokens(
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
       tokensToAssignFromL1.push(
-        createEscrowToken(project, escrow, chainOfL1Escrow, token),
+        createEscrowToken(
+          project,
+          associatedTokens,
+          escrow,
+          chainOfL1Escrow,
+          token,
+        ),
       )
     }
   }
