@@ -3,14 +3,7 @@ import { expect } from 'earl'
 import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
-import {
-  type ContractMeta,
-  getTargetsMeta,
-  interpolateString,
-  invertMeta,
-  mergeContractMeta,
-  mergePermissions,
-} from './metaUtils'
+import { interpolateString } from './metaUtils'
 
 describe('metaUtils', () => {
   describe('interpolateDescription', () => {
@@ -42,16 +35,6 @@ describe('metaUtils', () => {
       expect(() => interpolateString(description, analysis)).toThrow(
         'Value for variable "{{ missingValue }}" in contract field not found in contract analysis',
       )
-    })
-  })
-  describe('isEmptyObject', () => {
-    it('should return false even if the object contains only false values', () => {
-      const obj = { a: false, b: undefined }
-      expect(isEmptyObject(obj)).toEqual(false)
-    })
-    it('should return true if the object is empty', () => {
-      const obj = { a: undefined }
-      expect(isEmptyObject(obj)).toEqual(true)
     })
   })
 })
