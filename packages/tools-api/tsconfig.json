@@ -1,8 +1,7 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "outDir": "build",
-    "rootDir": "."
+    "outDir": "build"
   },
-  "include": ["src", "scripts"]
+  "include": ["src"]
 }
