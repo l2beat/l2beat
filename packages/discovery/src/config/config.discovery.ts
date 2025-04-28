@@ -72,16 +72,21 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
             url: chainConfig.explorer.url,
             unsupported: chainConfig.explorer.unsupported,
           }
-        : {
-            type: chainConfig.explorer.type,
-            url: chainConfig.explorer.url,
-            apiKey: env.string([
-              `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-              `${ENV_NAME}_ETHERSCAN_API_KEY`,
-              //support for legacy local configs
-              `DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`,
-            ]),
-            unsupported: chainConfig.explorer.unsupported,
-          },
+        : chainConfig.explorer.type === 'sourcify'
+          ? {
+              type: chainConfig.explorer.type,
+              chainId: chainConfig.explorer.chainId,
+            }
+          : {
+              type: chainConfig.explorer.type,
+              url: chainConfig.explorer.url,
+              apiKey: env.string([
+                `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
+                `${ENV_NAME}_ETHERSCAN_API_KEY`,
+                //support for legacy local configs
+                `DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`,
+              ]),
+              unsupported: chainConfig.explorer.unsupported,
+            },
   }
 }

@@ -1,4 +1,3 @@
-import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import type { CliLogger } from '@l2beat/shared'
 import { type EthereumAddress, formatAsAsciiTable } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -17,10 +16,10 @@ export async function getTokenMinterEvents(
   rpcUrl: string,
   explorerUrl?: string,
   explorerApiKey?: string,
-  explorerType?: string,
+  explorerType?: 'etherscan' | 'blockscout',
 ) {
   const explorer = {
-    type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
+    type: explorerType ?? 'etherscan',
     url: explorerUrl ?? 'ERROR',
     apiKey: explorerApiKey ?? 'ERROR',
   }

@@ -3,7 +3,7 @@ import { CliLogger } from '@l2beat/shared'
 import { command, number, option, positional, subcommands } from 'cmd-ts'
 import { fetchAndFlatten } from '../implementations/flatten'
 import { matchFile, readAndHashFile } from '../implementations/matchFlat'
-import { explorerApiKey, explorerType, explorerUrl } from './args'
+import { chainId, explorerApiKey, explorerType, explorerUrl } from './args'
 import { Directory, EthereumAddressValue, File } from './types'
 
 const minSimilarity = option({
@@ -56,6 +56,7 @@ const MatchFlatAddress = command({
     explorerUrl,
     type: explorerType,
     apiKey: explorerApiKey,
+    chainId: chainId,
   },
   handler: async (args) => {
     const logger: CliLogger = new CliLogger()
@@ -63,6 +64,7 @@ const MatchFlatAddress = command({
       args.address,
       args.explorerUrl,
       args.apiKey,
+      args.chainId,
       args.type,
       logger,
       false,

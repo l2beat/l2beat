@@ -9,11 +9,16 @@ interface ChainConfig {
   chainId: number
   // See: https://github.com/safe-global/safe-core-sdk/blob/9b64da33bc55615349d527909d4b792e05bb9826/packages/protocol-kit/src/utils/eip-3770/config.ts
   shortName: string
-  explorer: {
-    type: 'etherscan' | 'blockscout' | 'routescan'
-    url: string
-    unsupported?: EtherscanUnsupportedMethods
-  }
+  explorer:
+    | {
+        type: 'etherscan' | 'blockscout' | 'routescan'
+        url: string
+        unsupported?: EtherscanUnsupportedMethods
+      }
+    | {
+        type: 'sourcify'
+        chainId: number
+      }
   multicall: MulticallConfig | undefined
 }
 
@@ -291,6 +296,16 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'blockscout',
       url: 'https://scan.everclear.org/api',
+    },
+  },
+  {
+    name: 'zircuit',
+    chainId: 48900,
+    shortName: 'zircuit',
+    multicall: undefined,
+    explorer: {
+      type: 'sourcify',
+      chainId: 48900,
     },
   },
 ] as const satisfies ChainConfig[]

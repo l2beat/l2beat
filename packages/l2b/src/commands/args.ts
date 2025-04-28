@@ -1,4 +1,4 @@
-import { oneOf, option, optional, string } from 'cmd-ts'
+import { number, oneOf, option, optional, string } from 'cmd-ts'
 import { ExistingPath, HttpUrl } from './types'
 
 export const discoveryPath = option({
@@ -23,10 +23,10 @@ export const explorerUrl = option({
 })
 
 export const explorerType = option({
-  type: oneOf(['etherscan', 'blockscout']),
+  type: oneOf(['etherscan', 'blockscout'] as const),
   long: 'etherscan-type',
   short: 't',
-  defaultValue: () => 'etherscan',
+  defaultValue: () => 'etherscan' as const,
 })
 
 export const explorerApiKey = option({
@@ -34,4 +34,10 @@ export const explorerApiKey = option({
   env: 'L2B_ETHERSCAN_API_KEY',
   long: 'etherscan-key',
   short: 'k',
+})
+
+export const chainId = option({
+  type: optional(number),
+  long: 'chain-id',
+  short: 'c',
 })

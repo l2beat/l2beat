@@ -1,16 +1,12 @@
 import { writeFileSync } from 'fs'
 import path from 'path'
 import { flattenStartingFrom } from '@l2beat/discovery'
-import {
-  type ExplorerConfig,
-  getExplorerClient,
-} from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
 import { command, option, positional, string } from 'cmd-ts'
+import { createExplorerClient } from '../implementations/createExplorerForCli'
 import { powerdiff } from '../implementations/powerdiff'
 import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
-import { explorerApiKey, explorerType, explorerUrl } from './args'
+import { chainId, explorerApiKey, explorerType, explorerUrl } from './args'
 import { EthereumAddressValue } from './types'
 
 export const FlattenAndDiff = command({
@@ -29,6 +25,7 @@ export const FlattenAndDiff = command({
     explorerUrl,
     type: explorerType,
     apiKey: explorerApiKey,
+    chainId: chainId,
     difftasticPath: option({
       type: string,
       long: 'difftastic-path',
@@ -53,13 +50,9 @@ export const FlattenAndDiff = command({
     diffContext,
   },
   handler: async (args) => {
-    assert(
-      args.type !== 'etherscan' || args.apiKey !== undefined,
-      'When using etherscan you should provide the API key using --etherscan-key.',
-    )
     const httpClient = new HttpClient()
-    const client = getExplorerClient(httpClient, {
-      type: args.type as ExplorerConfig['type'],
+    const client = createExplorerClient(httpClient, args.type, {
+      chainId: args.chainId,
       url: args.explorerUrl.toString(),
       apiKey: args.apiKey ?? 'YourApiKeyToken',
     })

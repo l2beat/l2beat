@@ -1,8 +1,4 @@
-import {
-  type ExplorerConfig,
-  ProxyDetector,
-  get$Implementations,
-} from '@l2beat/discovery'
+import { ProxyDetector, get$Implementations } from '@l2beat/discovery'
 import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { command, positional } from 'cmd-ts'
@@ -24,7 +20,7 @@ export const DetectProxy = command({
     const logger = new CliLogger()
 
     const explorer = {
-      type: (args.type as ExplorerConfig['type']) ?? 'etherscan',
+      type: args.type,
       url: args.explorerUrl ?? 'ERROR',
       apiKey: args.apiKey ?? 'ERROR',
     }

@@ -3,7 +3,7 @@ import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { boolean, command, flag, option, positional, string } from 'cmd-ts'
 import { fetchAndFlatten } from '../implementations/flatten'
-import { explorerApiKey, explorerType, explorerUrl } from './args'
+import { chainId, explorerApiKey, explorerType, explorerUrl } from './args'
 import { EthereumAddressValue } from './types'
 
 export const Flatten = command({
@@ -16,6 +16,7 @@ export const Flatten = command({
     explorerUrl,
     type: explorerType,
     apiKey: explorerApiKey,
+    chainId: chainId,
     output: option({
       type: string,
       long: 'output',
@@ -35,6 +36,7 @@ export const Flatten = command({
       args.address,
       args.explorerUrl,
       args.apiKey,
+      args.chainId,
       args.type,
       logger,
       args.includeAll,

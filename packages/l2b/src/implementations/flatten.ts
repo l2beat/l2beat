@@ -1,26 +1,21 @@
 import { flattenStartingFrom } from '@l2beat/discovery'
-import {
-  type ExplorerConfig,
-  getExplorerClient,
-} from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { type CliLogger, HttpClient } from '@l2beat/shared'
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import { createExplorerClient } from './createExplorerForCli'
 
 export async function fetchAndFlatten(
   address: EthereumAddress,
   explorerUrl: string,
   apiKey: string | undefined,
-  type: string,
+  chainId: number | undefined,
+  type: ExplorerConfig['type'],
   logger: CliLogger,
   includeAll: boolean,
 ): Promise<string> {
-  assert(
-    type !== 'etherscan' || apiKey !== undefined,
-    'When using etherscan you should provide the API key using --etherscan-key.',
-  )
   const httpClient = new HttpClient()
-  const client = getExplorerClient(httpClient, {
-    type: type as ExplorerConfig['type'],
+  const client = createExplorerClient(httpClient, type, {
+    chainId,
     url: explorerUrl.toString(),
     apiKey: apiKey ?? 'YourApiKeyToken',
   })
