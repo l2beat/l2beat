@@ -4,8 +4,7 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'

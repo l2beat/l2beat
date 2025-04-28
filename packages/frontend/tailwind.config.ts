@@ -4,7 +4,11 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './rewrite/src/**/*.{js,ts,jsx,tsx,mdx}',
+    './rewrite/index.html',
+  ],
   darkMode: 'class',
   future: {
     hoverOnlyWhenSupported: true,
@@ -295,18 +299,19 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
-        'roboto-serif': [
-          'var(--font-roboto-serif)',
-          'Roboto Serif',
-          'Roboto',
-          'Arial',
-        ],
+        'roboto-serif': ['var(--font-roboto-serif)', 'Roboto Serif', 'serif'],
         'roboto-serif-ext': [
           'var(--font-roboto-serif-ext)',
           'var(--font-roboto-serif)',
           'Roboto Serif',
-          'Roboto',
-          'Arial',
+          'serif',
+        ],
+        'rewrite-roboto': ['Roboto', 'Arial', 'sans-serif'],
+        'rewrite-roboto-serif': ['Roboto Serif', 'serif'],
+        'rewrite-roboto-serif-ext': [
+          'Roboto Serif Ext',
+          'Roboto Serif',
+          'serif',
         ],
         lora: ['Lora', 'serif'],
       },

@@ -25,7 +25,7 @@ export function ProjectScalingSummary({ project }: Props) {
       <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
-            <ProjectHeader title={project.name} slug={project.slug} />
+            <ProjectHeader project={project} />
             <div className="space-y-2">
               {project.archivedAt && <ArchivedBar />}
               {project.isUpcoming && <UpcomingBar />}

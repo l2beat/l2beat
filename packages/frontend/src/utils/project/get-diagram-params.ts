@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { getImageParams } from './get-image-params'
 
 export type DiagramType =
@@ -45,10 +46,9 @@ export function getDiagramParams(
   }
 
   const paths = Object.fromEntries(
-    Object.entries(imagePaths).map(([key, filePath]) => [
-      key,
-      getImageParams(filePath),
-    ]),
+    Object.entries(imagePaths)
+      .filter(([_, filePath]) => existsSync(filePath))
+      .map(([key, filePath]) => [key, getImageParams(filePath)]),
   )
 
   const { light } = paths

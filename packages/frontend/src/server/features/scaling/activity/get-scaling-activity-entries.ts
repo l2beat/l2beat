@@ -5,6 +5,7 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getProjectIcon } from '../../utils/get-project-icon'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import type { ActivityProjectTableData } from './get-activity-table-data'
@@ -100,6 +101,7 @@ function getEthereumEntry(
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
     shortName: undefined,
+    icon: getProjectIcon('ethereum'),
     slug: 'ethereum',
     tab,
     // Ethereum is always at the top so it is always stageOrder 3

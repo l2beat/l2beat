@@ -13,12 +13,16 @@ export async function GET(
   props: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await props.params
-  const response = await getCachedResponse(slug, request.nextUrl.searchParams)
+  const range = request.nextUrl.searchParams.get('range') as
+    | ActivityChartParams['range']
+    | null
+
+  const response = await getCachedResponse(slug, range)
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (slug: string, searchParams: URLSearchParams) => {
+  async (slug: string, range: ActivityChartParams['range'] | null) => {
     const isEthereum = slug === 'ethereum'
     const project = await ps.getProject({
       slug,
@@ -31,10 +35,6 @@ const getCachedResponse = cache(
         error: 'Project not found.',
       } as const
     }
-
-    const range = searchParams.get('range') as
-      | ActivityChartParams['range']
-      | null
 
     const params: ActivityChartParams = {
       filter: isEthereum

@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { getCollectionEntry } from '~/content/get-collection'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import type { VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from '../../_utils/get-proof-verification'
 import { getTrustedSetup } from '../../_utils/get-trusted-setup'
@@ -26,7 +27,7 @@ export function getZkCatalogProjectDetails(
 
   return {
     title: project.name,
-    icon: `/icons/${project.slug}.png`,
+    icon: getProjectIcon(project.slug),
     linkToMainProjectDetails: project.isScaling
       ? `/scaling/projects/${project.slug}`
       : undefined,

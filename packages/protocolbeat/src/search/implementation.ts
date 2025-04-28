@@ -1,10 +1,12 @@
-import { getProject, searchCode } from '../api/api'
+import { getProject, getProjects, searchCode } from '../api/api'
 import type { ApiAddressEntry, ApiCodeSearchResponse } from '../api/types'
 import { debounce } from '../common/debounce'
 import { getCodeSearchTerm } from './CodeSearchResultEntry'
+import { getProjectSearchTerm } from './ProjectSearchResultEntry'
 
 export type SearchResults =
   | { type: 'contract'; entryCount: number; entries: ApiAddressEntry[] }
+  | { type: 'project'; entryCount: number; entries: string[] }
   | {
       type: 'code'
       entryCount: number
@@ -57,12 +59,30 @@ async function searchCodeQuery(
 
 const searchCodeQueryDebounced = debounce(searchCodeQuery, 350)
 
+async function searchProjectQuery(searchTerm: string): Promise<SearchResults> {
+  const projects = await getProjects()
+  const projectSearchTerm = getProjectSearchTerm(searchTerm)
+  const matching = projects.filter((p) =>
+    p.name.toLowerCase().includes(projectSearchTerm.toLowerCase()),
+  )
+
+  return {
+    type: 'project',
+    entryCount: matching.length,
+    entries: matching.map((p) => p.name),
+  }
+}
+
+const searchProjectQueryDebounced = debounce(searchProjectQuery, 150)
+
 export async function searchQuery(
   project: string,
   searchTerm: string,
 ): Promise<SearchResults> {
   if (searchTerm.startsWith('%')) {
     return await searchCodeQueryDebounced(project, searchTerm)
+  } else if (searchTerm.startsWith('@')) {
+    return await searchProjectQueryDebounced(searchTerm)
   } else {
     return await serachContractQuery(project, searchTerm)
   }

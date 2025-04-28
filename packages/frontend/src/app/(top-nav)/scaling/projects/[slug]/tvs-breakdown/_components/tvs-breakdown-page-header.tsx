@@ -5,12 +5,14 @@ import { formatTimestampToDateWithHour } from '~/utils/dates'
 interface Props {
   title: string
   slug: string
+  icon: string
   tvsBreakdownTimestamp: number
 }
 
 export function TvsBreakdownPageHeader({
   title,
   slug,
+  icon,
   tvsBreakdownTimestamp,
 }: Props) {
   return (
@@ -24,7 +26,7 @@ export function TvsBreakdownPageHeader({
                 <Image
                   width={16}
                   height={16}
-                  src={`/icons/${slug}.png`}
+                  src={icon}
                   alt={`${title} logo`}
                 />
                 <span className="leading-none">{title}</span>

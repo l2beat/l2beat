@@ -1,5 +1,6 @@
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { ps } from '~/server/projects'
 
 export interface ContractUtils {
@@ -80,6 +81,7 @@ async function getContractUsageMap() {
       id: project.id,
       name: project.name,
       slug: project.slug,
+      icon: getProjectIcon(project.slug),
       url,
     }
 

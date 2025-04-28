@@ -9,6 +9,8 @@ import type { TechnologyChoicesSectionProps } from '~/components/projects/sectio
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
+import { getDiagramParams } from '../get-diagram-params'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getTechnologyChoicesSectionProps } from './get-technology-choices-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
@@ -83,10 +85,7 @@ function getCustomDaSection(
     props: {
       id: 'da-layer-technology',
       title: 'Technology',
-      diagram: {
-        type: 'da-layer-technology',
-        slug: project.slug,
-      },
+      diagram: getDiagramParams('da-layer-technology', project.slug),
       content: project.customDa.technology.description,
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
@@ -126,6 +125,7 @@ function getPublicDaSection(
                 name: daSolution.layerName,
                 slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
                 type: 'data-availability',
+                icon: getProjectIcon(daSolution.layerSlug),
               },
             }
           : undefined,
