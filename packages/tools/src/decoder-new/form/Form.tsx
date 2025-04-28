@@ -1,21 +1,42 @@
+import type { DecodedResult } from '@l2beat/tools-api/types'
 import { clsx } from 'clsx'
 import { useReducer } from 'react'
-import { INITIAL_STATE, reducer, SUPPORTED_CHAINS } from './state'
+import { decode } from './api'
+import { INITIAL_STATE, SUPPORTED_CHAINS, reducer } from './state'
 
-export function Form() {
+interface Props {
+  onDataDecoded: (decoded: DecodedResult) => void
+}
+
+export function Form(props: Props) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
   const hasErrors =
     !!state.errors.hash || !!state.errors.data || !!state.errors.address
   const hasInput = !!state.values.hash || !!state.values.data
-  const disabled = hasErrors || !hasInput
+  const disabled = hasErrors || !hasInput || state.submitting
+
+  function onSubmit() {
+    dispatch({ type: 'submit' })
+    decode({
+      hash: (state.values.hash as `0x${string}`) || undefined,
+      data: (state.values.data as `0x${string}`) || undefined,
+      to: (state.values.address as `0x${string}`) || undefined,
+      chainId: state.values.chainId || undefined,
+    })
+      .then(
+        (x) => props.onDataDecoded(x),
+        (e) => console.error(e),
+      )
+      .then(() => dispatch({ type: 'submitted' }))
+  }
 
   return (
-    <div className="mx-auto max-w-[800px] p-4 pb-20">
+    <main className="mx-auto max-w-[800px] p-4 pb-20">
       <h1 className="mb-4 font-bold">Transaction data decoder</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          console.log(state)
+          onSubmit()
         }}
       >
         <div className="mb-4">
@@ -111,7 +132,7 @@ export function Form() {
         <div className="mb-4 flex h-5 items-center gap-2 text-sm before:h-px before:w-full before:bg-zinc-600"></div>
         <input
           type="submit"
-          value="Decode"
+          value={state.submitting ? 'Decoding' : 'Decode'}
           disabled={disabled}
           className={clsx(
             'mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1',
@@ -120,6 +141,6 @@ export function Form() {
           )}
         />
       </form>
-    </div>
+    </main>
   )
 }
