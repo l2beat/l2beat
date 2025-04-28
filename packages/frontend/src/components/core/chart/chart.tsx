@@ -94,16 +94,16 @@ function ChartContainer<T extends { timestamp: number }>({
   useEventListener(
     'touchstart',
     () => {
-      document.body.classList.add('overflow-x-hidden')
-      document.documentElement.classList.add('overflow-x-hidden')
+      document.body.classList.add('overflow-x-clip')
+      document.documentElement.classList.add('overflow-x-clip')
     },
     ref,
   )
   useEventListener(
     'touchend',
     () => {
-      document.body.classList.remove('overflow-x-hidden')
-      document.documentElement.classList.remove('overflow-x-hidden')
+      document.body.classList.remove('overflow-x-clip')
+      document.documentElement.classList.remove('overflow-x-clip')
     },
     ref,
   )
