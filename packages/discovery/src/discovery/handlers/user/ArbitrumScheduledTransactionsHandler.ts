@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers, utils } from 'ethers'
 import * as z from 'zod'
 import type { ContractValue } from '../../output/types'
@@ -14,9 +14,17 @@ export const ArbitrumScheduledTransactionsHandlerDefinition = z.strictObject({
   type: z.literal('arbitrumScheduledTransactions'),
 })
 
-const ExecutorInterface = new utils.Interface([
-  'function execute(address upgrade, bytes upgradeCallData) payable',
+const executeFn = 'execute(address upgrade, bytes upgradeCallData) payable'
+const ExecutorInterface = new utils.Interface([`function ${executeFn}`])
+
+const unsafeCreateRetryableTicketFn =
+  'unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)'
+const InboxInterface = new utils.Interface([
+  `function ${unsafeCreateRetryableTicketFn}`,
 ])
+const unsafeCreateRetryableTicketFnSighash = InboxInterface.getSighash(
+  unsafeCreateRetryableTicketFn,
+)
 
 // Inboxes are contracts on Ethereum used to send messages to
 // L2 to execute transactions there. We can't easily
@@ -92,15 +100,18 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     //   then the transaction will be called via Executor contract on L2
     //   (going via Inbox contract on Ethereum first)
     // * otherwise the target is the Executor address on Ethereum
+
     const decoded =
       target.toString() === retryableTicketMagic.toString()
-        ? await this.decodeL2Call(log, provider)
-        : await this.decodeExecuteCall(
-            'ethereum',
-            target,
-            log.args.data as string,
-            provider,
-          )
+        ? await this.decodeL2CallPreBoLD(log, provider)
+        : getSighash(log.args.data) === unsafeCreateRetryableTicketFnSighash
+          ? await this.decodeL2CallPostBoLD(target, log.args.data, provider)
+          : await this.decodeExecuteCall(
+              'ethereum',
+              target,
+              log.args.data as string,
+              provider,
+            )
 
     return {
       id: toContractValue(log.args.id),
@@ -120,6 +131,13 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     executeCalldata: string,
     provider: IProvider | undefined,
   ): Promise<Record<string, ContractValue | undefined>> {
+    if (executeCalldata === '0x') {
+      return {
+        chain,
+        executor: executorAddress.toString(),
+      }
+    }
+
     const parsed = ExecutorInterface.parseTransaction({ data: executeCalldata })
     const addrToCall = EthereumAddress(parsed.args.upgrade as string)
     const calldata = parsed.args.upgradeCallData as string
@@ -162,7 +180,15 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     }
   }
 
-  async decodeL2Call(
+  // NOTE(radomski): It appears that BoLD changed the way that L2 calls are
+  // scheduled. Instead of having RETRYABLE_TICKET_MAGIC it directly references
+  // the address of the inbox that it will pass the L2 call to. We split the
+  // decoding into decoding pre-BoLD and post-BoLD.
+  //
+  // Altought I'm still not 100% certain that this is actually correct because
+  // we only have a single case to explore. If you're reading this and something
+  // else has taken place feel free to disregard this comment and correct it.
+  async decodeL2CallPreBoLD(
     log: utils.LogDescription,
     provider: IProvider,
   ): Promise<ContractValue> {
@@ -203,4 +229,42 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
       inboxOnEthereum: targetInbox.toString(),
     }
   }
+
+  async decodeL2CallPostBoLD(
+    targetInbox: EthereumAddress,
+    inboxCalldata: string,
+    provider: IProvider,
+  ): Promise<ContractValue> {
+    // A call to an Executor on L2 starts as a call to an Inbox contract on
+    // Ethereum. The call data has the following structure:
+    // (can be found in L1ArbitrumTimelock.sol)
+
+    const chain = L2Inboxes[targetInbox.toString()]
+    if (chain === undefined) {
+      throw new Error(
+        `Unknown inbox address ${targetInbox.toString()} for L2 call`,
+      )
+    }
+    const parsed = InboxInterface.parseTransaction({ data: inboxCalldata })
+
+    const l2Executor = EthereumAddress(parsed.args.to as string)
+    const l2Calldata = parsed.args.data as string
+    const providerForChain =
+      // Nova arbiscan doesn't provide API so we're out of luck
+      chain === 'nova' ? undefined : provider.switchChain(chain, 0)
+    const decoded = await this.decodeExecuteCall(
+      chain,
+      l2Executor,
+      l2Calldata,
+      providerForChain,
+    )
+    return {
+      ...decoded,
+      inboxOnEthereum: targetInbox.toString(),
+    }
+  }
+}
+
+function getSighash(data: string): string {
+  return Bytes.fromHex(data).toString().slice(0, 10)
 }
