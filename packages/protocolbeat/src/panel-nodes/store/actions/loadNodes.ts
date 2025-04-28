@@ -47,6 +47,7 @@ export function loadNodes(
     : []
 
   const hiddenNodes = [...new Set([...state.hidden, ...unknownNodeIds])]
+  const visibleNodes = allNodes.filter((node) => !hiddenNodes.includes(node.id))
 
   return layout(
     {
@@ -55,7 +56,7 @@ export function loadNodes(
       nodes: allNodes,
       projectId,
     },
-    stackAutoLayout(allNodes),
+    stackAutoLayout(visibleNodes),
   )
 }
 
