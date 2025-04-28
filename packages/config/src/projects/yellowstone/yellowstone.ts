@@ -11,7 +11,7 @@ export const yellowstone: ScalingProject = upcomingL3({
     name: 'Chronicle Yellowstone',
     slug: 'yellowstone',
     description:
-      'Chronicle Yellowstone is Lit Protocol\'s custom EVM rollup which is superseding the Chronicle blockchain, allowing for a more performant and stable backend for Lit\'s infrastructure.',
+      "Chronicle Yellowstone is Lit Protocol's custom EVM rollup which is superseding the Chronicle blockchain, allowing for a more performant and stable backend for Lit's infrastructure.",
     purposes: ['Universal'],
     category: 'Optimium',
     stack: 'Arbitrum',
