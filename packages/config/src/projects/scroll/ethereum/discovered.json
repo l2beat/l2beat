@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22366785,
+  "blockNumber": 22366841,
   "configHash": "0x893e9088d6cee391217cba7bfa703c12a6d447a0c1d5eccb15f26b34d1d2a37e",
   "entries": [
     {
@@ -601,7 +601,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 24,
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1804,8 +1804,8 @@
         "getSigner": "0xD83C4892BB5aA241B63d8C4C134920111E142A20",
         "messageQueueParameters": {
           "maxGasLimit": 10000000,
-          "baseFeeOverhead": 39200000,
-          "baseFeeScalar": 170000000000000
+          "baseFeeOverhead": 15680000,
+          "baseFeeScalar": 34000000000000
         },
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
