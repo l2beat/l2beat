@@ -1,5 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { IconSearch } from '../icons/IconSearch'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../panel-code/store'
@@ -8,6 +9,7 @@ import {
   getCodeSearchTerm,
 } from './CodeSearchResultEntry'
 import { ContractSearchResultEntry } from './ContractSearchResultEntry'
+import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
 import { searchQuery } from './implementation'
 import { useSearchStore } from './store'
 
@@ -18,6 +20,7 @@ interface OpenSearchProps {
 }
 
 export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
+  const navigate = useNavigate()
   const { ensurePanel } = useMultiViewStore()
   const { setSourceIndex, showRange } = useCodeStore()
   const {
@@ -127,6 +130,10 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
                     }
                   }
                   setOpen(false)
+                } else if (data.type === 'project') {
+                  const result = data.entries[selectedIndex]
+                  navigate(`/ui/p/${result}`)
+                  setOpen(false)
                 } else {
                   const result = data.entries[selectedIndex]
                   if (result !== undefined) {
@@ -149,6 +156,10 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
             <CodeSearchResultEntry
               select={select}
               entries={data.type === 'code' ? data.entries : []}
+            />
+          ) : searchTerm.startsWith('@') ? (
+            <ProjectSearchResultEntry
+              entries={data.type === 'project' ? data.entries : []}
             />
           ) : (
             <ContractSearchResultEntry
