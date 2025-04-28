@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x70aa5c2cc63540a8960dce0317a3d86e136a946c
+
+# Diff at Mon, 28 Apr 2025 07:26:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eab7fd7faeb51149b02aa194788c8c00acde6c43 block: 22346267
+- current block number: 22366063
+
+## Description
+
+DelayedWETH owners upgraded to the SuperchainProxyAdminOwner. Under review removed.
+
+## Watched changes
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.0.to:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      values.owner:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0x323dFC63c9B83CB83f40325AaB74b245937cbdF0) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.0.to:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      values.owner:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x323dFC63c9B83CB83f40325AaB74b245937cbdF0","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.10.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.10.via:
+-        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+      receivedPermissions.10.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.9.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.9.from:
+-        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.9.description:
++        "set and change address mappings."
+      receivedPermissions.8.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.8.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
+      receivedPermissions.8.description:
+-        "set and change address mappings."
+      receivedPermissions.7.from:
+-        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      receivedPermissions.6.from:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      receivedPermissions.5.from:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      receivedPermissions.5.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
+      receivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.4.via:
+-        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"0x323dFC63c9B83CB83f40325AaB74b245937cbdF0","description":"can pull funds from the contract in case of emergency."}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC","description":"can pull funds from the contract in case of emergency."}
+    }
+```
+
 Generated with discovered.json: 0x4028119b91831a011bcc3bcced5b8dbd9ff6187e
 
 # Diff at Fri, 25 Apr 2025 13:14:46 GMT:

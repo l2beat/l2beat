@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 22346267,
+  "blockNumber": 22366063,
   "configHash": "0x154cc8a962dfc4c95be5aa2da0b90c39d9f5bad433fe176032642eea8ef8cdcf",
   "entries": [
     {
@@ -249,11 +249,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x5556170e498f35dfE5f66362cFCabEAF37ECC14c",
+        "anchorGame": "0xAB781dAfE32F683b6b48f4a2Eb5EcE8d5eCf2E81",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "getAnchorRoot": [
-          "0x6ef06d11e6edb921441adb3d98374cf2ab9711f91010fd2e73ce390d3ab7511e",
-          134690438
+          "0xd4e7660799af6e2ff716a027b934c19843c313d9cb1d24b8cc690e00abb80f76",
+          134809953
         ],
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "respectedGameType": 0,
@@ -302,7 +302,7 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "description": "can pull funds from the contract in case of emergency.",
           "via": []
         },
@@ -335,7 +335,7 @@
         "decimals": 18,
         "delay": 302400,
         "name": "Wrapped Ether",
-        "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "totalSupply": 0,
         "version": "1.3.0"
@@ -522,7 +522,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "20h 16m",
+        "timeSinceLastL2beatInteraction": "3d 14h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -610,7 +610,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292790785",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292791206",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -654,7 +654,7 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "description": "can pull funds from the contract in case of emergency.",
           "via": []
         },
@@ -687,9 +687,9 @@
         "decimals": 18,
         "delay": 302400,
         "name": "Wrapped Ether",
-        "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20415188000000000000",
+        "totalSupply": "20247594000000000000",
         "version": "1.3.0"
       },
       "derivedName": "DelayedWETH"
@@ -719,7 +719,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 67,
+        "nonce": 68,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -942,6 +942,16 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC",
+          "description": "can pull funds from the contract in case of emergency."
+        },
+        {
+          "permission": "interact",
+          "from": "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0",
+          "description": "can pull funds from the contract in case of emergency."
+        },
         {
           "permission": "interact",
           "from": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -1512,16 +1522,6 @@
               "condition": "not revoked by the Security Council"
             }
           ]
-        },
-        {
-          "permission": "interact",
-          "from": "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC",
-          "description": "can pull funds from the contract in case of emergency."
-        },
-        {
-          "permission": "interact",
-          "from": "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0",
-          "description": "can pull funds from the contract in case of emergency."
         }
       ],
       "directlyReceivedPermissions": [
@@ -1552,7 +1552,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 103,
+        "nonce": 104,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1675,8 +1675,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1326609,
-          "prevBlockNum": 22346252
+          "prevBoughtGas": 516982,
+          "prevBlockNum": 22366023
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1865,7 +1865,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 7660,
+        "gameCount": 7726,
         "gameImpls": [
           "0x5738a876359b48A65d35482C93B43e2c1147B32B",
           "0x1Ae178eBFEECd51709432EA5f37845Da0414EdFe",
