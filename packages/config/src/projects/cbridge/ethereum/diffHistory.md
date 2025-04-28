@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x83e6dc502c8eb962287a6a0b7d7685b72ab68b09
+
+# Diff at Mon, 28 Apr 2025 10:36:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 21628437
+- current block number: 21628437
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x520d812604E7b2ce71819FDBFE9aC40E56327F8f","via":[]}]
+    }
+```
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xF380166F8490F24AF32Bf47D1aA217FBA62B6575","via":[{"address":"0x8E339115b295DeD49880eA62C1F06d1dbec3496b"}]}]
+    }
+```
+
 Generated with discovered.json: 0xc6346c9a04190c17a8603e99fc626a371734e66e
 
 # Diff at Thu, 10 Apr 2025 14:42:15 GMT:

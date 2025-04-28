@@ -132,14 +132,6 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
       "values": {
@@ -354,14 +346,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "sinceTimestamp": 1734387287,
       "sinceBlock": 21418004,
       "values": {
@@ -387,14 +371,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "sinceTimestamp": 1734387299,
       "sinceBlock": 21418005,
       "values": {
@@ -446,18 +422,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1734387299,
       "sinceBlock": 21418005,
@@ -561,13 +525,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "sinceTimestamp": 1734387323,
       "sinceBlock": 21418007,
       "values": {
@@ -623,19 +580,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -776,24 +720,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x9Fb23129982c993743Eb9bB156af8CC8Fa2aC761",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1734387299,
       "sinceBlock": 21418005,
@@ -877,18 +803,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "sinceTimestamp": 1734387287,
       "sinceBlock": 21418004,
       "values": {
@@ -952,13 +866,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }]
-        }
-      ],
       "sinceTimestamp": 1734387311,
       "sinceBlock": 21418006,
       "values": {
@@ -1493,5 +1400,6 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0xfc9ca0e43ac28a3e9f617dc04189ad40145ba6198a41bdfa7027602a8e14ec64",
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
-  }
+  },
+  "permissionsConfigHash": "0x219f6fdcd87f6754ac56bf67c32edfec9724021bc344af35d56ff769caef4b44"
 }

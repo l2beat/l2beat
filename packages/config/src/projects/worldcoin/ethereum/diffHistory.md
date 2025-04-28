@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x909fdbe78fafaea808e7ea9d682bbf5fac2eb282
+
+# Diff at Mon, 28 Apr 2025 10:36:35 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22208595
+- current block number: 22208595
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208595 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x754c15aad56c5926a59d08f345d95ddf87a65851
 
 # Diff at Sun, 06 Apr 2025 08:11:53 GMT:

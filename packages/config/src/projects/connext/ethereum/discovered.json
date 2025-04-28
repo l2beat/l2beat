@@ -116,5 +116,6 @@
       "function getTransactionManager() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa8fb333760f388754817d51b347b3f2490368a69f361d4f07bfde8e87522f74c"
 }

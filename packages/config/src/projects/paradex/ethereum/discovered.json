@@ -120,31 +120,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
       "values": {
@@ -287,23 +262,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -784,5 +742,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
     "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183"
-  }
+  },
+  "permissionsConfigHash": "0x522739091b47430487f4e3d9420ebe51db8624cb75ff518d1633328eb8fe2350"
 }

@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x21bdf9d51e611348832f4191ffd3982e35c509cb
+
+# Diff at Mon, 28 Apr 2025 10:36:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22231693
+- current block number: 22231693
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231693 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[]},{"permission":"interact","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","description":"change the finalization period (challenge period).","via":[]},{"permission":"propose","to":"0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F","via":[]},{"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6","via":[]},{"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x7fFB604c57FAFbAeaE6587DF035a0DB032301593","via":[]},{"permission":"interact","to":"0x7fFB604c57FAFbAeaE6587DF035a0DB032301593","description":"freeze specific withdrawals.","via":[]},{"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","description":"set and change address mappings.","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x7fFB604c57FAFbAeaE6587DF035a0DB032301593","via":[]},{"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}]
+    }
+```
+
 Generated with discovered.json: 0x7d96bf7f77f8a673a83ca4ad43e36b26dce40069
 
 # Diff at Wed, 09 Apr 2025 13:41:14 GMT:

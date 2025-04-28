@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x569e542d33d33f098261c0ea1f5d38a61fceea51
+
+# Diff at Mon, 28 Apr 2025 10:36:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0","via":[]}]
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xAc5D8bCD13da463bea96c75f9085c4e40037F790","via":[]}]
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d","via":[]}]
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C","via":[]}]
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE","via":[]},{"permission":"upgrade","to":"0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe6ae23e48d578ee9f35f5783eff4234bf5119b4f
 
 # Diff at Thu, 10 Apr 2025 14:42:22 GMT:

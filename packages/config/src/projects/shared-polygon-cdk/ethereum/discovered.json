@@ -192,20 +192,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            },
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
@@ -319,66 +305,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
-      "issuedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "to": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-          "via": []
-        },
-        {
-          "permission": "aggregatePolygon",
-          "to": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
-          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            },
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -784,20 +710,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            },
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
       "sinceTimestamp": 1679653151,
       "sinceBlock": 16896720,
@@ -944,30 +856,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1717,5 +1605,6 @@
     "polygon-cdk/PolygonRollupManager_pessimistic": "0xc9535092402045470b254bc911e193803f0a82bc0e78932c1c810ce000a79c63",
     "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
     "polygon-cdk/Timelock": "0x78901e9bf86645856ac7e8fb50da9c1b6d749c8a1e7ee7f2d432ab6ab0d71c34"
-  }
+  },
+  "permissionsConfigHash": "0x83e808d4dc43fa66350966df551cc749cd702992b010b158d7c179bc74cd5b03"
 }

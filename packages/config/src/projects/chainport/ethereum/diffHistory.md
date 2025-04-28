@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6957d6e046bc2be8e3df6a6c8a6eddfd971c7888
+
+# Diff at Mon, 28 Apr 2025 10:36:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22045311
+- current block number: 22045311
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045311 (main branch discovery), not current.
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe2d2ea8f72eca859fbec1f99bb71ffa0bbd83b99
 
 # Diff at Fri, 14 Mar 2025 13:07:39 GMT:

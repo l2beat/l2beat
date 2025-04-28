@@ -28,13 +28,6 @@
         "0xcd8bce7612cc46b4eb6dae7d913880fdd47ee8fcd03d90bd5d99fe145638685c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1637595390,
       "sinceBlock": 13665321,
@@ -174,13 +167,6 @@
         "0x90a8fe0eeb8f61a691fd579cb10499f4fd9167497e9aeab3b1ce4f6427fabc96"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637613802,
       "sinceBlock": 13666681,
       "values": {
@@ -227,13 +213,6 @@
         "0xd67e23441d8b22dcf363c048ad14a86a4de64b242cb242fd7ef0fa11da2cb6ff"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637625277,
       "sinceBlock": 13667557,
       "values": {
@@ -289,13 +268,6 @@
         "0xbda27aaf69ce4f365f73f0436a7e06bffede3a693579569ec42ae41718b94c75"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"],
       "sinceTimestamp": 1637621914,
       "sinceBlock": 13667289,
@@ -391,13 +363,6 @@
         "0xc18d3818f9e809ced3dcce60fbe4287220ce2fced4f6c66711de5e704738bb9a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637651844,
       "sinceBlock": 13669463,
       "values": {
@@ -940,5 +905,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x196e2b9eedc109915dcc5214870666b8d5d9b08c01fb3640d0c4a48eedd5bfe7"
 }

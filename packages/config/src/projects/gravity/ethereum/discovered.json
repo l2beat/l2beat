@@ -69,5 +69,6 @@
       "function updateValset(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _newValset, tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa04ec24b64e25b5baf3052ee0047a0ae753d6306bced17dcfb2ca840ca0412e2"
 }

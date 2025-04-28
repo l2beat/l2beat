@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x12b5d5bc0e4aaca60a5dca1e016416dbfa241288
+
+# Diff at Mon, 28 Apr 2025 10:36:29 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22346378
+- current block number: 22346378
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346378 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x6e08569bfa61bb905be3ca25503b694413dd59a7
 
 # Diff at Fri, 25 Apr 2025 13:36:51 GMT:

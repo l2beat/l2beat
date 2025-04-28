@@ -135,13 +135,6 @@
         "0xca3afcf92a9c12ce307d9de265b57fe02f7022f6a5f0eab38511eccafbfff478"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getDataSize",
         "getDefiInteractionHashesLength",
@@ -495,5 +488,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x2a68b75720ca2fd1c4b920c1a04963acd94fb571c9210be60dfb83a05c18ef68"
 }

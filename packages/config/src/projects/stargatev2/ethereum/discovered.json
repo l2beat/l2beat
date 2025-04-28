@@ -33,13 +33,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -697,13 +690,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1687808675,
       "sinceBlock": 17565748,
       "values": {
@@ -2004,5 +1990,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xa6e6ad7557336e8f9badff8ecb10ee73fba81f19e86b981eee4b22f82bcd6a61"
 }

@@ -54,19 +54,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x258862dec9a77db57b398c441390783293E2a7A1",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [{ "address": "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a" }]
-        }
-      ],
       "sinceTimestamp": 1720110635,
       "sinceBlock": 20234353,
       "values": {
@@ -121,25 +108,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x258862dec9a77db57b398c441390783293E2a7A1",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x258862dec9a77db57b398c441390783293E2a7A1",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1719499031,
       "sinceBlock": 20183666,
@@ -436,5 +404,6 @@
     "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0xa8648db707f1a993c68710dc6d53b92eb429f9d630d94c6d0937249d172a9b76"
 }

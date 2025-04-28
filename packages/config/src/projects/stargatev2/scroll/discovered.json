@@ -417,5 +417,6 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa6e6ad7557336e8f9badff8ecb10ee73fba81f19e86b981eee4b22f82bcd6a61"
 }

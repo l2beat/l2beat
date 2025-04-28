@@ -77,13 +77,6 @@
         "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1699746983,
       "sinceBlock": 18552104,
       "values": {
@@ -191,13 +184,6 @@
         "0x0eb913bdd3a56c7e954cf0d749fde579620dce50157f8736c1938de91acd7127"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -658,5 +644,6 @@
       "function setPendingAdmin(address pendingAdmin_)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xf217a3c997f97992ab81483509472213c592d7d4788954b370e6295c40b1e963"
 }

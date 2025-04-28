@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2f086b096539eb91e0bf665897fc333c7fec5cf6
+
+# Diff at Mon, 28 Apr 2025 10:36:22 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22346402
+- current block number: 22346402
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346402 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x5b88323f00185a488b376c67a02f6b699a49264c
 
 # Diff at Wed, 19 Mar 2025 13:05:31 GMT:

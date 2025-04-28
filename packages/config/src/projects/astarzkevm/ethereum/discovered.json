@@ -65,25 +65,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1708632059,
       "sinceBlock": 19285389,
@@ -217,19 +198,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "via": [{ "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }]
-        }
-      ],
       "sinceTimestamp": 1708624559,
       "sinceBlock": 19284769,
       "values": {
@@ -609,5 +577,6 @@
     "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0xc4f562b70fbddd86867eb637f503523391613cd3862ad0f3279aa35cfa2766e6"
 }

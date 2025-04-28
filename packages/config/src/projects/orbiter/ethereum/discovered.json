@@ -44,5 +44,6 @@
       "function transferERC20(address _token, address _to, uint256 _amount, bytes _ext)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x244ef68ea0aae917d98a86cc20e952e6d47fdc84db6cc8de707d3612251d653c"
 }

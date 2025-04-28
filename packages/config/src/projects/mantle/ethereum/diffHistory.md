@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x05e40b04be83da4a5ee2098215015c69830a22c2
+
+# Diff at Mon, 28 Apr 2025 10:36:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22273219
+- current block number: 22273219
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273219 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x2F44BD2a54aC3fB20cd7783cF94334069641daC9","via":[]},{"permission":"propose","to":"0x6667961f5e9C98A76a48767522150889703Ed77D","via":[]},{"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}]
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400},{"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749","via":[]},{"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}]
+    }
+```
+
+```diff
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"manage all access control roles.","via":[]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"manage all access control roles.","via":[{"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"set and change address mappings.","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x2F44BD2a54aC3fB20cd7783cF94334069641daC9","via":[]},{"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}]
+    }
+```
+
 Generated with discovered.json: 0xcaf87d742fb8a5a68439077b565cd48ebfea18b7
 
 # Diff at Tue, 15 Apr 2025 08:46:02 GMT:

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa355d84166167c29fa645d69a546f0c6dbc49828
+
+# Diff at Mon, 28 Apr 2025 10:36:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x353800524721e11B453f73f523dD8840c215a213","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"manage the members of the data availability committee and the threshold for valid commitments.","via":[]},{"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"}]}]
+    }
+```
+
 Generated with discovered.json: 0xe55fc5e613096cc5fec9b0993aefd5463dfb161a
 
 # Diff at Thu, 24 Apr 2025 10:31:16 GMT:

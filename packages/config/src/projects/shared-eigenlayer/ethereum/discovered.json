@@ -100,40 +100,6 @@
         "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["avs"],
       "sinceTimestamp": 1711141931,
       "sinceBlock": 19492759,
@@ -307,40 +273,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -651,40 +583,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract for permissionless strategy creation via beacon proxies.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1723232243,
       "sinceBlock": 20493178,
       "values": {
@@ -772,20 +670,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "description": "executes scheduled operations after the delay",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "description": "can cancel scheduled operations",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1732299167,
       "sinceBlock": 21244979,
       "values": {
@@ -848,40 +732,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1721406755,
       "sinceBlock": 20341793,
       "values": {
@@ -964,40 +814,6 @@
         "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-              "delay": 2073600
-            },
-            { "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            { "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-              "delay": 2073600
-            },
-            { "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            { "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            { "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
       "sinceBlock": 19477666,
@@ -1056,40 +872,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
@@ -1197,40 +979,6 @@
         "0x0e8b710d3b23eeae5d441beddd0f023fb1532922dee0f7daf4098658bc4f4d32"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["numPods"],
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
@@ -1587,20 +1335,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "description": "executes scheduled operations after the delay",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "description": "can cancel scheduled operations",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1732234379,
       "sinceBlock": 21239612,
       "values": {
@@ -1672,40 +1406,6 @@
         "0x354232830a4c633f47d96d48ecce7e0dae7c3475887ee6418e78b2dcc045f8b7"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
@@ -1814,40 +1514,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
       "sinceBlock": 18366276,
@@ -2951,5 +2617,6 @@
     "eigenlayer/TokenHopper": "0x2d11e019aadd23bb3977879af9e11d7021f86ccb0c073820375d508372480683",
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x4d91b4653aebdeeca5e10893c219b45ad3ac6fcd63546235ee97f08867305f54"
 }

@@ -14,13 +14,6 @@
         "0xd4be21971e93432f8a4269386f5c2dfa288dff859600b0a3c8d8f17fdfd895e6"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691475899,
       "sinceBlock": 17868398,
       "values": {
@@ -68,13 +61,6 @@
         "0x6e1b7753cf25b1dc926ed1048285f85b9cc596dbcebdadc1fdabd6830ac08f1e"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691475827,
       "sinceBlock": 17868392,
       "values": {
@@ -125,13 +111,6 @@
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691475083,
       "sinceBlock": 17868330,
       "values": {
@@ -178,13 +157,6 @@
         "0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691244011,
       "sinceBlock": 17849224,
       "values": {
@@ -209,14 +181,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can update the validator registry address used to check whitelist inclusion.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691243879,
       "sinceBlock": 17849213,
       "values": {
@@ -378,14 +342,6 @@
       ],
       "proxyType": "immutable",
       "description": "Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can update the whitelist of validators",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691243915,
       "sinceBlock": 17849216,
       "values": {
@@ -435,19 +391,6 @@
         "0x315e4278520bf097047cc2be4371ac60125bba1043fa4e97e7054988fe3ba503"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can replace all validators.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -550,13 +493,6 @@
         "0x093a1d884a048e1f39d3bb4ebd1bab3f52d07ed9cfd823099f6ddb87098f2de2"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691475539,
       "sinceBlock": 17868368,
       "values": {
@@ -688,14 +624,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can update the root chain it references.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691243951,
       "sinceBlock": 17849219,
       "values": {
@@ -725,14 +653,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that allows the consensus supermajority to slash validators.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can update how much of the slashed funds go to the proposer and reporter.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691243891,
       "sinceBlock": 17849214,
       "values": {
@@ -760,13 +680,6 @@
         "0x4731842b5a3a9367e3a748bcccb6280c89c1e5428139b7cca48ed566ed74709a"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691475707,
       "sinceBlock": 17868382,
       "values": {
@@ -850,13 +763,6 @@
         "0xa949b42c0c7697496d06fe3d513ba1663e62f99796bacd265ab50e6453e4dcbb"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1691475959,
       "sinceBlock": 17868403,
       "values": {
@@ -928,14 +834,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-          "description": "can delete arbitrary checkpoints.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
@@ -1873,5 +1771,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/ValidatorRegistry": "0x6d525dc05290b0183414a4731a6dc9236e6d96841b6b657bae95deebeddee807",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0xab528d4de92b1c2cad9455e4f5ab5b16fe826d98e4e05bd85d631f41cbb8ddb8"
 }

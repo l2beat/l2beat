@@ -383,13 +383,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestRoot"],
       "sinceTimestamp": 1688671151,
       "sinceBlock": 17636832,
@@ -670,5 +663,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x7b1d0c44640026d62e769e0e235aa8ea5cf2d7f5c8afde283febd6a748cd554c"
 }

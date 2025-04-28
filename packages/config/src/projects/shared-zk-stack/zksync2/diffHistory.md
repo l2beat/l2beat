@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x1889d0b03f4c91eb2eb22391b900bd42332cacb3
+
+# Diff at Mon, 28 Apr 2025 10:36:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 59465384
+- current block number: 59465384
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 59465384 (main branch discovery), not current.
+
+```diff
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0x085b8B6407f150D62adB1EF926F7f304600ec714"}]},{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract ProtocolTimelockController_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"}]},{"permission":"interact","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract TokenTimelockController_deprecated (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x10560f8B7eE37571AD7E3702EEb12Bc422036E89","delay":259200,"description":"manage all access control roles and change the minimum delay.","via":[{"address":"0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6","delay":259200}]},{"permission":"interact","to":"0x10560f8B7eE37571AD7E3702EEb12Bc422036E89","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x10560f8B7eE37571AD7E3702EEb12Bc422036E89","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x10560f8B7eE37571AD7E3702EEb12Bc422036E89","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.","via":[{"address":"0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","to":"0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4","description":"control all roles in the ZkToken access control, including the minter roles.","via":[]},{"permission":"upgrade","to":"0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8","via":[{"address":"0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}]
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x711ea620AB29f41AbC6596a15981e14ce58C97c9","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","via":[]},{"permission":"interact","to":"0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","via":[]}]
+    }
+```
+
+```diff
+    contract GovOpsTimelockController_deprecated (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x496869a7575A1f907D1C5B1eca28e4e9E382afAb","delay":259200,"description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19","delay":259200}]},{"permission":"interact","to":"0x496869a7575A1f907D1C5B1eca28e4e9E382afAb","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x496869a7575A1f907D1C5B1eca28e4e9E382afAb","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x496869a7575A1f907D1C5B1eca28e4e9E382afAb","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","delay":259200,"description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200}]},{"permission":"interact","to":"0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xb83FF6501214ddF40C91C9565d095400f3F45746","delay":259200,"description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","to":"0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"propose transactions.","via":[]}]
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x711ea620AB29f41AbC6596a15981e14ce58C97c9","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x8c3263ccda583a59843916187172855c22b89838
 
 # Diff at Tue, 22 Apr 2025 12:21:29 GMT:

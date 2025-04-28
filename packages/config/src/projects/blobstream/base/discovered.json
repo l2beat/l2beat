@@ -36,14 +36,6 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1719523667,
       "sinceBlock": 16367160,
       "values": {
@@ -194,31 +186,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
-          "description": "can freeze the bridge contract and update the list of authorized relayers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1710651207,
       "sinceBlock": 11930930,
@@ -549,5 +516,6 @@
     "succinct/SP1Blobstream": "0x886e792aba1703e94c7eb1c129babcca484bd908a355b129879c543fdca7d523",
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
-  }
+  },
+  "permissionsConfigHash": "0x15f5aaeda4c8420887d934037b49c6fb819e70af985cc1aad78d583c361f785c"
 }

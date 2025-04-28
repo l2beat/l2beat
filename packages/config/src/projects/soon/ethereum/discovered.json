@@ -15,29 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "change the finalization period (challenge period).",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -109,24 +86,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead", "getSequencerPubkeyInfos"],
       "sinceTimestamp": 1735877315,
       "sinceBlock": 21541468,
@@ -229,24 +188,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-          "description": "freeze specific withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1735877303,
       "sinceBlock": 21541467,
@@ -321,13 +262,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877363,
       "sinceBlock": 21541472,
       "values": {
@@ -438,14 +372,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877171,
       "sinceBlock": 21541456,
       "values": {
@@ -525,18 +451,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877231,
       "sinceBlock": 21541461,
       "values": {
@@ -671,14 +585,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877327,
       "sinceBlock": 21541469,
       "values": {
@@ -1103,5 +1009,6 @@
     "opstack/OptimismPortal_soon": "0x507812100f0bd906b170b3a3aada83e2bcdb3b7ab4ef917a52e227dcdd9d42d9",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0x68d0c63cdb472304d7535e1f346167607384aaf415d1f263236470fdc60b1c32"
 }

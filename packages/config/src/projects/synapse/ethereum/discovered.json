@@ -80,13 +80,6 @@
         "0x81d007102ce6d41c4e245cc562c41b762d6fe49738f3dac3eb5e159caa6dc853"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1629082107,
       "sinceBlock": 13033669,
       "values": {
@@ -612,5 +605,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x03b2bb26e2a192bd96bf7d523675b8f6a7fa28fbe667b6312f77e35be131f642"
 }

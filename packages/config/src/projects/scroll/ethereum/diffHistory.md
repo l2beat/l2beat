@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xb41899c17a8c3b1758aa844bd11544fee769f359
+
+# Diff at Mon, 28 Apr 2025 10:36:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22297562
+- current block number: 22297562
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22297562 (main branch discovery), not current.
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+    }
+```
+
 Generated with discovered.json: 0x0e01527d127d533aa4b14eb56b065292878e5616
 
 # Diff at Fri, 18 Apr 2025 18:06:50 GMT:

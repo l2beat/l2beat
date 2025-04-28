@@ -23,13 +23,6 @@
         "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661972207,
       "sinceBlock": 15448318,
       "values": {
@@ -533,5 +526,6 @@
       "function withdraw(address recipient, uint256 amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xf730b246d0eb95e32ed7cc7e7bfd7d4629627efedfa4f16ad7e4821283bbaa18"
 }

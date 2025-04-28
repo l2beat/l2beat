@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xe5196011be34dfef4672e4608d94387606a11e5b
+
+# Diff at Mon, 28 Apr 2025 10:36:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 133041012
+- current block number: 133041012
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9","via":[{"address":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}]}]
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x089808f694055a1a43aca5ca4d5cd729f6bac7d0
 
 # Diff at Thu, 10 Apr 2025 14:43:59 GMT:

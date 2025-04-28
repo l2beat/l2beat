@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x93fb21e870a2e7987544b7729188df1122d79c64
+
+# Diff at Mon, 28 Apr 2025 10:36:33 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 27754690
+- current block number: 27754690
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 27754690 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x5416B7421c42B9218B29f688C47a46020c23cF0d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","description":"set and change address mappings.","via":[{"address":"0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[]},{"permission":"propose","to":"0xfB04981fa938f03b82B4Ca8F5B1FAAA1A547306B","via":[]},{"permission":"upgrade","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[{"address":"0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xa096dD38362bd2cE3C696474329989960722A7Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x9C5657Fd52b200b3fE7652ADF20659ec071DD8b0","via":[]},{"permission":"upgrade","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[{"address":"0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb765Df9d2925a82678F4B7bc60eF5294c1604514) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[]},{"permission":"upgrade","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[{"address":"0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}]
+    }
+```
+
 Generated with discovered.json: 0x76577971578e9e373406d33dab4b530a4d40f77a
 
 # Diff at Thu, 27 Mar 2025 11:16:07 GMT:

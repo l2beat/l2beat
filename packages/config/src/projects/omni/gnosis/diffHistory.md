@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xddaebf400f730ce6b98f831bd32b28645e031227
+
+# Diff at Mon, 28 Apr 2025 10:36:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 39725195
+- current block number: 39725195
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 39725195 (main branch discovery), not current.
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xb1F43dc8B57562e7FA48157D73102a8e4a94975A","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","via":[]},{"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}]
+    }
+```
+
+```diff
+    contract HomeAMB (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","description":"change the threshold and manage signers.","via":[]},{"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}]
+    }
+```
+
+```diff
+    contract HomeOmnibridge (0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x92286ed5478bf371d1870708f02033bc65c82620
 
 # Diff at Thu, 24 Apr 2025 15:50:32 GMT:

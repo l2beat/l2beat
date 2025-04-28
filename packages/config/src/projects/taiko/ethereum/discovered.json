@@ -37,13 +37,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getStateVariables",
         "getLastSyncedBlock",
@@ -310,13 +303,6 @@
         "0x5da570fbffd5ab663ce8983496a9ded290ed853a950b4052ac93b35217babac8"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1714033799,
       "sinceBlock": 19731197,
@@ -564,13 +550,6 @@
         "0x3bb4317c77a14f8dabc9d24fa5867bfa8af8e388e54bdd58da2b8f43f2914c2b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1730879519,
       "sinceBlock": 21127238,
       "values": {
@@ -604,13 +583,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for blocks proven by Guardian minority.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550627,
       "sinceBlock": 19773965,
       "values": {
@@ -688,13 +660,6 @@
         "0x9dede6e55b7b0db6226ea3cead125c4750d147ad96cef774a61e51e8e9ce6d36"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550615,
       "sinceBlock": 19773964,
       "values": {
@@ -778,13 +743,6 @@
         "0x5350c31937c3194b7ab11b26251fcec0e2a3ba88b516d5c851b9f6bfe7e76935"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1731046547,
       "sinceBlock": 21141069,
       "values": {
@@ -843,13 +801,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1716217559,
       "sinceBlock": 19911920,
       "values": {
@@ -944,13 +895,6 @@
         "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": {
@@ -1005,13 +949,6 @@
         "0x0112b81e89b367f8ffeb6b571bd245b1be7a1279474ffa11591f8374a2c8b14f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -1172,13 +1109,6 @@
         "0xf99b7d5f650d3734e945c5040d8e4776dfdc97ff745666e084c1d471b7973f38"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -1238,13 +1168,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for SGX proven blocks.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nextInstanceId"],
       "sinceTimestamp": 1714550627,
       "sinceBlock": 19773965,
@@ -1317,13 +1240,6 @@
         "0x118c20a34164db28141d7fa6496d1fcf9e139354ed77c4e1c3f33e5eaac65977"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nextMessageId"],
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
@@ -1428,13 +1344,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for Guardian proven blocks.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550627,
       "sinceBlock": 19773965,
       "values": {
@@ -1512,13 +1421,6 @@
         "0x61eadd250e6fee2eea7d778ca5fdb6e04b0fa09044c65eba836b397f585e5535"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -2541,5 +2443,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752"
-  }
+  },
+  "permissionsConfigHash": "0x44e0ae1ee03acb9a3d6f3e2fb73c668166d8a68ee99c1d0fdfe6edda9e13fda9"
 }

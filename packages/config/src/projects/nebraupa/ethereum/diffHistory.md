@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xfaba4331f654a2596d00f673eb0a092165fc75a2
+
+# Diff at Mon, 28 Apr 2025 10:36:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 20826378
+- current block number: 20826378
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826378 (main branch discovery), not current.
+
+```diff
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xb463603469Bf31f189E3F6625baf8378880Df14e","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x836448fbeca19051957056104cce2ac592fc7bec
 
 # Diff at Tue, 04 Mar 2025 10:39:28 GMT:

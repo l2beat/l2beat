@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x0bf810e890cea47314800a73e2ab605157621057
+
+# Diff at Mon, 28 Apr 2025 10:36:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 14489756
+- current block number: 14489756
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14489756 (main branch discovery), not current.
+
+```diff
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]}]
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
+    }
+```
+
+```diff
+    contract L2ETHGateway (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
+    }
+```
+
+```diff
+    contract L2ScrollMessenger (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
+    }
+```
+
+```diff
+    contract SCRToken (0xd29687c813D741E2F938F4aC377128810E217b1b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]}]
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
+    }
+```
+
 Generated with discovered.json: 0x7516b67414bc24c4dcff6339a2858a557766be03
 
 # Diff at Sun, 06 Apr 2025 08:18:52 GMT:

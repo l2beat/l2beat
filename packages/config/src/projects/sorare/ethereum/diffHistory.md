@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x48a1a783f4c83b056c336b7d8d34c241ffbc4353
+
+# Diff at Mon, 28 Apr 2025 10:36:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 21981156
+- current block number: 21981156
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981156 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0xF5C9F957705bea56a7e806943f98F7777B995826) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0x5918481F777dBe437De249492B90AffB4e655de4","via":[]},{"permission":"governStarknet","to":"0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B","via":[]},{"permission":"interact","to":"0x5918481F777dBe437De249492B90AffB4e655de4","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B","description":"manage the token admin role.","via":[]},{"permission":"operateStarkEx","to":"0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","via":[]},{"permission":"operateStarkEx","to":"0x63881ac44293E22F3c3183a0C4113586ABb3e653","via":[]},{"permission":"upgrade","to":"0x5918481F777dBe437De249492B90AffB4e655de4","delay":1209600,"via":[]},{"permission":"upgrade","to":"0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B","delay":1209600,"via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xc860dc1df1980c365961ebd4fdf5c43b029b1753
 
 # Diff at Thu, 27 Mar 2025 11:15:24 GMT:

@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xb0f769e7c926fa47506a2a841216f75c48016785
+
+# Diff at Mon, 28 Apr 2025 10:36:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22336710
+- current block number: 22336710
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22336710 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","description":"can freeze the Vector contract and update the list of authorized relayers.","via":[]},{"permission":"interact","to":"0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474","description":"can call commitHeaderRange() to commit block ranges to the Vector contract.","via":[]},{"permission":"upgrade","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[]}]
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930","description":"pause the bridge.","via":[]},{"permission":"interact","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.","via":[]},{"permission":"upgrade","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}]
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x4f19e1c1a1b47fe77d64dbfe805e57c7762bc60d
 
 # Diff at Thu, 24 Apr 2025 10:31:15 GMT:

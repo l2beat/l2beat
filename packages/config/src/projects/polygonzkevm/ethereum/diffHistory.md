@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x89da5bfdfd434fafeb5ff273ff71dd3f1f2fd3cc
+
+# Diff at Mon, 28 Apr 2025 10:36:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"sequence","to":"0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800","via":[]}]
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904","via":[]}]
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x9ccaa90adad549269313917ddd7005f8eb8be731
 
 # Diff at Tue, 18 Mar 2025 08:13:35 GMT:

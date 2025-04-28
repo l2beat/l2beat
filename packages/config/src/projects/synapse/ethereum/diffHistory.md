@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x08d7660b5f2de07fb10c9ec6222f4b5af98917c1
+
+# Diff at Mon, 28 Apr 2025 10:36:24 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x56914b7676d30e3ac6989405189e0e7565bbaafc
 
 # Diff at Mon, 17 Mar 2025 15:29:31 GMT:

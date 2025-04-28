@@ -19,14 +19,6 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -145,13 +137,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "sinceTimestamp": 1700167631,
       "sinceBlock": 18586931,
       "values": {
@@ -277,23 +262,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0x309Fe2536d01867018D120b40e4676723C53A14C",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -484,14 +452,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "sinceTimestamp": 1700167631,
       "sinceBlock": 18586931,
       "values": {
@@ -637,24 +597,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x99199a22125034c808ff20f377d91187E8050F2E",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1700167631,
       "sinceBlock": 18586931,
@@ -783,13 +725,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "sinceTimestamp": 1700167631,
       "sinceBlock": 18586931,
       "values": {
@@ -830,14 +765,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "sinceTimestamp": 1700167631,
       "sinceBlock": 18586931,
       "values": {
@@ -952,41 +879,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "via": [
-            {
-              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": [
-            {
-              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
-            },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1700167631,
       "sinceBlock": 18586931,
@@ -1071,41 +963,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "via": [
-            {
-              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": [
-            {
-              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
-            },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
-        }
-      ],
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
@@ -1428,14 +1285,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
-        }
-      ],
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
       "values": {
@@ -2000,5 +1849,6 @@
     "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
     "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0xba7e40d926b07a5167e7cc06ca333457f145c7a757664a09ac0e345fb096730e"
 }

@@ -1,3 +1,162 @@
+Generated with discovered.json: 0xe9273337736e2ab2f7534e98aab1134330a1be68
+
+# Diff at Mon, 28 Apr 2025 10:36:37 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 838575
+- current block number: 838575
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 838575 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.","via":[]}]
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","via":[]}]
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","via":[]}]
+    }
+```
+
+```diff
+    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
+      receivedPermissions.10:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
+      receivedPermissions.9:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
+      receivedPermissions.8:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
+      receivedPermissions.7:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
+      receivedPermissions.6:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
+      receivedPermissions.5:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."}
+      receivedPermissions.4:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"confirm sanctions, making them permanent without providing an exit window."}
+      receivedPermissions.3.description:
+-        "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
++        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+      receivedPermissions.2.description:
+-        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
++        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+      receivedPermissions.1.delay:
++        950400
+      receivedPermissions.0.delay:
+-        950400
++        604800
+      receivedPermissions.0.description:
+-        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
++        "confirm sanctions, making them permanent without providing an exit window."
+    }
+```
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","via":[]}]
+      receivedPermissions.7:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":1036800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
+      receivedPermissions.6:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.5.delay:
+-        1036800
+      receivedPermissions.5.description:
+-        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.4.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
++        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+      receivedPermissions.3.description:
++        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+      receivedPermissions.2.from:
+-        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.2.description:
+-        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
++        "approve smart wallet recoveries for any KintoWallet."
+      receivedPermissions.2.delay:
++        1036800
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"change the beacon implementation.","via":[]}]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","description":"confirm sanctions, making them permanent without providing an exit window.","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":1036800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"approve smart wallet recoveries for any KintoWallet.","via":[]}]
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x6E31039abF8d248aBed57E307C9E1b7530c269E4","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.","via":[]},{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"transfer KYC NFTs to a different address.","via":[]},{"permission":"interact","to":"0xb539019776eF803E89EC062Ad54cA24D1Fdb008a","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x70d1c95896534960241cb7c054aeab528c3a34b7
 
 # Diff at Tue, 22 Apr 2025 13:32:35 GMT:
