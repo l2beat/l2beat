@@ -21,7 +21,6 @@ export function buildSharedModuleIndex(
 }
 
 export type StructureContractOverrides = StructureContract & {
-  name?: string // TODO(radomski): This is required?
   address: EthereumAddress
 }
 
@@ -44,7 +43,7 @@ export function makeEntryStructureConfig(
     pushValues: function (values: StructureContract) {
       const newState = {
         // root names > display names
-        name: this.name ?? values.displayName ?? this.displayName,
+        name: this.name,
         address: this.address,
         ...StructureContract.parse(merge({}, values, this)),
       }

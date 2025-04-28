@@ -75,7 +75,6 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     template: e.template,
     sourceHashes: e.sourceHashes,
     proxyType: e.proxyType,
-    displayName: e.displayName,
     description: e.description,
     issuedPermissions: e.issuedPermissions,
     receivedPermissions: e.receivedPermissions,

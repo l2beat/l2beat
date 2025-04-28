@@ -34,7 +34,6 @@ export const DiscoveryCategory = z.object({
 
 export type ColorContract = z.infer<typeof ColorContract>
 export const ColorContract = z.object({
-  displayName: z.string().optional(),
   categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   category: z.optional(z.string()),
   description: z.optional(z.string()),

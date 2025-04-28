@@ -99,7 +99,6 @@ export type StructureEntry = {
 
 export type ColorEntry = {
   name?: string
-  displayName?: string
   description?: string
   fieldMeta?: Record<string, FieldMeta>
   issuedPermissions?: IssuedPermission[]

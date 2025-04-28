@@ -28,7 +28,6 @@ interface AnalyzedCommon {
   address: EthereumAddress
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
-  derivedName: string | undefined
   implementationNames?: Record<EthereumAddress, string>
   isVerified: boolean
   proxyType?: string
@@ -184,16 +183,15 @@ export class AddressAnalyzer {
     const deployment = proxy.deployment
     const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
       type: isEOA ? 'EOA' : 'Contract',
-      name: isEOA ? config.name : (config.name ?? sources.name),
-      derivedName: isEOA ? undefined : sources.name,
-      implementationNames: isEOA
-        ? undefined
-        : getImplementationNames(address, sources),
+      name: isEOA ? undefined : sources.name,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,
+      implementationNames: isEOA
+        ? undefined
+        : getImplementationNames(address, sources),
       proxyType: proxy?.type,
       values: mergedValues,
       errors: { ...templateErrors, ...errors },

@@ -9,7 +9,6 @@ const BASE_CONTRACT: AnalyzedContract = {
   type: 'Contract',
   address: EthereumAddress.random(),
   name: randomUUID(),
-  derivedName: undefined,
   isVerified: false,
   implementations: [],
   values: {},
@@ -301,7 +300,6 @@ describe(resolveAnalysis.name, () => {
         type: 'EOA',
         name: undefined,
         address: eoaAddress,
-        derivedName: undefined,
         isVerified: false,
         implementations: [],
         values: {},
@@ -344,7 +342,6 @@ describe(resolveAnalysis.name, () => {
       {
         type: 'EOA',
         name: undefined,
-        derivedName: undefined,
         isVerified: false,
         implementations: [],
         values: {},

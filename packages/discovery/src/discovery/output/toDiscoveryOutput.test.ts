@@ -16,7 +16,6 @@ describe(processAnalysis.name, () => {
   const baseContract = {
     ...EMPTY_ANALYZED_CONTRACT,
     type: 'Contract' as const,
-    derivedName: undefined,
     isVerified: true,
     deploymentTimestamp: UnixTime(1234),
     deploymentBlockNumber: 9876,
@@ -55,7 +54,6 @@ describe(processAnalysis.name, () => {
     ...baseContract,
     address: ADDRESS_B,
     name: 'B',
-    derivedName: 'Something not B',
     values: { a: 1, b: 2 },
     errors: { c: 'error' },
     abis: {

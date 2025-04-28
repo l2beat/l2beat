@@ -18,9 +18,5 @@ export function getImplementationNames(
 
   const entries = [baseEntry, ...perSourceEntries]
 
-  if (entries.length > 1) {
-    return Object.fromEntries(entries)
-  }
-
-  return undefined
+  return entries.length > 1 ? Object.fromEntries(entries) : undefined
 }
