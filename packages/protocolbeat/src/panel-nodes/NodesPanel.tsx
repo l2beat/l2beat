@@ -85,7 +85,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           id: eoa.address,
           isInitial: false,
           name: eoa.name ?? fallback,
-          addressType: 'EOA',
+          addressType: eoa.type,
           address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
           color: 0,
