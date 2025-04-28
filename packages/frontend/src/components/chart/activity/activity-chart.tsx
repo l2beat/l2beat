@@ -77,7 +77,7 @@ export function ActivityChart({
     projects: {
       label:
         projectName ??
-        (type === 'ValidiumsAndOptimiums' ? 'Validiums and Optimiums' : type),
+        (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
       color: typeToColor(type),
       indicatorType: {
         shape: 'line',
@@ -226,7 +226,7 @@ export function ActivityCustomTooltip({
             return (
               <div
                 key={entry.name}
-                className="flex w-full items-start justify-between gap-2"
+                className="flex w-full items-center justify-between gap-2"
               >
                 <div className="flex items-center gap-1">
                   <ChartDataIndicator
