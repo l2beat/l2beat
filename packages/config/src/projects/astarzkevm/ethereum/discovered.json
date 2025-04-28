@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0x28794d5aa2f897a56bf7120f67f4ce98e957ef5e0bee60689eabca9418b414d5",
+  "configHash": "0x2a6f37b61d15bd830983f6930355f80eee2ad2682e07d2057a56b0f6732a9a67",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -247,26 +247,26 @@
         "getAmountOfMembers": 5,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://dac1-zkevm.astar.network",
-            "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
-          ],
-          [
-            "https://dac3-zkevm.astar.network",
-            "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
-          ],
-          [
-            "https://dac2-zkevm.astar.network",
-            "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
-          ],
-          [
-            "https://dac4-zkevm.astar.network",
-            "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
-          ],
-          [
-            "https://dac0-zkevm.astar.network",
-            "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
-          ]
+          {
+            "url": "https://dac1-zkevm.astar.network",
+            "addr": "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
+          },
+          {
+            "url": "https://dac3-zkevm.astar.network",
+            "addr": "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
+          },
+          {
+            "url": "https://dac2-zkevm.astar.network",
+            "addr": "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
+          },
+          {
+            "url": "https://dac4-zkevm.astar.network",
+            "addr": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
+          },
+          {
+            "url": "https://dac0-zkevm.astar.network",
+            "addr": "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
+          }
         ],
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "requiredAmountOfSignatures": 3

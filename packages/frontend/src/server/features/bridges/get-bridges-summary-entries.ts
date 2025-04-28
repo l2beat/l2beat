@@ -27,7 +27,7 @@ export async function getBridgesSummaryEntries() {
         'statuses',
         'bridgeInfo',
         'bridgeRisks',
-        'tvlInfo',
+        'tvsInfo',
         'bridgeTechnology',
       ],
       where: ['isBridge'],
@@ -78,9 +78,7 @@ interface TvsData {
 }
 
 function getBridgesSummaryEntry(
-  project: Project<
-    'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvlInfo' | 'bridgeTechnology'
-  >,
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvlInfo'>,
   changes: ProjectChanges,
   bridgeTvs: ProjectSevenDayTvsBreakdown | undefined,
 ): BridgesSummaryEntry {
@@ -90,7 +88,7 @@ function getBridgesSummaryEntry(
           associatedRatio:
             bridgeTvs.associated.total / bridgeTvs.breakdown.total,
           name: project.name,
-          associatedTokens: project.tvlInfo.associatedTokens,
+          associatedTokens: project.tvsInfo.associatedTokens,
         })
       : undefined
 
@@ -105,7 +103,7 @@ function getBridgesSummaryEntry(
           }
         : undefined,
       change: bridgeTvs?.change.total,
-      associatedTokens: project.tvlInfo.associatedTokens,
+      associatedTokens: project.tvsInfo.associatedTokens,
       associatedTokenWarning,
       warnings: compact([
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,

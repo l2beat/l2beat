@@ -2,7 +2,7 @@
   "name": "portal",
   "chain": "ethereum",
   "blockNumber": 20089055,
-  "configHash": "0xb0a5636e30eaf3541984a17b082950f2594e8cee432df63c262e950fd9a70397",
+  "configHash": "0x0294fb4968f78d2680cf46206ac06cda98e40258294226160ba43510131aa537",
   "entries": [
     {
       "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -380,8 +380,8 @@
         "getGuardianSetExpiry": 0,
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
-        "guardianSet": [
-          [
+        "guardianSet": {
+          "keys": [
             "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
             "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157",
             "0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
@@ -402,8 +402,8 @@
             "0x5E1487F35515d02A92753504a8D75471b9f49EdB",
             "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
           ],
-          0
-        ],
+          "expirationTime": 0
+        },
         "isFork": false,
         "messageFee": 0,
         "quorum": [

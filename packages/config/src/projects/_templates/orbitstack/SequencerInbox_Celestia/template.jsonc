@@ -9,7 +9,13 @@
   "fields": {
     "maxTimeVariation": {
       "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
-      "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
+      "edit": [
+        "shape",
+        "delayBlocks",
+        "futureBlocks",
+        "delaySeconds",
+        "futureSeconds"
+      ]
     },
     "sequencerVersion": {
       "handler": {

@@ -117,11 +117,26 @@ function Display({
           </p>
           {copy}
         </p>
-        {'template' in selected && selected.template && (
-          <p className="font-mono text-aux-orange text-xs">
-            template/{selected.template}
-          </p>
+        {selected.roles.length > 0 && (
+          <div className="flex flex-row divide-x divide-coffee-400 font-mono text-sm">
+            {'Roles:'}
+            {selected.roles.map((role) => (
+              <p className="px-1 text-aux-teal ">{role}</p>
+            ))}
+          </div>
         )}
+        <div className="flex flex-row divide-x divide-coffee-400 font-mono text-xs">
+          {'proxyType' in selected && selected.proxyType && (
+            <p className="px-1 text-aux-cyan first:pl-0">
+              {selected.proxyType}
+            </p>
+          )}
+          {'template' in selected && selected.template && (
+            <p className="px-1 text-aux-orange first:pl-0">
+              template/{selected.template}
+            </p>
+          )}
+        </div>
         <div className="font-mono text-xs">
           <AddressDisplay
             simplified
@@ -144,6 +159,16 @@ function Display({
             {selected.referencedBy.map((value) => (
               <li key={value.address}>
                 <AddressDisplay value={value} />
+                <div className="mt-1 mb-2 ml-4 text-xs">
+                  {value.fieldNames.map((fieldName, i) => (
+                    <span
+                      key={i}
+                      className="mr-2 inline-block rounded bg-coffee-800 px-1.5 py-0.5"
+                    >
+                      {fieldName}
+                    </span>
+                  ))}
+                </div>
               </li>
             ))}
           </ol>

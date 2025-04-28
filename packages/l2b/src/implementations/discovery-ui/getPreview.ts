@@ -1,7 +1,7 @@
 import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
-import { getProjectDiscoveries } from './getDiscoveries'
+import { getAllProjectDiscoveries } from './getDiscoveries'
 import { type ContractsMeta, getMeta } from './getMeta'
 import { toAddress } from './toAddress'
 import type {
@@ -35,10 +35,9 @@ export function getPreview(
     contracts: ProjectContract[]
   }[] = []
 
-  const metaPerChain: { [chain: string]: ContractsMeta } = {}
+  const discoveries = getAllProjectDiscoveries(configReader, projectId)
+  const meta = getMeta(discoveries)
   projectChains.forEach((chain) => {
-    const discoveries = getProjectDiscoveries(configReader, projectId, chain)
-    metaPerChain[chain] = getMeta(discoveries)
     const processor = new ProjectDiscovery(projectId, chain)
     permissionsPerChain.push({
       chain,
@@ -51,11 +50,8 @@ export function getPreview(
   })
 
   return {
-    permissionsPerChain: getPermissionsPreview(
-      permissionsPerChain,
-      metaPerChain,
-    ),
-    contractsPerChain: getContractsPreview(contractsPerChain, metaPerChain),
+    permissionsPerChain: getPermissionsPreview(permissionsPerChain, meta),
+    contractsPerChain: getContractsPreview(contractsPerChain, meta),
   }
 }
 
@@ -64,29 +60,29 @@ function getPermissionsPreview(
     chain: string
     permissions: ProjectPermissions
   }[],
-  metaPerChain: { [chain: string]: ContractsMeta },
+  meta: ContractsMeta,
 ): { chain: string; permissions: ApiPreviewPermissions }[] {
   return permissionsPerChain.map(({ chain, permissions }) => ({
     chain,
     permissions: {
       roles: (permissions.roles ?? []).map((p) => ({
         addresses: p.accounts.map((a) =>
-          toAddressFieldValue(a.address, chain, metaPerChain),
+          toAddressFieldValue(a.address, chain, meta),
         ),
         name: p.name,
         description: p.description,
         multisigParticipants: p.participants?.map((x) =>
-          toAddressFieldValue(x.address, chain, metaPerChain),
+          toAddressFieldValue(x.address, chain, meta),
         ),
       })),
       actors: (permissions.actors ?? []).map((p) => ({
         addresses: p.accounts.map((a) =>
-          toAddressFieldValue(a.address, chain, metaPerChain),
+          toAddressFieldValue(a.address, chain, meta),
         ),
         name: p.name,
         description: p.description,
         multisigParticipants: p.participants?.map((x) =>
-          toAddressFieldValue(x.address, chain, metaPerChain),
+          toAddressFieldValue(x.address, chain, meta),
         ),
       })),
     },
@@ -95,13 +91,13 @@ function getPermissionsPreview(
 
 function getContractsPreview(
   contractsPerChain: { chain: string; contracts: ProjectContract[] }[],
-  metaPerChain: { [chain: string]: ContractsMeta },
+  meta: ContractsMeta,
 ): { chain: string; contracts: ApiPreviewContract[] }[] {
   return contractsPerChain.map(({ chain, contracts }) => ({
     chain,
     contracts: contracts.map((c) => {
       return {
-        addresses: [toAddressFieldValue(c.address, chain, metaPerChain)],
+        addresses: [toAddressFieldValue(c.address, chain, meta)],
         name: c.name,
         description: c.description ?? '',
         upgradableBy: c.upgradableBy,
@@ -111,14 +107,15 @@ function getContractsPreview(
 }
 
 function toAddressFieldValue(
-  address: string,
+  rawAddress: string,
   chain: string,
-  meta: { [chain: string]: ContractsMeta },
+  meta: ContractsMeta,
 ): AddressFieldValue {
+  const address = toAddress(chain, rawAddress)
   return {
     type: 'address',
-    name: meta[chain][address].name,
-    address: toAddress(chain, address),
-    addressType: meta[chain][address].type,
+    name: meta[address].name,
+    address,
+    addressType: meta[address].type,
   }
 }

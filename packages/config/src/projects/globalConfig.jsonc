@@ -86,7 +86,7 @@
 
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "Paradex Multisig",
 
-    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "AbstractChainAdminMultisig",
+    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "Abstract Multisig",
 
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
 
@@ -177,7 +177,21 @@
     "0x944eB0a2829A859959586b10D54229278534a696": "MamoriLabs3",
     "0x2bfDA59220413DEd39dD0E443620b5277EcE6348": "Ankr",
     "0x58028fFbc25aE2e12b96276bDB125955F41D41f3": "Hypernative2",
-    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn2"
+    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn2",
+    // gnosis bridge validators
+    "0x587C0d02B40822f15f05301d87c16f6a08AaDDde": "CoW Protocol EOA 1",
+    "0x674c97db4ce6cac04a124d745979f3e4cba0e9f0": "CoW Protocol EOA 2",
+    "0x90776017057b84bc47D7e7383b65C463C80a6cdd": "Gateway EOA 1",
+    "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6": "Gateway EOA 2",
+    "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506": "Giveth EOA 1",
+    "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d": "Giveth EOA 2",
+    "0xfA98B60E02A61B6590f073cAD56e68326652d094": "Karpatkey EOA",
+    "0x97630e2ae609d4104abda91f3066c556403182dd": "Gnosis DAO EOA 1",
+    "0xbdc141c8d2343f33f40cb9edd601ccf460cd0dde": "Gnosis DAO EOA 2",
+    "0x4d1c96b9a49c4469a0b720a22b74b034eddfe051": "Protofire EOA 1",
+    "0x459a3bd49f1ff109bc90b76125533699aaaaf9a6": "Protofire EOA 2",
+    "0x1312e98995bbcc30fc63db3cef807e20cdd33dca": "Safe EOA 1",
+    "0x258667E543C913264388B33328337257aF208a8f": "Safe EOA 2"
   },
   "types": {
     "Undecimal2": {
@@ -194,35 +208,35 @@
     },
     "ZkSyncAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "zksync2" }
+      "arg": { "prefix": "zksync" }
     },
     "EthereumAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "ethereum" }
+      "arg": { "prefix": "eth" }
     },
     "ArbitrumAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "arbitrum" }
+      "arg": { "prefix": "arb1" }
     },
     "NovaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "nova" }
+      "arg": { "prefix": "arb-nova" }
     },
     "OptimismAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "optimism" }
+      "arg": { "prefix": "oeth" }
     },
     "PolygonAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "polygonpos" }
+      "arg": { "prefix": "matic" }
     },
     "BSCAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "bsc" }
+      "arg": { "prefix": "bnb" }
     },
     "AvalancheAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "avalanche" }
+      "arg": { "prefix": "avax" }
     },
     "CeloAddress": {
       "typeCaster": "ChainPrefix",
@@ -238,19 +252,19 @@
     },
     "PolygonZKEVMAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "polygonzkevm" }
+      "arg": { "prefix": "zkevm" }
     },
     "GnosisAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "gnosis" }
+      "arg": { "prefix": "gno" }
     },
     "SepoliaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "sepolia" }
+      "arg": { "prefix": "sep" }
     },
     "ScrollAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "scroll" }
+      "arg": { "prefix": "scr" }
     },
     "MantleAddress": {
       "typeCaster": "ChainPrefix",
@@ -258,11 +272,11 @@
     },
     "MetisAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "metis" }
+      "arg": { "prefix": "metis-andromeda" }
     },
     "BobanetworkAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "bobanetwork" }
+      "arg": { "prefix": "boba" }
     },
     "ModeAddress": {
       "typeCaster": "ChainPrefix",
@@ -274,11 +288,11 @@
     },
     "MantapacificAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "mantapacific" }
+      "arg": { "prefix": "manta" }
     },
     "BlastAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "blast" }
+      "arg": { "prefix": "blastmainnet" }
     },
     "ArbOsWasmModuleRoot": {
       "typeCaster": "Mapping",

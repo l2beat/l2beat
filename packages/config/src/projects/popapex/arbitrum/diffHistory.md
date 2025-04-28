@@ -1,4 +1,81 @@
-Generated with discovered.json: 0x705304d99d9ad770106625795f42d9bc43aaf31d
+Generated with discovered.json: 0x2474992e8277ed693da602bea2fd60150be7535b
+
+# Diff at Mon, 28 Apr 2025 12:22:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 315644682
+- current block number: 331093486
+
+## Description
+
+Minor Arbitrum upgrade [3.1.0](https://github.com/OffchainLabs/nitro-contracts/releases/tag/v3.1.0) that everyone is doing atm.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"
++        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.$pastUpgrades.2:
++        ["2025-01-23T20:27:56.000Z","0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]]
+      values.$pastUpgrades.1.2:
+-        "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17"
++        "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046"
+      values.$pastUpgrades.1.1:
+-        "2025-01-23T20:27:56.000Z"
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.1.0:
+-        ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
++        "2024-02-21T19:17:28.000Z"
+      values.$pastUpgrades.0.2:
+-        "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046"
++        "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b"
+      values.$pastUpgrades.0.1.0:
+-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.$pastUpgrades.0.0:
+-        "2024-02-21T19:17:28.000Z"
++        "2025-04-25T21:55:46.000Z"
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+      values.$implementation:
+-        "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
++        "0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
+      values.$pastUpgrades.1:
++        ["2025-04-25T21:55:46.000Z","0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",["0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@315644682 => .flat}/Inbox/Inbox.sol     | 52 +++++++++++++++++-----
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++---
+ 2 files changed, 59 insertions(+), 17 deletions(-)
+```
+
+Generated with discovered.json: 0x49c8fcccb0d8a2aee5fa89a2b7d40013d6c1202f
 
 # Diff at Tue, 18 Mar 2025 08:14:58 GMT:
 

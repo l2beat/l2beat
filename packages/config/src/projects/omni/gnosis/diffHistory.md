@@ -1,4 +1,234 @@
-Generated with discovered.json: 0x826800f5ebfe971aec956682e4dae389e0d3aaa4
+Generated with discovered.json: 0x92286ed5478bf371d1870708f02033bc65c82620
+
+# Diff at Thu, 24 Apr 2025 15:50:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 39627531
+- current block number: 39725195
+
+## Description
+
+Config related: template matches from the ethereum side.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 39627531 (main branch discovery), not current.
+
+```diff
+    contract Giveth EOA 2 (0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d) {
+    +++ description: None
+      name:
++        "Giveth EOA 2"
+    }
+```
+
+```diff
+    contract Yaru (0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5) {
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+      description:
++        "Contract handling inbound messages for the Hashi protocol."
+    }
+```
+
+```diff
+    contract Safe EOA 2 (0x258667E543C913264388B33328337257aF208a8f) {
+    +++ description: None
+      name:
++        "Safe EOA 2"
+    }
+```
+
+```diff
+    contract Gateway EOA 2 (0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6) {
+    +++ description: None
+      name:
++        "Gateway EOA 2"
+    }
+```
+
+```diff
+    contract Protofire EOA 2 (0x459A3bd49F1ff109bc90b76125533699AaAAf9A6) {
+    +++ description: None
+      name:
++        "Protofire EOA 2"
+    }
+```
+
+```diff
+    contract CoW Protocol EOA 2 (0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0) {
+    +++ description: None
+      name:
++        "CoW Protocol EOA 2"
+    }
+```
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      name:
+-        "HashiManager"
++        "HashiManager_Gnosis"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "0xb1F43dc8B57562e7FA48157D73102a8e4a94975A"
+      issuedPermissions.0.description:
++        "change critical configurations of the Hashi protocol like the validation contract addresses."
+      fieldMeta.targetAddress.description:
+-        "Address of the target contract on Ethereum"
++        "Address of the target contract on GnosisChain"
+      fieldMeta.adapters.description:
+-        "Array of the adapters on Ethereum"
++        "Array of the adapters on GnosisChain"
+      fieldMeta.reporters.description:
+-        "Array of the reporters on Ethereum"
++        "Array of the reports on GnosisChain"
+      fieldMeta.threshold.description:
+-        "Threshold of the adapters on Ethereum"
++        "Threshold of the adapters on GnosisChain"
+      fieldMeta.HASHI_IS_MANDATORY:
++        {"severity":"HIGH","description":"If true, Hashi validation is mandatory"}
+      template:
++        "gnosisbridge/HashiManager"
+      description:
++        "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator."
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"}
+      receivedPermissions.2.from:
+-        "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
++        "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+      receivedPermissions.1.from:
+-        "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
++        "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
++        "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+      receivedPermissions.0.description:
++        "change the threshold and manage signers."
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      name:
+-        "BridgeValidators"
++        "BridgeValidators_Gnosis"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "change the threshold and manage signers."
+      values.requiredSignatures:
+-        4
+      values.validatorList:
+-        ["0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6","0xfA98B60E02A61B6590f073cAD56e68326652d094","0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe","0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0","0x258667E543C913264388B33328337257aF208a8f","0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d","0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"]
++++ description: Array of the signers in the validator multisig
+      values.$members:
++        ["0x459A3bd49F1ff109bc90b76125533699AaAAf9A6","0xfA98B60E02A61B6590f073cAD56e68326652d094","0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe","0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6","0x258667E543C913264388B33328337257aF208a8f","0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0","0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"]
+      values.$threshold:
++        4
+      template:
++        "gnosisbridge/BridgeValidators"
+      description:
++        "Custom multisignature contract for Validator addresses."
+      fieldMeta:
++        {"$members":{"description":"Array of the signers in the validator multisig"}}
+    }
+```
+
+```diff
+    contract SafeL2 (0xb1F43dc8B57562e7FA48157D73102a8e4a94975A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E","description":"change critical configurations of the Hashi protocol like the validation contract addresses."}]
+    }
+```
+
+```diff
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+      description:
++        "Contract handling outbound messages for the Hashi protocol."
+    }
+```
+
+```diff
+    contract Gnosis DAO EOA 2 (0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe) {
+    +++ description: None
+      name:
++        "Gnosis DAO EOA 2"
+    }
+```
+
+```diff
+    contract Karpatkey EOA (0xfA98B60E02A61B6590f073cAD56e68326652d094) {
+    +++ description: None
+      name:
++        "Karpatkey EOA"
+    }
+```
+
+Generated with discovered.json: 0x4977b3aabc95c21faa7d333e667319fe563a0290
+
+# Diff at Thu, 24 Apr 2025 07:18:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5e04a862ca14d0cf2b0f2109c8f3cf63d05c6b32 block: 39627531
+- current block number: 39627531
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 39627531 (main branch discovery), not current.
+
+```diff
+    contract HashiManager (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: None
++++ description: Array of the adapters on Ethereum
++++ severity: HIGH
+      values.adapters.0:
+-        "ethereum:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"
++        "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"
++++ description: Array of the reporters on Ethereum
++++ severity: HIGH
+      values.reporters.0:
+-        "ethereum:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"
++        "eth:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"
++++ description: Address of the target contract on Ethereum
++++ severity: HIGH
+      values.targetAddress:
+-        "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      usedTypes.0.arg.prefix:
+-        "ethereum"
++        "eth"
+    }
+```
+
+Generated with discovered.json: 0x07d276e18de5145485ad7f9345eba8e3e84b0714
 
 # Diff at Wed, 16 Apr 2025 13:18:21 GMT:
 

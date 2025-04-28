@@ -181,8 +181,10 @@ function CustomTooltip({
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex min-w-28 flex-col gap-1">
-        <div>{formatTimestamp(label, { longMonthName: true })}</div>
-        <div>
+        <div className="label-value-14-medium mb-1 text-secondary">
+          {formatTimestamp(label, { longMonthName: true })}
+        </div>
+        <div className="flex flex-col gap-2">
           {payload.map((entry) => {
             if (entry.name === undefined || entry.value === undefined)
               return null
@@ -199,11 +201,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="label-value-15-medium whitespace-nowrap">
                   {formatCurrency(entry.value, unit)}
                 </span>
               </div>

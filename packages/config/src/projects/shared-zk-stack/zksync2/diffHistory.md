@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x8c3263ccda583a59843916187172855c22b89838
+
+# Diff at Tue, 22 Apr 2025 12:21:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 57909592
+- current block number: 59465384
+
+## Description
+
+[ZIP-9: V27 EVM Emulation Upgrade](https://www.tally.xyz/gov/zksync/proposal/112142012854508751423955156601121618924383324119199970784935099214632480260394?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) has arrived in the ProtocolUpgradeHandler.
+
+can be executed from tomorrow, `l2b zkgovproposal 112142012854508751423955156601121618924383324119199970784935099214632480260394` excerpt:
+```
+================================================================================
+L1 Upgrade Information
+================================================================================
+
+L1 Message Hash: 0x2d3883b5d936c6a3c8b4170c4735bbf437de601b3f5afaceeee27b6b52907574
+L2 -> L1 Message Origin: Tx: 0xef8d3d6c0afde1cd9f867a82e32dad5a4fab54c7dc7f81f920fc611b0224540e
+
+Estimated L1 Arrival: 2025-04-19T03:34:12.000Z (3d ago)
+
+L1 Upgrade Started: Yes (Tx: 0xc59c407de7a9cc4c13fdf403165f91d6942a4f87ed27197324c298944518c474)
+L1 Upgrade ID: 0x2d3883b5d936c6a3c8b4170c4735bbf437de601b3f5afaceeee27b6b52907574
+
+L1 Upgrade State: LegalVetoPeriod
+
+L1 Upgrade Timeline:
+• Created: 2025-04-21T10:31:47.000Z (1d ago)
+• Legal Veto Period End: 2025-04-24T10:31:47.000Z (in 1d)
+• Guardians Approval: No
+• Expires If Not Approved By: 2025-05-24T10:31:47.000Z (in 31d)
+
+================================================================================
+L2 vs L1 Payload Comparison
+================================================================================
+
+✓ L1 payload is contained within the L2 proposal
+```
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      values.proposalQueuedCount:
+-        8
++        9
+    }
+```
+
 Generated with discovered.json: 0xda1215aaae5b259d0bbe7241c15b75452d7c9979
 
 # Diff at Thu, 10 Apr 2025 14:43:43 GMT:

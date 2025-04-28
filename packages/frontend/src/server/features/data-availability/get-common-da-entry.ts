@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
+import { getProjectIcon } from '../utils/get-project-icon'
 
 export interface CommonDaEntry extends CommonProjectEntry {
   tab: 'public' | 'custom'
@@ -18,6 +19,7 @@ export function getCommonDaEntry({
   return {
     id: project.id,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     name: project.name,
     nameSecondLine: project.daLayer.type,
     href,
@@ -39,6 +41,7 @@ export function getCommonDacDaEntry({
   return {
     id: project.id,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     name: project.customDa.name ?? `${project.name} DAC`,
     nameSecondLine: project.customDa.type,
     href: `/scaling/projects/${project.slug}`,

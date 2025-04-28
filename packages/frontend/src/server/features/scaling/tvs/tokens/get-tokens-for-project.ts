@@ -2,11 +2,13 @@ import type { Project, TvsToken } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { getStaticAsset } from '~/server/features/utils/get-project-icon'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 
 export type ProjectTokens = Record<TvsToken['source'], ProjectToken[]>
 export type ProjectToken = TvsToken & {
   usdValue: number
+  iconUrl: string
 }
 
 export async function getTokensForProject(
@@ -25,7 +27,7 @@ export async function getTokensForProject(
 
   const tokenValuesMap = new Map(tokenValues.map((x) => [x.tokenId, x]))
 
-  const withUsdValue: ProjectToken[] = project.tvsConfig
+  const withUsdValue = project.tvsConfig
     .map((t) => {
       const tokenValue = tokenValuesMap.get(t.id)
       if (!tokenValue) return undefined
@@ -41,21 +43,33 @@ export async function getTokensForProject(
   return groupBySource(withUsdValue)
 }
 
-function groupBySource(tokens: ProjectToken[]) {
+function groupBySource(
+  tokens: (Omit<ProjectToken, 'iconUrl'> & { iconUrl?: string })[],
+) {
   const canonical: ProjectToken[] = []
   const native: ProjectToken[] = []
   const external: ProjectToken[] = []
 
+  const placeholderIcon = getStaticAsset('/images/token-placeholder.png')
   for (const token of tokens) {
     switch (token.source) {
       case 'canonical':
-        canonical.push(token)
+        canonical.push({
+          ...token,
+          iconUrl: token.iconUrl ?? placeholderIcon,
+        })
         break
       case 'native':
-        native.push(token)
+        native.push({
+          ...token,
+          iconUrl: token.iconUrl ?? placeholderIcon,
+        })
         break
       case 'external':
-        external.push(token)
+        external.push({
+          ...token,
+          iconUrl: token.iconUrl ?? placeholderIcon,
+        })
         break
     }
   }
@@ -72,6 +86,7 @@ function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
   return groupBySource(
     project.tvsConfig.map((t) => ({
       ...t,
+      iconUrl: t.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
       usdValue: 1000,
     })),
   )

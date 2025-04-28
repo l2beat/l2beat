@@ -1,8 +1,8 @@
 {
   "name": "blessnet",
   "chain": "arbitrum",
-  "blockNumber": 322452556,
-  "configHash": "0xbfacbc5acf84592ab8dfe8f20188d9741d2e6533e75c54b942d2f975e9126e8f",
+  "blockNumber": 330085907,
+  "configHash": "0x594824d0909147fae01cc7171a18124fa6fa4f276dddd6ee7275d4fd96147945",
   "entries": [
     {
       "name": "Blessnet Multisig 2",
@@ -42,7 +42,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 3 (100%)",
-        "nonce": 669,
+        "nonce": 1619,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -188,7 +188,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 146751,
+        "batchCount": 147857,
         "batchPosterManager": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
         "batchPosters": ["0xa0899d20D9665EB0FfE311A395FCd481bF38A5Ff"],
         "bridge": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
@@ -220,7 +220,7 @@
         "rollup": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 26,
+        "totalDelayedMessagesRead": 27,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -548,7 +548,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 51,
+        "nonce": 66,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -705,7 +705,7 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x6cdca102c8d3b82c196bf1961cd07e35b44717396edbfdd3241adc89ab895438"
+        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
@@ -728,32 +728,38 @@
       "sinceBlock": 240884142,
       "values": {
         "$admin": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b",
-        "$implementation": "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB",
+        "$implementation": "0xeF960375235AbFab045c4A7324295612739569EB",
         "$pastUpgrades": [
           [
             "2024-08-09T00:09:45.000Z",
             "0x74a7d47d00c5aaffa51d86eb0d5ac1273332a17730ccbd9ee303253521f03a15",
             ["0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB"]
+          ],
+          [
+            "2025-04-24T21:39:59.000Z",
+            "0x1886d4d0e9c54cd3e04d16cad30e1f4041ae2a109c2341587f8c5736e4ad6ca0",
+            ["0xeF960375235AbFab045c4A7324295612739569EB"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0x46B6462301182B393ac5f014779687d3B6d4FB57",
           "0x67B01721383baedF4b27B745bf533F6F7bDc4AE4"
         ],
         "allowedOutboxList": ["0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB"],
-        "delayedMessageCount": 26,
+        "delayedMessageCount": 27,
         "inboxHistory": [
           "0x46B6462301182B393ac5f014779687d3B6d4FB57",
           "0x67B01721383baedF4b27B745bf533F6F7bDc4AE4"
         ],
         "nativeToken": "0x000000000000CCA70B6e0997a94681a3114EdDD7",
+        "nativeTokenDecimals": 18,
         "outboxHistory": ["0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB"],
         "rollup": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
         "sequencerInbox": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
-        "sequencerMessageCount": 146751,
-        "sequencerReportedSubMessageCount": 2513440
+        "sequencerMessageCount": 147857,
+        "sequencerReportedSubMessageCount": 2616643
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -944,13 +950,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 47186,
+        "firstUnresolvedNode": 48136,
         "inbox": "0x46B6462301182B393ac5f014779687d3B6d4FB57",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20487666,
-        "latestConfirmed": 47185,
-        "latestNodeCreated": 47185,
+        "latestConfirmed": 48135,
+        "latestNodeCreated": 48135,
         "loserStakeEscrow": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
         "minimumAssertionPeriod": 75,
         "outbox": "0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
@@ -1589,19 +1595,20 @@
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
     ],
-    "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB": [
+    "0xeF960375235AbFab045c4A7324295612739569EB": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
       "error CallNotAllowed()",
       "error CallTargetNotAllowed(address target)",
       "error InvalidOutboxSet(address outbox)",
       "error InvalidTokenSet(address token)",
+      "error NativeTokenDecimalsTooLarge(uint256 decimals)",
       "error NotContract(address addr)",
       "error NotDelayedInbox(address sender)",
       "error NotOutbox(address sender)",
+      "error NotOwner(address sender, address owner)",
       "error NotRollupOrOwner(address sender, address rollup, address owner)",
       "error NotSequencerInbox(address sender)",
       "event BridgeCallTriggered(address indexed outbox, address indexed to, uint256 value, bytes data)",
-      "event DepositMessageDelivered(address indexed sender)",
       "event InboxToggle(address indexed inbox, bool enabled)",
       "event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)",
       "event OutboxToggle(address indexed outbox, bool enabled)",
@@ -1620,6 +1627,8 @@
       "function executeCall(address to, uint256 value, bytes data) returns (bool success, bytes returnData)",
       "function initialize(address rollup_, address nativeToken_)",
       "function nativeToken() view returns (address)",
+      "function nativeTokenDecimals() view returns (uint8)",
+      "function postUpgradeInit()",
       "function rollup() view returns (address)",
       "function sequencerInbox() view returns (address)",
       "function sequencerInboxAccs(uint256) view returns (bytes32)",
@@ -1664,8 +1673,8 @@
     "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
     "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
     "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
-    "orbitstack/RollupProxy_fastConfirm": "0xc7fb90b328704727b36009a58af78ba33b8c575391e9f530cf458bf214f77b00",
-    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/RollupProxy_fastConfirm": "0x15096a7a30984da8dead5ecf3a39299ca438a6f3869a0ff528f1ddb261e095b1",
+    "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }

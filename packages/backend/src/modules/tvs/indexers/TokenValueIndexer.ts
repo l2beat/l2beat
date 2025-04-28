@@ -1,17 +1,17 @@
-import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import type { ValueService } from '../services/ValueService'
 import type { DBStorage } from '../tools/DBStorage'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import {
   createAmountConfig,
   createPriceConfigId,

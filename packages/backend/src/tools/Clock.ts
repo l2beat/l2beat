@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { alignTimestamp } from '../modules/tvl/utils/alignTimestamp'
+import { alignTimestamp } from './alignTimestamp'
 
 export class Clock {
   constructor(

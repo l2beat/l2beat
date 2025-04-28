@@ -3,8 +3,9 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import type { Database } from '@l2beat/database'
+import type { BlockTimestampProvider } from '@l2beat/shared'
+import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
-import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
 const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
@@ -25,7 +26,10 @@ describe(BlockTargetIndexer.name, () => {
         clock,
         blockTimestampProvider,
         getMockDb(),
-        ProjectId('mock'),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
       )
 
       await indexer.start()
@@ -49,7 +53,10 @@ describe(BlockTargetIndexer.name, () => {
         clock,
         blockTimestampProvider,
         getMockDb(),
-        ProjectId('mock'),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
       )
 
       const result = await indexer.tick()
@@ -58,7 +65,7 @@ describe(BlockTargetIndexer.name, () => {
       expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenNthCalledWith(1, LAST_HOUR)
+      ).toHaveBeenNthCalledWith(1, LAST_HOUR, 'chain')
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
@@ -77,7 +84,10 @@ describe(BlockTargetIndexer.name, () => {
         clock,
         blockTimestampProvider,
         getMockDb(),
-        ProjectId('mock'),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
       )
 
       await indexer.tick()
@@ -102,7 +112,10 @@ describe(BlockTargetIndexer.name, () => {
         clock,
         blockTimestampProvider,
         getMockDb(),
-        ProjectId('mock'),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
       )
 
       await indexer.tick()
@@ -134,7 +147,10 @@ describe(BlockTargetIndexer.name, () => {
         clock,
         blockTimestampProvider,
         db,
-        ProjectId('mock'),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
       )
 
       await expect(async () => await indexer.tick()).toBeRejectedWith(

@@ -2,7 +2,7 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 21736867,
-  "configHash": "0x3235eee9b4244c79fcd8a9867f243b50f91e24e613029a925686f62afd908caf",
+  "configHash": "0x81a2089cc32ef4172a15445f91705f79a605dd656cc6ab8396effede1ed71b33",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -182,14 +182,14 @@
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://witnesschain-da-1.eu-north-2.gateway.fm/",
-            "0xcc543F5a2052eDf584216093A0547c4Acd84B80b"
-          ],
-          [
-            "https://witnesschain-da-2.eu-north-2.gateway.fm/",
-            "0xef5F06e5C0493601829DacFA23f2fe30303b0166"
-          ]
+          {
+            "url": "https://witnesschain-da-1.eu-north-2.gateway.fm/",
+            "addr": "0xcc543F5a2052eDf584216093A0547c4Acd84B80b"
+          },
+          {
+            "url": "https://witnesschain-da-2.eu-north-2.gateway.fm/",
+            "addr": "0xef5F06e5C0493601829DacFA23f2fe30303b0166"
+          }
         ],
         "owner": "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b",
         "requiredAmountOfSignatures": 1

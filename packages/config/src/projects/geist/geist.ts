@@ -48,6 +48,7 @@ export const geist: ScalingProject = orbitStackL3({
         type: 'rpc',
         url: 'https://geist-mainnet.g.alchemy.com/public',
         callsPerMinute: 600,
+        retryStrategy: 'UNRELIABLE',
       },
     ],
     gasTokens: ['GHST'],

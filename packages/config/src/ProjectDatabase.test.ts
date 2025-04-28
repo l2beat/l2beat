@@ -3,8 +3,8 @@ import {
   AssetId,
   ChainId,
   CoingeckoId,
+  type LegacyToken,
   ProjectId,
-  type Token,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ProjectDatabase } from './ProjectDatabase'
@@ -86,7 +86,7 @@ describe(ProjectDatabase.name, () => {
   })
 
   it('can add and retrieve a token', async () => {
-    const token: Token = {
+    const token: LegacyToken = {
       id: AssetId('foo'),
       name: 'Foo',
       coingeckoId: CoingeckoId('foo'),

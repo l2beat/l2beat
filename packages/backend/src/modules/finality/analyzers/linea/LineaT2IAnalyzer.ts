@@ -6,7 +6,7 @@ import {
 import { utils } from 'ethers'
 
 import type { Database } from '@l2beat/database'
-import type { BlobProvider, RpcClient } from '@l2beat/shared'
+import type { EthereumDaProvider, RpcClient } from '@l2beat/shared'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { decodeBlob } from './decodeBlob'
@@ -18,12 +18,12 @@ export const lineaIface = new utils.Interface([blobFn])
 
 export class LineaT2IAnalyzer extends BaseAnalyzer {
   constructor(
-    private readonly blobProvider: BlobProvider,
-    provider: RpcClient,
+    private readonly ethereumDaProvider: EthereumDaProvider,
+    rpcClient: RpcClient,
     db: Database,
     projectId: ProjectId,
   ) {
-    super(provider, db, projectId)
+    super(rpcClient, db, projectId)
   }
 
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
@@ -44,8 +44,8 @@ export class LineaT2IAnalyzer extends BaseAnalyzer {
           'Type 3 transaction missing blobVersionedHashes',
         )
         assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
-        const { blobs } =
-          await this.blobProvider.getBlobsByVersionedHashesAndBlockNumber(
+        const blobs =
+          await this.ethereumDaProvider.getBlobsByVersionedHashesAndBlockNumber(
             tx.blobVersionedHashes,
             tx.blockNumber,
           )

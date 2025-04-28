@@ -6,10 +6,13 @@
       "handler": {
         "type": "event",
         "select": "sender",
-        "add": { "event": "RegistrationUpdated" }
+        "add": {
+          "event": "RegistrationUpdated"
+        }
       }
     }
   },
   "ignoreInWatchMode": ["counter"],
-  "ignoreRelatives": ["REGISTRATIONS"]
+  "ignoreRelatives": ["REGISTRATIONS"],
+  "category": "core"
 }

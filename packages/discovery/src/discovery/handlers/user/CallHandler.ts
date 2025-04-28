@@ -20,7 +20,6 @@ export const CallHandlerDefinition = z.strictObject({
   method: z.optional(z.string()),
   args: z.array(z.union([z.string(), z.number()])),
   ignoreRelative: z.optional(z.boolean()),
-  pickFields: z.optional(z.array(z.string())),
   expectRevert: z.optional(z.boolean()),
   address: z.optional(z.string()),
 })
@@ -72,7 +71,6 @@ export class CallHandler implements Handler {
       resolved.address ?? currentContractAddress,
       this.fragment,
       resolved.args,
-      this.definition.pickFields,
     )
 
     if (this.definition.expectRevert && callResult.error === EXEC_REVERT_MSG) {
@@ -86,6 +84,7 @@ export class CallHandler implements Handler {
     return {
       field: this.field,
       ...callResult,
+      fragment: this.fragment,
       ignoreRelative: this.definition.ignoreRelative,
     }
   }

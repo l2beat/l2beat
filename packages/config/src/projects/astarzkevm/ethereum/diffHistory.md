@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x39e0e216af6bbd4fc53737f056ebb75650d03f7a
+Generated with discovered.json: 0xd82044897bad8a6ba0d52b4260c5d8e9d60700a6
+
+# Diff at Thu, 24 Apr 2025 10:29:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+      values.members.4:
+-        ["https://dac1-zkevm.astar.network","0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"]
++        {"url":"https://dac4-zkevm.astar.network","addr":"0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"}
+      values.members.3:
+-        ["https://dac2-zkevm.astar.network","0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"]
++        {"url":"https://dac3-zkevm.astar.network","addr":"0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"}
+      values.members.2:
+-        ["https://dac3-zkevm.astar.network","0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"]
++        {"url":"https://dac2-zkevm.astar.network","addr":"0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"}
+      values.members.1:
+-        ["https://dac4-zkevm.astar.network","0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"]
++        {"url":"https://dac1-zkevm.astar.network","addr":"0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"}
+      values.members.0:
+-        ["https://dac0-zkevm.astar.network","0xC4ad70e848f36925FcbDfb252f5e258D06647320"]
++        {"url":"https://dac0-zkevm.astar.network","addr":"0xC4ad70e848f36925FcbDfb252f5e258D06647320"}
+    }
+```
+
+Generated with discovered.json: 0x67ed72788486360923eaaf67a54dcdf12572beb5
 
 # Diff at Thu, 10 Apr 2025 14:42:11 GMT:
 

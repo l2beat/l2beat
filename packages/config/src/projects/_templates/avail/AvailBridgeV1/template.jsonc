@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Bridge contract that verifies merkle proofs of inclusion in the proven data of the {{vectorx}} DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.",
+  "category": "shared",
+  "ignoreRelatives": ["avail"],
+  "ignoreMethods": ["getFee", "isSent"],
+  "ignoreInWatchMode": ["messageId"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        }
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "{{ defaultAdminDelay }}",
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+        }
+      ]
+    },
+    "pauserAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        },
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the bridge."
+        }
+      ]
+    }
+  }
+}

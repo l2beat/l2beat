@@ -14,8 +14,8 @@ export function PizzaRosetteTooltip({
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
-        <div className="mb-4">
-          <span className="text-base font-bold">Risk analysis</span> is{' '}
+        <div className="mb-3">
+          <span className="heading-16">Risk analysis</span> is{' '}
           <UnderReviewBadge />
         </div>
 
@@ -31,9 +31,7 @@ export function PizzaRosetteTooltip({
 
   return (
     <div className="flex flex-col">
-      <span className="text-base font-bold">
-        <span className="mr-2">Risk analysis</span>
-      </span>
+      <span className="heading-16 mb-2">Risk analysis</span>
       <div className="flex items-center gap-6">
         <div className="relative flex size-[200px] items-center justify-center">
           <PizzaRosetteIcon
@@ -49,7 +47,7 @@ export function PizzaRosetteTooltip({
             size="small"
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {values.map((value) => (
             <RiskValue key={value.name} {...value} />
           ))}

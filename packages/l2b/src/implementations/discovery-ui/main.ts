@@ -99,7 +99,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const implementationPath =
       codePaths.length > 1 ? codePaths[1].path : codePaths[0].path
     const againstPath =
-      against === 'templates' ? './discovery/_templates/' : './discovery/'
+      against === 'templates' ? './projects/_templates/' : './projects/'
 
     executeTerminalCommand(
       `(cd ${path.dirname(paths.discovery)} && l2b match-flat file "${implementationPath}" "${againstPath}")`,

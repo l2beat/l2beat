@@ -1,0 +1,55 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "apechain",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "apechain-APE",
+      "priceId": "apecoin",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+        "chain": "arbitrum",
+        "escrowAddress": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
+        "decimals": 18,
+        "sinceTimestamp": 1729290000
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "apecoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "escrowAddress": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
+              "sinceTimestamp": 1729290000
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "apecoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "apechain",
+              "escrowAddress": "0xe4103e80c967f58591a1d7cA443ed7E392FeD862",
+              "decimals": 18,
+              "sinceTimestamp": 1729290000
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": true
+    }
+  ]
+}

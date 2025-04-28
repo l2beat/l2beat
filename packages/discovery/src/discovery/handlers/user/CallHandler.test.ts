@@ -3,6 +3,7 @@ import { expect, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
 import { EXEC_REVERT_MSG } from '../utils/callMethod'
+import { toFunctionFragment } from '../utils/toFunctionFragment'
 import { CallHandler } from './CallHandler'
 
 describe(CallHandler.name, () => {
@@ -182,6 +183,7 @@ describe(CallHandler.name, () => {
 
   describe('execute', () => {
     const method = 'function add(uint256 a, uint256 b) view returns (uint256)'
+    const methodFragment = toFunctionFragment(method)
     const address = EthereumAddress.random()
 
     it('calls the method with the provided parameters', async () => {
@@ -208,6 +210,7 @@ describe(CallHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
+        fragment: methodFragment,
         value: 3,
         ignoreRelative: undefined,
       })
@@ -243,6 +246,7 @@ describe(CallHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
+        fragment: methodFragment,
         value: 3,
         ignoreRelative: undefined,
       })
@@ -275,6 +279,7 @@ describe(CallHandler.name, () => {
       })
       expect(result).toEqual({
         field: 'add',
+        fragment: methodFragment,
         value: 3,
         ignoreRelative: undefined,
       })
@@ -315,6 +320,7 @@ describe(CallHandler.name, () => {
       })
       expect(result).toEqual({
         field: 'add',
+        fragment: methodFragment,
         value: 3,
         ignoreRelative: undefined,
       })
@@ -337,6 +343,7 @@ describe(CallHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
+        fragment: methodFragment,
         error: 'oops',
         ignoreRelative: undefined,
       })
@@ -359,6 +366,7 @@ describe(CallHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
+        fragment: methodFragment,
         value: 3,
         ignoreRelative: true,
       })
@@ -404,6 +412,7 @@ describe(CallHandler.name, () => {
       expect(result).toEqual({
         field: 'add',
         error: EXEC_REVERT_MSG,
+        fragment: methodFragment,
         ignoreRelative: undefined,
       })
     })

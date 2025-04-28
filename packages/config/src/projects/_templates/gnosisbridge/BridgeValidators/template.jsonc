@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Custom multisignature contract for Validator addresses.",
+  "ignoreRelatives": ["F_ADDR"],
+  "ignoreMethods": ["requiredSignatures", "validatorList"],
+  "fields": {
+    "$members": {
+      "handler": {
+        "type": "call",
+        "method": "validatorList",
+        "args": []
+      },
+      "description": "Array of the signers in the validator multisig"
+    },
+    "$threshold": {
+      "handler": {
+        "type": "call",
+        "method": "requiredSignatures",
+        "args": []
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the threshold and manage signers."
+        }
+      ]
+    }
+  }
+}

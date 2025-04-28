@@ -1,8 +1,8 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 22181511,
-  "configHash": "0x067325c65f8d4bfffa0997e17f5ba89748b20c5fa9fb518bb2994a397aee6b67",
+  "blockNumber": 22336708,
+  "configHash": "0x0bbeaebb8f1283e8c55f2bf34584d3a3f787fe0a36b78c62612085c4b3fb061f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -213,31 +213,31 @@
         "getChainId": 50104,
         "getChainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getDAValidatorPair": [
-          "0x907b30407249949521Bf0c89A43558dae200146A",
-          "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
+          "0x8f50d93B9955B285f787043B30B5F51D09bE0120",
+          "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 4596,
+        "getFirstUnprocessedPriorityTx": 5479,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
-        "getPriorityTreeRoot": "0x22ca2c629e99e88af570acc04f9607e9e23e877f8e556f64362f6535d1b7c919",
+        "getPriorityQueueSize": 9,
+        "getPriorityTreeRoot": "0x2b131da5f7f998ee4b3ff4adb72e9ca92dc8429899289f66184ccfcbafbe1adb",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 20882,
-        "getTotalBatchesExecuted": 20869,
-        "getTotalBatchesVerified": 20878,
-        "getTotalBlocksCommitted": 20882,
-        "getTotalBlocksExecuted": 20869,
-        "getTotalBlocksVerified": 20878,
-        "getTotalPriorityTxs": 4603,
+        "getTotalBatchesCommitted": 22069,
+        "getTotalBatchesExecuted": 22060,
+        "getTotalBatchesVerified": 22067,
+        "getTotalBlocksCommitted": 22069,
+        "getTotalBlocksExecuted": 22060,
+        "getTotalBlocksVerified": 22067,
+        "getTotalPriorityTxs": 5488,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -294,6 +294,11 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x14574dfC6B7aF658c5033BA95673864947956521",
@@ -427,19 +432,23 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "ValidiumL1DAValidator",
-      "address": "0x907b30407249949521Bf0c89A43558dae200146A",
+      "name": "AvailL1DAValidator",
+      "address": "0x8f50d93B9955B285f787043B30B5F51D09bE0120",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
+      "template": "shared-zk-stack/v26/AvailL1DAValidator",
       "sourceHashes": [
-        "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
+        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
       ],
       "proxyType": "immutable",
-      "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108927,
-      "sinceBlock": 21809358,
-      "values": { "$immutable": true },
-      "derivedName": "ValidiumL1DAValidator",
+      "description": "Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "sinceTimestamp": 1743696419,
+      "sinceBlock": 22189472,
+      "values": {
+        "$immutable": true,
+        "bridge": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+        "vectorx": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      },
+      "derivedName": "AvailL1DAValidator",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -558,6 +567,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF",
           "0x3b6036d410cA018661324766680674921a8b2d89",
           "0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
           "0x14574dfC6B7aF658c5033BA95673864947956521",
@@ -565,15 +575,20 @@
           "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
           "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
         ],
-        "$threshold": 3,
+        "$threshold": 4,
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 7,
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
+    },
+    {
+      "address": "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f",
@@ -628,11 +643,6 @@
       },
       "derivedName": "L1USDCBridge",
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "0xFa30EAe30351A83809657299F6Cad9557c232e8C",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -904,9 +914,14 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x907b30407249949521Bf0c89A43558dae200146A": [
-      "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
-      "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    "0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
+      "constructor(address _availBridge)",
+      "error InvalidAttestationProof()",
+      "error InvalidValidatorOutputHash()",
+      "function attestations(bytes32) view returns (address attester, uint32 blockNumber, uint128 leafIndex)",
+      "function bridge() view returns (address)",
+      "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
+      "function vectorx() view returns (address)"
     ],
     "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
@@ -1081,9 +1096,9 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
-    "shared-zk-stack/v26/Diamond": "0x748a53ab23ca7de7668b62f01a1e436cda12fe5b08cf1bd1bfcde11f6dba8ffe",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/ValidatorTimelock": "0xb0a9eee97036385e26460c74be8e8196ad5c4872d104d7ecd6d3a00bd59ac2f8",
+    "shared-zk-stack/v26/AvailL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
+    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

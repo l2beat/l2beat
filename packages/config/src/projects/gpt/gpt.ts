@@ -2,7 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  NEW_CRYPTOGRAPHY,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
@@ -107,11 +106,6 @@ export const gpt: ScalingProject = polygonCDKStack({
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [], // removed as their rpc is broken and last tvs was USD 81
-  nonTemplateTechnology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-    },
-  },
   stateDerivation: {
     nodeSoftware:
       'Node software can be found [here](https://github.com/0xPolygon/cdk-validium-node).',

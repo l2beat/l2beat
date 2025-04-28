@@ -73,20 +73,15 @@ function createIndexers(
 ) {
   const daService = new DaService()
   const indexerService = new IndexerService(database)
-  const blockProviders = providers.block
 
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
 
   for (const daLayer of config.layers) {
-    const blockTimestampProvider = blockProviders.getBlockTimestampProvider(
-      daLayer.name,
-    )
-
     const targetIndexer = new BlockTargetIndexer(
       logger,
       clock,
-      blockTimestampProvider,
+      providers.blockTimestamp,
       daLayer.name,
     )
     targetIndexers.push(targetIndexer)
