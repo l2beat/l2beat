@@ -13,12 +13,21 @@ export async function GET(
   props: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await props.params
-  const response = await getCachedResponse(slug, request.nextUrl.searchParams)
+  const searchParams = request.nextUrl.searchParams
+  const range = searchParams.get('range') as TvsChartDataParams['range'] | null
+  const excludeAssociatedTokens =
+    searchParams.get('excludeAssociatedTokens') === 'true'
+
+  const response = await getCachedResponse(slug, range, excludeAssociatedTokens)
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (slug: string, searchParams: URLSearchParams) => {
+  async (
+    slug: string,
+    range: TvsChartDataParams['range'] | null,
+    excludeAssociatedTokens: boolean,
+  ) => {
     const project = await ps.getProject({
       slug,
       where: ['tvsConfig', 'isScaling'],
@@ -31,15 +40,10 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const range = searchParams.get('range') as
-      | TvsChartDataParams['range']
-      | null
-
     const params: TvsChartDataParams = {
       range: range ?? '30d',
       filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens:
-        searchParams.get('excludeAssociatedTokens') === 'true',
+      excludeAssociatedTokens,
       previewRecategorisation: false,
     }
     const parsedParams = TvsChartDataParams.safeParse(params)
