@@ -109,6 +109,7 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
+          name: CONTRACT_A.name,
           address: ADDRESS_A,
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
@@ -127,6 +128,7 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
+          name: CONTRACT_B.name,
           address: ADDRESS_B,
           proxyType: CONTRACT_B.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -149,6 +151,7 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
+          name: CONTRACT_C.name,
           address: ADDRESS_C,
           proxyType: CONTRACT_C.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -178,6 +181,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_A,
+          name: CONTRACT_A.name,
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -186,6 +190,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_B,
+          name: CONTRACT_B.name,
           proxyType: CONTRACT_B.proxyType,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
@@ -195,6 +200,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_C,
+          name: CONTRACT_C.name,
           proxyType: CONTRACT_C.proxyType,
           values: CONTRACT_C.values,
           sinceBlock: baseContract.deploymentBlockNumber,
