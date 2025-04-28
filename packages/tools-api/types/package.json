@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "types": "../build/types.d.ts",
+  "main": "../build/types.js"
+}
