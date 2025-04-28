@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 14982736,
+  "blockNumber": 15047009,
   "configHash": "0x09dc597a976c63e4b30d2abbff8f20a854170242a026b518f2ec0db90df9e7d5",
   "entries": [
     {
@@ -50,7 +50,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 19010430595285,
+        "totalSupply": 19181265560890,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -984,9 +984,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x2d92c4cf5ebd923212c629e2cfc796fa8cc688992839e0bdcfca977f580d008d",
+        "messageRoot": "0xbe94e72dcbf1058e3eb6a6e1b22526aeb45c76242bb3965a7cfff889026cb354",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 204035,
+        "nextMessageIndex": 204078,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "derivedName": "L2MessageQueue"

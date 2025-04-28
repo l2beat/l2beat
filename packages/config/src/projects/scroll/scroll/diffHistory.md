@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf4bf556bc052882d706ce9b619e57b6e991bc633
+Generated with discovered.json: 0x9a88d1091eef39b7de16f29b3585140c97680299
 
-# Diff at Fri, 25 Apr 2025 16:07:16 GMT:
+# Diff at Mon, 28 Apr 2025 08:56:32 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@4ff4f5834af1b04f4f0aca2e75571dc1ab52319d block: 14489756
-- current block number: 14982736
+- comparing to: main@a68d2e28c8787c5d6b9533bafbaed67dd065d75c block: 14489756
+- current block number: 15047009
 
 ## Description
 
@@ -17,7 +17,7 @@ Added new roles to the ScrollOwner contract and its timelock controllers.
     +++ description: Contract of the USDC token on Scroll.
       values.totalSupply:
 -        18073085046087
-+        19010430595285
++        19181265560890
     }
 ```
 
