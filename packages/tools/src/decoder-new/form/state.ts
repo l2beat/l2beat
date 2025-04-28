@@ -35,6 +35,7 @@ export interface State {
     data?: string
     address?: string
   }
+  submitting: boolean
 }
 
 export const INITIAL_STATE: State = {
@@ -45,6 +46,7 @@ export const INITIAL_STATE: State = {
     chainId: 1,
   },
   errors: {},
+  submitting: false,
 }
 
 export type Action =
@@ -52,6 +54,8 @@ export type Action =
   | { type: 'set data'; value: string }
   | { type: 'set address'; value: string }
   | { type: 'set chainId'; value: number }
+  | { type: 'submit' }
+  | { type: 'submitted' }
 
 const HASH_REGEX = /^0x[a-f\d]{64}$/i
 const DATA_REGEX = /^0x([a-f\d]{2})*$/i
@@ -123,6 +127,10 @@ export function reducer(state: State, action: Action): State {
           hash: undefined,
         },
       }
+    case 'submit':
+      return { ...state, submitting: true }
+    case 'submitted':
+      return { ...state, submitting: false }
   }
 }
 
