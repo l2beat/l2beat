@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x491fbc5e9d3fa1bcd46a28962e0f8999246523d7
+
+# Diff at Mon, 28 Apr 2025 11:58:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 315644762
+- current block number: 331087763
+
+## Description
+
+Minor Arbitrum upgrade (non-18 decimals gas token support) [3.1.0](https://github.com/OffchainLabs/nitro-contracts/releases/tag/v3.1.0) that everyone is doing atm.
+
+## Watched changes
+
+```diff
+    contract Inbox (0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.0:
+-        "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"
++        "0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"
+      values.$pastUpgrades.1:
++        ["2024-05-15T18:56:14.000Z","0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]]
+      values.$pastUpgrades.0.2:
+-        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
++        "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b"
+      values.$pastUpgrades.0.1:
+-        "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5"
++        ["0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"]
+      values.$pastUpgrades.0.0:
+-        "2024-05-15T18:56:14.000Z"
++        "2025-04-25T21:55:46.000Z"
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"
++        "0x7be08B013de2b23a6329De51C4994f841dcE1a10"
+      values.$pastUpgrades.1:
++        ["2025-04-25T21:55:46.000Z","0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",["0x7be08B013de2b23a6329De51C4994f841dcE1a10"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract Bridge (0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
+      values.$implementation:
+-        "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
++        "0xdF0eaCC3F37356DF320e5B5db16C7eD7A6b596dd"
+      values.$pastUpgrades.1:
++        ["2025-04-25T21:55:46.000Z","0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",["0xdF0eaCC3F37356DF320e5B5db16C7eD7A6b596dd"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.nativeTokenDecimals:
++        18
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol                         | 54 +++++++++++++
+ .../Inbox/ERC20Inbox.sol                           | 92 +++++++++++++++++++---
+ .../SequencerInbox/SequencerInbox.sol              | 24 ++++--
+ 3 files changed, 152 insertions(+), 18 deletions(-)
+```
+
 Generated with discovered.json: 0x0217f25706aca6a4c17e41d77f7a9a8c956786ea
 
 # Diff at Tue, 18 Mar 2025 08:15:02 GMT:
