@@ -4,15 +4,31 @@ import {
   getDiscoveryPaths,
   modelPermissionsCommand,
 } from '@l2beat/discovery'
-import { boolean, command, flag, positional, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  string,
+} from 'cmd-ts'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const ModelPermissions = command({
   name: 'model-permissions',
   args: {
-    projectQuery: positional({
+    project: positional({
       type: string,
-      displayName: 'projectQuery',
+      displayName: 'project',
+      description: 'Project name (without chain) or `all`',
+    }),
+    message: option({
+      type: optional(string),
+      long: 'message',
+      short: 'm',
+      description:
+        'Message that will be written in the description section of diffHistory.md',
     }),
     debug: flag({
       type: boolean,
@@ -26,8 +42,8 @@ export const ModelPermissions = command({
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    let projects = [args.projectQuery]
-    if (args.projectQuery === 'all') {
+    let projects = [args.project]
+    if (args.project === 'all') {
       projects = configReader
         .readAllChains()
         .flatMap((chain) => configReader.readAllProjectsForChain(chain))
@@ -40,7 +56,7 @@ export const ModelPermissions = command({
         paths,
         args.debug,
       )
-      updateDiffHistory(project)
+      updateDiffHistory(project, args.message)
     }
   },
 })
