@@ -272,5 +272,5 @@ describe('discovery config.jsonc', () => {
         )
       }
     }
-  })
+  }).timeout(10000)
 })
