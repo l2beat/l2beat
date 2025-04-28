@@ -721,5 +721,5 @@
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0xf4aea756319e286b512a342b76a6f394ea96365924b7460c7b50d41fc23658f7"
+  "permissionsConfigHash": "0x18dcc6f628917f5030b5ff975ab72deb711fd374fbb0001f7117b357857c13a2"
 }

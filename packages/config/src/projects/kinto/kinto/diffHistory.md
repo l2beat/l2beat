@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe9273337736e2ab2f7534e98aab1134330a1be68
+Generated with discovered.json: 0x77c83107ae833d25968904ad7dd3359875ad7d8c
 
-# Diff at Mon, 28 Apr 2025 10:36:37 GMT:
+# Diff at Mon, 28 Apr 2025 12:05:14 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 838575
@@ -41,79 +41,10 @@ discovery. Values are for block 838575 (main branch discovery), not current.
 ```
 
 ```diff
-    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
-    +++ description: None
-      receivedPermissions.11:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
-      receivedPermissions.10:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
-      receivedPermissions.9:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
-      receivedPermissions.8:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
-      receivedPermissions.7:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
-      receivedPermissions.6:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
-      receivedPermissions.5:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."}
-      receivedPermissions.4:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"confirm sanctions, making them permanent without providing an exit window."}
-      receivedPermissions.3.description:
--        "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
-+        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
-      receivedPermissions.2.description:
--        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
-+        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
-      receivedPermissions.1.delay:
-+        950400
-      receivedPermissions.0.delay:
--        950400
-+        604800
-      receivedPermissions.0.description:
--        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
-+        "confirm sanctions, making them permanent without providing an exit window."
-    }
-```
-
-```diff
     contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
     +++ description: None
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","via":[]}]
-      receivedPermissions.7:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":1036800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
-      receivedPermissions.6:
-+        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."}
-      receivedPermissions.5.permission:
--        "interact"
-+        "upgrade"
-      receivedPermissions.5.from:
--        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
-+        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
-      receivedPermissions.5.delay:
--        1036800
-      receivedPermissions.5.description:
--        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
-      receivedPermissions.4.from:
--        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
-+        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
-      receivedPermissions.3.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.3.from:
--        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
-+        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
-      receivedPermissions.3.description:
-+        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
-      receivedPermissions.2.from:
--        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
-+        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
-      receivedPermissions.2.description:
--        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
-+        "approve smart wallet recoveries for any KintoWallet."
-      receivedPermissions.2.delay:
-+        1036800
     }
 ```
 

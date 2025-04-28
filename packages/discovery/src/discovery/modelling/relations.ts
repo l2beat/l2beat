@@ -118,10 +118,7 @@ export function buildPermissionsModel(
       ),
     }
 
-    for (const template of [
-      permissionTemplate,
-      permissionConditionTemplate,
-    ]) {
+    for (const template of [permissionTemplate, permissionConditionTemplate]) {
       const to = String(valuesWithPermission['permission.to']).toLowerCase()
       if (addressToNameMap[to] === undefined) {
         continue

@@ -1063,5 +1063,5 @@
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
   },
-  "permissionsConfigHash": "0x87e0604073e290b468f302a09c878cfa96f8646f08177a1bfcebd884ab415d51"
+  "permissionsConfigHash": "0xca95d4fbacaf969bdc12cc43b7c6b948a72f068e895d4fb980a026b04e420c4c"
 }

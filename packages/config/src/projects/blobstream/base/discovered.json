@@ -517,5 +517,5 @@
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x15f5aaeda4c8420887d934037b49c6fb819e70af985cc1aad78d583c361f785c"
+  "permissionsConfigHash": "0x91ad5d6529b2e900dfaa22733cf080d3a154db4bcc3d18b661efa049a05925e8"
 }

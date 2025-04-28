@@ -2626,5 +2626,5 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x4abe4e2bfcd7559c349529b3e9ec62ba5c2788d82b9bfd86fcddc98c7ff32728"
+  "permissionsConfigHash": "0xefff9569e0e0e983031a205e00531e80e4b72d65db2da60f41dd3ab7cd808a95"
 }

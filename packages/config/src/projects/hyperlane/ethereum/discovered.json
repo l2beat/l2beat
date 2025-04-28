@@ -1424,5 +1424,5 @@
     "hyperlane/HypERC20Collateral": "0x455d9fac67cb70e193347258fde0eb088bef75b179cfaff2dd52e0fdc2efdf96",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "permissionsConfigHash": "0x861b64b6377b5c58471b8ea5d37c7954ef5b910716d1d4c45dc8145b85930850"
+  "permissionsConfigHash": "0x398c2fbb5fe3fb1ed1eacbbd198951ad12cde8e53ddbacf432b6195f9e5fa15b"
 }

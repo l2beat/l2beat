@@ -673,5 +673,5 @@
     "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
     "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
   },
-  "permissionsConfigHash": "0x807be8ea4420742c2d44cf9be3900f68ad5a83fbdd3fafeaf27fe0b739238a3b"
+  "permissionsConfigHash": "0xbd6657750873da4fbfd97d39d678cebbfa8480603ee6e1f701043e2689d88e87"
 }

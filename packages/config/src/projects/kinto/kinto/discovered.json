@@ -304,36 +304,6 @@
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 604800,
-          "description": "confirm sanctions, making them permanent without providing an exit window."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 604800,
-          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 604800,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 950400,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 950400,
-          "description": "confirm sanctions, making them permanent without providing an exit window."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 950400,
           "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
         },
@@ -346,22 +316,7 @@
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "description": "confirm sanctions, making them permanent without providing an exit window."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
         }
       ]
     },
@@ -384,23 +339,12 @@
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 1036800,
-          "description": "approve smart wallet recoveries for any KintoWallet."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 1036800,
           "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "description": "approve smart wallet recoveries for any KintoWallet."
-        },
-        {
-          "permission": "interact",
-          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
         },
         {
           "permission": "interact",
@@ -3948,5 +3892,5 @@
   "usedTemplates": {
     "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1"
   },
-  "permissionsConfigHash": "0x086617d74317a779e4e58839320635a1e2423d38a45f4b8a19613dda00545328"
+  "permissionsConfigHash": "0xc5352a4cc39ee213cde4e8f60c4ab3b30579e026d0eca7fc02cfe268c5fefb0b"
 }

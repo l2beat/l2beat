@@ -1410,5 +1410,5 @@
     "opstack/zircuit/SuperchainConfig": "0x97ac106120e0eb829ef2873ae828694300be0883750ddfd7cb965eed5cc501f4",
     "opstack/zircuit/Verifier": "0x6c97de6021617dbfcf86fee986182cb7d22d10440735734124a69a3734b9058f"
   },
-  "permissionsConfigHash": "0x8e2ca8c17df2983dec301ce4e0e5dcdad960bfbe35f63762e93a912449534a0b"
+  "permissionsConfigHash": "0x85b4f0df44897566b61970b326ade8d9b470463d138aed5f039d7b4305876247"
 }

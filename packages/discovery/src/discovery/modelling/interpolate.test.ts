@@ -44,7 +44,9 @@ describe(interpolateModelTemplate.name, () => {
       ).
       myAddr(&$.address, "&$.address:raw").
       myName("&$.name").
-      myDescription("&$.description")
+      myDescription("&$.description").
+      shouldCastToNil(&fieldThatDoesNotExist|orNil).
+      shouldQuote(&$.name|quote).
     `
     const contract: EntryParameters = {
       type: 'Contract',
@@ -80,7 +82,9 @@ describe(interpolateModelTemplate.name, () => {
       ).
       myAddr(contactMsigA, "0x0000000000000000000000000000000000000123").
       myName("ContactMsigA").
-      myDescription("Description of ContactMsigA")
+      myDescription("Description of ContactMsigA").
+      shouldCastToNil(nil).
+      shouldQuote("ContactMsigA").
     `)
   })
 

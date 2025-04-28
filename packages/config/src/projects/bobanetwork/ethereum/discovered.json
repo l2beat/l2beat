@@ -1028,5 +1028,5 @@
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   },
-  "permissionsConfigHash": "0x0106922a0fa0f090fa76422728ac69d4460426ba221fe8af6533111e1f051791"
+  "permissionsConfigHash": "0x72b4fd9c82a76d2cac9ba93064e3dcb939ee2777d59f604faa9d57904c8f565b"
 }

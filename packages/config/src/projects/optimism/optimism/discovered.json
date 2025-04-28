@@ -1287,5 +1287,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0x85e91758b625f36fa58de1418eaf2e1dd1aec692363932b7cc6b40150aa04261"
+  "permissionsConfigHash": "0xd80a1e91ed584da712c25147f369eb4e19101b08f92621eff0175ead58963848"
 }

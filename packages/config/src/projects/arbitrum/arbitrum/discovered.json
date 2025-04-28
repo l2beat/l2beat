@@ -2769,5 +2769,5 @@
     "orbitstack/layer2/TreasuryTimelock": "0x3e0115480caa634049a16ebe5fb1e09a3834d2087140901945bcd301bd46789f",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x25a34648155a91264ae1062dd01dc03ed9db101801c73a3a4f9f66e285cb5380"
   },
-  "permissionsConfigHash": "0x1a20481f2ce232ea6b2d399715b3abd567324eca964ed7424f61411285f81297"
+  "permissionsConfigHash": "0x770283fb42acbe8223e26b78e302c3f3c294f0178455cff7f22815b223e42d3f"
 }

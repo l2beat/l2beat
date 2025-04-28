@@ -1320,5 +1320,5 @@
     "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
     "starkex/StarkPerpetual": "0x491138cc31c40b798c5278ae5bfe2f45fad75a40f08728e4e9f82f32c8a7a9cc"
   },
-  "permissionsConfigHash": "0x2db2455e220eb3ac8ce830fd3567b65519b26564381a8423812f5673e2ad8448"
+  "permissionsConfigHash": "0xfc4502ff4b3620142113ac6202d1c2715c52125fb7dce05c2408eaa6e85fe827"
 }

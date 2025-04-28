@@ -1606,5 +1606,5 @@
     "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
     "polygon-cdk/Timelock": "0x78901e9bf86645856ac7e8fb50da9c1b6d749c8a1e7ee7f2d432ab6ab0d71c34"
   },
-  "permissionsConfigHash": "0x83e808d4dc43fa66350966df551cc749cd702992b010b158d7c179bc74cd5b03"
+  "permissionsConfigHash": "0x8c520e587126cfbf8447b8e9552e8ff5ea322d5bbafec09a9f9980a1e578f15f"
 }

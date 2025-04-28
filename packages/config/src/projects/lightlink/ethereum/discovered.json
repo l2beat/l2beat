@@ -1100,5 +1100,5 @@
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75"
   },
-  "permissionsConfigHash": "0xbff9dfb51e68e510a44f52bf6161e988414da0322e5e9956770a56e0df466c44"
+  "permissionsConfigHash": "0xb240b919bb947da147d484ce062ec203fd947c4608b98c15cbef1111a8010cda"
 }

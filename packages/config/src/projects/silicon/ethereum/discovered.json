@@ -406,5 +406,5 @@
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
   },
-  "permissionsConfigHash": "0x217e489c96a086827ccb0f9b8470a81844c6b7b8a52dca622137a26dc9d490c7"
+  "permissionsConfigHash": "0x70665ebc4b0d34fe2de9b40a7ca04b2f20c03dec4b341ee94a2fc16527a7b7c2"
 }

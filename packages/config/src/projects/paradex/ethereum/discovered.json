@@ -743,5 +743,5 @@
     "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
     "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183"
   },
-  "permissionsConfigHash": "0x522739091b47430487f4e3d9420ebe51db8624cb75ff518d1633328eb8fe2350"
+  "permissionsConfigHash": "0x563bc4221fdad7b3e97047cfb2c6c62a1c3b360ada5a543e2ca00411210bf068"
 }

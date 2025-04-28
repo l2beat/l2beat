@@ -1072,5 +1072,5 @@
     "orbitstack/layer2/L2WethGateway": "0xa5776691f5bead6b28b8e18ebe70995ade4dfc5cf25d7dd7e2b8484f86c9ddb1",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04"
   },
-  "permissionsConfigHash": "0x33dbfc3e8d6a2a6a84b5485cabc348b1f04d1ccc97c42f84fadefa6dbfa58aa5"
+  "permissionsConfigHash": "0x71d12c1293cc26ed4e6330c3199b26467fb0fd52659fd40ffd3336edf7ba8b02"
 }

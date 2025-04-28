@@ -2878,5 +2878,5 @@
     "shared-zk-stack/v26/RollupDAManager": "0x1f13223d5cafcdf085f21bbe6e4a988bc53d13fce1257c48f223e38ac6a11eb9",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xf032363ca5f34e7b0e4c790bb2a8223de26bd48691f1234afc950e82f4156138"
+  "permissionsConfigHash": "0x6123558cb29a3c82fe23854283553b9fc9a4bcc2f7c37eb2e6303446ad94edd2"
 }

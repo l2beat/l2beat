@@ -4052,5 +4052,5 @@
     "starknet/StarknetEthBridge": "0xbc8ae085a45e96134776ef38c00c9c7ebcd5b7b7c0818c0bfd287e1d11bb0597",
     "starknet/StarknetMultiBridge": "0x61321009feca9bb05ddf52331ab3017dfcf7a1f09b3b248cc6bb1fe910cedb07"
   },
-  "permissionsConfigHash": "0xebb807ae6dfd2b0a066c843e3e4713466ad4a3a730b995d6b543ed663ca1d3ec"
+  "permissionsConfigHash": "0x8e6ef24e7c5965d5ed350f0890ae369d4ba7184d5816d21c7406210e357d98b1"
 }

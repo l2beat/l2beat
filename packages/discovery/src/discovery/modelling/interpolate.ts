@@ -37,7 +37,11 @@ export function interpolateModelTemplate(
       const processedValue = toLower
         ? String(value).toLowerCase()
         : String(value)
-      const casted = tryCastingToName(processedValue, addressToNameMap, leaveRaw)
+      const casted = tryCastingToName(
+        processedValue,
+        addressToNameMap,
+        leaveRaw,
+      )
       const quoted = quote ? `"${casted}"` : casted
       return quoted
     },

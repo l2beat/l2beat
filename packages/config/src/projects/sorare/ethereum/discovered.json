@@ -908,5 +908,5 @@
     "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
     "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
   },
-  "permissionsConfigHash": "0xda830d59686bb775641139284998cd1954ad4d7623cddc8fbb9a5479cf1df482"
+  "permissionsConfigHash": "0xff884092f9fc8e5ddd858914cef6e92f7f177556578f9623fee7bb85a826e6bb"
 }
