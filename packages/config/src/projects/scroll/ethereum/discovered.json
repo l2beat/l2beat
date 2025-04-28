@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22366508,
+  "blockNumber": 22366785,
   "configHash": "0x893e9088d6cee391217cba7bfa703c12a6d447a0c1d5eccb15f26b34d1d2a37e",
   "entries": [
     {
@@ -962,13 +962,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "getFirstUnfinalizedMessageEnqueueTime",
         "nextCrossDomainMessageIndex",
@@ -997,7 +990,7 @@
         "getFirstUnfinalizedMessageEnqueueTime": 1745817119,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 954163,
+        "nextCrossDomainMessageIndex": 954164,
         "nextUnfinalizedQueueIndex": 954151,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -1040,13 +1033,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC721 tokens from L1 to L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1151,13 +1137,6 @@
         "0x5d09a2c78d20d4e9f61774a32aa4da8e74be21a247188625d5eeffdac11e5eb4"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696920095,
       "sinceBlock": 18318330,
       "values": {
@@ -1193,13 +1172,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1309,13 +1281,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the proper sender.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1460,87 +1425,15 @@
           ]
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters."
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+        },
+        {
+          "permission": "interact",
+          "from": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+          "description": "update the minimum delay message queue parameters and enforced mode parameters."
         }
       ],
       "sinceTimestamp": 1696782479,
@@ -1670,13 +1563,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge WETH from L1 to L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1718,13 +1604,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1900,19 +1779,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1742476115,
       "sinceBlock": 22088274,
       "values": {
@@ -2180,13 +2046,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -2239,7 +2098,7 @@
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 358508,
+          "lastCommittedBatchIndex": 358511,
           "lastFinalizedBatchIndex": 358502,
           "lastFinalizeTimestamp": 1745818979,
           "flags": 1,
@@ -2297,13 +2156,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2349,13 +2201,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC1155 tokens from L1 to L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2558,13 +2403,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2851,13 +2689,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge USDC tokens from L1 to L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "ignoreInWatchMode": ["totalBridgedUSDC"],
       "sinceTimestamp": 1696919351,
       "sinceBlock": 18318268,
@@ -2884,7 +2715,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19272403659493,
+        "totalBridgedUSDC": 19272400658100,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway",
@@ -2904,13 +2735,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {

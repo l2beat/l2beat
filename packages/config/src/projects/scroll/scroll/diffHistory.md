@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9a88d1091eef39b7de16f29b3585140c97680299
+Generated with discovered.json: 0xf4db1cb4d19edccbc61d3c02accd4951612e5422
 
-# Diff at Mon, 28 Apr 2025 08:56:32 GMT:
+# Diff at Mon, 28 Apr 2025 09:52:14 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@a68d2e28c8787c5d6b9533bafbaed67dd065d75c block: 14489756
-- current block number: 15047009
+- current block number: 15048065
 
 ## Description
 
@@ -17,7 +17,7 @@ Added new roles to the ScrollOwner contract and its timelock controllers.
     +++ description: Contract of the USDC token on Scroll.
       values.totalSupply:
 -        18073085046087
-+        19181265560890
++        19147318188126
     }
 ```
 
@@ -64,32 +64,8 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      receivedPermissions.9:
-+        {"permission":"upgrade","from":"0x64CCBE37c9A82D85A1F2E74649b7A42923067988","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.8:
-+        {"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.7:
-+        {"permission":"upgrade","from":"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.6:
-+        {"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}
-      receivedPermissions.5.from:
--        "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
-+        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
-      receivedPermissions.4.from:
--        "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
-+        "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
-      receivedPermissions.3.from:
--        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
-+        "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
-      receivedPermissions.3.via.0.address:
--        "0xA76acF000C890b0DD7AEEf57627d9899F955d026"
-+        "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
-      receivedPermissions.2.from:
--        "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
-+        "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
-      receivedPermissions.2.via.0.address:
--        "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
-+        "0xA76acF000C890b0DD7AEEf57627d9899F955d026"
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","via":[{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]},{"permission":"upgrade","from":"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]},{"permission":"upgrade","from":"0x6EA73e05AdC79974B931123675ea8F78FfdacDF0","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]},{"permission":"upgrade","from":"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]},{"permission":"upgrade","from":"0xd29687c813D741E2F938F4aC377128810E217b1b","via":[{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]},{"permission":"upgrade","from":"0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
       values.accessControl:
 +        {"roles":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"]},"SECURITY_COUNCIL_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]},"SCROLL_MULTISIG_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"EMERGENCY_MULTISIG_NO_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_1DAY_DELAY_TOLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_7DAY_DELAY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"emergency-nodelay":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"]},"ops-fast":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"]}},"targets":{"0xA76acF000C890b0DD7AEEf57627d9899F955d026":{"upgrade(address,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"upgradeAndCall(address,address,bytes)":["SECURITY_COUNCIL_NO_DELAY_ROLE"]},"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81":{"upgrade(address,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"upgradeAndCall(address,address,bytes)":["SECURITY_COUNCIL_NO_DELAY_ROLE"]},"0x5300000000000000000000000000000000000003":{"updateWhitelistStatus(address[],bool)":["emergency-nodelay"]},"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC":{"setPause(bool)":["emergency-nodelay"]},"0x33B60d5Dd260d453cAC3782b0bDC01ce84672142":{"pauseDeposit(bool)":["emergency-nodelay"],"pauseWithdraw(bool)":["emergency-nodelay"],"updateCircleCaller(address)":["ops-fast"]},"0x5300000000000000000000000000000000000002":{"setOverhead(uint256)":["ops-fast"],"setCommitScalar(uint256)":["ops-fast"],"setBlobScalar(uint256)":["ops-fast"]},"0x5300000000000000000000000000000000000005":{"updateMinWithdrawAmount(uint256)":["ops-fast"],"updateRecipient(address)":["ops-fast"]},"0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79":{"setERC20Gateway(address[],address[])":["ops-fast"]},"0x64CCBE37c9A82D85A1F2E74649b7A42923067988":{"updateTokenMapping(address,address)":["ops-fast"]},"0x7bC08E1c04fb41d75F1410363F0c5746Eae80582":{"updateTokenMapping(address,address)":["ops-fast"]},"0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc":{"updateTokenMapping(address,address)":["ops-fast"]},"0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4":{"transferOwnership(address)":["ops-fast"]},"0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE":{"transferOwnership(address)":["ops-fast"]},"0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC":{"withdrawFailedAmount(address,address)":["ops-fast"],"grantRole(bytes32,address)":["ops-fast"],"revokeRole(bytes32,address)":["ops-fast"]}}}
       values.scNoDelay:
@@ -126,10 +102,8 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
     +++ description: Used to propose and manage onchain governance proposals.
-      issuedPermissions.2:
-+        {"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"can configure contract settings such as voting delay, quorum, contract manager.","via":[{"address":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]}
       issuedPermissions.1:
-+        {"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"}]}
++        {"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"can configure contract settings such as voting delay, quorum, contract manager.","via":[{"address":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]}
       issuedPermissions.0.permission:
 -        "upgrade"
 +        "interact"
@@ -166,6 +140,8 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract L2GatewayRouter (0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) {
     +++ description: Counterpart to the L1GatewayRouter contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
       description:
 +        "Counterpart to the L1GatewayRouter contract."
     }
@@ -204,6 +180,8 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract L2ETHGateway (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
     +++ description: Contract of the L2ScrollMessenger contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
       values.counterpart:
 -        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
 +        "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
@@ -225,6 +203,8 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract L2ScrollMessenger (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) {
     +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
       values.counterpart:
 -        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
 +        "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
@@ -318,6 +298,14 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SCRToken (0xd29687c813D741E2F938F4aC377128810E217b1b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"}]}]
+    }
+```
+
+```diff
 -   Status: DELETED
     contract  (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9)
     +++ description: None
@@ -326,6 +314,8 @@ discovery. Values are for block 14489756 (main branch discovery), not current.
 ```diff
     contract L2GatewayRouter (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
     +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B","via":[{"address":"0xA76acF000C890b0DD7AEEf57627d9899F955d026"}]}]
       values.counterpart:
 -        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
 +        "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2c64eaa5e06d9a330c811c14c661daec62867609
+Generated with discovered.json: 0x27e7df2df7a80e08decac590df84ea0eba4dc93f
 
-# Diff at Mon, 28 Apr 2025 08:56:04 GMT:
+# Diff at Mon, 28 Apr 2025 09:51:53 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@a68d2e28c8787c5d6b9533bafbaed67dd065d75c block: 22297562
-- current block number: 22366508
+- current block number: 22366785
 
 ## Description
 
@@ -144,51 +144,8 @@ EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
 ```diff
     contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      receivedPermissions.14:
-+        {"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}
-      receivedPermissions.13.from:
--        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
-+        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
-      receivedPermissions.12.from:
--        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
-+        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
-      receivedPermissions.11.from:
--        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
-+        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
-      receivedPermissions.8.from:
--        "0x987e300fDfb06093859358522a79098848C33852"
-+        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      receivedPermissions.7.from:
--        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-+        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
-      receivedPermissions.6.from:
--        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
-+        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
-      receivedPermissions.5.from:
--        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
-+        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
-      receivedPermissions.4.from:
--        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
-+        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
-      receivedPermissions.3.from:
--        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
-+        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
-      receivedPermissions.2.from:
--        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
-+        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
-      receivedPermissions.1.from:
--        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
-+        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"
-      receivedPermissions.0.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.0.from:
--        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"
-+        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
-      receivedPermissions.0.via:
--        [{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]
-      receivedPermissions.0.description:
-+        "update the minimum delay message queue parameters and enforced mode parameters."
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"0x8432728A257646449245558B8b7Dbe51A16c7a4D","description":"update the minimum delay message queue parameters and enforced mode parameters."}
       values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes):
 -        ["emergency-nodelay"]
       values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.finalizeEuclidInitialBatch(bytes32):
@@ -426,6 +383,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       name:
 -        "L1MessageQueue"
 +        "L1MessageQueueWithGasPriceOracle"
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.estimateCrossDomainMessageFee:
 +        [0,39287348,78574696,117862044,157149392]
       values.getCrossDomainMessage:
@@ -638,6 +597,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
     +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
 +        "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
@@ -688,6 +649,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
     +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62"
 +        "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62"
@@ -701,6 +664,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
     +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.prevReplayIndex:
 +        [0,0,0,0,0]
       errors:
@@ -739,6 +704,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
     +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       fieldMeta:
 -        {"paused":{"severity":"HIGH","description":"Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."}}
     }
@@ -747,8 +714,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      receivedPermissions.14:
--        {"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x987e300fDfb06093859358522a79098848C33852","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE:
 -        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
       values.accessControl.roles.TIMELOCK_1DAY_DELAY_ROLE:
@@ -771,6 +738,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
     +++ description: Contract used to bridge WETH from L1 to L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9"
 +        "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9"
@@ -797,6 +766,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
     +++ description: Contract used to bridge ETH from L1 to L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
 +        "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
@@ -887,6 +858,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
       name:
 -        "OLD_L2GasPriceOracle"
 +        "L2GasPriceOracle"
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.estimateCrossDomainMessageFee:
 +        [0,460000000,920000000,1380000000,1840000000]
       errors:
@@ -922,6 +895,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
     +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.provers:
 -        ["0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c","0x74b286304576625557629C47E9E8702383D9eF92"]
       values.revertedBatches:
@@ -944,6 +919,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
     +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
 +        "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
@@ -961,6 +938,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
     +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
 +        "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
@@ -1021,6 +1000,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
     +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
 +        "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
@@ -1084,6 +1065,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
     +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       values.counterpart:
 -        "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"
 +        "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"
@@ -1104,6 +1087,8 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
 ```diff
     contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
     +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
       template:
 +        "scroll/L1GatewayRouter"
       description:

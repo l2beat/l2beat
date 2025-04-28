@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 15047009,
+  "blockNumber": 15048065,
   "configHash": "0x09dc597a976c63e4b30d2abbff8f20a854170242a026b518f2ec0db90df9e7d5",
   "entries": [
     {
@@ -19,13 +19,6 @@
       ],
       "proxyType": "ZeppelinOS proxy",
       "description": "Contract of the USDC token on Scroll.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696919085,
       "sinceBlock": 37,
       "values": {
@@ -50,7 +43,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 19181265560890,
+        "totalSupply": 19147318188126,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -162,58 +155,6 @@
           "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
           "description": "upgrade all core contracts of the system.",
           "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-          "via": [{ "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xd29687c813D741E2F938F4aC377128810E217b1b",
-          "via": [{ "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
         }
       ],
       "directlyReceivedPermissions": [
@@ -862,11 +803,6 @@
           "to": "0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351",
           "description": "can propose new onchain governance proposals without the required threshold of votes.",
           "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81" }]
         }
       ],
       "sinceTimestamp": 1725377334,
@@ -944,13 +880,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1GatewayRouter contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -984,9 +913,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xbe94e72dcbf1058e3eb6a6e1b22526aeb45c76242bb3965a7cfff889026cb354",
+        "messageRoot": "0xca8432c7e97e02d6b1cd208c19253259ec05ad0581f07fa20dc827c61c95d7e7",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 204078,
+        "nextMessageIndex": 204079,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "derivedName": "L2MessageQueue"
@@ -1007,13 +936,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC1155Gateway contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -1050,13 +972,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1CustomERC20Gateway contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -1153,13 +1068,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract of the L2ScrollMessenger contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -1212,13 +1120,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -1294,13 +1195,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC721Gateway contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -1793,13 +1687,6 @@
         "0x04d776ff58fa371ab516a53f4b7a12f5f0f1dd00f20206aea3906014017297ba"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e" }]
-        }
-      ],
       "sinceTimestamp": 1725336741,
       "sinceBlock": 8949006,
       "values": {
@@ -1888,13 +1775,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "via": [{ "address": "0xA76acF000C890b0DD7AEEf57627d9899F955d026" }]
-        }
-      ],
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
