@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x568391c94fc70497fd0094107a9e96186ac199b2
+Generated with discovered.json: 0x74a967b8211eef7064cd2c104a9230c4829c608f
 
-# Diff at Mon, 28 Apr 2025 09:20:42 GMT:
+# Diff at Mon, 28 Apr 2025 09:27:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@abb69590061038da05feece26d3be8369d45e4a9 block: 29215620
@@ -25,7 +25,7 @@ discovery. Values are for block 29215620 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract MasterMinter (0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1)
-    +++ description: None
+    +++ description: Manager contract for minter management [sic].
 ```
 
 ```diff
