@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Config } from '../config/types'
 import { AddressService } from '../domain/AddressService'
+import { ApiController } from '../domain/ApiController'
 import { Decoder } from '../domain/Decoder'
 import { SignatureService } from '../domain/SignatureService'
 import { createHttpServer } from './HttpServer'
@@ -36,19 +37,16 @@ export class Application {
 
     const decoder = new Decoder(addressService, signatureService)
 
-    const httpServer = createHttpServer(config, logger.for('Router'))
+    const controller = new ApiController(decoder, config.chains)
+    const httpServer = createHttpServer(
+      config,
+      controller,
+      logger.for('Router'),
+    )
 
     this.start = async () => {
       await httpServer.start()
       appLogger.info('Started')
-
-      const decoded = await decoder.decode({
-        to: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        chain: config.chains[0]!,
-        data: '0xa9059cbb0000000000000000000000005318ffc5b00c9335511205f6ff460472673f410e0000000000000000000000000000000000000000000000000000000000f646e0',
-      })
-      console.log(JSON.stringify(decoded, null, 2))
     }
   }
 }
