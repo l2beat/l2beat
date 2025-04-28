@@ -72,13 +72,14 @@ export const omni: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description: `${discovery.getMultisigStats('BridgeValidators_DAI')} Validator MultiSig`,
+      value: `Multisig (${discovery.getMultisigStats('BridgeValidators_DAI')})`,
+      description: `${discovery.getMultisigStats('BridgeValidators_DAI')} BridgeValidators Multisig with publicly disclosed, external signers (DAI and Omni bridges each have their own validator set).`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts can be upgraded by the Gnosis Bridge MultiSig',
+      value: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+      secondLine: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Gnosis Bridge Multisig')} Gnosis Bridge MultiSig`,
       sentiment: 'bad',
     },
     destinationToken: {
@@ -86,6 +87,11 @@ export const omni: Bridge = {
       description:
         BRIDGE_RISK_VIEW.CANONICAL.description +
         ' Tokens transferred end up as wrapped ERC677.',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
+      description: 'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
+      sentiment: 'bad',
     },
   },
   technology: {
