@@ -78,6 +78,7 @@ export function processAnalysis(
               ? undefined
               : sortByKeys(x.errors),
           derivedName: x.derivedName,
+          implementationNames: x.implementationNames,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies EntryParameters)
       }),

@@ -87,6 +87,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     errors: e.errors,
     fieldMeta: e.fieldMeta,
     derivedName: e.derivedName,
+    implementationNames: e.implementationNames,
     usedTypes: e.usedTypes,
     references: e.references,
     category: e.category,
