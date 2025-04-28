@@ -101,7 +101,6 @@ export const scalingSummaryColumns = [
             tvsWarnings={value.warnings}
             breakdown={value.breakdown}
             change={value.change}
-            gasTokens={ctx.row.original.gasTokens}
           />
         )
       },

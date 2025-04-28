@@ -1,10 +1,10 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
-import { languageJoin } from '~/utils/language-join'
 import { Square } from '../square'
 import { WarningBar, sentimentToWarningBarColor } from '../warning-bar'
 import { Breakdown } from './breakdown'
+import { languageJoin } from '~/utils/language-join'
 
 export interface TokenBreakdownProps {
   total: number
@@ -16,7 +16,7 @@ export interface TokenBreakdownProps {
 
 export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
   associatedTokenSymbols: string[]
-  gasTokens?: string[]
+
   tvsWarnings: WarningWithSentiment[]
 }
 
@@ -47,20 +47,16 @@ export function TokenBreakdownTooltipContent({
   stablecoin,
   associatedTokenSymbols,
   tvsWarnings,
-  gasTokens,
 }: TokenBreakdownTooltipContentProps) {
   const other = total - associated - ether - stablecoin
-  const associatedTokensWithGas = associatedTokenSymbols.map((symbol) =>
-    gasTokens?.includes(symbol.toUpperCase()) ? `${symbol} (gas)` : symbol,
-  )
   const values = [
     {
-      title: languageJoin(associatedTokensWithGas) ?? 'Associated',
+      title: languageJoin(associatedTokenSymbols) ?? 'Associated',
       value: associated,
       variant: 'associated' as const,
     },
     {
-      title: gasTokens?.includes('ETH') ? 'Ether (gas)' : 'Ether',
+      title: 'ETH & derivatives',
       value: ether,
       variant: 'ether' as const,
     },
@@ -73,7 +69,7 @@ export function TokenBreakdownTooltipContent({
   ]
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 max-md:max-w-xs">
       {total === 0 ? (
         <span>No tokens</span>
       ) : (
