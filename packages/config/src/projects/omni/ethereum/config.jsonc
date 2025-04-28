@@ -4,95 +4,118 @@
   "name": "omni",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
-    "0x88ad09518695c6c3712AC10a214bE5109a655671",
-    "0x87D48c565D0D85770406D248efd7dc3cbd41e729",
-    "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418" // LayerZero Adapter for Hashi
+    "0x88ad09518695c6c3712AC10a214bE5109a655671", // ForeignOmnibridge
+    "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418", // LayerZero Adapter for Hashi
+    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016" // SdaiForeignBridge
   ],
-  "names": {
-    "0x88ad09518695c6c3712AC10a214bE5109a655671": "ForeignOmnibridge",
-    "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "ForeignAMB",
-    "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "BridgeValidators",
-    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig",
-    "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafe",
-    "0x87D48c565D0D85770406D248efd7dc3cbd41e729": "AAVEInterestERC20",
-    "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5": "AAVEIncentivesController",
-    "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9": "AAVELendingPool",
-    "0x4da27a545c0c5B758a6BA100e3a049001de870f5": "stkAAVEToken",
-    "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": "HashiManager",
-    "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "Hashi Multisig"
-  },
   "overrides": {
+    "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": {
+      // sub MS
+      "category": "spam"
+    },
+    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
+      // XDaiForeignBridge
+      "category": "core",
+      "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
+      "displayName": "DaiForeignBridge",
+      "proxyType": "Eternal Storage proxy",
+      "ignoreRelatives": [
+        "compToken",
+        "cDaiToken",
+        "sDaiToken",
+        "erc20token",
+        "daiToken"
+      ],
+      "ignoreMethods": [
+        "totalExecutedPerDay",
+        "totalSpentPerDay",
+        "withinExecutionLimit",
+        "withinLimit",
+        "getCurrentDay"
+      ],
+      "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
+      "fields": {
+        "validatorContract": {
+          "permissions": [
+            {
+              "type": "validateBridge3"
+            }
+          ]
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references."
+            }
+          ]
+        }
+      }
+    },
+    "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
+      // BridgeValidators dai
+      "description": "Custom Multisignature contract for Validators.",
+      "displayName": "BridgeValidators_DAI",
+      "proxyType": "Eternal Storage proxy"
+    },
+    "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": {
+      // HashiManager dai
+      "displayName": "HashiManager_DAI",
+      "proxyType": "Eternal Storage proxy"
+    },
     "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": {
       // LayerZero Adapter for Hashi
       "ignoreRelatives": ["LAYER_ZERO_ENDPOINT", "endpoint"]
     },
     "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": {
-      // HashiManager
-      "proxyType": "Eternal Storage proxy",
-      "fields": {
-        "HASHI_IS_MANDATORY": {
-          "description": "If true, Hashi validation is mandatory",
-          "severity": "HIGH"
-        },
-        "targetAddress": {
-          "description": "Address of the target contract on GnosisChain",
-          "severity": "HIGH",
-          "edit": ["format", "GnosisAddress"]
-        },
-        "adapters": {
-          "description": "Array of the adapters on GnosisChain",
-          "severity": "HIGH",
-          "edit": ["map", ["format", "GnosisAddress"]]
-        },
-        "reporters": {
-          "description": "Array of the reports on GnosisChain",
-          "severity": "HIGH",
-          "edit": ["map", ["format", "GnosisAddress"]]
-        },
-        "threshold": {
-          "description": "Threshold of the adapters on GnosisChain",
-          "severity": "HIGH"
-        },
-        "AdaptersFromStorage": {
-          "handler": {
-            "type": "storage",
-            "slot": "0x21aa67cae9293b939ada82eb9133293e592da66aa847a5596523bd6d2bf2529b",
-            "returnType": "address"
-          }
-        }
-      }
+      // HashiManager omni
+      "displayName": "HashiManager_Omni",
+      "proxyType": "Eternal Storage proxy"
     },
     "0x88ad09518695c6c3712AC10a214bE5109a655671": {
       // ForeignOmnibridge
+      "category": "core",
+      "description": "Token bridge implementation and escrow for ERC-20 tokens.",
       "proxyType": "Eternal Storage proxy",
-      "ignoreMethods": ["getCurrentDay"]
-    },
-    "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": {
-      // ForeignAMB
-      "proxyType": "Eternal Storage proxy"
-    },
-    "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": {
-      // BridgeValidators
-      "proxyType": "Eternal Storage proxy",
+      "ignoreMethods": ["getCurrentDay"],
       "fields": {
-        "validatorList": {
-          "description": "Array of the signers in the validator multisig",
-          "severity": "MEDIUM",
-          "type": "PERMISSION"
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change all critical configurations like yield farming for escrowed funds and limits."
+            }
+          ]
         }
       }
     },
-    "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5": {
-      // AAVEIncentivesController
-      "ignoreDiscovery": true
+    "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": {
+      // ForeignAMB
+      "category": "core",
+      "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
+      "proxyType": "Eternal Storage proxy",
+      "fields": {
+        "validatorContract": {
+          "permissions": [
+            {
+              "type": "validateBridge3"
+            }
+          ]
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change external validation logic refered to by this contract (e.g. Hashi)."
+            }
+          ]
+        }
+      }
     },
-    "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9": {
-      // AAVELendingPool
-      "ignoreDiscovery": true
-    },
-    "0x4da27a545c0c5B758a6BA100e3a049001de870f5": {
-      // stkAAVEToken
-      "ignoreDiscovery": true
+    "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": {
+      // BridgeValidators omni
+      "displayName": "BridgeValidators_Omni",
+      "proxyType": "Eternal Storage proxy"
     }
   }
 }

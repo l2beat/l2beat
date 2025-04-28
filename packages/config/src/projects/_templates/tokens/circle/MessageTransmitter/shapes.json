@@ -1,0 +1,14 @@
+{
+  "MessageTransmitter": {
+    "hash": "0x0a6be4fecca4861686e0a31878557d698e444ce7024f01190aabc908e17087e3",
+    "address": "0xAD09780d193884d503182aD4588450C416D6F9D4",
+    "chain": "base",
+    "blockNumber": 29519230
+  },
+  "MessageTransmitterV2": {
+    "hash": "0x84e99328c6ecdcc29a4322f0758efcb0a5886faaa900a1764ba815e6c8a2036a",
+    "address": "0x7Db629f6Acc20Be49a0A7565c21CC178E9Ac21e3",
+    "chain": "base",
+    "blockNumber": 29519230
+  }
+}

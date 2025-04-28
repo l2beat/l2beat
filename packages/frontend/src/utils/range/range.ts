@@ -30,17 +30,18 @@ export function getRangeWithMax(
   resolution: Resolution,
   opts?: {
     now?: UnixTime
+    offset?: UnixTime
   },
 ): [UnixTime | null, UnixTime] {
   const days = rangeToDays(range)
-
+  const offset = opts?.offset ?? 0
   const roundedNow = UnixTime.toStartOf(
     opts?.now ?? UnixTime.now(),
     resolution === 'hourly' ? 'hour' : 'day',
   )
 
-  const start = days !== null ? roundedNow - days * UnixTime.DAY : null
-  const end = roundedNow
+  const start = days !== null ? roundedNow - days * UnixTime.DAY + offset : null
+  const end = roundedNow + offset
 
   return [start, end]
 }

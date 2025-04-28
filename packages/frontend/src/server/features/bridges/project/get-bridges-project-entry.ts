@@ -201,7 +201,7 @@ export async function getBridgesProjectEntry(
   const technologySection = getBridgeTechnologySection(project)
   if (technologySection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         ...technologySection,
         id: 'technology',
@@ -214,7 +214,7 @@ export async function getBridgesProjectEntry(
     getBridgeOtherConsiderationsSection(project)
   if (otherConsiderationsSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'other-considerations',
         title: 'Other considerations',

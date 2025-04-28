@@ -482,7 +482,7 @@ export async function getScalingProjectEntry(
   const operatorSection = getOperatorSection(project)
   if (operatorSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'operator',
         title: 'Operator',
@@ -507,7 +507,7 @@ export async function getScalingProjectEntry(
   const withdrawalsSection = getWithdrawalsSection(project)
   if (withdrawalsSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'withdrawals',
         title: 'Withdrawals',
@@ -520,7 +520,7 @@ export async function getScalingProjectEntry(
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   if (otherConsiderationsSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'other-considerations',
         title: 'Other considerations',

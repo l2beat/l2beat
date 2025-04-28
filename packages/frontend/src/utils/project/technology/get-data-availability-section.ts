@@ -5,12 +5,12 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import type { GroupSectionProps } from '~/components/projects/sections/group-section'
-import type { TechnologySectionProps } from '~/components/projects/sections/technology-section'
+import type { TechnologyChoicesSectionProps } from '~/components/projects/sections/technology-choices-section'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import { getTechnologyChoicesSectionProps } from './get-technology-choices-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 type DataAvailabilitySection =
@@ -21,9 +21,9 @@ type DataAvailabilitySection =
         | undefined
     }
   | {
-      type: 'TechnologySection'
+      type: 'TechnologyChoicesSection'
       props:
-        | Omit<TechnologySectionProps, 'id' | 'title' | 'sectionOrder'>
+        | Omit<TechnologyChoicesSectionProps, 'id' | 'title' | 'sectionOrder'>
         | undefined
     }
 
@@ -45,7 +45,7 @@ export function getDataAvailabilitySection(
   }
   if (project.scalingTechnology?.isUnderReview)
     return {
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         items: [],
         isUnderReview: true,
@@ -108,13 +108,13 @@ function getCustomDaSection(
 function getPublicDaSection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
   daSolution?: DaSolution,
-): Extract<DataAvailabilitySection, { type: 'TechnologySection' }> {
+): Extract<DataAvailabilitySection, { type: 'TechnologyChoicesSection' }> {
   assert(
     project.scalingTechnology?.dataAvailability,
     'dataAvailability is required',
   )
 
-  const props = getTechnologySectionProps(project, [
+  const props = getTechnologyChoicesSectionProps(project, [
     makeTechnologyChoice(
       'data-availability',
       project.scalingTechnology.dataAvailability,
@@ -133,7 +133,7 @@ function getPublicDaSection(
     ),
   ])
   return {
-    type: 'TechnologySection',
+    type: 'TechnologyChoicesSection',
     props,
   } as const
 }

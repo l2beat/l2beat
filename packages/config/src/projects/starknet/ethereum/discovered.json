@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 22144824,
+  "blockNumber": 22346393,
   "configHash": "0x65ed4a037797261e324947dc34fac5b09a91d3008df91bf58b51272c2ee67b94",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -307,7 +307,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 28,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1085,6 +1085,17 @@
               "delay": 691200
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "delay": 259200,
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -1113,7 +1124,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 26,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1823,7 +1834,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1669310,
+        "l1ToL2MessageNonce": 1670219,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1847,9 +1858,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "779395971216745029869557920876212017825583268592235057994064206121712003722",
-        "stateBlockNumber": 1265607,
-        "stateRoot": "876691395408977440220981051620473908062384858948483850606695778202067495877",
+        "stateBlockHash": "2785487556821208834607829184260586493745756849201663550600926429216547747342",
+        "stateBlockNumber": 1344804,
+        "stateRoot": "714931898301122029139816843785263593462040318518034668293855043447018195712",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1918,6 +1929,11 @@
         {
           "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "delay": 259200
         }
       ],
       "sinceTimestamp": 1739989031,
@@ -1967,12 +1983,26 @@
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "delay": 259200,
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+          "delay": 259200,
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1704905879,
       "sinceBlock": 18977888,
       "values": {
-        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$admin": [
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+        ],
         "$immutable": false,
         "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "$pastUpgrades": [
@@ -2028,7 +2058,10 @@
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+            "members": [
+              "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+              "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+            ]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",

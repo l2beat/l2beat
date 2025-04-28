@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "USDC",
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer."
+        }
+      ]
+    },
+    "masterMinter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage minter addresses."
+        }
+      ]
+    },
+    "blacklister": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "blacklist addresses, freezing any interactions with the USDC token for them."
+        }
+      ]
+    },
+    "rescuer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer any ERC-20 tokens out of the contract."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the USDC token (no transfers, mints, burns)."
+        }
+      ]
+    },
+    "minters": {
+      "description": "All minters, ignoring their 'allowed amount'",
+      "handler": {
+        "type": "event",
+        "select": "minter",
+        "add": {
+          "event": "MinterConfigured"
+        },
+        "remove": {
+          "event": "event MinterRemoved(address indexed minter)"
+        }
+      }
+    }
+  }
+}

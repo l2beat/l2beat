@@ -55,8 +55,8 @@ export function ProjectBadge({
     <Tooltip delayDuration={0}>
       <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
       <TooltipContent>
-        <span className="mb-2 block font-medium">{badge.name}</span>
-        <span className="text-xs">{badge.description}</span>
+        <span className="label-value-14-medium mb-1 block">{badge.name}</span>
+        <span>{badge.description}</span>
       </TooltipContent>
     </Tooltip>
   )

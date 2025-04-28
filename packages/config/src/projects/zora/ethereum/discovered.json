@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 22194727,
+  "blockNumber": 22346307,
   "configHash": "0xf11703a0a307ebaa499dc7e3602642894dc81f995cf8af20e212c16e7cf3ec36",
   "entries": [
     {
@@ -66,10 +66,6 @@
       "directlyReceivedPermissions": [
         {
           "permission": "guard",
-          "from": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054"
-        },
-        {
-          "permission": "guard",
           "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
         }
       ],
@@ -101,57 +97,29 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OptimismPortal",
+      "name": "OptimismPortal2",
       "address": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
       "type": "Contract",
-      "template": "opstack/OptimismPortal",
+      "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
+        "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "via": [
-            {
-              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": [
-            {
-              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
-            },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
-        },
         {
           "permission": "upgrade",
           "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1686694031,
       "sinceBlock": 17473938,
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
-        "$implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
+        "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
         "$pastUpgrades": [
           [
             "2023-06-13T22:11:23.000Z",
@@ -167,26 +135,50 @@
             "2024-04-19T21:23:23.000Z",
             "0xfe942033eec0df235735ae8872759f690e4bee4c86ebb6dba7b9b9446410b5d1",
             ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 5,
+        "disputeGameFactory": "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
+        "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "GUARDIAN": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
-        "l2Oracle": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 348576,
-          "prevBlockNum": 22194630
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 22345996
         },
         "paused": false,
+        "proofMaturityDelaySeconds": 604800,
+        "RespectedGameString": "PermissionedDisputeGame",
+        "respectedGameType": 1,
+        "respectedGameTypeUpdatedAt": 1745506331,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-        "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "systemConfig": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
-        "version": "2.5.0"
+        "version": "3.10.0"
       },
-      "derivedName": "OptimismPortal",
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
+      },
+      "derivedName": "OptimismPortal2",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -291,7 +283,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 67,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -304,13 +296,7 @@
     {
       "address": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
@@ -386,6 +372,11 @@
         },
         {
           "permission": "interact",
+          "from": "0xee6F71542e32930B44D6C208a15DE67E56F86087",
+          "description": "can pull funds from the contract in case of emergency."
+        },
+        {
+          "permission": "interact",
           "from": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
@@ -403,6 +394,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x7615032B5998714A056d5100f403666Be2C3AC15",
+          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
         },
@@ -413,17 +409,22 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
-          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
-        },
-        {
-          "permission": "upgrade",
           "from": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
         },
         {
           "permission": "upgrade",
+          "from": "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
+          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
+          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xee6F71542e32930B44D6C208a15DE67E56F86087",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
         }
       ],
@@ -452,10 +453,29 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 12,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "MIPS",
+      "address": "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C",
+      "type": "Contract",
+      "template": "opstack/MIPS",
+      "sourceHashes": [
+        "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779"
+      ],
+      "proxyType": "immutable",
+      "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "sinceTimestamp": 1733920139,
+      "sinceBlock": 21379266,
+      "values": {
+        "$immutable": true,
+        "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
+        "version": "1.2.1"
+      },
+      "derivedName": "MIPS"
     },
     {
       "address": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
@@ -482,6 +502,138 @@
       "address": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PermissionedDisputeGame",
+      "address": "0x7541f1C32A501E13F722fBb7C57195aD4C8415E7",
+      "type": "Contract",
+      "template": "opstack/PermissionedDisputeGame",
+      "sourceHashes": [
+        "0x36b6d01ce1c06ddc49ae1e3fcb2954cf2bfba1c55fd1174fce55ebd20e3dbe13"
+      ],
+      "proxyType": "immutable",
+      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "sinceTimestamp": 1742398835,
+      "sinceBlock": 22081870,
+      "values": {
+        "$immutable": true,
+        "absolutePrestate": "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01",
+        "absolutePrestateDecoded": "v1.5.1-rc.1",
+        "anchorStateRegistry": "0x7615032B5998714A056d5100f403666Be2C3AC15",
+        "challenger": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "claimData": [],
+        "claimDataLen": 0,
+        "clockExtension": 10800,
+        "createdAt": 0,
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 1,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameType": 1,
+        "getChallengerDuration": [],
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2BlockNumberChallenged": false,
+        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2ChainId": 7777777,
+        "maxClockDuration": 302400,
+        "maxGameDepth": 73,
+        "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "splitDepth": 30,
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "1.3.1",
+        "vm": "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C",
+        "weth": "0xee6F71542e32930B44D6C208a15DE67E56F86087"
+      },
+      "fieldMeta": {
+        "absolutePrestateDecoded": {
+          "description": "Prestate tag for known prestates."
+        }
+      },
+      "derivedName": "PermissionedDisputeGame",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
+            "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
+            "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
+            "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
+            "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+            "0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37": "v1.4.0-unichain",
+            "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
+            "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
+            "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
+            "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
+            "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
+            "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
+            "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
+            "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
+            "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
+            "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
+            "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
+            "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
+            "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
+            "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
+            "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
+            "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
+            "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
+            "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AnchorStateRegistry",
+      "address": "0x7615032B5998714A056d5100f403666Be2C3AC15",
+      "type": "Contract",
+      "template": "opstack/AnchorStateRegistry",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x6ceb1548721dae770e84e1c1059e5415381a07285cd687fdb032aa2d320e1f20"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
+        }
+      ],
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "sinceTimestamp": 1742398703,
+      "sinceBlock": 22081859,
+      "values": {
+        "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
+        "$implementation": "0x2F5c9bed66e6CD336CbbDEd66B1039682cd4fE16",
+        "$pastUpgrades": [
+          [
+            "2025-03-19T15:39:47.000Z",
+            "0x5661465a8f24654bb135e9d34b8c5380023f157a328b2ea90286aaca3d04c270",
+            ["0x2F5c9bed66e6CD336CbbDEd66B1039682cd4fE16"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "disputeGameFactory": "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
+        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "version": "2.0.0"
+      },
+      "derivedName": "AnchorStateRegistry"
     },
     {
       "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
@@ -531,9 +683,19 @@
             "2024-04-19T21:23:23.000Z",
             "0xfe942033eec0df235735ae8872759f690e4bee4c86ebb6dba7b9b9446410b5d1",
             ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 5,
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -556,18 +718,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
-          "via": [
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            {
-              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            }
-          ]
-        },
         {
           "permission": "guard",
           "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -609,7 +759,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 19,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -715,17 +865,6 @@
       "receivedPermissions": [
         {
           "permission": "guard",
-          "from": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
-          "via": [
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            {
-              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
-            }
-          ]
-        },
-        {
-          "permission": "guard",
           "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "via": [
             { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -764,7 +903,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 101,
+        "nonce": 103,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -775,101 +914,30 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L2OutputOracle",
-      "address": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
+      "name": "PreimageOracle",
+      "address": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
       "type": "Contract",
-      "template": "opstack/L2OutputOracle",
+      "template": "opstack/PreimageOracle",
       "sourceHashes": [
-        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
+        "0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b"
       ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
-        }
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ],
-      "sinceTimestamp": 1686694007,
-      "sinceBlock": 17473936,
+      "proxyType": "immutable",
+      "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "sinceTimestamp": 1724975087,
+      "sinceBlock": 20637600,
       "values": {
-        "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
-        "$implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
-        "$pastUpgrades": [
-          [
-            "2023-06-13T22:11:23.000Z",
-            "0x2d5cb61e2bcf7b90f813f128dd3ee41d8f0dc78bed2b49c2dcc61e95e7530d03",
-            ["0x89336159Edd615260a95309e46343602D6b6489e"]
-          ],
-          [
-            "2023-06-14T21:39:23.000Z",
-            "0xf1fb37ad9d3aab9b6c5ccda93bd4ccbba1eaf52045132df60ee1d4a129e6f575",
-            ["0x8b2131f336CFF06edD7B86aE41b476eef873f7C5"]
-          ],
-          [
-            "2023-06-15T14:51:59.000Z",
-            "0xc121c2598e03ceb8f6f3e508315202fa1f3ed2b962169c443d0ad6413d9fcde5",
-            ["0x9eedde6b4D3263b97209Ba860eDF3Fc6a8fB6a44"]
-          ],
-          [
-            "2024-04-19T21:23:23.000Z",
-            "0xfe942033eec0df235735ae8872759f690e4bee4c86ebb6dba7b9b9446410b5d1",
-            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
-          ],
-          [
-            "2024-04-19T21:23:23.000Z",
-            "0xfe942033eec0df235735ae8872759f690e4bee4c86ebb6dba7b9b9446410b5d1",
-            ["0xF243BEd163251380e78068d317ae10f26042B292"]
-          ]
-        ],
-        "$upgradeCount": 5,
-        "challenger": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
-        "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
-        "deletedOutputs": [],
-        "FINALIZATION_PERIOD_SECONDS": 604800,
-        "finalizationPeriodSeconds": 604800,
-        "L2_BLOCK_TIME": 2,
-        "l2BlockTime": 2,
-        "latestBlockNumber": 28531980,
-        "latestOutputIndex": 16075,
-        "nextBlockNumber": 28533780,
-        "nextOutputIndex": 16076,
-        "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
-        "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
-        "startingBlockNumber": 0,
-        "startingTimestamp": 1686693839,
-        "SUBMISSION_INTERVAL": 1800,
-        "submissionInterval": 1800,
-        "version": "1.8.0"
+        "$immutable": true,
+        "challengePeriod": 86400,
+        "KECCAK_TREE_DEPTH": 16,
+        "MAX_LEAF_COUNT": 65535,
+        "MIN_BOND_SIZE": "250000000000000000",
+        "minProposalSize": 126000,
+        "PRECOMPILE_CALL_RESERVED_GAS": 100000,
+        "proposalCount": 0,
+        "proposals": [],
+        "version": "1.1.2"
       },
-      "fieldMeta": {
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": "Challenge period (Number of seconds until a state root is finalized)."
-        },
-        "proposer": { "severity": "HIGH" },
-        "challenger": { "severity": "HIGH" },
-        "deletedOutputs": { "severity": "HIGH" }
-      },
-      "derivedName": "L2OutputOracle",
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "derivedName": "PreimageOracle"
     },
     {
       "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
@@ -941,16 +1009,26 @@
             "2025-01-24T14:41:35.000Z",
             "0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350",
             ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 7,
         "basefeeScalar": 100000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
         "batchInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
         "blobbasefeeScalar": 611590,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
-        "disputeGameFactory": "0x0000000000000000000000000000000000000000",
+        "disputeGameFactory": "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
         "gasLimit": 30000000,
@@ -1012,6 +1090,54 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DisputeGameFactory",
+      "address": "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
+      "type": "Contract",
+      "template": "opstack/DisputeGameFactory",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
+        }
+      ],
+      "ignoreInWatchMode": ["gameCount"],
+      "sinceTimestamp": 1742398679,
+      "sinceBlock": 22081857,
+      "values": {
+        "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
+        "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
+        "$pastUpgrades": [
+          [
+            "2025-03-19T15:39:35.000Z",
+            "0x88ce75c9fa2f1cbbde747194749d24347deb080d959e518167accee7462556df",
+            ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "gameCount": 5,
+        "gameImpls": [
+          "0x0000000000000000000000000000000000000000",
+          "0x7541f1C32A501E13F722fBb7C57195aD4C8415E7",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "initBonds": [0, 0, 0, 0, 0],
+        "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "permissionedGamesTotal": 5,
+        "version": "1.0.0"
+      },
+      "derivedName": "DisputeGameFactory",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1044,11 +1170,6 @@
       "receivedPermissions": [
         {
           "permission": "guard",
-          "from": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
-          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
-        },
-        {
-          "permission": "guard",
           "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
         }
@@ -1079,7 +1200,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 21,
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1122,9 +1243,14 @@
             "2024-04-19T21:23:23.000Z",
             "0xfe942033eec0df235735ae8872759f690e4bee4c86ebb6dba7b9b9446410b5d1",
             ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "bridge": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "version": "1.9.0"
@@ -1204,46 +1330,6 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Zora Multisig 2",
-      "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1686592547,
-      "sinceBlock": 17465587,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4",
-          "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB",
-          "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7",
-          "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81",
-          "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
-          "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0xac8a89558305fc00b7a2686ab2bda0fb7e97f96a30b075fcc453b727c8172bda",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 0,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "address": "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1274,11 +1360,11 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"
+          "from": "0x7615032B5998714A056d5100f403666Be2C3AC15"
         },
         {
           "permission": "upgrade",
-          "from": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"
+          "from": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"
         },
         {
           "permission": "upgrade",
@@ -1286,7 +1372,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e"
+        },
+        {
+          "permission": "upgrade",
           "from": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xee6F71542e32930B44D6C208a15DE67E56F86087"
         }
       ],
       "sinceTimestamp": 1686693947,
@@ -1341,11 +1435,21 @@
             "2024-04-19T21:23:23.000Z",
             "0xfe942033eec0df235735ae8872759f690e4bee4c86ebb6dba7b9b9446410b5d1",
             ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-04-24T14:52:11.000Z",
+            "0x557cab0b43928b8382105655a8bef75c3bd925d8ff3ecd157b9cee57361fd0bd",
+            ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 6,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630288",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630899",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1402,6 +1506,55 @@
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "DelayedWETH",
+      "address": "0xee6F71542e32930B44D6C208a15DE67E56F86087",
+      "type": "Contract",
+      "template": "opstack/DelayedWETH",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
+        }
+      ],
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1742398739,
+      "sinceBlock": 22081862,
+      "values": {
+        "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
+        "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
+        "$pastUpgrades": [
+          [
+            "2025-03-19T15:39:59.000Z",
+            "0x339d4ca1b77634c61ff28dbe76f42568ddb681874090651514a58ee9919b1562",
+            ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "config": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "decimals": 18,
+        "delay": 604800,
+        "name": "Wrapped Ether",
+        "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "symbol": "WETH",
+        "totalSupply": 0,
+        "version": "1.1.0"
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "AddressManager",
@@ -1487,31 +1640,18 @@
       "function showLiveness()",
       "function version() view returns (string)"
     ],
-    "0x2D778797049FE9259d947D1ED8e5442226dFB589": [
-      "constructor()",
+    "0x2F5c9bed66e6CD336CbbDEd66B1039682cd4fE16": [
+      "constructor(address _disputeGameFactory)",
+      "error InvalidGameStatus()",
+      "error Unauthorized()",
+      "error UnregisteredGame()",
       "event Initialized(uint8 version)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "function GUARDIAN() view returns (address)",
-      "function L2_ORACLE() view returns (address)",
-      "function SYSTEM_CONFIG() view returns (address)",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Oracle() view returns (address)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool paused_)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function anchors(uint32) view returns (bytes32 root, uint256 l2BlockNumber)",
+      "function disputeGameFactory() view returns (address)",
+      "function initialize(tuple(uint32 gameType, tuple(bytes32 root, uint256 l2BlockNumber) outputRoot)[] _startingAnchorRoots, address _superchainConfig)",
+      "function setAnchorState(address _game)",
       "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
+      "function tryUpdateAnchorState()",
       "function version() view returns (string)"
     ],
     "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
@@ -1609,6 +1749,14 @@
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
       "constructor(address _singleton)"
     ],
+    "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C": [
+      "constructor(address _oracle)",
+      "error InvalidMemoryProof()",
+      "error InvalidRMWInstruction()",
+      "function oracle() view returns (address oracle_)",
+      "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32)",
+      "function version() view returns (string)"
+    ],
     "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF": [
       "constructor()",
       "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
@@ -1643,6 +1791,137 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
+    "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087": [
+      "constructor(uint256 _delay)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Unwrap(address indexed src, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)",
+      "function allowance(address, address) view returns (uint256)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function config() view returns (address)",
+      "function decimals() view returns (uint8)",
+      "function delay() view returns (uint256)",
+      "function deposit() payable",
+      "function hold(address _guy, uint256 _wad)",
+      "function initialize(address _owner, address _config)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function recover(uint256 _wad)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unlock(address _guy, uint256 _wad)",
+      "function version() view returns (string)",
+      "function withdraw(uint256 _wad)",
+      "function withdraw(address _guy, uint256 _wad)",
+      "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
+    ],
+    "0x7541f1C32A501E13F722fBb7C57195aD4C8415E7": [
+      "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _weth, address _anchorStateRegistry, uint256 _l2ChainId, address _proposer, address _challenger)",
+      "error AlreadyInitialized()",
+      "error AnchorRootNotFound()",
+      "error BadAuth()",
+      "error BlockNumberMatches()",
+      "error BondTransferFailed()",
+      "error CannotDefendRootClaim()",
+      "error ClaimAboveSplit()",
+      "error ClaimAlreadyExists()",
+      "error ClaimAlreadyResolved()",
+      "error ClockNotExpired()",
+      "error ClockTimeExceeded()",
+      "error ContentLengthMismatch()",
+      "error DuplicateStep()",
+      "error EmptyItem()",
+      "error GameDepthExceeded()",
+      "error GameNotInProgress()",
+      "error IncorrectBondAmount()",
+      "error InvalidChallengePeriod()",
+      "error InvalidClockExtension()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidHeader()",
+      "error InvalidHeaderRLP()",
+      "error InvalidLocalIdent()",
+      "error InvalidOutputRootProof()",
+      "error InvalidParent()",
+      "error InvalidPrestate()",
+      "error InvalidSplitDepth()",
+      "error L2BlockNumberChallenged()",
+      "error MaxDepthTooLarge()",
+      "error NoCreditToClaim()",
+      "error OutOfOrderResolution()",
+      "error UnexpectedList()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "error UnexpectedString()",
+      "error ValidStep()",
+      "event Move(uint256 indexed parentIndex, bytes32 indexed claim, address indexed claimant)",
+      "event Resolved(uint8 indexed status)",
+      "function absolutePrestate() view returns (bytes32 absolutePrestate_)",
+      "function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset)",
+      "function anchorStateRegistry() view returns (address registry_)",
+      "function attack(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
+      "function challengeRootL2Block(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes _headerRLP)",
+      "function challenger() view returns (address challenger_)",
+      "function claimCredit(address _recipient)",
+      "function claimData(uint256) view returns (uint32 parentIndex, address counteredBy, address claimant, uint128 bond, bytes32 claim, uint128 position, uint128 clock)",
+      "function claimDataLen() view returns (uint256 len_)",
+      "function claims(bytes32) view returns (bool)",
+      "function clockExtension() view returns (uint64 clockExtension_)",
+      "function createdAt() view returns (uint64)",
+      "function credit(address) view returns (uint256)",
+      "function defend(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256 _claimIndex) view returns (uint64 duration_)",
+      "function getNumToResolve(uint256 _claimIndex) view returns (uint256 numRemainingChildren_)",
+      "function getRequiredBond(uint128 _position) view returns (uint256 requiredBond_)",
+      "function initialize() payable",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2BlockNumberChallenged() view returns (bool)",
+      "function l2BlockNumberChallenger() view returns (address)",
+      "function l2ChainId() view returns (uint256 l2ChainId_)",
+      "function maxClockDuration() view returns (uint64 maxClockDuration_)",
+      "function maxGameDepth() view returns (uint256 maxGameDepth_)",
+      "function move(bytes32 _disputed, uint256 _challengeIndex, bytes32 _claim, bool _isAttack) payable",
+      "function proposer() view returns (address proposer_)",
+      "function resolutionCheckpoints(uint256) view returns (bool initialCheckpointComplete, uint32 subgameIndex, uint128 leftmostPosition, address counteredBy)",
+      "function resolve() returns (uint8 status_)",
+      "function resolveClaim(uint256 _claimIndex, uint256 _numToResolve)",
+      "function resolvedAt() view returns (uint64)",
+      "function resolvedSubgames(uint256) view returns (bool)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function splitDepth() view returns (uint256 splitDepth_)",
+      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2BlockNumber)",
+      "function startingRootHash() view returns (bytes32 startingRootHash_)",
+      "function status() view returns (uint8)",
+      "function step(uint256 _claimIndex, bool _isAttack, bytes _stateData, bytes _proof)",
+      "function subgames(uint256, uint256) view returns (uint256)",
+      "function version() view returns (string)",
+      "function vm() view returns (address vm_)",
+      "function weth() view returns (address weth_)"
+    ],
+    "0x7615032B5998714A056d5100f403666Be2C3AC15": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1669,15 +1948,55 @@
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": [
       "constructor(address _masterCopy)"
     ],
-    "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": [
+      "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
+      "error ActiveProposal()",
+      "error AlreadyFinalized()",
+      "error AlreadyInitialized()",
+      "error BadProposal()",
+      "error BondTransferFailed()",
+      "error InsufficientBond()",
+      "error InvalidInputSize()",
+      "error InvalidPreimage()",
+      "error InvalidProof()",
+      "error NotEOA()",
+      "error NotInitialized()",
+      "error PartOffsetOOB()",
+      "error PostStateMatches()",
+      "error StatesNotContiguous()",
+      "error TreeSizeOverflow()",
+      "error WrongStartingBlock()",
+      "function KECCAK_TREE_DEPTH() view returns (uint256)",
+      "function MAX_LEAF_COUNT() view returns (uint256)",
+      "function MIN_BOND_SIZE() view returns (uint256)",
+      "function PRECOMPILE_CALL_RESERVED_GAS() view returns (uint256)",
+      "function addLeavesLPP(uint256 _uuid, uint256 _inputStartBlock, bytes _input, bytes32[] _stateCommitments, bool _finalize)",
+      "function challengeFirstLPP(address _claimant, uint256 _uuid, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengePeriod() view returns (uint256 challengePeriod_)",
+      "function getTreeRootLPP(address _owner, uint256 _uuid) view returns (bytes32 treeRoot_)",
+      "function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) payable",
+      "function loadBlobPreimagePart(uint256 _z, uint256 _y, bytes _commitment, bytes _proof, uint256 _partOffset)",
+      "function loadKeccak256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset) returns (bytes32 key_)",
+      "function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, uint64 _requiredGas, bytes _input)",
+      "function loadSha256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function minProposalSize() view returns (uint256 minProposalSize_)",
+      "function preimageLengths(bytes32) view returns (uint256)",
+      "function preimagePartOk(bytes32, uint256) view returns (bool)",
+      "function preimageParts(bytes32, uint256) view returns (bytes32)",
+      "function proposalBlocks(address, uint256, uint256) view returns (uint64)",
+      "function proposalBlocksLen(address _claimant, uint256 _uuid) view returns (uint256 len_)",
+      "function proposalBonds(address, uint256) view returns (uint256)",
+      "function proposalBranches(address, uint256, uint256) view returns (bytes32)",
+      "function proposalCount() view returns (uint256 count_)",
+      "function proposalMetadata(address, uint256) view returns (bytes32)",
+      "function proposalParts(address, uint256) view returns (bytes32)",
+      "function proposals(uint256) view returns (address claimant, uint256 uuid)",
+      "function readPreimage(bytes32 _key, uint256 _offset) view returns (bytes32 dat_, uint256 datLen_)",
+      "function squeezeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function version() view returns (string)",
+      "function zeroHashes(uint256) view returns (bytes32)"
     ],
     "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86": [
       "constructor(address _admin)",
@@ -1758,6 +2077,16 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
+    "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
       "constructor(address _singleton)"
     ],
@@ -1770,6 +2099,32 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B": [
+      "constructor()",
+      "error GameAlreadyExists(bytes32 uuid)",
+      "error IncorrectBondAmount()",
+      "error NoImplementation(uint32 gameType)",
+      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
+      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
+      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)",
+      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
+      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
+      "function gameCount() view returns (uint256 gameCount_)",
+      "function gameImpls(uint32) view returns (address)",
+      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
+      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
+      "function initBonds(uint32) view returns (uint256)",
+      "function initialize(address _owner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setImplementation(uint32 _gameType, address _impl)",
+      "function setInitBond(uint32 _gameType, uint256 _initBond)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)"
     ],
     "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B": [
       "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
@@ -1790,9 +2145,6 @@
       "function version() view returns (string)"
     ],
     "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": [
-      "constructor(address _singleton)"
-    ],
-    "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": [
       "constructor(address _singleton)"
     ],
     "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": [
@@ -1921,6 +2273,66 @@
       "function initialize(address _bridge)",
       "function version() view returns (string)"
     ],
+    "0xe2F826324b2faf99E513D16D266c3F80aE87832B": [
+      "constructor(uint256 _proofMaturityDelaySeconds, uint256 _disputeGameFinalityDelaySeconds)",
+      "error BadTarget()",
+      "error CallPaused()",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error GasEstimation()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error LargeCalldata()",
+      "error OutOfGas()",
+      "error SmallGasLimit()",
+      "error Unauthorized()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "event DisputeGameBlacklisted(address indexed disputeGame)",
+      "event Initialized(uint8 version)",
+      "event RespectedGameTypeSet(uint32 indexed newGameType, uint64 indexed updatedAt)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
+      "function blacklistDisputeGame(address _disputeGame)",
+      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function disputeGameBlacklist(address) view returns (bool)",
+      "function disputeGameFactory() view returns (address)",
+      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
+      "function initialize(address _disputeGameFactory, address _systemConfig, address _superchainConfig, uint32 _initialRespectedGameType)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function paused() view returns (bool)",
+      "function proofMaturityDelaySeconds() view returns (uint256)",
+      "function proofSubmitters(bytes32, uint256) view returns (address)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
+      "function respectedGameType() view returns (uint32)",
+      "function respectedGameTypeUpdatedAt() view returns (uint64)",
+      "function setRespectedGameType(uint32 _gameType)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)"
+    ],
+    "0xee6F71542e32930B44D6C208a15DE67E56F86087": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef": [
       "event AddressSet(string indexed name, address newAddress, address oldAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1929,36 +2341,6 @@
       "function renounceOwnership()",
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0xF243BEd163251380e78068d317ae10f26042B292": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function challenger() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
-      "function l2BlockTime() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function proposer() view returns (address)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function submissionInterval() view returns (uint256)",
-      "function version() view returns (string)"
     ]
   },
   "usedTemplates": {
@@ -1967,12 +2349,17 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
     "gnosisSafeModules/LivenessModule": "0x649656e7dda2f87bdeca0dc9a6bb23b2dc62c32ed6d1fdf245c3dcc2f6e80f74",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
+    "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
+    "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
-    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/MIPS": "0xd12d2689d2079778eb7b76ccef58c6919f21c6631fc03341b6287a2a84b4fe89",
     "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/OptimismPortal2": "0x4e07890d088dde04c91da95ae82fb3afac97525e47080508da6c741a49d29818",
+    "opstack/PermissionedDisputeGame": "0x709d9cdeb77ad9cd56b80cba43f92d64bef04a4976fa79e98bdb987cc6f00aa8",
+    "opstack/PreimageOracle": "0xdad9efe0df74ac3a11918603d36b0b60b59ea7690452f74d581d6712a2675d82",
     "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }

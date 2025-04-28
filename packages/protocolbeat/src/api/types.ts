@@ -48,6 +48,7 @@ export interface ApiProjectChain {
 
 export type ApiAddressType =
   | 'EOA'
+  | 'EOAPermissioned'
   | 'Unverified'
   | 'Token'
   | 'Multisig'
@@ -59,9 +60,14 @@ export type ApiAddressType =
 export interface ApiAddressEntry {
   name?: string
   description?: string
+  roles: string[]
   type: ApiAddressType
-  referencedBy: AddressFieldValue[]
+  referencedBy: ApiAddressReference[]
   address: string
+}
+
+export interface ApiAddressReference extends AddressFieldValue {
+  fieldNames: string[]
 }
 
 export interface Field {

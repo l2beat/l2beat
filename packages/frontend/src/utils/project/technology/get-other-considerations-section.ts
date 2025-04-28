@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import { getTechnologyChoicesSectionProps } from './get-technology-choices-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export function getOtherConsiderationsSection(
@@ -10,7 +10,7 @@ export function getOtherConsiderationsSection(
       makeTechnologyChoice(`other-considerations-${i + 1}`, x),
     ) ?? []
 
-  return getTechnologySectionProps(project, items)
+  return getTechnologyChoicesSectionProps(project, items)
 }
 
 export function getBridgeOtherConsiderationsSection(
