@@ -1,13 +1,8 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { CostsHeader } from './_components/costs-header'
-import { CostsMetricContextProvider } from './_components/costs-metric-context'
-import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
-import { CostsUnitContextProvider } from './_components/costs-unit-context'
-import { ScalingCostsTabs } from './_components/scaling-costs-tabs'
+import { ScalingCostsPage } from './_page'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -28,16 +23,7 @@ export default async function Page() {
 
   return (
     <HydrateClient>
-      <TableFilterContextProvider>
-        <CostsTimeRangeContextProvider>
-          <CostsUnitContextProvider>
-            <CostsMetricContextProvider>
-              <CostsHeader />
-              <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
-            </CostsMetricContextProvider>
-          </CostsUnitContextProvider>
-        </CostsTimeRangeContextProvider>
-      </TableFilterContextProvider>
+      <ScalingCostsPage entries={entries} milestones={HOMEPAGE_MILESTONES} />
     </HydrateClient>
   )
 }

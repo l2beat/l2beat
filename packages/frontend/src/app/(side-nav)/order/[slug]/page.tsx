@@ -10,6 +10,7 @@ import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/ful
 import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
 type Params = {
@@ -90,7 +91,7 @@ export default async function Page(props: Props) {
               <div>
                 <div className="flex items-center gap-2">
                   <Image
-                    src={`/icons/${project.slug}.png`}
+                    src={getProjectIcon(project.slug)}
                     alt={project.name}
                     width={20}
                     height={20}

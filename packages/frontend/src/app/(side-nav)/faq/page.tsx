@@ -22,7 +22,7 @@ export interface FaqItemWithId extends FaqItem {
   id: string
 }
 
-export default async function Page() {
+export default function Page() {
   const faqItemsWithId: FaqItemWithId[] = faqItems.map((item) => ({
     ...item,
     id: questionToId(item.question),

@@ -3,6 +3,7 @@ import type { FilterableEntry } from '~/components/table/filters/filterable-valu
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
+import { getProjectIcon } from '../utils/get-project-icon'
 
 export interface CommonBridgesEntry
   extends CommonProjectEntry,
@@ -22,6 +23,7 @@ export function getCommonBridgesEntry({
     slug: project.slug,
     name: project.name,
     shortName: project.shortName,
+    icon: getProjectIcon(project.slug),
     filterable: [
       {
         id: 'type',

@@ -6,10 +6,16 @@ interface Props {
   name: string
   slug: string
   href: string
+  backgroundImage: string
   className?: string
 }
 
-export function EcosystemBuildOnLink({ name, slug, href, className }: Props) {
+export function EcosystemBuildOnLink({
+  name,
+  href,
+  backgroundImage,
+  className,
+}: Props) {
   return (
     <EcosystemWidget asChild>
       <CustomLink
@@ -23,7 +29,7 @@ export function EcosystemBuildOnLink({ name, slug, href, className }: Props) {
       >
         <div
           className="absolute inset-0 origin-left rounded-lg bg-cover bg-center transition-all ease-in-out group-hover:scale-125"
-          style={{ backgroundImage: `url(/ecosystems/${slug}/build-on.png)` }}
+          style={{ backgroundImage: `url(${backgroundImage})` }}
         />
         <div className="relative flex h-full flex-col justify-center">
           <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
