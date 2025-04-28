@@ -34,6 +34,7 @@ import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawal
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getProjectIcon } from '../../utils/get-project-icon'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
@@ -49,6 +50,7 @@ export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
+  icon: string
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
@@ -181,6 +183,7 @@ export async function getScalingProjectEntry(
     type: project.scalingInfo.layer,
     name: project.name,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.statuses.isUnderReview,
       ...changes,
@@ -256,6 +259,7 @@ export async function getScalingProjectEntry(
     ? {
         hostChainName: hostChain.name,
         hostChainSlug: hostChain.slug,
+        hostChainIcon: getProjectIcon(hostChain.slug),
       }
     : undefined
   const hostChainRisksSummary =
@@ -265,6 +269,7 @@ export async function getScalingProjectEntry(
       ? {
           hostChainName: hostChain.name,
           hostChainSlug: hostChain.slug,
+          hostChainIcon: getProjectIcon(hostChain.slug),
           riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
             .length,
         }
@@ -419,7 +424,7 @@ export async function getScalingProjectEntry(
         title: 'Rollup stage',
         stageConfig: project.scalingStage,
         name: project.name,
-        icon: `/icons/${project.slug}.png`,
+        icon: getProjectIcon(project.slug),
         type: project.scalingInfo.type,
         isUnderReview: project.statuses.isUnderReview,
         isAppchain: project.scalingInfo.capability === 'appchain',
@@ -535,12 +540,10 @@ export async function getScalingProjectEntry(
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
         content: project.scalingTechnology.upgradesAndGovernance,
-        diagram: {
-          type: 'upgrades-and-governance',
-          slug:
-            project.scalingTechnology.upgradesAndGovernanceImage ??
-            project.slug,
-        },
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.statuses.isUnderReview,
       },

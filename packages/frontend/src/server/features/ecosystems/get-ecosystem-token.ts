@@ -4,6 +4,7 @@ import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
+import { getStaticAsset } from '../utils/get-project-icon'
 
 export interface EcosystemToken {
   logo: string
@@ -86,7 +87,7 @@ const getCachedEcosystemToken = cache(
     )
 
     return {
-      logo: token.iconUrl ?? '/images/token-placeholder.png',
+      logo: token.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
       name: token.name,
       symbol: token.symbol,
       description: ecosystem.ecosystemConfig.token.description,
@@ -117,7 +118,7 @@ function getMockEcosystemToken(
   ecosystem: Project<'ecosystemConfig'>,
 ): EcosystemToken {
   return {
-    logo: '/images/token-placeholder.png',
+    logo: getStaticAsset('/images/token-placeholder.png'),
     name: 'Mock Token',
     symbol: 'MOCK',
     description: ecosystem.ecosystemConfig.token.description,

@@ -8,6 +8,7 @@ export type ProjectDetailsRelatedProjectBannerProps = {
     name: string
     type: 'scaling' | 'bridges' | 'data-availability'
     slug: string
+    icon: string
   }
   className?: string
 }
@@ -31,7 +32,7 @@ export function ProjectDetailsRelatedProjectBanner({
         <span className="inline-block">
           <Image
             className="mr-1 inline-block size-5"
-            src={`/icons/${project.slug.split('/')[0]}.png`}
+            src={project.icon}
             width={20}
             height={20}
             alt={`${project.name} logo`}

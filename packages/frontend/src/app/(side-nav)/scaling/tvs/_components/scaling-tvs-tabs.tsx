@@ -53,6 +53,7 @@ export function ScalingTvsTabs(props: Props) {
             .map((project) => ({
               slug: project.slug,
               name: project.name,
+              icon: project.icon,
             })),
     [checked, props.others, props.rollups, props.validiumsAndOptimiums],
   )

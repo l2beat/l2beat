@@ -7,6 +7,7 @@ import { IndexCell } from '../../cells/index-cell'
 export interface CommonProjectColumnsEntry {
   slug: string
   name: string
+  icon: string
 }
 
 export interface CommonProjectColumnsOptions {
@@ -42,7 +43,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
         const image = (
           <Image
             className="min-h-[20px] min-w-[20px]"
-            src={`/icons/${ctx.row.original.slug}.png`}
+            src={ctx.row.original.icon}
             width={20}
             height={20}
             alt={`${ctx.row.original.name} logo`}

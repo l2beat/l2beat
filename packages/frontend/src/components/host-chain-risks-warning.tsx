@@ -3,12 +3,14 @@ import { ProjectDetailsRelatedProjectBanner } from './project-details-related-pr
 export type HostChainRisksWarningProps = {
   hostChainName: string
   hostChainSlug: string
+  hostChainIcon: string
   riskCount?: number
 }
 
 export function HostChainRisksWarning({
   hostChainName,
   hostChainSlug,
+  hostChainIcon,
   riskCount,
 }: HostChainRisksWarningProps) {
   const text = riskCount
@@ -18,7 +20,12 @@ export function HostChainRisksWarning({
   return (
     <ProjectDetailsRelatedProjectBanner
       text={text}
-      project={{ name: hostChainName, slug: hostChainSlug, type: 'scaling' }}
+      project={{
+        name: hostChainName,
+        slug: hostChainSlug,
+        icon: hostChainIcon,
+        type: 'scaling',
+      }}
     />
   )
 }

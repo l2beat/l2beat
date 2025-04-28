@@ -62,8 +62,12 @@ export interface ApiAddressEntry {
   description?: string
   roles: string[]
   type: ApiAddressType
-  referencedBy: AddressFieldValue[]
+  referencedBy: ApiAddressReference[]
   address: string
+}
+
+export interface ApiAddressReference extends AddressFieldValue {
+  fieldNames: string[]
 }
 
 export interface Field {

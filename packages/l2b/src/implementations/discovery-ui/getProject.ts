@@ -18,9 +18,9 @@ import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import type {
-  AddressFieldValue,
   ApiAbiEntry,
   ApiAddressEntry,
+  ApiAddressReference,
   ApiAddressType,
   ApiProjectChain,
   ApiProjectContract,
@@ -231,30 +231,40 @@ function abiEntry(entry: string): ApiAbiEntry {
 }
 
 function populateReferencedBy(chains: ApiProjectChain[]) {
-  const referencedBy = new Map<string, AddressFieldValue[]>()
+  const referencedBy = new Map<string, ApiAddressReference[]>()
   for (const chain of chains) {
     for (const contract of [
       ...chain.initialContracts,
       ...chain.discoveredContracts,
     ]) {
-      const field: AddressFieldValue = {
-        type: 'address',
-        name: contract.name,
-        address: contract.address,
-        addressType: contract.type,
-      }
-      const relatives = getAddresses(
-        contract.fields.map((x) => x.value),
-      ).filter((x, i, a) => a.indexOf(x) === i)
-      for (const relative of relatives) {
-        if (relative === contract.address) {
-          continue
-        }
-        const refs = referencedBy.get(relative)
-        if (refs) {
-          refs.push(field)
-        } else {
-          referencedBy.set(relative, [field])
+      for (const field of contract.fields) {
+        const addresses = getAddresses([field.value])
+        for (const address of addresses) {
+          if (address === contract.address) {
+            continue
+          }
+
+          const ref: ApiAddressReference = {
+            type: 'address',
+            name: contract.name,
+            address: contract.address,
+            addressType: contract.type,
+            fieldNames: [field.name],
+          }
+
+          const existingRef = referencedBy
+            .get(address)
+            ?.find((r) => r.address === contract.address)
+
+          if (existingRef) {
+            if (!existingRef.fieldNames.includes(field.name)) {
+              existingRef.fieldNames.push(field.name)
+            }
+          } else {
+            const refs = referencedBy.get(address) || []
+            refs.push(ref)
+            referencedBy.set(address, refs)
+          }
         }
       }
     }
