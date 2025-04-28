@@ -7,6 +7,14 @@
   scrollbar-color: #f97315 transparent;
 }
 
+:focus-visible {
+  @apply outline outline-orange-500;
+}
+
+::selection {
+  @apply bg-orange-900;
+}
+
 @layer utilities {
   .pixelated {
     image-rendering: pixelated;
