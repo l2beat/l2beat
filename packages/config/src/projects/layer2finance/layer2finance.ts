@@ -13,12 +13,12 @@ export const layer2finance: ScalingProject = {
   archivedAt: UnixTime(1695686400), // 2023-09-26T00:00:00.000Z,
   capability: 'universal',
   display: {
-    name: 'ScalingProject.Finance',
+    name: 'Layer2.Finance',
     slug: 'layer2finance',
     warning:
       'Currently the TVS is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
-      'ScalingProject.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
+      'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purposes: ['Exchange'],
     category: 'Optimistic Rollup',
     links: {
@@ -57,7 +57,7 @@ export const layer2finance: ScalingProject = {
           references: [
             {
               title:
-                'RollupChain.sol#L460-L496 - ScalingProject.Finance source code',
+                'RollupChain.sol#L460-L496 - Layer2.Finance source code',
               url: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
             },
           ],
