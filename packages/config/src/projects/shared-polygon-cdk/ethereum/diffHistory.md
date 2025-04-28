@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0ccec8b3efe039eb17a8c6a692cc04cbe439f74d
 
 ## Description
 
-New unknown pessimistig agglayer chain deployed, not active yet.
+New unknown pessimistic agglayer chain deployed, not active yet.
 
 ## Watched changes
 
