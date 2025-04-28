@@ -1,3 +1,279 @@
+Generated with discovered.json: 0xa83cbc41b40a496c5dcdb3e274efe8c4467793b8
+
+# Diff at Thu, 24 Apr 2025 15:59:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22281679
+- current block number: 22337861
+
+## Description
+
+Merge xdai into omni (this) discovery to unite Gnosis bridge as one.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281679 (main branch discovery), not current.
+
+```diff
+    contract Giveth EOA 2 (0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d) {
+    +++ description: None
+      name:
++        "Giveth EOA 2"
+    }
+```
+
+```diff
+    contract Safe EOA 2 (0x258667E543C913264388B33328337257aF208a8f) {
+    +++ description: None
+      name:
++        "Safe EOA 2"
+    }
+```
+
+```diff
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba) {
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+      description:
++        "Contract handling inbound messages for the Hashi protocol."
+    }
+```
+
+```diff
+    contract undefined (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"}
+      receivedPermissions.0.from:
+-        "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
++        "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
+    }
+```
+
+```diff
+    contract Gateway EOA 2 (0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6) {
+    +++ description: None
+      name:
++        "Gateway EOA 2"
+    }
+```
+
+```diff
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E","description":"change the threshold and manage signers."}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x88ad09518695c6c3712AC10a214bE5109a655671"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e","description":"change external validation logic refered to by this contract (e.g. Hashi)."}
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.2.description:
++        "change the threshold and manage signers."
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.description:
++        "change all critical configurations like yield farming for escrowed funds and limits."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
++        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+      receivedPermissions.0.description:
++        "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references."
+    }
+```
+
+```diff
+    contract Protofire EOA 2 (0x459A3bd49F1ff109bc90b76125533699AaAAf9A6) {
+    +++ description: None
+      name:
++        "Protofire EOA 2"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+      issuedPermissions.2:
++        {"permission":"validateBridge3","to":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064","via":[]}
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "change external validation logic refered to by this contract (e.g. Hashi)."
+      description:
++        "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Hashi Multisig (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD","description":"change critical configurations of the Hashi protocol like the validation contract addresses."},{"permission":"interact","from":"0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9","description":"change critical configurations of the Hashi protocol like the validation contract addresses."}]
+    }
+```
+
+```diff
+    contract CoW Protocol EOA 2 (0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0) {
+    +++ description: None
+      name:
++        "CoW Protocol EOA 2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AAVEInterestERC20 (0x87D48c565D0D85770406D248efd7dc3cbd41e729)
+    +++ description: None
+```
+
+```diff
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: Token bridge implementation and escrow for ERC-20 tokens.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "change all critical configurations like yield farming for escrowed funds and limits."
+      description:
++        "Token bridge implementation and escrow for ERC-20 tokens."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      name:
+-        "HashiManager"
++        "HashiManager_Omni"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "0x670a3e447F4DE92C012777Ac5591D81E12aD0957"
+      issuedPermissions.0.description:
++        "change critical configurations of the Hashi protocol like the validation contract addresses."
+      template:
++        "gnosisbridge/HashiManager"
+      description:
++        "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator."
+    }
+```
+
+```diff
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+      description:
++        "Contract handling outbound messages for the Hashi protocol."
+    }
+```
+
+```diff
+    contract Gnosis DAO EOA 2 (0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe) {
+    +++ description: None
+      name:
++        "Gnosis DAO EOA 2"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      name:
+-        "BridgeValidators"
++        "BridgeValidators_Omni"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "change the threshold and manage signers."
+      values.requiredSignatures:
+-        4
+      values.validatorList:
+-        ["0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6","0xfA98B60E02A61B6590f073cAD56e68326652d094","0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe","0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0","0x258667E543C913264388B33328337257aF208a8f","0x459A3bd49F1ff109bc90b76125533699AaAAf9A6","0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"]
++++ description: Array of the signers in the validator multisig
+      values.$members:
++        ["0x459A3bd49F1ff109bc90b76125533699AaAAf9A6","0xfA98B60E02A61B6590f073cAD56e68326652d094","0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe","0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6","0x258667E543C913264388B33328337257aF208a8f","0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0","0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"]
+      values.$threshold:
++        4
+      fieldMeta.validatorList:
+-        {"severity":"MEDIUM","description":"Array of the signers in the validator multisig","type":"PERMISSION"}
+      fieldMeta.$members:
++        {"description":"Array of the signers in the validator multisig"}
+      template:
++        "gnosisbridge/BridgeValidators"
+      description:
++        "Custom multisignature contract for Validator addresses."
+      receivedPermissions:
++        [{"permission":"validateBridge3","from":"0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"}]
+    }
+```
+
+```diff
+    contract Karpatkey EOA (0xfA98B60E02A61B6590f073cAD56e68326652d094) {
+    +++ description: None
+      name:
++        "Karpatkey EOA"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
+    +++ description: Custom multisignature contract for Validator addresses.
+```
+
 Generated with discovered.json: 0x2722dba24d027c899a6f9429eaaf5d71cf354d07
 
 # Diff at Thu, 24 Apr 2025 07:16:50 GMT:

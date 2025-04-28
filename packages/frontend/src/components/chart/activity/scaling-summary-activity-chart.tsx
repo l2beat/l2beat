@@ -58,7 +58,7 @@ const chartMeta = {
     },
   },
   validiumsAndOptimiums: {
-    label: 'Validiums and Optimiums',
+    label: 'Validiums & Optimiums',
     color: 'hsl(var(--chart-cyan))',
     indicatorType: {
       shape: 'line',
@@ -219,7 +219,7 @@ function CustomTooltip({
             return (
               <div
                 key={entry.name}
-                className="flex w-full items-start justify-between gap-2"
+                className="flex w-full items-center justify-between gap-2"
               >
                 <div className="flex items-center gap-1">
                   <ChartDataIndicator

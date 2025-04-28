@@ -3,20 +3,27 @@ import Link from 'next/link'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
+import type { ImageParams } from '~/utils/project/get-image-params'
 import { EcosystemWidget } from './ecosystem-widget'
 
 export interface EcosystemGovernanceLinks {
   review: string
   topDelegates: string
   proposals: string
+  bankImage: ImageParams
 }
 
 interface Props {
   links: EcosystemGovernanceLinks
+  topDelegatesBackgroundImage: string
   className?: string
 }
 
-export function EcosystemGovernanceLinks({ links, className }: Props) {
+export function EcosystemGovernanceLinks({
+  links,
+  topDelegatesBackgroundImage,
+  className,
+}: Props) {
   return (
     <div
       className={cn(
@@ -24,8 +31,15 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
         className,
       )}
     >
-      <GovernanceLink href={links.review} className="sm:row-span-2" />
-      <TopDelegatesLink href={links.topDelegates} />
+      <GovernanceLink
+        href={links.review}
+        bankImage={links.bankImage}
+        className="sm:row-span-2"
+      />
+      <TopDelegatesLink
+        href={links.topDelegates}
+        backgroundImage={topDelegatesBackgroundImage}
+      />
       <ProposalsLink href={links.proposals} />
     </div>
   )
@@ -33,8 +47,9 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
 
 function GovernanceLink({
   href,
+  bankImage,
   className,
-}: { href: string; className?: string }) {
+}: { href: string; bankImage: ImageParams; className?: string }) {
   return (
     <EcosystemWidget
       className={cn('flex flex-col overflow-hidden !pt-0', className)}
@@ -49,11 +64,11 @@ function GovernanceLink({
           </div>
         </div>
         <Image
-          src="/ecosystems/governance-bank.png"
+          {...bankImage}
+          width={bankImage.width / 3}
+          height={bankImage.height / 3}
           alt="Governance Bank"
           className="py-4"
-          width={141}
-          height={130}
         />
       </div>
 
@@ -70,8 +85,9 @@ function GovernanceLink({
 
 function TopDelegatesLink({
   href,
+  backgroundImage,
   className,
-}: { href: string; className?: string }) {
+}: { href: string; backgroundImage: string; className?: string }) {
   return (
     <EcosystemWidget asChild>
       <CustomLink
@@ -83,7 +99,10 @@ function TopDelegatesLink({
           className,
         )}
       >
-        <div className="absolute inset-0 origin-left rounded-lg bg-[url(/ecosystems/governance-delegates.png)] bg-cover transition-all ease-in-out group-hover:scale-125" />
+        <div
+          className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        />
         <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black"></div>
         <div className="relative flex h-full flex-col justify-center">
           <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">

@@ -159,6 +159,16 @@ function Display({
             {selected.referencedBy.map((value) => (
               <li key={value.address}>
                 <AddressDisplay value={value} />
+                <div className="mt-1 mb-2 ml-4 text-xs">
+                  {value.fieldNames.map((fieldName, i) => (
+                    <span
+                      key={i}
+                      className="mr-2 inline-block rounded bg-coffee-800 px-1.5 py-0.5"
+                    >
+                      {fieldName}
+                    </span>
+                  ))}
+                </div>
               </li>
             ))}
           </ol>

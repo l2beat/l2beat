@@ -49,6 +49,7 @@ export function ScalingFinalityTables(props: Props) {
             .map((project) => ({
               slug: project.slug,
               name: project.name,
+              icon: project.icon,
             })),
     [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
   )

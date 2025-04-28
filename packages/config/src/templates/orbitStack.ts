@@ -77,12 +77,7 @@ const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     name: 'EVM compatible smart contracts are supported',
     description:
       'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-      },
-    ],
+    risks: [],
     references: [
       {
         title: 'Inside Arbitrum Nitro',
@@ -97,12 +92,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     name: 'EVM compatible and Stylus smart contracts are supported',
     description:
       'Arbitrum One supports smart contracts written in Solidity and other programming languages (Rust, C++) that compile to WASM. Such smart contracts are executed by nodes using either a geth fork or [a fork of wasmer](https://github.com/OffchainLabs/wasmer) inside the Nitro node, and can be proven with the onchain WASM VM.',
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-      },
-    ],
+    risks: [],
     references: [
       {
         title: 'Inside Arbitrum Nitro',

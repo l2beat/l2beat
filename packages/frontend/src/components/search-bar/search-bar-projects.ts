@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { ps } from '~/server/projects'
 import type { SearchBarProject } from './search-bar-entry'
 
@@ -10,21 +11,31 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
       'daBridge',
       'isZkCatalog',
       'isScaling',
-      'isBridge',
       'isDaLayer',
+      'isBridge',
       'isUpcoming',
     ],
   })
 
   return projects.flatMap((p): SearchBarProject[] => {
     const results: SearchBarProject[] = []
+    if (
+      !p.isZkCatalog &&
+      !p.isScaling &&
+      !p.isBridge &&
+      !p.daLayer &&
+      !p.daBridge
+    ) {
+      return []
+    }
+
     const common = {
       type: 'project',
       id: p.id,
       name: p.name,
+      iconUrl: getProjectIcon(p.slug),
       kind: getKind(p),
       isUpcoming: !!p.isUpcoming,
-      iconUrl: `/icons/${p.slug}.png`,
       addedAt: p.addedAt,
       tags: [p.slug],
     } satisfies Partial<SearchBarProject>

@@ -1,8 +1,23 @@
 import { readFileSync } from 'fs'
 import path from 'path'
 import imageSize from 'image-size'
+import { env } from '~/env'
+import { getManifest } from '~/utils/Manifest'
 
-export function getImageParams(filePath: string) {
+export interface ImageParams {
+  width: number
+  height: number
+  src: string
+}
+
+export function getImageParams(filePath: string): ImageParams | undefined {
+  if (env.REWRITE) {
+    const manifest = getManifest(
+      env.NODE_ENV === 'production',
+      path.join(process.cwd(), 'rewrite'),
+    )
+    return manifest.getImage(filePath)
+  }
   try {
     const imgBuffer = readFileSync(
       path.join(process.cwd(), './public', filePath),
