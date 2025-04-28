@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /**
  * Colorblind friendly color generation strategy:
  * - 11 colors is predefined in the base palette (Okabe-Ito + CARTO Safe)

@@ -64,7 +64,8 @@ export function DaThroughputByProjectChart({
           color:
             project === 'Unknown'
               ? 'hsl(var(--secondary))'
-              : (customColors[project] ?? colors[colorIndex++]!),
+              : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                (customColors[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
         }
       }
