@@ -1,8 +1,10 @@
+import { QueryClient } from '@tanstack/react-query'
 import { getProject, getProjects, searchCode } from '../api/api'
 import type { ApiAddressEntry, ApiCodeSearchResponse } from '../api/types'
-import { debounce } from '../common/debounce'
 import { getCodeSearchTerm } from './CodeSearchResultEntry'
 import { getProjectSearchTerm } from './ProjectSearchResultEntry'
+
+const queryClient = new QueryClient()
 
 export type SearchResults =
   | { type: 'contract'; entryCount: number; entries: ApiAddressEntry[] }
@@ -17,7 +19,10 @@ async function serachContractQuery(
   project: string,
   searchTerm: string,
 ): Promise<SearchResults> {
-  const projectObject = await getProject(project)
+  const projectObject = await queryClient.ensureQueryData({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project),
+  })
 
   const allEntries = projectObject.entries.flatMap((c) => {
     return [...c.initialContracts, ...c.discoveredContracts, ...c.eoas]
@@ -57,10 +62,12 @@ async function searchCodeQuery(
   return { type: 'code', entryCount, entries: searchResult.matches }
 }
 
-const searchCodeQueryDebounced = debounce(searchCodeQuery, 350)
-
 async function searchProjectQuery(searchTerm: string): Promise<SearchResults> {
-  const projects = await getProjects()
+  const projects = await queryClient.ensureQueryData({
+    queryKey: ['projects'],
+    queryFn: () => getProjects(),
+  })
+
   const projectSearchTerm = getProjectSearchTerm(searchTerm)
   const matching = projects.filter((p) =>
     p.name.toLowerCase().includes(projectSearchTerm.toLowerCase()),
@@ -73,16 +80,14 @@ async function searchProjectQuery(searchTerm: string): Promise<SearchResults> {
   }
 }
 
-const searchProjectQueryDebounced = debounce(searchProjectQuery, 150)
-
 export async function searchQuery(
   project: string,
   searchTerm: string,
 ): Promise<SearchResults> {
   if (searchTerm.startsWith('%')) {
-    return await searchCodeQueryDebounced(project, searchTerm)
+    return await searchCodeQuery(project, searchTerm)
   } else if (searchTerm.startsWith('@')) {
-    return await searchProjectQueryDebounced(searchTerm)
+    return await searchProjectQuery(searchTerm)
   } else {
     return await serachContractQuery(project, searchTerm)
   }

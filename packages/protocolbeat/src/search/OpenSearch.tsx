@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDebounce } from '../common/useDebounce'
 import { IconSearch } from '../icons/IconSearch'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../panel-code/store'
@@ -52,9 +53,13 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
     }
   }, [selectedIndex])
 
+  const searchTermDebounced = useDebounce(searchTerm, (term: string) => {
+    return term.startsWith('%') ? 350 : 0
+  })
+
   const { isError, isPending, data } = useQuery({
-    queryKey: ['projects', project, searchTerm],
-    queryFn: () => searchQuery(project, searchTerm),
+    queryKey: ['search', project, searchTermDebounced],
+    queryFn: () => searchQuery(project, searchTermDebounced),
     placeholderData: keepPreviousData,
   })
 
