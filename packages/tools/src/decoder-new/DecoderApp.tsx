@@ -105,6 +105,10 @@ function reducer(state: State, action: Action): State {
 
 export function DecoderApp() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+  const hasErrors =
+    !!state.errors.hash || !!state.errors.data || !!state.errors.address
+  const hasInput = !!state.values.hash || !!state.values.data
+  const disabled = hasErrors || !hasInput
 
   return (
     <div className="mx-auto max-w-[800px] p-4 pb-20">
@@ -112,6 +116,7 @@ export function DecoderApp() {
       <form
         onSubmit={(e) => {
           e.preventDefault()
+          console.log(state)
         }}
       >
         <div className="mb-4">
@@ -204,7 +209,12 @@ export function DecoderApp() {
         <input
           type="submit"
           value="Decode"
-          className="mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1 active:mt-1 active:border-b-0"
+          disabled={disabled}
+          className={clsx(
+            'mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1',
+            disabled && 'cursor-not-allowed opacity-60',
+            !disabled && 'active:mt-1 active:border-b-0',
+          )}
         />
       </form>
     </div>
