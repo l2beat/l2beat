@@ -219,9 +219,9 @@ pnpm tvs:generate [project] [--include-zero-amounts | --help]
 This script uses two inputs:
 
 - Token list -  manually maintained list of tokens to track - `/packages/config/src/tokens/generated.json`
-- Project(s) configuration - ts files 
+- Project configuration - `.ts` files with project definition (especially escrows and apis like RPC)
 
-This two-step config generation will be soon replace by Token Discovery
+This two-step config generation script will be soon replace by Token Discovery
 
 
 ### Local execution
