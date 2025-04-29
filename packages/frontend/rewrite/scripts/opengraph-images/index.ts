@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import express from 'express'
 import { generateProjectOgImages } from './projects/generateProjectOgImages'
+import { generateTvsBreakdownOgImages } from './projects/generateTvsBreakdownOgImages'
 const ogImageSize = { width: 1200, height: 630 }
 
 async function main() {
@@ -19,6 +20,10 @@ async function main() {
   ])
 
   await generateProjectOgImages(ogImageSize, {
+    robotoMedium,
+    robotoBold,
+  })
+  await generateTvsBreakdownOgImages(ogImageSize, {
     robotoMedium,
     robotoBold,
   })

@@ -5,7 +5,6 @@ import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
 import { ps } from '~/server/projects'
-import React from 'react'
 
 export async function generateProjectOgImages(
   size: { width: number; height: number },
@@ -27,21 +26,21 @@ export async function generateProjectOgImages(
 
     const outputDir = path.join(
       process.cwd(),
-      `rewrite/static/meta-images/${type}/projects`,
+      `rewrite/static/meta-images/${type}/projects/${project.slug}`,
     )
-    const outputFile = path.join(outputDir, `${project.slug}.png`)
+    const outputFile = path.join(outputDir, 'opengraph-image.png')
     if (existsSync(outputFile)) {
       continue
     }
 
-    console.time(`Generated og image for ${project.name}`)
+    console.time(`[PROJECT DETAILS] ${project.name}`)
     const pngBuffer = await generateProjectOgImage(project, type, size, fonts)
 
     mkdirSync(outputDir, {
       recursive: true,
     })
     writeFileSync(outputFile, pngBuffer)
-    console.timeEnd(`Generated og image for ${project.name}`)
+    console.timeEnd(`[PROJECT DETAILS] ${project.name}`)
   }
 }
 
