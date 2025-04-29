@@ -4,5 +4,11 @@
     "address": "0x40B1060a114380f40faC6869c5B383f47e61530c",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1NativeTokenVault_v27": {
+    "hash": "0xb5c84cdd8085d4ad38124e19b8be87360c9401f9621534284de4ed5fa69c3b63",
+    "address": "0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947",
+    "chain": "ethereum",
+    "blockNumber": 22374168
   }
 }
