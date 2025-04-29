@@ -57,6 +57,21 @@ export type AmountConfig =
   | CirculatingSupplyAmountConfig
   | ConstAmountConfig
 
+export type OnchainAmountConfig =
+  | BalanceOfEscrowAmountConfig
+  | TotalSupplyAmountConfig
+  | StarknetTotalSupplyAmountConfig
+
+export function isOnchainAmountConfig(
+  config: AmountConfig,
+): config is OnchainAmountConfig {
+  return (
+    config.type === 'totalSupply' ||
+    config.type === 'balanceOfEscrow' ||
+    config.type === 'starknetTotalSupply'
+  )
+}
+
 export type TokenValue = Omit<TokenValueRecord, 'configurationId'>
 
 export interface TvsBreakdown {

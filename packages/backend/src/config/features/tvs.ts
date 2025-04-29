@@ -6,6 +6,7 @@ import {
   generateConfigurationId,
 } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
+import { isOnchainAmountConfig } from '../../modules/tvs/types'
 import type { TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
@@ -52,6 +53,7 @@ export async function getTvsConfig(
             return CirculatingSupplyAmountIndexer.SOURCE()
           case 'balanceOfEscrow':
           case 'totalSupply':
+          case 'starknetTotalSupply':
             return a.chain
           case 'const':
             return undefined
@@ -65,7 +67,7 @@ export async function getTvsConfig(
   const chains = Array.from(
     new Set(
       amounts
-        .filter((a) => a.type === 'totalSupply' || a.type === 'balanceOfEscrow')
+        .filter((a) => isOnchainAmountConfig(a))
         .map((c) => c.chain)
         .filter(notUndefined),
     ),

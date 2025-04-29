@@ -9,10 +9,12 @@ import type {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, type UnixTime } from '@l2beat/shared-pure'
-import type {
-  AmountConfig,
-  CirculatingSupplyAmountConfig,
-  PriceConfig,
+import {
+  type AmountConfig,
+  type CirculatingSupplyAmountConfig,
+  type OnchainAmountConfig,
+  type PriceConfig,
+  isOnchainAmountConfig,
 } from '../types'
 import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
@@ -196,25 +198,14 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
   ) {
     const onchainAmounts = amounts
-      .filter(
-        (a) =>
-          a.type === 'balanceOfEscrow' ||
-          a.type === 'totalSupply' ||
-          a.type === 'starknetTotalSupply',
-      )
+      .filter(isOnchainAmountConfig)
       .filter(
         (a) =>
           timestamp >= a.sinceTimestamp &&
           (!a.untilTimestamp || timestamp < a.untilTimestamp),
       )
 
-    const amountsToFetch = new Map<
-      string,
-      Map<
-        'balanceOfEscrow' | 'totalSupply' | 'starknetTotalSupply',
-        AmountConfig[]
-      >
-    >()
+    const amountsToFetch = new Map<string, Map<string, OnchainAmountConfig[]>>()
 
     await Promise.all(
       onchainAmounts.map(async (amount) => {
@@ -239,7 +230,7 @@ export class DataFormulaExecutor {
         if (!amountsToFetch.has(amount.chain)) {
           amountsToFetch.set(
             amount.chain,
-            new Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>(),
+            new Map<string, OnchainAmountConfig[]>(),
           )
         }
 
@@ -528,14 +519,7 @@ export class DataFormulaExecutor {
 function extractUniqueChains(amounts: AmountConfig[]) {
   return [
     ...new Set(
-      amounts
-        .filter(
-          (x) =>
-            x.type === 'balanceOfEscrow' ||
-            x.type === 'totalSupply' ||
-            x.type === 'starknetTotalSupply',
-        )
-        .map((x) => x.chain),
+      amounts.filter(isOnchainAmountConfig).map((x) => x.chain),
     ).values(),
   ]
 }

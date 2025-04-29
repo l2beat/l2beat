@@ -19,7 +19,12 @@ import {
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { ValueService } from '../services/ValueService'
-import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
+import {
+  type AmountConfig,
+  type ProjectTvsConfig,
+  type TokenValue,
+  isOnchainAmountConfig,
+} from '../types'
 import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import type { LocalStorage } from './LocalStorage'
@@ -118,11 +123,7 @@ export class LocalExecutor {
     const chainProjects = new Set<string>()
 
     for (const amount of amounts) {
-      if (
-        amount.type === 'balanceOfEscrow' ||
-        amount.type === 'totalSupply' ||
-        amount.type === 'starknetTotalSupply'
-      ) {
+      if (isOnchainAmountConfig(amount)) {
         chainProjects.add(amount.chain)
       }
     }

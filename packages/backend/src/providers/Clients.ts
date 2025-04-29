@@ -33,6 +33,7 @@ export interface Clients {
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: RpcClient[]
+  starknetClients: StarknetClient[]
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -254,5 +255,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     getStarknetClient,
     getRpcClient,
     rpcClients,
+    starknetClients,
   }
 }

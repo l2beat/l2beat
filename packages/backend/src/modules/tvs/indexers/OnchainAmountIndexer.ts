@@ -1,8 +1,13 @@
 import type {
   BalanceOfEscrowAmountFormula,
+  StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
 } from '@l2beat/config'
-import type { BalanceProvider, TotalSupplyProvider } from '@l2beat/shared'
+import type {
+  BalanceProvider,
+  StarknetTotalSupplyProvider,
+  TotalSupplyProvider,
+} from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -17,12 +22,14 @@ import type { SyncOptimizer } from '../tools/SyncOptimizer'
 export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
+  | StarknetTotalSupplyAmountFormula
 
 interface OnchainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<OnchainAmountConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
   chain: string
   totalSupplyProvider: TotalSupplyProvider
+  starknetTotalSupplyProvider: StarknetTotalSupplyProvider
   balanceProvider: BalanceProvider
 }
 
@@ -62,13 +69,23 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       blockNumber,
     )
 
-    const totalSupplyRecords = await this.fetchTokensTotalSupplies(
+    const totalSupplyRecords = await this.fetchRpcTotalSupplies(
       configurations,
       timestamp,
       blockNumber,
     )
 
-    const amounts = [...escrowBalanceRecords, ...totalSupplyRecords]
+    const starknetTotalSupplyRecords = await this.fetchStarknetTotalSupplies(
+      configurations,
+      timestamp,
+      blockNumber,
+    )
+
+    const amounts = [
+      ...escrowBalanceRecords,
+      ...totalSupplyRecords,
+      ...starknetTotalSupplyRecords,
+    ]
 
     return async () => {
       await this.$.db.tvsAmount.insertMany(amounts)
@@ -105,6 +122,10 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       (c) => c.properties.type === 'balanceOfEscrow',
     ) as Configuration<BalanceOfEscrowAmountFormula>[]
 
+    if (escrows.length === 0) {
+      return []
+    }
+
     this.logger.info('Fetching escrow balances', {
       blockNumber,
       balances: escrows.length,
@@ -128,7 +149,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     }))
   }
 
-  private async fetchTokensTotalSupplies(
+  private async fetchRpcTotalSupplies(
     configurations: Configuration<OnchainAmountConfig>[],
     timestamp: number,
     blockNumber: number,
@@ -137,7 +158,11 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       (c) => c.properties.type === 'totalSupply',
     ) as Configuration<TotalSupplyAmountFormula>[]
 
-    this.logger.info('Fetching tokens total supplies', {
+    if (tokens.length === 0) {
+      return []
+    }
+
+    this.logger.info('Fetching rpc total supplies', {
       blockNumber,
       balances: tokens.length,
     })
@@ -148,7 +173,41 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       this.$.chain,
     )
 
-    this.logger.info('Fetched tokens total supplies')
+    this.logger.info('Fetched rpc total supplies')
+
+    return totalSupplies.map((supply, i) => ({
+      configurationId: tokens[i].id,
+      amount: supply,
+      timestamp,
+    }))
+  }
+
+  private async fetchStarknetTotalSupplies(
+    configurations: Configuration<OnchainAmountConfig>[],
+    timestamp: number,
+    blockNumber: number,
+  ) {
+    const tokens = configurations.filter(
+      (c) => c.properties.type === 'starknetTotalSupply',
+    ) as Configuration<StarknetTotalSupplyAmountFormula>[]
+
+    if (tokens.length === 0) {
+      return []
+    }
+
+    this.logger.info('Fetching starknet total supplies', {
+      blockNumber,
+      balances: tokens.length,
+    })
+
+    const totalSupplies =
+      await this.$.starknetTotalSupplyProvider.getTotalSupplies(
+        tokens.map((token) => token.properties.address),
+        blockNumber,
+        this.$.chain,
+      )
+
+    this.logger.info('Fetched starknet total supplies')
 
     return totalSupplies.map((supply, i) => ({
       configurationId: tokens[i].id,

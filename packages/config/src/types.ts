@@ -1140,6 +1140,21 @@ export function isAmountFormula(formula: Formula): boolean {
   return formula.type !== 'calculation' && formula.type !== 'value'
 }
 
+export type OnchainAmountFormula =
+  | BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | StarknetTotalSupplyAmountFormula
+
+export function isOnchainAmountFormula(
+  formula: Formula,
+): formula is OnchainAmountFormula {
+  return (
+    formula.type === 'totalSupply' ||
+    formula.type === 'balanceOfEscrow' ||
+    formula.type === 'starknetTotalSupply'
+  )
+}
+
 // token deployed to single chain
 export type TvsToken = z.infer<typeof TvsTokenSchema>
 export const TvsTokenSchema = z.object({
