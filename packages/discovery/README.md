@@ -8,24 +8,25 @@ Discovery also includes a user interface. See below for instructions on how to r
 
 # To run discovery
 
-Running discovery will update the information for a given project.
+To run discovery, first you need to have `l2b` installed, to do so:
+- Navigate to the `l2beat/packages/l2b` directory
+- `pnpm l2bup` # Will build the l2b command
+- In the future, if you want to get the newest changes if enough to run `pnpm build:dependencies`.
 
-To run discovery, first change to the repository root directory, then to the `packages/backend` directory.
+Running discovery requires you to be in the `l2beat/packages/config` directory.
+You also MUST install an environment file called `.env` in the `packages/config` directory for discovery to work. See the *RPC configuration* section below for information about the environment file.
 
-You MUST install an environment file called `.env` in the `packages/backend` directory for discovery to work. See the *RPC configuration* section below for information about the environment file.
+- `l2b discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
+- `l2b discover --help` print out all the possible switches for discovery
 
-- `pnpm discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
-- `pnpm discover --help` print out all the possible switches for discovery
-
-A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts)
-If you misspell the chain name, a list of all possible chains is printed
-In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `pnpm discover all [project]`.
+A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `l2b discover all [project]`.
+It's possible to discover all projects that contain a given address by running `l2b discover (<chain> | all) [address]`, it's useful when a change to a shared multisig has occurred.
 
 # To run the discovery UI
 
 To run the discovery UI locally:
-- Navigate to the `l2beat/packages/l2b` directory
-- `pnpm l2bup` # Will build the l2b command
+- Ensure you have `l2b` installed, check the installation instructions above if you don't have it installed.
 - `l2b ui` # Will run the discovery UI on http://localhost:2021/ui
 
 # RPC configuration
@@ -52,14 +53,14 @@ ETHEREUM_ETHERSCAN_API_KEY=<API_KEY>
 ETHEREUM_BEACON_API_URL_FOR_DISCOVERY=<BEACON_URL>                           # (optional)
 ETHEREUM_EVENT_RPC_URL_FOR_DISCOVERY=<RPC_URL_THAT_SUPPORTS_UNLIMITED_RANGE> # (optional)
 
-# But some of the handlers are going to switch to Arbitrum and fetch info from there 
+# But some of the handlers are going to switch to Arbitrum and fetch info from there
 ARBITRUM_RPC_URL_FOR_DISCOVERY=<RPC_URL>
 ARBITRUM_ETHERSCAN_API_KEY=<API_KEY>
 ```
 
 Tips:
 - DO NOT commit your RPC keys to GitHub :)
-- Please raise a ticket if you require assistance.
+- The tooling team is open to help you with any issues you encounter.
 
 # Discovery documentation
 
@@ -70,7 +71,18 @@ NOTE: We use a pseudo-TS syntax to simplify parameter types here:
 
 ## Adding new project
 
-Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
+Create a new folder in `packages/config/src/projects/` named after the project, inside that create a folder named after the chain with `config.jsonc` inside. Then run
+Example of how the folder structure should look like:
+
+```
+packages/config/src/projects/<project_name>
+├─ <chain_name_1>
+│  ├─ discovered.json (this will be generated)
+│  └─ config.jsonc
+└─ <chain_name_2>
+   ├─ discovered.json (this will be generated)
+   └─ config.jsonc
+```
 
 ```
 pnpm discover <project_chain> <project_name>
@@ -80,8 +92,9 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 **Parameters:**
 
-- `"$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json"`
+- `"$schema": "../../../../../discovery/schemas/config.v2.schema.json"`
 - `name` - name of the project
+- `chain` - chain of the project
 - `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
 - `names: Record<address, string>` - (optional) key-value object, with addresses as keys. It will allow you to override the name of the contract in discovery (ex. `Bridge` instead of `Bridge_v1`)
 - `overrides: Record<address, object>` - (optional) key-value object, with contracts as keys. It will allow you to ignore contracts in discovery (ex. token addresses or external contracts) or, override more complex fields and methods ([storage](#storage-handler) and [array](#array-handler) handlers).
@@ -90,7 +103,8 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 ```
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json"
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json"
+  chain: "ethereum",
   name: "project_a",
   initialAddresses: ["0x1234", "0x5678"],
   names: {
@@ -605,13 +619,13 @@ Your configuration directly determines how events are interpreted and what outpu
 
 **If you use just add**
 
-You get: *A list of all values from matching events*  
+You get: *A list of all values from matching events*
 
-**What happens**:  
+**What happens**:
 Every matching event appends its value(s) to the result  .
 Output preserves emission order (oldest → newest)
 
-Example: Track all registered users:  
+Example: Track all registered users:
 
 ```json
 {
@@ -693,7 +707,7 @@ If events are:
 Output becomes:
 
 ```js
-{ 
+{
   10: 3,  // Chain 10's latest is batch 3
   20: 2   // Chain 20's latest remains batch 2
 }
@@ -713,7 +727,7 @@ Example: Track only EVM chains
 {
   "type": "event",
   "select": ["batchIndex"],
-  "set": { 
+  "set": {
     "event": "CurrentBatchMultichain",
     "where": ["=", "#chainId", 1]  // ChainID 1 = Ethereum
   }
@@ -736,8 +750,8 @@ Example: Track version from two upgrade events
 {
   "type": "event",
   "select": ["version"],
-  "set": { 
-    "event": ["UpgradeV1", "UpgradeV2"] 
+  "set": {
+    "event": ["UpgradeV1", "UpgradeV2"]
   }
 }
 ```
@@ -924,7 +938,7 @@ You can configure the name of the output folder through the `--sources-folder` a
 
 ### In what situation would I use edit?
 
-Values returned from a handler are not always in the shape you want them to be. 
+Values returned from a handler are not always in the shape you want them to be.
 That's problematic if you want to use a value in a description.
 Say for example the project has a method to return the entire configuration of the system.
 After calling it you get something like this:
@@ -1144,7 +1158,7 @@ The ability to use the `edit` feature is still available on such a field.
 Example configuration:
 
 ```json
-"acccessControlTargets": {
+"accessControlTargets": {
   "copy": "accessControl",
   "edit": ["get", "targets"]
 }
