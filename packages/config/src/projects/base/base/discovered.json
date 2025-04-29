@@ -1,0 +1,10 @@
+{
+  "name": "base",
+  "chain": "base",
+  "blockNumber": 29578229,
+  "configHash": "0x5cb275706e2ecf253846b36d49433f0f38175b4b1d93b7404a3a2c3dbc5e84df",
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x6065b5adcb605dd547b105442b86349ed94400d09c71757d004d7f7915d6468f"
+}

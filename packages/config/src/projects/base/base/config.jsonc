@@ -1,0 +1,12 @@
+{
+    "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+    "chain": "base",
+    "name": "base",
+    "import": ["../../globalConfig.jsonc"],
+    "initialAddresses": [
+    ],
+    "names": {
+    },
+    "overrides": {}
+  }
+  

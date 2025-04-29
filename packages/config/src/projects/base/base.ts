@@ -6,12 +6,14 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
+const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
 
 export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   discovery,
   genesisTimestamp,
+  additionalDiscoveries: { ['base']: l2Discovery },
   display: {
     name: 'Base',
     slug: 'base',
@@ -187,6 +189,13 @@ export const base: ScalingProject = opStackL2({
     },
   ),
   milestones: [
+    {
+      title: 'Base becomes Stage 1',
+      url: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
+      date: '2024-10-30T00:00:00Z',
+      description: 'Base sets up a Security Council and becomes Stage 1.',
+      type: 'general',
+    },
     {
       title: 'Fault proofs!',
       url: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
