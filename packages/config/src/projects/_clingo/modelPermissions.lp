@@ -16,12 +16,14 @@ permission(Receiver, "act", Msig, 0, nil) :-
 % multisig can act independently if threshold is greater than 1 (even if it passes act permission to e.g. module)
 canActIndependently(Msig) :-
   msig(Msig, Threshold),
+  not preventActingIndependently(Msig),
   Threshold > 1.
 
 % anyone that doesn't pass act permission to someone else can act independently
 canActIndependently(Actor) :-
   address(Actor, _, _),
-  not permission(_, "act", Actor, _, _).
+  not permission(_, "act", Actor, _, _),
+  not preventActingIndependently(Actor).
 
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
@@ -55,5 +57,5 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
 % #show addressType/2.
 % #show addressDescription/2.
 % #show canActIndependently/1.
-#show transitivePermission/8.
+% #show transitivePermission/8.
 #show ultimatePermission/9.

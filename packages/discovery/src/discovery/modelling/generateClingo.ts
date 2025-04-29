@@ -1,7 +1,7 @@
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { PermissionsConfig } from '../config/PermissionConfig'
-import type { EntryParameters } from '../output/types'
+import type { StructureEntry } from '../output/types'
 import { interpolateModelTemplate } from './interpolate'
 import {
   buildPermissionsModel,
@@ -9,7 +9,7 @@ import {
 } from './relations'
 
 export function generateClingoFromPermissionsConfig(
-  entry: EntryParameters,
+  entry: StructureEntry,
   chain: string,
   permissionsConfig: PermissionsConfig,
   templateService: TemplateService,
@@ -33,7 +33,7 @@ export function generateClingoFromPermissionsConfig(
 }
 
 export function generateClingoFromModelLp(
-  entry: EntryParameters,
+  entry: StructureEntry,
   chain: string,
   templateService: TemplateService,
   addressToNameMap: Record<string, string>,
@@ -42,7 +42,7 @@ export function generateClingoFromModelLp(
     ? templateService.loadClingoModelTemplate(entry.template)
     : undefined
   if (modelTemplate) {
-    const values = contractValuesForInterpolation(chain, entry)
+    const values = contractValuesForInterpolation(chain, entry, undefined)
     const interpolated = interpolateModelTemplate(
       modelTemplate,
       values,

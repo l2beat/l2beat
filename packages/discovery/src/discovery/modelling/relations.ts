@@ -9,7 +9,11 @@ import { interpolateModelTemplate } from './interpolate'
 
 interface InlineTemplate {
   content: string
-  when: (c: StructureEntry, p?: RawPermissionConfiguration) => boolean
+  when: (
+    c: StructureEntry,
+    cp: ContractPermission,
+    p?: RawPermissionConfiguration,
+  ) => boolean
 }
 
 const addressTemplate: InlineTemplate = {
@@ -34,6 +38,18 @@ addressType(
   eoa).`,
   when: (c) => c.type === 'EOA',
 }
+const canActIndependentlyTemplate: InlineTemplate = {
+  content: `
+canActIndependently(
+  @self).`,
+  when: (_, cp) => cp.canActIndependently === true,
+}
+const preventActingIndependentlyTemplate: InlineTemplate = {
+  content: `
+preventActingIndependently(
+  @self).`,
+  when: (_, cp) => cp.canActIndependently === false,
+}
 const permissionTemplate: InlineTemplate = {
   content: `
 permission(
@@ -53,17 +69,19 @@ permissionCondition(
   &permission.delay,
   &permission.description|quote|orNil,
   "&permission.condition").`,
-  when: (_, p) => p?.condition !== undefined,
+  when: (_c, _cp, p) => p?.condition !== undefined,
 }
 
 export function contractValuesForInterpolation(
   chain: string,
-  entry: StructureEntry,
+  structureEntry: StructureEntry,
+  contractPermission: ContractPermission | undefined,
 ): Record<string, ContractValue | undefined> {
-  const values = entry.values
+  const values = structureEntry.values
   return {
     '$.chain': chain,
-    '$.address': entry.address.toLowerCase(),
+    '$.address': structureEntry.address.toLowerCase(),
+    '$.canActIndependently': contractPermission?.canActIndependently,
     ...values,
   }
 }
@@ -76,14 +94,20 @@ export function buildPermissionsModel(
 ): string {
   const relationsModel: string[] = []
 
-  const contractValues = contractValuesForInterpolation(chain, structureEntry)
+  const contractValues = contractValuesForInterpolation(
+    chain,
+    structureEntry,
+    contractPermission,
+  )
 
   for (const template of [
     addressTemplate,
     addressTypeContractTemplate,
     addressTypeEOATemplate,
+    canActIndependentlyTemplate,
+    preventActingIndependentlyTemplate,
   ]) {
-    if (template.when(structureEntry)) {
+    if (template.when(structureEntry, contractPermission)) {
       const interpolated = interpolateModelTemplate(
         template.content,
         contractValues,
@@ -123,7 +147,7 @@ export function buildPermissionsModel(
       if (addressToNameMap[to] === undefined) {
         continue
       }
-      if (template.when(structureEntry, permission)) {
+      if (template.when(structureEntry, contractPermission, permission)) {
         const interpolated = interpolateModelTemplate(
           template.content,
           valuesWithPermission,
