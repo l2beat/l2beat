@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW } from '../../common'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -159,35 +160,32 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
-  stage: {
-    stage: 'UnderReview',
-  },
-  // getStage(
-  //   {
-  //     stage0: {
-  //       callsItselfRollup: true,
-  //       stateRootsPostedToL1: true,
-  //       dataAvailabilityOnL1: true,
-  //       rollupNodeSourceAvailable: true,
-  //     },
-  //     stage1: {
-  //       principle: false,
-  //       stateVerificationOnL1: true,
-  //       fraudProofSystemAtLeast5Outsiders: true,
-  //       usersHave7DaysToExit: false,
-  //       usersCanExitWithoutCooperation: true,
-  //       securityCouncilProperlySetUp: false,
-  //     },
-  //     stage2: {
-  //       proofSystemOverriddenOnlyInCaseOfABug: false,
-  //       fraudProofSystemIsPermissionless: true,
-  //       delayWith30DExitWindow: false,
-  //     },
-  //   },
-  //   {
-  //     rollupNodeLink: 'https://github.com/base-org/node',
-  //   },
-  // ),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/base-org/node',
+    },
+  ),
   milestones: [
     {
       title: 'Fault proofs!',

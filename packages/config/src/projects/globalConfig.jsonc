@@ -37,9 +37,11 @@
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "Arbitrum Multisig 2",
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "Arbitrum Security Council",
 
-    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Multisig 1",
-    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 2",
-    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Multisig 3",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 1",
+    "0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110": "Base Multisig 2",
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Coordinator Multisig",
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Governance Multisig",
+    "0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": "Base Security Council",
 
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZK Foundation Multisig",
