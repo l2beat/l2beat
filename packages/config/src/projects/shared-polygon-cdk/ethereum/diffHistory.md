@@ -1,50 +1,174 @@
-Generated with discovered.json: 0xef01aa60c82d8a0bd535733dd327675b2bc90bb6
+Generated with discovered.json: 0x0ccec8b3efe039eb17a8c6a692cc04cbe439f74d
 
-# Diff at Mon, 28 Apr 2025 12:05:00 GMT:
+# Diff at Mon, 28 Apr 2025 12:34:05 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22244012
-- current block number: 22244012
+- current block number: 22367585
 
 ## Description
 
-Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+New unknown pessimistic agglayer chain deployed, not active yet.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22244012 (main branch discovery), not current.
-
-```diff
-    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
-    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"},{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}]
-    }
-```
+## Watched changes
 
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
-      issuedPermissions:
--        [{"permission":"aggregatePolygon","to":"0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE","via":[]},{"permission":"aggregatePolygon","to":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","via":[]},{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]},{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]},{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.","via":[]},{"permission":"interact","to":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.","via":[]},{"permission":"interact","to":"0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]},{"permission":"upgrade","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"},{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}]
-    }
-```
-
-```diff
-    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
-    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"},{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}]
-    }
-```
-
-```diff
-    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
-    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
-      issuedPermissions:
--        [{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay","via":[]},{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]}]
+      values.rollupCount:
+-        17
++        18
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.17:
++        {"rollupContract":"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC","chainID":938,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.rollupsDataV2.16.rollupContract:
+-        "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC"
++        "0x88AaB361f108C3c959F2928Da3cD8e47298016B5"
+      values.rollupsDataV2.16.chainID:
+-        938
++        4913
+      values.rollupsDataV2.15.rollupContract:
+-        "0x88AaB361f108C3c959F2928Da3cD8e47298016B5"
++        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+      values.rollupsDataV2.15.chainID:
+-        4913
++        3776
+      values.rollupsDataV2.14.rollupContract:
+-        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
++        "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8"
+      values.rollupsDataV2.14.chainID:
+-        3776
++        623
+      values.rollupsDataV2.14.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupsDataV2.14.forkID:
+-        9
++        12
+      values.rollupsDataV2.14.rollupTypeID:
+-        4
++        7
+      values.rollupsDataV2.13.rollupContract:
+-        "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8"
++        "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
+      values.rollupsDataV2.13.chainID:
+-        623
++        1702448187
+      values.rollupsDataV2.13.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.13.forkID:
+-        12
++        9
+      values.rollupsDataV2.13.rollupTypeID:
+-        7
++        4
+      values.rollupsDataV2.12.rollupContract:
+-        "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
++        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
+      values.rollupsDataV2.12.chainID:
+-        1702448187
++        801
+      values.rollupsDataV2.12.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupsDataV2.12.forkID:
+-        9
++        12
+      values.rollupsDataV2.12.rollupTypeID:
+-        4
++        10
+      values.rollupsDataV2.12.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.12.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+      values.rollupsDataV2.11.rollupContract:
+-        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
++        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
+      values.rollupsDataV2.11.chainID:
+-        801
++        2355
+      values.rollupsDataV2.11.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.11.forkID:
+-        12
++        9
+      values.rollupsDataV2.11.rollupTypeID:
+-        10
++        4
+      values.rollupsDataV2.11.rollupVerifierType:
+-        1
++        0
+      values.rollupsDataV2.11.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.10.rollupContract:
+-        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
++        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
+      values.rollupsDataV2.10.chainID:
+-        2355
++        9369
+      values.rollupsDataV2.10.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupsDataV2.10.forkID:
+-        9
++        12
+      values.rollupsDataV2.10.rollupTypeID:
+-        4
++        10
+      values.rollupsDataV2.10.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.10.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+      values.rollupsDataV2.9.rollupContract:
+-        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
++        "0xB234F18738d9531CAD6ae6d9A587d09fe200272C"
+      values.rollupsDataV2.9.chainID:
+-        9369
++        999
+      values.rollupsDataV2.9.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.9.forkID:
+-        12
++        9
+      values.rollupsDataV2.9.rollupTypeID:
+-        10
++        4
+      values.rollupsDataV2.9.rollupVerifierType:
+-        1
++        0
+      values.rollupsDataV2.9.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.8.rollupContract:
+-        "0xB234F18738d9531CAD6ae6d9A587d09fe200272C"
++        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
+      values.rollupsDataV2.8.chainID:
+-        999
++        45056
+      values.rollupsDataV2.8.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupsDataV2.8.forkID:
+-        9
++        12
+      values.rollupsDataV2.8.rollupTypeID:
+-        4
++        10
+      values.rollupsDataV2.8.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.8.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
     }
 ```
 

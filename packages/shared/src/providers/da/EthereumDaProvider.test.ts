@@ -42,10 +42,10 @@ describe(EthereumDaProvider.name, () => {
       const mockBeaconChainClient = mockObject<BeaconChainClient>()
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       const result = await provider.getBlobs(1, 2)
@@ -108,10 +108,10 @@ describe(EthereumDaProvider.name, () => {
       })
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       const result = await provider.getBlobs(1, 1)
@@ -125,6 +125,53 @@ describe(EthereumDaProvider.name, () => {
           blockTimestamp: UnixTime.fromDate(mockDate),
           size: 131072n,
         } as EthereumBlob,
+        {
+          type: 'ethereum',
+          daLayer: 'ethereum',
+          inbox: '0xto1',
+          sequencer: '0xfrom1',
+          blockTimestamp: UnixTime.fromDate(mockDate),
+          size: 131072n,
+        } as EthereumBlob,
+      ])
+    })
+
+    it('should fallback to beacon chain if blobScanClient is undefined', async () => {
+      const mockDate = new Date()
+      const kzgCommitment1 = generateKzgCommitment()
+      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
+      const blob1 = {
+        kzg_commitment: kzgCommitment1,
+        data: 'blob1',
+      }
+
+      const mockRpcClient = mockObject<RpcClient>({
+        getBlock: mockFn().resolvesTo({
+          timestamp: UnixTime.fromDate(mockDate),
+          transactions: [
+            {
+              type: '0x3',
+              blobVersionedHashes: [versionedHash1],
+              from: '0xfrom1',
+              to: '0xto1',
+            },
+          ],
+        }),
+      })
+
+      const mockBeaconChainClient = mockObject<BeaconChainClient>({
+        getBlockSidecar: mockFn().resolvesTo([blob1]),
+      })
+
+      const provider = new EthereumDaProvider(
+        mockBeaconChainClient,
+        mockRpcClient,
+        'ethereum',
+      )
+
+      const result = await provider.getBlobs(1, 1)
+
+      expect(result).toEqual([
         {
           type: 'ethereum',
           daLayer: 'ethereum',
@@ -164,10 +211,10 @@ describe(EthereumDaProvider.name, () => {
       })
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
@@ -207,10 +254,10 @@ describe(EthereumDaProvider.name, () => {
       })
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
@@ -239,10 +286,10 @@ describe(EthereumDaProvider.name, () => {
       })
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       const result = await provider.getRelevantBlobs('txHash')
@@ -286,10 +333,10 @@ describe(EthereumDaProvider.name, () => {
       })
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       const result = await provider.getRelevantBlobs('txHash')
@@ -310,10 +357,10 @@ describe(EthereumDaProvider.name, () => {
       const mockBeaconChainClient = mockObject<BeaconChainClient>()
 
       const provider = new EthereumDaProvider(
-        mockBlobScanClient,
         mockBeaconChainClient,
         mockRpcClient,
         'ethereum',
+        mockBlobScanClient,
       )
 
       await expect(provider.getRelevantBlobs('txHash')).toBeRejectedWith(

@@ -1,107 +1,75 @@
-Generated with discovered.json: 0x7e43c4f44718c5f420bf3d1640faa067f2b11870
+Generated with discovered.json: 0xb2b394853a1be0b6ba3f763d134813f3bb8410d7
 
-# Diff at Mon, 28 Apr 2025 12:05:08 GMT:
+# Diff at Mon, 28 Apr 2025 12:22:50 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 315644612
-- current block number: 315644612
+- current block number: 331093646
 
 ## Description
 
-Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+Minor Arbitrum upgrade [3.1.0](https://github.com/OffchainLabs/nitro-contracts/releases/tag/v3.1.0) that everyone is doing atm.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 315644612 (main branch discovery), not current.
-
-```diff
-    contract Bridge (0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e) {
-    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
-```
-
-```diff
-    contract L1OrbitUSDCGateway (0x404922a9B29b4a5205a6074AbA31A7392BD28944) {
-    +++ description: Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176","via":[{"address":"0x401eCb1D350407f13ba348573E5630B83638E30D"}]}]
-    }
-```
-
-```diff
-    contract RollupEventInbox (0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1) {
-    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
-```
+## Watched changes
 
 ```diff
     contract SequencerInbox (0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68) {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
-      issuedPermissions:
--        [{"permission":"sequence","to":"0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]},{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
-```
-
-```diff
-    contract RollupProxy (0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      issuedPermissions:
--        [{"permission":"fastconfirm","to":"0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","via":[{"address":"0x1a8902780F37e0526788198Dee30b8375A0B24Bc"}]},{"permission":"interact","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"}]},{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"}]},{"permission":"validate","to":"0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]},{"permission":"validate","to":"0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0x1a8902780F37e0526788198Dee30b8375A0B24Bc"}]}]
-    }
-```
-
-```diff
-    contract GatewayRouter (0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7) {
-    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
-```
-
-```diff
-    contract ChallengeManager (0x832CF28be3042b6F60D7225E393E924D7f0936F6) {
-    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
-```
-
-```diff
-    contract UpgradeExecutor (0x8b2600BA65E7908D38Af906fbcafB2f62D395765) {
-    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0xb7F0b49F09177cF8ab3aD8Cff68260DaFB079aCC"
++        "0x7be08B013de2b23a6329De51C4994f841dcE1a10"
+      values.$pastUpgrades.1:
++        ["2024-10-10T10:37:46.000Z","0xb59c601b49b2bdd75a4ea43ea249eefba807c0f98211ce3cb2389ade74607955",["0xb7F0b49F09177cF8ab3aD8Cff68260DaFB079aCC"]]
+      values.$pastUpgrades.0.2:
+-        "0xb59c601b49b2bdd75a4ea43ea249eefba807c0f98211ce3cb2389ade74607955"
++        ["0x7be08B013de2b23a6329De51C4994f841dcE1a10"]
+      values.$pastUpgrades.0.1:
+-        ["0xb7F0b49F09177cF8ab3aD8Cff68260DaFB079aCC"]
++        "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b"
+      values.$pastUpgrades.0.0:
+-        "2024-10-10T10:37:46.000Z"
++        "2025-04-25T21:55:46.000Z"
+      values.$upgradeCount:
+-        1
++        2
     }
 ```
 
 ```diff
     contract Inbox (0xB1146A7eb098ECF46e8AAf695f4A960A963948d6) {
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
+      sourceHashes.0:
+-        "0xb2c117c2e00734a82fe4ab27d5fe91a6e152c06bbcdbf83db021ad32b6be3e60"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "0xD2f1C58Da62BCfaD4BeF7802B2F6363C2cbe7082"
++        "0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"
+      values.$pastUpgrades.1:
++        ["2024-10-10T10:37:46.000Z","0xb59c601b49b2bdd75a4ea43ea249eefba807c0f98211ce3cb2389ade74607955",["0xD2f1C58Da62BCfaD4BeF7802B2F6363C2cbe7082"]]
+      values.$pastUpgrades.0.2:
+-        "0xb59c601b49b2bdd75a4ea43ea249eefba807c0f98211ce3cb2389ade74607955"
++        "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b"
+      values.$pastUpgrades.0.1:
+-        "2024-10-10T10:37:46.000Z"
++        ["0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"]
+      values.$pastUpgrades.0.0:
+-        ["0xD2f1C58Da62BCfaD4BeF7802B2F6363C2cbe7082"]
++        "2025-04-25T21:55:46.000Z"
+      values.$upgradeCount:
+-        1
++        2
     }
 ```
 
-```diff
-    contract ERC20Gateway (0xe41363751bd1C305384375F428585C20e3dF516A) {
-    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
-```
+## Source code changes
 
 ```diff
-    contract Outbox (0xfbe537816d181888fAbE52338a5D921eE131E9Db) {
-    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x8b2600BA65E7908D38Af906fbcafB2f62D395765"},{"address":"0xd12478d6edD1db996313E2F4350F2FD99c118B6E"}]}]
-    }
+.../Inbox/ERC20Inbox.sol                           | 16 +++++++++++++--
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++++++++++-------
+ 2 files changed, 31 insertions(+), 9 deletions(-)
 ```
 
 Generated with discovered.json: 0xbc6c39ea769a858dcff698275f6a735259cdf19f

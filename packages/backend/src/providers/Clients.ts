@@ -216,7 +216,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     retryStrategy: 'RELIABLE',
   })
 
-  if (ethereumClient && config.beaconApi.url) {
+  if (config.beaconApi.url) {
     beaconChainClient = new BeaconChainClient({
       sourceName: 'beaconApi',
       beaconApiUrl: config.beaconApi.url,

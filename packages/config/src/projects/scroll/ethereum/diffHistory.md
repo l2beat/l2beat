@@ -1,14 +1,318 @@
-Generated with discovered.json: 0x8d9be6cc4a67b3f82ff5ff7acacad7135fd1fa36
+Generated with discovered.json: 0xcf769c4f6c70fd534da2f94dab4444c3d4edc589
 
-# Diff at Mon, 28 Apr 2025 12:05:16 GMT:
+# Diff at Mon, 28 Apr 2025 10:39:01 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 22297562
-- current block number: 22297562
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a68d2e28c8787c5d6b9533bafbaed67dd065d75c block: 22297562
+- current block number: 22367020
 
 ## Description
 
-Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+EnforcedTxGateway unpaused. Upgraded permissions for Stage 1.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37)
+    +++ description: None
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.6:
++        {"startBatchIndex":0,"verifier":"0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828"}
+      values.legacyVerifiersLength.6:
++        0
+      values.verifierVersions.6:
++        7
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      sourceHashes.1:
+-        "0xe550fda323606a4b4fd2a05cf45dda231290e1d57a077828632c098fa0579161"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x0a1aa34da20ecb18034b84d08a6f6c0a3b5f5b865aaf9fbd37ef7c766dfdc5a8"
+      values.$implementation:
+-        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
++        "0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"
+      values.$pastUpgrades.3:
++        ["2025-04-25T07:06:59.000Z","0x783703d4e94de48edb75261149a540cbf7abb7ef077865c11080e622a508ab86",["0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"]]
+      values.$pastUpgrades.2:
++        ["2023-10-08T16:25:23.000Z","0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e",["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]]
+      values.$pastUpgrades.1.2.0:
+-        "0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"
++        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
+      values.$pastUpgrades.1.1:
+-        "2023-10-08T16:25:23.000Z"
++        "2024-02-22T08:20:23.000Z"
+      values.$pastUpgrades.1.0:
+-        "0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e"
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
+-        ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
++        "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21"
+      values.$pastUpgrades.0.1:
+-        "2024-02-22T08:20:23.000Z"
++        "2025-04-22T06:01:35.000Z"
+      values.$pastUpgrades.0.0:
+-        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
++        ["0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868"]
+      values.$upgradeCount:
+-        2
++        4
+      values.counterpart:
+-        "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
++        "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
+      values.messageQueue:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.prevReplayIndex:
+-        [0,0,0,0,0]
+      values.xDomainMessageSender:
+-        "0x0000000000000000000000000000000000000001"
++        "scr:0x0000000000000000000000000000000000000001"
+      values.enforcedTxGateway:
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      values.messageQueueV1:
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.messageQueueV2:
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+      errors:
+-        {"prevReplayIndex":"Processing error occurred."}
+      template:
++        "scroll/L1ScrollMessenger"
+      description:
++        "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+      sourceHashes.1:
+-        "0xcb83aeace6c4751da7d9340ffa2eff5c9c9fdf2e9c1f25d6bc2f31ffabfcb477"
++        "0x7e017c785ff8a5c9fce815594b0d7e7ced85dbc125ae000cd7babf1cfaefabf9"
+      values.$implementation:
+-        "0x642af405bF64660665B37977449C9C536B806318"
++        "0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc"
+      values.$pastUpgrades.1:
++        ["2025-04-22T06:01:35.000Z","0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21",["0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.messageQueue:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
++++ description: Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.
++++ severity: HIGH
+      values.paused:
+-        true
++        false
+      template:
++        "scroll/EnforcedTxGateway"
+      description:
++        "Contracts to force L1 -> L2 messages with the proper sender."
+      fieldMeta:
++        {"paused":{"severity":"HIGH","description":"Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2ScrollMessengerFallback (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC)
+    +++ description: None
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"0x8432728A257646449245558B8b7Dbe51A16c7a4D","description":"update the minimum delay message queue parameters and enforced mode parameters."}
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes):
+-        ["emergency-nodelay"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.finalizeEuclidInitialBatch(bytes32):
+-        ["SECURITY_COUNCIL_NO_DELAY_ROLE"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes):
++        ["emergency-nodelay"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.disableEnforcedBatchMode():
++        ["SECURITY_COUNCIL_NO_DELAY_ROLE"]
+      values.accessControl.targets.0x8432728A257646449245558B8b7Dbe51A16c7a4D:
++        {"updateMessageQueueParameters((uint32,uint112,uint112))":["ops-fast"],"updateEnforcedBatchParameters((uint24,uint24))":["ops-fast"],"updateSigner(address)":["emergency-nodelay"]}
+      values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d:
++        {"setPause(bool)":["emergency-nodelay"]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852)
+    +++ description: None
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      sourceHashes.1:
+-        "0x2d7fa796a8274772f3ee8143549252719d97cf0dafeaf769802b66b51a195041"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306"
+      values.$implementation:
+-        "0x8f339292d2b3909574B2bEB051a613a987dB538f"
++        "0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"
+      values.$pastUpgrades.6:
++        ["2025-04-15T14:47:23.000Z","0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0",["0x8f339292d2b3909574B2bEB051a613a987dB538f"]]
+      values.$pastUpgrades.5.2:
+-        "2025-04-15T14:47:23.000Z"
++        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
+      values.$pastUpgrades.5.1:
+-        "0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0"
++        ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
+      values.$pastUpgrades.5.0:
+-        ["0x8f339292d2b3909574B2bEB051a613a987dB538f"]
++        "2024-08-20T23:36:35.000Z"
+      values.$pastUpgrades.4.2:
+-        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
++        "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21"
+      values.$pastUpgrades.4.1.0:
+-        "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"
++        "0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"
+      values.$pastUpgrades.4.0:
+-        "2024-08-20T23:36:35.000Z"
++        "2025-04-22T06:01:35.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.committedBatches:
+-        ["0x5aaeb6101a47fc16866e80d77ffe090b6a7b3cf7d988be981646ab6aedfa2c42","0xaa8181f04f8e305328a6117fa6bc13fa2093a3c4c990c5281df95a1cb85ca18f","0x30d13ec2a06074f2048d64d85b62e1b4fb8f461d43bbd26099ef86d903c97399","0xe4bf15441d44aec723eff1ba7e80f9f5c6dbc46312471d0b23e297310870012f","0xcb24a337233a0d9a335e71a33637a8e42d71422c08ca6338572eb1e25e0f989a"]
+      values.finalizedStateRoots:
+-        ["0x08d535cc60f40af5dd3b31e0998d7567c2d568b224bed2ba26070aeb078d1339","0x2b3219c3d89d50b5aa4e56743c4e22501d34b885e468365ba3b1cc818297db74","0x2494e7866ed0b6e8cf87024c0036e53cf3d4a7cbe22f11d80f8fff36392463a0","0x18a3423e924e332986d81b32fbec1f1d21b1f7a8a706267fdf87ed18bc6dfff6","0x2d0336979e3bcd0ef4c4cde61d5ab5b14ee57b5f533152c459dc0e63bb1a7e1f"]
+      values.isBatchFinalized:
+-        [true,true,true,true,true]
+      values.messageQueue:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.withdrawRoots:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0","0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0"]
+      values.isEnforcedModeEnabled:
++        false
+      values.messageQueueV1:
++        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
+      values.messageQueueV2:
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+      values.provers:
++        ["0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c","0x74b286304576625557629C47E9E8702383D9eF92"]
+      values.revertedBatches:
++        [275119,275120,275121,275122,275123,275124,275125,275126,275127,275128,275129,275130,275131,275132,275133,275134,275135,275136,275137,275138,275139,275140,275141,275142,275143,275144,275145,275146,275147,275148,275149,275150,275151,275152,275153,275154,275155,275156,275157,275158,275159,275160,275161,275162,275163,275164,275165,275166,275167,275168,275169,275170,275171,275172,275173,346818,346817,346816,346815]
+      values.sequencers:
++        ["0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B","0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"]
+      values.systemConfig:
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+      errors:
+-        {"committedBatches":"Processing error occurred.","finalizedStateRoots":"Processing error occurred.","isBatchFinalized":"Processing error occurred.","withdrawRoots":"Processing error occurred."}
+      template:
++        "scroll/ScrollChain"
+      description:
++        "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.10.from:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
+      directlyReceivedPermissions.9.from:
+-        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      directlyReceivedPermissions.8.from:
+-        "0x987e300fDfb06093859358522a79098848C33852"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
+      directlyReceivedPermissions.1.from:
+-        "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
++        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.2:
+-        "0xE2e6345baAD18f779167443Dc4886495507b3249"
++        "0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae"
+      values.$members.1:
+-        "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
++        "0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid (0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828)
+    +++ description: Contract used to verify zk proofs given the aggregate proof and the public input hash.
+```
+
+```diff
++   Status: CREATED
+    contract L1MessageQueueV2 (0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D)
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierPostEuclid-2 (0x9F66505cB1626D06B50EF2597f41De6686e8f79a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../EnforcedTxGateway/EnforcedTxGateway.sol        |  79 +-
+ .../L1MessageQueueV2/L1MessageQueueV2.sol}         | 867 +++++++--------------
+ .../TransparentUpgradeableProxy.p.sol              |   2 +-
+ .../L1ScrollMessenger/L1ScrollMessenger.sol        |  50 +-
+ .../L2ScrollMessengerFallback.sol => /dev/null     | 469 -----------
+ .../ScrollChain/ScrollChain.sol                    | 652 +++++++++++++---
+ .../SystemConfig/SystemConfig.sol}                 | 212 ++---
+ .../TransparentUpgradeableProxy.p.sol              |   2 +-
+ .../.flat@22297562/Whitelist.sol => /dev/null      |  97 ---
+ ...0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3.sol} |   0
+ ...-0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828.sol | 102 +++
+ 11 files changed, 1095 insertions(+), 1437 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -17,27 +321,329 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22297562 (main branch discovery), not current.
 
 ```diff
-    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    contract ZkEvmVerifierPostEuclid (0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3) {
     +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
 ```diff
-    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
     +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract undefined (0x0c5cc5155b346453154059aD9d2Ff695dB92f774) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      name:
+-        "TimelockSC"
++        "TimelockSCEmergency"
+      values.Canceller:
++        ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      values.getMinDelayFormatted:
++        "0s"
+      values.Proposer:
++        ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      values.timelockAdminAC:
++        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      template:
++        "scroll/L1Timelock"
+      description:
++        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone."
+      issuedPermissions:
++        [{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"propose transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"upgrade all core contracts of the system."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"disable enforced batch mode."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update ScrollChain zk proof verifier."}]
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      name:
+-        "L1MessageQueue"
++        "L1MessageQueueWithGasPriceOracle"
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.estimateCrossDomainMessageFee:
++        [0,39287348,78574696,117862044,157149392]
+      values.getCrossDomainMessage:
++        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"]
+      values.isMessageDropped:
++        [false,false,false,false,false]
+      values.isMessageSkipped:
++        [false,false,false,false,false]
+      values.messageQueue:
++        ["0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320","0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894","0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae","0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6","0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"]
+      errors:
++        {"estimateCrossDomainMessageFee":"Processing error occurred.","getCrossDomainMessage":"Processing error occurred.","isMessageDropped":"Processing error occurred.","isMessageSkipped":"Processing error occurred.","messageQueue":"Processing error occurred."}
     }
+```
+
+```diff
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.Canceller:
++        ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+      values.getMinDelayFormatted:
++        "1d"
+      values.Proposer:
++        ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+      values.timelockAdminAC:
++        ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]
+      template:
++        "scroll/L1Timelock"
+      description:
++        "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone."
+      issuedPermissions:
++        [{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address."},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"add permissioned batchers and provers to the whitelist."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"set ERC20 gateways in the L1GatewayRouter."}]
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract undefined (0x0f50874f227621Dea72482004639a9fFe440A4dA) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"cancel queued transactions."},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"upgrade all core contracts of the system.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"disable enforced batch mode.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"propose transactions."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"cancel queued transactions."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"propose transactions."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update ScrollChain zk proof verifier.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"},{"permission":"act","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready."},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready."},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready."},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready."}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+    +++ description: None
+      values.whitelisted:
+-        ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
+    }
+```
+
+```diff
+    contract undefined (0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract undefined (0x30315233090F675520eef5CBd7A6cf7d185af443) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract undefined (0x383C148ba96956F985F6141B2D119add1C34e3B7) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract TimelockSCSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      name:
+-        "TimelockSlow"
++        "TimelockSCSlow"
+      values.Canceller:
++        ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      values.getMinDelayFormatted:
++        "3d"
+      values.Proposer:
++        ["0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      values.timelockAdminAC:
++        ["0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      template:
++        "scroll/L1Timelock"
+      description:
++        "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone."
+      issuedPermissions:
++        [{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"propose transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"update the minimum delay and manage all access control roles of the timelock."}]
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      description:
+-        "Used to update the verifier and keep track of current and old versions."
++        "Contract used to update the verifier and keep track of current and old versions."
+      template:
++        "scroll/MultipleVersionRollupVerifier"
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV0 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ERC1155GatewayFallback (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc)
+    +++ description: None
 ```
 
 ```diff
     contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
-    +++ description: None
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
++        "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
+      template:
++        "scroll/L1ERC721Gateway"
+      description:
++        "Contract used to bridge ERC721 tokens from L1 to L2."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
+```
+
+```diff
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2CustomERC20GatewayFallback (0x64CCBE37c9A82D85A1F2E74649b7A42923067988)
+    +++ description: None
+```
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      values.counterpart:
+-        "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9"
++        "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2TokenFactoryFallback (0x66e5312EDeEAef6e80759A0F789e7914Fb401484)
+    +++ description: None
 ```
 
 ```diff
@@ -45,6 +651,13 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     +++ description: None
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62"
++        "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -53,6 +666,38 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     +++ description: None
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.prevReplayIndex:
++        [0,0,0,0,0]
+      errors:
++        {"prevReplayIndex":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Safe (0x69C2eD64171bF5737c2B78bdF722e68a032B2825) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2ETHGatewayFallback (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2WETHGatewayFallback (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9)
+    +++ description: None
+```
+
+```diff
+    contract undefined (0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -61,30 +706,189 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     +++ description: None
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      fieldMeta:
+-        {"paused":{"severity":"HIGH","description":"Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."}}
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0x987e300fDfb06093859358522a79098848C33852","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","from":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+      values.opsFast:
++        ["0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]
+      values.opsNoDelay:
++        ["0x826714adD4dDA2b8750794A467C892c0Cd49216b"]
+      values.scNoDelay:
++        ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
+      template:
++        "scroll/ScrollOwner"
+      issuedPermissions:
++        [{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"update the L1ScrollMessenger fee vault address.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"revert unfinalized batches.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"add permissioned batchers and provers to the whitelist.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"update the minimum delay message queue parameters and enforced mode parameters.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"set ERC20 gateways in the L1GatewayRouter.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"pause the L1 -> L2 messenger and enforced transaction mode.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"remove permissioned batchers and provers to the whitelist, and update the sequencer address.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"upgrade all core contracts of the system.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"disable enforced batch mode.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update ScrollChain zk proof verifier.","via":[{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
 ```diff
     contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
-    +++ description: None
+    +++ description: Contract used to bridge WETH from L1 to L2.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9"
++        "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9"
+      values.l2WETH:
+-        "0x5300000000000000000000000000000000000004"
++        "scr:0x5300000000000000000000000000000000000004"
+      template:
++        "scroll/L1WETHGateway"
+      description:
++        "Contract used to bridge WETH from L1 to L2."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract L2ERC721GatewayFallback (0x7bC08E1c04fb41d75F1410363F0c5746Eae80582)
+    +++ description: None
 ```
 
 ```diff
     contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
-    +++ description: None
+    +++ description: Contract used to bridge ETH from L1 to L2.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
++        "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
+      template:
++        "scroll/L1ETHGateway"
+      description:
++        "Contract used to bridge ETH from L1 to L2."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
 ```diff
-    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      values.Canceller:
++        ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+      values.getMinDelayFormatted:
++        "0s"
+      values.Proposer:
++        ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
+      values.timelockAdminAC:
++        ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","0x826714adD4dDA2b8750794A467C892c0Cd49216b"]
+      template:
++        "scroll/L1Timelock"
+      description:
++        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone."
+      issuedPermissions:
++        [{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"propose transactions.","via":[]},{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"revert unfinalized batches."},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"pause the L1 -> L2 messenger and enforced transaction mode."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"remove permissioned batchers and provers to the whitelist, and update the sequencer address."}]
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
     +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Safe (0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      name:
+-        "OLD_L2GasPriceOracle"
++        "L2GasPriceOracle"
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.estimateCrossDomainMessageFee:
++        [0,460000000,920000000,1380000000,1840000000]
+      errors:
++        {"estimateCrossDomainMessageFee":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract undefined (0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      values.counterpart:
+-        "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6"
++        "scr:0x9eBf2f33526CD571f8b2ad312492cb650870CFd6"
+      template:
++        "scroll/L1CustomERC20Gateway"
+      description:
++        "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -93,46 +897,220 @@ discovery. Values are for block 22297562 (main branch discovery), not current.
     +++ description: None
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.provers:
+-        ["0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c","0x74b286304576625557629C47E9E8702383D9eF92"]
+      values.revertedBatches:
+-        [275119,275120,275121,275122,275123,275124,275125,275126,275127,275128,275129,275130,275131,275132,275133,275134,275135,275136,275137,275138,275139,275140,275141,275142,275143,275144,275145,275146,275147,275148,275149,275150,275151,275152,275153,275154,275155,275156,275157,275158,275159,275160,275161,275162,275163,275164,275165,275166,275167,275168,275169,275170,275171,275172,275173,346818,346817,346816,346815]
+      values.sequencers:
+-        ["0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B","0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"]
+      values.committedBatches:
++        ["0x5aaeb6101a47fc16866e80d77ffe090b6a7b3cf7d988be981646ab6aedfa2c42","0xaa8181f04f8e305328a6117fa6bc13fa2093a3c4c990c5281df95a1cb85ca18f","0x30d13ec2a06074f2048d64d85b62e1b4fb8f461d43bbd26099ef86d903c97399","0xe4bf15441d44aec723eff1ba7e80f9f5c6dbc46312471d0b23e297310870012f","0xcb24a337233a0d9a335e71a33637a8e42d71422c08ca6338572eb1e25e0f989a"]
+      values.finalizedStateRoots:
++        ["0x08d535cc60f40af5dd3b31e0998d7567c2d568b224bed2ba26070aeb078d1339","0x2b3219c3d89d50b5aa4e56743c4e22501d34b885e468365ba3b1cc818297db74","0x2494e7866ed0b6e8cf87024c0036e53cf3d4a7cbe22f11d80f8fff36392463a0","0x18a3423e924e332986d81b32fbec1f1d21b1f7a8a706267fdf87ed18bc6dfff6","0x2d0336979e3bcd0ef4c4cde61d5ab5b14ee57b5f533152c459dc0e63bb1a7e1f"]
+      values.isBatchFinalized:
++        [true,true,true,true,true]
+      values.withdrawRoots:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0","0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0"]
+      errors:
++        {"committedBatches":"Processing error occurred.","finalizedStateRoots":"Processing error occurred.","isBatchFinalized":"Processing error occurred.","withdrawRoots":"Processing error occurred."}
     }
 ```
 
 ```diff
     contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
-    +++ description: None
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
++        "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
+      template:
++        "scroll/L1CustomERC20Gateway"
+      description:
++        "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
 ```diff
     contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
-    +++ description: None
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
++        "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
+      template:
++        "scroll/L1ERC1155Gateway"
+      description:
++        "Contract used to bridge ERC1155 tokens from L1 to L2."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"revert unfinalized batches.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"cancel queued transactions."},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"propose transactions."},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"pause the L1 -> L2 messenger and enforced transaction mode.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"remove permissioned batchers and provers to the whitelist, and update the sequencer address.","via":[{"address":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b"}]
+    }
+```
+
+```diff
+    contract Safe (0xC3eA7C657884BB380B66D79C36aDCb5658b01896) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2TokenImplementationFallback (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69)
+    +++ description: None
+```
+
+```diff
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierPostEuclid (0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582) {
+    +++ description: None
+      name:
+-        ""
++        "PlonkVerifierPostEuclid"
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
 ```diff
     contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
-    +++ description: None
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
++        "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
+      values.l2TokenFactory:
+-        "0x66e5312EDeEAef6e80759A0F789e7914Fb401484"
++        "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484"
+      values.l2TokenImplementation:
+-        "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69"
++        "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69"
+      template:
++        "scroll/L1StandardERC20Gateway"
+      description:
++        "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2StandardERC20GatewayFallback (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A)
+    +++ description: None
+```
+
+```diff
+    contract undefined (0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.14:
+-        {"permission":"upgrade","from":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"}
+    }
+```
+
+```diff
+    contract undefined (0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"cancel queued transactions."},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"propose transactions."},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"add permissioned batchers and provers to the whitelist.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]},{"permission":"interact","from":"0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"set ERC20 gateways in the L1GatewayRouter.","via":[{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]
     }
 ```
 
 ```diff
     contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
-    +++ description: None
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      values.counterpart:
+-        "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"
++        "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"
+      values.l2USDC:
+-        "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
++        "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
+      template:
++        "scroll/L1USDCGateway"
+      description:
++        "Contract used to bridge USDC tokens from L1 to L2."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
 ```diff
     contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
-    +++ description: None
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
       issuedPermissions:
 -        [{"permission":"upgrade","to":"0x798576400F7D662961BA15C6b3F3d813447a26a6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      template:
++        "scroll/L1GatewayRouter"
+      description:
++        "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway."
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract undefined (0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract undefined (0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
     }
 ```
 

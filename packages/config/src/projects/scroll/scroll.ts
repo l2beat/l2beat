@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -27,34 +28,31 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('scroll')
+const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
 
-const timelockSlowDelay = discovery.getContractValue<number>(
-  'TimelockSlow',
-  'getMinDelay',
-)
-const timelockFastDelay = discovery.getContractValue<number>(
-  'TimelockFast',
-  'getMinDelay',
-)
-const timelockSCDelay = discovery.getContractValue<number>(
-  'TimelockSC',
-  'getMinDelay',
-)
-const timelockEmergencyDelay = discovery.getContractValue<number>(
-  'TimelockEmergency',
-  'getMinDelay',
+const enforcedModeDelayParameters = discovery.getContractValue<{
+  maxDelayEnterEnforcedMode: number
+  maxDelayMessageQueue: number
+}>('SystemConfig', 'enforcedBatchParameters')
+
+const maxDelayEnterEnforcedMode =
+  enforcedModeDelayParameters.maxDelayEnterEnforcedMode
+const maxDelayMessageQueue = enforcedModeDelayParameters.maxDelayMessageQueue
+
+const minSelfSequenceDelay = Math.min(
+  maxDelayMessageQueue,
+  maxDelayEnterEnforcedMode,
 )
 
 const upgradesSC = {
   upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
 }
 
-const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
-  'EnforcedTxGateway',
-  'paused',
+const upgradeDelay = discovery.getContractValue<number>(
+  'TimelockSCEmergency',
+  'getMinDelay',
 )
 
-const upgradeDelay = 0
 const finalizationPeriod = 0
 
 export const scroll: ScalingProject = {
@@ -76,20 +74,13 @@ export const scroll: ScalingProject = {
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
-        'https://ondora.xyz/network/scroll',
-        'https://scroll.l2scan.co/',
         'https://okx.com/web3/explorer/scroll',
-        'https://scroll.nftscan.com/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
-        'https://github.com/scroll-tech/scroll-prover',
-        'https://github.com/scroll-tech/zkevm-circuits',
-        'https://github.com/scroll-tech/zkevm-specs',
-        'https://github.com/scroll-tech/scroll-zkevm',
+        'https://github.com/scroll-tech/zkvm-prover',
         'https://github.com/scroll-tech/go-ethereum',
         'https://github.com/scroll-tech/frontends',
-        'https://github.com/scroll-tech/scroll-contract-deploy-demo',
         'https://github.com/scroll-tech',
       ],
       socialMedia: [
@@ -130,8 +121,8 @@ export const scroll: ScalingProject = {
         principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
       },
       stage2: {
@@ -293,6 +284,22 @@ export const scroll: ScalingProject = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0xc1aa4e19',
+          functionSignature:
+            'function finalizeBundlePostEuclidV2(bytes,uint256,bytes32,bytes32,bytes)',
+          sinceTimestamp: UnixTime(1745508700),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'batchSubmissions' },
           { type: 'l2costs', subtype: 'batchSubmissions' },
         ],
@@ -324,6 +331,22 @@ export const scroll: ScalingProject = {
           sinceTimestamp: UnixTime(1724227415),
         },
       },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x9bbaa2ba',
+          functionSignature:
+            'function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash)',
+          sinceTimestamp: UnixTime(1745508700),
+        },
+      },
     ],
     liveness: {
       duplicateData: {
@@ -351,8 +374,9 @@ export const scroll: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    sequencerFailure:
+      RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(minSelfSequenceDelay),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   technology: {
     dataAvailability: {
@@ -361,37 +385,44 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
+      ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
           title:
-            'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-          url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+            'ScrollChain.sol - Etherscan source code, finalizeBundlePostEuclidV2() function modifier',
+          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+      description:
+        FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract').description +
+        ` The enforced liveness mechanism is activated if either an L1 message has not been finalized for more than ${formatSeconds(
+          maxDelayMessageQueue,
+        )} or a batch has not been finalized for more than ${formatSeconds(
+          maxDelayEnterEnforcedMode,
+        )}. When activated, transactions that were directly posted to the smart contract can be forcefully included by anyone on the host chain, which finalizes their ordering.`,
       references: [
         {
           title: 'EnforcedTxGateway.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+          url: 'https://etherscan.io/address/0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc#code',
         },
         {
-          title: 'EnforcedTxGateway is paused - Etherscan proxy contract',
-          url: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
+          title: 'L1MessageQueueV2 - Etherscan proxy contract',
+          url: 'https://etherscan.io/address/0xEfA158006b072793a49E622B26761cD0eC38591d',
         },
       ],
     },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('zk'),
-        risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+        risks: [],
         references: [
           {
             title:
@@ -410,7 +441,7 @@ export const scroll: ScalingProject = {
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV7Codec.sol#L7).',
   },
   stateValidation: {
     description:
@@ -419,17 +450,17 @@ export const scroll: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          'The prover code can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/prover).',
+          'The prover code can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/prover).',
       },
       {
         title: 'ZK Circuits',
         description:
-          'Scroll circuits are based on the Halo2 proof system and are designed to replicate the behavior of the EVM. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.5/zkevm-circuits) while the code for the aggregation circuits can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.5/aggregator).',
+          'Scroll circuits are [openvm](https://book.openvm.dev/) based Guest Programs based on the Halo2 proof system. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
       },
       {
         title: 'Verification Keys Generation',
         description:
-          'SNARK verification keys can be generated and checked against Ethereum verifier contract using [this guide](https://github.com/scroll-tech/scroll-prover#verifier-contract). The system requires a trusted setup.',
+          'SNARK verification keys can be generated and checked against Ethereum verifier contract using [this guide](https://github.com/scroll-tech/openvm/blob/66a8134a515c9f699d572e7f681311a04df3aef8/book/src/advanced-usage/sdk.md?plain=1#L99). The system requires a trusted setup.',
       },
       {
         ...STATE_VALIDATION.VALIDITY_PROOFS,
@@ -563,191 +594,46 @@ export const scroll: ScalingProject = {
             },
           ],
         },
+        {
+          name: 'PlonkVerifierPostEuclid',
+          description:
+            'Scroll verifier proving bundles (group of batches). Corresponds to openvm zkVM Circuits (Euclid upgrade).',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x9F66505cB1626D06B50EF2597f41De6686e8f79a',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main verifier',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
+              link: 'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits',
+            },
+          ],
+        },
       ],
     },
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('ScrollChain', {
-          description:
-            'The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist. L1 -> L2 message processing on L2 is not enforced.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1ScrollMessenger', {
-          description:
-            'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1MessageQueue', {
-          description:
-            'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
-        }),
-        discovery.getContractDetails('Whitelist', {
-          description:
-            'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
-        }),
-        discovery.getContractDetails('ScrollOwner', {
-          description:
-            'Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.',
-        }),
-        discovery.getContractDetails('TimelockSlow', {
-          description: `${formatSeconds(
-            timelockSlowDelay,
-          )} timelock. Admin of the ScrollOwner contract, meaning it can assign and revoke roles. The SecurityCouncil can propose, cancel and execute transactions, and the ExecutorMultisig can execute them.`,
-        }),
-        discovery.getContractDetails('TimelockFast', {
-          description: `${formatSeconds(
-            timelockFastDelay,
-          )} timelock. Can add new sequencers and provers, update the gas oracle and permissions to update its values, the max gas limit, and gateways token mappings. The ScrollOpsMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them. Currently also has the Admin role in the ScrollOwner contract and can thus manage all roles including the ones that can upgrade all system contracts.`,
-        }),
-        discovery.getContractDetails('TimelockSC', {
-          description: `${formatSeconds(
-            timelockSCDelay,
-          )} timelock. Can upgrade all core system contracts via the ProxyAdmin. The SecurityCouncil can propose, cancel and execute transactions, and the ScrollExecutorMultisig can execute them.`,
-        }),
-        discovery.getContractDetails('TimelockEmergency', {
-          description: `${formatSeconds(
-            timelockEmergencyDelay,
-          )} timelock. Can pause system contracts, revert batches and remove sequencers. The ScrollEmergencyMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them.`,
-        }),
-        discovery.getContractDetails('MultipleVersionRollupVerifier', {
-          description:
-            'Contract used to update the verifier and keep track of current and old versions.',
-        }),
-        discovery.getContractDetails('ZkEvmVerifierV0', {
-          description:
-            'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.',
-        }),
-        discovery.getContractDetails('PlonkVerifierV0', {
-          description:
-            'Plonk verifier used to verify ZK proofs using calldata for DA.',
-        }),
-        discovery.getContractDetails('ZkEvmVerifierV1', {
-          description:
-            'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1.',
-        }),
-        discovery.getContractDetails('PlonkVerifierV1', {
-          description:
-            'Plonk verifier used to verify ZK proofs using blobs for DA.',
-        }),
-        discovery.getContractDetails('ZkEvmVerifierV1-1', {
-          description:
-            'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1-1. Added in the Curie upgrade.',
-        }),
-        discovery.getContractDetails('PlonkVerifierV1-1', {
-          description:
-            'Plonk verifier used to verify ZK proofs using blobs for DA.',
-        }),
-        discovery.getContractDetails('ZkEvmVerifierV2', {
-          description:
-            'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2. Added in the Darwin upgrade.',
-        }),
-        discovery.getContractDetails('PlonkVerifierV2', {
-          description: 'Plonk verifier used to verify ZK proofs for bundles.',
-        }),
-        discovery.getContractDetails('ZkEvmVerifierV2-1', {
-          description:
-            'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2-1. Added in the Darwin v2 upgrade.',
-        }),
-        discovery.getContractDetails('PlonkVerifierV2-1', {
-          description: 'Plonk verifier used to verify ZK proofs for bundles.',
-        }),
-        discovery.getContractDetails('L1ETHGateway', {
-          description: 'Deprecated: Contract used to bridge ETH from L1 to L2.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1WETHGateway', {
-          description: 'Contract used to bridge WETH from L1 to L2.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1BatchBridgeGateway', {
-          description:
-            'Contract used to efficiently bridge ETH (in batches) from L1 to L2.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1StandardERC20Gateway', {
-          description:
-            'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1CustomERC20Gateway', {
-          description:
-            'Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1USDCGateway', {
-          description: 'Contract used to bridge USDC tokens from L1 to L2.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1ERC721Gateway', {
-          description: 'Contract used to bridge ERC721 tokens from L1 to L2.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1ERC1155Gateway', {
-          description: 'Contract used to bridge ERC1155 tokens from L1 to L2.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('L1GatewayRouter', {
-          description:
-            'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
-          ...upgradesSC,
-        }),
-        discovery.getContractDetails('Scroll Multisig 4', {
-          description:
-            'Multisig used to store fees collected from gateways to pay for L1 -> L2 message execution.',
-        }),
-        discovery.getContractDetails('EnforcedTxGateway', {
-          description:
-            'Contracts to force L1 -> L2 messages with the proper sender.',
-          ...upgradesSC,
-          pausable: {
-            paused: isEnforcedTxGatewayPaused,
-            pausableBy: ['ScrollOwner'],
-          },
-        }),
-        discovery.getContractDetails('OLD_L2GasPriceOracle', {
-          description:
-            'Deprecated: the functionality of this contract has been moved to the L1MessageQueue contract. It was used to relay the L2 basefee on L1 in a trusted way using a whitelist. It was also used to store and update values related to intrinsic gas cost calculations.',
-          ...upgradesSC,
-        }),
-      ],
+      [discovery.chain]: discovery.getDiscoveredContracts(),
+      [l2Discovery.chain]: l2Discovery.getDiscoveredContracts(),
     },
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getMultisigPermission(
-          'Scroll Multisig 3',
-          'Can propose transactions via the TimelockFast, which can configure operational parameters like adding provers, configuring the gas limit and token L1 -> L2 address mappings. The ScrollExecutorMultisig needs to execute these proposals once ready.',
-        ),
-        discovery.getMultisigPermission(
-          'Scroll Security Council',
-          'Can upgrade all system contracts via the TimelockSC and the ProxyAdmin and manage all critical roles in the ScrollOwner via the TimelockSlow. The ScrollExecutorMultisig can execute these proposals, but the SC is also permissioned to execute them.',
-        ),
-        discovery.getMultisigPermission(
-          'Scroll Multisig 1',
-          'Can execute timelock transactions in all four timelocks.',
-        ),
-        discovery.getMultisigPermission(
-          'Scroll Multisig 2',
-          'Can revert batches, remove sequencers and provers, and pause contracts via the TimelockEmergency. The ScrollExecutorMultisig needs to execute these proposals.',
-        ),
-        discovery.getPermissionDetails(
-          'Sequencers',
-          discovery.getPermissionedAccounts('ScrollChain', 'sequencers'),
-          'Actors allowed to commit transaction batches.',
-        ),
-        discovery.getPermissionDetails(
-          'Proposers',
-          discovery.getPermissionedAccounts('ScrollChain', 'provers'),
-          'Actors allowed to prove transaction batches and publish state root updates.',
-        ),
-      ],
-    },
+    [discovery.chain]: discovery.getDiscoveredPermissions(),
+    [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
   },
   milestones: [
+    {
+      title: 'Scroll Euclid upgrade',
+      url: 'https://scroll.io/blog/euclid-upgrade',
+      date: '2025-04-24T00:00:00.00Z',
+      description:
+        'Scroll becomes Stage 1 by improving permissions and introducing enforced batch mode.',
+      type: 'general',
+    },
     {
       title: 'SCR token launch',
       url: 'https://scroll.io/blog/scr-token',

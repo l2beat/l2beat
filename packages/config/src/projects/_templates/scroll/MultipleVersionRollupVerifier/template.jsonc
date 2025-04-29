@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used to update the verifier and keep track of current and old versions.",
+  "category": "core",
+  "ignoreMethods": ["getVerifier"],
+  "fields": {
+    "verifierVersions": {
+      "handler": {
+        "type": "event",
+        "select": "version",
+        "add": { "event": "UpdateVerifier" }
+      }
+    },
+    "latestVerifier": {
+      "handler": {
+        "type": "array",
+        "maxLength": 20,
+        "indices": "{{ verifierVersions }}"
+      },
+      "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
+    },
+    "legacyVerifiersLength": {
+      "handler": {
+        "type": "array",
+        "maxLength": 20,
+        "indices": "{{ verifierVersions }}"
+      }
+    }
+  }
+}
