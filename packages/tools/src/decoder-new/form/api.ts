@@ -1,7 +1,10 @@
 import type { ApiQuery, DecodedResult } from '@l2beat/tools-api/types'
 
 export async function decode(query: ApiQuery): Promise<DecodedResult> {
-  const apiUrl = 'http://localhost:3000/api/decode'
+  const apiUrl =
+    process.env.NODE_ENV === 'production'
+      ? 'https://tools-api.l2beat.com/api/decode'
+      : 'http://localhost:3000/api/decode'
   const params: Record<string, string> = {}
   if (query.hash) params.hash = query.hash
   if (query.data) params.data = query.data
