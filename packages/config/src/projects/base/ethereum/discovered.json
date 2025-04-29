@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 22375869,
+  "blockNumber": 22376587,
   "configHash": "0x11e5c68c306eb47abe82e83ada423a3dc60dbd570a633e7255ea10925ea0ac6a",
   "entries": [
     {
@@ -509,7 +509,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 4322,
+        "gameCount": 4325,
         "gameImpls": [
           "0xE17d670043c3cDd705a3223B3D89A228A1f07F0f",
           "0xE749aA49c3eDAF1DCb997eA3DAC23dff72bcb826",
@@ -591,8 +591,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 22375866
+          "prevBoughtGas": 517494,
+          "prevBlockNum": 22376582
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -648,11 +648,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x507e21266Dcfa66cb627a48dEfA84a2CD6f0C4D9",
+        "anchorGame": "0xC3bbb8Fcdb6F81b4247B6F3233Bf48bc40C4B5E7",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0xef971ea7d705b8cacc113b263b94ec91f870e424948c4f2e7e7c0eec177644cc",
-          29273578
+          "0x1ec8fbdb48f6f530b627b5957cada8e0fac3e5daeb10c2b2786b5d825d394d0b",
+          29277287
         ],
         "portal": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -1244,7 +1244,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293031979",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293032019",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1599,7 +1599,7 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "20425013000000000000",
+        "totalSupply": "20505013000000000000",
         "version": "1.3.0"
       },
       "derivedName": "DelayedWETH"
@@ -3127,5 +3127,5 @@
     "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   },
-  "permissionsConfigHash": "0x6065b5adcb605dd547b105442b86349ed94400d09c71757d004d7f7915d6468f"
+  "permissionsConfigHash": "0x1bb2de55b43dda56dae5747106b031f7d42606e6338df1d151502c62d7d6f019"
 }
