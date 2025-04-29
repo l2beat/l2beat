@@ -68,11 +68,12 @@ class TestSignatureService implements ISignatureService {
     this.signatures.clear()
   }
 
-  add(selector: `0x${string}`, signature: string) {
+  add(signature: string) {
+    const selector = toFunctionSelector(signature)
     const array = this.signatures.get(selector) ?? []
     array.push(signature)
     this.signatures.set(selector, array)
-    return this
+    return selector
   }
 
   lookup(selector: `0x${string}`): Promise<string[]> {
@@ -101,6 +102,62 @@ describe(Decoder.name, () => {
         abi: 'bytes',
         encoded: '0x',
         decoded: { type: 'bytes', value: '0x' },
+      },
+      to: undefined,
+      chainId: 1,
+    })
+  })
+
+  it('call no arguments', async () => {
+    const selector = signatureService.add('function foo()')
+
+    const result = await decoder.decode({
+      data: selector,
+      chain: ethereum,
+    })
+    expect(result).toEqual({
+      data: {
+        name: 'data',
+        abi: 'bytes',
+        encoded: selector,
+        decoded: {
+          type: 'call',
+          abi: 'function foo()',
+          selector: selector,
+          arguments: [],
+        },
+      },
+      to: undefined,
+      chainId: 1,
+    })
+  })
+
+  it('call with arguments', async () => {
+    const selector = signatureService.add('function foo(uint256 bar)')
+    const data: `0x${string}` = `${selector}${'1234'.padStart(64, '0')}`
+
+    const result = await decoder.decode({
+      data: data,
+      chain: ethereum,
+    })
+    expect(result).toEqual({
+      data: {
+        name: 'data',
+        abi: 'bytes',
+        encoded: data,
+        decoded: {
+          type: 'call',
+          abi: 'function foo(uint256 bar)',
+          selector: selector,
+          arguments: [
+            {
+              name: 'bar',
+              abi: 'uint256',
+              encoded: `0x${'1234'.padStart(64, '0')}`,
+              decoded: { type: 'number', value: (0x1234).toString() },
+            },
+          ],
+        },
       },
       to: undefined,
       chainId: 1,
