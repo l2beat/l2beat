@@ -11,14 +11,14 @@ import { RollupWtfFetcher } from '../implementations/find-l2/RollupWtfFetcher'
 
 export const FindL2 = command({
   name: 'find-l2',
-  description: 'Try to find L2s from other sources',
+  description: 'Try to find L2s from other sources.',
   args: {
     blocksToDownload: option({
       type: number,
       long: 'blocks-to-download',
       short: 'b',
       description:
-        'number of blocks to check for blob transactions from the tip',
+        'number of blocks to check for blob transactions from the tip.',
       defaultValue: () => 50000,
       defaultValueIsSerializable: true,
     }),

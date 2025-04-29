@@ -8,6 +8,7 @@ import { command, positional, string } from 'cmd-ts'
 
 export const ModelPermissions = command({
   name: 'model-permissions',
+  description: 'Remodel permissions for given project with the newest config.',
   args: {
     projectQuery: positional({
       type: string,

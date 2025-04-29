@@ -15,12 +15,12 @@ import { rimraf } from 'rimraf'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
-  description: 'Download all Solidity files for shapes defined in a template',
+  description: 'Download all Solidity files for shapes defined in a template.',
   args: {
     template: positional({
       type: string,
       displayName: 'template',
-      description: 'name of the template to download shapes for',
+      description: 'name of the template to download shapes for.',
     }),
   },
   handler: async (args) => {

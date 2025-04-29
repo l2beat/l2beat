@@ -5,7 +5,8 @@ import { discoveryPath } from './args'
 
 const CompareSingleOpStackProjects = command({
   name: 'compare-op-stacks-all',
-  description: 'Compare semantic versioning in all projects using the op stack',
+  description:
+    'Compare semantic versioning in all projects using the op stack.',
   version: '1.0.0',
   args: {
     project: positional({ type: string, displayName: 'project' }),
@@ -23,7 +24,8 @@ const CompareSingleOpStackProjects = command({
 
 const CompareAllOpStackProjects = command({
   name: 'compare-op-stacks-all',
-  description: 'Compare semantic versioning in all projects using the op stack',
+  description:
+    'Compare semantic versioning in all projects using the op stack.',
   version: '1.0.0',
   args: { discoveryPath },
   handler: async (args) => {
@@ -38,7 +40,7 @@ const CompareAllOpStackProjects = command({
 
 export const CompareOpStacks = subcommands({
   name: 'compare-op-stacks',
-  description: 'Compare semantic versioning in projects using the op stack',
+  description: 'Compare semantic versioning in projects using the op stack.',
   cmds: {
     all: CompareAllOpStackProjects,
     single: CompareSingleOpStackProjects,

@@ -4,7 +4,7 @@ import { HttpUrl } from './types'
 
 export const FindCelestiaNamespace = command({
   name: 'find-celestia-namespace',
-  description: 'Finds the celestia namespace based on given commitment',
+  description: 'Finds the celestia namespace based on given commitment.',
   version: '1.0.0',
   args: {
     apiUrl: positional({
