@@ -209,8 +209,10 @@ export function pickClosestValues(
   points: { value: number; date: Date }[],
   timestamps: UnixTime[],
 ): QueryResultPoint[] {
-  //TODO: Handle this case properly
-  if (points.length === 0) return []
+  if (points.length === 0) {
+    throw new Error('pickClosestValues: no points available to match timestamps')
+  }
+
   const result: QueryResultPoint[] = []
 
   const getDelta = (i: number, j: number) =>
@@ -267,13 +269,9 @@ function combineResults(results: CoinMarketChartRangeData[]) {
   return data
 }
 
-// This function is a neat helper to make circulating supply values more "round"
-// Calculates the amount of digits in the number, and then "zeroes out" the last four of them
-// e.g. 123456789 -> 123450000
 export function approximateCirculatingSupply(marketCap: number, price: number) {
   const circulatingSupplyRaw = marketCap / price
 
-  // reduce variation in the result by disregarding least significant parts
   const log = Math.floor(Math.log10(circulatingSupplyRaw))
   const digitsToClear = Math.max(log - 4, 0)
   const precision = 10 ** digitsToClear
