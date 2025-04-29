@@ -32,7 +32,6 @@ import type {
 } from '../types'
 import type { PermissionRegistry } from './PermissionRegistry'
 import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
-import { PermissionsFromModel } from './PermissionsFromModel'
 import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import {
@@ -61,10 +60,7 @@ export class ProjectDiscovery {
         configReader.readDiscovery(module, chain),
       ),
     ]
-    this.permissionRegistry =
-      configReader.getDisplayMode(projectName) === 'fromModel'
-        ? new PermissionsFromModel(this)
-        : new PermissionsFromDiscovery(this)
+    this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
   getEOAName(address: EthereumAddress): string {
@@ -604,6 +600,10 @@ export class ProjectDiscovery {
       .filter((e) => e.type === 'EOA')
 
     return eoas.filter((eoa) => eoa.name === name)
+  }
+
+  getEntries(): EntryParameters[] {
+    return this.discoveries.flatMap((discovery) => discovery.entries)
   }
 
   getContracts(): EntryParameters[] {

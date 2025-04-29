@@ -151,5 +151,6 @@
       "function updateStrategy(address _strategy, uint32 _strategyId)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x9c78edfe7bddc69d6ad5528e94fcdbceff7214e3bc3d1484d1f0070bb8318592"
 }

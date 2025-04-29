@@ -191,13 +191,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1669425971,
       "sinceBlock": 16050867,
       "values": {
@@ -1931,13 +1924,6 @@
         "0xebb3af4d8e88b43e1d66732a0650acc3a2616dcb49321d3c59a88e79c0fdd781"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1657699079,
       "sinceBlock": 15133087,
       "values": {
@@ -1970,13 +1956,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661536020,
       "sinceBlock": 15416736,
       "values": {
@@ -2089,13 +2068,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1669420643,
       "sinceBlock": 16050424,
       "values": {
@@ -2212,13 +2184,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661531835,
       "sinceBlock": 15416448,
       "values": {
@@ -3393,5 +3358,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x93e6acc492be49c3af9a8b322b5919bd01500aaf422c6f1641f98868480c3399"
 }

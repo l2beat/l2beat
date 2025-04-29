@@ -15,16 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -214,25 +204,6 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [{ "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" }]
-        },
-        {
-          "permission": "validate",
-          "to": "0xAcB7D670bb95144B88a5Cd1883B87bC5021FD10a",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -375,16 +346,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -460,16 +421,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -613,16 +564,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -683,16 +624,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -754,28 +685,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x845205C0F5109282954Bba4217aDA2a27Fdd89fF",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -854,16 +763,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
-          "via": [
-            { "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" },
-            { "address": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -1515,5 +1414,6 @@
     "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x89f952257b897de74427513e7da0afdd5c44071469a8347cd53e207cc8d75c6e"
 }

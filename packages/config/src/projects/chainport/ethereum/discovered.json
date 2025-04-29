@@ -99,13 +99,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626949825,
       "sinceBlock": 12875629,
       "values": {
@@ -375,5 +368,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x197c23dd16890bee2f0ec1a2b6234ec3f5172c825754dea709f1b74cc110abbc"
 }

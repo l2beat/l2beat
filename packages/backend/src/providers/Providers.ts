@@ -54,14 +54,14 @@ export class Providers {
     this.day = new DayProviders(config.chainConfig, this.clients.starkex)
 
     const blobProviders: DaBlobProvider[] = []
-    if (this.clients.blobscan && this.clients.beacon) {
+    if (this.clients.beacon) {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
       blobProviders.push(
         new EthereumDaProvider(
-          this.clients.blobscan,
           this.clients.beacon,
           ethereumRpc,
           'ethereum',
+          this.clients.blobscan,
         ),
       )
     }

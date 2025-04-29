@@ -19336,5 +19336,6 @@
     "transporter/PriceRegistry": "0x1446d2e81e0804c808246c6c31122a8823aa7c974e2487647d7502d530d9b46f",
     "transporter/RouterV1_0_0": "0xf8d34f96cc84ee703e4b5e8abae8b3836dd27a2f239144af40b3dcf1ff6fb8af",
     "transporter/RouterV1_2_0": "0x3015fdf1e7a78e71377f5cdd6e0b0cd46de5678925d8342e711c92db79e48ead"
-  }
+  },
+  "permissionsConfigHash": "0x34bd46457960ad9c12e026c520cea0f6cd1ea703f4388fc9f4ac606f0bfd8a3d"
 }

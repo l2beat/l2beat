@@ -248,58 +248,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
-          "via": []
-        },
-        {
-          "permission": "governStarknet",
-          "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
-          "delay": 1209600,
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-          "delay": 1209600,
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -536,41 +484,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-          "delay": 1209600,
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -1406,5 +1319,6 @@
     "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
     "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
     "starkex/StarkPerpetual": "0x491138cc31c40b798c5278ae5bfe2f45fad75a40f08728e4e9f82f32c8a7a9cc"
-  }
+  },
+  "permissionsConfigHash": "0xfc4502ff4b3620142113ac6202d1c2715c52125fb7dce05c2408eaa6e85fe827"
 }

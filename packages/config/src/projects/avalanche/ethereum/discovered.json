@@ -11,5 +11,6 @@
     }
   ],
   "abis": {},
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x7bffca01cec526d3c9caede286c7fddb4aaa4b7ae9c2900a37bee6ec0b722d89"
 }

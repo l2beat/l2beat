@@ -401,13 +401,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1635077695,
       "sinceBlock": 13480127,
       "values": {
@@ -2124,5 +2117,6 @@
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/SHARPVerifier": "0x1b6d2df648136e7e01e2f7dc4237e03ea8b9060aafee56c40b8cf45179dd5016",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0x38e64c0bdc916fd8608162ff858b98f8da01ce76b5b786f5725572f8f2d785e9"
-  }
+  },
+  "permissionsConfigHash": "0x9c0c765b738401583d888b377f21f6e8f69eaa9087262aebc450bf9c575b8ffd"
 }

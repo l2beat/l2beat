@@ -12,32 +12,32 @@ import { EthereumAddressValue } from './types'
 
 export const AddShape = command({
   name: 'add-shape',
-  description: 'Add a new contract shape to a template',
+  description: 'Add a new contract shape to a template.',
   args: {
     chain: positional({
       type: string,
       displayName: 'chain',
-      description: 'chain to add the contract to',
+      description: 'chain to add the contract to.',
     }),
     address: positional({
       type: EthereumAddressValue,
       displayName: 'address',
-      description: 'address of the contract to add',
+      description: 'address of the contract to add.',
     }),
     blockNumber: positional({
       type: number,
       displayName: 'blockNumber',
-      description: 'block number of the contract',
+      description: 'block number of the contract.',
     }),
     fileName: positional({
       type: string,
       displayName: 'fileName',
-      description: 'fileName of the contract',
+      description: 'fileName of the contract.',
     }),
     template: positional({
       type: string,
       displayName: 'template',
-      description: 'name of the template to add the shape to',
+      description: 'name of the template to add the shape to.',
     }),
   },
   handler: async (args) => {
