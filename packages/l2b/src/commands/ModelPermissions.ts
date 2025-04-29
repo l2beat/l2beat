@@ -17,6 +17,7 @@ import { updateDiffHistory } from '../implementations/discovery/updateDiffHistor
 
 export const ModelPermissions = command({
   name: 'model-permissions',
+  description: 'Remodel permissions for given project with the newest config.',
   args: {
     project: positional({
       type: string,

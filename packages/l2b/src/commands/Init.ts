@@ -7,18 +7,18 @@ const { chain } = DiscoverCommandArgs
 
 export const Init = command({
   name: 'init',
-  description: 'Creates a discovery project',
+  description: 'Creates a discovery project.',
   args: {
     project: positional({
       type: string,
       displayName: 'project',
-      description: 'name of the new project',
+      description: 'name of the new project.',
     }),
     chain,
     initialAddresses: restPositionals({
       type: EthereumAddressValue,
       displayName: 'initalAddresses',
-      description: 'a list of initial addresses',
+      description: 'a list of initial addresses.',
     }),
   },
   handler: (args) => {
