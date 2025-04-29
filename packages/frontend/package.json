@@ -22,7 +22,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts",
-    "generate-og-images": "node -r esbuild-register rewrite/scripts/opengraph-images/index.tsx"
+    "generate-og-images": "node -r esbuild-register rewrite/scripts/opengraph-images/index.ts"
   },
   "dependencies": {
     "@l2beat/config": "workspace:*",

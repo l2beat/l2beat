@@ -67,7 +67,7 @@ export function ProjectOpengraphImage({
               whiteSpace: 'pre',
               fontFamily: 'roboto',
               fontWeight: 700,
-              fontSize: 96,
+              fontSize: name.length < 22 ? 96 : 72,
               lineHeight: 1,
             }}
           >
