@@ -13,6 +13,7 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "node -r source-map-support/register build/index.js",
     "dev": "node -r esbuild-register --watch src/index.ts",
+    "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
