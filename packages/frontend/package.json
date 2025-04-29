@@ -21,7 +21,8 @@
     "format:fix": "biome check --write .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
+    "tinify-logos": "tsx scripts/logos/tinifyLogos.ts",
+    "generate-og-images": "node -r esbuild-register rewrite/scripts/opengraph-images/index.tsx"
   },
   "dependencies": {
     "@l2beat/config": "workspace:*",
@@ -41,6 +42,7 @@
     "@radix-ui/react-switch": "^1.1.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@resvg/resvg-js": "^2.6.2",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/react-query": "^5.51.11",
@@ -73,6 +75,7 @@
     "react-dom": "19.0.0",
     "recharts": "^2.15.1",
     "rimraf": "^5.0.0",
+    "satori": "^0.12.2",
     "sharp": "^0.33.5",
     "sirv": "^3.0.1",
     "sqlite3": "5.1.7",
