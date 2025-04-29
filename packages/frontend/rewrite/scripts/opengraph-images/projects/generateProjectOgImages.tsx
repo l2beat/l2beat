@@ -5,6 +5,7 @@ import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
 import { ps } from '~/server/projects'
+import React from 'react'
 
 export async function generateProjectOgImages(
   size: { width: number; height: number },
@@ -26,7 +27,7 @@ export async function generateProjectOgImages(
 
     const outputDir = path.join(
       process.cwd(),
-      `rewrite/static/meta-images/projects/${type}`,
+      `rewrite/static/meta-images/${type}/projects`,
     )
     const outputFile = path.join(outputDir, `${project.slug}.png`)
     if (existsSync(outputFile)) {
@@ -46,7 +47,7 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project,
-  type: 'scaling' | 'bridge' | 'zk-catalog' | 'da-layer',
+  type: 'scaling' | 'bridges' | 'zk-catalog' | 'data-availability',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -94,12 +95,12 @@ export function getOpengraphProjectType(
     return 'scaling'
   }
   if (project.isBridge) {
-    return 'bridge'
+    return 'bridges'
   }
   if (project.isZkCatalog) {
     return 'zk-catalog'
   }
   if (project.isDaLayer) {
-    return 'da-layer'
+    return 'data-availability'
   }
 }

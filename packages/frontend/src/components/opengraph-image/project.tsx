@@ -29,7 +29,7 @@ export function ProjectOpengraphImage({
       }}
     >
       <img
-        src={`${baseUrl}/meta-images/projects/template.png`}
+        src={`${baseUrl}/meta-images/project-background.png`}
         alt=""
         {...size}
       />
