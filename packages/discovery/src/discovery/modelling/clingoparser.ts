@@ -1,4 +1,5 @@
 import { type Node, grammar } from 'ohm-js'
+import * as z from 'zod'
 
 // In Ohm grammar, uppercase ids are for syntactic rules
 // which allow spaces in-between tokens.
@@ -56,10 +57,38 @@ const semantics = clingoFactGrammar.createSemantics().addOperation('toValue', {
   },
 })
 
-export const parseClingoFact = (fact: string) => {
+export type ClingoValue =
+  | string
+  | number
+  | null
+  | undefined
+  | ClingoFact
+  | ClingoValue[]
+export const ClingoValue: z.ZodType<ClingoValue> = z.lazy(() =>
+  z.union([
+    z.string(),
+    z.number(),
+    z.null().transform(() => undefined),
+    z.undefined(),
+    ClingoFact,
+    z.array(ClingoValue),
+  ]),
+)
+
+export type ClingoFact = {
+  atom: string
+  params: ClingoValue[]
+}
+
+export const ClingoFact: z.ZodType<ClingoFact> = z.object({
+  atom: z.string(),
+  params: z.array(ClingoValue),
+})
+
+export function parseClingoFact(fact: string): ClingoFact {
   const parsed = clingoFactGrammar.match(fact, 'Fact')
   if (parsed.failed()) {
     throw new Error(parsed.message)
   }
-  return semantics(parsed).toValue()
+  return ClingoFact.parse(semantics(parsed).toValue())
 }

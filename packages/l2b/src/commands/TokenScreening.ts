@@ -157,7 +157,7 @@ interface TokenSupplyBreakdown {
 
 export const TokenScreening = command({
   name: 'token-screening',
-  description: 'Finds L2 token classification for L1 tokens',
+  description: 'Finds L2 token classification for L1 tokens.',
   args: {
     tokenAddresses: restPositionals({
       type: EthereumAddressValue,

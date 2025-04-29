@@ -56,55 +56,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
-      "issuedPermissions": [
-        {
-          "permission": "sequence",
-          "to": "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "sinceTimestamp": 1729307471,
       "sinceBlock": 20996843,
       "values": {
@@ -179,13 +130,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "sinceTimestamp": 1729307603,
       "sinceBlock": 20996854,
       "values": {
@@ -316,13 +260,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
       "sinceTimestamp": 1729307207,
       "sinceBlock": 20996821,
@@ -374,13 +311,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "sinceTimestamp": 1729307651,
       "sinceBlock": 20996858,
       "values": {
@@ -569,13 +499,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "sinceTimestamp": 1729307555,
       "sinceBlock": 20996850,
       "values": {
@@ -612,174 +535,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0x0092bC49078f130D27e70dBeee441E227280B97D",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x323a78C1c910b282dE98a557d735628A02E00983",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xF2FF0509520fAf35B511074466A509e00d73C307",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "to": "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "batchChallenged",
         "lastCommittedBatchIndex",
@@ -1099,19 +854,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "description": "can pause and unpause",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "sinceTimestamp": 1729308143,
       "sinceBlock": 20996899,
       "values": {
@@ -1195,13 +937,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1729307111,
       "sinceBlock": 20996813,
@@ -1903,5 +1638,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x51963444ea067dc1f5f278fc7bb3d77250a325ce7d7a01b3da0ee6aefd4ddd30"
 }

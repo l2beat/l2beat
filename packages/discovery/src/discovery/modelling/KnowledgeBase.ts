@@ -1,4 +1,4 @@
-import type { ClingoFact, ClingoValue } from './factTypes'
+import type { ClingoFact } from './clingoparser'
 
 export class KnowledgeBase {
   constructor(public readonly facts: ClingoFact[]) {}
@@ -39,47 +39,4 @@ export class KnowledgeBase {
     }
     return fact
   }
-}
-
-export function groupFacts(
-  facts: ClingoFact[],
-  onPosition: number,
-): ClingoFact[] {
-  const groups = new Map<string, ClingoValue[]>()
-
-  for (const fact of facts) {
-    if (fact.params[onPosition] === undefined) {
-      throw new Error(
-        `Trying to group ${JSON.stringify(fact)} on incorrect position ${onPosition}`,
-      )
-    }
-    const keyParams = [
-      fact.atom,
-      ...fact.params.slice(0, onPosition),
-      ...fact.params.slice(onPosition + 1),
-    ]
-    const key = JSON.stringify(keyParams)
-    const current = groups.get(key) || []
-    current.push(fact.params[onPosition])
-    groups.set(key, current)
-  }
-
-  const result: ClingoFact[] = []
-  for (const [key, values] of groups) {
-    const keyParts: [string, ...ClingoValue[]] = JSON.parse(key)
-    const [atom, ...keyParams] = keyParts
-
-    const newParams = [
-      ...keyParams.slice(0, onPosition),
-      values,
-      ...keyParams.slice(onPosition),
-    ]
-
-    result.push({
-      atom,
-      params: newParams,
-    })
-  }
-
-  return result
 }

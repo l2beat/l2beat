@@ -1,3 +1,133 @@
+Generated with discovered.json: 0xabfe46bf7f4d5932911880fb0d91c00bcc901856
+
+# Diff at Tue, 29 Apr 2025 09:36:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22081889
+- current block number: 22081889
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081889 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B","description":"Add/remove batchPosters (Sequencers).","via":[]},{"permission":"sequence","to":"0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]},{"permission":"sequence","to":"0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]},{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}]
+    }
+```
+
+```diff
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"interact","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract OutboxV0 (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]}]
+    }
+```
+
+```diff
+    contract OutboxV1 (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]}]
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}]
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xcEe284F754E854890e311e3280b767F80797180d) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]}]
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","description":"cancel queued transactions.","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"interact","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","description":"propose transactions.","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"interact","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"interact","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","description":"cancel queued transactions.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"interact","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]},{"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}]
+    }
+```
+
 Generated with discovered.json: 0x9a4da452de7c86277cb5cd91a554cbe6391c9f34
 
 # Diff at Thu, 10 Apr 2025 14:42:11 GMT:

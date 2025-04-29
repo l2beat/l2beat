@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 22194732,
-  "configHash": "0x1c8a66aced3fed9fc31520c7807ebb693b5f330368e7ddf8b372984f6c09f609",
+  "configHash": "0xe755300f7e5f81cc4c549e82314a3509cc0ec9ba5f163341702f9a243983503c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -24,14 +24,6 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -262,13 +254,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1737735011,
       "sinceBlock": 21695466,
@@ -315,13 +300,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "sinceTimestamp": 1721746199,
       "sinceBlock": 20369937,
       "values": {
@@ -510,14 +488,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "sinceTimestamp": 1721746175,
       "sinceBlock": 20369935,
       "values": {
@@ -558,13 +528,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1737735023,
       "sinceBlock": 21695467,
@@ -700,19 +663,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xee1Af3f99AF8C5b93512FbE2A3f0dD5568CE087f",
-          "description": "can pull funds from the contract in case of emergency.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1739905235,
       "sinceBlock": 21875210,
@@ -811,41 +761,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "via": [
-            {
-              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": [
-            {
-              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
-            },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
-        }
-      ],
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
@@ -1181,14 +1096,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "sinceTimestamp": 1721746019,
       "sinceBlock": 20369922,
       "values": {
@@ -1218,14 +1125,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
-        }
-      ],
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
       "values": {
@@ -1251,13 +1150,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "sinceTimestamp": 1721746211,
       "sinceBlock": 20369938,
       "values": {
@@ -1303,13 +1195,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1721746151,
       "sinceBlock": 20369933,
@@ -1426,24 +1311,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xee1Af3f99AF8C5b93512FbE2A3f0dD5568CE087f",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xF7ca543d652E38692fD12f989eb55b5327eC9A20",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1721746163,
       "sinceBlock": 20369934,
@@ -2304,5 +2171,6 @@
     "opstack/PreimageOracle": "0xdad9efe0df74ac3a11918603d36b0b60b59ea7690452f74d581d6712a2675d82",
     "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0x9153ece077110eaaca458e1bb040dbc1269aa9468525c28c3b8c7f968e1e24d4"
 }

@@ -531,5 +531,6 @@
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x238cadc8474d1da30c3b69d75979527598224b3c0282fd309976dc89e35cec7e"
 }

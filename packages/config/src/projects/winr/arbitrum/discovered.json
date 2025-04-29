@@ -1,7 +1,7 @@
 {
   "name": "winr",
   "chain": "arbitrum",
-  "blockNumber": 315644762,
+  "blockNumber": 331087763,
   "configHash": "0x43906f0316f01e6450a63d2e7ee8f4a73b31d1477fda40d3b8b1e1c3ae9ccbc6",
   "entries": [
     {
@@ -15,16 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1715799374,
       "sinceBlock": 211603139,
       "values": {
@@ -76,37 +66,6 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
-      "issuedPermissions": [
-        {
-          "permission": "fastconfirm",
-          "to": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "via": [{ "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [{ "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" }]
-        },
-        {
-          "permission": "validate",
-          "to": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "validate",
-          "to": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": [{ "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -150,13 +109,13 @@
         "confirmPeriodBlocks": 300,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3548,
+        "firstUnresolvedNode": 4619,
         "inbox": "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19879132,
-        "latestConfirmed": 3547,
-        "latestNodeCreated": 3547,
+        "latestConfirmed": 4618,
+        "latestNodeCreated": 4618,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0xBA99217992620b76aae0D574c70bD313B30D3D1d",
@@ -266,33 +225,28 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
+        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1715799374,
       "sinceBlock": 211603139,
       "values": {
         "$admin": "0x802c7B6585d20cb69524EF23fCbF919F671F808a",
-        "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
+        "$implementation": "0xD87f160f8c414d834cBDd9477c3D8c3ad1802255",
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
             "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+          ],
+          [
+            "2025-04-25T21:55:46.000Z",
+            "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",
+            ["0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "allowListEnabled": false,
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
         "getProxyAdmin": "0x802c7B6585d20cb69524EF23fCbF919F671F808a",
@@ -446,7 +400,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 69,
+        "nonce": 77,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -510,26 +464,10 @@
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
+        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
-      "issuedPermissions": [
-        {
-          "permission": "sequence",
-          "to": "0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -540,16 +478,21 @@
       "sinceBlock": 211603139,
       "values": {
         "$admin": "0x802c7B6585d20cb69524EF23fCbF919F671F808a",
-        "$implementation": "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c",
+        "$implementation": "0x7be08B013de2b23a6329De51C4994f841dcE1a10",
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
             "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"]
+          ],
+          [
+            "2025-04-25T21:55:46.000Z",
+            "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",
+            ["0x7be08B013de2b23a6329De51C4994f841dcE1a10"]
           ]
         ],
-        "$upgradeCount": 1,
-        "batchCount": 18544,
+        "$upgradeCount": 2,
+        "batchCount": 19770,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307"],
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -579,7 +522,7 @@
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3870,
+        "totalDelayedMessagesRead": 4196,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -625,7 +568,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 701,
+        "nonce": 1772,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -680,16 +623,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1715799374,
       "sinceBlock": 211603139,
       "values": {
@@ -728,16 +661,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -835,16 +758,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1715799374,
       "sinceBlock": 211603139,
       "values": {
@@ -885,20 +798,10 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
+        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "via": [
-            { "address": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA" },
-            { "address": "0x802c7B6585d20cb69524EF23fCbF919F671F808a" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -908,32 +811,38 @@
       "sinceBlock": 211603139,
       "values": {
         "$admin": "0x802c7B6585d20cb69524EF23fCbF919F671F808a",
-        "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$implementation": "0xdF0eaCC3F37356DF320e5B5db16C7eD7A6b596dd",
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
             "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+          ],
+          [
+            "2025-04-25T21:55:46.000Z",
+            "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",
+            ["0xdF0eaCC3F37356DF320e5B5db16C7eD7A6b596dd"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
           "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
         ],
         "allowedOutboxList": ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
-        "delayedMessageCount": 3870,
+        "delayedMessageCount": 4196,
         "inboxHistory": [
           "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
           "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
         ],
         "nativeToken": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
+        "nativeTokenDecimals": 18,
         "outboxHistory": ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 18544,
-        "sequencerReportedSubMessageCount": 48297906
+        "sequencerMessageCount": 19770,
+        "sequencerReportedSubMessageCount": 52780503
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1090,48 +999,6 @@
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
-    ],
-    "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
-      "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
-      "error CallNotAllowed()",
-      "error CallTargetNotAllowed(address target)",
-      "error InvalidOutboxSet(address outbox)",
-      "error InvalidTokenSet(address token)",
-      "error NotContract(address addr)",
-      "error NotDelayedInbox(address sender)",
-      "error NotOutbox(address sender)",
-      "error NotRollupOrOwner(address sender, address rollup, address owner)",
-      "error NotSequencerInbox(address sender)",
-      "event BridgeCallTriggered(address indexed outbox, address indexed to, uint256 value, bytes data)",
-      "event InboxToggle(address indexed inbox, bool enabled)",
-      "event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)",
-      "event OutboxToggle(address indexed outbox, bool enabled)",
-      "event RollupUpdated(address rollup)",
-      "event SequencerInboxUpdated(address newSequencerInbox)",
-      "function acceptFundsFromOldBridge() payable",
-      "function activeOutbox() view returns (address)",
-      "function allowedDelayedInboxList(uint256) view returns (address)",
-      "function allowedDelayedInboxes(address inbox) view returns (bool)",
-      "function allowedOutboxList(uint256) view returns (address)",
-      "function allowedOutboxes(address outbox) view returns (bool)",
-      "function delayedInboxAccs(uint256) view returns (bytes32)",
-      "function delayedMessageCount() view returns (uint256)",
-      "function enqueueDelayedMessage(uint8 kind, address sender, bytes32 messageDataHash, uint256 tokenFeeAmount) returns (uint256)",
-      "function enqueueSequencerMessage(bytes32 dataHash, uint256 afterDelayedMessagesRead, uint256 prevMessageCount, uint256 newMessageCount) returns (uint256 seqMessageIndex, bytes32 beforeAcc, bytes32 delayedAcc, bytes32 acc)",
-      "function executeCall(address to, uint256 value, bytes data) returns (bool success, bytes returnData)",
-      "function initialize(address rollup_, address nativeToken_)",
-      "function nativeToken() view returns (address)",
-      "function rollup() view returns (address)",
-      "function sequencerInbox() view returns (address)",
-      "function sequencerInboxAccs(uint256) view returns (bytes32)",
-      "function sequencerMessageCount() view returns (uint256)",
-      "function sequencerReportedSubMessageCount() view returns (uint256)",
-      "function setDelayedInbox(address inbox, bool enabled)",
-      "function setOutbox(address outbox, bool enabled)",
-      "function setSequencerInbox(address _sequencerInbox)",
-      "function setSequencerReportedSubMessageCount(uint256 newMsgCount)",
-      "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
-      "function updateRollupAddress(address _rollup)"
     ],
     "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0": [
       "error AlreadyInit()",
@@ -1302,7 +1169,7 @@
     "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": [
       "constructor(address _singleton)"
     ],
-    "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c": [
+    "0x7be08B013de2b23a6329De51C4994f841dcE1a10": [
       "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
       "error AlreadyInit()",
       "error AlreadyValidDASKeyset(bytes32)",
@@ -1325,8 +1192,8 @@
       "error NoSuchKeyset(bytes32)",
       "error NotBatchPoster()",
       "error NotBatchPosterManager(address)",
+      "error NotCodelessOrigin()",
       "error NotForked()",
-      "error NotOrigin()",
       "error NotOwner(address sender, address owner)",
       "error RollupNotChanged()",
       "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
@@ -1374,44 +1241,6 @@
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
     ],
-    "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab": [
-      "constructor(uint256 _maxDataSize)",
-      "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
-      "error GasLimitTooLarge()",
-      "error InsufficientSubmissionCost(uint256 expected, uint256 actual)",
-      "error InsufficientValue(uint256 expected, uint256 actual)",
-      "error L1Forked()",
-      "error NotAllowedOrigin(address origin)",
-      "error NotOrigin()",
-      "error NotRollupOrOwner(address sender, address rollup, address owner)",
-      "error RetryableData(address from, address to, uint256 l2CallValue, uint256 deposit, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)",
-      "event AllowListAddressSet(address indexed user, bool val)",
-      "event AllowListEnabledUpdated(bool isEnabled)",
-      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
-      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function allowListEnabled() view returns (bool)",
-      "function bridge() view returns (address)",
-      "function calculateRetryableSubmissionFee(uint256, uint256) pure returns (uint256)",
-      "function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)",
-      "function depositERC20(uint256 amount) returns (uint256)",
-      "function getProxyAdmin() view returns (address)",
-      "function initialize(address _bridge, address _sequencerInbox)",
-      "function isAllowed(address) view returns (bool)",
-      "function maxDataSize() view returns (uint256)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function sendContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, uint256 value, bytes data) returns (uint256)",
-      "function sendL2Message(bytes messageData) returns (uint256)",
-      "function sendL2MessageFromOrigin(bytes messageData) returns (uint256)",
-      "function sendUnsignedTransaction(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, uint256 value, bytes data) returns (uint256)",
-      "function sequencerInbox() view returns (address)",
-      "function setAllowList(address[] user, bool[] val)",
-      "function setAllowListEnabled(bool _allowListEnabled)",
-      "function unpause()",
-      "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)"
-    ],
     "0x802c7B6585d20cb69524EF23fCbF919F671F808a": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1458,6 +1287,45 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xD87f160f8c414d834cBDd9477c3D8c3ad1802255": [
+      "constructor(uint256 _maxDataSize)",
+      "error AmountTooLarge(uint256 amount)",
+      "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
+      "error GasLimitTooLarge()",
+      "error InsufficientSubmissionCost(uint256 expected, uint256 actual)",
+      "error InsufficientValue(uint256 expected, uint256 actual)",
+      "error L1Forked()",
+      "error NotAllowedOrigin(address origin)",
+      "error NotCodelessOrigin()",
+      "error NotRollupOrOwner(address sender, address rollup, address owner)",
+      "error RetryableData(address from, address to, uint256 l2CallValue, uint256 deposit, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)",
+      "event AllowListAddressSet(address indexed user, bool val)",
+      "event AllowListEnabledUpdated(bool isEnabled)",
+      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
+      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function allowListEnabled() view returns (bool)",
+      "function bridge() view returns (address)",
+      "function calculateRetryableSubmissionFee(uint256, uint256) pure returns (uint256)",
+      "function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)",
+      "function depositERC20(uint256 amount) returns (uint256)",
+      "function getProxyAdmin() view returns (address)",
+      "function initialize(address _bridge, address _sequencerInbox)",
+      "function isAllowed(address) view returns (bool)",
+      "function maxDataSize() view returns (uint256)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function sendContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, uint256 value, bytes data) returns (uint256)",
+      "function sendL2Message(bytes messageData) returns (uint256)",
+      "function sendL2MessageFromOrigin(bytes messageData) returns (uint256)",
+      "function sendUnsignedTransaction(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, uint256 value, bytes data) returns (uint256)",
+      "function sequencerInbox() view returns (address)",
+      "function setAllowList(address[] user, bool[] val)",
+      "function setAllowListEnabled(bool _allowListEnabled)",
+      "function unpause()",
+      "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)"
     ],
     "0xD89d54007079071cBA859127318b9F34eeB78049": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
@@ -1558,6 +1426,52 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
+    "0xdF0eaCC3F37356DF320e5B5db16C7eD7A6b596dd": [
+      "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
+      "error CallNotAllowed()",
+      "error CallTargetNotAllowed(address target)",
+      "error InvalidOutboxSet(address outbox)",
+      "error InvalidTokenSet(address token)",
+      "error NativeTokenDecimalsTooLarge(uint256 decimals)",
+      "error NotContract(address addr)",
+      "error NotDelayedInbox(address sender)",
+      "error NotOutbox(address sender)",
+      "error NotOwner(address sender, address owner)",
+      "error NotRollupOrOwner(address sender, address rollup, address owner)",
+      "error NotSequencerInbox(address sender)",
+      "event BridgeCallTriggered(address indexed outbox, address indexed to, uint256 value, bytes data)",
+      "event InboxToggle(address indexed inbox, bool enabled)",
+      "event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)",
+      "event OutboxToggle(address indexed outbox, bool enabled)",
+      "event RollupUpdated(address rollup)",
+      "event SequencerInboxUpdated(address newSequencerInbox)",
+      "function acceptFundsFromOldBridge() payable",
+      "function activeOutbox() view returns (address)",
+      "function allowedDelayedInboxList(uint256) view returns (address)",
+      "function allowedDelayedInboxes(address inbox) view returns (bool)",
+      "function allowedOutboxList(uint256) view returns (address)",
+      "function allowedOutboxes(address outbox) view returns (bool)",
+      "function delayedInboxAccs(uint256) view returns (bytes32)",
+      "function delayedMessageCount() view returns (uint256)",
+      "function enqueueDelayedMessage(uint8 kind, address sender, bytes32 messageDataHash, uint256 tokenFeeAmount) returns (uint256)",
+      "function enqueueSequencerMessage(bytes32 dataHash, uint256 afterDelayedMessagesRead, uint256 prevMessageCount, uint256 newMessageCount) returns (uint256 seqMessageIndex, bytes32 beforeAcc, bytes32 delayedAcc, bytes32 acc)",
+      "function executeCall(address to, uint256 value, bytes data) returns (bool success, bytes returnData)",
+      "function initialize(address rollup_, address nativeToken_)",
+      "function nativeToken() view returns (address)",
+      "function nativeTokenDecimals() view returns (uint8)",
+      "function postUpgradeInit()",
+      "function rollup() view returns (address)",
+      "function sequencerInbox() view returns (address)",
+      "function sequencerInboxAccs(uint256) view returns (bytes32)",
+      "function sequencerMessageCount() view returns (uint256)",
+      "function sequencerReportedSubMessageCount() view returns (uint256)",
+      "function setDelayedInbox(address inbox, bool enabled)",
+      "function setOutbox(address outbox, bool enabled)",
+      "function setSequencerInbox(address _sequencerInbox)",
+      "function setSequencerReportedSubMessageCount(uint256 newMsgCount)",
+      "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
+      "function updateRollupAddress(address _rollup)"
+    ],
     "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
@@ -1654,5 +1568,6 @@
     "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x7ad125c32bc319a5ff6f7bbb5573eb8bb01195491a0f53d111ac4dcbce3faf4b"
 }

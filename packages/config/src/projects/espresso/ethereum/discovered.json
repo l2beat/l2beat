@@ -78,25 +78,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-          "description": "can call newFinalizedState() to prove the latest HotShot state.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
@@ -264,5 +245,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x93790699f4cdb0b99f3c90feaa129c375fd8beef1de7608c015ca0ec416a5c28"
 }

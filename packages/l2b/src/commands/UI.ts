@@ -3,7 +3,7 @@ import { runDiscoveryUi } from '../implementations/discovery-ui/main'
 
 export const UI = command({
   name: 'ui',
-  description: 'Launches discovery ui',
+  description: 'Launches DiscoUI.',
   version: '1.0.0',
   args: {
     readonly: flag({

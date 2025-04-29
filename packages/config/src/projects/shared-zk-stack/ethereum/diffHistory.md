@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xa18e8f6b7461533079ddeaa1545fa7d542388152
+
+# Diff at Tue, 29 Apr 2025 09:41:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22281621
+- current block number: 22281621
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281621 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e4943346848c4867F81dFb37c4cA9C5715A7828","description":"create new zk chains (based on the current version), register tokens (ZK cluster Admin role).","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","description":"set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]},{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860) {
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) {
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e4943346848c4867F81dFb37c4cA9C5715A7828","description":"revert batches for any connected chain (ZK cluster Admin role).","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]},{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","description":"pause, unpause and set critical escrow address references.","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]},{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}]
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"start (queue) upgrades.","via":[]},{"permission":"interact","to":"0x600dA620Ab29F41ABC6596a15981e14cE58c86b8","description":"extend the legal veto period, approve a protocol upgrade.","via":[]},{"permission":"interact","to":"0x66E4431266DC7E04E7d8b7FE9d2181253df7F410","description":"soft freeze, hard freeze, approve a protocol upgrade.","via":[]},{"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}]}]
+    }
+```
+
+```diff
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) {
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}]
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x600dA620Ab29F41ABC6596a15981e14cE58c86b8","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0x66E4431266DC7E04E7d8b7FE9d2181253df7F410","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0xbC1653bd3829dfEc575AfC3816D4899cd103B51c","description":"one of its 3/3 signers.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xf13d42f97689394808e9aa92a8a89942e33b540c
 
 # Diff at Wed, 16 Apr 2025 12:41:31 GMT:

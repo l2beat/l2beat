@@ -507,5 +507,6 @@
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x460f5b47d3fa39525923f7d0c0abe7fcb62b1ccf4843f9a9639df2efe330ea33"
 }

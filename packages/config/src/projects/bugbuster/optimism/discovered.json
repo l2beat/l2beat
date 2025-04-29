@@ -167,5 +167,6 @@
       "function getInputBox() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa76af1255573b8046883c2756602773efed29abefc48fa9d72ee6c3d5aa0d5fa"
 }

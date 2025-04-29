@@ -115,13 +115,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x88acF681fb9a1DFcE5ac83391991895C54CF24cc",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1739223627,
       "sinceBlock": 26217140,
       "values": {
@@ -362,13 +355,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nextAvailableNonce"],
       "sinceTimestamp": 1739223595,
       "sinceBlock": 26217124,
@@ -415,37 +401,6 @@
         "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1",
-          "description": "manage minter addresses.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x3ABd6f64A422225E61E435baE41db12096106df7",
-          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x4d15e70518A20Fc8828b5C3853f32e35238d0b77",
-          "description": "blacklist addresses, freezing any interactions with the USDC token for them.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD3571B3bc51CECFf49194AD67aFFFC648d5e07b4",
-          "description": "pause the USDC token (no transfers, mints, burns).",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1692383789,
       "sinceBlock": 2797221,
@@ -797,56 +752,6 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 2d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971",
-          "delay": 172800,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "delay": 172800,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1519,5 +1424,6 @@
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0x677cbce8e4dde23c97d0340fb407bbf95e3b483987e7e82ed9eec94026dcaa38",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
-  }
+  },
+  "permissionsConfigHash": "0x92321a906ea9a5f893b329ff04926e76ace658fa2e6ff538a8cfbaf1d01a898e"
 }

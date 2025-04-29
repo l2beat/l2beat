@@ -4,6 +4,171 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "zkfair-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+            "decimals": 18,
+            "sinceTimestamp": 1744292087
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+            "decimals": 18,
+            "sinceTimestamp": 1702879283
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkfair-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+            "decimals": 18,
+            "sinceTimestamp": 1744292087
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+            "decimals": 18,
+            "sinceTimestamp": 1702879283
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkfair-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+            "decimals": 6,
+            "sinceTimestamp": 1744292087
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+            "decimals": 6,
+            "sinceTimestamp": 1702879283
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkfair-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+            "decimals": 6,
+            "sinceTimestamp": 1744292087
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+            "decimals": 6,
+            "sinceTimestamp": 1702879283
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkfair-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+            "decimals": 8,
+            "sinceTimestamp": 1744292087
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+            "decimals": 8,
+            "sinceTimestamp": 1702879283
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zkfair-ZKF",
       "priceId": "zkfair",
       "symbol": "ZKF",
@@ -29,12 +194,26 @@
       "name": "Zks",
       "iconUrl": "https://assets.coingecko.com/coins/images/13585/large/image_2024-01-16_172847810.png?1705397359",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
-        "chain": "ethereum",
-        "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
-        "decimals": 18,
-        "sinceTimestamp": 1702879283
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+            "chain": "ethereum",
+            "escrowAddress": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+            "decimals": 18,
+            "sinceTimestamp": 1744292087
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+            "chain": "ethereum",
+            "escrowAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+            "decimals": 18,
+            "sinceTimestamp": 1702879283
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",

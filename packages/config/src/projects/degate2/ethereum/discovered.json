@@ -440,5 +440,6 @@
       "function withdraw(address, address to, address token, uint256 amount) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xcd13fcf767be1d0d52e88fa5dd68bc5a79187d726e57cdf9615b7670cc4227bb"
 }
