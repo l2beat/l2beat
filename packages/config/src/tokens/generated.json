@@ -9880,6 +9880,28 @@
       }
     },
     {
+      "name": "Resolv USD",
+      "coingeckoId": "resolv-usr",
+      "address": "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",
+      "symbol": "USR",
+      "decimals": 18,
+      "deploymentTimestamp": 1732110167,
+      "coingeckoListingTimestamp": 1725148800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
       "name": "Satoshi AI agent by Virtuals",
       "coingeckoId": "satoshi-ai-agent-by-virtuals",
       "address": "0x7588880d9c78E81FAde7b7e8DC0781E95995a792",
@@ -10178,6 +10200,20 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Zora",
+      "coingeckoId": "zora",
+      "address": "0x1111111111166b7FE7bd91427724B487980aFc69",
+      "symbol": "ZORA",
+      "decimals": 18,
+      "deploymentTimestamp": 1740769903,
+      "coingeckoListingTimestamp": 1745366400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54693/large/zora.jpg?1741094751",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Everclear",
@@ -11318,6 +11354,28 @@
           {
             "name": "Connext (xERC20)",
             "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Resolv USD",
+      "coingeckoId": "resolv-usr",
+      "address": "0x2492D0006411Af6C8bbb1c8afc1B0197350a79e9",
+      "symbol": "USR",
+      "decimals": 18,
+      "deploymentTimestamp": 1732183134,
+      "coingeckoListingTimestamp": 1725148800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }

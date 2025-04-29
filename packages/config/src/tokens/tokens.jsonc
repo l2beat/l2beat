@@ -2219,6 +2219,22 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USR",
+      "coingeckoId": "resolv-usr",
+      "address": "0x2492D0006411Af6C8bbb1c8afc1B0197350a79e9",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "APE",
       "coingeckoId": "apecoin",
       "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
@@ -3367,6 +3383,28 @@
     }
   ],
   "base": [
+    {
+      "symbol": "USR",
+      "coingeckoId": "resolv-usr",
+      "address": "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ZORA",
+      "address": "0x1111111111166b7FE7bd91427724B487980aFc69",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "XCN",
       "address": "0x9c632e6aaa3ea73f91554f8a3cb2ed2f29605e0c",
