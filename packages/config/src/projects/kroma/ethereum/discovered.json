@@ -2420,5 +2420,5 @@
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x06d8cb3180ad95fc301556747ba5e339dfa69ab3bb968bb54c0a11382f0b20cf"
+  "permissionsConfigHash": "0x380a50f020e6b3ddcbec10cb9d3aa3f288f47d00506b85a621bb845ca9bf5d1b"
 }
