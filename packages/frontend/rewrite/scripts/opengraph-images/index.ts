@@ -7,9 +7,7 @@ const ogImageSize = { width: 1200, height: 630 }
 async function main() {
   const app = express()
   app.use(express.static(path.join(__dirname, '../../static')))
-  const server = app.listen(6464, () => {
-    console.log('Server is running on port 6464')
-  })
+  const server = app.listen(6464)
 
   const [robotoMedium, robotoBold] = await Promise.all([
     readFile(
