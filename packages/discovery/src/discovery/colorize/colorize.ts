@@ -29,7 +29,10 @@ export function colorize(
     )
 
     result.entries.push({
-      name: entryConfig.name ?? e.name ?? e.implementationNames?.[e.address],
+      name:
+        entryConfig.name ??
+        entryConfig.displayName ??
+        e.implementationNames?.[e.address],
       description: interpolateString(entryConfig.description, e),
       references: getReferences(entryConfig, e),
       category: resolveCategory(entryConfig),

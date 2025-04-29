@@ -42,7 +42,6 @@ export function makeEntryStructureConfig(
     types: merge({}, config.types ?? {}, overrides.types),
     pushValues: function (values: StructureContract) {
       const newState = {
-        // root names > display names
         name: this.name,
         address: this.address,
         ...StructureContract.parse(merge({}, values, this)),
