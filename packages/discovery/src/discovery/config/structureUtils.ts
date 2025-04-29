@@ -35,14 +35,13 @@ export function makeEntryStructureConfig(
   const override =
     config.overrides?.[address.toString()] ?? StructureContract.parse({})
 
-  const overrides = { name: undefined, address, ...override }
+  const overrides = { address, ...override }
 
   const result = {
     ...overrides,
     types: merge({}, config.types ?? {}, overrides.types),
     pushValues: function (values: StructureContract) {
       const newState = {
-        name: this.name,
         address: this.address,
         ...StructureContract.parse(merge({}, values, this)),
       }
