@@ -87,7 +87,6 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   tvsOrder: number
   risks: RosetteValue[]
   baseLayerRisks: RosetteValue[] | undefined
-  gasTokens: string[] | undefined
 }
 
 export function getScalingSummaryEntry(
@@ -156,6 +155,5 @@ export function getScalingSummaryEntry(
     baseLayerRisks: project.scalingRisks.host
       ? getL2Risks(project.scalingRisks.host)
       : undefined,
-    gasTokens: project.chainConfig?.gasTokens,
   }
 }
