@@ -1955,7 +1955,7 @@
         "decimals": 18,
         "sinceTimestamp": 1718326583
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },
@@ -2357,6 +2357,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-USR",
+      "priceId": "resolv-usr",
+      "symbol": "USR",
+      "name": "Resolv USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1732110167
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-VADER",
       "priceId": "vaderai-by-virtuals",
       "symbol": "VADER",
@@ -2636,6 +2654,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-ZORA",
+      "priceId": "zora",
+      "symbol": "ZORA",
+      "name": "Zora",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54693/large/zora.jpg?1741094751",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "zora",
+        "decimals": 18,
+        "sinceTimestamp": 1745366400,
+        "address": "0x1111111111166b7FE7bd91427724B487980aFc69",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
