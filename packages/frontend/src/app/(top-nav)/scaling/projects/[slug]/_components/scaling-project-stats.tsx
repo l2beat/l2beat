@@ -28,12 +28,7 @@ export function ProjectScalingStats({ project, className }: Props) {
       key="tokens"
       title="Tokens"
       valueClassName="max-md:-mt-0.5"
-      value={
-        <TokenBreakdownStat
-          tokenTvs={project.header.tvs?.tokens}
-          gasTokens={project.header.gasTokens}
-        />
-      }
+      value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
     />,
     <ProjectStat
       key="ops-count"
