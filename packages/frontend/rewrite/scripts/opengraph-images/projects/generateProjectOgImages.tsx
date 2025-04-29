@@ -18,7 +18,7 @@ export async function generateProjectOgImages(
   })
 
   for (const project of projects) {
-    const type = getType(project)
+    const type = getOpengraphProjectType(project)
     if (!type) {
       console.log(`Skipping ${project.name} because it has no type`)
       continue
@@ -84,7 +84,7 @@ async function generateProjectOgImage(
   return resvg.render().asPng()
 }
 
-function getType(
+export function getOpengraphProjectType(
   project: Project<
     never,
     'isScaling' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
