@@ -46,9 +46,9 @@ export function Layout() {
                   className={({ isActive }) =>
                     clsx('font-mono underline', isActive && 'text-orange-500')
                   }
-                  to="/old-decoder"
+                  to="/decoder-new"
                 >
-                  /old-decoder
+                  /decoder-new
                 </NavLink>
               </li>
               <li>
