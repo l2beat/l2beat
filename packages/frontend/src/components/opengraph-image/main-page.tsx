@@ -111,7 +111,7 @@ export function MainPageOpengraphImage({ type, title, size, baseUrl }: Props) {
               }}
             >
               {typeToIcon[type]}
-              {type.toUpperCase()}
+              {type.toUpperCase().split('-').join(' ')}
             </div>
           ) : null}
           <div
