@@ -25,8 +25,8 @@ export async function generateProjectOgImages(
     }
 
     const outputDir = path.join(
-      __dirname,
-      `../../static/meta-images/projects/${type}`,
+      process.cwd(),
+      `rewrite/static/meta-images/projects/${type}`,
     )
     const outputFile = path.join(outputDir, `${project.slug}.png`)
     if (existsSync(outputFile)) {
