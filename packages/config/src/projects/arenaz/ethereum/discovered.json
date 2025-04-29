@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "blockNumber": 22194734,
-  "configHash": "0xc3af508569af8de9ad9e44be42ce19b8dd15bda699dd737d01cd93822eaa99a9",
+  "configHash": "0x35ad1b761f4d138804cec9b69c476da9b554b2f3ed1b33673a2a270b1dbfdcf1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
