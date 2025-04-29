@@ -51,13 +51,6 @@
         "0xf1249b1702e937c0b400c431224c31f04de782b043f625ab4e1dd18d9ba95863"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626720238,
       "sinceBlock": 12858680,
       "values": {
@@ -129,13 +122,6 @@
         "0x85c164a0c91eb9d4eb34a3a81e63e66c588a8acd2ec2cdbb4cbcf227807eb359"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626719733,
       "sinceBlock": 12858640,
       "values": {
@@ -202,13 +188,6 @@
         "0xf86e44103e5d07e9f6a25146ea2cfc4946eba19bbb8731b704b9f5047202b6b7"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "minTransactionGas",
         "multiplierDivider",
@@ -282,13 +261,6 @@
         "0x64d57ba715ab14476dad60dec42ebcc0f939e5c516d5a33d0d2b2c142c8c8995"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626719338,
       "sinceBlock": 12858615,
       "values": {
@@ -343,13 +315,6 @@
         "0xafde9f814c1cf9acd1b9fe1079c4a8b2dad9af902314bae9c98ecc95d370023a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626720065,
       "sinceBlock": 12858665,
       "values": {
@@ -416,13 +381,6 @@
         "0x35e9599e33157eeee63fd0fb0b76fbb7d42b14c7f969abc8b765417abbae91d5"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "gasLimit",
         "headerMessageGasCost",
@@ -521,13 +479,6 @@
         "0x6d6c213f615227669bc439b652e8d47403e0c630f5182fc3221d871255939029"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626719900,
       "sinceBlock": 12858653,
       "values": {
@@ -600,13 +551,6 @@
         "0xc330381a32c8728fbbdb79c094a22af35e910194c1397147dd089acf552b0c64"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1650021217,
       "sinceBlock": 14589619,
       "values": {
@@ -1281,5 +1225,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xc0a13a239dad3ff835691ebd1719277caf82fe26bd782e36f2b6fffe0f03d890"
 }

@@ -14,13 +14,6 @@
         "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598437004,
       "sinceBlock": 10735475,
       "values": {
@@ -190,13 +183,6 @@
         "0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613107769,
       "sinceBlock": 11839898,
       "values": {
@@ -308,14 +294,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "description": "can update the root chain it references.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1590850640,
       "sinceBlock": 10167767,
       "values": {
@@ -345,13 +323,6 @@
         "0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436664,
       "sinceBlock": 10735445,
       "values": {
@@ -490,13 +461,6 @@
         "0x5b260eb8b498c90359fa555e522f2fdd615857ea55e37c785de7da84915bfa7d"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -647,13 +611,6 @@
         "0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1616774452,
       "sinceBlock": 12115587,
       "values": {
@@ -759,13 +716,6 @@
         "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598437971,
       "sinceBlock": 10735538,
       "values": {
@@ -830,14 +780,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "description": "can delete arbitrary checkpoints.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
@@ -888,13 +830,6 @@
         "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436896,
       "sinceBlock": 10735465,
       "values": {
@@ -975,13 +910,6 @@
         "0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613100777,
       "sinceBlock": 11839404,
       "values": {
@@ -1031,13 +959,6 @@
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436547,
       "sinceBlock": 10735437,
       "values": {
@@ -1336,13 +1257,6 @@
         "0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1630304491,
       "sinceBlock": 13125225,
       "values": {
@@ -1390,13 +1304,6 @@
         "0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436766,
       "sinceBlock": 10735454,
       "values": {
@@ -2718,5 +2625,6 @@
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0xefff9569e0e0e983031a205e00531e80e4b72d65db2da60f41dd3ab7cd808a95"
 }

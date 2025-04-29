@@ -950,5 +950,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xcdf4731c64b6356c6c4c40098b8c6dc76c63afbd6187096526f5d8bced809592"
 }

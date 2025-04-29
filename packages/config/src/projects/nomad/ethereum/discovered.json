@@ -13,13 +13,6 @@
         "0x5a213a8e0ec856d7338e82299deea6e024ae062e3529eba107f202a6d8600857"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1641898337,
       "sinceBlock": 13983756,
@@ -118,13 +111,6 @@
         "0xa84df7e66da3df341f1c36dbdb91392d9fa74a77013330c97f73274f59d0be15"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1641898263,
       "sinceBlock": 13983751,
       "values": {
@@ -199,13 +185,6 @@
         "0x2e0076ec20cd768884b443f77a4c1a9b0e7532b23d3f961c0d2d3160f8057fe9"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1641899423,
       "sinceBlock": 13983843,
       "values": {
@@ -265,13 +244,6 @@
         "0x49bd5136e54546da3f230903b88d542e5e2f6ceedb105ba13642063f86972ab3"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1641898210,
       "sinceBlock": 13983742,
       "values": {
@@ -781,5 +753,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x0f21017d5d6ed82e50651a17705de0472cbff73d994cc6dd795ca5172f2ef4c0"
 }

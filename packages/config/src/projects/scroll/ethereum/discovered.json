@@ -89,62 +89,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [{ "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -236,61 +180,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [
-            {
-              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -726,67 +615,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [
-            {
-              "address": "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1343,88 +1171,6 @@
       ],
       "proxyType": "immutable",
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "disable enforced batch mode.",
-          "via": [{ "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "update ScrollChain zk proof verifier.",
-          "via": [{ "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "description": "upgrade all core contracts of the system.",
-          "via": [{ "address": "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "pause the L1 -> L2 messenger and enforced transaction mode.",
-          "via": [{ "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "remove permissioned batchers and provers to the whitelist, and update the sequencer address.",
-          "via": [{ "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "revert unfinalized batches.",
-          "via": [{ "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "add permissioned batchers and provers to the whitelist.",
-          "via": [
-            {
-              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "set ERC20 gateways in the L1GatewayRouter.",
-          "via": [
-            {
-              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "update the L1ScrollMessenger fee vault address.",
-          "via": [
-            {
-              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
-          "via": [
-            {
-              "address": "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1643,56 +1389,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [{ "address": "0x826714adD4dDA2b8750794A467C892c0Cd49216b" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -3925,5 +3621,6 @@
     "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
     "scroll/ScrollOwner": "0xfd66b0dc42cf0df543470fb20ffad080c5050c5b20ad3f272aa74becef76efed",
     "scroll/SystemConfig": "0x9a4e9f2d20d157cab92c6950661e3141306abd40e573b6d43ad92f7640c94d5c"
-  }
+  },
+  "permissionsConfigHash": "0x235011363fc6855e8549bc65244f5aae0442c4f06d797c94eb697d881c86d32b"
 }

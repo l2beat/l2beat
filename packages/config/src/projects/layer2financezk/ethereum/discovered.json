@@ -141,46 +141,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -775,5 +735,6 @@
     "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
     "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
     "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
-  }
+  },
+  "permissionsConfigHash": "0x370c41f28beb0e15dddf1b1a31eced59c0ddcd2b1791c778f4c4532252bff58c"
 }

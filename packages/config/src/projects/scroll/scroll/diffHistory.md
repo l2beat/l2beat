@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x57f3ecf012398c81fdab7be5e9e1f55625b3363b
+
+# Diff at Tue, 29 Apr 2025 09:33:30 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 15048934
+- current block number: 15048934
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15048934 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"disable enforced batch mode.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update ScrollChain zk proof verifier.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"upgrade all core contracts of the system.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]}]
+    }
+```
+
+```diff
+    contract TimelockSCEmergency (0x1f807E2E8ab2e61230a0A9C271F90242831278b4) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"propose transactions.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x1f807E2E8ab2e61230a0A9C271F90242831278b4"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    contract TimelockFast (0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376","delay":86400}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","description":"can configure contract settings such as voting delay, quorum, contract manager.","via":[{"address":"0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]},{"permission":"interact","to":"0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351","description":"can propose new onchain governance proposals without the required threshold of votes.","via":[]}]
+    }
+```
+
+```diff
+    contract TimelockEmergency (0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0c5cc5155b346453154059aD9d2Ff695dB92f774","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"update the minimum delay and manage all access control roles of the timelock.","via":[]},{"permission":"interact","to":"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"}]},{"permission":"interact","to":"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","to":"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402","description":"execute transactions that are ready.","via":[{"address":"0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
 Generated with discovered.json: 0x3b4f0a01e6d2764c7b4d9c2e95064ed9c372de23
 
 # Diff at Mon, 28 Apr 2025 10:39:37 GMT:

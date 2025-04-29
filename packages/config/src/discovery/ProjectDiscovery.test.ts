@@ -15,7 +15,6 @@ describe(ProjectDiscovery.name, () => {
     readConfig: (projectName: string, chain: string) =>
       mockConfig(projectName, chain),
     readDiscovery: () => discoveredJsonStub,
-    getDisplayMode: () => 'fromDiscovery',
   })
 
   const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)

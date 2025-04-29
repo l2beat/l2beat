@@ -68,4 +68,13 @@ describe(EthereumAddress.name, () => {
       '0x0000000000000000000000000001234567890AbC',
     )
   })
+
+  it('properly checks ignoring case', () => {
+    expect(
+      EthereumAddress.checkIgnoringCase(
+        '0xc2819dc788505aac350142a7a707bf9d03e3bd03',
+      ),
+    ).toEqual(true)
+    expect(EthereumAddress.checkIgnoringCase('test')).toEqual(false)
+  })
 })

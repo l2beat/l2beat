@@ -329,5 +329,6 @@
       "function transferOwnership(address newOwner)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x06ce5624f3b2a3414f8f89d34c133802d45f9a4de796f0cf0558149bc612e42b"
 }

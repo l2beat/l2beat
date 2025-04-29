@@ -49,5 +49,6 @@
       "function withdrawEth(address recipient, uint256 amount, uint256 nonce, bytes signature)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x53ea0dad7859088a99f982a98f0841529e4cb1bd8c805f661e5257c18b63ebbc"
 }

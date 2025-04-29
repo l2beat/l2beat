@@ -190,24 +190,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
       "sinceTimestamp": 1539028166,
       "sinceBlock": 6478422,
@@ -337,24 +319,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change external validation logic refered to by this contract (e.g. Hashi).",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1579258532,
       "sinceBlock": 9298324,
       "values": {
@@ -593,19 +557,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Token bridge implementation and escrow for ERC-20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change all critical configurations like yield farming for escrowed funds and limits.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1596501090,
       "sinceBlock": 10590093,
       "values": {
@@ -676,19 +627,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1726023347,
       "sinceBlock": 20724523,
       "values": {
@@ -761,19 +699,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1738140599,
       "sinceBlock": 21729100,
       "values": {
@@ -935,19 +860,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change the threshold and manage signers.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
@@ -1020,19 +932,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change the threshold and manage signers.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
@@ -1710,5 +1609,6 @@
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
 }
