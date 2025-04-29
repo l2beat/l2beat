@@ -29,7 +29,7 @@ you need to talk to devs to handle this case.
    and fill it:
 
    - `type` (required): set it as `'rpc'`
-   - `url` (optional): only set it if you want to use public RPC, if you are using private do not
+   - `url` (required): only set it if you want to use public RPC, if you are using private do not
      set it here, in next step I will show you where to put it
    - `callsPerMinute` (optional): in most of the cases 200 would be enough
 
