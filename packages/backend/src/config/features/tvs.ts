@@ -75,19 +75,19 @@ export async function getTvsConfig(
 
   const blockTimestamps = await Promise.all(
     Array.from(new Set(chains).values()).map(async (c) => {
-      const chainConfig = await new ProjectService().getProject({
+      const project = await new ProjectService().getProject({
         id: ProjectId(c),
         select: ['chainConfig'],
       })
-      assert(chainConfig, `${c}: chainConfig not configured`)
-      assert(chainConfig.chainConfig.sinceTimestamp)
+      assert(project, `${c}: chainConfig not configured`)
+      assert(project.chainConfig.sinceTimestamp)
 
       return {
         chainName: c,
         configurationId: generateConfigurationId([`chain_${c}`]),
         sinceTimestamp:
-          sinceTimestamp ?? chainConfig.chainConfig.sinceTimestamp,
-        untilTimestamp: chainConfig.chainConfig.untilTimestamp,
+          sinceTimestamp ?? project.chainConfig.sinceTimestamp,
+        untilTimestamp: project.chainConfig.untilTimestamp,
       }
     }),
   )
