@@ -5344,13 +5344,6 @@
   ],
   "real": [
     {
-      "symbol": "RWA",
-      "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
-      "source": "native",
-      "supply": "totalSupply",
-      "coingeckoId": "re-al"
-    },
-    {
       "symbol": "UKRE",
       "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
       "source": "native",
@@ -5371,52 +5364,7 @@
           }
         ]
       },
-      "coingeckoId": "bridged-usdc-re-al"
-    },
-    {
-      "symbol": "USTB",
-      "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero",
-            "slug": "omnichain"
-          }
-        ]
-      },
-      "coingeckoId": "real-us-t-bill"
-    },
-    {
-      "symbol": "PEARL",
-      "address": "0xce1581d7b4ba40176f0e219b2cac30088ad50c7a",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero",
-            "slug": "omnichain"
-          }
-        ]
-      },
-      "coingeckoId": "pearl"
-    },
-    {
-      "symbol": "arcUSD",
-      "address": "0xaec9e50e3397f9ddc635c6c429c8c7eca418a143",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero",
-            "slug": "omnichain"
-          }
-        ]
-      },
-      "coingeckoId": "arcana-2"
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "MORE",
