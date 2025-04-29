@@ -11,7 +11,7 @@ Discovery also includes a user interface. See below for instructions on how to r
 To run discovery, first you need to have `l2b` installed, to do so:
 - Navigate to the `l2beat/packages/l2b` directory
 - `pnpm l2bup` # Will build the l2b command
-- In the future, if you want to get the newest changes if enough to run `pnpm build:dependencies`.
+- In the future, if you want to get the newest changes it is enough to run `pnpm build:dependencies`.
 
 Running discovery requires you to be in the `l2beat/packages/config` directory.
 You also MUST install an environment file called `.env` in the `packages/config` directory for discovery to work. See the *RPC configuration* section below for information about the environment file.
