@@ -5,6 +5,7 @@ import type {
   BlockTimestampProvider,
   CirculatingSupplyProvider,
   PriceProvider,
+  StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, type UnixTime } from '@l2beat/shared-pure'
@@ -25,6 +26,7 @@ export class DataFormulaExecutor {
     private blockProviders: Map<string, BlockProvider>,
     private blockTimestampProvider: BlockTimestampProvider,
     private totalSupplyProvider: TotalSupplyProvider,
+    private starknetTotalSupplyProvider: StarknetTotalSupplyProvider,
     private balanceProvider: BalanceProvider,
     private logger: Logger,
   ) {}
@@ -194,7 +196,12 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
   ) {
     const onchainAmounts = amounts
-      .filter((a) => a.type === 'balanceOfEscrow' || a.type === 'totalSupply')
+      .filter(
+        (a) =>
+          a.type === 'balanceOfEscrow' ||
+          a.type === 'totalSupply' ||
+          a.type === 'starknetTotalSupply',
+      )
       .filter(
         (a) =>
           timestamp >= a.sinceTimestamp &&
@@ -203,7 +210,10 @@ export class DataFormulaExecutor {
 
     const amountsToFetch = new Map<
       string,
-      Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>
+      Map<
+        'balanceOfEscrow' | 'totalSupply' | 'starknetTotalSupply',
+        AmountConfig[]
+      >
     >()
 
     await Promise.all(
@@ -267,6 +277,23 @@ export class DataFormulaExecutor {
                   block,
                   chain,
                 )
+                await this.localStorage.writeAmounts(
+                  timestamp,
+                  Array.from(values.values()).map((value, i) => ({
+                    id: configs[i].id,
+                    amount: value,
+                  })),
+                )
+                break
+              }
+              case 'starknetTotalSupply': {
+                assert(configs.every((c) => c.type === 'starknetTotalSupply'))
+                const values =
+                  await this.starknetTotalSupplyProvider.getTotalSupplies(
+                    configs.map((c) => c.address),
+                    block,
+                    chain,
+                  )
                 await this.localStorage.writeAmounts(
                   timestamp,
                   Array.from(values.values()).map((value, i) => ({
@@ -502,7 +529,12 @@ function extractUniqueChains(amounts: AmountConfig[]) {
   return [
     ...new Set(
       amounts
-        .filter((x) => x.type === 'balanceOfEscrow' || x.type === 'totalSupply')
+        .filter(
+          (x) =>
+            x.type === 'balanceOfEscrow' ||
+            x.type === 'totalSupply' ||
+            x.type === 'starknetTotalSupply',
+        )
         .map((x) => x.chain),
     ).values(),
   ]

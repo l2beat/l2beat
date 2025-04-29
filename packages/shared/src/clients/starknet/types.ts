@@ -1,4 +1,11 @@
+import { HEX_REGEX } from '@l2beat/shared-pure'
 import { z } from 'zod'
+
+export interface StarknetCallParameters {
+  contract_address: string
+  entry_point_selector: string
+  calldata: string[]
+}
 
 export type StarknetGetBlockResponse = z.infer<typeof StarknetGetBlockResponse>
 export const StarknetGetBlockResponse = z.object({
@@ -31,6 +38,13 @@ export const StarknetGetBlockWithTxsResponse = z.object({
     block_hash: z.string(),
     transactions: z.array(StarknetTransaction),
   }),
+})
+
+export type StarknetCallResponse = z.infer<typeof StarknetCallResponse>
+export const StarknetCallResponse = z.object({
+  jsonrpc: z.literal('2.0'),
+  id: z.number().int(),
+  result: z.array(z.string().regex(HEX_REGEX, 'Invalid hex string')),
 })
 
 export type StarknetErrorResponse = z.infer<typeof StarknetErrorResponse>

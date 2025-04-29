@@ -2,6 +2,7 @@ import type {
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
+  StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
   TvsToken,
 } from '@l2beat/config'
@@ -41,6 +42,9 @@ export type BalanceOfEscrowAmountConfig = BalanceOfEscrowAmountFormula &
 export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
   AmountConfigBase
 
+export type StarknetTotalSupplyAmountConfig = StarknetTotalSupplyAmountFormula &
+  AmountConfigBase
+
 export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
   AmountConfigBase
 
@@ -49,6 +53,7 @@ export type ConstAmountConfig = ConstAmountFormula & AmountConfigBase
 export type AmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
+  | StarknetTotalSupplyAmountConfig
   | CirculatingSupplyAmountConfig
   | ConstAmountConfig
 
