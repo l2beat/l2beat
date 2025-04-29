@@ -6846,7 +6846,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1710187105,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 10,
       "source": "external",
@@ -7307,7 +7307,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1709929439,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 169,
       "source": "external",
@@ -7487,7 +7487,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1710281055,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 252,
       "source": "external",
@@ -9105,6 +9105,93 @@
       }
     },
     {
+      "name": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+      "symbol": "pumpBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1733048016,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Tunnel mode only)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1734390796,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDa",
+      "coingeckoId": "usda-2",
+      "address": "0xff12470a969Dd362EB6595FFB44C82c959Fe9ACc",
+      "symbol": "USDa",
+      "decimals": 18,
+      "deploymentTimestamp": 1740290202,
+      "coingeckoListingTimestamp": 1731542400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51599/large/SUSDA.png?1731604761",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDa saving token",
+      "coingeckoId": "susda",
+      "address": "0x2840F9d9f96321435Ab0f977E7FDBf32EA8b304f",
+      "symbol": "sUSDa",
+      "decimals": 18,
+      "deploymentTimestamp": 1740290229,
+      "coingeckoListingTimestamp": 1731974400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51821/large/USDA.png?1732035172",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -9348,7 +9435,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1709929437,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "chainId": 5000,
       "source": "external",
@@ -9995,7 +10082,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1718326583,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 8453,
       "source": "external",
@@ -10411,7 +10498,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1710281157,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 34443,
       "source": "external",
@@ -11482,7 +11569,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1710118556,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 42161,
       "source": "external",
@@ -12205,7 +12292,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1724432997,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 48900,
       "source": "external",
@@ -12633,7 +12720,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1710974953,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 59144,
       "source": "external",
@@ -13020,7 +13107,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1713651093,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 81457,
       "source": "external",
@@ -13428,7 +13515,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1710187704,
       "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 534352,
       "source": "external",
