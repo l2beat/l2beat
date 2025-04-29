@@ -20,6 +20,7 @@ import { StageOneRequirementsChangeStageSectionNotice } from '~/components/count
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { featureFlags } from '~/consts/feature-flags'
+import { EmergencyIcon } from '~/icons/emergency'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -32,7 +33,6 @@ import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { ScopeOfAssessment } from './scope-of-assessment'
 import type { ProjectSectionProps } from './types'
-import { EmergencyIcon } from '~/icons/emergency'
 
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string
