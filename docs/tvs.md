@@ -134,17 +134,17 @@ Examples:
       "operator": "diff",
       "arguments": [
          {
-         "type": "totalSupply",
-         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-         "chain": "celo",
-         "decimals": 6,
-         "sinceTimestamp": 1742960663
-         },
+            "type": "totalSupply",
+            "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+            "chain": "celo",
+            "decimals": 6,
+            "sinceTimestamp": 1742960663
+         }, 
          {
-         "type": "const",
-         "value": "323024420080000",
-         "decimals": 6,
-         "sinceTimestamp": 1742960663
+            "type": "const",
+            "value": "323024420080000",
+            "decimals": 6,
+            "sinceTimestamp": 1742960663
          }
       ]
    },
@@ -174,27 +174,27 @@ Examples:
       "operator": "diff",
       "arguments": [
          {
-         "type": "value",
-         "priceId": "wrapped-bitcoin",
-         "amount": {
-            "type": "totalSupply",
-            "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
-            "chain": "bob",
-            "decimals": 8,
-            "sinceTimestamp": 1712862107
-         }
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+               "type": "totalSupply",
+               "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+               "chain": "bob",
+               "decimals": 8,
+               "sinceTimestamp": 1712862107
+            }
          },
          {
-         "type": "value",
-         "priceId": "wrapped-bitcoin",
-         "amount": {
-            "type": "balanceOfEscrow",
-            "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
-            "chain": "bob",
-            "decimals": 8,
-            "escrowAddress": "0x33b7A7a164B77433A61d4B49bD780a2718812e6e",
-            "sinceTimestamp": 1712862107
-         }
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+               "type": "balanceOfEscrow",
+               "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+               "chain": "bob",
+               "decimals": 8,
+               "escrowAddress": "0x33b7A7a164B77433A61d4B49bD780a2718812e6e",
+               "sinceTimestamp": 1712862107
+            }
          }
       ]
    },
