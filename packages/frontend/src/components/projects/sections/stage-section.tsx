@@ -32,6 +32,7 @@ import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { ScopeOfAssessment } from './scope-of-assessment'
 import type { ProjectSectionProps } from './types'
+import { EmergencyIcon } from '~/icons/emergency'
 
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string
@@ -39,6 +40,7 @@ export interface StageSectionProps extends ProjectSectionProps {
   type: string
   stageConfig: StageUnderReview | StageConfigured
   isAppchain: boolean
+  emergencyWarning?: string
   additionalConsiderations:
     | {
         short: string
@@ -56,6 +58,7 @@ export function StageSection({
   isAppchain,
   additionalConsiderations,
   scopeOfAssessment,
+  emergencyWarning,
   ...sectionProps
 }: StageSectionProps) {
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
@@ -83,6 +86,14 @@ export function StageSection({
 
   return (
     <ProjectSection {...sectionProps}>
+      {emergencyWarning && (
+        <Callout
+          color="yellow"
+          body={emergencyWarning}
+          icon={<EmergencyIcon className="size-5" />}
+          className="mb-4 p-4 font-medium leading-snug"
+        />
+      )}
       <span className="mb-4 inline-block w-full rounded-lg bg-surface-secondary p-4 font-medium md:px-6">
         <Image
           src={icon}

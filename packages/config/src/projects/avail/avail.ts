@@ -15,6 +15,7 @@ export const avail: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
   },
