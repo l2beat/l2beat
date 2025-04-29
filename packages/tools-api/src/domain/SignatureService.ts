@@ -4,7 +4,11 @@ import type { DiscoveredConfig } from '../config/types'
 import type { FourByteClient } from '../services/api/FourByteClient'
 import type { OpenChainClient } from '../services/api/OpenChainClient'
 
-export class SignatureService {
+export interface ISignatureService {
+  lookup(selector: `0x${string}`): Promise<string[]>
+}
+
+export class SignatureService implements ISignatureService {
   private known = new Map<`0x${string}`, string[]>()
 
   constructor(
