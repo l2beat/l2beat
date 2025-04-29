@@ -25,7 +25,11 @@ export interface AddressInfo {
   abi: FunctionAbi[]
 }
 
-export class AddressService {
+export interface IAddressService {
+  lookup(address: Address, chain: Chain): Promise<AddressInfo>
+}
+
+export class AddressService implements IAddressService {
   constructor(
     private alchemyClient: AlchemyClient,
     private etherscanClient: EtherscanClient,

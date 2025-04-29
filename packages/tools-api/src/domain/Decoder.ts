@@ -1,8 +1,10 @@
+import { parseAbiItem } from 'abitype'
+import { decodeFunctionData, encodeFunctionData } from 'viem'
 import type { Address, Chain } from '../config/types'
-import type { AddressInfo, AddressService } from './AddressService'
-import type { SignatureService } from './SignatureService'
-import type { DecodedResult } from './decode/DecodedResult'
-import { decode } from './decode/decode'
+import type { AddressInfo, IAddressService } from './AddressService'
+import type { DecodedCall, DecodedResult, DecodedValue } from './DecodedResult'
+import type { ISignatureService } from './SignatureService'
+import { mix } from './mix'
 
 export interface Transaction {
   to?: Address
@@ -17,8 +19,8 @@ interface Known {
 
 export class Decoder {
   constructor(
-    private addressService: AddressService,
-    private signatureService: SignatureService,
+    private addressService: IAddressService,
+    private signatureService: ISignatureService,
   ) {}
 
   async decode(tx: Transaction) {
@@ -48,17 +50,42 @@ export class Decoder {
     tx: Transaction,
     known: Known,
   ): Promise<DecodedResult> {
-    const selector = getSelector(tx.data)
+    const toInfo = tx.to && known.addresses.get(tx.to)
+    return {
+      data: {
+        name: 'data',
+        abi: 'bytes',
+        encoded: tx.data,
+        decoded: await this.decodeBytes(tx.data, known),
+      },
+      to: toInfo && {
+        type: 'address',
+        name: toInfo.name,
+        value: toInfo.address,
+        discovered: toInfo.fromDiscovery,
+        explorerLink: toInfo.explorerLink,
+      },
+      chainId: tx.chain.chainId,
+    }
+  }
+
+  private async decodeBytes(
+    data: `0x${string}`,
+    known: Known,
+  ): Promise<DecodedValue> {
+    const selector = getSelector(data)
     if (!selector) {
-      return {
-        type: 'error',
-        error: 'Data too short',
-      }
+      return { type: 'bytes', value: data }
     }
     const signatures =
       known.signatures.get(selector) ??
       (await this.signatureService.lookup(selector))
-    return decode(tx.data, signatures)
+    for (const signature of signatures) {
+      try {
+        return decodeFunction(data, selector, signature)
+      } catch {}
+    }
+    return { type: 'bytes', value: data }
   }
 }
 
@@ -68,4 +95,43 @@ function getSelector(data: `0x${string}`): `0x${string}` | undefined {
     return undefined
   }
   return selector
+}
+
+function decodeFunction(
+  data: `0x${string}`,
+  selector: `0x${string}`,
+  signature: string,
+): DecodedCall {
+  const abiItem = parseAbiItem(signature)
+  if (abiItem.type !== 'function') {
+    throw new Error('Abi provided is not a function')
+  }
+  const decoded = decodeFunctionData({
+    abi: [abiItem],
+    data,
+  })
+  const encoded = encodeFunctionData({
+    abi: [abiItem],
+    ...decoded,
+  })
+  if (!data.startsWith(encoded)) {
+    throw new Error('Invalid encoding')
+  }
+  const extra = data.slice(encoded.length).toLowerCase()
+  const values = mix(abiItem.inputs, decoded.args)
+  if (extra) {
+    values.push({
+      name: 'extra data',
+      abi: 'bytes',
+      encoded: `0x${extra}`,
+      decoded: { type: 'bytes', value: `0x${extra}` },
+    })
+  }
+
+  return {
+    type: 'call',
+    abi: signature,
+    selector,
+    arguments: values,
+  }
 }
