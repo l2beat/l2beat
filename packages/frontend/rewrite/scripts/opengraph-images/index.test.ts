@@ -1,6 +1,5 @@
 import { existsSync } from 'fs'
 import path from 'path'
-import type { Project } from '@l2beat/config'
 import { expect } from 'earl'
 import { ps } from '~/server/projects'
 import { getOpengraphProjectType } from './projects/generateProjectOgImages'
@@ -11,7 +10,16 @@ describe('opengraph images', () => {
       optional: ['isScaling', 'isBridge', 'isZkCatalog', 'isDaLayer'],
     })
     const missing = projects
-      .map(getFilePath)
+      .map((p) => {
+        const type = getOpengraphProjectType(p)
+        if (!type) {
+          return undefined
+        }
+        return path.join(
+          __dirname,
+          `../../static/meta-images/${type}/projects/${p.slug}/opengraph-image.png`,
+        )
+      })
       .filter((p) => p !== undefined && !existsSync(p))
 
     expect(missing).toEqual([])
@@ -33,20 +41,3 @@ describe('opengraph images', () => {
     expect(missing).toEqual([])
   })
 })
-
-function getFilePath(
-  project: Project<
-    never,
-    'isScaling' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
-  >,
-) {
-  const type = getOpengraphProjectType(project)
-  if (!type) {
-    return undefined
-  }
-
-  return path.join(
-    __dirname,
-    `../../static/meta-images/${type}/projects/${project.slug}/opengraph-image.png`,
-  )
-}
