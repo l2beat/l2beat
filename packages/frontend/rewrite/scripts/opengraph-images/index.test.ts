@@ -1,7 +1,7 @@
-import type { Project } from '@l2beat/config'
-import { expect } from 'earl'
 import { existsSync } from 'fs'
 import path from 'path'
+import type { Project } from '@l2beat/config'
+import { expect } from 'earl'
 import { ps } from '~/server/projects'
 
 describe('opengraph images', () => {

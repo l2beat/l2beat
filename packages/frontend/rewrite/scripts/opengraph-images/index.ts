@@ -1,6 +1,6 @@
-import express from 'express'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+import express from 'express'
 import { generateProjectOgImages } from './projects/generateProjectOgImages'
 const ogImageSize = { width: 1200, height: 630 }
 
