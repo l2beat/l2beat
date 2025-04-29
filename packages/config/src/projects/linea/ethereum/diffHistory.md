@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x719cc041ce1a45d6a7efcb1dd319d810455f945a
+Generated with discovered.json: 0x4ce0363175c7691159b2deeb25bdfc9377c9046e
 
-# Diff at Tue, 29 Apr 2025 08:19:06 GMT:
+# Diff at Tue, 29 Apr 2025 09:46:34 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22273396
@@ -53,6 +53,8 @@ discovery. Values are for block 22273396 (main branch discovery), not current.
     +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
       issuedPermissions:
 -        [{"permission":"interact","to":"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8","description":"pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).","via":[]}]
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"manage all critical access control roles and permissions (full admin of the main bridge escrow).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0x971f46a2852d11D59dbF0909e837cfd06f357DeB","description":"change the beacon implementation.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"cancel queued transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
     }
 ```
 

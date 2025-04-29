@@ -699,71 +699,6 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
-          "description": "change the beacon implementation.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1322,5 +1257,5 @@
     "linea/Roles": "0xa2464d6b0b8a583e2a25b7127ea401ba7f63faf48f95f5fb9838cebca0c98aba",
     "linea/TokenBridge": "0xaa1287667ece38f474859679ed0569d43b19a19bbdb2a21a1a5701c5a15fe1cc"
   },
-  "permissionsConfigHash": "0x1fc76e220f0b97ccda00730186a2d5ea076b90f4775409f03030007544901a60"
+  "permissionsConfigHash": "0xec86c2d65d435c9384d569e695791eccf5b0485b8789ea148a5b041c6bd4d617"
 }
