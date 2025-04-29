@@ -44,6 +44,22 @@ async function main() {
     0,
   )
 
+  const proofConfigs = getProofSubmissionConfigsForProject(
+    config,
+    'starknet',
+    start,
+    end,
+  )
+  const costsByProofConfig = await db.l2Cost.getGasSumByTimeRangeAndConfigId(
+    proofConfigs.map((c) => c.id),
+    start,
+    end,
+  )
+  const proofCost = costsByProofConfig.reduce(
+    (acc, c) => acc + weiToEth(c.totalCostInWei),
+    0,
+  )
+
   const customers = Object.keys(await getCostumers(start, end))
   let reportedTotalProofCost = 0
   let reportedTotalDataCost = 0
@@ -61,6 +77,7 @@ async function main() {
   console.log('reported_total_data_cost:', reportedTotalDataCost)
   console.log('total_proof_cost:', totalProofCost)
   console.log('total_data_cost:', totalDataCost)
+  console.log('proof_cost:', proofCost)
 }
 main().catch(console.error)
 
@@ -94,6 +111,28 @@ function getBatchConfigsForProject(
         (!c.untilTimestamp || c.untilTimestamp > start) &&
         c.type === 'l2costs' &&
         c.subtype === 'batchSubmissions',
+    ) ?? []
+  )
+}
+
+function getProofSubmissionConfigsForProject(
+  config: Config,
+  projectId: string,
+  start: UnixTime,
+  end: UnixTime,
+) {
+  assert(config.trackedTxsConfig !== false)
+  const projectConfig = config.trackedTxsConfig.projects.find(
+    (p) => p.id === projectId,
+  )
+  return (
+    projectConfig?.configurations.filter(
+      (c): c is TrackedTxCostsConfig =>
+        c.sinceTimestamp < end &&
+        (!c.untilTimestamp || c.untilTimestamp > start) &&
+        c.type === 'l2costs' &&
+        c.subtype === 'proofSubmissions' &&
+        c.params.formula === 'functionCall',
     ) ?? []
   )
 }
