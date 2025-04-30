@@ -91,7 +91,7 @@ export const sonicgateway: Bridge = {
     },
     sourceUpgradeability: {
       value: `Multisig (${discovery.getMultisigStats('SonicGatewayMultisig')})`,
-      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Gnosis Bridge Multisig')} SonicGatewayMultisig`,
+      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('SonicGatewayMultisig')} SonicGatewayMultisig`,
       sentiment: 'bad',
     },
     livenessFailure: {
