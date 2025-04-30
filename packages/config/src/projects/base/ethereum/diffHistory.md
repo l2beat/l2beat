@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8740ad5a377e8f4db8d6bc6ed4ffd1e088bac1cb
+Generated with discovered.json: 0x2d0de7dad719465efc655f310b52300545d685f4
 
-# Diff at Wed, 30 Apr 2025 08:43:54 GMT:
+# Diff at Wed, 30 Apr 2025 08:55:33 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@84235dd5417ade9a370db923dce740dd4503b6dc block: 22346130
@@ -286,6 +286,17 @@ discovery. Values are for block 22346130 (main branch discovery), not current.
 -        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]}]
       directlyReceivedPermissions:
 -        [{"permission":"act","from":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]
+    }
+```
+
+```diff
+    contract SkyLink Bridge (0xA5874756416Fa632257eEA380CAbd2E87cED352A) {
+    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
+      name:
+-        "L1TokenBridge"
++        "SkyLink Bridge"
+      description:
++        "Custom bridge for USDS and sUSDS managed by Sky governance."
     }
 ```
 
