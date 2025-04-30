@@ -1,4 +1,4 @@
-import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
+import { type Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainBasicApi, ChainConfig, ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import {
@@ -17,7 +17,7 @@ import {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { ValueService } from '../services/ValueService'
 import {
   type AmountConfig,
@@ -171,17 +171,20 @@ export class LocalExecutor {
       )
 
       if (etherscanApi) {
+        assert(
+          chainConfig.chainId,
+          `${chainConfig.name}: chainConfig.chainId is required for etherscan API`,
+        )
         indexerClients.push(
           new BlockIndexerClient(
             http,
             new RateLimiter({ callsPerMinute: 120 }),
             {
               type: etherscanApi.type,
-              url: etherscanApi.url,
-              apiKey: this.env.string(
-                Env.key(chainConfig.name, 'ETHERSCAN_API_KEY'),
-              ),
+              url: this.env.string('ETHERSCAN_API_URL'),
+              apiKey: this.env.string('ETHERSCAN_API_KEY'),
               chain: chainConfig.name,
+              chainId: chainConfig.chainId,
             },
           ),
         )

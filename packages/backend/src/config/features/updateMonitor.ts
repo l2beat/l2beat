@@ -130,11 +130,8 @@ function getChainDiscoveryConfig(
           }
         : {
             type: explorerApi.type,
-            url: explorerApi.url,
-            apiKey: env.string([
-              `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-              `${ENV_NAME}_ETHERSCAN_API_KEY`,
-            ]),
+            url: env.string('ETHERSCAN_API_URL'),
+            apiKey: env.string('ETHERSCAN_API_KEY'),
             unsupported: {
               getContractCreation: explorerApi.contractCreationUnsupported,
             },

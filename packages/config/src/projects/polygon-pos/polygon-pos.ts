@@ -37,6 +37,8 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
   'validatorThreshold',
 )
 
+const chainId = 137
+
 export const polygonpos: ScalingProject = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
@@ -119,7 +121,7 @@ export const polygonpos: ScalingProject = {
   },
   chainConfig: {
     name: 'polygonpos',
-    chainId: 137,
+    chainId,
     explorerUrl: 'https://polygonscan.com',
     multicallContracts: [
       {
@@ -135,7 +137,7 @@ export const polygonpos: ScalingProject = {
         url: 'https://polygon.llamarpc.com',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.polygonscan.com/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://polygon.blockscout.com/api/v2' },
     ],
   },

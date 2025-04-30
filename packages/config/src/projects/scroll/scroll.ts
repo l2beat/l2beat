@@ -54,6 +54,7 @@ const upgradeDelay = discovery.getContractValue<number>(
 )
 
 const finalizationPeriod = 0
+const chainId = 534352
 
 export const scroll: ScalingProject = {
   type: 'layer2',
@@ -139,7 +140,7 @@ export const scroll: ScalingProject = {
   ),
   chainConfig: {
     name: 'scroll',
-    chainId: 534352,
+    chainId,
     explorerUrl: 'https://scrollscan.com',
     sinceTimestamp: UnixTime(1696917600),
     multicallContracts: [
@@ -154,7 +155,7 @@ export const scroll: ScalingProject = {
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },
-      { type: 'etherscan', url: 'https://api.scrollscan.com/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   config: {
