@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3cd7e8616499b321428fd292676f3069b0103889
+Generated with discovered.json: 0xb7db25d1406e767ff53822815d771ee477dd25b6
 
-# Diff at Wed, 30 Apr 2025 08:06:07 GMT:
+# Diff at Wed, 30 Apr 2025 08:43:53 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 29605405
+- current block number: 29605802
 
 ## Description
 
@@ -14,19 +14,13 @@ base
 ```diff
 +   Status: CREATED
     contract FeeDisburser (0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA)
-    +++ description: None
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
 ```
 
 ```diff
 +   Status: CREATED
     contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
     +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
-```
-
-```diff
-+   Status: CREATED
-    contract GasPriceOracle (0x420000000000000000000000000000000000000F)
-    +++ description: None
 ```
 
 ```diff
@@ -38,13 +32,13 @@ base
 ```diff
 +   Status: CREATED
     contract SequencerFeeVault (0x4200000000000000000000000000000000000011)
-    +++ description: None
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
 ```
 
 ```diff
 +   Status: CREATED
     contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012)
-    +++ description: None
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
 ```
 
 ```diff
@@ -86,13 +80,13 @@ base
 ```diff
 +   Status: CREATED
     contract BaseFeeVault (0x4200000000000000000000000000000000000019)
-    +++ description: None
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
 ```
 
 ```diff
 +   Status: CREATED
     contract L1FeeVault (0x420000000000000000000000000000000000001A)
-    +++ description: None
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
 ```
 
 ```diff

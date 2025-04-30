@@ -1,18 +1,20 @@
 {
   "name": "base",
   "chain": "base",
-  "blockNumber": 29605405,
-  "configHash": "0xfcd8b7ffa7e91447226232d56c7bc202fa4f574003a2799f50a71b6e099d0189",
+  "blockNumber": 29605802,
+  "configHash": "0x9cabdf4e4e7df8420b11323094ee37e8d8eb10b7970d728040b028665e41d4ac",
   "entries": [
     {
       "name": "FeeDisburser",
       "address": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
       "type": "Contract",
+      "template": "opstack/Layer2/FeeDisburser",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
       "sinceTimestamp": 1686802803,
       "sinceBlock": 6728,
       "values": {
@@ -103,33 +105,6 @@
       "derivedName": "L2CrossDomainMessenger"
     },
     {
-      "name": "GasPriceOracle",
-      "address": "0x420000000000000000000000000000000000000F",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1686789349,
-      "sinceBlock": 0,
-      "values": {
-        "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xa919894851548179A0750865e7974DA599C0Fac7",
-        "$pastUpgrades": [
-          [
-            "2024-03-14T00:00:01.000Z",
-            "0xedbfdad1f44ea830b863eac45eca4408398351b30511826012882059625963d2",
-            ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
-          ],
-          [
-            "2024-07-10T16:00:01.000Z",
-            "0x2f63bbe08a66796dde569281a58a53e0b0f64b7aa067297e9c70455fb8e375bc",
-            ["0xa919894851548179A0750865e7974DA599C0Fac7"]
-          ]
-        ],
-        "$upgradeCount": 2
-      },
-      "derivedName": ""
-    },
-    {
       "name": "L2StandardBridge",
       "address": "0x4200000000000000000000000000000000000010",
       "type": "Contract",
@@ -159,11 +134,13 @@
       "name": "SequencerFeeVault",
       "address": "0x4200000000000000000000000000000000000011",
       "type": "Contract",
+      "template": "opstack/Layer2/SequencerFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0xa6e80925a541b18f301edb66231f85cc8aee7aba084674ca3e2822f55d5295d1"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
       "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
@@ -185,7 +162,6 @@
         "l1FeeWallet": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
         "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
         "RECIPIENT": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
-        "totalProcessed": "28746155161537643290296",
         "version": "1.3.0",
         "WITHDRAWAL_NETWORK": 1
       },
@@ -195,11 +171,13 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0x4200000000000000000000000000000000000012",
       "type": "Contract",
+      "template": "opstack/Layer2/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0xaf8d1aec41a22039c90d3ea23d8b660cbe441037e0fe15f90b7c39c46c34d07d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
       "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
@@ -299,18 +277,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 511191346,
+        "basefee": 423451016,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 2483215163,
+        "blobBaseFee": 3399547344,
         "blobBaseFeeScalar": 1055762,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x2011e56593ea5435423f45f4b7c43480a018a158234ad7b5fec8b502cb2b6261",
+        "hash": "0xbafc24783be73a73f2a3d55d82d81e853ddfa1bfe015a609b1045d0d8c69e487",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 22380527,
-        "sequenceNumber": 5,
-        "timestamp": 1745999963,
+        "number": 22380593,
+        "sequenceNumber": 3,
+        "timestamp": 1746000767,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -376,10 +354,6 @@
         {
           "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000007"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x420000000000000000000000000000000000000F"
         },
         {
           "permission": "upgrade",
@@ -451,11 +425,13 @@
       "name": "BaseFeeVault",
       "address": "0x4200000000000000000000000000000000000019",
       "type": "Contract",
+      "template": "opstack/Layer2/BaseFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0x0834e3a66bf6d3446ab3f5e42dde52e5ce5072d98b3b4a7e049ca96280b9f635"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
       "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
@@ -476,7 +452,6 @@
         "$upgradeCount": 2,
         "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
         "RECIPIENT": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
-        "totalProcessed": "7902823894951744444798",
         "version": "1.3.0",
         "WITHDRAWAL_NETWORK": 1
       },
@@ -486,11 +461,13 @@
       "name": "L1FeeVault",
       "address": "0x420000000000000000000000000000000000001A",
       "type": "Contract",
+      "template": "opstack/Layer2/L1FeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0x2bbc4761e06b3858a304723900de8a855d85d9eb247116f2315f3714a47ad71b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
       "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
@@ -511,7 +488,6 @@
         "$upgradeCount": 2,
         "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
         "RECIPIENT": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
-        "totalProcessed": "9493319570770476485611",
         "version": "1.3.0",
         "WITHDRAWAL_NETWORK": 1
       },
@@ -606,11 +582,6 @@
         {
           "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000007",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x420000000000000000000000000000000000000F",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
@@ -818,16 +789,6 @@
       "function withdraw()"
     ],
     "0x4200000000000000000000000000000000000007": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x420000000000000000000000000000000000000F": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1247,15 +1208,20 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/FeeDisburser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
+    "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
     "opstack/Layer2/L2ERC721Bridge": "0x9014fd221c67a8a11045cd252fd4bd75e36e7dcea7eaf8d98eb22da2a0d2e919",
     "opstack/Layer2/L2StandardBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0xbb8ec39d7870faca409a8c1ff8da350ef80d61228a6aa0e950e8de4b9294f909",
-    "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0xa35fb4bf129fdc91590300bacf8241a67bb0f9c090a417fa8afb8ad629164164"
+  "permissionsConfigHash": "0xcdd5b30de31eff14a32173cb0d132afed5274c96d57a029ae82081f594cbac37"
 }

@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 22380542,
+  "blockNumber": 22380607,
   "configHash": "0x62ed6cc6c36c3783988443d9d090443f20697971a6f00fddbbe5dded40d67598",
   "entries": [
     {
@@ -598,7 +598,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 22380537
+          "prevBlockNum": 22380601
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -654,11 +654,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x8237B9100ed50F6a017CA752bc459ffFC8e1cAE1",
+        "anchorGame": "0xC563BbBa05183C5EFbB6803Bb43E89fF28bC3029",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0x6879f117ddde6e881b7c682815745db0c3e3cf96dcf9b31d87932e7bb2be047c",
-          29300715
+          "0xff82e8e8eb1bd7853aace9efa8f8c580d3fbafcef064e1021cdfc60f4eab12d8",
+          29302607
         ],
         "portal": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -1250,7 +1250,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293032176",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293032181",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3133,5 +3133,5 @@
     "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   },
-  "permissionsConfigHash": "0xa35fb4bf129fdc91590300bacf8241a67bb0f9c090a417fa8afb8ad629164164"
+  "permissionsConfigHash": "0xcdd5b30de31eff14a32173cb0d132afed5274c96d57a029ae82081f594cbac37"
 }
