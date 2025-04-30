@@ -85,7 +85,6 @@ export default async function Image({ params }: Props) {
           weight: 700,
         },
       ],
-      debug: true,
     },
   )
 }
