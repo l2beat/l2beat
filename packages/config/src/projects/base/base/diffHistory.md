@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xbb5f7501a70764c6e5e655ff873fb597b5d065d0
+Generated with discovered.json: 0x0449ef9ac49e3bd9d4707e63e7b8f845e2cd5cb7
 
-# Diff at Wed, 30 Apr 2025 08:55:32 GMT:
+# Diff at Wed, 30 Apr 2025 09:40:55 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 29605802
 
 ## Description
 
-base
+base l2 initial discovery.
 
 ## Initial discovery
 
