@@ -188,6 +188,14 @@ export const base: ScalingProject = opStackL2({
   ),
   milestones: [
     {
+      title: 'Base achieves Stage 1',
+      url: 'https://base.mirror.xyz/tWDMlGp48fF0MeADcLQruUBq1Qxkou4O5x3ax8Rm3jA',
+      date: '2025-04-29T00:00:00Z',
+      description:
+        'Through an upgrade in their governance process and a Security Council, Base is now stage 1.',
+      type: 'general',
+    },
+    {
       title: 'Fault proofs!',
       url: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
       date: '2024-10-30T00:00:00Z',
