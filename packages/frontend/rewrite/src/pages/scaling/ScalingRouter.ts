@@ -26,61 +26,61 @@ export function ScalingRouter(
   })
 
   app.get('/scaling/summary', async (req, res) => {
-    const data = await getScalingSummaryData(manifest)
+    const data = await getScalingSummaryData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/activity', async (req, res) => {
-    const data = await getScalingActivityData(manifest)
+    const data = await getScalingActivityData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/risk', async (req, res) => {
-    const data = await getScalingRiskData(manifest)
+    const data = await getScalingRiskData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/tvs', async (req, res) => {
-    const data = await getScalingTvsData(manifest)
+    const data = await getScalingTvsData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/data-availability', async (req, res) => {
-    const data = await getScalingDataAvailabilityData(manifest)
+    const data = await getScalingDataAvailabilityData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/liveness', async (req, res) => {
-    const data = await getScalingLivenessData(manifest)
+    const data = await getScalingLivenessData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/finality', async (req, res) => {
-    const data = await getScalingFinalityData(manifest)
+    const data = await getScalingFinalityData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/costs', async (req, res) => {
-    const data = await getScalingCostsData(manifest)
+    const data = await getScalingCostsData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/archived', async (req, res) => {
-    const data = await getScalingArchivedData(manifest)
+    const data = await getScalingArchivedData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/scaling/upcoming', async (req, res) => {
-    const data = await getScalingUpcomingData(manifest)
+    const data = await getScalingUpcomingData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
@@ -91,7 +91,11 @@ export function ScalingRouter(
       params: z.object({ slug: z.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectData(manifest, req.params.slug)
+      const data = await getScalingProjectData(
+        manifest,
+        req.params.slug,
+        req.originalUrl,
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
@@ -110,6 +114,7 @@ export function ScalingRouter(
       const data = await getScalingProjectTvsBreakdownData(
         manifest,
         req.params.slug,
+        req.originalUrl,
       )
       if (!data) {
         res.status(404).send('Not found')
