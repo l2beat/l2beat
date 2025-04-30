@@ -4,7 +4,6 @@ import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import Image from '~/_next/image'
 import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
-import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
@@ -14,6 +13,7 @@ import {
 import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { ArrowIcon } from '~/icons/arrow'
 import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
+import { cn } from '~/utils/cn'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemProjectsByRaas({
