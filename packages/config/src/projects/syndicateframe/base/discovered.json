@@ -79,23 +79,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d",
-          "via": [{ "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -151,18 +134,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d",
-          "via": [{ "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1707369307,
       "sinceBlock": 10289980,
@@ -284,14 +255,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }]
-        }
-      ],
       "sinceTimestamp": 1707369287,
       "sinceBlock": 10289970,
       "values": {
@@ -323,24 +286,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d",
-          "via": [{ "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1707369321,
       "sinceBlock": 10289987,
@@ -468,14 +413,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }]
-        }
-      ],
       "sinceTimestamp": 1707369327,
       "sinceBlock": 10289990,
       "values": {
@@ -766,5 +703,6 @@
     "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
     "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0x0cacf1d41220b6b695502d3ab8e5abb1414f582b1172b99dcc100935e715d8f6"
 }

@@ -15,16 +15,16 @@ const BEACON_CHAIN_GENESIS_TIMESTAMP = 1606824023
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
-    private readonly blobScanClient: BlobScanClient,
     private readonly beaconChainClient: BeaconChainClient,
     private readonly rpcClient: RpcClient,
     readonly daLayer: string,
+    private readonly blobScanClient?: BlobScanClient,
   ) {}
 
   async getBlobs(from: number, to: number): Promise<EthereumBlob[]> {
-    const blobScanResult = await this.blobScanClient.getBlobs(from, to)
+    const blobScanResult = await this.blobScanClient?.getBlobs(from, to)
 
-    if (blobScanResult.length > 0) {
+    if (blobScanResult && blobScanResult.length > 0) {
       return blobScanResult.map((blob) => ({
         type: 'ethereum',
         daLayer: this.daLayer,

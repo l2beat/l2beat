@@ -22,6 +22,7 @@ import {
   generateConfigurationId,
 } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
+import { isOnchainAmountConfig } from './types'
 
 export function initTvsModule(
   config: Config,
@@ -116,9 +117,7 @@ export function initTvsModule(
     blockTimestampIndexers.set(block.chainName, blockTimestampIndexer)
   }
 
-  const onchainAmounts = config.tvs.amounts.filter(
-    (a) => a.type === 'totalSupply' || a.type === 'balanceOfEscrow',
-  )
+  const onchainAmounts = config.tvs.amounts.filter(isOnchainAmountConfig)
 
   for (const chain of config.tvs.chains) {
     const blockTimestampIndexer = blockTimestampIndexers.get(chain)
@@ -130,6 +129,7 @@ export function initTvsModule(
       syncOptimizer,
       chain: chain,
       totalSupplyProvider: providers.totalSupply,
+      starknetTotalSupplyProvider: providers.starknetTotalSupply,
       balanceProvider: providers.balance,
       parents: [blockTimestampIndexer],
       indexerService,

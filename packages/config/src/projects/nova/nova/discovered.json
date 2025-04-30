@@ -21,24 +21,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Router managing token <–> gateway mapping on L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1656313073,
       "sinceBlock": 12,
       "values": {
@@ -171,24 +153,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1656314863,
       "sinceBlock": 32,
       "values": {
@@ -242,24 +206,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -431,24 +377,6 @@
         "0x1cb12c4c632180beb2db8907c85d74522ccc8f18edc0626818bedf7229297333"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1656313084,
       "sinceBlock": 16,
@@ -586,24 +514,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1656313079,
       "sinceBlock": 14,
@@ -775,24 +685,6 @@
         "0x8ae72d766dbd9972974ea5cbde4207e80bf11dbc3426b277d41544d2639371f9"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" },
-            { "address": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1678968495,
       "sinceBlock": 3154421,
@@ -1179,5 +1071,6 @@
     "orbitstack/layer2/L2SurplusFee": "0x1c53b5bca08d45fff3778cd66cff20fb1583158bc8b2c7b7df2efcaed10751e5",
     "orbitstack/layer2/L2WethGateway": "0xa5776691f5bead6b28b8e18ebe70995ade4dfc5cf25d7dd7e2b8484f86c9ddb1",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04"
-  }
+  },
+  "permissionsConfigHash": "0x71d12c1293cc26ed4e6330c3199b26467fb0fd52659fd40ffd3336edf7ba8b02"
 }

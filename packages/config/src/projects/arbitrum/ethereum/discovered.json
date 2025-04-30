@@ -36,29 +36,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -435,47 +412,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -619,29 +555,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -788,29 +701,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
       "values": {
@@ -891,44 +781,6 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -1128,29 +980,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -1206,29 +1035,6 @@
         "0x20497774f6f2ef1febbb63646e0eb3b2ed5190f6a53f178032f86d972f0ca99d"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
       "values": {
@@ -1289,29 +1095,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1623784095,
       "sinceBlock": 12640865,
       "values": {
@@ -1379,29 +1162,6 @@
         "0x00ef6edf5319c5f35e60c03df0fb64df6d630fb23373f9a084d86a868812b4ed"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1630296149,
       "sinceBlock": 13124585,
       "values": {
@@ -1451,29 +1211,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1652,29 +1389,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1623784100,
       "sinceBlock": 12640867,
       "values": {
@@ -1738,29 +1452,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1739368811,
       "sinceBlock": 21830860,
       "values": {
@@ -1855,29 +1546,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1623867835,
       "sinceBlock": 12647126,
       "values": {
@@ -2033,73 +1701,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "description": "cancel queued transactions.",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "description": "propose transactions.",
-          "via": [{ "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "via": [
-            { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -5136,5 +4737,6 @@
     "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
     "orbitstack/Timelock": "0x8bd921cefd06b5aabca770f0961437d4b35396a3ddfc5be8be4dd959daadaff5",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04"
-  }
+  },
+  "permissionsConfigHash": "0x69992fcbd9ca70c86feba656652692784f136a3198ee1721623e01615779fd54"
 }

@@ -6,5 +6,6 @@
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x37e49749bb984e1c01ed29b46b41f2dc9f0f4ec8fa0a6b4d7ba3ef77d69b78b7"
 }

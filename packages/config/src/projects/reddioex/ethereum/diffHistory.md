@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x800df04bc51ddacede3198bb486646b7380b0535
+
+# Diff at Tue, 29 Apr 2025 08:19:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 19825385
+- current block number: 19825385
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825385 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0xB62BcD40A24985f560b5a9745d478791d8F1945C) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0x6b7763b749073e892c83E674c1EC4799D6f339Ef","via":[]},{"permission":"interact","to":"0x6b7763b749073e892c83E674c1EC4799D6f339Ef","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"operateStarkEx","to":"0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a","via":[]},{"permission":"operateStarkEx","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"upgrade","to":"0x6b7763b749073e892c83E674c1EC4799D6f339Ef","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x708faa3a1d3f95e69e706d85cfbf0a7fdeb397e3
 
 # Diff at Thu, 27 Mar 2025 11:14:57 GMT:

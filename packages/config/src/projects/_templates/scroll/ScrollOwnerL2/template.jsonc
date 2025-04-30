@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
+  "category": "core",
+  "canActIndependently": false,
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "scrollAccessControl",
+        "roleNames": {
+          "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
+          "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
+          "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
+          "0x0bc16a0ae95f4e5b799d8e99b60c3f58a85a250a4113bda01d7aa9161915bb51": "emergency-nodelay",
+          "0x25cde7d55aec2382cb151a266953ae458755f20dbd760809260e51683955fe9e": "ops-fast",
+          "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_ROLE",
+          "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+        }
+      }
+    },
+    "scNoDelay": {
+      "copy": "accessControl",
+      "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade all core contracts of the system."
+        },
+        {
+          "type": "interact",
+          "description": "disable enforced batch mode."
+        },
+        {
+          "type": "interact",
+          "description": "update ScrollChain zk proof verifier."
+        }
+      ]
+    }
+  }
+}

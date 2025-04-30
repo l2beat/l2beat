@@ -675,5 +675,6 @@
       "function visibilityDelay() view returns (uint8)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xcc888bb287dda25b54618c0487812629191769d4c92f8d7cecdcd8d591245c10"
 }

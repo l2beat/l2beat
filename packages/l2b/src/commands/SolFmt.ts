@@ -8,7 +8,7 @@ export const SolFmt = command({
     fileOrDir: positional({
       type: string,
       displayName: 'path',
-      description: 'file or directory to format',
+      description: 'file or directory to format.',
     }),
   },
   handler: ({ fileOrDir }) => {

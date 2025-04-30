@@ -28,14 +28,33 @@ const FIRST_SECTION_PREFIX = '# Diff at'
 
 export async function updateDiffHistory(
   projectName: string,
+  description?: string,
+  overwriteCache: boolean = false,
+) {
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
+  const chains = configReader.readAllChainsForProject(projectName)
+  for (const chain of chains) {
+    await updateDiffHistoryForChain(
+      configReader,
+      projectName,
+      chain,
+      description,
+      overwriteCache,
+    )
+  }
+}
+
+export async function updateDiffHistoryForChain(
+  configReader: ConfigReader,
+  projectName: string,
   chain: string,
   description?: string,
   overwriteCache: boolean = false,
 ) {
   // Get discovered.json from main branch and compare to current
-  console.log(`Project: ${projectName}`)
+  console.log(`Updating diffHistory for: ${projectName} on ${chain}`)
   const paths = getDiscoveryPaths()
-  const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder =
     '.' +

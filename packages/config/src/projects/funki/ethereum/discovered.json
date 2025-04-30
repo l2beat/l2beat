@@ -46,23 +46,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0x0B3476949e1C82160575295f58720E16EeD2BF7b",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0xA1ddae0829c3bD4096c34aEC58b2BC21e3a6d10E",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -182,14 +165,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "sinceTimestamp": 1721212607,
       "sinceBlock": 20325694,
       "values": {
@@ -210,18 +185,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x052a8cd5967bc3Bdb5660c989a3A68bCA683A077",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1721212775,
       "sinceBlock": 20325708,
@@ -263,13 +226,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "sinceTimestamp": 1721212823,
       "sinceBlock": 20325712,
       "values": {
@@ -435,13 +391,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "sinceTimestamp": 1721212835,
       "sinceBlock": 20325713,
       "values": {
@@ -488,14 +437,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "sinceTimestamp": 1721212799,
       "sinceBlock": 20325710,
       "values": {
@@ -621,24 +562,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3D389212A78FD7D4600C9483470e59630C293416",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x4712454AddDbAbACaAb84916546899CA9690A6fF",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1721212787,
       "sinceBlock": 20325709,
@@ -724,18 +647,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x052a8cd5967bc3Bdb5660c989a3A68bCA683A077",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "sinceTimestamp": 1721212655,
       "sinceBlock": 20325698,
       "values": {
@@ -775,19 +686,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xc0CE2761d5cC92d25dB6ccD95e4b9483eD22D11B",
-          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-          "via": [{ "address": "0xD069C4724f9bC15FA53b3b2516594512AEf8c957" }]
-        }
-      ],
       "sinceTimestamp": 1721212727,
       "sinceBlock": 20325704,
       "values": {
@@ -1326,5 +1224,6 @@
     "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0xc0c700f059137b4d1aa0f3d8907f74ad7b7f74e3e9f7365802d5c67dbe673f48"
 }

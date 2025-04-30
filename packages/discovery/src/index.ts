@@ -1,7 +1,14 @@
 export { discover } from './cli/discoverCommand'
+export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
-export { modelPermissions } from './discovery/modelling/modelPermissions'
+export {
+  modelPermissions,
+  modelPermissionsForIsolatedDiscovery,
+  generateClingoForProject,
+  generatePermissionConfigHash,
+} from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
+export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery'
 export {
   getChainConfig,
   getChainShortName,
@@ -79,8 +86,7 @@ export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,
   type ClingoValue,
-  parseExportedFacts,
-} from './discovery/modelling/factTypes'
+} from './discovery/modelling/clingoparser'
 export type {
   DiscoveryOutput,
   EntryParameters,

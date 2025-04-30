@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x381896d3906c1024d8fa6a2c90f50a08f61f93f9
+
+# Diff at Tue, 29 Apr 2025 08:19:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21995404
+- current block number: 21995404
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995404 (main branch discovery), not current.
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[{"address":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]}]
+    }
+```
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[{"address":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]}]
+    }
+```
+
 Generated with discovered.json: 0x45bae0c61443fae97cfc51b4112b33e31c8f47d6
 
 # Diff at Fri, 07 Mar 2025 13:49:22 GMT:

@@ -162,5 +162,6 @@
       "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x78c4730fce43e3a66b70856d6e30c2598939cdc91456d03f771c59922e0e126c"
 }
