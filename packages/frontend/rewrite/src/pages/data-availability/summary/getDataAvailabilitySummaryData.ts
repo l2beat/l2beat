@@ -25,6 +25,7 @@ export async function getDataAvailabilitySummaryData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/data-availability/summary/opengraph-image.png',
         },
       }),
     },

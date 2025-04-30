@@ -19,6 +19,8 @@ export async function getDataAvailabilityRiskData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image:
+            '/meta-images/data-availability/risk-analysis/opengraph-image.png',
         },
       }),
     },

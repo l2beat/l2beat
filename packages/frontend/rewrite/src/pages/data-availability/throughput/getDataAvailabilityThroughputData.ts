@@ -19,6 +19,8 @@ export async function getDataAvailabilityThroughputData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image:
+            '/meta-images/data-availability/throughput/opengraph-image.png',
         },
       }),
     },
