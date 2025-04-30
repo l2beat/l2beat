@@ -4,10 +4,12 @@ import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
 import type { Manifest } from '../../../../../src/utils/Manifest'
 import type { RenderData } from '../../../ssr/server'
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 
 export async function getZkCatalogProjectData(
   manifest: Manifest,
   slug: string,
+  url: string,
 ): Promise<RenderData | undefined> {
   const project = await ps.getProject({
     slug,
@@ -28,9 +30,13 @@ export async function getZkCatalogProjectData(
   return {
     head: {
       manifest,
-      title: 'FAQ - L2BEAT',
-      description:
-        'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+      metadata: getMetadata(manifest, {
+        title: `${project.name} - ZK Catalog`,
+        openGraph: {
+          url,
+          image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
+        },
+      }),
     },
     ssr: {
       page: 'ZkCatalogProjectPage',
