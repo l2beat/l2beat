@@ -6,7 +6,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -76,11 +76,15 @@ export const gluon: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
   },
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.FRAUD_PROOFS,
+        isIncomplete: true,
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.FRAUD_PROOFS,
-      isIncomplete: true,
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
       isIncomplete: true,

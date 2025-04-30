@@ -1,4 +1,65 @@
-Generated with discovered.json: 0xcbe40dcf1147be8a3aebdb7b1a434ae5d178905e
+Generated with discovered.json: 0x842be5dc97080a4bd284803283268aad6806127b
+
+# Diff at Tue, 29 Apr 2025 08:19:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22208591
+- current block number: 22208591
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208591 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x49015545B46B07082bd7faf2633643eae87710EC","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0x49015545B46B07082bd7faf2633643eae87710EC","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x129A94208bb3030D809c36849d43b50d13e0cACf","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x49015545B46B07082bd7faf2633643eae87710EC","description":"manage the members of the data availability committee and the threshold for valid commitments.","via":[]},{"permission":"upgrade","to":"0x49015545B46B07082bd7faf2633643eae87710EC","via":[{"address":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]}]
+    }
+```
+
+Generated with discovered.json: 0xe0a5cb6193bc16f41087ed371f0b454baf40d9bf
+
+# Diff at Thu, 24 Apr 2025 10:31:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22208591
+- current block number: 22208591
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208591 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      values.members.0:
+-        ["https://dac.ternoa-mainnet.zeeve.online","0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"]
++        {"url":"https://dac.ternoa-mainnet.zeeve.online","addr":"0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"}
+    }
+```
+
+Generated with discovered.json: 0x4e0c1e28ca95053064654d4076b29d9d631f4b55
 
 # Diff at Thu, 10 Apr 2025 14:43:27 GMT:
 

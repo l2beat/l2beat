@@ -675,9 +675,7 @@ describe(EventHandler.name, () => {
 
       await expect(async () =>
         handler.execute(provider, ADDRESS),
-      ).toBeRejectedWith(
-        "Tried to extract column [invalidParam] but it's undefined",
-      )
+      ).toBeRejectedWith('Key not found in object')
     })
 
     it('throws error when select references invalid parameter', async () => {

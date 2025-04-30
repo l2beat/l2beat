@@ -12,7 +12,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   EXITS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -22,7 +21,7 @@ import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
-import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
+import { STATE_VALIDATION } from '../../common/stateValidation'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -80,7 +79,6 @@ export const paradex: ScalingProject = {
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
@@ -99,7 +97,22 @@ export const paradex: ScalingProject = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'paradex',
+    chainId: undefined,
+    gasTokens: ['ETH'],
+    apis: [
+      {
+        type: 'starknet',
+        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_7',
+        callsPerMinute: 120,
+      },
+    ],
+  },
   config: {
+    activityConfig: {
+      type: 'block',
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
@@ -186,6 +199,7 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1725811535),
+          untilTimestamp: UnixTime(1744056299), // april 9 2025
           programHashes: [
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
@@ -196,8 +210,29 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1725811535),
+          untilTimestamp: UnixTime(1744056299), // april 9 2025
           programHashes: [
             '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1744056299),
+          programHashes: [
+            '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1744056299),
+          programHashes: [
+            '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator
           ],
         },
       },
@@ -285,9 +320,10 @@ export const paradex: ScalingProject = {
       delayWith30DExitWindow: false,
     },
   }),
+  stateValidation: {
+    categories: [STATE_VALIDATION.VALIDITY_PROOFS],
+  },
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
@@ -307,6 +343,28 @@ export const paradex: ScalingProject = {
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
+    {
+      title: 'Perpetual Options Launch',
+      url: 'https://x.com/tradeparadex/status/1907041207177613610',
+      date: '2025-04-01T00:00:00Z',
+      description: 'Paradex opens perpetual options trading to all users.',
+      type: 'general',
+    },
+    {
+      title: 'Vaults Launched',
+      url: 'https://x.com/tradeparadex/status/1843550172443512998',
+      date: '2024-10-08T00:00:00Z',
+      description:
+        'Paradex launches Vaults, the future of on-chain investment management.',
+      type: 'general',
+    },
+    {
+      title: 'Paradex exits Open Beta',
+      url: 'https://x.com/tradeparadex/status/1854537396714651707',
+      date: '2024-11-07T00:00:00Z',
+      description: 'Paradex launches XP Warzone Season 1 and exits Open Beta.',
+      type: 'general',
+    },
     {
       title: 'Paradex starts using blobs',
       url: 'https://twitter.com/tradeparadex/status/1768306190596153799',

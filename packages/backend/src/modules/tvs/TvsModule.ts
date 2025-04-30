@@ -8,7 +8,6 @@ import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
-import { SyncOptimizer } from '../tvl/utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
@@ -17,11 +16,13 @@ import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
+import { SyncOptimizer } from './tools/SyncOptimizer'
 import {
   createAmountConfig,
   generateConfigurationId,
 } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
+import { isOnchainAmountConfig } from './types'
 
 export function initTvsModule(
   config: Config,
@@ -116,9 +117,7 @@ export function initTvsModule(
     blockTimestampIndexers.set(block.chainName, blockTimestampIndexer)
   }
 
-  const onchainAmounts = config.tvs.amounts.filter(
-    (a) => a.type === 'totalSupply' || a.type === 'balanceOfEscrow',
-  )
+  const onchainAmounts = config.tvs.amounts.filter(isOnchainAmountConfig)
 
   for (const chain of config.tvs.chains) {
     const blockTimestampIndexer = blockTimestampIndexers.get(chain)
@@ -130,6 +129,7 @@ export function initTvsModule(
       syncOptimizer,
       chain: chain,
       totalSupplyProvider: providers.totalSupply,
+      starknetTotalSupplyProvider: providers.starknetTotalSupply,
       balanceProvider: providers.balance,
       parents: [blockTimestampIndexer],
       indexerService,

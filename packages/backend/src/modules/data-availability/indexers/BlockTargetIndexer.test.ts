@@ -2,8 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import type { BlockTimestampProvider } from '@l2beat/shared'
 import type { Clock } from '../../../tools/Clock'
-import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
 const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
@@ -55,7 +55,7 @@ describe(BlockTargetIndexer.name, () => {
       expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenNthCalledWith(1, LAST_HOUR)
+      ).toHaveBeenNthCalledWith(1, LAST_HOUR, 'mock')
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {

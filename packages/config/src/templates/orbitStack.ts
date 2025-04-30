@@ -77,12 +77,7 @@ const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     name: 'EVM compatible smart contracts are supported',
     description:
       'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-      },
-    ],
+    risks: [],
     references: [
       {
         title: 'Inside Arbitrum Nitro',
@@ -97,12 +92,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     name: 'EVM compatible and Stylus smart contracts are supported',
     description:
       'Arbitrum One supports smart contracts written in Solidity and other programming languages (Rust, C++) that compile to WASM. Such smart contracts are executed by nodes using either a geth fork or [a fork of wasmer](https://github.com/OffchainLabs/wasmer) inside the Nitro node, and can be proven with the onchain WASM VM.',
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-      },
-    ],
+    risks: [],
     references: [
       {
         title: 'Inside Arbitrum Nitro',
@@ -145,7 +135,6 @@ interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
-  usesBlobs?: boolean
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
@@ -159,6 +148,8 @@ interface OrbitStackConfigCommon {
   customDa?: ProjectCustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Set to true if projects posts blobs to Ethereum */
+  usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -567,8 +558,6 @@ function orbitStackCommon(
             } as ProjectTechnologyChoice
           }
         })(),
-      stateCorrectness:
-        templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         daProvider.technology,
@@ -822,51 +811,56 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
 function getDaTracking(
   templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
 ): ProjectDaTrackingConfig[] | undefined {
+  // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
     return templateVars.nonTemplateDaTracking
   }
 
-  const usesBlobs = templateVars.usesBlobs ?? false
+  if (templateVars.usesEthereumBlobs) {
+    const batchPosters = templateVars.discovery.getContractValue<string[]>(
+      'SequencerInbox',
+      'batchPosters',
+    )
 
-  const batchPosters = templateVars.discovery.getContractValue<string[]>(
-    'SequencerInbox',
-    'batchPosters',
-  )
+    const inboxDeploymentBlockNumber =
+      templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
 
-  const inboxDeploymentBlockNumber =
-    templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
+    return [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
+        inbox: templateVars.sequencerInbox.address,
+        sequencers: batchPosters,
+      },
+    ]
+  }
 
-  return usesBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxDeploymentBlockNumber,
-          inbox: templateVars.sequencerInbox.address,
-          sequencers: batchPosters,
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
+  if (templateVars.celestiaDa) {
+    return [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.celestiaDa.sinceBlock,
+        namespace: templateVars.celestiaDa.namespace,
+      },
+    ]
+  }
+
+  if (templateVars.availDa) {
+    return [
+      {
+        type: 'avail',
+        daLayer: ProjectId('avail'),
+        // TODO: update to value from discovery
+        sinceBlock: templateVars.availDa.sinceBlock,
+        appId: templateVars.availDa.appId,
+      },
+    ]
+  }
+
+  return undefined
 }
 
 function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
@@ -995,7 +989,7 @@ function getDAProvider(
 
   if (postsToEthereum(templateVars)) {
     const usesBlobs =
-      templateVars.usesBlobs ??
+      templateVars.usesEthereumBlobs ??
       templateVars.discovery.getContractValueOrUndefined(
         'SequencerInbox',
         'postsBlobs',

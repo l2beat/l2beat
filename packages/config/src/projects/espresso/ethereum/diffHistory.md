@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xa1c8db3dc6b3df1cd03bef7fcc8bcea4c9aad35f
+Generated with discovered.json: 0x2251de852fcd46ef642fea8c91cac2509784a3c9
+
+# Diff at Tue, 29 Apr 2025 08:19:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21372994
+- current block number: 21372994
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21372994 (main branch discovery), not current.
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x34F5af5158171Ffd2475d21dB5fc3B311F221982","description":"can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.","via":[]},{"permission":"interact","to":"0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947","description":"can call newFinalizedState() to prove the latest HotShot state.","via":[]},{"permission":"upgrade","to":"0x34F5af5158171Ffd2475d21dB5fc3B311F221982","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x7aeee60f11b3664455af709e819fc506e0e0df8e
 
 # Diff at Tue, 04 Mar 2025 10:39:07 GMT:
 

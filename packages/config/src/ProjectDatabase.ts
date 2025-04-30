@@ -1,6 +1,6 @@
 import {
   type AssetId,
-  type Token,
+  type LegacyToken,
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import sqlite3 from 'sqlite3'
@@ -31,6 +31,7 @@ const schema = {
   colors: 'TEXT',
   milestones: 'TEXT',
   chainConfig: 'TEXT',
+  escrows: 'TEXT',
 
   bridgeInfo: 'TEXT',
   bridgeRisks: 'TEXT',
@@ -48,8 +49,7 @@ const schema = {
 
   proofVerification: 'TEXT',
 
-  tvlInfo: 'TEXT',
-  tvlConfig: 'TEXT',
+  tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
   livenessInfo: 'TEXT',
@@ -172,24 +172,26 @@ export class ProjectDatabase {
     )
   }
 
-  async saveToken(token: Token) {
+  async saveToken(token: LegacyToken) {
     await this.query(`INSERT INTO tokens(id, data) VALUES(?, ?)`, [
       token.id,
       JSON.stringify(token),
     ])
   }
 
-  async getToken(id: AssetId): Promise<Token | undefined> {
+  async getToken(id: AssetId): Promise<LegacyToken | undefined> {
     const rows = await this.query(`SELECT data FROM tokens WHERE id = ?`, [id])
     const row = rows[0]
     if (row) {
-      return JSON.parse((row as { data: string }).data) as Token
+      return JSON.parse((row as { data: string }).data) as LegacyToken
     }
   }
 
-  async getTokens(): Promise<Token[]> {
+  async getTokens(): Promise<LegacyToken[]> {
     const rows = await this.query(`SELECT data FROM tokens`)
-    return rows.map((row): Token => JSON.parse((row as { data: string }).data))
+    return rows.map(
+      (row): LegacyToken => JSON.parse((row as { data: string }).data),
+    )
   }
 
   private query(query: string, values?: unknown[]): Promise<unknown[]> {

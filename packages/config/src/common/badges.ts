@@ -157,6 +157,17 @@ export const badges = [
     },
   },
   {
+    id: 'AvailVector',
+    type: BadgeType.DA,
+    name: 'Avail with Vector',
+    description:
+      'This project utilizes Avail and has Vector enabled, facilitating the bridging of data availability commitments between Avail and Ethereum.',
+    action: {
+      type: 'publicDaHighlight',
+      slug: 'avail',
+    },
+  },
+  {
     id: 'Celestia',
     type: BadgeType.DA,
     name: 'Celestia',

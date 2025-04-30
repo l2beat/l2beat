@@ -41,7 +41,7 @@ interface PublicationProps {
 function Publication({ publication }: PublicationProps) {
   return (
     <LinkWithThumbnail
-      src={`/meta-images/governance/publications/${publication.id}.png`}
+      {...publication.thumbnail}
       href={`/governance/publications/${publication.id}`}
       topAccessory={
         <p className="subtitle-11 text-brand">{publication.publishedOn}</p>

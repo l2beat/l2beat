@@ -19,8 +19,15 @@ export const nebraupa: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
+  },
+  display: {
+    description:
+      'NEBRA UPA (Universal Proof Aggregation) protocol aggregates proofs from different parties into the same proof.',
+    links: {},
+    badges: [],
   },
   proofVerification: {
     aggregation: true,

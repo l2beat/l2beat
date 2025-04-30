@@ -2,7 +2,7 @@
   "name": "degate2",
   "chain": "ethereum",
   "blockNumber": 18554408,
-  "configHash": "0xe8d8be8792786a53a57138228b1213dd80235575f7704e8d9773250b732a1372",
+  "configHash": "0x3b842580ef9297b6f91f1dfab27d36eca7db4e9b08d60d3b3e0ec5c7ffafd6c6",
   "entries": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -440,5 +440,6 @@
       "function withdraw(address, address to, address token, uint256 amount) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xcd13fcf767be1d0d52e88fa5dd68bc5a79187d726e57cdf9615b7670cc4227bb"
 }

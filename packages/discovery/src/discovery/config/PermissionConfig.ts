@@ -24,6 +24,7 @@ export const RolePermissionEntries = [
   'validateZkStack',
   'validateBridge',
   'validateBridge2',
+  'validateBridge3',
   'relay',
   'aggregatePolygon',
   'operateStarknet',
@@ -58,8 +59,8 @@ export const ContractPermission = z.object({
   fields: z.record(z.string(), ContractPermissionField).default({}),
 })
 
-export type PermissionConfig = z.infer<typeof PermissionConfig>
-export const PermissionConfig = z.object({
+export type PermissionsConfig = z.infer<typeof PermissionsConfig>
+export const PermissionsConfig = z.object({
   overrides: z.optional(
     z.record(
       z.string().refine((key) => EthereumAddress.check(key), {

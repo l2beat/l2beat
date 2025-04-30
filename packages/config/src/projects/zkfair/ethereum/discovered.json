@@ -1,8 +1,8 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 22166672,
-  "configHash": "0xd927e7a8796e3897444bdb9229e2c3bd6090e0af32673e815b79d2c1d0b9fafc",
+  "blockNumber": 22322978,
+  "configHash": "0xffa5a9599dd584433290443e1c4b3e6be79827897a93a3704154c7420509dbd6",
   "entries": [
     {
       "name": "ZKFairAdmin",
@@ -55,13 +55,6 @@
         "0xf130a993ad1c6ad92168bdcb2f36fa45071cfdfccb13dd005d7d45e454089482"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
-        }
-      ],
       "sinceTimestamp": 1702879355,
       "sinceBlock": 18810967,
       "values": {
@@ -210,13 +203,6 @@
         "0xb7beee2e185ac88119ddf52a7b183100c31b13dbb35154dd5b60e74c16684cba"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
-        }
-      ],
       "sinceTimestamp": 1702879331,
       "sinceBlock": 18810965,
       "values": {
@@ -305,13 +291,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
-        }
-      ],
       "sinceTimestamp": 1702879319,
       "sinceBlock": 18810964,
       "values": {
@@ -328,26 +307,26 @@
         "committeeHash": "0xba409e01b8959e09c11202ce45dd3e4ac8aa7e21440e86c1e9dc924369151fca",
         "getAmountOfMembers": 5,
         "members": [
-          [
-            "http://43.129.159.5:8444",
-            "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
-          ],
-          [
-            "http://129.226.185.196:8444",
-            "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
-          ],
-          [
-            "http://43.155.22.171:8444",
-            "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
-          ],
-          [
-            "http://119.28.1.197:8444",
-            "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
-          ],
-          [
-            "http://43.129.158.203:8444",
-            "0xFe1da7CAd939805d4A889822357c348177a5118d"
-          ]
+          {
+            "url": "http://43.129.159.5:8444",
+            "addr": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
+          },
+          {
+            "url": "http://129.226.185.196:8444",
+            "addr": "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
+          },
+          {
+            "url": "http://43.155.22.171:8444",
+            "addr": "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
+          },
+          {
+            "url": "http://119.28.1.197:8444",
+            "addr": "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
+          },
+          {
+            "url": "http://43.129.158.203:8444",
+            "addr": "0xFe1da7CAd939805d4A889822357c348177a5118d"
+          }
         ],
         "owner": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
         "requiredAmountOfSignatures": 3
@@ -358,18 +337,11 @@
       "derivedName": "CDKDataCommittee"
     },
     {
-      "name": "Bridge",
+      "name": "OldBridge",
       "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
-        }
-      ],
       "sinceTimestamp": 1702879283,
       "sinceBlock": 18810961,
       "values": {
@@ -410,6 +382,17 @@
       "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Bridge",
+      "address": "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742988323,
+      "sinceBlock": 22130765,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
@@ -791,5 +774,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xec6e876484d2dc1c50f82b9c9c6336286a3bb4f705bd0cab9dcf1ae26f095ed7"
 }

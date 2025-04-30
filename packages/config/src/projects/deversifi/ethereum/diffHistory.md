@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xb53d6414611db1c9177d96ec20fdb74eb36d4bd5
+Generated with discovered.json: 0x58ed58d6db647b248d281df1aa35d3ce49026c85
+
+# Diff at Tue, 29 Apr 2025 08:19:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","via":[]},{"permission":"interact","to":"0x8fDEC5EE435501571034A78a7F3AA167185969b3","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","description":"manage the token admin role.","via":[]},{"permission":"operateStarknet","to":"0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5","via":[]},{"permission":"upgrade","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","delay":259200,"via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xa54563189ec758742209abd73b27cfa085bd7cf7
 
 # Diff at Thu, 27 Mar 2025 11:14:13 GMT:
 

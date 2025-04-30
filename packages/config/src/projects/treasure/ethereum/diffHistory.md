@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xbe94487aed179a0ece22b0c426ff89dc8aad17ad
+Generated with discovered.json: 0x41cb9e23357251de152619acba683df1032d1e91
+
+# Diff at Tue, 29 Apr 2025 08:19:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22181511
+- current block number: 22181511
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22181511 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x2572835e02b59078711aa0800490e80975e4169d","via":[]},{"permission":"validateZkStack","to":"0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283","via":[]}]
+    }
+```
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x282370D1e925ee897CB29Cb3beC13aAe0743067C","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","via":[{"address":"0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"}]},{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x2572835e02b59078711aa0800490e80975e4169d","via":[]},{"permission":"validateZkStack","to":"0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283","via":[]}]
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216","description":"set the conversion factor for gas token deposits.","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xab70c8cc85a23de22e88a2ff62b5a13a6a5069a6
 
 # Diff at Thu, 10 Apr 2025 14:43:30 GMT:
 

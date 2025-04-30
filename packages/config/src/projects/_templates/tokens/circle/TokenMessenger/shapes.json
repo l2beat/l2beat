@@ -1,0 +1,14 @@
+{
+  "TokenMessenger": {
+    "hash": "0xd05b852e1f8c4b58ffee547d6db9feb1ae5b614ac3281d8cb02c8b2e3af2164f",
+    "address": "0x1682Ae6375C4E4A97e4B583BC394c861A46D8962",
+    "chain": "base",
+    "blockNumber": 29519230
+  },
+  "TokenMessengerV2.sol": {
+    "hash": "0x65d3e84e1231bb11a792f4a9946c0672509f68725186e8c623086e51d4ace1a3",
+    "address": "0x555E272506C06e7E559d57418563742AFE363ec8",
+    "chain": "base",
+    "blockNumber": 29519230
+  }
+}

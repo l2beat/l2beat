@@ -5,12 +5,10 @@ import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('layerzerov2oft')
 const enaExecutor = EthereumAddress(
-  (
-    discovery.getContractValue('SendUln302', 'defaultExecutor_ENA') as [
-      number,
-      string,
-    ]
-  )[1],
+  discovery.getContractValue<{
+    maxMessageSize: number
+    executor: string
+  }>('SendUln302', 'defaultExecutor_ENA').executor,
 )
 
 export const layerzerov2oft: Bridge = {

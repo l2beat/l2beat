@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
+  "category": "core",
+  "ignoreMethods": [
+    "committedBatches",
+    "finalizedStateRoots",
+    "isBatchFinalized",
+    "withdrawRoots"
+  ],
+  "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
+  "ignoreRelatives": ["messageQueueV1"], // deprecated
+  "fields": {
+    "sequencers": {
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": {
+          "event": "UpdateSequencer",
+          "where": ["=", "#status", true]
+        },
+        "remove": {
+          "event": "UpdateSequencer",
+          "where": ["!=", "#status", true]
+        }
+      }
+    },
+    "provers": {
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": {
+          "event": "UpdateProver",
+          "where": ["=", "#status", true]
+        },
+        "remove": {
+          "event": "UpdateProver",
+          "where": ["!=", "#status", true]
+        }
+      }
+    },
+    "revertedBatches": {
+      "handler": {
+        "type": "event",
+        "select": "batchIndex",
+        "add": { "event": "RevertBatch" }
+      }
+    }
+  }
+}

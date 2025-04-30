@@ -14,12 +14,16 @@
       "handler": {
         "type": "call",
         "method": "getStaticConfig",
-        "args": [],
-        "pickFields": ["commitStore"]
-      }
+        "args": []
+      },
+      "edit": ["get", "commitStore"]
     },
     "getStaticConfig": {
-      "returnType": "(tuple(address commitStore, ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address prevOffRamp, address rmnProxy, address tokenAdminRegistry))"
+      "edit": [
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["set", "sourceChainSelector", ["format", "ChainIdMap"]]
+      ]
     }
   }
 }

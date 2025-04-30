@@ -1,11 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { notFound } from 'next/navigation'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
-import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
-import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
-import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
-import { ProjectDetails } from '~/components/projects/project-details'
 import { env } from '~/env'
 import {
   getDaProjectEntry,
@@ -14,8 +8,7 @@ import {
 import { ps } from '~/server/projects'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
-import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
-import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
+import { DataAvailabilityProjectPage } from './_page'
 
 interface Props {
   params: Promise<{
@@ -78,54 +71,20 @@ export async function generateMetadata(props: Props) {
 export default async function Page(props: Props) {
   const params = await props.params
 
-  const pageData = await getPageData(params)
+  const entry = await getEntry(params)
 
-  if (!pageData) {
+  if (!entry) {
     return notFound()
   }
 
-  const { entry, summaryComponent } = pageData
-
-  const navigationSections = projectDetailsToNavigationSections(entry.sections)
-  const isNavigationEmpty = navigationSections.length === 0
-
   return (
     <HydrateClient>
-      {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 md:hidden">
-          <MobileProjectNavigation sections={navigationSections} />
-        </div>
-      )}
-      {summaryComponent}
-      <ContentWrapper mobileFull>
-        {isNavigationEmpty ? (
-          <ProjectDetails items={entry.sections} />
-        ) : (
-          <div className="gap-x-12 md:flex">
-            <div className="mt-10 hidden w-[242px] shrink-0 md:block">
-              <DesktopProjectNavigation
-                project={{
-                  title: entry.name,
-                  slug: entry.slug,
-                  isUnderReview: entry.isUnderReview,
-                }}
-                sections={navigationSections}
-                projectVariants={entry.projectVariants}
-              />
-            </div>
-            <div className="w-full">
-              <HighlightableLinkContextProvider>
-                <ProjectDetails items={entry.sections} />
-              </HighlightableLinkContextProvider>
-            </div>
-          </div>
-        )}
-      </ContentWrapper>
+      <DataAvailabilityProjectPage projectEntry={entry} />
     </HydrateClient>
   )
 }
 
-async function getPageData(params: { layer: string; bridge: string }) {
+async function getEntry(params: { layer: string; bridge: string }) {
   const layer = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
@@ -145,11 +104,7 @@ async function getPageData(params: { layer: string; bridge: string }) {
       notFound()
     }
 
-    const entry = await getEthereumDaProjectEntry(layer, bridge)
-    return {
-      entry,
-      summaryComponent: <EthereumDaProjectSummary project={entry} />,
-    }
+    return getEthereumDaProjectEntry(layer, bridge)
   }
 
   const entry = await getDaProjectEntry(layer, params.bridge)
@@ -157,8 +112,5 @@ async function getPageData(params: { layer: string; bridge: string }) {
     notFound()
   }
 
-  return {
-    entry,
-    summaryComponent: <RegularDaProjectSummary project={entry} />,
-  }
+  return entry
 }

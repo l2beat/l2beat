@@ -61,5 +61,6 @@ export interface TrackedTxSharedBridgeConfig {
   address: EthereumAddress
   signature: `function ${string}`
   selector: string
+  /** Chain ID for Elastic Chain. Rollup ID for Agglayer */
   chainId: number
 }

@@ -18,6 +18,7 @@
         "PORT",
         "SENTRY_AUTH_TOKEN",
         "SKIP_ENV_VALIDATION",
+        "TINIFY_API_KEY",
         "VERCEL_GIT_COMMIT_REF",
         "VERCEL_GIT_COMMIT_SHA",
         "VERCEL_ENV",

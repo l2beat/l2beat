@@ -1,8 +1,6 @@
-import { MainPageHeader } from '~/components/main-page-header'
-import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingDaEntries } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { ScalingDaTables } from './_components/scaling-da-tables'
+import { ScalingDaPage } from './_page'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -13,12 +11,5 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getScalingDaEntries()
 
-  return (
-    <>
-      <MainPageHeader>Data Availability</MainPageHeader>
-      <TableFilterContextProvider>
-        <ScalingDaTables {...entries} />
-      </TableFilterContextProvider>
-    </>
-  )
+  return <ScalingDaPage entries={entries} />
 }

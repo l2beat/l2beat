@@ -2,7 +2,7 @@
   "name": "pulseChain",
   "chain": "ethereum",
   "blockNumber": 17968825,
-  "configHash": "0xec712cbe6b8d1aab1302ed51ff0261ddcf18c613827449eaf0b3bb45ffabc746",
+  "configHash": "0xaa7e6ce66c8544847c07595834c6abf3b8bdf97507d8619513fbb9cdcffe72e1",
   "entries": [
     {
       "address": "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
@@ -29,13 +29,6 @@
         "0x9720f814127b9abe2e0b23ce0cf1e96d96219277e21d382e52407db172c73c76"
       ],
       "proxyType": "Eternal Storage proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentDay"],
       "sinceTimestamp": 1684141499,
       "sinceBlock": 17264177,
@@ -79,13 +72,6 @@
         "0x5568dae309b68b3870831f43f7a6eb3459ab46bee27f0f282f5b9a0b2f2ed720"
       ],
       "proxyType": "Eternal Storage proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1684140779,
       "sinceBlock": 17264119,
       "values": {
@@ -222,13 +208,6 @@
         "0x580afb6cca5222e2dcaa0dcab547ed491b14414cabd97992abf96566d6af0fa0"
       ],
       "proxyType": "Eternal Storage proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1684140863,
       "sinceBlock": 17264125,
       "values": {
@@ -552,5 +531,6 @@
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x79bb67f77dec84c9b1b122be813b1f20e031bd456159c9b4af0032226197db25"
 }

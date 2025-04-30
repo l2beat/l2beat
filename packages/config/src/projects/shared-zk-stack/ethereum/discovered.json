@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22281621,
-  "configHash": "0xfef2e4896aa06594d2f7f8814f31b3a9cdd6e8fc8701f0525b33773b1eacd593",
+  "configHash": "0x7510b3bddc3abb6e188549888ae3f786660fc3bc39064686cf2e21fd804c6932",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -283,28 +283,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
-          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1717520639,
       "sinceBlock": 20019828,
       "values": {
@@ -766,16 +744,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1739109035,
       "sinceBlock": 21809367,
@@ -881,16 +849,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1739109203,
       "sinceBlock": 21809380,
@@ -1207,16 +1165,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1739109071,
       "sinceBlock": 21809370,
       "values": {
@@ -1461,16 +1409,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1739109131,
       "sinceBlock": 21809375,
       "values": {
@@ -1560,28 +1498,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
-          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1717520663,
       "sinceBlock": 20019830,
       "values": {
@@ -1732,22 +1648,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "pause, unpause and set critical escrow address references.",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1717521479,
       "sinceBlock": 20019898,
       "values": {
@@ -1813,34 +1713,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "start (queue) upgrades.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
-          "description": "extend the legal veto period, approve a protocol upgrade.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1931,14 +1803,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        }
-      ],
       "sinceTimestamp": 1739108879,
       "sinceBlock": 21809354,
       "values": {
@@ -1975,26 +1839,6 @@
       ],
       "proxyType": "immutable",
       "description": "A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
-          "description": "one of its 3/3 signers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
-          "description": "one of its 3/3 signers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c",
-          "description": "one of its 3/3 signers.",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3033,5 +2877,6 @@
     "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x845f5c52bb56cdad184c9075a1d06fe4283a7dd9197c0e9dccc748bb3f80ae85",
     "shared-zk-stack/v26/RollupDAManager": "0x1f13223d5cafcdf085f21bbe6e4a988bc53d13fce1257c48f223e38ac6a11eb9",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x00399ffa4d660290a05f15b7a2264f50c71e7fd94d8adb477df8b0cc48deac1c"
 }

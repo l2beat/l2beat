@@ -46,6 +46,18 @@ describe('getProjects', () => {
     }
   })
 
+  describe('every non-ecosystem project has statuses and display', () => {
+    for (const project of projects) {
+      if (project.ecosystemConfig) {
+        continue
+      }
+      it(project.name, () => {
+        expect(project.statuses).not.toEqual(undefined)
+        expect(project.display).not.toEqual(undefined)
+      })
+    }
+  })
+
   it('every project can be serialized', () => {
     function findNonSerializable(
       value: unknown,
@@ -356,24 +368,6 @@ describe('getProjects', () => {
           }
         }
       })
-    })
-  })
-
-  describe('escrows', () => {
-    it('every escrow is unique', () => {
-      const addressToKey = (address: EthereumAddress, chain: string) =>
-        `${address.toString()} (${chain})`
-      const addresses = new Set<string>()
-
-      for (const project of projects) {
-        for (const { address, chain } of project.tvlConfig?.escrows ?? []) {
-          it(address.toString(), () => {
-            const key = addressToKey(address, chain ?? 'ethereum')
-            expect(addresses.has(key)).toEqual(false)
-            addresses.add(key)
-          })
-        }
-      }
     })
   })
 

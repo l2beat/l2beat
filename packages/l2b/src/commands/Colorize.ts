@@ -11,6 +11,8 @@ import { updateDiffHistory } from '../implementations/discovery/updateDiffHistor
 
 export const Colorize = command({
   name: 'colorize',
+  description:
+    'Recolorize the discovered.json files with newest configuration.',
   args: {},
   handler: async () => {
     const paths = getDiscoveryPaths()

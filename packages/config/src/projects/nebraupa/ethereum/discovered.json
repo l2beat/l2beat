@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0xeb4cf3b507f8eccd5db42019aeeeeaf9bfd8cbafdc87ff9c7b336b7a89161cf0",
+  "configHash": "0xb58f1d09f1a7506ad6e79c78571300b9631bedac8d853d08a3834aac643e8207",
   "entries": [
     {
       "address": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
@@ -23,13 +23,6 @@
         "0xe582f3eab54999f776908b50e2e0f6f3bf03ed8d3c1e5c0d4c7f106234259e85"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "claimableFees",
         "nextSubmissionIdxToVerify",
@@ -365,5 +358,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x85a7afce0991885c62f60ef366ac5ec7f5094b5443888ebc00f4628cb8638bf2"
 }

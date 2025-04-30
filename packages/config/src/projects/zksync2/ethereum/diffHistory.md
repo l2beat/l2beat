@@ -1,3 +1,212 @@
+Generated with discovered.json: 0x12905dcfca93c3640e0ab6c3e8acd6786f8ad6db
+
+# Diff at Tue, 29 Apr 2025 08:19:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22346378
+- current block number: 22346378
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346378 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract.","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x6e08569bfa61bb905be3ca25503b694413dd59a7
+
+# Diff at Fri, 25 Apr 2025 13:36:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c29f37e6f9358f91b847d140615c705e0d4deb52 block: 22297690
+- current block number: 22346378
+
+## Description
+
+TX filterer removed.
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
+      issuedPermissions.2.to:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
+      issuedPermissions.1.to:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      issuedPermissions.0.to:
+-        "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f"
++        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      issuedPermissions.0.description:
+-        "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
++        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TransactionFilterer (0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x1ae30409af0dfa266658881479c867798211bc6c
+
+# Diff at Fri, 18 Apr 2025 18:39:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 22286698
+- current block number: 22297690
+
+## Description
+
+New transaction filterer, still unverified.
+
+Funnily, claude can decompile it and the censored addy matches:
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract ProtectedAddressValidator {
+    address constant PROTECTED_ADDRESS = 0xb1027ed67f89c9f588e097f70807163fec1005d3;
+
+    function isValid(
+        address addr1,
+        address addr2,
+        uint256 param1,
+        uint256 param2,
+        bytes calldata data,
+        address addr3
+    ) external pure returns (bool) {
+        // If first address matches protected address, return false
+        if (addr1 == PROTECTED_ADDRESS) {
+            return false;
+        }
+
+        // Check data length - must be at least 20 bytes (size of an address)
+        uint256 dataLength = data.length;
+        if (dataLength < 20) {
+            return true;
+        }
+
+        // Loop through data to check for protected address
+        for (uint256 i = 0; i < dataLength - 20; i++) {
+            // Extract address from data at current position
+            address extractedAddress;
+            assembly {
+                // Load 32 bytes and mask to get an address (20 bytes)
+                let ptr := add(add(data.offset, 32), i)
+                extractedAddress := and(mload(ptr), 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)
+            }
+
+            // If extracted address matches protected address, return false
+            if (extractedAddress == PROTECTED_ADDRESS) {
+                return false;
+            }
+        }
+
+        // No protected address found in data, return true
+        return true;
+    }
+}
+
+```
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      issuedPermissions.1.to:
+-        "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78"
++        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      issuedPermissions.1.description:
+-        "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
++        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+      issuedPermissions.0.to:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f"
+      issuedPermissions.0.description:
+-        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
++        "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78"
++        "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransactionFilterer (0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22286698 (main branch discovery), not current.
+
+```diff
+    contract  (0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78) {
+    +++ description: None
+      name:
+-        "TransactionFilterer"
++        ""
+    }
+```
+
 Generated with discovered.json: 0x8f9687e7c43a3a4dc8c6b9d29458e53c5dd24b02
 
 # Diff at Thu, 17 Apr 2025 05:43:43 GMT:

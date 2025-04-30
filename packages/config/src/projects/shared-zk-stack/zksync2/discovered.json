@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 57909592,
-  "configHash": "0x6ca16e4251427632438c9a0722ffee4eaebbaec704c4e8fca62daca06a2bdb5b",
+  "blockNumber": 59465384,
+  "configHash": "0xc5e86b1363d19b86565948b61f4d1a5372f750cb330a51bbdcf714321e11dde5",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -14,32 +14,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 0s.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [{ "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -145,7 +119,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1742399363,
+        "clock": 1745324477,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -190,32 +164,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 0s.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [{ "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -274,38 +222,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -413,7 +329,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1742399363,
+        "clock": 1745324477,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -457,30 +373,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
-          "via": [
-            {
-              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
-          "description": "control all roles in the ZkToken access control, including the minter roles.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
-          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
-        }
-      ],
       "ignoreInWatchMode": ["clock", "totalSupply"],
       "sinceTimestamp": 1716317326,
       "sinceBlock": 34572100,
@@ -542,7 +434,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1742399363,
+        "clock": 1745324477,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -563,7 +455,7 @@
         "MinterAdmin": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "12990000568015200000000000000"
+        "totalSupply": "13103157062315200000000000000"
       },
       "derivedName": "ZkTokenV2"
     },
@@ -661,7 +553,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1742399363,
+        "clock": 1745324477,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -679,7 +571,7 @@
         "lateQuorumVoteExtension": 259200,
         "name": "ZkProtocolGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 8,
+        "proposalQueuedCount": 9,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
@@ -722,20 +614,6 @@
       ],
       "proxyType": "immutable",
       "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
-          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -795,7 +673,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1742399363,
+        "clock": 1745324477,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -840,38 +718,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -931,38 +777,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1057,38 +871,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1158,14 +940,6 @@
       ],
       "proxyType": "immutable",
       "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1214,7 +988,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1742399363,
+        "clock": 1745324477,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -1927,8 +1701,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "shared-zk-stack/TimelockController": "0x9410aa635587a43dde5fba3d5c25e28bf016636ecbc59bf235c35793abcdd03e",
-    "shared-zk-stack/ZkGovernor": "0x61bc5eebee9360f812b96318d286fb7dfcd0ae7a504280b888dadd53a1f21bc7",
+    "shared-zk-stack/TimelockController": "0x9e70dcb39a5b49774d7cfdd3e9edbea022ddd1ed82db3313ebcd83bf0af88e43",
+    "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x10be13c3b1d138ac7962969b31c78e55aa0d45fc3133042d1457f930a120b6b8"
-  }
+  },
+  "permissionsConfigHash": "0x00399ffa4d660290a05f15b7a2264f50c71e7fd94d8adb477df8b0cc48deac1c"
 }

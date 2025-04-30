@@ -1,21 +1,26 @@
-import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggLayerEscrow,
   ChainConfig,
   Project,
-  ProjectTvlEscrow,
   TvsToken,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
+import {
+  assert,
+  Bytes,
+  EthereumAddress,
+  TokenId,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../../peripherals/multicall/types'
 import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
-import { createEscrowToken } from '../mapConfig'
+import { createEscrowToken } from '../legacyConfig/mapLegacyConfig'
+import type { LegacyEscrow } from '../legacyConfig/types'
 import { isEmptyAddress } from './isEmptyAddress'
 
 export const bridgeInterface = new utils.Interface([
@@ -23,9 +28,15 @@ export const bridgeInterface = new utils.Interface([
 ])
 const ORIGIN_NETWORK = 0
 
+// We are assuming that the BRIDGE_ADDRESS is the same on all chains
+export const AGGLAYER_L2BRIDGE_ADDRESS = EthereumAddress(
+  '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
+)
+
 export async function getAggLayerTokens(
-  project: Project<'tvlConfig', 'chainConfig'>,
-  escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+  project: Project<'escrows', 'chainConfig'>,
+  associatedTokens: string[],
+  escrow: LegacyEscrow & { sharedEscrow: AggLayerEscrow },
   chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
   localStorage: LocalStorage,
@@ -116,9 +127,7 @@ export async function getAggLayerTokens(
         iconUrl: token.iconUrl,
         category: token.category,
         source: 'canonical' as const,
-        isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-          token.symbol,
-        ),
+        isAssociated: associatedTokens.includes(token.symbol),
         amount: {
           type: 'totalSupply' as const,
           address: item.address,
@@ -219,7 +228,13 @@ export async function getAggLayerTokens(
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
       tokensToAssignFromL1.push(
-        createEscrowToken(project, escrow, chainOfL1Escrow, token),
+        createEscrowToken(
+          project,
+          associatedTokens,
+          escrow,
+          chainOfL1Escrow,
+          token,
+        ),
       )
     }
   }

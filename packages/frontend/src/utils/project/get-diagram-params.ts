@@ -50,7 +50,6 @@ export function getDiagramParams(
       getImageParams(filePath),
     ]),
   )
-
   const { light } = paths
 
   if (!light) return undefined

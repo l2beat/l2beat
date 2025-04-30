@@ -2,7 +2,7 @@
   "name": "gravity",
   "chain": "ethereum",
   "blockNumber": 17065004,
-  "configHash": "0x5ace23277c140234f7d7faa49d2009a36fdd64a7c47dc1efde4d3ea0e5c3ca66",
+  "configHash": "0x8a0c5eb748936980e19a300c47d474b660e81ec7792e0f64faece2b93c990320",
   "entries": [
     {
       "name": "Gravity",
@@ -69,5 +69,6 @@
       "function updateValset(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _newValset, tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa04ec24b64e25b5baf3052ee0047a0ae753d6306bced17dcfb2ca840ca0412e2"
 }

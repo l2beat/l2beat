@@ -1,4 +1,86 @@
-Generated with discovered.json: 0x56c991491c342daa6d0a992cffba612dec3430f2
+Generated with discovered.json: 0x66acbf69b497014a24c66d1239d801e915635c8b
+
+# Diff at Tue, 29 Apr 2025 08:19:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22266078
+- current block number: 22266078
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22266078 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24","via":[]},{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[]},{"permission":"propose","to":"0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23","via":[]},{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[]},{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x26dB93F8b8b4f7016240af62F7730979d353f9A7) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[]},{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x2dF7057d3F25212E51aFEA8dA628668229Ea423f) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","description":"set and change address mappings.","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x3A44A3b263FB631cdbf25f339e2D29497511A81f) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc1dA06CC5DD5cE23bABa924463de7F762039252d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"},{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
+    }
+```
+
+Generated with discovered.json: 0x83988919972989857b574ec1a0c64817c96cc2d9
 
 # Diff at Mon, 14 Apr 2025 08:37:06 GMT:
 

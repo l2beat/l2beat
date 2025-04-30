@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "import": ["../../ethereumConfig.jsonc"],
+  "name": "tokens",
+  "chain": "base",
+  "initialAddresses": [
+    "0xD8724322f44E5c58D7A815F542036fb17DbbF839", // wOETH
+    "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913" // USDC
+  ],
+  "overrides": {
+    "0x1e89F91Ee35D7d21c8e8238c79146daF7aB8Bb94": {
+      // chainlink ccip BurnMintTokenPool
+      "ignoreDiscovery": true
+    }
+  }
+}

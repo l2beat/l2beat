@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x0de94823f8a1ba5a9939ea0b14b799487a8de5dd
+Generated with discovered.json: 0xf07bf7cbbeb955f66282d6326b2e2e95515a1d37
+
+# Diff at Tue, 29 Apr 2025 08:19:30 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 17565279
+- current block number: 17565279
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17565279 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec","via":[]}]
+    }
+```
+
+```diff
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0Bff4B38792a95314b3463E1Bf9831BDa1995391","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xe2af1bc9ddaceeb92b4f5eee117cf2b6682afb41
 
 # Diff at Mon, 31 Mar 2025 12:35:31 GMT:
 

@@ -63,7 +63,7 @@
         "method": "programHash",
         "args": []
       },
-      "returnType": "(StarknetProgramHash)"
+      "edit": ["format", "StarknetProgramHash"]
     },
     "aggregatorHashMapped": {
       "handler": {
@@ -71,7 +71,7 @@
         "method": "aggregatorProgramHash",
         "args": []
       },
-      "returnType": "(StarknetProgramHash)"
+      "edit": ["format", "StarknetProgramHash"]
     }
   },
   "ignoreInWatchMode": [

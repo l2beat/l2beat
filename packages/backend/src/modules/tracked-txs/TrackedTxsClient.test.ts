@@ -13,10 +13,14 @@ import type {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import {
-  sharedBridgeChainId,
-  sharedBridgeCommitBatchesInput,
-  sharedBridgeCommitBatchesSelector,
-  sharedBridgeCommitBatchesSignature,
+  agglayerSharedBridgeChainId,
+  agglayerSharedBridgeVerifyBatchesInput,
+  agglayerSharedBridgeVerifyBatchesSelector,
+  agglayerSharedBridgeVerifyBatchesSignature,
+  elasticChainSharedBridgeChainId,
+  elasticChainSharedBridgeCommitBatchesInput,
+  elasticChainSharedBridgeCommitBatchesSelector,
+  elasticChainSharedBridgeCommitBatchesSignature,
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
@@ -165,9 +169,31 @@ const CONFIGURATIONS = [
       params: {
         formula: 'sharedBridge',
         address: EthereumAddress.random(),
-        selector: sharedBridgeCommitBatchesSelector,
-        chainId: sharedBridgeChainId,
-        signature: sharedBridgeCommitBatchesSignature,
+        selector: elasticChainSharedBridgeCommitBatchesSelector,
+        chainId: elasticChainSharedBridgeChainId,
+        signature: elasticChainSharedBridgeCommitBatchesSignature,
+      },
+    },
+  } as Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+  >,
+  {
+    id: '5',
+    hasData: true,
+    minHeight: 1,
+    maxHeight: 100,
+    properties: {
+      id: '5',
+      projectId: ProjectId('project1'),
+      type: 'l2costs',
+      subtype: 'batchSubmissions',
+      sinceTimestamp: FROM,
+      params: {
+        formula: 'sharedBridge',
+        address: EthereumAddress.random(),
+        selector: agglayerSharedBridgeVerifyBatchesSelector,
+        chainId: agglayerSharedBridgeChainId,
+        signature: agglayerSharedBridgeVerifyBatchesSignature,
       },
     },
   } as Configuration<
@@ -234,7 +260,21 @@ const FUNCTIONS_RESPONSE = [
     to_address: CONFIGURATIONS[3].properties.params.address,
     gas_price: 1500,
     receipt_gas_used: 200000,
-    input: sharedBridgeCommitBatchesInput,
+    input: elasticChainSharedBridgeCommitBatchesInput,
+    transaction_type: 3,
+    calldata_gas_used: 0,
+    data_length: 0,
+    receipt_blob_gas_used: 300,
+    receipt_blob_gas_price: 3,
+  },
+  {
+    hash: TX_HASH,
+    block_number: BLOCK,
+    block_timestamp: toBigQueryDate(FROM),
+    to_address: CONFIGURATIONS[4].properties.params.address,
+    gas_price: 1500,
+    receipt_gas_used: 200000,
+    input: agglayerSharedBridgeVerifyBatchesInput,
     transaction_type: 3,
     calldata_gas_used: 0,
     data_length: 0,
@@ -248,7 +288,7 @@ const parsedFunctionCalls =
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
-  [CONFIGURATIONS[3]],
+  [CONFIGURATIONS[3], CONFIGURATIONS[4]],
   parsedFunctionCalls,
 )
 

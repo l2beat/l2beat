@@ -1,4 +1,3 @@
-import { createIndexerId } from '@l2beat/backend-shared'
 import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import {
@@ -9,6 +8,7 @@ import {
 } from '@l2beat/uif'
 import type { IndexerService } from './IndexerService'
 import { assertUniqueIndexerId } from './ids'
+import { createIndexerId } from './indexerIdentity'
 import type { IndexerTags } from './types'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {

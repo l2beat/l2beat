@@ -1,4 +1,65 @@
-Generated with discovered.json: 0x45888a83e1e720c9131ee7555495937934bf8b42
+Generated with discovered.json: 0x7f3357bc67f9b24314960dee3b35bbaedcd7e9a4
+
+# Diff at Tue, 29 Apr 2025 08:18:58 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337715
+- current block number: 22337715
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337715 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc186fA914353c44b2E33eBE05f21846F1048bEda","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xd2b98cee46be677a29fb7fba20754a4948f35323
+
+# Diff at Thu, 24 Apr 2025 08:36:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22187210
+- current block number: 22337715
+
+## Description
+
+Upgrade the scroll adapter.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Scroll_Adapter (0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.534352:
+-        "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F"
++        "0x2DA799c2223c6ffB595e578903AE6b95839160d8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll_Adapter (0x2DA799c2223c6ffB595e578903AE6b95839160d8)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3af056119078158b8cac1d38813cd3898c8a4fda
 
 # Diff at Thu, 03 Apr 2025 08:31:29 GMT:
 

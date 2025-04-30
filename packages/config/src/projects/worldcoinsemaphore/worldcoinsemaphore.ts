@@ -19,8 +19,14 @@ export const worldcoinsemaphore: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
+  },
+  display: {
+    description: 'Anonymity set inclusion checker for the Worldcoin network.',
+    links: {},
+    badges: [],
   },
   proofVerification: {
     shortDescription:

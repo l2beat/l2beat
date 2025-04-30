@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
   "name": "omni",
   "chain": "gnosis",
   "import": ["../../ethereumConfig.jsonc"],
@@ -10,7 +10,8 @@
   "overrides": {
     "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
       //HomeOmnibridge
-      "proxyType": "Eternal Storage proxy"
+      "proxyType": "Eternal Storage proxy",
+      "ignoreInWatchMode": ["getCurrentDay"]
     },
     "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": {
       // HomeAMB
@@ -19,6 +20,7 @@
     },
     "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": {
       // BridgeValidators
+      "displayName": "BridgeValidators_Gnosis",
       "proxyType": "Eternal Storage proxy"
     },
     "0xD9a3039cfC70aF84AC9E566A2526fD3b683B995B": {
@@ -39,26 +41,28 @@
         "getSyncCommitteePeriod",
         "headers",
         "syncCommittees"
-      ]
+      ],
+      "ignoreInWatchMode": ["getCurrentEpoch", "head"]
     },
     "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": {
       // HashiManager
+      "displayName": "HashiManager_Gnosis",
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
           "description": "Address of the target contract on Ethereum",
           "severity": "HIGH",
-          "returnType": "(EthereumAddress)"
+          "edit": ["format", "EthereumAddress"]
         },
         "adapters": {
           "description": "Array of the adapters on Ethereum",
           "severity": "HIGH",
-          "returnType": "(EthereumAddress[])"
+          "edit": ["map", ["format", "EthereumAddress"]]
         },
         "reporters": {
           "description": "Array of the reporters on Ethereum",
           "severity": "HIGH",
-          "returnType": "(EthereumAddress[])"
+          "edit": ["map", ["format", "EthereumAddress"]]
         },
         "threshold": {
           "description": "Threshold of the adapters on Ethereum",

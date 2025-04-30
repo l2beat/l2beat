@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0x00f91731180e8ca0b16bd659c581fa6f96cacccc580ad11d04b988d63621aa2f",
+  "configHash": "0xd762407b246471b6813ddc33494e2f3e3d1b51895e167ec5388353cd8fb56153",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -652,18 +652,6 @@
         "0xff5700176e3e8e2bcfd99d769eb287166500ca4f9652023c0d9e62f3765a7219"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1681981595,
       "sinceBlock": 17086720,
       "values": {
@@ -1353,13 +1341,6 @@
         "0x06a889d020b7a23683b5ac7ead2e75691788f53221e130558d8fb7d7c343ed57"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1650541439,
       "sinceBlock": 14628098,
       "values": {
@@ -1420,18 +1401,6 @@
         "0xdb6862dac51a4a0c4557ac12d22d60dacbe7086552ee860e94d311508d27862c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1662626413,
       "sinceBlock": 15495566,
       "values": {
@@ -3884,5 +3853,6 @@
     "amarok/Relayer": "0xc06497ad0c634f581d93cefc639ed852334cd7fa0219bc93d7c9400a8e2e8815",
     "amarok/RelayerProxyHub": "0xabf44b5af1f5a5287b387cf1ec1d54a3d609495fa34a36162765992d7d896fc0",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xa146f17f88d39d691ec1a7c3b56a9dbfca83dd1e171289debcf2284ecad01035"
 }

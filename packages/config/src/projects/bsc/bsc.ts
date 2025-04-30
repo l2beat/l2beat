@@ -7,6 +7,18 @@ export const bsc: BaseProject = {
   name: 'Binance Smart Chain',
   shortName: 'BSC',
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
+  display: {
+    description: 'EVM-compatible Layer 1.',
+    links: {},
+    badges: [],
+  },
   chainConfig: {
     name: 'bsc',
     chainId: 56,
