@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xd270bcd76b890ed82913d9eb1403c6492810a488
+Generated with discovered.json: 0x40225847041aa0956c7ac662235c44b92d7c37be
 
-# Diff at Tue, 29 Apr 2025 18:47:12 GMT:
+# Diff at Wed, 30 Apr 2025 08:02:44 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 29581538
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current block number: 29605405
 
 ## Description
 
-Initial L2 conf (init addresses copied from ink).
+Initial L2 config.
 
 ## Initial discovery
 

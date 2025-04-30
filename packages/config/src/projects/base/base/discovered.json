@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "base",
-  "blockNumber": 29581538,
-  "configHash": "0xfea4930f35cdd3c783d92e4b6203d0716d7db0fadbf651468078d7ad8b839d45",
+  "blockNumber": 29605405,
+  "configHash": "0xfcd8b7ffa7e91447226232d56c7bc202fa4f574003a2799f50a71b6e099d0189",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -89,7 +89,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658532",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658548",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -299,18 +299,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 462932261,
+        "basefee": 511191346,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 5034189055,
+        "blobBaseFee": 2483215163,
         "blobBaseFeeScalar": 1055762,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xc8969472143bf882473b14503b409609a297f2b70959a0e4442fe0efdce9dcaa",
+        "hash": "0x2011e56593ea5435423f45f4b7c43480a018a158234ad7b5fec8b502cb2b6261",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 22376580,
-        "sequenceNumber": 3,
-        "timestamp": 1745952239,
+        "number": 22380527,
+        "sequenceNumber": 5,
+        "timestamp": 1745999963,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"

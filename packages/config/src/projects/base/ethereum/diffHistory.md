@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xee0404c2258fc15fc3434b05a5a22be9c4df3a55
+Generated with discovered.json: 0x7398360d93a9304a612fefef55aff11f29fe2877
 
-# Diff at Wed, 30 Apr 2025 07:45:54 GMT:
+# Diff at Wed, 30 Apr 2025 08:02:45 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@84235dd5417ade9a370db923dce740dd4503b6dc block: 22346130
-- current block number: 22380459
+- current block number: 22380542
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Upgraded permissions to handle protocol upgrades with new 3/3 setup. Achieves Stage 1.
 
 ## Watched changes
 
