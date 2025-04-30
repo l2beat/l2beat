@@ -4,5 +4,11 @@
     "address": "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1Nullifier_v27": {
+    "hash": "0x56a8f9e2feec75535d897e8159a8cdf1546d81df34f77964c66bc908820e8687",
+    "address": "0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518",
+    "chain": "ethereum",
+    "blockNumber": 22374168
   }
 }

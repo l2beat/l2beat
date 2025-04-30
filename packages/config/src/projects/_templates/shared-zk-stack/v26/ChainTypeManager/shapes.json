@@ -4,5 +4,11 @@
     "address": "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "ChainTypeManager_v27": {
+    "hash": "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52",
+    "address": "0x6D598c77AF57Bfa17201483400615c61819dD45A",
+    "chain": "ethereum",
+    "blockNumber": 22374168
   }
 }
