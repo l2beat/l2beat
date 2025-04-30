@@ -134,6 +134,7 @@ export interface ProjectColors {
 export interface ProjectStatuses {
   yellowWarning: string | undefined
   redWarning: string | undefined
+  emergencyWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
   // countdowns
