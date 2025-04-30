@@ -227,6 +227,8 @@ export const base: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
+  upgradesAndGovernance:
+    'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Optimism Security Council multisig, with a Safe Module that allows the OP Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The OP Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
     text: `a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
