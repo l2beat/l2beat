@@ -20,6 +20,7 @@ export async function getScalingTvsData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/scaling/value-secured/opengraph-image.png',
         },
       }),
     },

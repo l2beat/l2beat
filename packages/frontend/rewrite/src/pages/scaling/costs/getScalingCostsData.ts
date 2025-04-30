@@ -20,6 +20,7 @@ export async function getScalingCostsData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/scaling/costs/opengraph-image.png',
         },
       }),
     },

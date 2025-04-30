@@ -19,6 +19,7 @@ export async function getScalingFinalityData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/scaling/finality/opengraph-image.png',
         },
       }),
     },

@@ -19,6 +19,7 @@ export async function getScalingRiskData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/scaling/risk-analysis/opengraph-image.png',
         },
       }),
     },

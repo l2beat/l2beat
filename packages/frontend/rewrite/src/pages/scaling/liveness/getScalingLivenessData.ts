@@ -19,6 +19,7 @@ export async function getScalingLivenessData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/scaling/liveness/opengraph-image.png',
         },
       }),
     },
