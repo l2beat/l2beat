@@ -1,10 +1,12 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilityThroughputData(
   manifest: Manifest,
+  url: string,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
@@ -14,9 +16,11 @@ export async function getDataAvailabilityThroughputData(
   return {
     head: {
       manifest,
-      title: 'Data Availability Throughput - L2BEAT',
-      description:
-        'Compare data throughput and capacity across different data availability solutions.',
+      metadata: getMetadata(manifest, {
+        openGraph: {
+          url,
+        },
+      }),
     },
     ssr: {
       page: 'DataAvailabilityThroughputPage',

@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
@@ -6,6 +7,7 @@ import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilitySummaryData(
   manifest: Manifest,
+  url: string,
 ): Promise<RenderData> {
   const [
     appLayoutProps,
@@ -20,9 +22,11 @@ export async function getDataAvailabilitySummaryData(
   return {
     head: {
       manifest,
-      title: 'Data Availability Summary - L2BEAT',
-      description:
-        'L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+      metadata: getMetadata(manifest, {
+        openGraph: {
+          url,
+        },
+      }),
     },
     ssr: {
       page: 'DataAvailabilitySummaryPage',

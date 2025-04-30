@@ -14,19 +14,22 @@ export function DataAvailabilityRouter(
   render: RenderFunction,
 ) {
   app.get('/data-availability/summary', async (req, res) => {
-    const data = await getDataAvailabilitySummaryData(manifest)
+    const data = await getDataAvailabilitySummaryData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/data-availability/risk', async (req, res) => {
-    const data = await getDataAvailabilityRiskData(manifest)
+    const data = await getDataAvailabilityRiskData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/data-availability/throughput', async (req, res) => {
-    const data = await getDataAvailabilityThroughputData(manifest)
+    const data = await getDataAvailabilityThroughputData(
+      manifest,
+      req.originalUrl,
+    )
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
@@ -40,7 +43,11 @@ export function DataAvailabilityRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getDataAvailabilityProjectData(manifest, req.params)
+      const data = await getDataAvailabilityProjectData(
+        manifest,
+        req.params,
+        req.originalUrl,
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
