@@ -6,10 +6,10 @@ export function getPureDefaultMetadata(props?: {
   description?: string
 }): { title: string; description: string } {
   return {
-    title: 'L2BEAT - The state of the layer two ecosystem',
+    title: props?.title ?? 'L2BEAT - The state of the layer two ecosystem',
     description:
+      props?.description ??
       'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
-    ...props,
   }
 }
 

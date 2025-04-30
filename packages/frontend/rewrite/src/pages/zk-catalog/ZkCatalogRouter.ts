@@ -23,7 +23,11 @@ export function ZkCatalogRouter(
       params: z.object({ slug: z.string() }),
     }),
     async (req, res) => {
-      const data = await getZkCatalogProjectData(manifest, req.params.slug)
+      const data = await getZkCatalogProjectData(
+        manifest,
+        req.params.slug,
+        req.originalUrl,
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
