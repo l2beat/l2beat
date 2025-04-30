@@ -17,7 +17,7 @@ import {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { ValueService } from '../services/ValueService'
 import {
   type AmountConfig,
@@ -171,10 +171,6 @@ export class LocalExecutor {
       )
 
       if (etherscanApi) {
-        assert(
-          chainConfig.chainId,
-          `${chainConfig.name}: chainConfig.chainId is required for etherscan API`,
-        )
         indexerClients.push(
           new BlockIndexerClient(
             http,
@@ -184,7 +180,7 @@ export class LocalExecutor {
               url: this.env.string('ETHERSCAN_API_URL'),
               apiKey: this.env.string('ETHERSCAN_API_KEY'),
               chain: chainConfig.name,
-              chainId: chainConfig.chainId,
+              chainId: etherscanApi.chainId,
             },
           ),
         )
