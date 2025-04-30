@@ -231,4 +231,13 @@ export const base: ScalingProject = opStackL2({
     category: 'Funds can be stolen if',
     text: `a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
   },
+  nonTemplateRiskView: {
+    exitWindow: {
+      value: 'None',
+      description:
+        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 3 parties: Base multisig, the Op Foundation Operations multisig, and the Base Security Council.',
+      sentiment: 'bad',
+      orderHint: 0, // 0-7 days
+    },
+  },
 })
