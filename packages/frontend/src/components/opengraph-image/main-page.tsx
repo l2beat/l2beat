@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react'
-
 /* eslint-disable @next/next/no-img-element */
 
 export interface MainPage {
@@ -131,7 +129,7 @@ export function MainPageOpengraphImage({ type, title, size, baseUrl }: Props) {
   )
 }
 
-const typeToIcon: Record<NonNullable<MainPage['type']>, ReactNode> = {
+const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
   scaling: (
     <svg
       width="39"
