@@ -1,11 +1,10 @@
 'use client'
 
-import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
-import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
-import { useState } from 'react'
 import { assert } from '@l2beat/shared-pure'
+import { chunk } from 'lodash'
+import { useState } from 'react'
 import Image from '~/_next/image'
-import { ArrowIcon } from '~/icons/arrow'
+import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import {
   Tooltip,
   TooltipContent,
@@ -13,8 +12,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
-import { chunk } from 'lodash'
-import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { ArrowIcon } from '~/icons/arrow'
+import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
+import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemProjectsByRaas({
   projectsByRaas,
