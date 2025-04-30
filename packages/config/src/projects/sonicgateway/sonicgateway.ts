@@ -85,16 +85,19 @@ export const sonicgateway: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description:
-        'Transfers need to be signed by a threshold of 6/8 Validators and then relayed to the destination chain.',
+      value: `Multisig (${validatorThresholdString})`,
+      description: `${validatorThresholdString} Validators with onchain transparent signer addresses.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'The code that secures the system can be changed arbitrarily and without notice.',
+      value: `Multisig (${discovery.getMultisigStats('SonicGatewayMultisig')})`,
+      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Gnosis Bridge Multisig')} SonicGatewayMultisig`,
       sentiment: 'bad',
+    },
+    livenessFailure: {
+      value: 'Reclaim funds',
+      description: `If the operators do not service the bridge, deposited funds do not arrive at the destination chain but can be reclaimed on the source chain after ${timeUntilDeadString}.`,
+      sentiment: 'warning',
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
