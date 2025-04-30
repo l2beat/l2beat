@@ -22,7 +22,8 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts",
-    "generate-og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts"
+    "generate-og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts",
+    "rewrite:tinify": "tsx rewrite/scripts/tinify"
   },
   "dependencies": {
     "@l2beat/config": "workspace:*",
