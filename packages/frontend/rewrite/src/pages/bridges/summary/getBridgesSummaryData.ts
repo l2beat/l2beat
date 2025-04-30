@@ -19,6 +19,7 @@ export async function getBridgesSummaryData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/bridges/summary/opengraph-image.png',
         },
       }),
     },

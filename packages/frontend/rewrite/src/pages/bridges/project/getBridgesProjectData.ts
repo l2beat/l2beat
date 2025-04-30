@@ -48,6 +48,7 @@ export async function getBridgesProjectData(
         description: project.display.description,
         openGraph: {
           url,
+          image: `/meta-images/bridges/projects/${project.slug}/opengraph-image.png`,
         },
       }),
     },

@@ -19,6 +19,7 @@ export async function getBridgesRiskData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/bridges/risk-analysis/opengraph-image.png',
         },
       }),
     },
