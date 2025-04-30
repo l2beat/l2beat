@@ -10,7 +10,7 @@ import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
-import { parseClingoFact } from './clingoparser'
+import { type ClingoFact, parseClingoFact } from './clingoparser'
 import { generateClingoFromModelLp } from './generateClingo'
 import { generateClingoFromPermissionsConfig } from './generateClingo'
 import { parseUltimatePermissionFact } from './parseUltimatePermissionFact'
@@ -31,6 +31,13 @@ export async function modelPermissions(
       paths,
       debug,
     )
+  return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
+}
+
+export async function buildPermissionsOutput(
+  permissionFacts: ClingoFact[],
+  permissionsConfigHash: Hash256,
+) {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
   const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
@@ -41,6 +48,21 @@ export async function modelPermissions(
     permissionsConfigHash,
     permissions: ultimatePermissions,
   }
+}
+
+export async function runClingoForSingleModel(clingoInput: string) {
+  const clingoResult = await runClingo(clingoInput)
+  if (clingoResult.Result === 'ERROR') {
+    throw new Error(clingoResult.Error)
+  }
+  if (clingoResult.Models.Number !== 1) {
+    throw new Error('Expected 1 model, got ' + clingoResult.Models.Number)
+  }
+  const facts = clingoResult.Call[0]?.Witnesses[0]?.Value as string[]
+  if (!facts) {
+    throw new Error('No facts found')
+  }
+  return facts
 }
 
 export async function modelPermissionFactsUsingClingo(
@@ -62,17 +84,7 @@ export async function modelPermissionFactsUsingClingo(
   const inputFilePath = join(projectPath, 'clingo.input.lp')
   writeFileSync(inputFilePath, combinedClingo)
 
-  const clingoResult = await runClingo(combinedClingo)
-  if (clingoResult.Result === 'ERROR') {
-    throw new Error(clingoResult.Error)
-  }
-  if (clingoResult.Models.Number !== 1) {
-    throw new Error('Expected 1 model, got ' + clingoResult.Models.Number)
-  }
-  const facts = clingoResult.Call[0]?.Witnesses[0]?.Value as string[]
-  if (!facts) {
-    throw new Error('No facts found')
-  }
+  const facts = await runClingoForSingleModel(combinedClingo)
 
   const outputFilePath = join(projectPath, 'clingo.output.lp')
   writeFileSync(outputFilePath, facts.join('.\n'))
@@ -161,4 +173,24 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
+}
+
+// This function is a temporary solution for Update Monitor
+// which does discovery per single isolated project.
+export async function modelPermissionsForIsolatedDiscovery(
+  discovery: DiscoveryOutput,
+  permissionConfig: PermissionsConfig,
+  templateService: TemplateService,
+  paths: DiscoveryPaths,
+) {
+  const clingoForProject = generateClingoForProjectOnChain(
+    permissionConfig,
+    discovery,
+    templateService,
+  )
+  const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
+  const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
+  const facts = await runClingoForSingleModel(combinedClingo)
+  const parsedFacts = facts.map(parseClingoFact)
+  return buildPermissionsOutput(parsedFacts, Hash256.ZERO) // hash for isolated discovery is incorrect anyway
 }
