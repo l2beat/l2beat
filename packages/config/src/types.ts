@@ -1092,6 +1092,18 @@ export const TotalSupplyAmountFormulaSchema = z.object({
   decimals: z.number(),
 })
 
+export type StarknetTotalSupplyAmountFormula = z.infer<
+  typeof StarknetTotalSupplyAmountFormulaSchema
+>
+export const StarknetTotalSupplyAmountFormulaSchema = z.object({
+  type: z.literal('starknetTotalSupply'),
+  chain: z.string(),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  address: z.string(),
+  decimals: z.number(),
+})
+
 export type CirculatingSupplyAmountFormula = z.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
@@ -1120,11 +1132,27 @@ export const AmountFormulaSchema = z.union([
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
+  StarknetTotalSupplyAmountFormulaSchema,
 ])
 
 export type Formula = CalculationFormula | ValueFormula | AmountFormula
 export function isAmountFormula(formula: Formula): boolean {
   return formula.type !== 'calculation' && formula.type !== 'value'
+}
+
+export type OnchainAmountFormula =
+  | BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | StarknetTotalSupplyAmountFormula
+
+export function isOnchainAmountFormula(
+  formula: Formula,
+): formula is OnchainAmountFormula {
+  return (
+    formula.type === 'totalSupply' ||
+    formula.type === 'balanceOfEscrow' ||
+    formula.type === 'starknetTotalSupply'
+  )
 }
 
 // token deployed to single chain

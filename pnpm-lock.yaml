@@ -287,6 +287,9 @@ importers:
       p-limit:
         specifier: ^6.1.0
         version: 6.1.0
+      zod-to-json-schema:
+        specifier: ^3.24.4
+        version: 3.24.5(zod@3.23.8)
 
   packages/database:
     dependencies:
