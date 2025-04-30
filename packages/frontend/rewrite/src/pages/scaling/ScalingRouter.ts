@@ -1,6 +1,6 @@
 import type { Router } from 'express'
 import type { RenderFunction } from 'rewrite/src/ssr/server'
-import { validateRoute } from 'rewrite/src/ssr/validateRoute'
+import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
 import { getScalingActivityData } from './activity/getScalingActivityData'
