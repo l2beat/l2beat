@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x40225847041aa0956c7ac662235c44b92d7c37be
+Generated with discovered.json: 0x3cd7e8616499b321428fd292676f3069b0103889
 
-# Diff at Wed, 30 Apr 2025 08:02:44 GMT:
+# Diff at Wed, 30 Apr 2025 08:06:07 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - current block number: 29605405
 
 ## Description
 
-Initial L2 config.
+base
 
 ## Initial discovery
 
@@ -25,7 +25,7 @@ Initial L2 config.
 
 ```diff
 +   Status: CREATED
-    contract  (0x420000000000000000000000000000000000000F)
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F)
     +++ description: None
 ```
 

@@ -103,7 +103,7 @@
       "derivedName": "L2CrossDomainMessenger"
     },
     {
-      "name": "",
+      "name": "GasPriceOracle",
       "address": "0x420000000000000000000000000000000000000F",
       "type": "Contract",
       "unverified": true,
@@ -1257,5 +1257,5 @@
     "opstack/Layer2/OptimismMintableERC721Factory": "0xbb8ec39d7870faca409a8c1ff8da350ef80d61228a6aa0e950e8de4b9294f909",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x1bb2de55b43dda56dae5747106b031f7d42606e6338df1d151502c62d7d6f019"
+  "permissionsConfigHash": "0xa35fb4bf129fdc91590300bacf8241a67bb0f9c090a417fa8afb8ad629164164"
 }

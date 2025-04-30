@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7398360d93a9304a612fefef55aff11f29fe2877
+Generated with discovered.json: 0x65f6358bba357301346649392ac5f12ccf580c46
 
-# Diff at Wed, 30 Apr 2025 08:02:45 GMT:
+# Diff at Wed, 30 Apr 2025 08:06:07 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@84235dd5417ade9a370db923dce740dd4503b6dc block: 22346130
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7398360d93a9304a612fefef55aff11f29fe2877
 
 ## Description
 
-Upgraded permissions to handle protocol upgrades with new 3/3 setup. Achieves Stage 1.
+base
 
 ## Watched changes
 
