@@ -1,10 +1,10 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
-import { chunk } from 'lodash'
 import { useState } from 'react'
 import Image from '~/_next/image'
 import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
@@ -29,7 +29,7 @@ export function EcosystemProjectsByRaas({
   const [raas, { projects, icon }] = raasEntry
 
   return (
-    <EcosystemWidget className={className}>
+    <EcosystemWidget className={cn(className, 'select-none')}>
       <EcosystemWidgetTitle className="mb-4">
         RaaS Providers
       </EcosystemWidgetTitle>
@@ -72,32 +72,24 @@ export function EcosystemProjectsByRaas({
         Used by
       </div>
       {projects.length <= 4 ? (
-        <table className="w-full">
-          <tbody>
-            {chunk(projects, 2).map((row, index) => (
-              <tr key={index}>
-                {row.map((project) => (
-                  <td key={project.slug} className="w-1/2 pb-1.5 ">
-                    <ProjectLinkWithTooltip project={project}>
-                      <div className="flex items-center gap-2">
-                        <Image
-                          src={project.icon}
-                          className="rounded-sm"
-                          alt={project.name}
-                          width={18}
-                          height={18}
-                        />
-                        <div className="whitespace-nowrap text-xs font-bold">
-                          {project.name}
-                        </div>
-                      </div>
-                    </ProjectLinkWithTooltip>
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid w-full grid-cols-2">
+          {projects.map((p) => (
+            <ProjectLinkWithTooltip key={p.slug} project={p}>
+              <div className="flex items-center gap-2">
+                <Image
+                  src={p.icon}
+                  className="rounded-sm"
+                  alt={p.name}
+                  width={18}
+                  height={18}
+                />
+                <div className="whitespace-nowrap text-xs font-bold">
+                  {p.name}
+                </div>
+              </div>
+            </ProjectLinkWithTooltip>
+          ))}
+        </div>
       ) : (
         <div className="flex flex-wrap gap-2">
           {projects.map((project) => (
