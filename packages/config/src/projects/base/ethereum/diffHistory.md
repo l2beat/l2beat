@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb423f6b6aaf13a09ed46afa0f28eeac3bc7d5035
 
 ## Description
 
-base stage 1 review.
+Base stage 1 upgrade. System upgrades are now governed by a 3/3 setup where upgrades need to be approved by Base Security Council (7/10), a Base multisig (3/6) and Op Operations multisig (5/7).
 
 ## Watched changes
 

@@ -7,7 +7,7 @@ Generated with discovered.json: 0x0449ef9ac49e3bd9d4707e63e7b8f845e2cd5cb7
 
 ## Description
 
-base l2 initial discovery.
+Base l2 initial discovery.
 
 ## Initial discovery
 
