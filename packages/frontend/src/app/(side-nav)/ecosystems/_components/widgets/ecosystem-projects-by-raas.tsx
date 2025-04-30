@@ -9,6 +9,7 @@ import { ArrowIcon } from '~/icons/arrow'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
@@ -127,10 +128,12 @@ function ProjectLinkWithTooltip({
       >
         <TooltipTrigger>{children}</TooltipTrigger>
       </LinkWithOnHoverPrefetch>
-      <TooltipContent className="z-999">
-        <p className="font-bold">{project.name}</p>
-        <p className="text-xs text-secondary">Click to view project page</p>
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent>
+          <p className="font-bold">{project.name}</p>
+          <p className="text-xs text-secondary">Click to view project page</p>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }
