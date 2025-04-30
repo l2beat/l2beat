@@ -60,7 +60,7 @@ export default async function Image({ params }: Props) {
       size={size}
     >
       {/* See comment in zk-catalog/[slug]/opengraph-image.tsx for explanation why we use &nbsp; */}
-      TVS BREAKDOWN
+      SCALING&nbsp;•&nbsp;PROJECT&nbsp;PAGE
     </ProjectOpengraphImage>,
     {
       ...size,
