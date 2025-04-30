@@ -85,8 +85,7 @@ export async function getTvsConfig(
       return {
         chainName: c,
         configurationId: generateConfigurationId([`chain_${c}`]),
-        sinceTimestamp:
-          sinceTimestamp ?? project.chainConfig.sinceTimestamp,
+        sinceTimestamp: sinceTimestamp ?? project.chainConfig.sinceTimestamp,
         untilTimestamp: project.chainConfig.untilTimestamp,
       }
     }),
