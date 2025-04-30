@@ -1,16 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW } from '../../common'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
+const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
 
 export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   discovery,
   genesisTimestamp,
+  additionalDiscoveries: { ['base']: l2Discovery },
   display: {
     name: 'Base',
     slug: 'base',
@@ -159,36 +162,41 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
-  stage: {
-    stage: 'UnderReview',
-  },
-  // getStage(
-  //   {
-  //     stage0: {
-  //       callsItselfRollup: true,
-  //       stateRootsPostedToL1: true,
-  //       dataAvailabilityOnL1: true,
-  //       rollupNodeSourceAvailable: true,
-  //     },
-  //     stage1: {
-  //       principle: false,
-  //       stateVerificationOnL1: true,
-  //       fraudProofSystemAtLeast5Outsiders: true,
-  //       usersHave7DaysToExit: false,
-  //       usersCanExitWithoutCooperation: true,
-  //       securityCouncilProperlySetUp: false,
-  //     },
-  //     stage2: {
-  //       proofSystemOverriddenOnlyInCaseOfABug: false,
-  //       fraudProofSystemIsPermissionless: true,
-  //       delayWith30DExitWindow: false,
-  //     },
-  //   },
-  //   {
-  //     rollupNodeLink: 'https://github.com/base-org/node',
-  //   },
-  // ),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/base-org/node',
+    },
+  ),
   milestones: [
+    {
+      title: 'Base achieves Stage 1',
+      url: 'https://base.mirror.xyz/tWDMlGp48fF0MeADcLQruUBq1Qxkou4O5x3ax8Rm3jA',
+      date: '2025-04-29T00:00:00Z',
+      description:
+        'Through an upgrade in their governance process and a Security Council, Base is now stage 1.',
+      type: 'general',
+    },
     {
       title: 'Fault proofs!',
       url: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
@@ -221,6 +229,15 @@ export const base: ScalingProject = opStackL2({
   ],
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
-    text: `a contract receives a malicious code upgrade. Upgrades must be approved by both the BaseMultisig1 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
+    text: `a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
+  },
+  nonTemplateRiskView: {
+    exitWindow: {
+      value: 'None',
+      description:
+        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 3 parties: Base multisig, the Op Foundation Operations multisig, and the Base Security Council.',
+      sentiment: 'bad',
+      orderHint: 0, // 0-7 days
+    },
   },
 })

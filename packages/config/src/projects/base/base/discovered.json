@@ -1,80 +1,74 @@
 {
-  "name": "optimism",
-  "chain": "optimism",
-  "blockNumber": 132493968,
-  "configHash": "0xada090f7cbda3a31201bfe9fcbcd1675c39544c6d05ed05f693664ff56a63269",
+  "name": "base",
+  "chain": "base",
+  "blockNumber": 29605802,
+  "configHash": "0x9cabdf4e4e7df8420b11323094ee37e8d8eb10b7970d728040b028665e41d4ac",
   "entries": [
     {
-      "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "MintManagerOwner",
-      "address": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
+      "name": "FeeDisburser",
+      "address": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
       "type": "Contract",
-      "template": "GnosisSafe",
+      "template": "opstack/Layer2/FeeDisburser",
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
-          "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1650712171,
-      "sinceBlock": 6297293,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$members": [
-          "0x3041BA32f451F5850c147805F5521AC206421623",
-          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
-          "0xdb203D7f00fF435dA107543B33495f9cA2c484C6",
-          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x462891ca8f7777ee79e5fe4366d0577864fdf00769c59e345303b084bf0cf38d",
-        "getChainId": 10,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafeL2"
-    },
-    {
-      "address": "0x3041BA32f451F5850c147805F5521AC206421623",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "DeployerWhitelist",
-      "address": "0x4200000000000000000000000000000000000002",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x40a3a457f0e922425ed48d80603e24e652453f57be197487f62795991cff2c2b"
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.",
-      "sinceTimestamp": 1636665399,
-      "sinceBlock": 0,
+      "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
+      "sinceTimestamp": 1686802803,
+      "sinceBlock": 6728,
       "values": {
-        "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "version": "1.0.0"
+        "$admin": "0xd94E416cf2c7167608B2515B7e4102B41efff94f",
+        "$implementation": "0x45969D00739d518f0Dde41920B67cE30395135A0",
+        "$pastUpgrades": [
+          [
+            "2023-09-01T23:06:43.000Z",
+            "0x49e50b94dd7c45505380b0015b912b001354b9103fc5549d05a2b4bb7e433278",
+            ["0x45969D00739d518f0Dde41920B67cE30395135A0"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "BASIS_POINT_SCALE": 10000,
+        "FEE_DISBURSEMENT_INTERVAL": 86400,
+        "L1_WALLET": "0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
+        "lastDisbursementTime": 1745862705,
+        "netFeeRevenue": 0,
+        "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
+        "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
+        "OPTIMISM_WALLET": "0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
+        "WITHDRAWAL_MIN_GAS": 35000
       },
-      "derivedName": "DeployerWhitelist"
+      "derivedName": "FeeDisburser"
+    },
+    {
+      "address": "0x1084092Ac2f04c866806CF3d4a385Afa4F6A6C97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3FDf3c4bf8783bB94295b9219DF74a648f397360",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -88,20 +82,20 @@
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
       "ignoreInWatchMode": ["messageNonce"],
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644335",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658548",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "OTHER_MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
         "RELAY_GAS_CHECK_BUFFER": 5000,
@@ -109,50 +103,6 @@
         "version": "1.4.0"
       },
       "derivedName": "L2CrossDomainMessenger"
-    },
-    {
-      "name": "GasPriceOracle",
-      "address": "0x420000000000000000000000000000000000000F",
-      "type": "Contract",
-      "template": "opstack/Layer2/GasPriceOracle",
-      "sourceHashes": [
-        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x6d0f92051952bf3dcccae9e0ff5cf654e3b386df386bc0609b0c7234a2a108bb"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Provides the current gas price for L2 transactions.",
-      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
-      "sinceTimestamp": 1636665399,
-      "sinceBlock": 0,
-      "values": {
-        "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xa919894851548179A0750865e7974DA599C0Fac7",
-        "$pastUpgrades": [
-          [
-            "2024-03-14T00:00:01.000Z",
-            "0xedbfdad1f44ea830b863eac45eca4408398351b30511826012882059625963d2",
-            ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
-          ],
-          [
-            "2024-07-10T16:00:01.000Z",
-            "0x2f63bbe08a66796dde569281a58a53e0b0f64b7aa067297e9c70455fb8e375bc",
-            ["0xa919894851548179A0750865e7974DA599C0Fac7"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "baseFee": 0,
-        "baseFeeScalar": 5227,
-        "blobBaseFee": 17002220575,
-        "blobBaseFeeScalar": 1014213,
-        "decimals": 6,
-        "DECIMALS": 6,
-        "gasPrice": 0,
-        "isEcotone": true,
-        "isFjord": true,
-        "l1BaseFee": 1654611049,
-        "version": "1.3.0"
-      },
-      "derivedName": "GasPriceOracle"
     },
     {
       "name": "L2StandardBridge",
@@ -165,17 +115,17 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1TokenBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "l1TokenBridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "OTHER_BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "version": "1.1.0"
       },
       "derivedName": "L2StandardBridge"
@@ -187,21 +137,33 @@
       "template": "opstack/Layer2/SequencerFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xf13800f6674424ad602d8daac646acfc10794f492253796903ac26b7fdb3eabf"
+        "0xa6e80925a541b18f301edb66231f85cc8aee7aba084674ca3e2822f55d5295d1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "l1FeeWallet": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
-        "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "version": "1.1.0"
+        "$implementation": "0xd53210eE20948eCFF8B6B8180E29657e0ce8492d",
+        "$pastUpgrades": [
+          [
+            "2023-09-01T17:35:23.000Z",
+            "0xe56b939e6eed472f168be6942f7b08af959d3777eee8b8508f82ef5ade47d528",
+            ["0x54d194FaAe439fc3f8024801B0b9EBc91Ebd39f5"]
+          ],
+          [
+            "2023-09-01T17:35:23.000Z",
+            "0xe56b939e6eed472f168be6942f7b08af959d3777eee8b8508f82ef5ade47d528",
+            ["0xd53210eE20948eCFF8B6B8180E29657e0ce8492d"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "l1FeeWallet": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
+        "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
+        "RECIPIENT": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
+        "version": "1.3.0",
+        "WITHDRAWAL_NETWORK": 1
       },
       "derivedName": "SequencerFeeVault"
     },
@@ -212,19 +174,26 @@
       "template": "opstack/Layer2/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x33cbc2e27551e9c304842740517adbe533ed12516557dc9a8b7c63f7d599998b"
+        "0xaf8d1aec41a22039c90d3ea23d8b660cbe441037e0fe15f90b7c39c46c34d07d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$implementation": "0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91",
+        "$pastUpgrades": [
+          [
+            "2024-05-20T17:23:27.000Z",
+            "0xf433ab504bcdb633914551cb2410aa89683d05db0062dca76fbe7a48297745c0",
+            ["0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "bridge": "0x4200000000000000000000000000000000000010",
         "BRIDGE": "0x4200000000000000000000000000000000000010",
-        "version": "1.1.0"
+        "version": "1.9.0"
       },
       "derivedName": "OptimismMintableERC20Factory"
     },
@@ -239,7 +208,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns the latest L1 block number.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -261,23 +230,17 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
-      "sinceTimestamp": 1664918265,
-      "sinceBlock": 27391910,
+      "sinceTimestamp": 1686789349,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
-        "$pastUpgrades": [
-          [
-            "2022-10-04T21:36:13.000Z",
-            "0x02985bade8b066202067f455d11aa0996a23c022fcd923e113af5d9997ddb5ce",
-            ["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
-        "otherBridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
+        "OTHER_BRIDGE": "0x608d94945A64503E642E6370Ec598e519a2C1E53",
+        "otherBridge": "0x608d94945A64503E642E6370Ec598e519a2C1E53",
         "version": "1.1.0"
       },
       "derivedName": "L2ERC721Bridge"
@@ -301,7 +264,7 @@
         "sequenceNumber",
         "blobBaseFee"
       ],
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -314,18 +277,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 1654611049,
-        "baseFeeScalar": 5227,
-        "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 17002220575,
-        "blobBaseFeeScalar": 1014213,
+        "basefee": 423451016,
+        "baseFeeScalar": 2269,
+        "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
+        "blobBaseFee": 3399547344,
+        "blobBaseFeeScalar": 1055762,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x1d84ad40a58f30f4978c565c19ff59852009c4518ba016552859854e006ce638",
+        "hash": "0xbafc24783be73a73f2a3d55d82d81e853ddfa1bfe015a609b1045d0d8c69e487",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 21931648,
-        "sequenceNumber": 0,
-        "timestamp": 1740586643,
+        "number": 22380593,
+        "sequenceNumber": 3,
+        "timestamp": 1746000767,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -341,7 +304,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -364,7 +327,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -390,15 +353,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000002"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000007"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x420000000000000000000000000000000000000F"
         },
         {
           "permission": "upgrade",
@@ -453,7 +408,7 @@
           "from": "0x4200000000000000000000000000000000000021"
         }
       ],
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -462,7 +417,7 @@
         "$upgradeCount": 0,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
-        "owner": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+        "owner": "0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
       },
       "derivedName": "ProxyAdmin"
     },
@@ -473,20 +428,32 @@
       "template": "opstack/Layer2/BaseFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x0c18a8a786c9a78d1ea6a3f71ee3369ae8acc817629b8bf4934b05f8a38a41a2"
+        "0x0834e3a66bf6d3446ab3f5e42dde52e5ce5072d98b3b4a7e049ca96280b9f635"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
-        "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "version": "1.1.0"
+        "$implementation": "0x4E207bDF8aece56de86821f5370b2b993D08C9E9",
+        "$pastUpgrades": [
+          [
+            "2023-09-01T17:35:23.000Z",
+            "0xe56b939e6eed472f168be6942f7b08af959d3777eee8b8508f82ef5ade47d528",
+            ["0xB0B77878bBc76E29aBE7584Bda27ae3CE1A9059a"]
+          ],
+          [
+            "2023-09-01T17:35:23.000Z",
+            "0xe56b939e6eed472f168be6942f7b08af959d3777eee8b8508f82ef5ade47d528",
+            ["0x4E207bDF8aece56de86821f5370b2b993D08C9E9"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
+        "RECIPIENT": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
+        "version": "1.3.0",
+        "WITHDRAWAL_NETWORK": 1
       },
       "derivedName": "BaseFeeVault"
     },
@@ -497,20 +464,32 @@
       "template": "opstack/Layer2/L1FeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xa5448c99f954f5f48195d1e118c0513d52fe9a6357928d1d29f617258ca935ff"
+        "0x2bbc4761e06b3858a304723900de8a855d85d9eb247116f2315f3714a47ad71b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
-        "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "version": "1.1.0"
+        "$implementation": "0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC",
+        "$pastUpgrades": [
+          [
+            "2023-09-01T17:35:23.000Z",
+            "0xe56b939e6eed472f168be6942f7b08af959d3777eee8b8508f82ef5ade47d528",
+            ["0xD36F11023188134d0f4610fF0C6e01c1B11488f8"]
+          ],
+          [
+            "2023-09-01T17:35:23.000Z",
+            "0xe56b939e6eed472f168be6942f7b08af959d3777eee8b8508f82ef5ade47d528",
+            ["0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "MIN_WITHDRAWAL_AMOUNT": "2000000000000000000",
+        "RECIPIENT": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
+        "version": "1.3.0",
+        "WITHDRAWAL_NETWORK": 1
       },
       "derivedName": "L1FeeVault"
     },
@@ -525,16 +504,16 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13",
+        "$implementation": "0x75505a97BD334E7BD3C476893285569C4136Fa0F",
         "$pastUpgrades": [
           [
-            "2023-07-27T22:05:33.000Z",
-            "0xe09a2d85965656572055111f1968491e9bb6b174bfaa5b3e38dbbb82ef94e6fb",
-            ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]
+            "2023-09-08T14:42:59.000Z",
+            "0x582b0cae963bb1ae3f7ec048fbc359b6dbff0dbfdcc033f301ff58c097755a27",
+            ["0x75505a97BD334E7BD3C476893285569C4136Fa0F"]
           ]
         ],
         "$upgradeCount": 1,
@@ -553,21 +532,21 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
-      "sinceTimestamp": 1636665399,
+      "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088",
+        "$implementation": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "$pastUpgrades": [
           [
-            "2023-07-27T22:05:33.000Z",
-            "0xe09a2d85965656572055111f1968491e9bb6b174bfaa5b3e38dbbb82ef94e6fb",
-            ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]
+            "2023-09-08T14:42:59.000Z",
+            "0x582b0cae963bb1ae3f7ec048fbc359b6dbff0dbfdcc033f301ff58c097755a27",
+            ["0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"]
           ]
         ],
         "$upgradeCount": 1,
         "getAttestTypeHash": "0xdbfdf8dc2b135c26253e00d5b6cbe6f20457e003fd526d97cea183883570de61",
-        "getDomainSeparator": "0xd963157246e3d9bacafb6121ee5c596e8048baf5c3814c1b9fa094fdc4d6aed1",
+        "getDomainSeparator": "0x441f04bd3fc4b9bbef0e92ccbdd47cebd80211d531918066401ffc7c91fd954b",
         "getName": "EAS",
         "getRevokeTypeHash": "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
@@ -576,74 +555,34 @@
       "derivedName": "EAS"
     },
     {
-      "name": "OPToken",
-      "address": "0x4200000000000000000000000000000000000042",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbaac8c2c26ae66ca5f26a277a6fc9ad2cac1d8e638fae5ab2589b8fec8262316"
-      ],
-      "proxyType": "immutable",
-      "description": "The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.",
-      "ignoreInWatchMode": ["totalSupply"],
-      "sinceTimestamp": 1650979836,
-      "sinceBlock": 6490467,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xd423c9c6b838296762a6bbf9663d4609148ea6bc83b5e94ce2c05615edc69072",
-        "name": "Optimism",
-        "owner": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
-        "symbol": "OP",
-        "totalSupply": "4294963294239972048644009441"
-      },
-      "derivedName": "GovernanceToken"
-    },
-    {
-      "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+      "address": "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "MintManager",
-      "address": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x132b4ddf43264613a6251435ddd7443efbd8ed51129af51edb5c6ab298471b3d"
-      ],
-      "proxyType": "immutable",
-      "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
-      "sinceTimestamp": 1665174739,
-      "sinceBlock": 28103702,
-      "values": {
-        "$immutable": true,
-        "DENOMINATOR": 1000,
-        "governanceToken": "0x4200000000000000000000000000000000000042",
-        "MINT_CAP": 20,
-        "MINT_PERIOD": 31536000,
-        "mintPermittedAfter": 0,
-        "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
-      },
-      "derivedName": "MintManager"
+      "address": "0x608d94945A64503E642E6370Ec598e519a2C1E53",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "name": "SuperchainProxyAdminOwner - L2 Alias",
-      "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+      "address": "0x6CD3850756b7894774Ab715D136F9dD02837De50",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Base Governance Multisig - L2 Alias",
+      "address": "0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000002",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000007",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x420000000000000000000000000000000000000F",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
@@ -720,32 +659,93 @@
       ]
     },
     {
-      "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+      "name": "GnosisSafeL2",
+      "address": "0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1690401081,
+      "sinceBlock": 1805867,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "0x1084092Ac2f04c866806CF3d4a385Afa4F6A6C97",
+          "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+          "0x3FDf3c4bf8783bB94295b9219DF74a648f397360"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x722e084593c255be784af2d4c4d9ebe8988d5e4bd6bfa83cffe4f8f18e4c1c1a",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "address": "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xdb203D7f00fF435dA107543B33495f9cA2c484C6",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "GnosisSafeL2",
+      "address": "0xd94E416cf2c7167608B2515B7e4102B41efff94f",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1688064179,
+      "sinceBlock": 637416,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
+          "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
+          "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
+          "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
+          "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
+          "0x6CD3850756b7894774Ab715D136F9dD02837De50"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xd16e718462d25bb73b8c6aba4611b4bc91c8e12dbf5180f9cd42af8080cffae9",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -768,10 +768,7 @@
       "function timestamp() view returns (uint64)",
       "function version() view returns (string)"
     ],
-    "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": [
-      "constructor(address _singleton)"
-    ],
-    "0x4200000000000000000000000000000000000002": [
+    "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -780,18 +777,19 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
     ],
     "0x4200000000000000000000000000000000000007": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x420000000000000000000000000000000000000F": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -931,43 +929,58 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x4200000000000000000000000000000000000042": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
-      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function delegate(address delegatee)",
-      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
-      "function delegates(address account) view returns (address)",
-      "function getPastTotalSupply(uint256 blockNumber) view returns (uint256)",
-      "function getPastVotes(address account, uint256 blockNumber) view returns (uint256)",
-      "function getVotes(address account) view returns (uint256)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address _account, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function numCheckpoints(address account) view returns (uint32)",
-      "function owner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function renounceOwnership()",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)"
+    "0x45969D00739d518f0Dde41920B67cE30395135A0": [
+      "constructor(address _optimismWallet, address _l1Wallet, uint256 _feeDisbursementInterval)",
+      "event FeesDisbursed(uint256 _disbursementTime, uint256 _paidToOptimism, uint256 _totalFeesDisbursed)",
+      "event FeesReceived(address indexed _sender, uint256 _amount)",
+      "event NoFeesCollected()",
+      "function BASIS_POINT_SCALE() view returns (uint32)",
+      "function FEE_DISBURSEMENT_INTERVAL() view returns (uint256)",
+      "function L1_WALLET() view returns (address)",
+      "function OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS() view returns (uint256)",
+      "function OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS() view returns (uint256)",
+      "function OPTIMISM_WALLET() view returns (address)",
+      "function WITHDRAWAL_MIN_GAS() view returns (uint32)",
+      "function disburseFees()",
+      "function lastDisbursementTime() view returns (uint256)",
+      "function netFeeRevenue() view returns (uint256)"
     ],
-    "0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088": [
+    "0x4E207bDF8aece56de86821f5370b2b993D08C9E9": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
+    ],
+    "0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
+      "function BRIDGE() view returns (address)",
+      "function bridge() view returns (address)",
+      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function createOptimismMintableERC20WithDecimals(address _remoteToken, string _name, string _symbol, uint8 _decimals) returns (address)",
+      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function initialize(address _bridge)",
+      "function version() view returns (string)"
+    ],
+    "0x75505a97BD334E7BD3C476893285569C4136Fa0F": [
+      "constructor()",
+      "error AlreadyExists()",
+      "event Registered(bytes32 indexed uid, address registerer)",
+      "function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))",
+      "function register(string schema, address resolver, bool revocable) returns (bytes32)",
+      "function version() view returns (string)"
+    ],
+    "0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05": [
+      "constructor(address _singleton)"
+    ],
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": [
       "constructor()",
       "error AccessDenied()",
       "error AlreadyRevoked()",
@@ -1016,61 +1029,6 @@
       "function revokeOffchain(bytes32 data) returns (uint64)",
       "function timestamp(bytes32 data) returns (uint64)",
       "function version() view returns (string)"
-    ],
-    "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": [
-      "constructor(address _upgrader, address _governanceToken)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function DENOMINATOR() view returns (uint256)",
-      "function MINT_CAP() view returns (uint256)",
-      "function MINT_PERIOD() view returns (uint256)",
-      "function governanceToken() view returns (address)",
-      "function mint(address _account, uint256 _amount)",
-      "function mintPermittedAfter() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _newMintManager)"
-    ],
-    "0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13": [
-      "constructor()",
-      "error AlreadyExists()",
-      "event Registered(bytes32 indexed uid, address registerer)",
-      "function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))",
-      "function register(string schema, address resolver, bool revocable) returns (bytes32)",
-      "function version() view returns (string)"
-    ],
-    "0xa919894851548179A0750865e7974DA599C0Fac7": [
-      "function DECIMALS() view returns (uint256)",
-      "function baseFee() view returns (uint256)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function decimals() pure returns (uint256)",
-      "function gasPrice() view returns (uint256)",
-      "function getL1Fee(bytes _data) view returns (uint256)",
-      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
-      "function getL1GasUsed(bytes _data) view returns (uint256)",
-      "function isEcotone() view returns (bool)",
-      "function isFjord() view returns (bool)",
-      "function l1BaseFee() view returns (uint256)",
-      "function overhead() view returns (uint256)",
-      "function scalar() view returns (uint256)",
-      "function setEcotone()",
-      "function setFjord()",
-      "function version() view returns (string)"
-    ],
-    "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
-      "constructor()",
-      "event OwnerChanged(address oldOwner, address newOwner)",
-      "event WhitelistDisabled(address oldOwner)",
-      "event WhitelistStatusChanged(address deployer, bool whitelisted)",
-      "function enableArbitraryContractDeployment()",
-      "function isDeployerAllowed(address _deployer) view returns (bool)",
-      "function owner() view returns (address)",
-      "function setOwner(address _owner)",
-      "function setWhitelistedDeployer(address _deployer, bool _isWhitelisted)",
-      "function version() view returns (string)",
-      "function whitelist(address) view returns (bool)"
     ],
     "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
       "constructor(address _l1CrossDomainMessenger)",
@@ -1122,25 +1080,6 @@
       "function version() view returns (string)",
       "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
       "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
-    ],
-    "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": [
-      "constructor(address _recipient)",
-      "event Withdrawal(uint256 value, address to, address from)",
-      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
-      "function RECIPIENT() view returns (address)",
-      "function l1FeeWallet() view returns (address)",
-      "function totalProcessed() view returns (uint256)",
-      "function version() view returns (string)",
-      "function withdraw()"
-    ],
-    "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": [
-      "constructor(address _bridge)",
-      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
-      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
-      "function BRIDGE() view returns (address)",
-      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
-      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
-      "function version() view returns (string)"
     ],
     "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": [
       "constructor()",
@@ -1201,23 +1140,20 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": [
-      "constructor(address _recipient)",
+    "0xd53210eE20948eCFF8B6B8180E29657e0ce8492d": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
       "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
       "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
       "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function l1FeeWallet() view returns (address)",
       "function totalProcessed() view returns (uint256)",
       "function version() view returns (string)",
       "function withdraw()"
     ],
-    "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": [
-      "constructor(address _recipient)",
-      "event Withdrawal(uint256 value, address to, address from)",
-      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
-      "function RECIPIENT() view returns (address)",
-      "function totalProcessed() view returns (uint256)",
-      "function version() view returns (string)",
-      "function withdraw()"
+    "0xd94E416cf2c7167608B2515B7e4102B41efff94f": [
+      "constructor(address _singleton)"
     ],
     "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
@@ -1275,7 +1211,7 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/GasPriceOracle": "0xed55fe1e61604ea2a3cd0199651c7b01bfb5afc47dd9a6f74bb53f4b09da4662",
+    "opstack/Layer2/FeeDisburser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
@@ -1288,5 +1224,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0x20e4fa2936634c1409a4f24ebd961be195f55cdf518d19b8d9ff274f84572214"
+  "permissionsConfigHash": "0xec550f129aad95e7dc23369d8df771bf4df6f5c216e27740079797235e2569b0"
 }

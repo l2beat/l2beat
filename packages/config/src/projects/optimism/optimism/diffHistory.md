@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x3b639e217f74de1c624d764678bbb185174633f2
+
+# Diff at Wed, 30 Apr 2025 09:41:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@84235dd5417ade9a370db923dce740dd4503b6dc block: 132493968
+- current block number: 132493968
+
+## Description
+
+add l2 alias name.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 132493968 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner - L2 Alias (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      name:
++        "SuperchainProxyAdminOwner - L2 Alias"
+    }
+```
+
 Generated with discovered.json: 0x6df4d35954022633efb387864de3648bd946e3a3
 
 # Diff at Tue, 29 Apr 2025 08:19:24 GMT:

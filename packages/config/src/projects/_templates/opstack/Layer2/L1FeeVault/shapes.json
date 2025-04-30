@@ -10,5 +10,11 @@
     "address": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
     "chain": "unichain",
     "blockNumber": 12933871
+  },
+  "L1FeeVault_v1_3_0": {
+    "hash": "0x2bbc4761e06b3858a304723900de8a855d85d9eb247116f2315f3714a47ad71b",
+    "address": "0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC",
+    "chain": "base",
+    "blockNumber": 29605802
   }
 }
