@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 22376587,
-  "configHash": "0x11e5c68c306eb47abe82e83ada423a3dc60dbd570a633e7255ea10925ea0ac6a",
+  "blockNumber": 22380459,
+  "configHash": "0x62ed6cc6c36c3783988443d9d090443f20697971a6f00fddbbe5dded40d67598",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -322,7 +322,13 @@
         "nonce": 0,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "derivedName": "Safe",
+      "references": [
+        {
+          "text": "Security Council members - Base Docs",
+          "href": "https://docs.base.org/chain/security-council"
+        }
+      ]
     },
     {
       "address": "0x21C7D1e6A81Daca071bA94839ab74C39A25f851F",
@@ -509,7 +515,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 4325,
+        "gameCount": 4338,
         "gameImpls": [
           "0xE17d670043c3cDd705a3223B3D89A228A1f07F0f",
           "0xE749aA49c3eDAF1DCb997eA3DAC23dff72bcb826",
@@ -591,8 +597,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 517494,
-          "prevBlockNum": 22376582
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 22380451
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -648,11 +654,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0xC3bbb8Fcdb6F81b4247B6F3233Bf48bc40C4B5E7",
+        "anchorGame": "0x8237B9100ed50F6a017CA752bc459ffFC8e1cAE1",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0x1ec8fbdb48f6f530b627b5957cada8e0fac3e5daeb10c2b2786b5d825d394d0b",
-          29277287
+          "0x6879f117ddde6e881b7c682815745db0c3e3cf96dcf9b31d87932e7bb2be047c",
+          29300715
         ],
         "portal": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -1244,7 +1250,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293032019",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293032171",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

@@ -14,6 +14,15 @@
     "0x3E8a0B63f57e975c268d610ece93da5f78c01321": "DelayedWETH_PermissionedGames"
   },
   "overrides": {
+    "0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": {
+      // Base Security Council
+      "references": [
+        {
+          "text": "Security Council members - Base Docs",
+          "href": "https://docs.base.org/chain/security-council"
+        }
+      ]
+    },
     "0x73a79Fab69143498Ed3712e519A88a918e1f4072": {
       "ignoreInWatchMode": ["gasLimit"] // custom ignore for weekly gas limit raise on Base
     },
