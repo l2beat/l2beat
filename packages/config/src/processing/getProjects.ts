@@ -62,6 +62,7 @@ function layer2Or3ToProject(
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
+      emergencyWarning: p.display.emergencyWarning,
       isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p, daBridges),
       // countdowns
@@ -202,6 +203,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     statuses: {
       yellowWarning: p.display.warning,
       redWarning: undefined,
+      emergencyWarning: undefined,
       isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p),
     },

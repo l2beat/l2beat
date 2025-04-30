@@ -1,9 +1,8 @@
 import type { Formula, TvsToken } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
 
 type AddressData =
   | {
-      address: EthereumAddress
+      address: string
       url?: string
       name?: string
     }

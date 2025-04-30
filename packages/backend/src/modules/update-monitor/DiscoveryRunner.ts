@@ -5,7 +5,10 @@ import {
   type DiscoveryEngine,
   type DiscoveryOutput,
   type TemplateService,
+  combinePermissionsIntoDiscovery,
   flattenDiscoveredSources,
+  getDiscoveryPaths,
+  modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
 import {
@@ -62,6 +65,18 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
+
+    // This is a temporary solution to model project in isolation
+    // until we refactor Update Monitor to support cross-chain discovery
+    const discoveryPaths = getDiscoveryPaths()
+    const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
+      discovery,
+      config.permission,
+      this.templateService,
+      discoveryPaths,
+    )
+    combinePermissionsIntoDiscovery(discovery, permissionsOutput)
+
     const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
 
     return { discovery, flatSources }

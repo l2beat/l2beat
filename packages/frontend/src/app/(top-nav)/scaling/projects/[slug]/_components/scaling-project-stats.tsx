@@ -76,6 +76,7 @@ export function ProjectScalingStats({ project, className }: Props) {
             <StageCell
               stageConfig={project.stageConfig}
               isAppchain={project.isAppchain}
+              emergencyWarning={project.header.emergencyWarning}
             />
           </a>
         }
