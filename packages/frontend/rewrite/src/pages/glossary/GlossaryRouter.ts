@@ -9,7 +9,7 @@ export function GlossaryRouter(
   render: RenderFunction,
 ) {
   app.get('/glossary', async (req, res) => {
-    const data = await getGlossaryData(manifest)
+    const data = await getGlossaryData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })

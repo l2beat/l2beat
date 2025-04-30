@@ -1,12 +1,26 @@
 import type { Metadata } from 'next'
 
-export function getDefaultMetadata(metadata?: Metadata): Metadata {
-  const { openGraph, twitter, ...rest } = metadata ?? {}
-
+// This function is to be used in REWRITE, will be deleted when REWRITE is over
+export function getPureDefaultMetadata(props?: {
+  title?: string
+  description?: string
+}): { title: string; description: string } {
   return {
     title: 'L2BEAT - The state of the layer two ecosystem',
     description:
       'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
+    ...props,
+  }
+}
+
+export function getDefaultMetadata(metadata?: Metadata): Metadata {
+  const { openGraph, twitter, ...rest } = metadata ?? {}
+
+  return {
+    ...getPureDefaultMetadata({
+      title: metadata?.title as string | undefined,
+      description: metadata?.description as string | undefined,
+    }),
     metadataBase: new URL('https://l2beat.com'),
     openGraph: {
       type: 'website',

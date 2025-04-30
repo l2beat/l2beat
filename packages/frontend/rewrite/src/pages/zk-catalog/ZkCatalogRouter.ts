@@ -12,7 +12,7 @@ export function ZkCatalogRouter(
   render: RenderFunction,
 ) {
   app.get('/zk-catalog', async (req, res) => {
-    const data = await getZkCatalogData(manifest)
+    const data = await getZkCatalogData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
