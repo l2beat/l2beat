@@ -7,8 +7,8 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import type { Manifest } from '~/utils/Manifest'
 
-import { ps } from '~/server/projects'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
+import { ps } from '~/server/projects'
 
 export async function getDataAvailabilityProjectData(
   manifest: Manifest,

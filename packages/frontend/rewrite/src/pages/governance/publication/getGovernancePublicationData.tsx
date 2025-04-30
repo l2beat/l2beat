@@ -1,10 +1,10 @@
 import { getCollectionEntry } from '~/content/get-collection'
 
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
 import type { Manifest } from '~/utils/Manifest'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 
 export async function getGovernancePublicationData(
   manifest: Manifest,
