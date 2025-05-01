@@ -3,10 +3,12 @@ export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
 export {
   modelPermissions,
+  modelPermissionsForIsolatedDiscovery,
   generateClingoForProject,
   generatePermissionConfigHash,
 } from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
+export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery'
 export {
   getChainConfig,
   getChainShortName,

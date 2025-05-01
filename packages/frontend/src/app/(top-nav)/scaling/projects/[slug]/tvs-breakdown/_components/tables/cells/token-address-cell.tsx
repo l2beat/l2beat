@@ -1,11 +1,10 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
 import { CustomLink } from '~/components/link/custom-link'
 
 import { CustomLinkIcon } from '~/icons/outlink'
 import { formatAddress } from '~/utils/format-address'
 
 interface Props {
-  address: EthereumAddress
+  address: string
   name?: string
   url?: string
 }

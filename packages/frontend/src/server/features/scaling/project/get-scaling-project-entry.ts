@@ -58,6 +58,7 @@ export interface ProjectScalingEntry {
   header: {
     warning?: string
     redWarning?: string
+    emergencyWarning?: string
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -136,6 +137,7 @@ export async function getScalingProjectEntry(
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
+    emergencyWarning: project.statuses.emergencyWarning,
     category,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
@@ -433,6 +435,7 @@ export async function getScalingProjectEntry(
             ? project.scalingStage.additionalConsiderations
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
+        emergencyWarning: project.statuses.emergencyWarning,
       },
     })
   }

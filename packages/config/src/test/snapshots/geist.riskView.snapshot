@@ -48,7 +48,7 @@
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
-    orderHint: -604800
+    orderHint: -345600
     secondLine: undefined
     sentiment: "bad"
     value: "None"

@@ -626,6 +626,7 @@
       "derivedName": "MintManager"
     },
     {
+      "name": "SuperchainProxyAdminOwner - L2 Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1287,5 +1288,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0xd80a1e91ed584da712c25147f369eb4e19101b08f92621eff0175ead58963848"
+  "permissionsConfigHash": "0x20e4fa2936634c1409a4f24ebd961be195f55cdf518d19b8d9ff274f84572214"
 }

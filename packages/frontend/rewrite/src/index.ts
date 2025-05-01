@@ -40,6 +40,7 @@ if (isProduction) {
 }
 
 ServerPageRouter(app, manifest, renderToHtml)
+
 const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
   headers: new Headers(req.headers as Record<string, string>),
 })
