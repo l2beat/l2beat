@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7d538cfb8aa7a54dde91aca186ec3a34871bd8d5
+Generated with discovered.json: 0xa0d4db47aca87c7ad8175620d62ad942d02232ee
 
-# Diff at Tue, 29 Apr 2025 11:39:26 GMT:
+# Diff at Thu, 01 May 2025 16:56:47 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@77c75eb9e473fdb862ed8eca79ef994be22d73f3 block: 22208559
-- current block number: 22374472
+- comparing to: main@2b416a2682a6346947ff8f432469bc39157f1420 block: 22208559
+- current block number: 22390330
 
 ## Description
 
-Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
@@ -30,8 +30,6 @@ Field .issuedPermissions is removed from the output as no longer needed. Added '
 ```diff
     contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
     +++ description: None
-      template:
--        "eigenlayer/AVSDirectory"
       sourceHashes.1:
 -        "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c"
 +        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
@@ -46,8 +44,6 @@ Field .issuedPermissions is removed from the output as no longer needed. Added '
       values.$upgradeCount:
 -        1
 +        2
-      values.avs:
--        ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7","0x9FC952BdCbB7Daca7d420fA55b942405B073A89d","0x71a77037870169d47aad6c2C9360861A4C0df2bF","0x6026b61bDD2252160691CB3F6005B6B72E0Ec044","0x35F4f28A8d3Ff20EEd10e087e8F96Ea2641E6AA2","0x23221c5bB90C7c57ecc1E75513e2E4257673F0ef","0xed2f4d90b073128ae6769a9A8D51547B1Df766C8","0xE5445838C475A2980e6a88054ff1514230b83aEb","0xd50E0931703302B080880C45148F5D83ea66aE2a","0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3","0xB6827E919b55B45290cf54F006EE4a231e06F088","0x1DE75EaAb2df55d467494A172652579E6FA4540E","0x07E26BF8060e33fA3771d88128b75493750515c1","0x1F2c296448f692af840843d993fFC0546619Dcdb","0x22CAc0e6A1465F043428e8AeF737b3cb09D0eEDa","0xe8E59c6C8B56F2c178f63BCFC4ce5e5e2359c8fc","0xb3AcAF09a1B801E36655B786da4EAA6aE9F5DC37","0x18343Aa10e3D2F3A861e5649627324aEAD987Adf","0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3","0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7","0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262","0xb19f05CDc5EF266766AC1287A1EeF29283058773","0x2d86E90ED40a034C753931eE31b1bD5E1970113d","0x75195699F659ed67083691c2C48F23d0B907b559","0xA5bD40e5406CB2d2440Db1D1bcF9dfD022B6C124","0x8EF368e31cd0b51941bf85bC11D8C71589489Fe4","0xd75c834B09ec626992Ff3Ce388AE7115791Fb282","0xaCB91045B8bBa06f9026e1A30855B6C4A1c5BaC6","0x83742C346E9f305dcA94e20915aB49A483d33f3E","0xd6B9B1B29A30127fb99e1201E91a3e021658E9fb","0xe008064DF9f019d0BFF0735fe6887d70b23825Ca","0xb73a87E8F7f9129816d40940Ca19DFa396944C71","0xFC569B3b74e15cf48AA684144e072e839Fd89380","0xF75Bc9850F4C44E682537C477c4Bb08f71f695Da","0xd6967ed3910C18E3546ABC1A67c61E75e2633fD9","0xB3e069FD6dDA251AcBDE09eDa547e0AB207016ee","0xA95Efd0CeFd326ff8eb5cFa8F0370CF7ED471D18","0xa3F64D3102a035db35c42A9001BBc83e08c7a366","0x461591A7e68906eDBcD643E010A7e1AE3B023c6d","0xBc77233855e3274E1903771675Eb71E602D9DC2e","0xeF2A435e5EE44B2041100EF8cbC8ae035166606c","0x3aDdEb54ddd43Eb40235eC32DfA7928F28A44bb5","0x852dD23aE808A20C48D7b7b03D23C3F5360928e1","0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","0x29B2E51d2bF840116797F8A27e40c05aE3e244D9","0xcA5608C29f13B813Ee6999a6686bea850bcdf36F","0x045fC77EdAf8F9252577b2805D7F26f113848520","0x466745F7c06fBBab48af7b64E9E9bea249fD6Ee5","0x7a49D7101a969eE8Ba68b5Ed4aF42E03Fa40B1eA","0xB3e9F71637f0089F81dAeb3b6999d391F13736Dd","0x44577f44D2A131c8033663996636d00Ce1F46808","0xb6EC8E5c6dB00089737Bd9637cFF76bD8Bbe0474","0x42F15F9E4dF4994317453477e80e24797CC1A929","0x35DebC00531Ac8771be5dbEf015feFD084efA958","0x6201bc0A699e3b10f324204e6F8EcdD0983De227","0x6f943318b05AD7c6EE596A220510A6D64B518dd8","0x0328635BA5FF28476118595234b5b7236b906c0B","0x10Ea82DdCE695dc44789633D362179B63CD18E64","0xC9E94BF890c9b4F11685d576bC65B08e0E87556F","0x4ca852BD78D9B7295874A7D223023Bff011b7EB3","0x328c822874991C31DdF400CD8388027Af66270A8","0x500C4E641b5d61026f26148Ab9363EB3241C08f3","0x05006D61cA5fE53DF316802f3aC91973d4B95F99","0x96b6a29D7B98519Ae66E6398BD27A76B30a5dC3f","0x203b9Acb40DfBB911f1e39C784EAB639418dae04"]
       values.DOMAIN_TYPEHASH:
 -        "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866"
       values.domainSeparator:
@@ -559,6 +555,112 @@ Field .issuedPermissions is removed from the output as no longer needed. Added '
  .../StrategyFactory/StrategyFactory.sol            |  613 +-
  .../StrategyManager/StrategyManager.sol            | 5170 +++++++++++++---
  17 files changed, 25309 insertions(+), 7137 deletions(-)
+```
+
+Generated with discovered.json: 0xd7527a347fb3c898a9fff35eec3fce254a26f8d5
+
+# Diff at Tue, 29 Apr 2025 08:19:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22208559
+- current block number: 22208559
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208559 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","description":"executes scheduled operations after the delay","via":[]},{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can cancel scheduled operations","via":[]}]
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0x738130BC8eADe1Bc65A9c056DEa636835896bc53","delay":2073600},{"address":"0x942eaF324971440384e4cA0ffA39fC3bb369D67d"},{"address":"0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0x738130BC8eADe1Bc65A9c056DEa636835896bc53","delay":2073600},{"address":"0x942eaF324971440384e4cA0ffA39fC3bb369D67d"},{"address":"0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x942eaF324971440384e4cA0ffA39fC3bb369D67d"},{"address":"0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"}]}]
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","description":"executes scheduled operations after the delay","via":[]},{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can cancel scheduled operations","via":[]}]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
 ```
 
 Generated with discovered.json: 0x48c05ac0ec0a7e77271908a5708c20c08d5315c6

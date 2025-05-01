@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 22374472,
+  "blockNumber": 22390330,
   "configHash": "0xa867840e532ef84595b240281d03f6de3c046397b3009a816998569677967373",
   "entries": [
     {
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xb00a1f0000000000",
-        "get_deposit_root": "0x5d4a6c8326a6b70b6c6d90f16a782a4367c4303a8a5d799c474211c9eb85b02a"
+        "get_deposit_count": "0xf8151f0000000000",
+        "get_deposit_root": "0x5a8f97394e69201eaed5bde375538eac33556d667ad365e32bbf0704d03aa217"
       },
       "derivedName": "DepositContract"
     },
@@ -98,7 +98,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1745456411,
+        "latestPress": 1746061211,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -117,45 +117,13 @@
       "name": "AVSDirectory",
       "address": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
       "type": "Contract",
+      "template": "eigenlayer/AVSDirectory",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
+      "ignoreInWatchMode": ["avs"],
       "sinceTimestamp": 1711141931,
       "sinceBlock": 19492759,
       "values": {
@@ -174,6 +142,76 @@
           ]
         ],
         "$upgradeCount": 2,
+        "avs": [
+          "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7",
+          "0x9FC952BdCbB7Daca7d420fA55b942405B073A89d",
+          "0x71a77037870169d47aad6c2C9360861A4C0df2bF",
+          "0x6026b61bDD2252160691CB3F6005B6B72E0Ec044",
+          "0x35F4f28A8d3Ff20EEd10e087e8F96Ea2641E6AA2",
+          "0x23221c5bB90C7c57ecc1E75513e2E4257673F0ef",
+          "0xed2f4d90b073128ae6769a9A8D51547B1Df766C8",
+          "0xE5445838C475A2980e6a88054ff1514230b83aEb",
+          "0xd50E0931703302B080880C45148F5D83ea66aE2a",
+          "0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3",
+          "0xB6827E919b55B45290cf54F006EE4a231e06F088",
+          "0x1DE75EaAb2df55d467494A172652579E6FA4540E",
+          "0x07E26BF8060e33fA3771d88128b75493750515c1",
+          "0x1F2c296448f692af840843d993fFC0546619Dcdb",
+          "0x22CAc0e6A1465F043428e8AeF737b3cb09D0eEDa",
+          "0xe8E59c6C8B56F2c178f63BCFC4ce5e5e2359c8fc",
+          "0xb3AcAF09a1B801E36655B786da4EAA6aE9F5DC37",
+          "0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
+          "0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3",
+          "0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7",
+          "0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262",
+          "0xb19f05CDc5EF266766AC1287A1EeF29283058773",
+          "0x2d86E90ED40a034C753931eE31b1bD5E1970113d",
+          "0x75195699F659ed67083691c2C48F23d0B907b559",
+          "0xA5bD40e5406CB2d2440Db1D1bcF9dfD022B6C124",
+          "0x8EF368e31cd0b51941bf85bC11D8C71589489Fe4",
+          "0xd75c834B09ec626992Ff3Ce388AE7115791Fb282",
+          "0xaCB91045B8bBa06f9026e1A30855B6C4A1c5BaC6",
+          "0x83742C346E9f305dcA94e20915aB49A483d33f3E",
+          "0xd6B9B1B29A30127fb99e1201E91a3e021658E9fb",
+          "0xe008064DF9f019d0BFF0735fe6887d70b23825Ca",
+          "0xb73a87E8F7f9129816d40940Ca19DFa396944C71",
+          "0xFC569B3b74e15cf48AA684144e072e839Fd89380",
+          "0xF75Bc9850F4C44E682537C477c4Bb08f71f695Da",
+          "0xd6967ed3910C18E3546ABC1A67c61E75e2633fD9",
+          "0xB3e069FD6dDA251AcBDE09eDa547e0AB207016ee",
+          "0xA95Efd0CeFd326ff8eb5cFa8F0370CF7ED471D18",
+          "0xa3F64D3102a035db35c42A9001BBc83e08c7a366",
+          "0x461591A7e68906eDBcD643E010A7e1AE3B023c6d",
+          "0xBc77233855e3274E1903771675Eb71E602D9DC2e",
+          "0xeF2A435e5EE44B2041100EF8cbC8ae035166606c",
+          "0x3aDdEb54ddd43Eb40235eC32DfA7928F28A44bb5",
+          "0x852dD23aE808A20C48D7b7b03D23C3F5360928e1",
+          "0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "0x29B2E51d2bF840116797F8A27e40c05aE3e244D9",
+          "0xcA5608C29f13B813Ee6999a6686bea850bcdf36F",
+          "0x045fC77EdAf8F9252577b2805D7F26f113848520",
+          "0x466745F7c06fBBab48af7b64E9E9bea249fD6Ee5",
+          "0x7a49D7101a969eE8Ba68b5Ed4aF42E03Fa40B1eA",
+          "0xB3e9F71637f0089F81dAeb3b6999d391F13736Dd",
+          "0x44577f44D2A131c8033663996636d00Ce1F46808",
+          "0xb6EC8E5c6dB00089737Bd9637cFF76bD8Bbe0474",
+          "0x42F15F9E4dF4994317453477e80e24797CC1A929",
+          "0x35DebC00531Ac8771be5dbEf015feFD084efA958",
+          "0x6201bc0A699e3b10f324204e6F8EcdD0983De227",
+          "0x6f943318b05AD7c6EE596A220510A6D64B518dd8",
+          "0x0328635BA5FF28476118595234b5b7236b906c0B",
+          "0x10Ea82DdCE695dc44789633D362179B63CD18E64",
+          "0xC9E94BF890c9b4F11685d576bC65B08e0E87556F",
+          "0x4ca852BD78D9B7295874A7D223023Bff011b7EB3",
+          "0x328c822874991C31DdF400CD8388027Af66270A8",
+          "0x500C4E641b5d61026f26148Ab9363EB3241C08f3",
+          "0x05006D61cA5fE53DF316802f3aC91973d4B95F99",
+          "0x96b6a29D7B98519Ae66E6398BD27A76B30a5dC3f",
+          "0x203b9Acb40DfBB911f1e39C784EAB639418dae04",
+          "0x5Bf17dFaA1B76Bb6C5C47F568636877F94C09b65",
+          "0x506D3bDef8C9E671928F1ffF135E0e0642B59AA4"
+        ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "domainSeparator": "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb",
         "OPERATOR_AVS_REGISTRATION_TYPEHASH": "0xda2c89bafdd34776a2b8bb9c83c82f419e20cc8c67207f70edd58249b92661bd",
@@ -200,40 +238,6 @@
         "0x01bb93f0533bf79f9680aee1f8f98c14501de40b31d642ccaab5b297dc809f1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -302,7 +306,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -316,40 +320,6 @@
         "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -593,7 +563,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -625,40 +595,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract for permissionless strategy creation via beacon proxies.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1723232243,
       "sinceBlock": 20493178,
       "values": {
@@ -721,20 +657,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "description": "executes scheduled operations after the delay",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "description": "can cancel scheduled operations",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1732299167,
       "sinceBlock": 21244979,
       "values": {
@@ -797,40 +719,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1721406755,
       "sinceBlock": 20341793,
       "values": {
@@ -920,40 +808,6 @@
         "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-              "delay": 2073600
-            },
-            { "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            { "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-              "delay": 2073600
-            },
-            { "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            { "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            { "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
       "sinceBlock": 19477666,
@@ -990,7 +844,7 @@
         "name": "Backing Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1721281227305069553846153885",
+        "totalSupply": "1722568647819134676923076963",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1010,40 +864,6 @@
         "0xa50d63fab44e951546763a60992b2c223d1b089ebbd81504210b24beadcf5b50"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
@@ -1159,40 +979,6 @@
         "0x6396fbec37d6d3c9c0b56494c6373e983a77e0980eaf9ab4782333de488449e5"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["numPods"],
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
@@ -1232,7 +1018,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33526,
+        "numPods": 33540,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -1290,40 +1076,6 @@
         "0x82974ffe4d2eaf842109ba34b64dc6aaacd4ab2040d3c53815e2cdf43946630b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -1672,20 +1424,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "description": "executes scheduled operations after the delay",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "description": "can cancel scheduled operations",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1732234379,
       "sinceBlock": 21239612,
       "values": {
@@ -1784,40 +1522,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "via": [
-            {
-              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
       "sinceBlock": 18366276,
@@ -1863,7 +1567,7 @@
         "name": "Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1721281227305069553846153885",
+        "totalSupply": "1722568647819134676923076963",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -3169,6 +2873,7 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/AVSDirectory": "0xc57750a5155e09049ae1ea4afd500090b460c5844ccb1d2d973da7af0d8d96f7",
     "eigenlayer/EIGEN token": "0x47c3793e522d863027dd4d7d9ae9f79149767db55e073a2fb68ac71a6be7412b",
     "eigenlayer/RewardAllStakersActionGenerator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/TimelockControllerOwning": "0x59a5edadc54910cb1de46acbf90c6438938dc8cfdcf165be92fe954134783f2c",
@@ -3176,5 +2881,6 @@
     "global/DepositContract": "0xfc77f1d7412b523d27d6db22532ffaa54e0026a15c868272f2f454514cab5df5",
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xf08bd0a731e62bd19bdf3186d46c75b19558dba275cc85d76e6c555c8920246c"
 }
