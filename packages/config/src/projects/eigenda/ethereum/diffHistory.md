@@ -9,8 +9,10 @@ Generated with discovered.json: 0x974084da6ca5a85bba551e9a95a6b6bcd6eb271c
 ## Description
 
 - New Operations multisig (0x002721B4790d97dC140a049936aA710152Ba92D5) as owner of core contracts i.e., ServiceManager, EjectionManager, RegistryCoordinator.
-- Changes to AVSDirectory, signature verifications methodology. Added OperatorSetRegistrationStatus, representing the registration status of an operator with an operator set, and last deregistered timestamp (needed for slashing). Apparently has been replaced by AllocationManager and will be deprecated in a future release.
+- Changes to AVSDirectory, signature verifications methodology. Added OperatorSetRegistrationStatus, representing the registration status of an operator with an operator set, and last deregistered timestamp (needed for slashing). Apparently it has been replaced by AllocationManager and will be deprecated in a future release.
 - AllocationManager responsible for creating Operator Sets, and Operator registrations to Operator Sets. The Allocation Manager also tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+
+--- 
 
 Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
 
