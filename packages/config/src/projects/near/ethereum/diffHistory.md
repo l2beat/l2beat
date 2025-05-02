@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd7e589a03e4d8508c5985c827ea13adbe47b26d5
+
+# Diff at Fri, 02 May 2025 14:39:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22230519
+- current block number: 22396767
+
+## Description
+
+project is archived.
+
+## Watched changes
+
+```diff
+    contract NearBridge (0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873) {
+    +++ description: None
+      values.paused:
+-        0
++        31
+    }
+```
+
 Generated with discovered.json: 0x3f1e9763c4f3d159425b6f4e0d1bcc74c77e74b7
 
 # Diff at Wed, 09 Apr 2025 09:41:49 GMT:
