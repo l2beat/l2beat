@@ -13,7 +13,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Proof system
+# Proof system [TO BE EXPANDED]
 
 Scroll's proof system is built to validate and finalize batches of L2 transactions that are committed on L1. The system uses ZK proofs to validate state transitions and allows for both normal sequencing and enforced batch modes.
 
@@ -98,5 +98,5 @@ The proof format and verification logic varies by batch version.
 
 ## Security Considerations
 
-The system prioritizes safety over liveness by allowing batch reversion and enforced mode activation when needed.
+The system prioritizes security over liveness by allowing batch reversion and enforced mode activation only after a delay.
 
