@@ -75,7 +75,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 61,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -95,16 +95,16 @@
         "$immutable": true,
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "bridgeState": {
-          "currentHeight": 145275873,
-          "nextTimestamp": 0,
-          "nextValidAt": 0,
-          "numBlockProducers": 0
+          "currentHeight": 143793084,
+          "nextTimestamp": "1744190502865473728",
+          "nextValidAt": 1744205039,
+          "numBlockProducers": 100
         },
         "initialized": true,
-        "lastValidAt": 1745860727,
+        "lastValidAt": 1744205039,
         "lockDuration": 14400,
         "lockEthAmount": "5000000000000000000",
-        "paused": 31,
+        "paused": 0,
         "replaceDuration": 18000000000000
       },
       "derivedName": "NearBridge"
