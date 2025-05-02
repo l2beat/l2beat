@@ -35,7 +35,7 @@ To force transactions on Scroll through L1, the following steps are taken:
 
 Should messages not be processed by the permissioned sequencer, the EOA waits for either:
    - `SystemConfig.maxDelayEnterEnforcedMode` to pass since the last batch finalization, or
-   - `SystemConfig.maxDelayMessageQueue` to pass since the first unfinalized message enqueue time..
+   - `SystemConfig.maxDelayMessageQueue` to pass since the first unfinalized message enqueue time.
 Then the EOA can finally call can submit a batch via `commitAndFinalizeBatch` and at the same time activate the permissionless sequencing mode (`UpdateEnforcedBatchMode`).
 
 
