@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "ethereum",
-  "blockNumber": 22281661,
+  "blockNumber": 22397509,
   "configHash": "0x091c0ae423655ae3838a1d97ddf43b06354534aab045b88ce65452097e97a679",
   "entries": [
     {
@@ -190,11 +190,11 @@
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 3037, "last": 3036 },
+        "intentQueue": { "first": 3049, "last": 3048 },
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 2000000,
         "messageReceiver": "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 3036,
+        "nonce": 3048,
         "owner": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
