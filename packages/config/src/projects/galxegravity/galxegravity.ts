@@ -13,10 +13,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Gravity',
     slug: 'galxegravity',
@@ -35,7 +32,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
       ],
     },
   },
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
@@ -43,6 +40,11 @@ export const galxegravity: ScalingProject = orbitStackL2({
     type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
+  },
+  celestiaDa: {
+    // TODO
+    sinceBlock: 1,
+    namespace: 'abc',
   },
   chainConfig: {
     name: 'galxegravity',
