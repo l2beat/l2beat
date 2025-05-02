@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22337719,
+  "blockNumber": 22397521,
   "configHash": "0x4764d7be7613098282c221984e487129fe8367953d7269ddc0de45eb41e6aec8",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -304,7 +304,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 9484,
+        "l1ToL2MessageNonce": 9493,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
