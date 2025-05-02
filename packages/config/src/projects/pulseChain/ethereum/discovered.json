@@ -2,7 +2,7 @@
   "name": "pulseChain",
   "chain": "ethereum",
   "blockNumber": 17968825,
-  "configHash": "0xaa7e6ce66c8544847c07595834c6abf3b8bdf97507d8619513fbb9cdcffe72e1",
+  "configHash": "0xc179421215947cd942d988bac3cb2d48efbca59fd2f3d5073d51e188170f97b8",
   "entries": [
     {
       "address": "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",

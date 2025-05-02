@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 133041012,
-  "configHash": "0xf04e41bbf596f6c4ed9c7e4cd6345a3009dbc031ce730d20be7f5e4d014e5ce3",
+  "configHash": "0x3ff43ab3a5af46b6b1f49dc7e846641e11e28e746107305dd10730ac499a2c7e",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",

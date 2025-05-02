@@ -2,7 +2,7 @@
   "name": "zkcandy",
   "chain": "ethereum",
   "blockNumber": 22223061,
-  "configHash": "0xabeda77dd3ffb601d5f95c901fd66d41077eb32652dffc3f8d11d49e31429b8b",
+  "configHash": "0xc1c354e5afb1a3e11b76db0ca9f3c9ba9552737ef131e58bb40f0b902e07dab8",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -253,8 +253,14 @@
       "name": "zkCandyZkEvm",
       "address": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
       "type": "Contract",
-      "unverified": true,
       "template": "shared-zk-stack/v26/Diamond",
+      "sourceHashes": [
+        "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b",
+        "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
+        "0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da",
+        "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6",
+        "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
+      ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "ignoreInWatchMode": [
@@ -491,7 +497,7 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "",
+      "derivedName": "DiamondProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -897,6 +903,20 @@
       "function setValidator(address _validator, bool _active)",
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
+    ],
+    "0xF2704433d11842d15aa76BBF0E00407267a99C92": [
+      "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "error AddressHasNoCode(address)",
+      "error DelegateCallFailed(bytes returnData)",
+      "error FacetExists(bytes4 selector, address)",
+      "error NoFunctionsForDiamondCut()",
+      "error NonEmptyCalldata()",
+      "error RemoveFunctionFacetAddressNotZero(address facet)",
+      "error RemoveFunctionFacetAddressZero()",
+      "error ReplaceFunctionFacetAddressZero()",
+      "error SelectorsMustAllHaveSameFreezability()",
+      "error UndefinedDiamondCutAction()",
+      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ]
   },
   "usedTemplates": {
