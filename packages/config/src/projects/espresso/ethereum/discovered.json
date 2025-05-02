@@ -1,7 +1,7 @@
 {
   "name": "espresso",
   "chain": "ethereum",
-  "blockNumber": 21372994,
+  "blockNumber": 22397507,
   "configHash": "0x8857c94a87aee8b0d213899c4377d978ac4e519dea645f4ff7756c53698da9f2",
   "entries": [
     {
@@ -41,7 +41,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -74,7 +74,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xb39829b8c4f7adee8b3f63d4c34b18a92e40670401393ceb3af7105d95f4b8c4"
+        "0x6c8c2f6bb51ae2ffefb868f088dc9db0c6c7b920bc8fe97de669ee0d91e43090"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
@@ -88,19 +88,25 @@
       "sinceBlock": 21123201,
       "values": {
         "$admin": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
-        "$implementation": "0x2E81FD03725158903FD32E41b0357C47941BB2c3",
+        "$implementation": "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B",
         "$pastUpgrades": [
           [
             "2024-11-05T18:20:35.000Z",
             "0x48bc49aef98e23cde6494da9897bac992ea11e7390c162bb86baa5a2c2209c4c",
             ["0x2E81FD03725158903FD32E41b0357C47941BB2c3"]
+          ],
+          [
+            "2025-05-01T16:57:23.000Z",
+            "0x61a3f76709191c8149c61f1aed15846ac8debd71a50540f71d94f21882323e41",
+            ["0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
+        "currentBlockNumber": 22397507,
         "finalizedState": {
-          "viewNum": 483678,
-          "blockHeight": 472918,
-          "blockCommRoot": "18278523005438341224914445701100123357842897512218761818604054787531085550697"
+          "viewNum": 2371954,
+          "blockHeight": 2336566,
+          "blockCommRoot": "6746915104959538064063734326850219113019100602345788736699504648576388592546"
         },
         "genesisStakeTableState": {
           "threshold": 34,
@@ -109,7 +115,7 @@
           "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
         },
         "genesisState": { "viewNum": 0, "blockHeight": 0, "blockCommRoot": 0 },
-        "getStateHistoryCount": 273,
+        "getStateHistoryCount": 593,
         "getVersion": {
           "majorVersion": 1,
           "minorVersion": 0,
@@ -118,7 +124,7 @@
         "isPermissionedProverEnabled": true,
         "owner": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
         "permissionedProver": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-        "stateHistoryFirstIndex": 44,
+        "stateHistoryFirstIndex": 364,
         "stateHistoryRetentionPeriod": 864000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -131,59 +137,6 @@
     }
   ],
   "abis": {
-    "0x2E81FD03725158903FD32E41b0357C47941BB2c3": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "error InsufficientSnapshotHistory()",
-      "error InvalidAddress()",
-      "error InvalidArgs()",
-      "error InvalidHotShotBlockForCommitmentCheck()",
-      "error InvalidInitialization()",
-      "error InvalidMaxStateHistory()",
-      "error InvalidProof()",
-      "error NoChangeRequired()",
-      "error NotInitializing()",
-      "error OutdatedState()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error ProverNotPermissioned()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error WrongStakeTableUsed()",
-      "event Initialized(uint64 version)",
-      "event NewState(uint64 indexed viewNum, uint64 indexed blockHeight, uint256 blockCommRoot)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PermissionedProverNotRequired()",
-      "event PermissionedProverRequired(address permissionedProver)",
-      "event Upgrade(address implementation)",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function disablePermissionedProverMode()",
-      "function finalizedState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
-      "function genesisStakeTableState() view returns (uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)",
-      "function genesisState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
-      "function getHotShotCommitment(uint256 hotShotBlockHeight) view returns (uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)",
-      "function getStateHistoryCount() view returns (uint256)",
-      "function getVersion() pure returns (uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)",
-      "function initialize(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) _genesis, tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner)",
-      "function isPermissionedProverEnabled() view returns (bool)",
-      "function lagOverEscapeHatchThreshold(uint256 blockNumber, uint256 blockThreshold) view returns (bool)",
-      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) newState, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof)",
-      "function owner() view returns (address)",
-      "function permissionedProver() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function setPermissionedProver(address prover)",
-      "function setstateHistoryRetentionPeriod(uint32 historySeconds)",
-      "function stateHistoryCommitments(uint256) view returns (uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)",
-      "function stateHistoryFirstIndex() view returns (uint64)",
-      "function stateHistoryRetentionPeriod() view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x34F5af5158171Ffd2475d21dB5fc3B311F221982": [
       "constructor(address _singleton)"
     ],
@@ -242,6 +195,61 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InsufficientSnapshotHistory()",
+      "error InvalidAddress()",
+      "error InvalidArgs()",
+      "error InvalidHotShotBlockForCommitmentCheck()",
+      "error InvalidInitialization()",
+      "error InvalidMaxStateHistory()",
+      "error InvalidProof()",
+      "error NoChangeRequired()",
+      "error NotInitializing()",
+      "error OutdatedState()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ProverNotPermissioned()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error WrongStakeTableUsed()",
+      "event Initialized(uint64 version)",
+      "event NewState(uint64 indexed viewNum, uint64 indexed blockHeight, uint256 blockCommRoot)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PermissionedProverNotRequired()",
+      "event PermissionedProverRequired(address permissionedProver)",
+      "event Upgrade(address implementation)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function _getVk() pure returns (tuple(uint256 domainSize, uint256 numInputs, tuple(uint256 x, uint256 y) sigma0, tuple(uint256 x, uint256 y) sigma1, tuple(uint256 x, uint256 y) sigma2, tuple(uint256 x, uint256 y) sigma3, tuple(uint256 x, uint256 y) sigma4, tuple(uint256 x, uint256 y) q1, tuple(uint256 x, uint256 y) q2, tuple(uint256 x, uint256 y) q3, tuple(uint256 x, uint256 y) q4, tuple(uint256 x, uint256 y) qM12, tuple(uint256 x, uint256 y) qM34, tuple(uint256 x, uint256 y) qO, tuple(uint256 x, uint256 y) qC, tuple(uint256 x, uint256 y) qH1, tuple(uint256 x, uint256 y) qH2, tuple(uint256 x, uint256 y) qH3, tuple(uint256 x, uint256 y) qH4, tuple(uint256 x, uint256 y) qEcc, bytes32 g2LSB, bytes32 g2MSB) vk)",
+      "function currentBlockNumber() view returns (uint256)",
+      "function disablePermissionedProverMode()",
+      "function finalizedState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
+      "function genesisStakeTableState() view returns (uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)",
+      "function genesisState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
+      "function getHotShotCommitment(uint256 hotShotBlockHeight) view returns (uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)",
+      "function getStateHistoryCount() view returns (uint256)",
+      "function getVersion() pure returns (uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)",
+      "function initialize(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) _genesis, tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner)",
+      "function isPermissionedProverEnabled() view returns (bool)",
+      "function lagOverEscapeHatchThreshold(uint256 blockNumber, uint256 blockThreshold) view returns (bool)",
+      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) newState, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof)",
+      "function owner() view returns (address)",
+      "function permissionedProver() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setPermissionedProver(address prover)",
+      "function setstateHistoryRetentionPeriod(uint32 historySeconds)",
+      "function stateHistoryCommitments(uint256) view returns (uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)",
+      "function stateHistoryFirstIndex() view returns (uint64)",
+      "function stateHistoryRetentionPeriod() view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
