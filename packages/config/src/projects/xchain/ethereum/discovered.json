@@ -1,7 +1,7 @@
 {
   "name": "xchain",
   "chain": "ethereum",
-  "blockNumber": 22046075,
+  "blockNumber": 22397537,
   "configHash": "0x4f569c300107535806e8811a707adec5b75200f9f741bb87368ba3bca92d450f",
   "entries": [
     {
@@ -249,8 +249,8 @@
         "outboxHistory": ["0x0b8071337dcB089478Ea740efC10904d9F359141"],
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerInbox": "0x47861E0419BE83d0175818a09221B6DF2EFD7793",
-        "sequencerMessageCount": 2461,
-        "sequencerReportedSubMessageCount": 3848015
+        "sequencerMessageCount": 2462,
+        "sequencerReportedSubMessageCount": 3850007
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -333,7 +333,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 2461,
+        "batchCount": 2462,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x74978411BbBCbC466e79fb855DAe981997100deB"],
         "bridge": "0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1",

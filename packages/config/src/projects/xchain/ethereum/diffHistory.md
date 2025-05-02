@@ -1,14 +1,73 @@
-Generated with discovered.json: 0x55d04afe829cb917a50172fa9aaeb17b9a31faf9
+Generated with discovered.json: 0x1a46a224f77c2fdc539b7dc44f4ecdeee31b6191
 
-# Diff at Fri, 02 May 2025 15:28:27 GMT:
+# Diff at Fri, 02 May 2025 17:15:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22046075
-- current block number: 22046075
+- current block number: 22397537
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Upgrade to known orbit implementations.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x47861E0419BE83d0175818a09221B6DF2EFD7793) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
++        "0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"
+      values.$pastUpgrades.2:
++        ["2024-05-23T20:34:11.000Z","0xc0e712054d68a04705baff16b7a9a90250799a1747911b98720cdb6c41d64b68",["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]]
+      values.$pastUpgrades.1.2:
+-        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
++        "0x5adbb6f82d9025a1f43f2b84b97d65c1ee2790f1db392e95ad839d2df89fc059"
+      values.$pastUpgrades.1.1:
+-        "0xc0e712054d68a04705baff16b7a9a90250799a1747911b98720cdb6c41d64b68"
++        ["0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"]
+      values.$pastUpgrades.1.0:
+-        "2024-05-23T20:34:11.000Z"
++        "2025-04-28T22:28:59.000Z"
+      values.$upgradeCount:
+-        2
++        3
+      values.reader4844:
+-        "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576"
++        "0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74"
+    }
+```
+
+```diff
+    contract Inbox (0xE961Ef06c26D0f032F0298c97C41e648d3bb715a) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+      values.$implementation:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"
+      values.$pastUpgrades.1:
++        ["2025-04-28T22:28:59.000Z","0x5adbb6f82d9025a1f43f2b84b97d65c1ee2790f1db392e95ad839d2df89fc059",["0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22046075 => .flat}/Inbox/Inbox.sol      | 52 +++++++++++++++++-----
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++---
+ 2 files changed, 59 insertions(+), 17 deletions(-)
+```
 
 ## Config/verification related changes
 

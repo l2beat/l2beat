@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 329029881,
+  "blockNumber": 332541642,
   "configHash": "0x6e46732acccd2569eadabead21054bd812aec138a7e10f2d4ce3071fcabbde61",
   "entries": [
     {
@@ -141,7 +141,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 7188,
+        "batchCount": 7190,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
@@ -173,7 +173,7 @@
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 102789,
+        "totalDelayedMessagesRead": 102790,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -258,7 +258,7 @@
           "0x575d32f7ff0C72921645e302cb14d2757E300786",
           "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
         ],
-        "delayedMessageCount": 102789,
+        "delayedMessageCount": 102790,
         "inboxHistory": [
           "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863",
@@ -272,8 +272,8 @@
         ],
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 7188,
-        "sequencerReportedSubMessageCount": 4498030
+        "sequencerMessageCount": 7190,
+        "sequencerReportedSubMessageCount": 4499920
       },
       "fieldMeta": {
         "allowedOutboxList": {
