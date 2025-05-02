@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { AggregatedLiveness2Repository } from './repository'
-import type { AggregatedLiveness2Record } from './entity'
 import { AggregatedLivenessRepository } from '../aggregated-liveness/repository'
+import type { AggregatedLiveness2Record } from './entity'
+import { AggregatedLiveness2Repository } from './repository'
 
 describeDatabase(AggregatedLiveness2Repository.name, (db) => {
   const repository = db.aggregatedLiveness2

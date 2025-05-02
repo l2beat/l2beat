@@ -11,6 +11,7 @@ import { UpdateNotifierRepository } from './discovery/update-notifier/repository
 import { DatabaseClient } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
+import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
@@ -24,7 +25,6 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
-import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {

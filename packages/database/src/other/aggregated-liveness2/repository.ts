@@ -1,7 +1,7 @@
 import {
-  UnixTime,
   type ProjectId,
   type TrackedTxsConfigSubtype,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLiveness2Record, toRecord, toRow } from './entity'
