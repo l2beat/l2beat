@@ -481,6 +481,16 @@ export const linea: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'The node software (Besu) and a guide to reconstruct the state from L1 is available [here](https://doc-linea-git-state-recovery-consensys-ddffed67.vercel.app/get-started/how-to/state-recovery).',
+    compressionScheme:
+      '',
+    genesisState:
+      '',
+    dataFormat:
+      '',
+  },
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
