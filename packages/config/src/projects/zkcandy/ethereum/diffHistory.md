@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb1af2fdab0c495d1457eedeeeea0bf52c0810275
+Generated with discovered.json: 0xd8cb0573ce138aacf224315f8b43f092df162af7
 
-# Diff at Fri, 02 May 2025 15:00:55 GMT:
+# Diff at Fri, 02 May 2025 15:28:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22223061
-- current block number: 22396873
+- current block number: 22223061
 
 ## Description
 
-main contract got verified, matches standard template.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -22,7 +22,7 @@ discovery. Values are for block 22223061 (main branch discovery), not current.
       unverified:
 -        true
       sourceHashes:
-+        ["0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da","0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1","0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31","0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6","0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b"]
++        ["0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b","0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31","0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da","0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6","0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"]
     }
 ```
 

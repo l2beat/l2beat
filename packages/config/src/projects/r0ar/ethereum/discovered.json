@@ -2,7 +2,7 @@
   "name": "r0ar",
   "chain": "ethereum",
   "blockNumber": 22195184,
-  "configHash": "0x767aa4d763cf7b123b735996127b5e14eb22ce080ee733fe4d88e2e0e7f6e609",
+  "configHash": "0xc7e7a179a0e6116240942a750d98c200fcea820c6fc80ab77c42a7a01a86efe4",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

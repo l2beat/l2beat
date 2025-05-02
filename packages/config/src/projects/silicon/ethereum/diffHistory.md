@@ -1,48 +1,4 @@
-Generated with discovered.json: 0x1af57b69d66809834cc91f300a36f88408caf023
-
-# Diff at Fri, 02 May 2025 14:51:46 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 21766766
-- current block number: 22396829
-
-## Description
-
-Upgrade to known source: validium type 7 (latest validium). Updated sequencer url.
-
-## Watched changes
-
-```diff
-    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
-    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
-      sourceHashes.1:
--        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
-+        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
-      values.$implementation:
--        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
-+        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
-      values.$pastUpgrades.1:
-+        ["2025-04-29T13:09:35.000Z","0xdadc987a1a0f2da5a24bcf9c6958c3e4bbe015686cfd2f954ba4f3ee4884dc07",["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
-      values.$upgradeCount:
--        1
-+        2
-      values.trustedSequencerURL:
--        "http://sequencer.silicon.network:8123"
-+        "https://rpc.silicon.network"
-      derivedName:
--        "PolygonValidiumStorageMigration"
-+        "PolygonValidiumEtrog"
-    }
-```
-
-## Source code changes
-
-```diff
-.../Validium/PolygonValidiumEtrog.sol}             | 203 +++++++++++----------
- 1 file changed, 111 insertions(+), 92 deletions(-)
-```
-
-Generated with discovered.json: 0xca8c220898a117ef7f8a6b327dce62eb51d1692d
+Generated with discovered.json: 0x2efbd23fd415f9da2c150ca1da917c1d96080c85
 
 # Diff at Tue, 29 Apr 2025 08:19:12 GMT:
 

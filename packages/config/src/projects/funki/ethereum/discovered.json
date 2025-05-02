@@ -2,7 +2,7 @@
   "name": "funki",
   "chain": "ethereum",
   "blockNumber": 22208380,
-  "configHash": "0x37716b9dc619199d84b7081da5797ed7982d349186d857d3a0e9d6d1021c3d7b",
+  "configHash": "0x2e97d7227a9d273433b021ae5fede5cc78f210cd6c972622309b9bfb9bf1cae7",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

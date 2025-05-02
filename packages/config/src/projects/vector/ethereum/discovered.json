@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 22336710,
-  "configHash": "0xe887b867530a8a0949d954f1892cf1c772bc1454b25aa9537fd9dde4bd5e8022",
+  "configHash": "0x6b113709a01b4c011c82f02891a984c98a08c2f4a42414976f0bbec9d41c0332",
   "entries": [
     {
       "name": "Vector",
