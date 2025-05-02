@@ -44,7 +44,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
   celestiaDa: {
     // TODO
     sinceBlock: 1,
-    namespace: 'abc',
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU=',
   },
   chainConfig: {
     name: 'galxegravity',
