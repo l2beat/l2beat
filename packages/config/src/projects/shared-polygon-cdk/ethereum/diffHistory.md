@@ -1,3 +1,236 @@
+Generated with discovered.json: 0x584c6e03cef1e8fe0ba6cd7a963b78a4300b4bc4
+
+# Diff at Fri, 02 May 2025 14:41:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22367585
+- current block number: 22396779
+
+## Description
+
+New pessimistic cdk prover deployed, chainid unknown. out of the 4 pessimistic provers, we have had 7 state updates so far: 4 from ID 14, and one each from ID 17,18,19. looks like testing, not in prod yet.
+
+ref: https://dune.com/queries/4683507
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.3:
++        19
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.2:
++        18
+      values.rollupCount:
+-        18
++        19
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.18:
++        {"rollupContract":"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC","chainID":938,"verifier":"0x0775e11309d75aA6b0967917fB0213C5673eDf81","forkID":9,"rollupTypeID":4,"rollupVerifierType":0,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.rollupsDataV2.17.rollupContract:
+-        "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC"
++        "0x88AaB361f108C3c959F2928Da3cD8e47298016B5"
+      values.rollupsDataV2.17.chainID:
+-        938
++        4913
+      values.rollupsDataV2.16.rollupContract:
+-        "0x88AaB361f108C3c959F2928Da3cD8e47298016B5"
++        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+      values.rollupsDataV2.16.chainID:
+-        4913
++        3776
+      values.rollupsDataV2.15.rollupContract:
+-        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
++        "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8"
+      values.rollupsDataV2.15.chainID:
+-        3776
++        623
+      values.rollupsDataV2.15.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupsDataV2.15.forkID:
+-        9
++        12
+      values.rollupsDataV2.15.rollupTypeID:
+-        4
++        7
+      values.rollupsDataV2.14.rollupContract:
+-        "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8"
++        "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
+      values.rollupsDataV2.14.chainID:
+-        623
++        1702448187
+      values.rollupsDataV2.14.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.14.forkID:
+-        12
++        9
+      values.rollupsDataV2.14.rollupTypeID:
+-        7
++        4
+      values.rollupsDataV2.13.rollupContract:
+-        "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
++        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
+      values.rollupsDataV2.13.chainID:
+-        1702448187
++        801
+      values.rollupsDataV2.13.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupsDataV2.13.forkID:
+-        9
++        12
+      values.rollupsDataV2.13.rollupTypeID:
+-        4
++        10
+      values.rollupsDataV2.13.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.13.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+      values.rollupsDataV2.12.rollupContract:
+-        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
++        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
+      values.rollupsDataV2.12.chainID:
+-        801
++        9369
+      values.rollupsDataV2.11.rollupContract:
+-        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
++        "0xB234F18738d9531CAD6ae6d9A587d09fe200272C"
+      values.rollupsDataV2.11.chainID:
+-        2355
++        999
+      values.rollupsDataV2.10.rollupContract:
+-        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
++        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
+      values.rollupsDataV2.10.chainID:
+-        9369
++        45056
+      values.rollupsDataV2.9.rollupContract:
+-        "0xB234F18738d9531CAD6ae6d9A587d09fe200272C"
++        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
+      values.rollupsDataV2.9.chainID:
+-        999
++        1511670449
+      values.rollupsDataV2.8.rollupContract:
+-        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
++        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
+      values.rollupsDataV2.8.chainID:
+-        45056
++        2355
+      values.rollupsDataV2.8.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupsDataV2.8.rollupTypeID:
+-        10
++        7
+      values.rollupsDataV2.8.rollupVerifierType:
+-        1
++        0
+      values.rollupsDataV2.8.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.7.rollupContract:
+-        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
++        "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
+      values.rollupsDataV2.7.chainID:
+-        1511670449
++        31415
+      values.rollupsDataV2.6.rollupContract:
+-        "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
++        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
+      values.rollupsDataV2.6.chainID:
+-        31415
++        196
+      values.rollupsDataV2.6.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.rollupsDataV2.6.forkID:
+-        9
++        13
+      values.rollupsDataV2.6.rollupTypeID:
+-        4
++        8
+      values.rollupsDataV2.5.rollupContract:
+-        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
++        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.rollupsDataV2.5.chainID:
+-        196
++        1101
+      values.rollupsDataV2.5.verifier:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupsDataV2.5.forkID:
+-        13
++        12
+      values.rollupsDataV2.5.rollupTypeID:
+-        8
++        6
+      values.rollupsDataV2.4.rollupContract:
+-        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
++        "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
+      values.rollupsDataV2.4.chainID:
+-        1101
++        994873017
+      values.rollupsDataV2.4.rollupTypeID:
+-        6
++        7
+      values.rollupsDataV2.3.rollupContract:
+-        "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
++        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
+      values.rollupsDataV2.3.chainID:
+-        994873017
++        752025
+      values.rollupsDataV2.2.rollupContract:
+-        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
++        "0xb1714954bBc0162A36FB44934F3216aCE81C40d7"
+      values.rollupsDataV2.2.chainID:
+-        752025
++        3344
+      values.rollupsDataV2.1.rollupContract:
+-        "0xb1714954bBc0162A36FB44934F3216aCE81C40d7"
++        "0xA87df42CD53E998b3A610B8bCe3719871b0bb940"
+      values.rollupsDataV2.1.chainID:
+-        3344
++        511252203
+      values.rollupsDataV2.1.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.1.forkID:
+-        12
++        9
+      values.rollupsDataV2.1.rollupTypeID:
+-        7
++        4
+      values.rollupsDataV2.0.rollupContract:
+-        "0xA87df42CD53E998b3A610B8bCe3719871b0bb940"
++        "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec"
+      values.rollupsDataV2.0.chainID:
+-        511252203
++        8088
+      values.rollupsDataV2.0.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupsDataV2.0.forkID:
+-        9
++        12
+      values.rollupsDataV2.0.rollupTypeID:
+-        4
++        10
+      values.rollupsDataV2.0.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.0.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+    }
+```
+
 Generated with discovered.json: 0x95779d3ab110e1a1825674f5ddb4c9a2442e3687
 
 # Diff at Tue, 29 Apr 2025 08:19:11 GMT:
