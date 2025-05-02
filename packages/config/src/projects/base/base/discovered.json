@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "base",
-  "blockNumber": 29605802,
+  "blockNumber": 29704408,
   "configHash": "0x9cabdf4e4e7df8420b11323094ee37e8d8eb10b7970d728040b028665e41d4ac",
   "entries": [
     {
@@ -15,6 +15,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
+      "ignoreInWatchMode": ["netFeeRevenue", "lastDisbursementTime"],
       "sinceTimestamp": 1686802803,
       "sinceBlock": 6728,
       "values": {
@@ -32,7 +33,7 @@
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
         "lastDisbursementTime": 1745862705,
-        "netFeeRevenue": 0,
+        "netFeeRevenue": "127128648883256630440",
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
         "OPTIMISM_WALLET": "0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
@@ -91,7 +92,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658548",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658648",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -277,18 +278,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 423451016,
+        "basefee": 969420181,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 3399547344,
+        "blobBaseFee": 9435023908,
         "blobBaseFeeScalar": 1055762,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xbafc24783be73a73f2a3d55d82d81e853ddfa1bfe015a609b1045d0d8c69e487",
+        "hash": "0x192bab7219d23cc522af407ec4700e0a1e8fa4d79960f92c4ad8b6e61cdd63ca",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 22380593,
-        "sequenceNumber": 3,
-        "timestamp": 1746000767,
+        "number": 22396869,
+        "sequenceNumber": 1,
+        "timestamp": 1746197987,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -1211,7 +1212,7 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/FeeDisburser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/FeeDisburser": "0x81e7cda064e8ed1c095231c79d03776318eb054eb93de239160734991736e1b2",
     "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
