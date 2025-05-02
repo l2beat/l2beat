@@ -4,6 +4,7 @@ import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
+import { getProjectIcon } from '../utils/get-project-icon'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -25,6 +26,7 @@ export function getCommonScalingEntry({
   return {
     id: project.id,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     name: project.name,
     nameSecondLine:
       project.scalingInfo.layer === 'layer2'
@@ -40,6 +42,7 @@ export function getCommonScalingEntry({
         impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
+      emergencyWarning: project.statuses.emergencyWarning,
       countdowns: {
         otherMigration: project.statuses.otherMigration,
       },

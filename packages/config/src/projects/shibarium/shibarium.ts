@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { floor } from 'lodash'
 import {
   CONTRACTS,
   DA_LAYERS,
@@ -11,6 +12,11 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('shibarium')
+
+const currentValidatorSetSize = discovery.getContractValue<number>(
+  'StakeManager',
+  'currentValidatorSetSize',
+)
 
 export const shibarium: ScalingProject = {
   id: ProjectId('shibarium'),
@@ -80,43 +86,51 @@ export const shibarium: ScalingProject = {
     ],
   },
   dataAvailability: {
-    layer: DA_LAYERS.NONE, // StakeManager is unverified
+    layer: DA_LAYERS.DAC,
     bridge: {
-      value: 'Unknown',
+      value: `${currentValidatorSetSize} validators`,
       sentiment: 'bad',
       description:
-        'Since the bridge is not verified, the specifics of the DA bridge are unknown.',
+        'The bridge verifies that at least 2/3+1 of the whitelisted validators stake has signed off on the checkpoint. The StakeMaanger contract is the source of truth for the current validator set. The identity of the validators is not public, so it is not possible to verify the presence of sybils, or the number of different entities behind the validators. Since members are whitelisted, the validator set effectively acts as a permissioned DAC.',
     },
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL, // StakeManager is unverified
+    dataAvailability: {
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: currentValidatorSetSize,
+        requiredSignatures: floor((currentValidatorSetSize * 2) / 3) + 1,
+      }),
+      sentiment: 'bad', // because members are not public
+    },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW, // StakeManager is unverified
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description:
-        'As a fork of Polygon PoS, state updates are supposed to be settled if signed by at least 2/3+1 of the Shibarium validators stake, without checking whether the state transition is valid. Since some contracts are not verified, it is not possible to verify the exact mechanism.',
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators on Shibarium decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
-        },
-      ],
-    },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'As a fork of Polygon PoS, state updates are settled if signed by at least 2/3+1 of the Shibarium validators stake, without checking whether the state transition is valid. The validator set is gated by a whitelist, which is not public.',
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators on Shibarium decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: {

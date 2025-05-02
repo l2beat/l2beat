@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x776d390ed65ac92f281473fb2e7bcbe6f14bc193
+Generated with discovered.json: 0x68b4661c20541d18b16f6be09b3e603648946265
+
+# Diff at Tue, 29 Apr 2025 08:19:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20138492
+- current block number: 20138492
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13a4cC0750296bB72Eb0006febec306551A4f472","via":[]}]
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13a4cC0750296bB72Eb0006febec306551A4f472","via":[]}]
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13a4cC0750296bB72Eb0006febec306551A4f472","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x65c507eb775722ef00f29846767eb4de57c04d9a
 
 # Diff at Tue, 04 Mar 2025 10:39:16 GMT:
 

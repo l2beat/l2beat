@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "base",
   "blockNumber": 26369623,
-  "configHash": "0x350f09a36507cefec39287cb32b9f88a24570eaca133dcbfd4c5ac6a1a364304",
+  "configHash": "0x901339315824c75d063762ddbe8f0d79ed248c8aede64199e8a467057068ac9a",
   "entries": [
     {
       "name": "StargatePoolUSDC",
@@ -417,5 +417,6 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x5706a59399c824e14cc625a3eb30d0938a9b6c1c11668fb20edb3e10356db3ae"
 }

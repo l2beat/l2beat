@@ -2,7 +2,7 @@
   "name": "symbiosis",
   "chain": "ethereum",
   "blockNumber": 22022451,
-  "configHash": "0xed4bdccf05b8e31ed15a8b33bf66b0b40aa5c81e92fd9da2719de7203dbc93f7",
+  "configHash": "0xfab10bb50a0ab41c71e1d2c8d4fd3e6626ed5eb026956553308f75dedcfd9833",
   "entries": [
     {
       "address": "0x0ee552336134B6f8F0a72927b6124f8A81865928",
@@ -109,13 +109,6 @@
         "0xbd76088c97afed7c4594c70e7bca2da6186fb16ab28e0f1f3f2521d3a62e67b8"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"],
       "sinceTimestamp": 1668406727,
       "sinceBlock": 15966436,
@@ -158,13 +151,6 @@
         "0x8c47d485b7d202eb666ef592012502f811cc91f1337393dbfd3411b67dea3580"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["requestCount"],
       "sinceTimestamp": 1668406751,
       "sinceBlock": 15966438,
@@ -225,13 +211,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1643968081,
       "sinceBlock": 14138783,
       "values": {
@@ -503,5 +482,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x36a4cce24279ea26e780e2787b9f491a42c1c04332c255fe00cbd4cb416d6dfe"
 }

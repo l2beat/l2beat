@@ -19,4 +19,11 @@ export class DaProvider {
 
     return await provider.getBlobs(from, to)
   }
+
+  getDaProvider(daLayer: string): DaBlobProvider {
+    const provider = this.providers.get(daLayer)
+    assert(provider, `Missing DaProvider for ${daLayer}`)
+
+    return provider
+  }
 }

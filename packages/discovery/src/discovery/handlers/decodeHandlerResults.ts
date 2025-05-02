@@ -1,11 +1,13 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
+import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,
   StructureContract,
 } from '../config/StructureConfig'
 import type { EntryParameters } from '../output/types'
-import { TypeApplier } from '../type-casters/TypeApplier'
+import { applyReturnFragment } from '../type-casters/applyReturnFragment'
 import type { HandlerResult } from './Handler'
+import { orderByCopyDependencies } from './orderByCopyDependencies'
 
 export function decodeHandlerResults(
   results: HandlerResult[],
@@ -18,30 +20,48 @@ export function decodeHandlerResults(
 } {
   const values: EntryParameters['values'] = {}
   const errors: EntryParameters['errors'] = {}
-  const typeApplier = new TypeApplier(types)
 
-  for (const result of results) {
-    if (result.value !== undefined) {
-      const returnType = (fieldOverrides ?? {})[result.field]?.returnType
+  for (const { value, field, fragment, error } of results) {
+    if (value !== undefined) {
       try {
-        if (returnType !== undefined) {
-          values[result.field] = typeApplier.applyReturnType(
-            result.value,
-            returnType,
-          )
-        } else {
-          values[result.field] = typeApplier.applyReturnFragment(
-            result.value,
-            result.fragment,
-          )
-        }
+        values[field] = applyReturnFragment(value, fragment)
       } catch (e) {
-        errors[result.field] = getErrorMessage(e)
+        errors[field] = getErrorMessage(e)
       }
     }
-    if (result.error !== undefined) {
-      errors[result.field] = result.error
+
+    if (error !== undefined) {
+      errors[field] = error
     }
   }
-  return { values, errors, usedTypes: typeApplier.usedTypes }
+
+  const runtime = new BlipRuntime(types)
+  const copyBatches = orderByCopyDependencies(fieldOverrides)
+  for (const batch of copyBatches) {
+    for (const fieldName of batch) {
+      const copy = (fieldOverrides ?? {})[fieldName]?.copy
+      if (copy !== undefined) {
+        if (values[copy] === undefined) {
+          errors[fieldName] = `Field ${copy} not found`
+          continue
+        }
+
+        values[fieldName] = values[copy]
+      }
+    }
+  }
+
+  for (const fieldName in fieldOverrides) {
+    const edit = (fieldOverrides ?? {})[fieldName]?.edit
+    if (edit !== undefined) {
+      // biome-ignore lint/style/noNonNullAssertion: It's fine
+      values[fieldName] = runtime.executeBlip(values[fieldName]!, edit)
+    }
+  }
+
+  return {
+    values,
+    errors,
+    usedTypes: runtime.usedTypes,
+  }
 }

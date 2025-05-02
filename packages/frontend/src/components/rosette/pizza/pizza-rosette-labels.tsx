@@ -13,12 +13,12 @@ interface Props extends VariantProps<typeof rosetteVariants> {
 }
 
 const rosetteVariants = cva(
-  'select-none whitespace-pre text-center font-medium uppercase leading-tight',
+  'select-none whitespace-pre text-center uppercase',
   {
     variants: {
       size: {
-        small: 'text-3xs',
-        regular: 'text-xs',
+        small: 'subtitle-10',
+        regular: 'subtitle-14',
       },
     },
     defaultVariants: {

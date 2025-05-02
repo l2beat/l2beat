@@ -2,7 +2,7 @@
   "name": "silicon",
   "chain": "ethereum",
   "blockNumber": 21766766,
-  "configHash": "0x5df3b6f2ba50249a59e0689b6f586e18f66d3b23c92781b8880d36bf2f606cee",
+  "configHash": "0xdf6b5cf7ddab9cd5631089a5b705f422384870e353fc37bcab90478eba238941",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -54,19 +54,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-          "via": [{ "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }]
-        }
-      ],
       "sinceTimestamp": 1724259359,
       "sinceBlock": 20578326,
       "values": {
@@ -84,18 +71,18 @@
         "getAmountOfMembers": 3,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "http://silicon-mainnet-da-3.nodeinfra.com:8444",
-            "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
-          ],
-          [
-            "http://da1.silicon.network:8444",
-            "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
-          ],
-          [
-            "http://da2.silicon.network:8444",
-            "0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
-          ]
+          {
+            "url": "http://silicon-mainnet-da-3.nodeinfra.com:8444",
+            "addr": "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
+          },
+          {
+            "url": "http://da1.silicon.network:8444",
+            "addr": "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
+          },
+          {
+            "url": "http://da2.silicon.network:8444",
+            "addr": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
+          }
         ],
         "owner": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
         "requiredAmountOfSignatures": 2
@@ -137,25 +124,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1724183531,
       "sinceBlock": 20572039,
@@ -437,5 +405,6 @@
     "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0x70665ebc4b0d34fe2de9b40a7ca04b2f20c03dec4b341ee94a2fc16527a7b7c2"
 }

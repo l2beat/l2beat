@@ -14,6 +14,7 @@ import { api } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
 import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
@@ -23,10 +24,12 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
+import { getProjectIcon } from '../../utils/get-project-icon'
 
 export interface BridgesProjectEntry {
   name: string
   slug: string
+  icon: string
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   underReviewStatus: UnderReviewStatus
@@ -61,7 +64,7 @@ export interface BridgesProjectEntry {
 export async function getBridgesProjectEntry(
   project: Project<
     | 'statuses'
-    | 'tvlInfo'
+    | 'tvsInfo'
     | 'tvsConfig'
     | 'bridgeInfo'
     | 'bridgeRisks'
@@ -88,6 +91,7 @@ export async function getBridgesProjectEntry(
   const common: Omit<BridgesProjectEntry, 'sections'> = {
     name: project.name,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: project.statuses.isUnderReview,
       ...changes,
@@ -110,10 +114,10 @@ export async function getBridgesProjectEntry(
                       tvsProjectStats.associated.total /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
-                    associatedTokens: project.tvlInfo.associatedTokens,
+                    associatedTokens: project.tvsInfo.associatedTokens,
                   }),
               ]),
-              associatedTokens: project.tvlInfo.associatedTokens,
+              associatedTokens: project.tvsInfo.associatedTokens,
             },
             tvsBreakdown: {
               ...tvsProjectStats.breakdown,
@@ -201,7 +205,7 @@ export async function getBridgesProjectEntry(
   const technologySection = getBridgeTechnologySection(project)
   if (technologySection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         ...technologySection,
         id: 'technology',
@@ -214,7 +218,7 @@ export async function getBridgesProjectEntry(
     getBridgeOtherConsiderationsSection(project)
   if (otherConsiderationsSection) {
     sections.push({
-      type: 'TechnologySection',
+      type: 'TechnologyChoicesSection',
       props: {
         id: 'other-considerations',
         title: 'Other considerations',
@@ -230,11 +234,10 @@ export async function getBridgesProjectEntry(
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
         content: project.bridgeTechnology.upgradesAndGovernance,
-        diagram: {
-          type: 'upgrades-and-governance',
-          slug:
-            project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
-        },
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.statuses.isUnderReview,
       },

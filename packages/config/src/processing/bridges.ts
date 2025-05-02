@@ -46,7 +46,6 @@ import { synapse } from '../projects/synapse/synapse'
 import { train } from '../projects/train/train'
 import { transporter } from '../projects/transporter/transporter'
 import { wormholeV1 } from '../projects/wormholeV1/wormholeV1'
-import { xdai } from '../projects/xdai/xdai'
 
 export const bridges: Bridge[] = [
   acrossV3,
@@ -95,6 +94,5 @@ export const bridges: Bridge[] = [
   transporter,
   portal,
   wormholeV1,
-  xdai,
   symbiosis,
 ]

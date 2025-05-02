@@ -15,10 +15,9 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
@@ -181,7 +180,7 @@ export function polygonCDKStack(
           ? 'polygon-cdk-validium'
           : 'polygon-cdk-rollup',
       stack: 'Polygon',
-      tvlWarning: templateVars.display.tvlWarning,
+      tvsWarning: templateVars.display.tvsWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod,
         warnings: {
@@ -277,27 +276,6 @@ export function polygonCDKStack(
             },
           ),
     technology: {
-      newCryptography: {
-        ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-        references: [
-          {
-            title:
-              'PolygonZkEVM.sol - Etherscan source code, verifyBatches() function',
-            url: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}#code`,
-          },
-        ],
-      },
-      stateCorrectness: templateVars.nonTemplateTechnology
-        ?.stateCorrectness ?? {
-        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-        references: explorerReferences(explorerUrl, [
-          {
-            title:
-              'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
-            address: safeGetImplementation(rollupManagerContract),
-          },
-        ]),
-      },
       dataAvailability:
         (templateVars.nonTemplateTechnology?.dataAvailability ??
         templateVars.daProvider !== undefined)
@@ -419,6 +397,16 @@ export function polygonCDKStack(
           title: 'Pessimistic Proofs',
           description:
             'The pessimistic proofs that are used to prove correct accounting in the shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
+        },
+        {
+          ...STATE_VALIDATION.VALIDITY_PROOFS,
+          references: explorerReferences(explorerUrl, [
+            {
+              title:
+                'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
+              address: safeGetImplementation(rollupManagerContract),
+            },
+          ]),
         },
       ],
     },

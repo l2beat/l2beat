@@ -2,56 +2,77 @@ import { expect, mockObject } from 'earl'
 
 import type { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
 import {
-  sharedBridgeChainId,
-  sharedBridgeCommitBatchesInput,
-  sharedBridgeCommitBatchesSignature,
-  sharedBridgeExecuteBatchesInput,
-  sharedBridgeExecuteBatchesSignature,
-  sharedBridgeProveBatchesInput,
-  sharedBridgeProveBatchesSignature,
+  agglayerSharedBridgeChainId,
+  agglayerSharedBridgeVerifyBatchesInput,
+  agglayerSharedBridgeVerifyBatchesSignature,
+  elasticChainSharedBridgeChainId,
+  elasticChainSharedBridgeCommitBatchesInput,
+  elasticChainSharedBridgeCommitBatchesSignature,
+  elasticChainSharedBridgeExecuteBatchesInput,
+  elasticChainSharedBridgeExecuteBatchesSignature,
+  elasticChainSharedBridgeProveBatchesInput,
+  elasticChainSharedBridgeProveBatchesSignature,
 } from '../../../test/sharedBridge'
 import { isChainIdMatching } from './isChainIdMatching'
 
 describe(isChainIdMatching.name, () => {
-  it('commitBatches', () => {
-    const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
-      chainId: sharedBridgeChainId,
-      signature: sharedBridgeCommitBatchesSignature,
+  describe('Elastic Chain Shared Bridge', () => {
+    it('commitBatches', () => {
+      const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
+        chainId: elasticChainSharedBridgeChainId,
+        signature: elasticChainSharedBridgeCommitBatchesSignature,
+      })
+
+      const result = isChainIdMatching(
+        elasticChainSharedBridgeCommitBatchesInput,
+        mockSharedBridgeConfig,
+      )
+
+      expect(result).toEqual(true)
     })
 
-    const result = isChainIdMatching(
-      sharedBridgeCommitBatchesInput,
-      mockSharedBridgeConfig,
-    )
+    it('proveBatches', () => {
+      const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
+        chainId: elasticChainSharedBridgeChainId,
+        signature: elasticChainSharedBridgeProveBatchesSignature,
+      })
 
-    expect(result).toEqual(true)
+      const result = isChainIdMatching(
+        elasticChainSharedBridgeProveBatchesInput,
+        mockSharedBridgeConfig,
+      )
+
+      expect(result).toEqual(true)
+    })
+
+    it('executeBatches', () => {
+      const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
+        chainId: elasticChainSharedBridgeChainId,
+        signature: elasticChainSharedBridgeExecuteBatchesSignature,
+      })
+
+      const result = isChainIdMatching(
+        elasticChainSharedBridgeExecuteBatchesInput,
+        mockSharedBridgeConfig,
+      )
+
+      expect(result).toEqual(true)
+    })
   })
 
-  it('proveBatches', () => {
-    const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
-      chainId: sharedBridgeChainId,
-      signature: sharedBridgeProveBatchesSignature,
+  describe('Agglayer Shared Bridge', () => {
+    it('verifyBatchesTrustedAggregator', () => {
+      const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
+        chainId: agglayerSharedBridgeChainId,
+        signature: agglayerSharedBridgeVerifyBatchesSignature,
+      })
+
+      const result = isChainIdMatching(
+        agglayerSharedBridgeVerifyBatchesInput,
+        mockSharedBridgeConfig,
+      )
+
+      expect(result).toEqual(true)
     })
-
-    const result = isChainIdMatching(
-      sharedBridgeProveBatchesInput,
-      mockSharedBridgeConfig,
-    )
-
-    expect(result).toEqual(true)
-  })
-
-  it('executeBatches', () => {
-    const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
-      chainId: sharedBridgeChainId,
-      signature: sharedBridgeExecuteBatchesSignature,
-    })
-
-    const result = isChainIdMatching(
-      sharedBridgeExecuteBatchesInput,
-      mockSharedBridgeConfig,
-    )
-
-    expect(result).toEqual(true)
   })
 })

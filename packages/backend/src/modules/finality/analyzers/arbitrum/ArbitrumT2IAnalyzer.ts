@@ -9,8 +9,8 @@ import zlib from 'zlib'
 import type { Database } from '@l2beat/database'
 import type {
   Blob,
-  BlobProvider,
   EVMTransaction,
+  EthereumDaProvider,
   RpcClient,
 } from '@l2beat/shared'
 import { utils } from 'ethers'
@@ -53,7 +53,7 @@ const BROTLI_COMPRESSION_TYPE = 0x00
 
 export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
   constructor(
-    private readonly blobProvider: BlobProvider,
+    private readonly ethereumDaProvider: EthereumDaProvider,
     private readonly logger: Logger,
     provider: RpcClient,
     db: Database,
@@ -106,8 +106,8 @@ export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
         assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
 
         // get blobs relevant to the transaction
-        const { blobs } =
-          await this.blobProvider.getBlobsByVersionedHashesAndBlockNumber(
+        const blobs =
+          await this.ethereumDaProvider.getBlobsByVersionedHashesAndBlockNumber(
             tx.blobVersionedHashes,
             tx.blockNumber,
           )

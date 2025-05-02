@@ -1,4 +1,86 @@
-Generated with discovered.json: 0xa8b7c2eb6a07580a8d5a5a37610a9bd70726dab9
+Generated with discovered.json: 0x6bc586b180876a779af071c9eedc453ec076dd92
+
+# Diff at Tue, 29 Apr 2025 08:19:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337719
+- current block number: 22337719
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337719 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","via":[]}]
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]},{"permission":"operateStarknet","to":"0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2","via":[]},{"permission":"upgrade","to":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xa5acd8e953e44b424458f0e539f3d1c0e0e37f68
+
+# Diff at Thu, 24 Apr 2025 08:36:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61 block: 22297523
+- current block number: 22337719
+
+## Description
+
+Gov updated, EOA upgrader removed.
+
+## Watched changes
+
+```diff
+    contract undefined (0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.4:
+-        {"permission":"upgrade","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","via":[]}
+      issuedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.3.description:
+-        "disable the withdrawal limit."
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.2.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.2.description:
++        "disable the withdrawal limit."
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
+Generated with discovered.json: 0x89caf88c44bb5e49c837e20db90c1af5dee5a3a2
 
 # Diff at Fri, 18 Apr 2025 17:58:18 GMT:
 

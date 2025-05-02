@@ -1,8 +1,6 @@
-import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BridgesHeader } from '../_components/bridges-header'
-import { BridgesArchivedTables } from './_components/bridges-archived-tables'
+import { BridgesArchivedPage } from './_page'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -12,10 +10,5 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getBridgesArchivedEntries()
-  return (
-    <TableFilterContextProvider>
-      <BridgesHeader>Archived</BridgesHeader>
-      <BridgesArchivedTables {...entries} />
-    </TableFilterContextProvider>
-  )
+  return <BridgesArchivedPage entries={entries} />
 }

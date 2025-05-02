@@ -48,7 +48,6 @@ describe(fillTvsValuesForTimestamps.name, () => {
       [100, 200, 300],
       mockProjectValue(150),
     )
-    console.log(result)
     expect(result).toEqual({
       '200': mockProjectValue(100),
       '300': mockProjectValue(150),

@@ -22,5 +22,6 @@
     "_nextHeaderBlock",
     "getLastChildBlock",
     "currentHeaderBlock"
-  ]
+  ],
+  "category": "core"
 }

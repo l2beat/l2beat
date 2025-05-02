@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0x2e03962baa3bcf19740c68f0a21cc54abb09fc4a89997875672d0801c1761432",
+  "configHash": "0x282328487c1b79183a427a2f6f19f162bc92fe3229658b42136c1da4221c8648",
   "entries": [
     {
       "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
@@ -53,13 +53,6 @@
         "0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1647128990,
       "sinceBlock": 14375018,
       "values": {
@@ -148,13 +141,6 @@
         "0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1652360689,
       "sinceBlock": 14761234,
       "values": {
@@ -182,13 +168,6 @@
         "0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1647128942,
       "sinceBlock": 14375014,
       "values": {
@@ -435,5 +414,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x33534205e6127c0ceec5a4ab23e9cd2ecee63863dbc3a4d6688abf6ee1b9ddbb"
 }

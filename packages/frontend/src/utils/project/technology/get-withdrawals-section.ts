@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import { getTechnologyChoicesSectionProps } from './get-technology-choices-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export function getWithdrawalsSection(
@@ -14,5 +14,5 @@ export function getWithdrawalsSection(
       makeTechnologyChoice('mass-exit', project.scalingTechnology.massExit),
   ].filter(notUndefined)
 
-  return getTechnologySectionProps(project, items)
+  return getTechnologyChoicesSectionProps(project, items)
 }

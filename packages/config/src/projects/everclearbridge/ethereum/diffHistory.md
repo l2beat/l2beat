@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xf4bd541a3feaba22dccc3f8afcd282ec5d53b5f9
+Generated with discovered.json: 0x0d3d8007f5abdd983a3be58631411488ef44a335
+
+# Diff at Tue, 29 Apr 2025 08:19:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22281661
+- current block number: 22281661
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281661 (main branch discovery), not current.
+
+```diff
+    contract  (0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6","via":[]}]
+    }
+```
+
+```diff
+    contract EverclearSpokeV3 (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x907ab14d5461be8097a4c36670a5e8aeb92f0419
 
 # Diff at Wed, 16 Apr 2025 12:49:25 GMT:
 

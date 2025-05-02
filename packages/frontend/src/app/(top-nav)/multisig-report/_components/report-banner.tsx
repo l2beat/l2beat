@@ -1,7 +1,11 @@
 import Image from 'next/image'
-import multisigReportImage from './landscape.png'
+import type { ImageParams } from '~/utils/project/get-image-params'
 
-export function ReportBanner() {
+export function ReportBanner({
+  image,
+}: {
+  image: ImageParams
+}) {
   return (
     <div className="mb-10 mt-8 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:my-12 md:grid md:grid-cols-2 md:bg-gradient-to-r">
       <div className="mx-0 my-8 flex flex-col justify-center md:mx-12">
@@ -14,7 +18,7 @@ export function ReportBanner() {
       </div>
       <Image
         alt=""
-        src={multisigReportImage}
+        {...image}
         className="h-full max-h-[320px] rounded-md md:rounded-none"
       />
     </div>

@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantle",
   "blockNumber": 76775244,
-  "configHash": "0x320114ce85af588f282f5855f5d79a0e6d5d7ea6ecf3462edac5c2b5ddfadea3",
+  "configHash": "0x1421e3b0085fdee733c14c749bbe5deca8cb237c785713efeaa7be488de08e70",
   "entries": [
     {
       "name": "MantleOwner",
@@ -90,13 +90,6 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
-          "via": [{ "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82" }]
-        }
-      ],
       "sinceTimestamp": 1709296907,
       "sinceBlock": 58697615,
       "values": {
@@ -151,13 +144,6 @@
         "0xce3f5eaddd62b6c043d92c0ff2cc4eed6369114f68e9d57c1b76f3d26dd29fa2"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -236,13 +222,6 @@
         "0xf74567f04dfc1337e1295ac8ee70891c3e1543ec852c2205630c0bcc4e0b6a19"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709279398,
       "sinceBlock": 58659973,
       "values": {
@@ -521,5 +500,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

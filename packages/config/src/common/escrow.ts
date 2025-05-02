@@ -1,4 +1,4 @@
-import type { TokenBridgedUsing } from '@l2beat/shared-pure'
+import type { LegacyTokenBridgedUsing } from '@l2beat/shared-pure'
 
 /**
  * An escrow with external governance (on the host- or the destination chain) that uses the canonical bridge for messaging.
@@ -10,7 +10,7 @@ const CANONICAL_EXTERNAL = {
         name: 'Canonical (external escrow)',
       },
     ],
-  } as TokenBridgedUsing,
+  } as LegacyTokenBridgedUsing,
   source: 'external' as 'canonical' | 'external' | 'native',
 }
 

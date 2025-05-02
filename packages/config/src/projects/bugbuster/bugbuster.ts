@@ -93,36 +93,40 @@ export const bugbuster: ScalingProject = {
       rollupNodeLink: '',
     },
   ),
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Bug Buster DApp permits invalid state roots.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid state root is submitted to the system by the configured Authority.',
+            isCritical: true,
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the DApp owner changes the consensus implementation maliciously.',
+            isCritical: true,
+          },
+        ],
+        references: [
+          {
+            title:
+              'Authority.sol#L48 - Optimism Etherscan source code, submitClaim function',
+            url: 'https://optimistic.etherscan.io/address/0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35#code#F1#L48',
+          },
+          {
+            title:
+              'CartesiDApp.sol#L201 - Optimism Etherscan source code, migrateToConsensus function',
+            url: 'https://optimistic.etherscan.io/address/0x3ff5c7383f614256053c3f6b86a47ba974937299#code#F1#L201',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'Fraud proofs are in development',
-      description:
-        'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Bug Buster DApp permits invalid state roots.',
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'an invalid state root is submitted to the system by the configured Authority.',
-          isCritical: true,
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'the DApp owner changes the consensus implementation maliciously.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          title:
-            'Authority.sol#L48 - Optimism Etherscan source code, submitClaim function',
-          url: 'https://optimistic.etherscan.io/address/0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35#code#F1#L48',
-        },
-        {
-          title:
-            'CartesiDApp.sol#L201 - Optimism Etherscan source code, migrateToConsensus function',
-          url: 'https://optimistic.etherscan.io/address/0x3ff5c7383f614256053c3f6b86a47ba974937299#code#F1#L201',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [

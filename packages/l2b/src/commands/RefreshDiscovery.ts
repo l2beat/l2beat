@@ -11,37 +11,38 @@ import { discoverAndUpdateDiffHistory } from '../implementations/discovery/disco
 
 export const RefreshDiscovery = command({
   name: 'refresh-discovery',
+  description: 'Rerun discovery on projects that need changes.',
   args: {
     all: flag({
       type: boolean,
       long: 'all',
       short: 'a',
-      description: 'refreshes discovery for every project',
+      description: 'refreshes discovery for every project.',
     }),
     from: option({
       type: optional(string),
       long: 'from',
       short: 'f',
       description:
-        'where to at which project start discovery, format <project>/<chain>',
+        'where to at which project start discovery, format <project>/<chain>.',
     }),
     confirmed: flag({
       type: boolean,
       long: 'yes',
       short: 'y',
-      description: 'accept the refresh, do not prompt the user',
+      description: 'accept the refresh, do not prompt the user.',
     }),
     message: option({
       type: optional(string),
       long: 'message',
       short: 'm',
       description:
-        'Message that will be written in the description section of diffHistory.md',
+        'Message that will be written in the description section of diffHistory.md.',
     }),
     overwriteCache: flag({
       type: boolean,
       long: 'overwrite-cache',
-      description: 'overwrite the cache entries',
+      description: 'overwrite the cache entries.',
     }),
   },
   handler: async (args) => {

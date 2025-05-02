@@ -2,7 +2,7 @@
   "name": "degate",
   "chain": "ethereum",
   "blockNumber": 18939731,
-  "configHash": "0x8f8c0e88b75810fd3413837cf45b8ffa5979457d29a9cf41c77d938e1f4a6abc",
+  "configHash": "0x45fba4da5dadf7c27d4ce4b6d006900a936d28b7086d540d1bb3a3191dc229ee",
   "entries": [
     {
       "name": "BlockVerifier",
@@ -507,5 +507,6 @@
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x460f5b47d3fa39525923f7d0c0abe7fcb62b1ccf4843f9a9639df2efe330ea33"
 }

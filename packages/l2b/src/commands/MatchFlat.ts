@@ -87,6 +87,8 @@ const MatchFlatAddress = command({
 
 export const MatchFlat = subcommands({
   name: 'match-flat',
+  description:
+    'Compute percentage similarity between a needle flat file and haystack.',
   cmds: Object.fromEntries(
     [MatchFlatFile, MatchFlatAddress].map((t) => [t.name, t]),
   ),

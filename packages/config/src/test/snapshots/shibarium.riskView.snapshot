@@ -2,9 +2,10 @@
 
 {
   dataAvailability: {
-    description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 9/12 that is tasked with protecting and supplying the data."
+    orderHint: 0.75
     sentiment: "bad"
-    value: "External"
+    value: "External (DAC)"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."

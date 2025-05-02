@@ -7,6 +7,7 @@ let nonce = 0
 function toRow(value: number) {
   return {
     configurationId: 'test',
+    priceId: 'ethereum',
     priceUsd: value,
     timestamp: new Date(nonce++),
   }
@@ -16,20 +17,20 @@ class TestRepository extends BaseRepository {
   async insert(value: number) {
     await this.db
       // We use prices because it is one of the simpler tables
-      .insertInto('Price')
+      .insertInto('TvsPrice')
       .values(toRow(value))
       .execute()
   }
 
   async batchInsert(values: number[]) {
     await this.batch(values, 2, async (values) => {
-      await this.db.insertInto('Price').values(values.map(toRow)).execute()
+      await this.db.insertInto('TvsPrice').values(values.map(toRow)).execute()
     })
   }
 
   async getAll() {
     const results = await this.db
-      .selectFrom('Price')
+      .selectFrom('TvsPrice')
       .select(['priceUsd'])
       .orderBy('priceUsd', 'asc')
       .execute()
@@ -37,7 +38,7 @@ class TestRepository extends BaseRepository {
   }
 
   async deleteAll() {
-    await this.db.deleteFrom('Price').execute()
+    await this.db.deleteFrom('TvsPrice').execute()
   }
 }
 

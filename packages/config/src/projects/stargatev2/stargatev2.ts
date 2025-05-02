@@ -30,21 +30,22 @@ const discoveredDelegates = [
 const discoveredSendLib = <string>(
   discovery.getContractValue('EndpointV2', 'getSendLibrary')
 )
-const discoveredReceiveLib = <[string, boolean]>(
+const discoveredReceiveLib = <{ lib: string; isDefault: boolean }>(
   discovery.getContractValue('EndpointV2', 'getReceiveLibrary')
 )
-const discoveredUlnConfig: [
-  number, // confirmations
-  number, // requiredDVNCount
-  number, // optionalDVNCount
-  number, // optionalDVNThreshold
-  string[], // requiredDVNs (addresses)
-  string[], // optionalDVNs (addresses)
-] = discovery.getContractValue('ReceiveUln302', 'getUlnConfig')
-const discoveredExecutorConfig: [number, string] = discovery.getContractValue(
-  'SendUln302',
-  'getExecutorConfig',
-)
+const discoveredUlnConfig = discovery.getContractValue<{
+  confirmations: number
+  requiredDVNCount: number
+  optionalDVNCount: number
+  optionalDVNThreshold: number
+  requiredDVNs: string[]
+  optionalDVNs: string[]
+}>('ReceiveUln302', 'getUlnConfig')
+
+const discoveredExecutorConfig = discovery.getContractValue<{
+  maxMessageSize: number
+  executor: string
+}>('SendUln302', 'getExecutorConfig')
 
 export const stargatev2: Bridge = {
   type: 'bridge',
@@ -127,15 +128,15 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     },
     validation: (() => {
       assert(
-        discoveredUlnConfig[1] === 2 && // requiredDVNCount
-          discoveredUlnConfig[4][0] ===
+        discoveredUlnConfig.requiredDVNCount === 2 &&
+          discoveredUlnConfig.requiredDVNs[0] ===
             '0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
-          discoveredUlnConfig[4][1] ===
+          discoveredUlnConfig.requiredDVNs[1] ===
             '0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
         'Update the validation, poO and permissions sections, the security config of Stargatev2 has changed.',
       )
       assert(
-        discoveredExecutorConfig[1] ===
+        discoveredExecutorConfig.executor ===
           '0x173272739Bd7Aa6e4e214714048a9fE699453059', // LayerZero Executor
         'The configured Executor for Stargatev2 changed: Review the permissions section.',
       )
@@ -304,7 +305,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     },
     ...(() => {
       assert(
-        EthereumAddress(discoveredReceiveLib[0]) ===
+        EthereumAddress(discoveredReceiveLib.lib) ===
           discovery.getContract('ReceiveUln302').address &&
           EthereumAddress(discoveredSendLib) ===
             discovery.getContract('SendUln302').address,

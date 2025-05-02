@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 22273396,
-  "configHash": "0x99e1651d027d9900c8817fca814402f77bb20d13301734268c92f401916895a1",
+  "configHash": "0x0314f8c241c462d74426bdb07742d9b0329bb0c97ad48e1a3976fa55f9cfa3eb",
   "entries": [
     {
       "name": "TokenBridge",
@@ -15,37 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "via": [
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "via": [
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1691067875,
       "sinceBlock": 17834649,
       "values": {
@@ -397,20 +366,6 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as 0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "change the beacon implementation.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "change the beacon implementation.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        }
-      ],
       "sinceTimestamp": 1691067839,
       "sinceBlock": 17834646,
       "values": {
@@ -456,53 +411,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
-          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "operateLinea",
-          "to": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
-          "via": []
-        },
-        {
-          "permission": "operateLinea",
-          "to": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "via": [
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "via": [
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
@@ -730,59 +638,6 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "propose transactions.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -844,79 +699,6 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
-          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
-          "description": "change the beacon implementation.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions.",
-          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
-            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1465,7 +1247,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
+    "global/Timelock": "0x2a557f1c66ae4b55d5b565ca43f14de3cffa034ccf145cec23f477a3730ecf2d",
     "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1474,5 +1256,6 @@
     "linea/PlonkVerifierForMultiTypeDataAggregation": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/Roles": "0xa2464d6b0b8a583e2a25b7127ea401ba7f63faf48f95f5fb9838cebca0c98aba",
     "linea/TokenBridge": "0xaa1287667ece38f474859679ed0569d43b19a19bbdb2a21a1a5701c5a15fe1cc"
-  }
+  },
+  "permissionsConfigHash": "0xec86c2d65d435c9384d569e695791eccf5b0485b8789ea148a5b041c6bd4d617"
 }

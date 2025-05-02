@@ -10,5 +10,11 @@
     "address": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
     "chain": "ink",
     "blockNumber": 10183769
+  },
+  "BaseFeeVault_v1_3_0": {
+    "hash": "0x0834e3a66bf6d3446ab3f5e42dde52e5ce5072d98b3b4a7e049ca96280b9f635",
+    "address": "0x4E207bDF8aece56de86821f5370b2b993D08C9E9",
+    "chain": "base",
+    "blockNumber": 29605802
   }
 }

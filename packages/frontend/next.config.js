@@ -1,5 +1,4 @@
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
-import './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

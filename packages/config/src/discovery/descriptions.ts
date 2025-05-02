@@ -17,6 +17,7 @@ export const DirectPermissionToPrefix: {
   relay: 'Can act as a Relayer',
   validateBridge: 'Can act as a Validator',
   validateBridge2: 'Can act as a Validator',
+  validateBridge3: 'Can act as a Validator',
   aggregatePolygon: 'Can act as a trusted Aggregator',
   operateStarknet: 'Can act as an Operator',
   operateStarkEx: 'Can act as an Operator',
@@ -41,6 +42,7 @@ export const UltimatePermissionToPrefix: {
   relay: 'A Relayer',
   validateBridge: 'A Validator',
   validateBridge2: 'A Validator',
+  validateBridge3: 'A Validator',
   aggregatePolygon: 'A trusted Aggregator',
   operateStarknet: 'An Operator',
   operateStarkEx: 'An Operator',
@@ -106,6 +108,11 @@ export const RoleDescriptions: {
     name: 'Validator',
     description:
       'Permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks. The validators listed here are the default validators for Ethereum and can be overridden by a custom configuration.',
+  },
+  validateBridge3: {
+    name: 'Validator',
+    description:
+      'Permissioned to sign crosschain messages, attesting to their validity.',
   },
   relay: {
     name: 'Relayer',

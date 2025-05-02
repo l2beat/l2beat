@@ -88,5 +88,11 @@
     "address": "0x059249eBf6e7F1B6c7E7bFb9079f6BCd8581635E",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "OptimismPortal_v2_1_0_zircuit": {
+    "hash": "0x67780cfd4e258f37c824b516a488799359ec5e535fb56f62fbd71765730fa32b",
+    "address": "0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a",
+    "chain": "ethereum",
+    "blockNumber": 22336762
   }
 }
