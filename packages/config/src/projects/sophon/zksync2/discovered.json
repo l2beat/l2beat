@@ -2,9 +2,10 @@
   "name": "sophon",
   "chain": "zksync2",
   "blockNumber": 54952361,
-  "configHash": "0xfcc48a817ffbfe9fc296bd201dba1a61b61a2f6afba4bde3187e67f09507e84b",
+  "configHash": "0x94763a48dd490b4267edb4e5a890a50b80fb32a64a53b468dc1bdafa3ae5735f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x8dee093a24512cf10db8f4d13be7abdaeb7efca3dc97bb635ec81956768bb273"
 }

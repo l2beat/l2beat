@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "base",
   "blockNumber": 27445725,
-  "configHash": "0x8408fe9f8c4a02d712f6d89738b28e89a4281178d445b0caea7e54c98f1f5f1b",
+  "configHash": "0x1def5510ec85ad4af0ad10675f1f03f0e7717042ea0dcb128a2943d7bc02d7ce",
   "entries": [
     {
       "name": "BaseL2Gateway",
@@ -14,13 +14,6 @@
         "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1711095783,
       "sinceBlock": 12153218,
       "values": {
@@ -81,13 +74,6 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
-          "via": [{ "address": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE" }]
-        }
-      ],
       "sinceTimestamp": 1711098033,
       "sinceBlock": 12154343,
       "values": {
@@ -171,13 +157,6 @@
         "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -506,5 +485,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

@@ -1,4 +1,57 @@
-Generated with discovered.json: 0x69979572f28452450602cb054e0df315503fd61d
+Generated with discovered.json: 0xf4de4562100bc3b4c9a8bec03034a20ff8148e97
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20089055
+- current block number: 20089055
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x59278F587D4cFcDCbbc08019060be7231c37ddc2","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x01464473ab99ac0c83c64f16af5f3e837440bdd1
+
+# Diff at Thu, 24 Apr 2025 10:30:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 20089055
+- current block number: 20089055
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      values.guardianSet:
+-        [["0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3","0xfF6CB952589BDE862c25Ef4392132fb9D4A42157","0x114De8460193bdf3A2fCf81f86a09765F4762fD1","0x107A0086b32d7A0977926A205131d8731D39cbEB","0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2","0x11b39756C042441BE6D8650b69b54EbE715E2343","0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd","0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20","0x74a3bf913953D695260D88BC1aA25A4eeE363ef0","0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e","0xAF45Ced136b9D9e24903464AE889F5C8a723FC14","0xf93124b7c738843CBB89E864c862c38cddCccF95","0xD2CC37A4dc036a8D232b48f62cDD4731412f4890","0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811","0x71AA1BE1D36CaFE3867910F99C09e347899C19C3","0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf","0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8","0x5E1487F35515d02A92753504a8D75471b9f49EdB","0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"],0]
++        {"keys":["0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3","0xfF6CB952589BDE862c25Ef4392132fb9D4A42157","0x114De8460193bdf3A2fCf81f86a09765F4762fD1","0x107A0086b32d7A0977926A205131d8731D39cbEB","0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2","0x11b39756C042441BE6D8650b69b54EbE715E2343","0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd","0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20","0x74a3bf913953D695260D88BC1aA25A4eeE363ef0","0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e","0xAF45Ced136b9D9e24903464AE889F5C8a723FC14","0xf93124b7c738843CBB89E864c862c38cddCccF95","0xD2CC37A4dc036a8D232b48f62cDD4731412f4890","0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811","0x71AA1BE1D36CaFE3867910F99C09e347899C19C3","0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf","0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8","0x5E1487F35515d02A92753504a8D75471b9f49EdB","0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"],"expirationTime":0}
+    }
+```
+
+Generated with discovered.json: 0x29c73ed8ab1760b804677ef8b48cf102930bb813
 
 # Diff at Tue, 04 Mar 2025 10:39:39 GMT:
 

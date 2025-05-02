@@ -8,6 +8,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { TableLink } from '~/components/table/table-link'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import { EmergencyIcon } from '~/icons/emergency'
 import { StopwatchIcon } from '~/icons/stopwatch'
 import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
@@ -16,9 +17,15 @@ export interface StageCellProps {
   stageConfig: ProjectScalingStage
   isAppchain: boolean
   href?: string
+  emergencyWarning?: string
 }
 
-export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
+export function StageCell({
+  stageConfig,
+  isAppchain,
+  href,
+  emergencyWarning,
+}: StageCellProps) {
   const hasNotice =
     stageConfig.stage !== 'UnderReview' &&
     stageConfig.stage !== 'NotApplicable' &&
@@ -42,9 +49,9 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
       )}
       {stageConfig.stage !== 'NotApplicable' &&
         stageConfig.stage !== 'UnderReview' &&
-        stageConfig.downgradePending && (
-          <StopwatchIcon className="mt-px md:mt-[3px]" />
-        )}
+        stageConfig.downgradePending &&
+        !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
+      {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
     </div>
   )
 
@@ -57,8 +64,12 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
       <TooltipTrigger disabledOnMobile className="h-full">
         <TableLink href={href}>{content}</TableLink>
       </TooltipTrigger>
-      <TooltipContent className="max-w-[360px]">
-        <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
+      <TooltipContent>
+        <StageTooltip
+          stageConfig={stageConfig}
+          isAppchain={isAppchain}
+          emergencyWarning={emergencyWarning}
+        />
       </TooltipContent>
     </Tooltip>
   )

@@ -1,9 +1,8 @@
 'use client'
 
-import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
+import { AreaChart } from 'recharts'
 
 import {
   ChartContainer,
@@ -38,7 +37,16 @@ interface Props {
 
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'line' })
-  const { denominator, unit } = getDaDataParams(data)
+  const max = useMemo(() => {
+    return data
+      ? Math.max(
+          ...data.map(([_, ...rest]) =>
+            Math.max(...rest.filter((x) => x !== null)),
+          ),
+        )
+      : undefined
+  }, [data])
+  const { denominator, unit } = getDaDataParams(max)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       return {
@@ -108,15 +116,15 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="text-secondary">
+      <div className="label-value-14-medium text-secondary">
         {formatTimestamp(label, { longMonthName: true })}
       </div>
       <HorizontalSeparator className="my-1" />
-      <div>
+      <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
           return (
             <div
               key={index}
@@ -127,9 +135,11 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="text-secondary">{configEntry.label}</span>
+                <span className="label-value-14-medium">
+                  {configEntry.label}
+                </span>
               </div>
-              <span className="font-medium tabular-nums text-primary">
+              <span className="label-value-15-medium tabular-nums text-primary">
                 {entry.value?.toFixed(2)} {unit}
               </span>
             </div>

@@ -1,8 +1,19 @@
 export { discover } from './cli/discoverCommand'
+export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
-export { modelPermissions } from './discovery/modelling/modelPermissions'
+export {
+  modelPermissions,
+  modelPermissionsForIsolatedDiscovery,
+  generateClingoForProject,
+  generatePermissionConfigHash,
+} from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
-export { getChainConfig, getChainShortName } from './config/config.discovery'
+export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery'
+export {
+  getChainConfig,
+  getChainShortName,
+  isChainShortName,
+} from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
@@ -18,7 +29,6 @@ export {
   RolePermissionEntries,
 } from './discovery/config/StructureConfig'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
-export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
@@ -76,8 +86,7 @@ export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,
   type ClingoValue,
-  parseExportedFacts,
-} from './discovery/modelling/factTypes'
+} from './discovery/modelling/clingoparser'
 export type {
   DiscoveryOutput,
   EntryParameters,
@@ -93,3 +102,4 @@ export {
 } from './discovery/config/getDiscoveryPaths'
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
+export { getChainConfigs } from './config/config.discovery'

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the whitelist of validators"
+        }
+      ]
+    }
+  },
+  "category": "core"
+}

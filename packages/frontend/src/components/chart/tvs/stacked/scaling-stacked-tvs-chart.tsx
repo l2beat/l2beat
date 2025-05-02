@@ -57,7 +57,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const chartData = useMemo(
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
-        const divider = unit === 'usd' ? 100 : ethPrice
+        const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
           native: native / divider,

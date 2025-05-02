@@ -1,4 +1,46 @@
-Generated with discovered.json: 0xf52cbf99b69bc6696945d07a254c998a40d07add
+Generated with discovered.json: 0x1ef6913275c7134bf4e0f35a6bffd4ba1ef0335e
+
+# Diff at Tue, 29 Apr 2025 08:19:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22022451
+- current block number: 22022451
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022451 (main branch discovery), not current.
+
+```diff
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x1Da522B35363c1eda4833bc121c8F3c67B2caa75","via":[]}]
+    }
+```
+
+```diff
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x1Da522B35363c1eda4833bc121c8F3c67B2caa75","via":[]}]
+    }
+```
+
+```diff
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x65f22d96a140a0907401b7ad0002c43254e47845
 
 # Diff at Tue, 11 Mar 2025 09:21:13 GMT:
 

@@ -8,8 +8,12 @@ import {
 import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
+export interface UsedInProjectWithIcon extends UsedInProject {
+  icon: string
+}
+
 interface Props {
-  usedIn: UsedInProject[]
+  usedIn: UsedInProjectWithIcon[]
   className?: string
   maxProjects?: number
   noTooltip?: boolean
@@ -72,7 +76,7 @@ export function ProjectsUsedIn({
                 <Image
                   width={20}
                   height={20}
-                  src={`/icons/${project.slug}.png`}
+                  src={project.icon}
                   alt={`${project.name} logo`}
                 />
               </TooltipTrigger>
@@ -85,7 +89,7 @@ export function ProjectsUsedIn({
                   <Image
                     width={20}
                     height={20}
-                    src={`/icons/${project.slug}.png`}
+                    src={project.icon}
                     alt={`${project.name} logo`}
                   />
                 </TooltipTrigger>

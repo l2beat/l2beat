@@ -156,10 +156,13 @@
         "type": "array",
         "method": "rollupIDToRollupData",
         "startIndex": 1,
-        "pickFields": ["rollupContract", "chainID", "verifier", "rollupTypeID"],
         "length": "{{ rollupCount }}",
         "ignoreRelative": true
-      }
+      },
+      "edit": [
+        "map",
+        ["pick", "rollupContract", "chainID", "verifier", "rollupTypeID"]
+      ]
     },
     "rollupTypes": {
       "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock",
@@ -168,9 +171,9 @@
         "method": "rollupTypeMap",
         "startIndex": 1,
         "length": "{{ rollupTypeCount }}",
-        "pickFields": ["consensusImplementation", "verifier"],
         "ignoreRelative": true
-      }
+      },
+      "edit": ["map", ["pick", "consensusImplementation", "verifier"]]
     },
     "isVerifyingBatches": {
       "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.",
@@ -178,10 +181,12 @@
         "type": "array",
         "method": "rollupIDToRollupData",
         "startIndex": 1,
-        "length": "{{ rollupCount }}",
-        "pickFields": ["lastVerifiedBatch"]
+        "length": "{{ rollupCount }}"
       },
-      "returnType": "(IsGreaterThanOne[][])"
+      "edit": [
+        "map",
+        ["pipe", ["get", "lastVerifiedBatch"], ["format", "IsGreaterThanOne"]]
+      ]
     }
   },
   "category": "shared"

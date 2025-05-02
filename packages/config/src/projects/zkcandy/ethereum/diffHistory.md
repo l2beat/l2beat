@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x02c1c240d41e0ff3ca21d8d1d65a48f3c4e47c15
+Generated with discovered.json: 0xfa36421687c9545bd36f38be69ed4cdb85ca12c3
+
+# Diff at Tue, 29 Apr 2025 08:19:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22223061
+- current block number: 22223061
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22223061 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D","via":[]},{"permission":"validateZkStack","to":"0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D","via":[]},{"permission":"validateZkStack","to":"0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70","via":[]}]
+    }
+```
+
+```diff
+    contract zkCandyZkEvm (0xF2704433d11842d15aa76BBF0E00407267a99C92) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8eb156588D2FAD21dE0066BAA5BfDcd940695196","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","via":[{"address":"0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"}]}]
+    }
+```
+
+Generated with discovered.json: 0x65cb93af048b913fb034ecf085c55132c062a3e3
 
 # Diff at Tue, 08 Apr 2025 08:48:42 GMT:
 

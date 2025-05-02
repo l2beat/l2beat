@@ -2,7 +2,7 @@
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0xc1ea43db53052d679c9c667000e15533c11ea523bdb79a0a1f5d26a43c546167",
+  "configHash": "0x94cfb1ccfe0f9044bd739f293bc59f087ce3ca2b04214727bbb80260eb42f3bd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -19,14 +19,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
-        }
-      ],
       "sinceTimestamp": 1689106799,
       "sinceBlock": 17672708,
       "values": {
@@ -47,13 +39,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -263,24 +248,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1689106883,
       "sinceBlock": 17672715,
@@ -414,23 +381,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -491,24 +441,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
-          "description": "withdraw ETH escrowed in the OptimismPortal.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1689106847,
       "sinceBlock": 17672712,
@@ -612,20 +544,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
-          "description": "withdraw ERC-20 tokens escrowed in the bridge.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
-        }
-      ],
       "sinceTimestamp": 1689106811,
       "sinceBlock": 17672709,
       "values": {
@@ -960,5 +878,6 @@
     "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
     "opstack/OptimismPortal_PGN_withdraw": "0x9493c4cbd6f089c547d22fcfa61305c17c2330777fa47540b7a035640b58e232",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0xa7f10f463b39373f161adce442d9065dd88c14cc0a87eb2aea893bd5211f2a95"
 }

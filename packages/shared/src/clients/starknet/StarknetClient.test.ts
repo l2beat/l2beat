@@ -1,9 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { type Block, type Transaction, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { StarknetClient } from './StarknetClient'
 import type {
+  StarknetCallParameters,
   StarknetErrorResponse,
   StarknetGetBlockResponse,
   StarknetGetBlockWithTxsResponse,
@@ -49,6 +50,37 @@ describe(StarknetClient.name, () => {
       const result = await client.getLatestBlockNumber()
 
       expect(result).toEqual(100)
+    })
+  })
+
+  describe(StarknetClient.prototype.call.name, () => {
+    it('sends call request and parses response', async () => {
+      const params: StarknetCallParameters = {
+        contract_address: '0x1234',
+        entry_point_selector: '0x5678',
+        calldata: [],
+      }
+
+      const rpcResult = ['0x1234', '0x5678']
+      const http = mockObject<HttpClient>()
+
+      const client = mockClient({ http })
+
+      const mockQuery = mockFn().returns({
+        jsonrpc: '2.0',
+        id: 1,
+        result: rpcResult,
+      })
+      client.query = mockQuery
+
+      const result = await client.call(params, 100)
+
+      expect(mockQuery).toHaveBeenCalledWith('starknet_call', [
+        params,
+        { block_number: 100 },
+      ])
+
+      expect(result).toEqual(rpcResult)
     })
   })
 

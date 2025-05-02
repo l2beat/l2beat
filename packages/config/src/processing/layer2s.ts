@@ -56,7 +56,6 @@ import { fhenix } from '../projects/fhenix/fhenix'
 import { fluence } from '../projects/fluence/fluence'
 import { fluent } from '../projects/fluent/fluent'
 import { form } from '../projects/form/form'
-import { frame } from '../projects/frame/frame'
 import { fraxtal } from '../projects/fraxtal/fraxtal'
 import { fuel } from '../projects/fuel/fuel'
 import { fuelv1 } from '../projects/fuelv1/fuelv1'
@@ -92,6 +91,7 @@ import { kontos } from '../projects/kontos/kontos'
 import { kroma } from '../projects/kroma/kroma'
 import { lachain } from '../projects/lachain/lachain'
 import { lambda } from '../projects/lambda/lambda'
+import { lasernet } from '../projects/lasernet/lasernet'
 import { layer2finance } from '../projects/layer2finance/layer2finance'
 import { layer2financezk } from '../projects/layer2financezk/layer2financezk'
 import { layerai } from '../projects/layerai/layerai'
@@ -149,6 +149,7 @@ import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
+import { powerloom } from '../projects/powerloom/powerloom'
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -180,11 +181,13 @@ import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
 import { specular } from '../projects/specular/specular'
+import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
 import { studiochain } from '../projects/studiochain/studiochain'
 import { superlumio } from '../projects/superlumio/superlumio'
 import { superseed } from '../projects/superseed/superseed'
+import { surge } from '../projects/surge/surge'
 import { swan } from '../projects/swan/swan'
 import { swell } from '../projects/swell/swell'
 import { sxnetwork } from '../projects/sxnetwork/sxnetwork'
@@ -199,7 +202,6 @@ import { ternoa } from '../projects/ternoa/ternoa'
 import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
-import { turboprotocol } from '../projects/turboprotocol/turboprotocol'
 import { tusima } from '../projects/tusima/tusima'
 import { unichain } from '../projects/unichain/unichain'
 import { union } from '../projects/union/union'
@@ -280,7 +282,6 @@ export const layer2s: ScalingProject[] = [
   fluence,
   fluent,
   form,
-  frame,
   fraxtal,
   fuel,
   fuelv1,
@@ -316,6 +317,7 @@ export const layer2s: ScalingProject[] = [
   kroma,
   lachain,
   lambda,
+  lasernet,
   layer2finance,
   layer2financezk,
   layerai,
@@ -373,6 +375,7 @@ export const layer2s: ScalingProject[] = [
   polygonpos2,
   polygonzkevm,
   polynomial,
+  powerloom,
   prom,
   publicgoodsnetwork,
   puffer,
@@ -405,11 +408,13 @@ export const layer2s: ScalingProject[] = [
   sorare,
   sovrun,
   specular,
+  spire,
   starknet,
   status,
   studiochain,
   superlumio,
   superseed,
+  surge,
   swan,
   swell,
   sxnetwork,
@@ -425,7 +430,6 @@ export const layer2s: ScalingProject[] = [
   thanos,
   thebinaryholdings,
   treasure,
-  turboprotocol,
   tusima,
   unichain,
   union,

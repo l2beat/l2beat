@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22123688,
-  "configHash": "0x1346660b9504ede659c104c225240dcc48b5ec45ef5367858d929f6d7a3976d9",
+  "configHash": "0xaf04f97aede0728f2f40929e549a9f4aafb92c3784582ff3834510fd4d05e52e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -49,13 +49,6 @@
         "0xba2e8ff1fb232454e73ee740f5c151763047d29a9c660b33be8926930334a768"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getConsensusReport",
         "getProcessingState",
@@ -373,13 +366,6 @@
         "0xc45cf7de845f22be0dadd18370faa3a228bdaa579f0c450f4459acbef0c91c05"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"],
       "sinceTimestamp": 1728566339,
       "sinceBlock": 20935462,
@@ -737,13 +723,6 @@
         "0x8eb8fe1367a0eb2d485632fc86c4e0eea79ee0a2dd3f72a2982a622b3c62f1ba"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["getConsensusReport", "getProcessingState"],
       "sinceTimestamp": 1683023999,
       "sinceBlock": 17172553,
@@ -847,13 +826,6 @@
         "0x700596a656c09529255fe261db91a5a98b3795dc7aac6bd680e1b9d5ad5f2f5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastFinalizedRequestId",
         "getLastRequestId",
@@ -1250,13 +1222,6 @@
         "0xfed378d959d7c0807be954e4650d7b087554f356d30c10c652058ea4ef14c0ca"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2e59A20f205bB85a89C53f1936454680651E618e",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626093401,
       "sinceBlock": 12812480,
       "values": {
@@ -1310,13 +1275,6 @@
         "0x69f924232e2916fff05aa3d4f0cbd7fd46005b8747ebacff3ac5e16761107735"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1681295123,
       "sinceBlock": 17031323,
       "values": {
@@ -1450,13 +1408,6 @@
         "0x3691fdeb4948182156b23943d1951957e54192b7f9f7ab4c88828089d29d58d7"
       ],
       "proxyType": "StarkWare proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x909d0CB383Ecc77e44daE5d0146cF476f611f62b",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1732195643,
       "sinceBlock": 21236399,
       "values": {
@@ -1662,13 +1613,6 @@
         "0xd5604f959d89ec8d8a68b4679f1ac04a3e991d52f605de25f20be7f57a4e669b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "treeRoot",
         "totalClaimableShares",
@@ -1711,13 +1655,6 @@
         "0xf761c7555657701beab5f35f2637465a03482c146dd8566d2fe486a66b790f82"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getActiveNodeOperatorsCount",
         "depositQueue",
@@ -1862,13 +1799,6 @@
         "0x503f0f420b9a496d2931807c8c9c7b3bae8e03c9d66fd0c046c0cee08657b365"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getAllStakingModuleDigests",
         "getStakingFeeAggregateDistribution",
@@ -4447,5 +4377,6 @@
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816",
     "tokens/Lido/wstETH": "0x89b5757b1c17c692e6249451f924466a880365fba7dd978916bb7a55849b7090",
     "tokens/STRK": "0x843a6f7d2c9ede53134153dc10c165db1c4106413acf7958939ce2e2436d42cc"
-  }
+  },
+  "permissionsConfigHash": "0x92321a906ea9a5f893b329ff04926e76ace658fa2e6ff538a8cfbaf1d01a898e"
 }

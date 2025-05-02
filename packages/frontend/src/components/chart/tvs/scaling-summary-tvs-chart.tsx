@@ -70,7 +70,6 @@ export function ScalingSummaryTvsChart({
   const { checked } = useRecategorisationPreviewContext()
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
-    excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
     previewRecategorisation: checked,
   })
@@ -79,9 +78,9 @@ export function ScalingSummaryTvsChart({
     return data?.map(([timestamp, rollups, validiumsAndOptimiums, others]) => {
       return {
         timestamp,
-        rollups: rollups / 100,
-        validiumsAndOptimiums: validiumsAndOptimiums / 100,
-        others: others / 100,
+        rollups,
+        validiumsAndOptimiums,
+        others,
       }
     })
   }, [data])
@@ -152,9 +151,11 @@ function CustomTooltip({
   const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
     <div className={tooltipContentVariants()}>
-      <div className="flex !w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60">
-        <div>{formatTimestamp(label, { longMonthName: true })}</div>
-        <div className="flex w-full items-center justify-between gap-2 text-xs text-secondary">
+      <div className="flex !w-[158px] flex-col [@media(min-width:600px)]:!w-60">
+        <div className="label-value-14-medium mb-3 text-secondary">
+          {formatTimestamp(label, { longMonthName: true })}
+        </div>
+        <div className="heading-16 mb-1.5 flex w-full items-center justify-between gap-2">
           <span className="[@media(min-width:600px)]:hidden">Total</span>
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
@@ -162,7 +163,7 @@ function CustomTooltip({
           <span className="text-primary">{formatCurrency(total, 'usd')}</span>
         </div>
         <HorizontalSeparator />
-        <div>
+        <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
             if (entry.value === undefined || entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
@@ -176,11 +177,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="w-20 leading-none sm:w-fit">
+                  <span className="label-value-14-medium w-20 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="label-value-15-medium whitespace-nowrap">
                   {formatCurrency(entry.value, 'usd')}
                 </span>
               </div>

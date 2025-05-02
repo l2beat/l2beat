@@ -12,6 +12,7 @@ export interface UsedInProject {
   name: string
   slug: string
   url: string
+  icon: string
   targetName: string
   type: 'implementation' | 'proxy' | 'permission'
 }
@@ -37,7 +38,7 @@ export function UsedInProjectEntry({
                   width={20}
                   height={20}
                   key={i}
-                  src={`/icons/${project.slug}.png`}
+                  src={project.icon}
                   alt="Project icon"
                   className="mx-1 inline"
                 />

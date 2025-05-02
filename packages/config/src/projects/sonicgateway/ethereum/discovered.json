@@ -1,8 +1,8 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 22187418,
-  "configHash": "0x3b194055eb0e90c4361fc55c31d020bee72fae0355c55d51da7574efeca92135",
+  "blockNumber": 22297572,
+  "configHash": "0x4ba6365c2825fc122160d4a925fb057314dfb9fb415c720a58282c24c512a8a9",
   "entries": [
     {
       "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
@@ -94,48 +94,6 @@
       ],
       "proxyType": "immutable",
       "description": "Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).",
-      "issuedPermissions": [
-        {
-          "permission": "validateBridge",
-          "to": "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x32744b98cC03A76C0559e905a31E8474a31729c1",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1734690491,
       "sinceBlock": 21443134,
       "values": {
@@ -337,7 +295,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 31,
+        "nonce": 32,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -348,34 +306,15 @@
       "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
-        "0xa91b55bb0cd39f657105bf6422bd209274305ae3556f2f802a822a891fabfa0e"
+        "0xb8e319a32352b23a4c5e25d87b867e5b2e228f4962fba3d1cebef0fa6f879ab8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
-          "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "set the proof verifier and the exit administrator.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1734690647,
       "sinceBlock": 21443147,
       "values": {
         "$admin": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-        "$implementation": "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330",
+        "$implementation": "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9",
         "$pastUpgrades": [
           [
             "2024-12-20T10:30:47.000Z",
@@ -386,9 +325,14 @@
             "2024-12-23T17:54:23.000Z",
             "0x8186d6acbf5d0d33ccb6a7054e1e9f61649873e7c85bdf7cd11825a266db5983",
             ["0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"]
+          ],
+          [
+            "2025-04-17T03:06:47.000Z",
+            "0x00658364f89d911d6cf167646f3d4cdcdaa90c60c1c1b5b7c1991e3e606dbf9c",
+            ["0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "bridge": "0x9Ef7629F9B930168b76283AdD7120777b3c895b3",
         "deadState": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EURC_BURN_PREPARER_ROLE": "0xea9b585a6ebd9633ce15a00ac59a64be294805b254faeed18790c2161e44e71a",
@@ -436,42 +380,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point for state (oracle) updates.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
-          "description": "set permissioned relayers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
-          "description": "set the fast lane fee.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
-          "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "manage all access control roles.",
-          "via": []
-        },
-        {
-          "permission": "relay",
-          "to": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
-          "via": []
-        },
-        {
-          "permission": "relay",
-          "to": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -540,7 +448,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 17866800,
+        "lastBlockNum": 20924666,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -561,23 +469,15 @@
       ],
       "proxyType": "immutable",
       "description": "Simple contract that saves the latest state root.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-          "description": "update the state root.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "sinceTimestamp": 1734690443,
       "sinceBlock": 21443130,
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 17866800,
-        "lastState": "0xc491e4b42df7b3e27dafecf02774bfc433adf728091d0be145ca12c0378e4a3f",
-        "lastUpdateTime": 1743669947,
+        "lastBlockNum": 20924666,
+        "lastState": "0x05a41fd45cf5c9c0fb5da2b38f9894f4d8669ced14fb47731ed73e0a6e19163f",
+        "lastUpdateTime": 1744998407,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
       "derivedName": "StateOracle"
@@ -603,26 +503,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "add tokens to the whitelist.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "manage access control roles.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "remove tokens from the whitelist.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1734690539,
       "sinceBlock": 21443138,
       "values": {
@@ -652,6 +532,10 @@
             "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "UNREGISTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+          },
+          "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           }
@@ -720,69 +604,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330": [
-      "constructor(address _bridge, address _tokenPairs, address _stateOracle)",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error ReentrancyGuardReentrantCall()",
-      "error SafeERC20FailedOperation(address token)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event BridgeDied()",
-      "event BurningEurcPrepared(address burner, uint256 amount)",
-      "event BurningUsdcPrepared(address burner, uint256 amount)",
-      "event BurningUsdtPrepared(address burner, uint256 amount)",
-      "event CancelledWhileDead(uint256 id, address indexed owner, address token, uint256 amount)",
-      "event Claim(uint256 id, address indexed owner, address token, uint256 amount)",
-      "event Deposit(uint256 indexed id, address indexed owner, address token, uint256 amount)",
-      "event ExitAdministratorSet(address _exitAdministrator)",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ProofVerifierSet(address proofVerifier)",
-      "event Upgraded(address indexed implementation)",
-      "event WithdrawnWhileDead(address indexed owner, address token, uint256 amount)",
-      "function EURC_BURN_PREPARER_ROLE() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function USDC_BURN_PREPARER_ROLE() view returns (bytes32)",
-      "function USDT_BURN_PREPARER_ROLE() view returns (bytes32)",
-      "function bridge() view returns (address)",
-      "function burnLockedEURC()",
-      "function burnLockedUSDC()",
-      "function burnLockedUSDT()",
-      "function cancelDepositWhileDead(uint256 id, address token, uint256 amount, bytes proof)",
-      "function claim(uint256 id, address token, uint256 amount, bytes proof)",
-      "function claims(uint256 withdrawalId) view returns (bool isClaimed)",
-      "function deadState() view returns (bytes32)",
-      "function deposit(uint96 uid, address token, uint256 amount)",
-      "function deposits(uint256 depositId) view returns (bytes32 senderTokenAmount)",
-      "function exitAdministrator() view returns (address)",
-      "function fetchDeadStatus() returns (bool)",
-      "function getClaimSlotIndex(uint256 id) pure returns (bytes32)",
-      "function getWithdrawalSlotIndex(uint256 id) pure returns (bytes32)",
-      "function hash(address sender, address token, uint256 amount) pure returns (bytes32)",
-      "function initialize(address _proofVerifier, address _owner, address _exitAdministrator)",
-      "function owner() view returns (address)",
-      "function prepareBurningEURC(address burner, uint256 amount)",
-      "function prepareBurningUSDC(address burner, uint256 amount)",
-      "function prepareBurningUSDT(address burner, uint256 amount)",
-      "function proofVerifier() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function setExitAdministrator(address _exitAdministrator)",
-      "function setProofVerifier(address _proofVerifier)",
-      "function stateOracle() view returns (address)",
-      "function tokenPairs() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function userOperationId(address sender, uint96 uid) pure returns (uint256)",
-      "function withdrawWhileDead(address recipient, address token, uint256 amount)"
     ],
     "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b": [
       "constructor(address _stateOracle, address _provingContract)",
@@ -928,6 +749,70 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9": [
+      "constructor(address _bridge, address _tokenPairs, address _stateOracle)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event BridgeDied()",
+      "event BurningEurcPrepared(address burner, uint256 amount)",
+      "event BurningUsdcPrepared(address burner, uint256 amount)",
+      "event BurningUsdtPrepared(address burner, uint256 amount)",
+      "event CancelledWhileDead(uint256 id, address indexed owner, address token, uint256 amount)",
+      "event Claim(uint256 id, address indexed owner, address token, uint256 amount)",
+      "event Deposit(uint256 indexed id, address indexed owner, address token, uint256 amount)",
+      "event ExitAdministratorSet(address _exitAdministrator)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProofVerifierSet(address proofVerifier)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawnWhileDead(address indexed owner, address token, uint256 amount)",
+      "function EURC_BURN_PREPARER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function USDC_BURN_PREPARER_ROLE() view returns (bytes32)",
+      "function USDT_BURN_PREPARER_ROLE() view returns (bytes32)",
+      "function bridge() view returns (address)",
+      "function burnLockedEURC()",
+      "function burnLockedUSDC()",
+      "function burnLockedUSDT()",
+      "function cancelDepositWhileDead(uint256 id, address token, uint256 amount, bytes proof)",
+      "function claim(uint256 id, address token, uint256 amount, bytes proof)",
+      "function claimFor(uint256 id, address user, address token, uint256 amount, bytes proof)",
+      "function claims(uint256 withdrawalId) view returns (bool isClaimed)",
+      "function deadState() view returns (bytes32)",
+      "function deposit(uint96 uid, address token, uint256 amount)",
+      "function deposits(uint256 depositId) view returns (bytes32 senderTokenAmount)",
+      "function exitAdministrator() view returns (address)",
+      "function fetchDeadStatus() returns (bool)",
+      "function getClaimSlotIndex(uint256 id) pure returns (bytes32)",
+      "function getWithdrawalSlotIndex(uint256 id) pure returns (bytes32)",
+      "function hash(address sender, address token, uint256 amount) pure returns (bytes32)",
+      "function initialize(address _proofVerifier, address _owner, address _exitAdministrator)",
+      "function owner() view returns (address)",
+      "function prepareBurningEURC(address burner, uint256 amount)",
+      "function prepareBurningUSDC(address burner, uint256 amount)",
+      "function prepareBurningUSDT(address burner, uint256 amount)",
+      "function proofVerifier() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setExitAdministrator(address _exitAdministrator)",
+      "function setProofVerifier(address _proofVerifier)",
+      "function stateOracle() view returns (address)",
+      "function tokenPairs() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userOperationId(address sender, uint96 uid) pure returns (uint256)",
+      "function withdrawWhileDead(address recipient, address token, uint256 amount)"
+    ],
     "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -961,5 +846,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xac767131af3ff9037b286db5a9775251331ccd32e4e731069566fbfdc2c5f5d6"
 }

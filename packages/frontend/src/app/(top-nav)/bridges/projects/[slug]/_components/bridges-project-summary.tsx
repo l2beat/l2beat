@@ -21,7 +21,7 @@ export function BridgesProjectSummary({ project }: Props) {
     <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
       <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="w-full space-y-4 md:space-y-6">
-          <ProjectHeader title={project.name} slug={project.slug} />
+          <ProjectHeader project={project} />
           <div className="space-y-2">
             {project.archivedAt && <ArchivedBar />}
             {project.isUpcoming && <UpcomingBar />}

@@ -20,6 +20,7 @@ export const ethereum: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
   },

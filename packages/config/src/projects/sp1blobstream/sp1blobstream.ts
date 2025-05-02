@@ -19,8 +19,14 @@ export const sp1blobstream: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
+  },
+  display: {
+    description: 'Celestia ZK light client implementation.',
+    links: {},
+    badges: [],
   },
   proofVerification: {
     shortDescription: 'Celestia ZK light client implementation.',

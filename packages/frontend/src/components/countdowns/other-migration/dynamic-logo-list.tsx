@@ -15,6 +15,7 @@ interface Props {
   projects: {
     slug: string
     name: string
+    icon: string
   }[]
 }
 export function DynamicLogoList({ projects }: Props) {
@@ -49,12 +50,12 @@ export function DynamicLogoList({ projects }: Props) {
         }}
         className="flex items-center overflow-hidden"
       >
-        {projects.slice(0, visibleCount).map(({ slug, name }) => (
+        {projects.slice(0, visibleCount).map(({ slug, name, icon }) => (
           <Tooltip key={slug}>
             <LinkWithOnHoverPrefetch href={`/scaling/projects/${slug}`}>
               <TooltipTrigger>
                 <Image
-                  src={`/icons/${slug}.png`}
+                  src={icon}
                   alt={name}
                   width={LOGO_SIZE}
                   height={LOGO_SIZE}

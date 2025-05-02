@@ -4,6 +4,7 @@ import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
+import { getProjectIcon } from '../utils/get-project-icon'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -22,13 +23,10 @@ export function getCommonScalingEntry({
   changes: ProjectChanges | undefined
   syncWarning?: string
 }): CommonScalingEntry {
-  const isRollup =
-    project.scalingInfo.type === 'Optimistic Rollup' ||
-    project.scalingInfo.type === 'ZK Rollup'
-
   return {
     id: project.id,
     slug: project.slug,
+    icon: getProjectIcon(project.slug),
     name: project.name,
     nameSecondLine:
       project.scalingInfo.layer === 'layer2'
@@ -44,15 +42,12 @@ export function getCommonScalingEntry({
         impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
+      emergencyWarning: project.statuses.emergencyWarning,
       countdowns: {
         otherMigration: project.statuses.otherMigration,
       },
     },
-    tab: project.scalingInfo.isOther
-      ? 'others'
-      : isRollup
-        ? 'rollups'
-        : 'validiumsAndOptimiums',
+    tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
@@ -85,9 +80,23 @@ export function getCommonScalingEntry({
     ],
     description: project.display?.description,
     badges: project.display.badges
-      .map((badge) => getBadgeWithParams(badge, project))
+      .map((badge) => getBadgeWithParams(badge))
       .filter((b) => b !== undefined),
   }
+}
+
+export function getScalingTab(
+  project: Project<'scalingInfo'>,
+): 'rollups' | 'validiumsAndOptimiums' | 'others' {
+  const isRollup =
+    project.scalingInfo.type === 'Optimistic Rollup' ||
+    project.scalingInfo.type === 'ZK Rollup'
+
+  return project.scalingInfo.isOther
+    ? 'others'
+    : isRollup
+      ? 'rollups'
+      : 'validiumsAndOptimiums'
 }
 
 function getStageOrder(stage: string | undefined): number {

@@ -15,8 +15,6 @@ export type DaSolution = Common & {
   contracts: ProjectContract[] | undefined
 }
 
-export type DaSolutionWith<T> = Common & T
-
 export async function getScalingDaSolution(
   project: Project<'scalingInfo', 'scalingDa'>,
 ): Promise<DaSolution | undefined> {

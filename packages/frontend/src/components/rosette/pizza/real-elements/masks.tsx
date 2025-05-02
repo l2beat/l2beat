@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import type { SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../../types'
@@ -55,7 +56,8 @@ function LowerRightMaskPath(props: SvgIconProps) {
   )
 }
 
-function createMaskId(risk: RosetteValue) {
+function createMaskId(risk?: RosetteValue) {
+  if (!risk) return undefined
   const noSpaces = risk.name.replace(/\s+/g, '_')
   const maskId = `mask-${noSpaces}`
   return maskId
@@ -69,7 +71,8 @@ const maskPaths = [
   LowerRightMaskPath,
 ]
 
-function riskToPizza(risk: RosetteValue) {
+function riskToPizza(risk?: RosetteValue) {
+  if (!risk) return null
   if (risk.sentiment === 'good') {
     return <FullGreenPizzaReference />
   }
@@ -87,15 +90,16 @@ function riskToPizza(risk: RosetteValue) {
 
 export function risksToPizzas(
   risks: RosetteValue[],
-  selectRisk: (risk: RosetteValue) => void,
+  selectRisk: (risk: RosetteValue | undefined) => void,
   selectedRisk: RosetteValue | undefined,
 ) {
   const pizzaBackgrounds: React.ReactNode[] = []
   const sliceHoverPaths: React.ReactNode[] = []
 
   for (let i = 0; i < risks.length; i++) {
-    const risk = risks[i]!
-    const MaskPath = maskPaths[i]!
+    const risk = risks[i]
+    const MaskPath = maskPaths[i]
+    assert(MaskPath, 'No mask path or risk')
 
     const pizzaBackground = riskToPizza(risk)
     pizzaBackgrounds.push(pizzaBackground)
@@ -105,15 +109,16 @@ export function risksToPizzas(
         fill="transparent"
         onMouseEnter={() => selectRisk(risk)}
         onTouchStart={() => selectRisk(risk)}
-        id={`${risk.name}-hover`}
+        id={`${risk?.name}-hover`}
       />,
     )
   }
 
   const pizzas = pizzaBackgrounds.map((pizzaBackground, i) => {
-    const risk = risks[i]!
+    const risk = risks[i]
     const maskId = createMaskId(risk)
-    const MaskPath = maskPaths[i]!
+    const MaskPath = maskPaths[i]
+    assert(MaskPath, 'No mask path')
 
     const maskElement = (
       <mask
@@ -136,7 +141,7 @@ export function risksToPizzas(
           mask={`url(#${maskId})`}
           className={cn(
             'transition-opacity',
-            selectedRisk && selectedRisk.name !== risk.name && 'opacity-20',
+            selectedRisk && selectedRisk.name !== risk?.name && 'opacity-20',
           )}
         >
           {pizzaBackground}

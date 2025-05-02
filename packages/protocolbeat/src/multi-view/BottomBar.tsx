@@ -50,7 +50,7 @@ export function BottomBar() {
       if (e.code === 'KeyF' && e.altKey) {
         toggleFullScreen()
       }
-      if (e.code === 'KeyP' && e.altKey) {
+      if ((e.code === 'KeyP' && e.altKey) || e.key === '/') {
         setOpen(true)
       }
       if (e.code === 'KeyR' && e.altKey) {
@@ -101,7 +101,8 @@ export function BottomBar() {
               <Keys keys={[altKey, 'F']} /> - Fullscreen panel
             </li>
             <li>
-              <Keys keys={[altKey, 'P']} /> - Toggle search
+              <Keys keys={[altKey, 'P']} /> or <Keys keys={['/']} /> - Toggle
+              search
             </li>
             <li>
               <Keys keys={[altKey, 'Q']} /> - Remove panel

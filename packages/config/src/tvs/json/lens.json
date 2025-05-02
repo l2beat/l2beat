@@ -40,7 +40,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "lens-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -51,10 +51,10 @@
       "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0xFc20fbf81928D495575B02D13c99ea1f1Ac4b272",
+        "address": "0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884",
         "chain": "lens",
         "decimals": 6,
-        "sinceTimestamp": 1740140786
+        "sinceTimestamp": 1743699600
       }
     }
   ]

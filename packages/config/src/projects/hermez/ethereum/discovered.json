@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21778467,
-  "configHash": "0x80e732528d71eda76542fa7e21a64ade19847cbc2bd15b880e92b0fe2318b5a3",
+  "configHash": "0xaea2e53dc1f1c87aa914ef79d164c750112ccbad572f7184e9646c41dfaf9fdb",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -39,13 +39,6 @@
         "0x476ed86f075a8dece66465dd7b3861cbdafe66b401883c61cb0a73d9b01dde22"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1616482443,
       "sinceBlock": 12093592,
       "values": {
@@ -234,13 +227,6 @@
         "0xe05e5b424accc7b17ae5ca45336522f973eef578dd74429d02aed898b86a59f2"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1616482490,
       "sinceBlock": 12093596,
       "values": {
@@ -654,5 +640,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xaf8b0f9a9db45c8c392c0df94b4df2c94f36bbf8cdaefa4605d54aa5792aa399"
 }

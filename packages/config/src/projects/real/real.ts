@@ -62,7 +62,6 @@ export const real: ScalingProject = orbitStackL2({
       { type: 'blockscout', url: 'https://explorer.re.al/api' },
     ],
   },
-  associatedTokens: ['RWA'], // native token reETH not on coingecko yet
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

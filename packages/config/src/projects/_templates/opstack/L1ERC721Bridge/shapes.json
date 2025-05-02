@@ -76,5 +76,17 @@
     "address": "0x276d3730f219f7ec22274f7263180b8452B46d47",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1ERC721Bridge_v2_2_0_zircuit": {
+    "hash": "0x937e394859daaa4d66de4cbe3e6770d80adf639ecc5d3394774676870cda8d62",
+    "address": "0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb",
+    "chain": "ethereum",
+    "blockNumber": 22336762
+  },
+  "L1ERC721Bridge_v2_4_0": {
+    "hash": "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837",
+    "address": "0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013",
+    "chain": "ethereum",
+    "blockNumber": 22346130
   }
 }

@@ -9,9 +9,9 @@ import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-brid
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
-import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvs/utils/get-associated-token-warning'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
@@ -21,7 +21,7 @@ export async function getBridgesSummaryEntries() {
     get7dTvsBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvlInfo'],
+      select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvsInfo'],
       where: ['isBridge'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -63,7 +63,7 @@ interface TvsData {
 }
 
 function getBridgesSummaryEntry(
-  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvlInfo'>,
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvsInfo'>,
   changes: ProjectChanges,
   bridgeTvs: ProjectSevenDayTvsBreakdown | undefined,
 ): BridgesSummaryEntry {
@@ -73,7 +73,7 @@ function getBridgesSummaryEntry(
           associatedRatio:
             bridgeTvs.associated.total / bridgeTvs.breakdown.total,
           name: project.name,
-          associatedTokens: project.tvlInfo.associatedTokens,
+          associatedTokens: project.tvsInfo.associatedTokens,
         })
       : undefined
 
@@ -88,7 +88,7 @@ function getBridgesSummaryEntry(
           }
         : undefined,
       change: bridgeTvs?.change.total,
-      associatedTokens: project.tvlInfo.associatedTokens,
+      associatedTokens: project.tvsInfo.associatedTokens,
       associatedTokenWarning,
       warnings: compact([
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,

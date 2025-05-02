@@ -19,8 +19,15 @@ export const worldcoinsmtb: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
+  },
+  display: {
+    description:
+      'ZK program to add or delete users from the Worldcoin anonymity set.',
+    links: {},
+    badges: [],
   },
   proofVerification: {
     shortDescription:

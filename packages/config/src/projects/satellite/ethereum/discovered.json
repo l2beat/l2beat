@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0x6d8ab603cb04d8516d555cccfa0b8fb0736b212727658b7ceceb8ab0e4485987",
+  "configHash": "0xd1de18cc7679c3f4941cb1cb7b901aba5be1197b29d2ed28905b186ac9168fa4",
   "entries": [
     {
       "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -23,13 +23,6 @@
         "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661972207,
       "sinceBlock": 15448318,
       "values": {
@@ -533,5 +526,6 @@
       "function withdraw(address recipient, uint256 amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x9885a89bcfbc6bfd9147dbf57dcfe1dda21a891efecdefd6f9e2daa30423963d"
 }

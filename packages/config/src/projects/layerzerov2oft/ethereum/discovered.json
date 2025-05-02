@@ -2,7 +2,7 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "blockNumber": 22174829,
-  "configHash": "0xda5808debc339abf1ae0140372295e58ec95e9f8a18d03c6992c5a94325802d7",
+  "configHash": "0x4b42e79dff0275f1eff7e85040f6ed5288b5ec6e8fb7a1a2e40ed870ae9ede35",
   "entries": [
     {
       "address": "0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
@@ -58,13 +58,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -159,10 +152,10 @@
       "values": {
         "$immutable": true,
         "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-        "defaultReceiveLib_rsETH": [
-          "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
-          true
-        ],
+        "defaultReceiveLib_rsETH": {
+          "lib": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "isDefault": true
+        },
         "defaultSendLib_ENA": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
         "eid": 30101,
         "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -696,13 +689,6 @@
         "0x3b47f76d4c64fc148adca081f2c312fc1254d579d93d93a6892aa26020d71635"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8",
-          "via": [{ "address": "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc" }]
-        }
-      ],
       "sinceTimestamp": 1736351639,
       "sinceBlock": 21580781,
       "values": {
@@ -854,13 +840,6 @@
         "0x7b47ae15df80519afbed6bca2472ab35b7e20938dfc898ececbbb6d1c7a369a0"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe16d201cA134345601631D327a971A3741646B0d",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1708740203,
       "sinceBlock": 19294337,
       "values": {
@@ -1026,57 +1005,57 @@
       "sinceBlock": 19093729,
       "values": {
         "$immutable": true,
-        "defaultExecutor_ENA": [
-          10000,
-          "0x173272739Bd7Aa6e4e214714048a9fE699453059"
-        ],
+        "defaultExecutor_ENA": {
+          "maxMessageSize": 10000,
+          "executor": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+        },
         "messageLibType": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
-        "ulnConfig_CYBER": [
-          15,
-          2,
-          0,
-          0,
-          [
+        "ulnConfig_CYBER": {
+          "confirmations": 15,
+          "requiredDVNCount": 2,
+          "optionalDVNCount": 0,
+          "optionalDVNThreshold": 0,
+          "requiredDVNs": [
             "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
             "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
           ],
-          []
-        ],
-        "ulnConfig_ENA": [
-          15,
-          2,
-          0,
-          0,
-          [
+          "optionalDVNs": []
+        },
+        "ulnConfig_ENA": {
+          "confirmations": 15,
+          "requiredDVNCount": 2,
+          "optionalDVNCount": 0,
+          "optionalDVNThreshold": 0,
+          "requiredDVNs": [
             "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
             "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
-          []
-        ],
-        "ulnConfig_sfrxETH": [
-          15,
-          2,
-          0,
-          0,
-          [
+          "optionalDVNs": []
+        },
+        "ulnConfig_sfrxETH": {
+          "confirmations": 15,
+          "requiredDVNCount": 2,
+          "optionalDVNCount": 0,
+          "optionalDVNThreshold": 0,
+          "requiredDVNs": [
             "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
             "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
-          []
-        ],
-        "ulnConfig_USDT0": [
-          15,
-          2,
-          0,
-          0,
-          [
+          "optionalDVNs": []
+        },
+        "ulnConfig_USDT0": {
+          "confirmations": 15,
+          "requiredDVNCount": 2,
+          "optionalDVNCount": 0,
+          "optionalDVNThreshold": 0,
+          "requiredDVNs": [
             "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2",
             "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
-          []
-        ],
+          "optionalDVNs": []
+        },
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
       "fieldMeta": {
@@ -3508,5 +3487,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x776ef954a1ff2bc194ca9f930374f29fd633375a9f68a4ece7df798eafc8d6fe"
 }

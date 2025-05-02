@@ -1,5 +1,4 @@
-import type { Logger } from '@l2beat/backend-tools'
-import { DiscoveryLogger } from '@l2beat/discovery'
+import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import { ChainConverter } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
@@ -46,6 +45,7 @@ export function createUpdateMonitorModule(
     chainConverter,
     logger,
     updateMessagesService,
+    config.updateMonitor.disabledChains,
   )
 
   // TODO: get rid of that once we achieve full library separation
@@ -57,7 +57,7 @@ export function createUpdateMonitorModule(
       paths,
       http,
       peripherals,
-      DiscoveryLogger.SILENT,
+      Logger.SILENT,
       chains,
       chainConfig.name,
       !!cacheEnabled,

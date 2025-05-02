@@ -5,7 +5,7 @@
   "ignoreMethods": ["getRequiredThreshold"],
   "fields": {
     "livenessInterval": {
-      "returnType": "(FormatSeconds)"
+      "edit": ["format", "FormatSeconds"]
     },
     "fallbackOwner": {
       "permissions": [

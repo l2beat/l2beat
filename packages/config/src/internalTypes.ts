@@ -133,11 +133,13 @@ export interface ProjectScalingDisplay {
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */
-  tvlWarning?: WarningWithSentiment
+  tvsWarning?: WarningWithSentiment
   /** A warning displayed above the description of the project */
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
   redWarning?: string
+  /** Emergency warning for the project. If present project will be displayed as in emergency mode. */
+  emergencyWarning?: string
   /** A few sentences describing the scaling project */
   description: string
   /** Detailed description of the scaling project, will be visible in detailed description section */
@@ -162,10 +164,6 @@ export interface ProjectScalingDisplay {
 }
 
 export interface ProjectScalingTechnology {
-  /** What state correctness mechanism is used in the project */
-  stateCorrectness?: ProjectTechnologyChoice
-  /** What is the new cryptography used in the project */
-  newCryptography?: ProjectTechnologyChoice
   /** What is the data availability choice for the project */
   dataAvailability?: ProjectTechnologyChoice
   /** What are the details about project operator(s) */
@@ -256,6 +254,7 @@ export interface Bridge {
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
   discoveryInfo?: ProjectDiscoveryInfo
+  upgradesAndGovernance?: string
 }
 
 export interface BridgeDisplay {
@@ -268,6 +267,7 @@ export interface BridgeDisplay {
   category: BridgeCategory
   links: ProjectLinks
   architectureImage?: string
+  upgradesAndGovernanceImage?: string
 }
 
 export interface BridgeConfig {

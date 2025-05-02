@@ -9,7 +9,24 @@
   "overrides": {
     "0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952": {
       // permissionedGamesTotal from the template ignored as they are using permissioned games by default
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "fields": {
+        // manual override while permissioned game is used
+        "proposer": {
+          "permissions": [
+            {
+              "type": "propose"
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "challenge"
+            }
+          ]
+        }
+      }
     }
   }
 }

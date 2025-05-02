@@ -1,13 +1,11 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
-  AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
-import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
 import type { StructureConfig } from '../config/StructureConfig'
 import { makeEntryStructureConfig } from '../config/structureUtils'
 import { buildSharedModuleIndex } from '../config/structureUtils'
@@ -21,7 +19,7 @@ export class DiscoveryEngine {
 
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
-    private readonly logger: DiscoveryLogger,
+    private readonly logger: Logger,
   ) {}
 
   reset() {
@@ -98,7 +96,7 @@ export class DiscoveryEngine {
               chalk.yellowBright('SKIP'),
               chalk.gray(skipReason),
             ]
-            this.logger.log(entries.join(' '))
+            this.logger.info(entries.join(' '))
             return
           }
 
@@ -128,17 +126,6 @@ export class DiscoveryEngine {
       depth++
     }
 
-    const analyzedContracts = Object.values(resolved).filter(
-      (a): a is AnalyzedContract => a.type === 'Contract',
-    )
-    const inverted = invertMeta(analyzedContracts.map((c) => c.targetsMeta))
-    Object.values(resolved).forEach((a) => {
-      a.combinedMeta = mergeContractMeta(
-        a.type === 'Contract' ? a.selfMeta : undefined,
-        inverted[a.address.toString()],
-      )
-    })
-
     const result = Object.values(resolved)
     this.checkErrors(result)
     this.reset()
@@ -150,14 +137,14 @@ export class DiscoveryEngine {
     const info = `${this.objectCount}/${total}`
     if (analysis.type === 'EOA') {
       const entries = [chalk.gray(info), analysis.address, chalk.blue('EOA')]
-      this.logger.log(entries.join(' '))
+      this.logger.info(entries.join(' '))
     } else if (analysis.type === 'Contract') {
       const entries = [
         chalk.gray(info),
         analysis.address,
         chalk.blue(analysis.name || '???'),
       ]
-      this.logger.log(entries.join(' '))
+      this.logger.info(entries.join(' '))
 
       const logs: string[] = []
       if (analysis.proxyType) {
@@ -179,7 +166,7 @@ export class DiscoveryEngine {
       for (const [i, log] of logs.entries()) {
         const prefix = i === logs.length - 1 ? `└─` : `├─`
         const indent = ' '.repeat(6)
-        this.logger.log(`${indent}${chalk.gray(prefix)} ${log}`)
+        this.logger.info(`${indent}${chalk.gray(prefix)} ${log}`)
       }
     }
   }
@@ -202,7 +189,7 @@ export class DiscoveryEngine {
       }
     }
     if (errorCount > 0) {
-      this.logger.log('')
+      this.logger.info('')
       this.logger.error(`Errors during discovery: ${errorCount}`)
       for (const error of errorMsgs) {
         this.logger.error(error)

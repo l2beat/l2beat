@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21802913,
-  "configHash": "0x8853662d8f26fa8ac0665bb2f7554f8b3fd11321237e6002f63f588b74c25a94",
+  "configHash": "0x1d781dd65abb1fcacf4a21238771fc5f34159a0501b924b37e9fcc942545c777",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -20,13 +20,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
@@ -179,24 +172,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
@@ -282,14 +257,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
@@ -320,18 +287,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
@@ -392,20 +347,6 @@
       ],
       "proxyType": "immutable",
       "description": "ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
-          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
-          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1734221171,
       "sinceBlock": 21404227,
       "values": {
@@ -432,31 +373,6 @@
       ],
       "proxyType": "immutable",
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
-          "description": "can mint frxETH tokens.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
-          "description": "can add and remove frxETH minters and set a new timelock address.",
-          "via": [
-            {
-              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
-          "description": "can mint frxETH tokens.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1665022895,
       "sinceBlock": 15686046,
@@ -500,18 +416,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
@@ -555,23 +459,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -656,20 +543,6 @@
       ],
       "proxyType": "immutable",
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
-          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
-          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -794,14 +667,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
@@ -827,13 +692,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        }
-      ],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
@@ -978,19 +836,6 @@
       ],
       "proxyType": "immutable",
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
-          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
-          "via": [
-            {
-              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-              "delay": 172800
-            }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1799,7 +1644,7 @@
     "fraxtal/FraxEtherMinter": "0xf0613acc9cc6152ba1e739f49480f2343ff1cd0559d158669ad5c04ba088046d",
     "fraxtal/frxETH": "0xd0b37c15c111eef32b02139bf4be8d60c2c864ca2bc292ce40efad364876b556",
     "fraxtal/FrxEthMinter": "0x1c1e0859bdf378f91cefaae8a3c6214f3cfc8bffed72c2280139e4586a4d2a11",
-    "fraxtal/Timelock": "0x37842a075ae97f45dfbdb24296a57dd1d36570cd3c2ec2362c87c9f5c842f522",
+    "fraxtal/Timelock": "0xddc387cb7e3e5d997b993c8702f986c6be80b6b460277bb796c259ddc0bb52ec",
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
@@ -1811,5 +1656,6 @@
     "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0xf45a1e7075b22ebe06498487a814ee5542c8e003f94abcafdb67adfbad12d602"
 }

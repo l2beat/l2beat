@@ -1,12 +1,14 @@
-import type { Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
   type ConfigRegistry,
   type DiscoveryEngine,
-  DiscoveryLogger,
   type DiscoveryOutput,
   type TemplateService,
+  combinePermissionsIntoDiscovery,
   flattenDiscoveredSources,
+  getDiscoveryPaths,
+  modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
 import {
@@ -63,7 +65,19 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
-    const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
+
+    // This is a temporary solution to model project in isolation
+    // until we refactor Update Monitor to support cross-chain discovery
+    const discoveryPaths = getDiscoveryPaths()
+    const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
+      discovery,
+      config.permission,
+      this.templateService,
+      discoveryPaths,
+    )
+    combinePermissionsIntoDiscovery(discovery, permissionsOutput)
+
+    const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
 
     return { discovery, flatSources }
   }

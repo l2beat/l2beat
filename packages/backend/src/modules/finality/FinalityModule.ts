@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import type { EthereumDaProvider } from '@l2beat/shared'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import type { Config, FinalityConfigProject } from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
@@ -82,8 +83,10 @@ function initializeConfigurations(
   const degateClient = providers.clients.degate
   assert(degateClient, 'Degate client not defined')
 
-  const blobProvider = providers.blob?.getBlobProvider()
-  assert(blobProvider, 'Blob client is required for finality module')
+  const ethereumDaProvider = providers.da.getDaProvider(
+    'ethereum',
+  ) as EthereumDaProvider
+  assert(ethereumDaProvider, 'Blob client is required for finality module')
 
   return configs
     .map((configuration): FinalityConfig | undefined => {
@@ -93,7 +96,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LineaT2IAnalyzer(
-                blobProvider,
+                ethereumDaProvider,
                 ethereumClient,
                 database,
                 configuration.projectId,
@@ -121,7 +124,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new OpStackT2IAnalyzer(
-                blobProvider,
+                ethereumDaProvider,
                 logger,
                 ethereumClient,
                 database,
@@ -147,7 +150,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ArbitrumT2IAnalyzer(
-                blobProvider,
+                ethereumDaProvider,
                 logger,
                 ethereumClient,
                 database,

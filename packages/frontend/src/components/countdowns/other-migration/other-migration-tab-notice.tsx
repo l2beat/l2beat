@@ -11,6 +11,7 @@ interface Props {
   projectsToBeMigrated: {
     slug: string
     name: string
+    icon: string
   }[]
   className?: string
 }

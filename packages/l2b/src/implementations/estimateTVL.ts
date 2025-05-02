@@ -5,7 +5,7 @@ import {
   Bytes,
   CoingeckoId,
   type EthereumAddress,
-  type Token,
+  type LegacyToken,
 } from '@l2beat/shared-pure'
 import { BigNumber, providers, utils } from 'ethers'
 
@@ -77,7 +77,7 @@ async function getBalances(
   provider: providers.JsonRpcBatchProvider,
   address: EthereumAddress,
   blockNumber: number,
-  tokens: Token[],
+  tokens: LegacyToken[],
 ): Promise<
   {
     symbol: string

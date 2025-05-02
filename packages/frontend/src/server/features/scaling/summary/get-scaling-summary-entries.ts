@@ -21,15 +21,15 @@ import { getActivityLatestUops } from '../activity/get-activity-latest-tps'
 import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
-import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-    optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
+    optional: ['tvsInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
@@ -87,13 +87,12 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   tvsOrder: number
   risks: RosetteValue[]
   baseLayerRisks: RosetteValue[] | undefined
-  gasTokens: string[] | undefined
 }
 
 export function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
-    'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'
+    'tvsInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'
   >,
   changes: ProjectChanges,
   latestTvs: ProjectSevenDayTvsBreakdown | undefined,
@@ -105,10 +104,10 @@ export function getScalingSummaryEntry(
           associatedRatio:
             latestTvs.associated.total / latestTvs.breakdown.total,
           name: project.name,
-          associatedTokens: project.tvlInfo?.associatedTokens ?? [],
+          associatedTokens: project.tvsInfo?.associatedTokens ?? [],
         })
       : undefined
-  const associatedTokensExcludedWarnings = compact(project.tvlInfo?.warnings)
+  const associatedTokensExcludedWarnings = compact(project.tvsInfo?.warnings)
   const activitySyncWarning = activity
     ? getActivitySyncWarning(activity.syncedUntil)
     : undefined
@@ -137,7 +136,7 @@ export function getScalingSummaryEntry(
       change: latestTvs?.change.total,
       associatedTokensExcludedChange:
         latestTvs?.changeExcludingAssociated.total,
-      associatedTokens: project.tvlInfo?.associatedTokens ?? [],
+      associatedTokens: project.tvsInfo?.associatedTokens ?? [],
       warnings: compact([
         ...associatedTokensExcludedWarnings,
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
@@ -156,6 +155,5 @@ export function getScalingSummaryEntry(
     baseLayerRisks: project.scalingRisks.host
       ? getL2Risks(project.scalingRisks.host)
       : undefined,
-    gasTokens: project.chainConfig?.gasTokens,
   }
 }

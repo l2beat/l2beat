@@ -44,7 +44,7 @@ export function toRawDiscoveryOutput(
   const structure = getStructureOutput(config.structure, blockNumber, results)
   const colorized = colorize(config.color, structure, templateService)
 
-  return combineStructureAndColor(structure, colorized)
+  return withoutUndefinedKeys(combineStructureAndColor(structure, colorized))
 }
 
 export function combineStructureAndColor(
@@ -62,6 +62,10 @@ export function sortByKeys<T extends object>(obj: T): T {
   ) as T
 }
 
+export function withoutUndefinedKeys<T extends object>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T
+}
+
 export function sortEntry(e: EntryParameters): EntryParameters {
   return {
     name: e.name,
@@ -73,7 +77,6 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     proxyType: e.proxyType,
     displayName: e.displayName,
     description: e.description,
-    issuedPermissions: e.issuedPermissions,
     receivedPermissions: e.receivedPermissions,
     directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,

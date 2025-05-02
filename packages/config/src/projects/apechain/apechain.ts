@@ -39,6 +39,8 @@ export const apechain: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'apechain',
     chainId: 33139,
+    coingeckoPlatform: 'apechain',
+    sinceTimestamp: UnixTime(1724863522),
     apis: [
       {
         type: 'rpc',
@@ -48,8 +50,7 @@ export const apechain: ScalingProject = orbitStackL3({
     ],
     gasTokens: ['APE'],
   },
-  // associatedTokens: ['APE'],
-  overrideEscrows: [],
+  associatedTokens: ['APE'],
   customDa: AnytrustDAC({ discovery }),
   milestones: [
     {

@@ -1,3 +1,130 @@
+Generated with discovered.json: 0x06e463f965c60ed17f2d6dfe8edf294992641e33
+
+# Diff at Tue, 29 Apr 2025 08:19:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22322978
+- current block number: 22322978
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+```diff
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+Generated with discovered.json: 0x1805c3ccfef3c269f15939674254509419a81156
+
+# Diff at Thu, 24 Apr 2025 10:31:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22322978
+- current block number: 22322978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
++++ description: URL and address of the DAC member
+      values.members.4:
+-        ["http://119.28.1.197:8444","0x9d8616545C9941138832EebC58Cb498E0ef21a13"]
++        {"url":"http://43.155.22.171:8444","addr":"0x9231622437bD57349cC9a15CDEc5383627DEbA17"}
++++ description: URL and address of the DAC member
+      values.members.3:
+-        ["http://43.155.22.171:8444","0x9231622437bD57349cC9a15CDEc5383627DEbA17"]
++        {"url":"http://43.129.158.203:8444","addr":"0xFe1da7CAd939805d4A889822357c348177a5118d"}
++++ description: URL and address of the DAC member
+      values.members.2:
+-        ["http://43.129.159.5:8444","0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"]
++        {"url":"http://119.28.1.197:8444","addr":"0x9d8616545C9941138832EebC58Cb498E0ef21a13"}
++++ description: URL and address of the DAC member
+      values.members.1:
+-        ["http://43.129.158.203:8444","0xFe1da7CAd939805d4A889822357c348177a5118d"]
++        {"url":"http://129.226.185.196:8444","addr":"0x061D273bEf947BD0ef2B828526e710eEa0f297ae"}
++++ description: URL and address of the DAC member
+      values.members.0:
+-        ["http://129.226.185.196:8444","0x061D273bEf947BD0ef2B828526e710eEa0f297ae"]
++        {"url":"http://43.129.159.5:8444","addr":"0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"}
+    }
+```
+
+Generated with discovered.json: 0xb4441644e04fc493c663f3a3cba3886d6f40cfbd
+
+# Diff at Tue, 22 Apr 2025 07:14:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 22166672
+- current block number: 22322978
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166672 (main branch discovery), not current.
+
+```diff
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      name:
+-        "Bridge"
++        "OldBridge"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf7d12fae8f1a6f5eca7bda8230644a4d0ec6764c
 
 # Diff at Mon, 31 Mar 2025 11:42:43 GMT:
