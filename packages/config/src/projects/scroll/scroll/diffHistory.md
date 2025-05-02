@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x73207528caa4f682c43da11a38687c4b24135a86
+
+# Diff at Thu, 01 May 2025 13:25:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2b416a2682a6346947ff8f432469bc39157f1420 block: 15048934
+- current block number: 15127262
+
+## Description
+
+Ignored USDC on Scroll total supply.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15048934 (main branch discovery), not current.
+
+```diff
+    contract Scroll USDC (0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) {
+    +++ description: Contract of the USDC token on Scroll.
+      values.totalSupply:
+-        19147318188126
+    }
+```
+
 Generated with discovered.json: 0x57f3ecf012398c81fdab7be5e9e1f55625b3363b
 
 # Diff at Tue, 29 Apr 2025 09:33:30 GMT:
