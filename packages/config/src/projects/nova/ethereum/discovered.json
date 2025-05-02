@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 22166991,
+  "blockNumber": 22396769,
   "configHash": "0xb8b6d52ea8a324aecd4be3fbdd1e49aadaecd6f93419be1390cd46f93bfde9c8",
   "entries": [
     {
@@ -82,7 +82,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 207350,
+        "batchCount": 220960,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -94,9 +94,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 22166712,
+          "prevBlockNumber": 22396563,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22166761
+          "prevSequencedBlockNumber": 22396609
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -129,7 +129,7 @@
         "rollup": "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 452900,
+        "totalDelayedMessagesRead": 466568,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -713,7 +713,7 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 452904,
+        "delayedMessageCount": 466570,
         "inboxHistory": [
           "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -721,8 +721,8 @@
         "outboxHistory": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 207350,
-        "sequencerReportedSubMessageCount": 83114965
+        "sequencerMessageCount": 220960,
+        "sequencerReportedSubMessageCount": 83483756
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2800,6 +2800,20 @@
               "data": "0x1cff79cd000000000000000000000000bf94afebfbf062a88615bc012da39d0822670aba000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c44f71a50e0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000ff813f6bd577c3d1cdbe435bac0621be6ae34b40000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000",
               "delay": 259200
             }
+          },
+          {
+            "id": "0xb43e0b29cc555bae3e0437af989975f362440bb163a80767ac2b50abc3b543a0",
+            "decoded": {
+              "chain": "nova",
+              "executor": "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d",
+              "inboxOnEthereum": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+            },
+            "raw": {
+              "target": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+              "value": 0,
+              "data": "0x6e6e8a6a00000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d0000000000000000000000000000000000000000000000663a9d579527ee69800000000000000000000000000000000000000000000000000004f94ae6af800000000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d00000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
           }
         ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
@@ -2874,7 +2888,7 @@
         ],
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x891ce05ac7d09b152db9b0bdd49f6a3e0ef3ec3267708edf1f73beaac3839515",
+        "latestConfirmed": "0x3f76c314b037de4ee6ee806ca3d86a80ad701b4a8458cdf69de9a75ea1821f21",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
