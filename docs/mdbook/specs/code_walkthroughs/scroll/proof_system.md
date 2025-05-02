@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Proof system](#proof-system)
+- [Proof system [TO BE EXPANDED]](#proof-system-to-be-expanded)
   - [Batch Lifecycle](#batch-lifecycle)
     - [Batch Commitment](#batch-commitment)
     - [Batch Finalization](#batch-finalization)
