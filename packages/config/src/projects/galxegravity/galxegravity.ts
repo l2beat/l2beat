@@ -66,5 +66,4 @@ export const galxegravity: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://explorer.gravity.xyz/api/v2' },
     ],
   },
-  customDa: AnytrustDAC({ discovery }),
 })
