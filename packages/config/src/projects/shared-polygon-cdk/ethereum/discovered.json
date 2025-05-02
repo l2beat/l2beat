@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22367585,
+  "blockNumber": 22397530,
   "configHash": "0x86a4e3781b6f3b508960beecd860ad07815fb04fda4fec0c157ce004514bca87",
   "entries": [
     {
@@ -215,7 +215,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xb0bed3146b3ebe68f952abf03c85afbc0b6ff014ed2e3166dad0ebd799f3fc06",
+        "getRoot": "0x252e9d0f362a44fa51fb05244965a86afa0b91eaa6a06b3aee55ead971f371a6",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -425,15 +425,15 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x7b51c2522ef8059f69fc0c0b4bd170fc3a1b64856c45c0c4b552e84e1b6efdcf",
+        "getRollupExitRoot": "0xf29f6880761b6ced5b866740405613e4d864fc0e09e3c01f3a60b34cd1c8f141",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1745843579,
+        "lastAggregationTimestamp": 1746204683,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14, 17],
+        "pessimisticProofSenders": [14, 17, 18, 19],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
-        "rollupCount": 18,
+        "rollupCount": 19,
         "rollupsDataV2": [
           {
             "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -519,9 +519,9 @@
           {
             "rollupContract": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
             "chainID": 2355,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            "forkID": 9,
-            "rollupTypeID": 4,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
@@ -591,6 +591,15 @@
           {
             "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
             "chainID": 45056,
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupTypeID": 10,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          },
+          {
+            "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+            "chainID": 8088,
             "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
             "forkID": 12,
             "rollupTypeID": 10,
@@ -681,8 +690,8 @@
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
-        "totalSequencedBatches": 717182,
-        "totalVerifiedBatches": 716693,
+        "totalSequencedBatches": 720393,
+        "totalVerifiedBatches": 719821,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -744,8 +753,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 57706,
-        "getRoot": "0xc611ff5e8509eafab7a8c0b1f324832c5935030c0399e7aa94e1ca02bfebe1d6",
+        "depositCount": 57870,
+        "getRoot": "0xbd90f05a830d59bcd5388e9696933e7ec2b9c4c5813c8625bda679ff22ee7e38",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",
@@ -830,7 +839,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

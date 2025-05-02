@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 22081889,
+  "blockNumber": 22397501,
   "configHash": "0x90771906310caf8076bb4c5fe38593ce1336ff04116973ba850f03f4aae01dff",
   "entries": [
     {
@@ -456,7 +456,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 841660,
+        "batchCount": 880593,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -468,9 +468,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 22081833,
+          "prevBlockNumber": 22397450,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22081882
+          "prevSequencedBlockNumber": 22397500
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -491,12 +491,12 @@
           "delaySeconds": 86400,
           "futureSeconds": 768
         },
-        "postsBlobs": true,
+        "postsBlobs": false,
         "reader4844": "0x15b25E3fb8419dA4848a6f193bb9b43519D0d4ca",
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1908859,
+        "totalDelayedMessagesRead": 1960220,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -818,7 +818,7 @@
         "getValidators": [],
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x5f64d22313878eab8fbfacf19dd1c969a10b8f10870d259a2bae547427e83871",
+        "latestConfirmed": "0x14cddd9af9d44370c9757dbfcf206947d2763bb1f944f7abcf15253bc200a4f7",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1262,7 +1262,7 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1908866,
+        "delayedMessageCount": 1960225,
         "inboxHistory": [
           "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -1276,8 +1276,8 @@
         ],
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 841660,
-        "sequencerReportedSubMessageCount": 295159513
+        "sequencerMessageCount": 880593,
+        "sequencerReportedSubMessageCount": 310331790
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -3397,6 +3397,20 @@
               "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
               "value": 0,
               "data": "0x1cff79cd000000000000000000000000bf94afebfbf062a88615bc012da39d0822670aba000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c44f71a50e0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000ff813f6bd577c3d1cdbe435bac0621be6ae34b40000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
+          },
+          {
+            "id": "0xb43e0b29cc555bae3e0437af989975f362440bb163a80767ac2b50abc3b543a0",
+            "decoded": {
+              "chain": "nova",
+              "executor": "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d",
+              "inboxOnEthereum": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+            },
+            "raw": {
+              "target": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+              "value": 0,
+              "data": "0x6e6e8a6a00000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d0000000000000000000000000000000000000000000000663a9d579527ee69800000000000000000000000000000000000000000000000000004f94ae6af800000000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d00000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000",
               "delay": 259200
             }
           }

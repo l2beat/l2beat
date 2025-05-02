@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd8cb0573ce138aacf224315f8b43f092df162af7
+Generated with discovered.json: 0x3df7a59ff93f942eb9265e8dbea3c60449621655
 
-# Diff at Fri, 02 May 2025 15:28:37 GMT:
+# Diff at Fri, 02 May 2025 17:25:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22223061
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd8cb0573ce138aacf224315f8b43f092df162af7
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+main contract got verified, matches standard template.
 
 ## Config/verification related changes
 

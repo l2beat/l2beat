@@ -1,14 +1,28 @@
-Generated with discovered.json: 0x41442c4ddbbd0a96b30fc6c15eb92d239f6ad04a
+Generated with discovered.json: 0x150032fb3a29de21258fc28f5c5b895a87fb9907
 
-# Diff at Fri, 02 May 2025 15:25:37 GMT:
+# Diff at Fri, 02 May 2025 17:24:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22166274
-- current block number: 22166274
+- current block number: 22397523
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a) {
+    +++ description: None
+      values.$members.3:
+-        "0x909e36B512Ed45250fdff513523119d825647695"
++        "0x6D9700B84F999a71D7701d6D537f32F1528f379A"
+      values.$members.2:
+-        "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd"
++        "0x909e36B512Ed45250fdff513523119d825647695"
+    }
+```
 
 ## Config/verification related changes
 

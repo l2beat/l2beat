@@ -1,4 +1,66 @@
-Generated with discovered.json: 0xec6f191e8fac3972c91c71c0e0cfc1eaab5a4ad2
+Generated with discovered.json: 0xfdf4d17c4468f4530047bb71d08608a41f5d3443
+
+# Diff at Fri, 02 May 2025 17:23:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22337715
+- current block number: 22397496
+
+## Description
+
+ZkStack_CustomGasToken_Adapter upgraded to use native CCTP if enabled.
+
+New Universal_Adapter added with CCTP support, currently not used.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkStack_CustomGasToken_Adapter (0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.232:
+-        "0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F"
++        "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
+      values.Adapters.56:
++        "0x22001f37B586792F25Ef9d19d99537C6446e0833"
+      values.CrossChainContracts.56:
++        "0x4e8E101924eDE233C13e2D8622DC8aED2872d505"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HubPoolStore (0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (0x22001f37B586792F25Ef9d19d99537C6446e0833)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_CustomGasToken_Adapter (0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/HubPoolStore.sol      |  72 +++
+ .../across-v3/ethereum/.flat/Universal_Adapter.sol | 597 +++++++++++++++++++++
+ .../ZkStack_CustomGasToken_Adapter.sol             | 214 +++++++-
+ 3 files changed, 865 insertions(+), 18 deletions(-)
+```
+
+Generated with discovered.json: 0x7f3357bc67f9b24314960dee3b35bbaedcd7e9a4
 
 # Diff at Tue, 29 Apr 2025 08:18:58 GMT:
 

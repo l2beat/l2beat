@@ -1,14 +1,9 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 22166274,
+  "blockNumber": 22397523,
   "configHash": "0xd444a5f432cba4822ad62bfce4ef74d626f984b769b9bd53e583850b5dc171f6",
   "entries": [
-    {
-      "address": "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "Inbox",
       "address": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
@@ -219,7 +214,7 @@
           "0xb6559478b59836376dA9937c4C697dDb21779E49",
           "0x9EBe5cabad9748263DbE1304064AdAb285c0f515",
           "0x13E83b0423534Eb6D542237F590096CEE5077056",
-          "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",
+          "0x6D9700B84F999a71D7701d6D537f32F1528f379A",
           "0x909e36B512Ed45250fdff513523119d825647695"
         ],
         "$threshold": 3,
@@ -227,7 +222,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 234,
+        "nonce": 238,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -663,6 +658,11 @@
         "owner": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0x6D9700B84F999a71D7701d6D537f32F1528f379A",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ERC20Gateway",
@@ -1888,5 +1888,5 @@
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x207b9ee64a2a5ab02f05c326a10143d93dfd0cbea51686d17278f74342d10c97"
+  "permissionsConfigHash": "0xe747c088f0924bbe4157cd6c52be82fcdc0be1057d2f5d886a05d8e4e0191c40"
 }

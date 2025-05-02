@@ -476,7 +476,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "7d 22h",
+        "timeSinceLastL2beatInteraction": "8d",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
