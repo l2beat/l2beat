@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x72a2deaf8747b256c76bf5c3ca718ef9e536de78
+
+# Diff at Fri, 02 May 2025 15:13:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 9916035
+- current block number: 15450035
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9916035 (main branch discovery), not current.
+
+```diff
+    contract L1Splitter (0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+      template:
++        "unichain/L1Splitter"
+      description:
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
+    }
+```
+
+```diff
+    contract L1Splitter (0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd).
+      template:
++        "unichain/L1Splitter"
+      description:
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd)."
+    }
+```
+
 Generated with discovered.json: 0x7c9926b96fa9e45c9df91b2a11e1357d1078cf35
 
 # Diff at Tue, 29 Apr 2025 08:19:30 GMT:
