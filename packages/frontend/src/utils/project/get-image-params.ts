@@ -19,9 +19,13 @@ export function getImageParams(filePath: string): ImageParams | undefined {
     return manifest.getImage(filePath)
   }
   try {
-    const imgBuffer = readFileSync(
-      path.join(process.cwd(), './public', filePath),
-    )
+    const base = path.join(process.cwd(), 'public')
+    const imgPath = path.join(base, filePath)
+    if (!imgPath.startsWith(base)) {
+      throw new Error(`Invalid image path: ${filePath}`)
+    }
+    const imgBuffer = readFileSync(imgPath)
+
     const dimensions = getImageDimensions(imgBuffer)
     if (!dimensions) return undefined
     return { ...dimensions, src: filePath }

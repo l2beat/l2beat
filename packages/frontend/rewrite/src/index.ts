@@ -83,10 +83,7 @@ function renderToHtml(data: RenderData, url: string) {
 }
 
 function getTemplate(manifest: Manifest) {
-  const matches = ['/index.css', '/index.js', '/icon.svg']
   let template = readFileSync('rewrite/index.html', 'utf-8')
-  for (const url of matches) {
-    template = template.replace(url, manifest.getUrl(url))
-  }
+  template = template.replace('/index.js', manifest.getUrl('/index.js'))
   return template
 }

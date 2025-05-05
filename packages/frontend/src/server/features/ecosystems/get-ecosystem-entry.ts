@@ -134,7 +134,7 @@ export async function getEcosystemEntry(
   return {
     ...ecosystem,
     colors: ecosystem.colors,
-    logo: getEcosystemLogo(slug),
+    logo: getEcosystemLogo(ecosystem.slug),
     badges: ecosystem.display.badges
       .map((badge) => getBadgeWithParams(badge))
       .filter((badge) => badge !== undefined),
