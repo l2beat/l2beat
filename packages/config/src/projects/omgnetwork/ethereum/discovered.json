@@ -2,7 +2,7 @@
   "name": "omgnetwork",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x7d03dee90fdbc7b4bb081e8a72a7724defe1b76299052638914576705f6cc134",
+  "configHash": "0xb3dacff4f01a1e1654c7f6b20b555d124906617f7b596cf6efa33c33beff8d5b",
   "entries": [
     {
       "name": "Erc20Vault",
@@ -256,5 +256,6 @@
       "event BondReturnFailed(address indexed receiver, uint256 amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x7b62fc3537fabbd2f6cc0799bf2b6b877e2f5587ef898a7ad96eb3aaab04e4c6"
 }

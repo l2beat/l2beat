@@ -76,7 +76,6 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     sourceHashes: e.sourceHashes,
     proxyType: e.proxyType,
     description: e.description,
-    issuedPermissions: e.issuedPermissions,
     receivedPermissions: e.receivedPermissions,
     directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,

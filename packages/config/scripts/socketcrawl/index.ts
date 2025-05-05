@@ -71,7 +71,7 @@ interface EnvironmentVariables {
 const ENV: EnvironmentVariables = {
   rpcUrl: process.env.ETHEREUM_RPC_URL,
   coinGeckoApiKey: process.env.COINGECKO_API_KEY,
-  etherscanApiKey: process.env.ETHEREUM_ETHERSCAN_API_KEY,
+  etherscanApiKey: process.env.ETHERSCAN_API_KEY,
 }
 
 // Validate required environment variables

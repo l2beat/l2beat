@@ -111,9 +111,12 @@ function getDataCollectionEntry<T extends DataCollectionKey>(
   id: string,
 ): DataCollectionEntry<T> {
   const contentEntry = collections[key]
-  const file = readFileSync(
-    path.join(DIR_PATH, key, `${id}.${contentEntry.extension}`),
-  )
+  const base = path.join(process.cwd(), DIR_PATH, key)
+  const filePath = path.join(base, `${id}.${contentEntry.extension}`)
+  if (!filePath.startsWith(base)) {
+    throw new Error('Invalid file path')
+  }
+  const file = readFileSync(filePath)
 
   const json: unknown = JSON.parse(file.toString())
   const data = contentEntry.schema.parse(json)
@@ -129,9 +132,13 @@ function getContentCollectionEntry<T extends ContentCollectionKey>(
   id: string,
 ): ContentCollectionEntry<T> {
   const contentEntry = collections[key]
-  const file = readFileSync(
-    path.join(process.cwd(), DIR_PATH, key, `${id}.${contentEntry.extension}`),
-  )
+  const base = path.join(process.cwd(), DIR_PATH, key)
+  const filePath = path.join(base, `${id}.${contentEntry.extension}`)
+  if (!filePath.startsWith(base)) {
+    throw new Error('Invalid file path')
+  }
+  const file = readFileSync(filePath)
+
   const parsedFile = matter(file.toString())
 
   const data = contentEntry.schema.parse(parsedFile.data)

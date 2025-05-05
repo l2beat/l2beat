@@ -130,11 +130,10 @@ function getChainDiscoveryConfig(
           }
         : {
             type: explorerApi.type,
-            url: explorerApi.url,
-            apiKey: env.string([
-              `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-              `${ENV_NAME}_ETHERSCAN_API_KEY`,
-            ]),
+            url: env.string('ETHERSCAN_API_URL'),
+            apiKey: env.string('ETHERSCAN_API_KEY'),
+            // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
+            chainId: chainConfig.chainId!,
             unsupported: {
               getContractCreation: explorerApi.contractCreationUnsupported,
             },

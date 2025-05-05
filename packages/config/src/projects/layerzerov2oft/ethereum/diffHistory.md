@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xff729e031a9e3a88bdce85906c003455ab7068db
+
+# Diff at Tue, 29 Apr 2025 08:19:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22174829
+- current block number: 22174829
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","via":[]}]
+    }
+```
+
+```diff
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8","via":[{"address":"0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"}]}]
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xe16d201cA134345601631D327a971A3741646B0d","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xcde83e025e3f3be2a1f67950ef9306f141c9def1
 
 # Diff at Thu, 24 Apr 2025 10:30:16 GMT:

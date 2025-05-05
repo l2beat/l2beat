@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0x1732c9e2d89ce2319fdfd09536785d2aed98936ed7721171d507f8cf0305456c",
+  "configHash": "0x89a4c6dc457e87ad2464fdd8d634328843baf6321a82ab966132d1ae5eb143af",
   "entries": [
     {
       "name": "History",
@@ -167,5 +167,6 @@
       "function getInputBox() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa76af1255573b8046883c2756602773efed29abefc48fa9d72ee6c3d5aa0d5fa"
 }

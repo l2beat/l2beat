@@ -6,6 +6,7 @@ import {
   type Formula,
   ProjectTvsConfigSchema,
   isAmountFormula,
+  isOnchainAmountFormula,
 } from '../types'
 
 type FormulaTest = (formula: Formula) => void
@@ -134,10 +135,7 @@ describe('tvs', () => {
         }
 
         const chainIsSupported: FormulaTest = (formula) => {
-          if (
-            formula.type === 'balanceOfEscrow' ||
-            formula.type === 'totalSupply'
-          ) {
+          if (isOnchainAmountFormula(formula)) {
             assert(
               supportedChains.has(formula.chain),
               `Unsupported chain ${formula.chain} configured for ${token.id}`,

@@ -12,6 +12,7 @@ interface EtherscanApi {
   type: 'etherscan'
   apiKey: string
   url: string
+  chainId: number
 }
 
 export type IndexerApi = BlockscoutApi | EtherscanApi | RoutescanApi

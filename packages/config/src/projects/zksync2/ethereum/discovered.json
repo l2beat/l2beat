@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 22346378,
-  "configHash": "0xe1e2be20fcf035634f31080af0d585904055c05d05cdebd59226159ed2d01e85",
+  "configHash": "0xec1eb1e5c6a9c37069734899ce9165fb41c4def933333292a7418d46eaa9a551",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -63,26 +63,6 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -657,18 +637,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -705,18 +673,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -752,14 +708,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1304,5 +1252,6 @@
     "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0xf70a07bff2973b2a4ca4b64edca17226bc5ee90da1aa186077513fb506ab9397"
 }

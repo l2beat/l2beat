@@ -30,7 +30,6 @@ import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
-import { TokenScreening } from './TokenScreening'
 import { UI } from './UI'
 import { ZkGovProposal } from './ZkGovProposal'
 
@@ -68,7 +67,6 @@ export function getSubcommands() {
     Init,
     InitTemplate,
     TVL,
-    TokenScreening,
     UI,
     ZkGovProposal,
   ]

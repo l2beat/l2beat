@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 331086890,
-  "configHash": "0x7e8b479a2700967f8d0ae1fe4fe3caae2d94a492187b8bd51b8dc52612590d25",
+  "configHash": "0xb32385c7b0e47f61cf2a035ed650f59db58000a26182b60e3612cf08f54603a5",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -31,24 +31,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2107,
@@ -166,56 +148,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "delay": 691200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "delay": 691200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -534,24 +466,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council member elections.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -606,24 +520,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Router managing token <–> gateway mapping on L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2108,
       "values": {
@@ -688,24 +584,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1624913237,
       "sinceBlock": 38495,
       "values": {
@@ -783,24 +661,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council member removals.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -876,24 +736,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -957,24 +799,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council nominee elections.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
       "values": {
@@ -1035,24 +859,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -1252,24 +1058,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -1370,24 +1158,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ARB sent from L2 to L1 is escrowed in this contract and minted on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1678968435,
       "sinceBlock": 70397931,
@@ -1420,24 +1190,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1516,72 +1268,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "description": "manage all access control roles.",
-          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
-          "description": "schedule a proposal to replace a Security Council member cohort.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
-          "description": "schedule a proposal to remove a Security Council member.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
-          "description": "schedule a proposal to add a new member to the Security Council.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
-          "description": "schedule a proposal to remove a Security Council member.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
-          "description": "schedule a proposal to replace a Security Council member.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
-          "description": "schedule a proposal to rotate a Security Council member (same member, new address).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "description": "manage all access control roles.",
-          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1834,24 +1520,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-          "via": [
-            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
-            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3098,5 +2766,6 @@
     "orbitstack/layer2/TreasuryGovernor": "0x8cd9bbe1a81d32bac719a133f9017116de77490bec63205d5a1107b44bbb47cf",
     "orbitstack/layer2/TreasuryTimelock": "0x3e0115480caa634049a16ebe5fb1e09a3834d2087140901945bcd301bd46789f",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x25a34648155a91264ae1062dd01dc03ed9db101801c73a3a4f9f66e285cb5380"
-  }
+  },
+  "permissionsConfigHash": "0x69992fcbd9ca70c86feba656652692784f136a3198ee1721623e01615779fd54"
 }

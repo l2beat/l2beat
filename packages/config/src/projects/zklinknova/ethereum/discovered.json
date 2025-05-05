@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 22022360,
-  "configHash": "0x0f2a2198e9cc96d59c0d9f31a442b86801b4bd9eea91d179959c5655e0edba69",
+  "configHash": "0x529f5b87155a2fafe4d1484a317dcbf684cb8b18cf7372bde6a8206ae1212801",
   "entries": [
     {
       "name": "Arbitrator",
@@ -13,13 +13,6 @@
         "0xff7b9bda4ccb0ae0e1775f82206c54ef89c794f6b4ffa42edbb65996bf7d0e8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709275199,
       "sinceBlock": 19338591,
       "values": {
@@ -64,13 +57,6 @@
         "0x9158bf76b126cdaa6a8fe310085a77d400ab2458c21f79e637846d8bc3cc2a13"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709281415,
       "sinceBlock": 19339109,
       "values": {
@@ -145,13 +131,6 @@
         "0xc39118a9cebca411d42cb5759e7387270a0a8472860288b0e01aa3235777afe5"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1710418475,
       "sinceBlock": 19433179,
       "values": {
@@ -192,13 +171,6 @@
         "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1711095887,
       "sinceBlock": 19488957,
       "values": {
@@ -229,13 +201,6 @@
         "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -305,13 +270,6 @@
         "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709281103,
       "sinceBlock": 19339083,
       "values": {
@@ -347,13 +305,6 @@
         "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1711092707,
       "sinceBlock": 19488695,
       "values": {
@@ -389,13 +340,6 @@
         "0x7f9e12d70f78945c6ea417774b5faf2e0a78ed4fbbdcaec591bf123428f28197"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709281007,
       "sinceBlock": 19339075,
       "values": {
@@ -431,13 +375,6 @@
         "0x6f5cdba451da8c1759148644f4daf8344ed2853d765413e18cd2fcf662f4694a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709278979,
       "sinceBlock": 19338906,
       "values": {
@@ -478,13 +415,6 @@
         "0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1718004791,
       "sinceBlock": 20059964,
       "values": {
@@ -514,13 +444,6 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": [{ "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2" }]
-        }
-      ],
       "sinceTimestamp": 1709295323,
       "sinceBlock": 19340260,
       "values": {
@@ -664,13 +587,6 @@
         "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709281211,
       "sinceBlock": 19339092,
       "values": {
@@ -706,13 +622,6 @@
         "0x070067bfd007d5f15c96e1e404a8b9b5eab4a2616d8ea8ebeab0a22f58262461"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709281355,
       "sinceBlock": 19339104,
       "values": {
@@ -1288,5 +1197,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

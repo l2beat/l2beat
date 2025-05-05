@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 21944318,
-  "configHash": "0x859e5898901c361a6aad9da3f616662a53075fb380b93f613d2f2d7c3fdd9460",
+  "configHash": "0x02fa938f76ef95abecaeed4c3bda074d62855e75d4e76137d3d27b34bee44db7",
   "entries": [
     {
       "name": "Treasurer",
@@ -33,13 +33,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -697,13 +690,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1687808675,
       "sinceBlock": 17565748,
       "values": {
@@ -2004,5 +1990,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x5706a59399c824e14cc625a3eb30d0938a9b6c1c11668fb20edb3e10356db3ae"
 }

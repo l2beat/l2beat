@@ -124,6 +124,8 @@ assert(
   'Review the technology section and riskView.stateValidation since the number of active tiers changed.',
 )
 
+const chainId = 167000
+
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
   capability: 'universal',
@@ -276,7 +278,7 @@ export const taiko: ScalingProject = {
   },
   chainConfig: {
     name: 'taiko',
-    chainId: 167000,
+    chainId,
     explorerUrl: 'https://taikoscan.io',
     sinceTimestamp: UnixTime(1716620627),
     gasTokens: ['ETH'],
@@ -286,7 +288,7 @@ export const taiko: ScalingProject = {
         url: 'https://rpc.mainnet.taiko.xyz',
         callsPerMinute: 500,
       },
-      { type: 'etherscan', url: 'https://api.taikoscan.io/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   type: 'layer2',

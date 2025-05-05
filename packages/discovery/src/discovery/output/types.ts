@@ -23,10 +23,6 @@ export interface StructureOutput {
   usedTemplates: Record<string, Hash256>
 }
 
-export interface PermissionOutput {
-  entries: Record<string, IssuedPermission[]>
-}
-
 export interface DiscoveryOutput {
   name: string
   chain: string
@@ -36,6 +32,7 @@ export interface DiscoveryOutput {
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
+  permissionsConfigHash?: Hash256
 }
 
 export interface DiscoveryCustomType {
@@ -63,9 +60,6 @@ export interface ResolvedPermissionDetails {
   via?: ResolvedPermissionPath[]
 }
 
-export type IssuedPermission = ResolvedPermissionDetails & {
-  to: EthereumAddress
-}
 export type ReceivedPermission = ResolvedPermissionDetails & {
   from: EthereumAddress
 }
@@ -101,15 +95,36 @@ export type ColorEntry = {
   name?: string
   description?: string
   fieldMeta?: Record<string, FieldMeta>
-  issuedPermissions?: IssuedPermission[]
-  receivedPermissions?: ReceivedPermission[]
-  directlyReceivedPermissions?: ReceivedPermission[]
   references?: ExternalReference[]
   category?: ContractCategory
 }
 
-export type EntryParameters = StructureEntry & ColorEntry
+export type PermissionEntry = {
+  receivedPermissions?: ReceivedPermission[]
+  directlyReceivedPermissions?: ReceivedPermission[]
+}
+
+export type EntryParameters = StructureEntry & ColorEntry & PermissionEntry
 
 export interface ColorOutput {
   entries: ColorEntry[]
+}
+
+export type PermissionsOutput = {
+  permissionsConfigHash: Hash256
+  permissions: {
+    receiver: string
+    receiverChain: string
+    permission: Permission
+    from: EthereumAddress
+    delay?: number
+    description?: string
+    condition?: string
+    via?: {
+      address: EthereumAddress
+      delay?: number
+      condition?: string
+    }[]
+    isFinal: boolean
+  }[]
 }

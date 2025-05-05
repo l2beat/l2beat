@@ -2,11 +2,6 @@ import { type Hash256, undefinedIfEmpty } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
-import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
-import {
-  transformToIssued,
-  transformToReceived,
-} from '../permission-resolving/transform'
 import { withoutUndefinedKeys } from './toDiscoveryOutput'
 import type { EntryParameters, StructureOutput } from './types'
 
@@ -40,20 +35,11 @@ function collectUsedTemplatesWithHashes(
 export function processAnalysis(
   results: Analysis[],
 ): Pick<StructureOutput, 'entries' | 'abis'> {
-  const resolvedPermissions = resolveAnalysis(results)
-
   const { contracts, abis } = getEntries(results)
   return {
     entries: contracts
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
       .map((x): EntryParameters => {
-        const { directlyReceivedPermissions, receivedPermissions } =
-          transformToReceived(
-            x.address,
-            resolvedPermissions,
-            x.combinedMeta?.permissions,
-          )
-
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
@@ -64,9 +50,6 @@ export function processAnalysis(
             ? undefinedIfEmpty(x.sourceBundles.map((b) => b.hash as string))
             : undefined,
           proxyType: x.proxyType,
-          issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-          receivedPermissions,
-          directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp,
           sinceBlock: x.deploymentBlockNumber,

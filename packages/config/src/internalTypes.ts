@@ -138,6 +138,8 @@ export interface ProjectScalingDisplay {
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
   redWarning?: string
+  /** Emergency warning for the project. If present project will be displayed as in emergency mode. */
+  emergencyWarning?: string
   /** A few sentences describing the scaling project */
   description: string
   /** Detailed description of the scaling project, will be visible in detailed description section */

@@ -79,6 +79,29 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLastNonZeroValue(timestamp: UnixTime): Promise<TokenValueRecord[]> {
+    const subquery = this.db
+      .selectFrom('TokenValue')
+      .select(['tokenId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('value', '>', 0)
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .groupBy(['tokenId'])
+      .as('latest')
+
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .innerJoin(subquery, (join) =>
+        join
+          .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('TokenValue')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

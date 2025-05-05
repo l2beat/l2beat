@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x71d1c341b1d29d0529e45a50e063b7aeb705fe04
+
+# Diff at Tue, 29 Apr 2025 08:19:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70","via":[]}]
+    }
+```
+
+```diff
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]}]
+    }
+```
+
+```diff
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]}]
+    }
+```
+
+```diff
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]}]
+    }
+```
+
+```diff
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]}]
+    }
+```
+
 Generated with discovered.json: 0xc899c6e7cead0c420fedf467cffacc1f64007ad3
 
 # Diff at Tue, 04 Mar 2025 10:39:35 GMT:

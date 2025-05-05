@@ -20,7 +20,7 @@ interface ProjectChain {
 
 export const AdriansCommand = command({
   name: 'adriansCommand',
-  description: 'builds some _knowledge base_',
+  description: 'Builds a knowledge base about a project to be used with LLMs.',
   args: {
     chain: positional({
       type: string,

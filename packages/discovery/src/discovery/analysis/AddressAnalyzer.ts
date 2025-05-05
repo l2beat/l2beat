@@ -20,7 +20,6 @@ import {
 import type { TemplateService } from './TemplateService'
 import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
-import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -39,9 +38,6 @@ interface AnalyzedCommon {
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
   relatives: AddressesWithTemplates
-  selfMeta?: ContractMeta
-  targetsMeta?: Record<string, ContractMeta>
-  combinedMeta?: ContractMeta
   usedTypes?: DiscoveryCustomType[]
 }
 
@@ -181,7 +177,7 @@ export class AddressAnalyzer {
     }
 
     const deployment = proxy.deployment
-    const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
+    const analysis = {
       type: isEOA ? 'EOA' : 'Contract',
       name: isEOA ? undefined : sources.name,
       isVerified: sources.isVerified,
@@ -201,17 +197,6 @@ export class AddressAnalyzer {
       ignoreInWatchMode: config.ignoreInWatchMode,
       relatives,
       usedTypes,
-    }
-
-    const analysis: Analysis = {
-      ...analysisWithoutMeta,
-      selfMeta: getSelfMeta(config),
-      targetsMeta: getTargetsMeta(
-        address,
-        mergedValues,
-        config.fields,
-        analysisWithoutMeta,
-      ),
     } as Analysis
 
     return analysis

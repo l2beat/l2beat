@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8fd3e094c040fa6b838787a2790397059e063132
+
+# Diff at Tue, 29 Apr 2025 08:19:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20311131
+- current block number: 20311131
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311131 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x02ecef526f806f06357659fFD14834fe82Ef4B04) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x714B2D10210f2A3a7AA614F949259C87613689aB","via":[]}]
+    }
+```
+
+```diff
+    contract Verifier (0x27C229937745d697d28FC7853d1bFEA7331Edf56) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x714B2D10210f2A3a7AA614F949259C87613689aB","via":[]}]
+    }
+```
+
+```diff
+    contract PairManager (0x661121AE41edE3f6FECDed922c59acC19A3ea9B3) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x714B2D10210f2A3a7AA614F949259C87613689aB","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x714B2D10210f2A3a7AA614F949259C87613689aB","via":[]}]
+    }
+```
+
+```diff
+    contract VerifierExit (0x961369d347EF7A6896BDD39cBE2B89e3911f521f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x714B2D10210f2A3a7AA614F949259C87613689aB","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x590a5dc338d20e789bb5e0ad3ba98f28aa8bf3ed
 
 # Diff at Tue, 04 Mar 2025 10:40:17 GMT:

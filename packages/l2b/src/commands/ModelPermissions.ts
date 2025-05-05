@@ -2,16 +2,40 @@ import {
   ConfigReader,
   TemplateService,
   getDiscoveryPaths,
-  modelPermissions,
+  modelPermissionsCommand,
 } from '@l2beat/discovery'
-import { command, positional, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  string,
+} from 'cmd-ts'
+import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const ModelPermissions = command({
   name: 'model-permissions',
+  description: 'Remodel permissions for given project with the newest config.',
   args: {
-    projectQuery: positional({
+    project: positional({
       type: string,
-      displayName: 'projectQuery',
+      displayName: 'project',
+      description: 'Project name (without chain) or `all`',
+    }),
+    message: option({
+      type: optional(string),
+      long: 'message',
+      short: 'm',
+      description:
+        'Message that will be written in the description section of diffHistory.md',
+    }),
+    debug: flag({
+      type: boolean,
+      long: 'debug',
+      short: 'd',
+      description: 'Keep debug Clingo files',
     }),
   },
   handler: async (args) => {
@@ -19,19 +43,21 @@ export const ModelPermissions = command({
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const chainConfigs = await Promise.all(
-      configReader
-        .readAllChainsForProject(args.projectQuery)
-        .flatMap((chain) => configReader.readConfig(args.projectQuery, chain)),
-    )
-    for (const config of chainConfigs) {
-      const discovery = configReader.readDiscovery(config.name, config.chain)
-      const permissions = modelPermissions(
-        config.structure,
-        discovery,
+    let projects = [args.project]
+    if (args.project === 'all') {
+      projects = configReader
+        .readAllChains()
+        .flatMap((chain) => configReader.readAllProjectsForChain(chain))
+    }
+    for (const project of projects) {
+      await modelPermissionsCommand(
+        project,
+        configReader,
         templateService,
+        paths,
+        args.debug,
       )
-      console.dir(permissions, { depth: null })
+      updateDiffHistory(project, args.message)
     }
   },
 })

@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x165b12cf9c0e52135176b2778f56ece1ea318562
+
+# Diff at Tue, 29 Apr 2025 08:19:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[]},{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract L1BlastBridge (0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) {
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x415c8893D514F9BC5211d36eEDA4183226b84AA7","via":[]},{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract LaunchBridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x697402166Fbf2F22E970df8a6486Ef171dbfc524) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[]},{"permission":"propose","to":"0x082b616Ec99167B2FEdee053F07db6795D4dA821","via":[]},{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: Contract managing Yield Providers for ETH.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05","description":"set and change address mappings.","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}]
+    }
+```
+
 Generated with discovered.json: 0x50b1184950c4c0720a9892539187628fc937d836
 
 # Diff at Thu, 27 Mar 2025 11:14:03 GMT:

@@ -6,6 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('celo')
+const chainId = 42220
 
 export const celo: ScalingProject = opStackL2({
   capability: 'universal',
@@ -40,7 +41,7 @@ export const celo: ScalingProject = opStackL2({
   chainConfig: {
     gasTokens: ['CELO'],
     name: 'celo',
-    chainId: 42220,
+    chainId,
     explorerUrl: 'https://celoscan.io',
     coingeckoPlatform: 'celo',
     sinceTimestamp: UnixTime(1742960663),
@@ -60,7 +61,7 @@ export const celo: ScalingProject = opStackL2({
       },
       {
         type: 'etherscan',
-        url: 'https://api.celoscan.io/api',
+        chainId,
         contractCreationUnsupported: true,
       },
     ],

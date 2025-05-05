@@ -10,7 +10,7 @@ export function MutlisigReportRouter(
   render: RenderFunction,
 ) {
   app.get('/multisig-report', async (req, res) => {
-    const data = await getMultisigReportData(manifest)
+    const data = await getMultisigReportData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })

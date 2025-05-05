@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x082fe0e0c98801d08d88c5e0587f3e711af09042
+
+# Diff at Tue, 29 Apr 2025 08:19:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337861
+- current block number: 22337861
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337861 (main branch discovery), not current.
+
+```diff
+    contract DaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]},{"permission":"validateBridge3","to":"0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E","via":[]}]
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change external validation logic refered to by this contract (e.g. Hashi).","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]},{"permission":"validateBridge3","to":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064","via":[]}]
+    }
+```
+
+```diff
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: Token bridge implementation and escrow for ERC-20 tokens.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change all critical configurations like yield farming for escrowed funds and limits.","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}]
+    }
+```
+
+```diff
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x670a3e447F4DE92C012777Ac5591D81E12aD0957","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","via":[]},{"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}]
+    }
+```
+
+```diff
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x670a3e447F4DE92C012777Ac5591D81E12aD0957","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","via":[]},{"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change the threshold and manage signers.","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change the threshold and manage signers.","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xa83cbc41b40a496c5dcdb3e274efe8c4467793b8
 
 # Diff at Thu, 24 Apr 2025 15:59:20 GMT:

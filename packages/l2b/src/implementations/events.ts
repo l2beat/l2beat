@@ -1,6 +1,9 @@
-import { type IProvider, ProxyDetector } from '@l2beat/discovery'
+import {
+  type ExplorerConfig,
+  type IProvider,
+  ProxyDetector,
+} from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
-import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import type { CliLogger } from '@l2beat/shared'
 import {
   assert,
@@ -21,12 +24,15 @@ export async function getEvents(
   explorerUrl?: string,
   explorerApiKey?: string,
   explorerType?: string,
+  explorerChainId?: number,
 ) {
   const explorer = {
-    type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
+    type: explorerType ?? 'etherscan',
     url: explorerUrl ?? 'ERROR',
     apiKey: explorerApiKey ?? 'ERROR',
-  }
+    chainId: explorerChainId ?? -1,
+  } as ExplorerConfig
+
   const provider = await getProvider(rpcUrl, explorer)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
@@ -39,6 +45,10 @@ export async function getEvents(
     assert(
       explorerType !== 'etherscan' || explorerApiKey !== undefined,
       'When using etherscan you should provide the API key using --etherscan-key.',
+    )
+    assert(
+      explorerType !== 'sourcify' || explorerChainId !== undefined,
+      'When using sourcify you should provide the chainId using --explorer-chain-id.',
     )
 
     const proxyDetector = new ProxyDetector()

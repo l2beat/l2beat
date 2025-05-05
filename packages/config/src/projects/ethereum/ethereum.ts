@@ -3,6 +3,8 @@ import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import type { BaseProject } from '../../types'
 
+const chainId = 1
+
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
   new Date('2019-11-14T00:00:00Z'),
@@ -20,6 +22,7 @@ export const ethereum: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
   },
@@ -178,7 +181,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
   },
   chainConfig: {
     name: 'ethereum',
-    chainId: 1,
+    chainId,
     explorerUrl: 'https://etherscan.io',
     coingeckoPlatform: 'ethereum',
     sinceTimestamp: MIN_TIMESTAMP_FOR_TVL,
@@ -203,7 +206,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
       },
     ],
     apis: [
-      { type: 'etherscan', url: 'https://api.etherscan.io/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://eth.blockscout.com/api/v2' },
       { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
     ],

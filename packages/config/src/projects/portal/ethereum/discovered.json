@@ -2,7 +2,7 @@
   "name": "portal",
   "chain": "ethereum",
   "blockNumber": 20089055,
-  "configHash": "0x0294fb4968f78d2680cf46206ac06cda98e40258294226160ba43510131aa537",
+  "configHash": "0x39220bad2945dd30a5f4a839f6274b879f5a8a40fda93ed097f770ec50a20d09",
   "entries": [
     {
       "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -291,13 +291,6 @@
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1686937559,
       "sinceBlock": 17493968,
       "values": {
@@ -897,5 +890,6 @@
       "function transferFrom(address from, address to, uint256 tokenId)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xcc4a4150126d700d8bee119ce8ce8c67642160de7ead1c93416718f246f52eb0"
 }

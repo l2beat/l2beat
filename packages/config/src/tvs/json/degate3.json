@@ -498,6 +498,25 @@
     },
     {
       "mode": "auto",
+      "id": "degate3-CVX",
+      "priceId": "convex-finance",
+      "symbol": "CVX",
+      "name": "Convex Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15585/large/convex.png?1696515221",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
+        "chain": "ethereum",
+        "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
+        "decimals": 18,
+        "sinceTimestamp": 1699746983
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "degate3-DAI",
       "priceId": "dai",
       "symbol": "DAI",

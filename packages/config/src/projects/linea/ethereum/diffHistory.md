@@ -1,3 +1,121 @@
+Generated with discovered.json: 0x092057818cf00bd317ba71b91d226121b6018dfd
+
+# Diff at Mon, 05 May 2025 04:35:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22273396
+- current block number: 22415188
+
+## Description
+
+Linea beta v1.4 upgrade: State Reconstruction! (added state derivation section.)
+
+New verifier: PlonkVerifierMainnetFull name suggests completeness but this will only be shipped [with Beta v2 in May](https://docs.linea.build/release-notes).
+
+## Watched changes
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.16:
+-        "0x1111111111111111111111111111111111111111"
++        "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.15:
+-        "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F"
++        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/PlonkVerifierMainnetFull.sol    | 1333 ++++++++++++++++++++
+ 1 file changed, 1333 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273396 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierForMultiTypeDataAggregation (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F) {
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+      template:
+-        "linea/PlonkVerifierForMultiTypeDataAggregation"
++        "linea/Verifier"
+    }
+```
+
+Generated with discovered.json: 0xe363e6dca0a119148715f2542881b49b1a482978
+
+# Diff at Tue, 29 Apr 2025 09:46:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22273396
+- current block number: 22273396
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273396 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"manage all critical access control roles and permissions (full admin of the main bridge escrow).","via":[]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all critical access control roles and permissions (full admin of the main bridge escrow).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]},{"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}]
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB) {
+    +++ description: A beacon with an upgradeable implementation currently set as 0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"change the beacon implementation.","via":[]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"change the beacon implementation.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3697bD0bC6C050135b8321F989a5316eACbF367D","description":"submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.","via":[]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"operateLinea","to":"0x46d2F319fd42165D4318F099E143dEA8124E9E3e","via":[]},{"permission":"operateLinea","to":"0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754","via":[]},{"permission":"upgrade","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]},{"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}]
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"cancel queued transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"propose transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8","description":"pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).","via":[]}]
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"manage all critical access control roles and permissions (full admin of the main bridge escrow).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0x971f46a2852d11D59dbF0909e837cfd06f357DeB","description":"change the beacon implementation.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"cancel queued transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+    }
+```
+
 Generated with discovered.json: 0x34d7a2525f6fd0096fdbf257bba1abd997d35415
 
 # Diff at Tue, 15 Apr 2025 09:10:02 GMT:

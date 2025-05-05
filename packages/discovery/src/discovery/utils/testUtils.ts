@@ -17,7 +17,6 @@ export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   extendedTemplate: undefined,
   ignoreInWatchMode: undefined,
   relatives: {},
-  selfMeta: undefined,
   usedTypes: [],
 }
 
@@ -35,6 +34,5 @@ export const EMPTY_ANALYZED_EOA: AnalyzedEOA = {
   extendedTemplate: undefined,
   ignoreInWatchMode: undefined,
   relatives: {},
-  selfMeta: undefined,
   usedTypes: [],
 }

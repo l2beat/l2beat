@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd61769c588d1b7654d294caf5c62c5b8df964bd1
+
+# Diff at Tue, 29 Apr 2025 08:19:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20017695
+- current block number: 20017695
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xa00d88191c9ce32665a86c39e4ac3a386df69bb8
 
 # Diff at Tue, 04 Mar 2025 10:39:42 GMT:

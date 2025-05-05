@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 39725195,
-  "configHash": "0xc6da1627b6c8e15d1fa05693fb0bcabe0ccdff1f3f2dbfb33be1e3dd2eb190c5",
+  "configHash": "0x3150ae54952e6dc9c92c729b3a716f249105ef2abe3d66c9f1c745c09d18e18f",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -240,19 +240,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xb1F43dc8B57562e7FA48157D73102a8e4a94975A",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-          "via": []
-        }
-      ],
       "values": {
         "$admin": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
         "$implementation": "0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
@@ -315,13 +302,6 @@
         "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
       ],
       "proxyType": "Eternal Storage proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-          "via": []
-        }
-      ],
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0xA033535983d1aBcc2648af730EDCb198909903D7",
@@ -530,19 +510,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-          "description": "change the threshold and manage signers.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-          "via": []
-        }
-      ],
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0xb056BFEdc397D427697a75E3ff115a0954de4791",
@@ -863,13 +830,6 @@
         "0x054fd17b3f8e15a00d9fd1d8e96c3b2769ae32765e5babae32ca4fd2deae564b"
       ],
       "proxyType": "Eternal Storage proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentDay"],
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
@@ -1554,5 +1514,6 @@
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
 }

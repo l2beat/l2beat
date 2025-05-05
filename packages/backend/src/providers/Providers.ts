@@ -11,6 +11,7 @@ import {
   DaProvider,
   EthereumDaProvider,
   PriceProvider,
+  StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -30,6 +31,7 @@ export class Providers {
   clients: Clients
   blockTimestamp: BlockTimestampProvider
   totalSupply: TotalSupplyProvider
+  starknetTotalSupply: StarknetTotalSupplyProvider
   balance: BalanceProvider
 
   constructor(
@@ -57,12 +59,7 @@ export class Providers {
     if (this.clients.beacon) {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
       blobProviders.push(
-        new EthereumDaProvider(
-          this.clients.beacon,
-          ethereumRpc,
-          'ethereum',
-          this.clients.blobscan,
-        ),
+        new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
       )
     }
     if (this.clients.celestia) {
@@ -82,6 +79,10 @@ export class Providers {
       ),
     })
     this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients, logger)
+    this.starknetTotalSupply = new StarknetTotalSupplyProvider(
+      this.clients.starknetClients,
+      logger,
+    )
     this.balance = new BalanceProvider(this.clients.rpcClients, logger)
   }
 
