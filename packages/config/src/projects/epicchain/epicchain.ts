@@ -15,7 +15,7 @@ export const epicchain: ScalingProject = underReviewL2({
     description:
       'Epic chain, previously Ehternity, is a low-cost Layer 2 solution on the Superchain, designed to bring global entertainment franchises onto the blockchain.',
     links: {
-      websites: ['hhttps://epicchain.io/'],
+      websites: ['https://epicchain.io/'],
       apps: ['https://swap.epicchain.io/'],
       explorers: ['https://ernscan.io/'],
       documentation: [],
