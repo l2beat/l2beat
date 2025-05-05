@@ -28,5 +28,11 @@
     "address": "0x873484Ba63353C8b71210ce123B465512d408B27",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "SequencerInbox_gravity": {
+    "hash": "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58",
+    "address": "0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50",
+    "chain": "ethereum",
+    "blockNumber": 22396423
   }
 }

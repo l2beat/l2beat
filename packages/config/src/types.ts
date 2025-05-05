@@ -134,6 +134,7 @@ export interface ProjectColors {
 export interface ProjectStatuses {
   yellowWarning: string | undefined
   redWarning: string | undefined
+  emergencyWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
   // countdowns
@@ -253,11 +254,11 @@ export type ChainApiConfig =
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
-  | ChainExplorerApi<'etherscan'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
-  | ChainStarkexApi
+  | StarkexApi
+  | EtherscanApi
 
 export interface ChainBasicApi<T extends string> {
   type: T
@@ -272,9 +273,15 @@ export interface ChainExplorerApi<T extends string> {
   contractCreationUnsupported?: boolean
 }
 
-export interface ChainStarkexApi {
+export interface StarkexApi {
   type: 'starkex'
   product: string[]
+}
+
+export interface EtherscanApi {
+  type: 'etherscan'
+  chainId: number
+  contractCreationUnsupported?: boolean
 }
 
 // #endregion
@@ -1092,6 +1099,18 @@ export const TotalSupplyAmountFormulaSchema = z.object({
   decimals: z.number(),
 })
 
+export type StarknetTotalSupplyAmountFormula = z.infer<
+  typeof StarknetTotalSupplyAmountFormulaSchema
+>
+export const StarknetTotalSupplyAmountFormulaSchema = z.object({
+  type: z.literal('starknetTotalSupply'),
+  chain: z.string(),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  address: z.string(),
+  decimals: z.number(),
+})
+
 export type CirculatingSupplyAmountFormula = z.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
@@ -1120,11 +1139,27 @@ export const AmountFormulaSchema = z.union([
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
+  StarknetTotalSupplyAmountFormulaSchema,
 ])
 
 export type Formula = CalculationFormula | ValueFormula | AmountFormula
 export function isAmountFormula(formula: Formula): boolean {
   return formula.type !== 'calculation' && formula.type !== 'value'
+}
+
+export type OnchainAmountFormula =
+  | BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | StarknetTotalSupplyAmountFormula
+
+export function isOnchainAmountFormula(
+  formula: Formula,
+): formula is OnchainAmountFormula {
+  return (
+    formula.type === 'totalSupply' ||
+    formula.type === 'balanceOfEscrow' ||
+    formula.type === 'starknetTotalSupply'
+  )
 }
 
 // token deployed to single chain

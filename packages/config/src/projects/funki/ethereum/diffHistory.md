@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x6291fb056753c0451260c915a861123db3601f75
+
+# Diff at Tue, 29 Apr 2025 08:19:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22208380
+- current block number: 22208380
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208380 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x1A9aE6486caEc0504657351ac473B3dF8A1367cb) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x0B3476949e1C82160575295f58720E16EeD2BF7b","via":[]},{"permission":"propose","to":"0xA1ddae0829c3bD4096c34aEC58b2BC21e3a6d10E","via":[]},{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x5a4ebF927338EA6af377caEee99C85088908f57D) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","description":"set and change address mappings.","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x5C9C7f98eD153a2deAA981eB5C97B31744AccF22) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x052a8cd5967bc3Bdb5660c989a3A68bCA683A077","via":[]},{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x87e75DcC1BB4e5B42cB5c52eB5832d6eCC3bFeF4) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x94519dD4BA8ba20Aaad14f7C6cD00fa1bB0192E9) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xA2C1C1A473250094a6244F2bcf6Cb51F670Ad3aC) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xD39a6CcCFa23cb741bB530497e42EC337f1215a8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3D389212A78FD7D4600C9483470e59630C293416","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x4712454AddDbAbACaAb84916546899CA9690A6fF","via":[]},{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xD3B2Ee457Cf8F05f00c17BFe509b43BA04c9e5a2) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x052a8cd5967bc3Bdb5660c989a3A68bCA683A077","via":[]},{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0xF40b807c2407e1d7dabb85f3ceefd5EACc7bF3CD) {
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xc0CE2761d5cC92d25dB6ccD95e4b9483eD22D11B","description":"can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure.","via":[]},{"permission":"upgrade","to":"0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD","via":[{"address":"0xD069C4724f9bC15FA53b3b2516594512AEf8c957"}]}]
+    }
+```
+
 Generated with discovered.json: 0xcc8389bac96d0ee1c7c30328a9616e3690c2b8b4
 
 # Diff at Sun, 06 Apr 2025 08:20:46 GMT:

@@ -42,7 +42,7 @@ tailwindcss \
   --watch < /dev/tty &
 pids+=($!)
 
-tsx \
+NEXT_PUBLIC_REWRITE=true tsx \
   --tsconfig ./rewrite/tsconfig.json \
   --watch rewrite/src/index.ts &
 pids+=($!)

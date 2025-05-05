@@ -12,6 +12,8 @@ const isForcedBatchDisallowed =
 
 const bridge = discovery.getContract('PolygonSharedBridge')
 
+const chainId = 1101
+
 export const polygonzkevm: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVM'),
@@ -51,7 +53,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
   },
   chainConfig: {
     name: 'polygonzkevm',
-    chainId: 1101,
+    chainId,
     explorerUrl: 'https://zkevm.polygonscan.com',
     sinceTimestamp: UnixTime(1679679015),
     multicallContracts: [
@@ -68,7 +70,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         url: 'https://polygon-rpc.com/zkevm',
         callsPerMinute: 500,
       },
-      { type: 'etherscan', url: 'https://api-zkevm.polygonscan.com/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://zkevm.blockscout.com/api/v2' },
     ],
   },

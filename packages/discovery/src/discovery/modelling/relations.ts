@@ -1,18 +1,19 @@
-import type {
-  DiscoveryOutput,
-  EntryParameters,
-  ReceivedPermission,
-} from '../output/types'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractPermission } from '../config/PermissionConfig'
+import type { RawPermissionConfiguration } from '../config/StructureConfig'
+import type { StructureEntry } from '../output/types'
 import type { ContractValue } from '../output/types'
-import {
-  contractValuesForInterpolation,
-  interpolateModelTemplate,
-} from './interpolate'
+import { get$Admins, toAddressArray } from '../utils/extractors'
+import { interpolateString } from '../utils/interpolateString'
+import { interpolateModelTemplate } from './interpolate'
 
-const RELATIONS_FILENAME = 'relations.lp'
 interface InlineTemplate {
   content: string
-  when: (c: EntryParameters, p?: ReceivedPermission) => boolean
+  when: (
+    c: StructureEntry,
+    cp: ContractPermission,
+    p?: RawPermissionConfiguration,
+  ) => boolean
 }
 
 const addressTemplate: InlineTemplate = {
@@ -22,13 +23,6 @@ address(
   "&$.chain",
   "&$.address:raw").`,
   when: () => true,
-}
-const addressNameTemplate: InlineTemplate = {
-  content: `
-addressName(
-  @self,
-  "&$.name").`,
-  when: (c) => c.name !== undefined,
 }
 const addressTypeContractTemplate: InlineTemplate = {
   content: `
@@ -44,108 +38,168 @@ addressType(
   eoa).`,
   when: (c) => c.type === 'EOA',
 }
-const addressDescriptionTemplate: InlineTemplate = {
+const canActIndependentlyTemplate: InlineTemplate = {
   content: `
-addressDescription(
-  @self,
-  "&$.description").`,
-  when: (c) => c.description !== undefined,
+canActIndependently(
+  @self).`,
+  when: (_, cp) => cp.canActIndependently === true,
+}
+const preventActingIndependentlyTemplate: InlineTemplate = {
+  content: `
+preventActingIndependently(
+  @self).`,
+  when: (_, cp) => cp.canActIndependently === false,
 }
 const permissionTemplate: InlineTemplate = {
   content: `
 permission(
-  @self,
+  &permission.to,
   "&permission.type",
-  &permission.giver).`,
+  &permission.from,
+  &permission.delay,
+  &permission.description|quote|orNil).`,
   when: () => true,
 }
-const permissionDescriptionTemplate: InlineTemplate = {
+const permissionConditionTemplate: InlineTemplate = {
   content: `
-permissionDescription(
-  @self,
+permissionCondition(
+  &permission.to,
   "&permission.type",
-  &permission.giver,
-  "&permission.description").`,
-  when: (_, p) => p?.description !== undefined,
-}
-const permissionDelayTemplate: InlineTemplate = {
-  content: `
-permissionDelay(
-  @self,
-  "&permission.type",
-  &permission.giver,
-  &permission.delay).`,
-  when: (_, p) => p?.delay !== undefined && p.delay !== 0,
+  &permission.from,
+  &permission.delay,
+  &permission.description|quote|orNil,
+  "&permission.condition").`,
+  when: (_c, _cp, p) => p?.condition !== undefined,
 }
 
-export function buildRelationsModels(
-  discoveryOutput: DiscoveryOutput,
+export function contractValuesForInterpolation(
+  chain: string,
+  structureEntry: StructureEntry,
+  contractPermission: ContractPermission | undefined,
+): Record<string, ContractValue | undefined> {
+  const values = structureEntry.values
+  return {
+    '$.chain': chain,
+    '$.address': structureEntry.address.toLowerCase(),
+    '$.canActIndependently': contractPermission?.canActIndependently,
+    ...values,
+  }
+}
+
+export function buildPermissionsModel(
+  chain: string,
+  contractPermission: ContractPermission,
+  structureEntry: StructureEntry,
   addressToNameMap: Record<string, string>,
-): Record<string, string[]> {
+): string {
   const relationsModel: string[] = []
-  const contractsAndEOAs = discoveryOutput.entries
 
-  for (const contractOrEoa of contractsAndEOAs) {
-    const contractValues = contractValuesForInterpolation(
-      discoveryOutput.chain,
-      contractOrEoa,
-    )
+  const contractValues = contractValuesForInterpolation(
+    chain,
+    structureEntry,
+    contractPermission,
+  )
 
-    for (const template of [
-      addressTemplate,
-      addressNameTemplate,
-      addressTypeContractTemplate,
-      addressTypeEOATemplate,
-      addressDescriptionTemplate,
-    ]) {
-      if (template.when(contractOrEoa)) {
+  for (const template of [
+    addressTemplate,
+    addressTypeContractTemplate,
+    addressTypeEOATemplate,
+    canActIndependentlyTemplate,
+    preventActingIndependentlyTemplate,
+  ]) {
+    if (template.when(structureEntry, contractPermission)) {
+      const interpolated = interpolateModelTemplate(
+        template.content,
+        contractValues,
+        addressToNameMap,
+      )
+      relationsModel.push(interpolated)
+    }
+  }
+
+  const issuedPermissions = getPermissionsDefinedOnFields(
+    contractPermission,
+    structureEntry,
+  )
+
+  for (const permission of issuedPermissions) {
+    const valuesWithPermission: Record<string, ContractValue | undefined> = {
+      ...contractValues,
+      'permission.from': structureEntry.address,
+      'permission.to': permission.to,
+      'permission.type': permission.type,
+      'permission.delay':
+        typeof permission.delay === 'string'
+          ? interpolateString(permission.delay, structureEntry)
+          : permission.delay,
+      'permission.description': interpolateString(
+        permission.description,
+        structureEntry,
+      ),
+      'permission.condition': interpolateString(
+        permission.condition,
+        structureEntry,
+      ),
+    }
+
+    for (const template of [permissionTemplate, permissionConditionTemplate]) {
+      const to = String(valuesWithPermission['permission.to']).toLowerCase()
+      if (addressToNameMap[to] === undefined) {
+        continue
+      }
+      if (template.when(structureEntry, contractPermission, permission)) {
         const interpolated = interpolateModelTemplate(
           template.content,
-          contractValues,
+          valuesWithPermission,
           addressToNameMap,
         )
         relationsModel.push(interpolated)
       }
     }
-
-    const directlyReceivedPermissions =
-      findAllDirectlyReceivedPermissions(contractOrEoa)
-
-    for (const permission of directlyReceivedPermissions) {
-      const valuesWithPermission: Record<string, ContractValue | undefined> = {
-        ...contractValues,
-        'permission.type': permission.permission,
-        'permission.giver': permission.from,
-        'permission.description': permission.description,
-        'permission.delay': permission.delay,
-      }
-
-      for (const template of [
-        permissionTemplate,
-        permissionDescriptionTemplate,
-        permissionDelayTemplate,
-      ]) {
-        if (template.when(contractOrEoa, permission)) {
-          const interpolated = interpolateModelTemplate(
-            template.content,
-            valuesWithPermission,
-            addressToNameMap,
-          )
-          relationsModel.push(interpolated)
-        }
-      }
-    }
   }
-  return { [RELATIONS_FILENAME]: relationsModel }
+  return relationsModel.join('\n')
 }
 
-export function findAllDirectlyReceivedPermissions(
-  contractOrEoa: EntryParameters,
-) {
-  return [
-    ...(contractOrEoa.directlyReceivedPermissions ?? []),
-    ...(contractOrEoa.receivedPermissions?.filter(
-      (p) => (p.via ?? []).length === 0,
-    ) ?? []),
-  ]
+export function getPermissionsDefinedOnFields(
+  contractPermission: ContractPermission,
+  structureEntry: StructureEntry,
+): (RawPermissionConfiguration & { to: EthereumAddress })[] {
+  const issuedPermissions = Object.entries(
+    contractPermission.fields ?? {},
+  ).flatMap(([field, values]) => {
+    return (
+      values?.permissions?.flatMap((permission) => {
+        return toAddressArray(structureEntry.values?.[field]).map((to) => {
+          return {
+            ...permission,
+            to,
+          }
+        })
+      }) ?? []
+    )
+  })
+  const adminPermissions = getPermissionsForAdmins(structureEntry)
+  adminPermissions.forEach((ap) => {
+    // add admin permission only if there's no existing upgrade permission for that address
+    if (
+      issuedPermissions.find((p) => p.type === 'upgrade' && p.to === ap.to) ===
+      undefined
+    ) {
+      issuedPermissions.push(ap)
+    }
+  })
+  return issuedPermissions
+}
+
+export function getPermissionsForAdmins(
+  structureEntry: StructureEntry,
+): (RawPermissionConfiguration & { to: EthereumAddress })[] {
+  const admins = get$Admins(structureEntry.values)
+  return admins.map((admin) => {
+    return {
+      to: admin,
+      type: 'upgrade',
+      delay: 0,
+    }
+  })
 }

@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0xa7494c3da59f9e4bf6dfc84d9f7a8962b0f5de1c26a888cfb8b099fd97dfaa24",
+  "configHash": "0x73c1622bb09db11fc013d04d30f7437bee6629efadf0680802556b414adaaa3e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -376,13 +376,6 @@
         "0x9a4dab9a6c79e6054401f76b1b8df918bf8b24d341078c87aef7d619f3787d3c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1640867581,
       "sinceBlock": 13906697,
       "values": {
@@ -465,13 +458,6 @@
         "0xf9ab1306492850c52f787f8af996c1c4df97d8c382b73d65e0e8e60fd346c056"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "currentMonthWithdrawnAmount",
         "currentYearWithdrawnAmount",
@@ -1076,5 +1062,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
-  }
+  },
+  "permissionsConfigHash": "0xca95d4fbacaf969bdc12cc43b7c6b948a72f068e895d4fb980a026b04e420c4c"
 }

@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 17565279,
-  "configHash": "0x619fa403d394ad599aecc08a41e8300ed7cf0259125c2601f6e909af906927eb",
+  "configHash": "0x0e185c20201bcf9873ea0a3ed72be7bb5a78bae4d91458eb2f18940347d37f9c",
   "entries": [
     {
       "name": "LineaOwner",
@@ -334,13 +334,6 @@
         "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709218113,
       "sinceBlock": 2590048,
       "values": {
@@ -380,13 +373,6 @@
         "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709279545,
       "sinceBlock": 2605406,
       "values": {
@@ -763,5 +749,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

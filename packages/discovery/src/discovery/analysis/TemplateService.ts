@@ -145,6 +145,16 @@ export class TemplateService {
     return parsed
   }
 
+  loadClingoModelTemplate(template: string): string | undefined {
+    const modelPath = path.join(
+      this.rootPath,
+      TEMPLATES_PATH,
+      template,
+      'model.lp',
+    )
+    return existsSync(modelPath) ? readFileSync(modelPath, 'utf8') : undefined
+  }
+
   loadContractTemplate(template: string): StructureContract {
     return this.loadContractTemplateBase(
       template,

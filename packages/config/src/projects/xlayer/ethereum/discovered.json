@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 22166659,
-  "configHash": "0xab6169d41eaed493c25d0ef7947427729086a9db47521d21606d324ac59ee23f",
+  "configHash": "0x55ace420c2125f69ce67061217c0e697ea5ef46c171e65ecd2624c3f6a83768f",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -16,19 +16,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x491619874b866c3cDB7C8553877da223525ead01",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE",
-          "via": [{ "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204" }]
-        }
-      ],
       "sinceTimestamp": 1711787327,
       "sinceBlock": 19545591,
       "values": {
@@ -100,25 +87,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x491619874b866c3cDB7C8553877da223525ead01",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa90B4C8B8807569980F6cC958c8905383136B5eA",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1711785755,
       "sinceBlock": 19545462,
@@ -443,5 +411,6 @@
     "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0xfd85127f2b1b5c72e3d45872535fc117c5fabefe583d1d75ddf7cf13f55b0f7a"
 }

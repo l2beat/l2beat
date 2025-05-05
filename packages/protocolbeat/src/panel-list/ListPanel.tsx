@@ -129,7 +129,7 @@ function ListItemContracts(props: {
       {open && (
         <ol>
           {props.entries
-            .sort((a, b) => b.type.localeCompare(a.type))
+            .toSorted((a, b) => b.type.localeCompare(a.type))
             .map((entry) => (
               <AddressEntry key={entry.address} entry={entry} />
             ))}

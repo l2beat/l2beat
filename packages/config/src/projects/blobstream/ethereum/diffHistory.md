@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x5184f0c38ed72afa03e9ad80979ef33a13f433cc
+
+# Diff at Tue, 29 Apr 2025 08:19:22 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22243970
+- current block number: 22243970
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22243970 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]}]
+    }
+```
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","via":[]},{"permission":"interact","to":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","description":"can freeze the bridge contract and update the list of authorized relayers.","via":[]},{"permission":"interact","to":"0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","via":[]},{"permission":"upgrade","to":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xc84a11302acfdb57dd3d34d11f10beb0c9387d68
 
 # Diff at Thu, 24 Apr 2025 10:29:51 GMT:

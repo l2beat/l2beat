@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 22337725,
-  "configHash": "0x735835ccdc40d33677212c6d9e97b958492abffcba8ed3b09658d71e82380e2d",
+  "configHash": "0x73dc0026c5fa828c9ed8f2053364da1be02bbce727ab3cf5d2dd956f5234aa23",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -25,18 +25,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1719936491,
       "sinceBlock": 20219921,
@@ -99,13 +87,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1719936563,
       "sinceBlock": 20219927,
@@ -212,24 +193,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1719936527,
       "sinceBlock": 20219924,
@@ -308,14 +271,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "sinceTimestamp": 1719936539,
       "sinceBlock": 20219925,
       "values": {
@@ -456,13 +411,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "sinceTimestamp": 1719936599,
       "sinceBlock": 20219930,
       "values": {
@@ -507,29 +455,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
-          "via": []
-        },
-        {
-          "permission": "guard",
-          "to": "0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
-          "description": "manage roles including the guardian role.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "sinceTimestamp": 1719936443,
       "sinceBlock": 20219917,
       "values": {
@@ -627,23 +552,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "latestBlockNumber",
         "latestOutputIndex",
@@ -721,13 +629,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "sinceTimestamp": 1719936587,
       "sinceBlock": 20219929,
       "values": {
@@ -789,13 +690,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "sinceTimestamp": 1741569827,
       "sinceBlock": 22013168,
       "values": {
@@ -934,13 +828,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
-          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
-        }
-      ],
       "sinceTimestamp": 1719936575,
       "sinceBlock": 20219928,
       "values": {
@@ -1517,10 +1404,11 @@
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
     "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44",
     "opstack/zircuit/L2OutputOracle": "0x20ddf1a14e90fbdedaf65e9594b67b2ac424318ebb1549398340f69192653242",
     "opstack/zircuit/SuperchainConfig": "0x97ac106120e0eb829ef2873ae828694300be0883750ddfd7cb965eed5cc501f4",
     "opstack/zircuit/Verifier": "0x6c97de6021617dbfcf86fee986182cb7d22d10440735734124a69a3734b9058f"
-  }
+  },
+  "permissionsConfigHash": "0x85b4f0df44897566b61970b326ade8d9b470463d138aed5f039d7b4305876247"
 }

@@ -2,7 +2,7 @@
   "name": "aztecconnect",
   "chain": "ethereum",
   "blockNumber": 21041827,
-  "configHash": "0x8879b003e64d4b01878d13271724ddefc845af8a5423221e4061becd6273a0ce",
+  "configHash": "0xd56260b7e0a6a8915f1f1603b770d14d3629a6d4ac64f30e12f4bf85a4e5c417",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -135,13 +135,6 @@
         "0xca3afcf92a9c12ce307d9de265b57fe02f7022f6a5f0eab38511eccafbfff478"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getDataSize",
         "getDefiInteractionHashesLength",
@@ -495,5 +488,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x37720592f72b0ce23713d9e2326d5aef6c58a0a126328bce0bd43d1b9fe2bfcc"
 }

@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x8b60732e570b6962ca6e7f111b8f19b097f80c2dd35cf8fcb97bf16da08c6a6e",
+  "configHash": "0x0f0a4d22912d2a5bdbbc1385c3c462138630d20e5e23dc43b8e11915498b5ab7",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -53,13 +53,6 @@
         "0x3052e020792c1a42febb86916d737ca4d3962b80b97fe18c7a778bf270acf023"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
-        }
-      ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
       "sinceTimestamp": 1710314867,
       "sinceBlock": 19424659,
@@ -173,13 +166,6 @@
         "0x6e30dabe85a54d5753ec304088b4cc9f1fc2ba202fb3982bf202b0cc4a922c99"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637077208,
       "sinceBlock": 13627429,
       "values": {
@@ -400,13 +386,6 @@
         "0xc5bc8dddf764177767a3613d96c31c0fcc86db07c909c72cbf2f6a2443942109"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1649638297,
       "sinceBlock": 14561258,
       "values": {
@@ -495,14 +474,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "description": "set and change address mappings.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637047108,
       "sinceBlock": 13625248,
       "values": {
@@ -564,13 +535,6 @@
         "0xc6bcfffdfe15d4c259332b8f62b29950aecdec253e8eeed2ebfa9e78ca1cea2b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
         "getTotalBatches",
@@ -657,13 +621,6 @@
         "0xff86f55c7d91dbdd408e8b44c6aa3647e5d7cef144de8a65bc84e13e3bf3524f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "currentBatch",
         "totalSequencers",
@@ -784,13 +741,6 @@
         "0x85cae352a6b900f9d20a913095da6267900b8e10f04d7277743dcdd0ce8c809e"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1649719906,
       "sinceBlock": 14567320,
       "values": {
@@ -825,13 +775,6 @@
         "0x8be6c2abbd355799e149ebae677a3814685c6b43ebad0b7853fe236af7a84fe7"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637089464,
       "sinceBlock": 13628326,
       "values": {
@@ -1459,5 +1402,6 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2"
-  }
+  },
+  "permissionsConfigHash": "0x8b047d0a2c3d4966a5a818d54519bfaba57ffe62f82541ace502b3876a1036d7"
 }

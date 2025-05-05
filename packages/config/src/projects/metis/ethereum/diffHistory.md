@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xee60ebaf3bafc7d55bf997324185837563303be6
+
+# Diff at Tue, 29 Apr 2025 08:19:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21242106
+- current block number: 21242106
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[]}]
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[]}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","description":"set and change address mappings.","via":[]}]
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[]}]
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}]
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[]}]
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x29434752bd18560c7eab8450475962ebc1b66a04
 
 # Diff at Thu, 10 Apr 2025 14:42:44 GMT:

@@ -2,7 +2,7 @@
   "name": "connext",
   "chain": "ethereum",
   "blockNumber": 21285557,
-  "configHash": "0x31ff652d88fa926afa44ae8ea6b57cc50540f81d4cffc863f3051bb4dfe98d97",
+  "configHash": "0x3ca4cb54ecc35692bd350ee173a110fbd07201cefcf1092762c6094538c3da8d",
   "entries": [
     {
       "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
@@ -116,5 +116,6 @@
       "function getTransactionManager() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa8fb333760f388754817d51b347b3f2490368a69f361d4f07bfde8e87522f74c"
 }

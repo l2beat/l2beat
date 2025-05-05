@@ -8,9 +8,8 @@
     value: "Onchain"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
-    orderHint: -604800
-    secondLine: undefined
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 3 parties: Base multisig, the Op Foundation Operations multisig, and the Base Security Council."
+    orderHint: 0
     sentiment: "bad"
     value: "None"
   }

@@ -97,10 +97,14 @@ const TooltipContent = ({
 )
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
+const TooltipPortal = TooltipPrimitive.Portal
+TooltipPortal.displayName = TooltipPrimitive.Portal.displayName
+
 export {
   Tooltip,
   TooltipContent,
   tooltipContentVariants,
   TooltipProvider,
   TooltipTrigger,
+  TooltipPortal,
 }

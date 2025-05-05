@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used to bridge WETH from L1 to L2.",
+  "category": "bridge-external",
+  "ignoreMethods": ["WETH"],
+  "fields": {
+    "counterpart": {
+      "edit": ["format", "ScrollAddress"]
+    },
+    "l2WETH": {
+      "edit": ["format", "ScrollAddress"]
+    }
+  }
+}

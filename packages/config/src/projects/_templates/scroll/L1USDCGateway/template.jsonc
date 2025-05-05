@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used to bridge USDC tokens from L1 to L2.",
+  "category": "bridge-external",
+  "ignoreMethods": ["l1USDC"],
+  "ignoreInWatchMode": ["totalBridgedUSDC"],
+  "fields": {
+    "counterpart": {
+      "edit": ["format", "ScrollAddress"]
+    },
+    "l2USDC": {
+      "edit": ["format", "ScrollAddress"]
+    }
+  }
+}

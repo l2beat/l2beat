@@ -24,6 +24,14 @@ EthereumAddress.check = function check(value: string) {
   }
 }
 
+EthereumAddress.checkIgnoringCase = function checkIgnoringCase(value: string) {
+  try {
+    return EthereumAddress(value).toLowerCase() === value.toLowerCase()
+  } catch {
+    return false
+  }
+}
+
 EthereumAddress.isBefore = function isBefore(
   a: EthereumAddress,
   b: EthereumAddress,

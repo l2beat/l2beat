@@ -1,5 +1,5 @@
 import type { Router } from 'express'
-import { validateRoute } from 'rewrite/src/ssr/validateRoute'
+import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import { env } from '~/env'
 import type { Manifest } from '../../../../src/utils/Manifest'
@@ -19,7 +19,11 @@ export function EcosystemsRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getEcosystemProjectData(manifest, req.params.slug)
+      const data = await getEcosystemProjectData(
+        manifest,
+        req.params.slug,
+        req.originalUrl,
+      )
       if (!data || !env.NEXT_PUBLIC_ECOSYSTEMS) {
         res.status(404).send('Not found')
         return

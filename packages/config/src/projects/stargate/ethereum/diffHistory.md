@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x19e7258bd6eb9296fdec40ca729c332cebd9878f
+
+# Diff at Tue, 29 Apr 2025 08:19:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21723798
+- current block number: 21723798
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723798 (main branch discovery), not current.
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","via":[]}]
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xa4c78a5e653c544a21127e2f7ed892ab294a2482
 
 # Diff at Thu, 24 Apr 2025 10:31:03 GMT:

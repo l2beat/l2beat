@@ -40,7 +40,7 @@ const configReader = new ConfigReader(paths.discovery)
 
 export const Discover = command({
   name: 'discover',
-  description: 'User interface to discover projects located in discovery',
+  description: 'User interface to discover projects located in discovery.',
   args,
   handler: async (args) => {
     const projectsOnChain: Record<string, string[]> = resolveProjectsOnChain(

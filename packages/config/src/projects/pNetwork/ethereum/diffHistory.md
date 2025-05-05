@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xb567116bba05123be684d5a837ebb224b40ee198
+
+# Diff at Tue, 29 Apr 2025 08:19:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a","via":[]}]
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB6D14DdFBE01AC537accBe35cCd771C30D53c535","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x0dc79d292362ad3090803c26958a09a5f8e0cf51
 
 # Diff at Tue, 04 Mar 2025 10:39:35 GMT:

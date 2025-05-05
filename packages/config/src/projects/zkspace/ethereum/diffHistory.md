@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x6dfe1c69fd0f80f2c3832bb2f8675ab8e224f4b3
+
+# Diff at Tue, 29 Apr 2025 08:19:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20432700
+- current block number: 20432700
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432700 (main branch discovery), not current.
+
+```diff
+    contract VerifierExit (0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract Governance (0x83Cb1531Ec8447366501aE440478da245EcffB89) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract Verifier (0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xc07f850b60E0EEd49a09E455b01a869C25963735) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSeaNFT (0xc632347cc96A4400653E3514eA148630455295b5) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x15eba6227964c7e2a3339168cae26ae302a59ea7
 
 # Diff at Tue, 04 Mar 2025 10:40:15 GMT:

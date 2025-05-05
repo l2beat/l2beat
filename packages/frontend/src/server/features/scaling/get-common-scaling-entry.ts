@@ -42,6 +42,7 @@ export function getCommonScalingEntry({
         impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
+      emergencyWarning: project.statuses.emergencyWarning,
       countdowns: {
         otherMigration: project.statuses.otherMigration,
       },
