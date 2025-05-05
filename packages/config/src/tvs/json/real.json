@@ -3,6 +3,24 @@
   "projectId": "real",
   "tokens": [
     {
+      "mode": "custom",
+      "id": "real-arcUSD",
+      "priceId": "arcana-2",
+      "symbol": "arcUSD",
+      "name": "arcUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAEC9e50e3397f9ddC635C6c429C8C7eca418a143",
+        "chain": "real",
+        "decimals": 18,
+        "sinceTimestamp": 1717632000
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "real-cbBTC",
       "priceId": "coinbase-wrapped-btc",
@@ -20,6 +38,42 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "real-PEARL",
+      "priceId": "pearl",
+      "symbol": "PEARL",
+      "name": "Pearl",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCE1581d7b4bA40176f0e219b2CaC30088Ad50C7A",
+        "chain": "real",
+        "decimals": 18,
+        "sinceTimestamp": 1715394373
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "real-RWA",
+      "priceId": "re-al",
+      "symbol": "RWA",
+      "name": "re.al",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
+        "chain": "real",
+        "decimals": 18,
+        "sinceTimestamp": 1720483200
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -94,6 +148,24 @@
       },
       "category": "stablecoin",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "real-USTB",
+      "priceId": "real-us-t-bill",
+      "symbol": "USTB",
+      "name": "US T-Bill",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
+        "chain": "real",
+        "decimals": 18,
+        "sinceTimestamp": 1717459200
+      },
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {

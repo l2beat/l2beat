@@ -13209,6 +13209,28 @@
       }
     },
     {
+      "name": "arcUSD",
+      "coingeckoId": "arcana-2",
+      "address": "0xAEC9e50e3397f9ddC635C6c429C8C7eca418a143",
+      "symbol": "arcUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1715634151,
+      "coingeckoListingTimestamp": 1717632000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "name": "MORE",
       "coingeckoId": "stack-2",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
@@ -13232,6 +13254,42 @@
       }
     },
     {
+      "name": "Pearl",
+      "coingeckoId": "pearl",
+      "address": "0xCE1581d7b4bA40176f0e219b2CaC30088Ad50C7A",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "deploymentTimestamp": 1715394373,
+      "coingeckoListingTimestamp": 1687478400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "name": "re.al",
+      "coingeckoId": "re-al",
+      "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
+      "symbol": "RWA",
+      "decimals": 18,
+      "deploymentTimestamp": 1715799306,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "UK Real Estate",
       "coingeckoId": "uk-real-estate",
       "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
@@ -13245,6 +13303,28 @@
       "chainId": 111188,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "US T-Bill",
+      "coingeckoId": "real-us-t-bill",
+      "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
+      "symbol": "USTB",
+      "decimals": 18,
+      "deploymentTimestamp": 1713200024,
+      "coingeckoListingTimestamp": 1717459200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607",
+      "chainId": 111188,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "name": "USD Coin",
