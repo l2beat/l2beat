@@ -94,5 +94,11 @@
     "address": "0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a",
     "chain": "ethereum",
     "blockNumber": 22336762
+  },
+  "OptimismPortalCGT": {
+    "hash": "0x5c3bff13328150b2e8d53d43b6317fe29b36be456289a1724d7e6b548b702fb5",
+    "address": "0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f",
+    "chain": "ethereum",
+    "blockNumber": 22395854
   }
 }

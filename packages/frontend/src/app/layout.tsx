@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
-import { PlausibleProvider } from '~/providers/plausible-provider'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { NavigationProgressBar } from '../components/navigation-progress-bar'
 import { roboto } from '../fonts'
@@ -35,18 +34,16 @@ export default async function RootLayout({
         />
       </head>
       <body className={roboto.variable}>
-        <PlausibleProvider>
-          <AppLayout
-            terms={terms.map((term) => ({
-              id: term.id,
-              matches: [term.data.term, ...(term.data.match ?? [])],
-            }))}
-            searchBarProjects={searchBarProjects}
-          >
-            {children}
-            <NavigationProgressBar />
-          </AppLayout>
-        </PlausibleProvider>
+        <AppLayout
+          terms={terms.map((term) => ({
+            id: term.id,
+            matches: [term.data.term, ...(term.data.match ?? [])],
+          }))}
+          searchBarProjects={searchBarProjects}
+        >
+          {children}
+          <NavigationProgressBar />
+        </AppLayout>
       </body>
     </html>
   )

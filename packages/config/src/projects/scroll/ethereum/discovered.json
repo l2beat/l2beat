@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22367020,
-  "configHash": "0x03017f4f169b2abc9989558860e3b7b2c35af0d57528aa4e4d320b14932d8bcb",
+  "blockNumber": 22389279,
+  "configHash": "0xfe2f62acebc77662d3849e4b157306d023d57dbe1e155bcf22f8fe18cb9570b1",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -815,11 +815,11 @@
         "$upgradeCount": 2,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1745832287,
+        "getFirstUnfinalizedMessageEnqueueTime": 1746095867,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 954165,
-        "nextUnfinalizedQueueIndex": 954163,
+        "nextCrossDomainMessageIndex": 954314,
+        "nextUnfinalizedQueueIndex": 954311,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1796,15 +1796,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 358511,
+        "lastFinalizedBatchIndex": 358685,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 358514,
-          "lastFinalizedBatchIndex": 358511,
-          "lastFinalizeTimestamp": 1745834879,
+          "lastCommittedBatchIndex": 358691,
+          "lastFinalizedBatchIndex": 358685,
+          "lastFinalizeTimestamp": 1746102359,
           "flags": 1,
           "reserved": 0
         },
@@ -2419,7 +2419,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19272400658100,
+        "totalBridgedUSDC": 19605685745987,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway",

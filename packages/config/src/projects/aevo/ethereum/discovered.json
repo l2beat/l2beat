@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 22046056,
-  "configHash": "0x2ecb65d7b9915c4f1d89fd19c3a4100e9be98ef4b2917d2445f7ab7dfc1eb7f8",
+  "blockNumber": 22397569,
+  "configHash": "0xa370f9927d7346c45c9b5c186588e8ff29e8ed8de12ce7c8eac7bbda42e0189b",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -60,7 +60,7 @@
         ],
         "$upgradeCount": 6,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292642914",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643385",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -238,7 +238,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "nonce": 96,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -305,7 +305,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 796584,
-          "prevBlockNum": 22045827
+          "prevBlockNum": 22395324
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
@@ -398,10 +398,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 6276600,
-        "latestOutputIndex": 10460,
-        "nextBlockNumber": 6277200,
-        "nextOutputIndex": 10461,
+        "latestBlockNumber": 6700800,
+        "latestOutputIndex": 11167,
+        "nextBlockNumber": 6701400,
+        "nextOutputIndex": 11168,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -789,7 +789,7 @@
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
     "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   },
   "permissionsConfigHash": "0xecbc41857166b3d12eb389d124c5abbd8a7d56058ff656eb488f508666ca6897"

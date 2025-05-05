@@ -2,7 +2,7 @@
   "name": "abstract",
   "chain": "ethereum",
   "blockNumber": 22367139,
-  "configHash": "0xb8c31c05a701296719461b244c5c890db1590394e548030b09e53525d7d75883",
+  "configHash": "0x55466e921b3ff5f65732af70282201c8134fe7909a7b283c0d0042666a469e4e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

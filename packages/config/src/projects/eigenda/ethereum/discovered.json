@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 22208508,
-  "configHash": "0x50f7895ba1256f58a2d1053384bd46e5665eef304646fbe36b6526533d86a8a1",
+  "configHash": "0x3ebe3bc0e0aa4f8f63129a07444795983ef40b010a60385b59e50281ad03559f",
   "entries": [
     {
       "name": "StakeRegistry",

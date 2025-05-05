@@ -1,3 +1,197 @@
+Generated with discovered.json: 0x63d08ed4115a5738396e2ddc41b1fa96771de4a8
+
+# Diff at Wed, 30 Apr 2025 15:49:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7e552dc46a020318c06ae0f56471c26a9b8ef3f5 block: 22281621
+- current block number: 22382816
+
+## Description
+
+v27 upgrade: Minor L1 contract changes (maintenance) and deployment of new diamond cut data for v27 (EVM emulation).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (0x107e92E7360e595d8129B522ABD458361f32f66C)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      sourceHashes.1:
+-        "0xe79288af01ff8940265966caffdc9ea0ef18822166fd7f704488419737716623"
++        "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb"
+      values.$implementation:
+-        "0xb720523EC3c615b069453bF4B0584CEbF034706f"
++        "0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87"
+      values.$pastUpgrades.4:
++        ["2024-06-04T17:03:59.000Z","0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61",["0x12f893689f9603991a8c22C249FFd0509Be95661"]]
+      values.$pastUpgrades.3.2:
+-        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
++        "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132"
+      values.$pastUpgrades.3.1:
+-        "2024-06-04T17:03:59.000Z"
++        "2025-04-28T12:33:11.000Z"
+      values.$pastUpgrades.3.0:
+-        "0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61"
++        ["0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87"]
+      values.$upgradeCount:
+-        4
++        5
+    }
+```
+
+```diff
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+      sourceHashes.1:
+-        "0x1912c5e1125a20bfd6b933a66a437e3d04e2404549b86b88ceadb233eff05477"
++        "0xba83b7c168ffa78d2e714cfb804ca1cd4f33807f6e9b2abb2820457d6d2bf77a"
+      values.$implementation:
+-        "0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E"
++        "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315"
+      values.$pastUpgrades.1:
++        ["2025-04-28T12:33:11.000Z","0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",["0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) {
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+      sourceHashes.1:
+-        "0xcd61d013f1b30811a4dab3d32b43daa9f826ed31663857c1e349c7986cdf2497"
++        "0xb5c84cdd8085d4ad38124e19b8be87360c9401f9621534284de4ed5fa69c3b63"
+      values.$implementation:
+-        "0x40B1060a114380f40faC6869c5B383f47e61530c"
++        "0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947"
+      values.$pastUpgrades.1:
++        ["2025-04-28T12:33:11.000Z","0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",["0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,27,0.
+      sourceHashes.1:
+-        "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37"
++        "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52"
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,27,0."
+      values.$implementation:
+-        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
++        "0x6D598c77AF57Bfa17201483400615c61819dD45A"
+      values.$pastUpgrades.4:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"]]
+      values.$pastUpgrades.3.2:
+-        ["0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"]
++        "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132"
+      values.$pastUpgrades.3.1:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        ["0x6D598c77AF57Bfa17201483400615c61819dD45A"]
+      values.$pastUpgrades.3.0:
+-        "2025-01-08T16:00:35.000Z"
++        "2025-04-28T12:33:11.000Z"
+      values.$upgradeCount:
+-        4
++        5
+      values.getSemverProtocolVersion.0:
+-        26
++        27
+      values.initialCutHash:
+-        "0x1f2fc821f3af8fc4dae46f80a28e8b582ace20e83a979acacf6ecbd0e9b4fcea"
++        "0xd20b12f6c5152e7197db37e19b177d22a369c32230fbbc2bfeec5b39788afd8c"
+      values.initialForceDeploymentHash:
+-        "0x5d46606048f0821e6ce823fd9cc257b47818b44dffed0bc21489e23ab242d0e1"
++        "0x48dac090fa2f13afa11b2ea3f456fb424cef704d997bd137575a5fe9c5c3241a"
+      values.l1GenesisUpgrade:
+-        "0x107e92E7360e595d8129B522ABD458361f32f66C"
++        "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C"
+      values.protocolVersion:
+-        111669149696
++        115964116992
+      values.storedBatchZero:
+-        "0x30624ae13932bc83804b007160a60b2394893f6097d5f7062de441172adc4749"
++        "0xe3199bb31e1acf8a1667692d8536edcce799c58cfebe85e3e0adeb0ae788b291"
+      values.serverNotifierAddress:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x56a8f9e2feec75535d897e8159a8cdf1546d81df34f77964c66bc908820e8687"
+      sourceHashes.0:
+-        "0x1d68adefefffd4b896740e985d1d7d39abbface4239c0fb54cbda7892ce8c99d"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      values.$implementation:
+-        "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"
++        "0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518"
+      values.$pastUpgrades.4:
++        ["2024-08-26T07:51:11.000Z","0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c",["0xb56A8225A745756DD215faf22E4796f373561AcD"]]
+      values.$pastUpgrades.3.2.0:
+-        "0xb56A8225A745756DD215faf22E4796f373561AcD"
++        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
+      values.$pastUpgrades.3.1:
+-        "2024-08-26T07:51:11.000Z"
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.3.0:
+-        "0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.2.2:
+-        ["0xF5A14DCdde1143443f06033200D345c2a2828A99"]
++        "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132"
+      values.$pastUpgrades.2.1:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "2025-04-28T12:33:11.000Z"
+      values.$pastUpgrades.2.0:
+-        "2025-01-08T16:00:35.000Z"
++        ["0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518"]
+      values.$upgradeCount:
+-        4
++        5
+    }
+```
+
+```diff
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) {
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
++++ severity: HIGH
+      values.daPairs.1:
++        {"l1DAValidator":"0x72213dfe8CA61B0A782970dCFebFb877778f9119","l2DAValidator":"0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281","status":true}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (0xC5bBb8bA0302215Da343D47EC617649E59c7d61C)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/Bridgehub.sol                        |  8 ++-
+ .../ChainTypeManager/ChainTypeManager.sol          | 16 +++++
+ .../L1AssetRouter/L1AssetRouter.sol                | 20 +++----
+ .../{.flat@22281621 => .flat}/L1GenesisUpgrade.sol | 69 +++++++++++++++++++---
+ .../L1NativeTokenVault/L1NativeTokenVault.sol      | 17 +++---
+ .../L1Nullifier/L1Nullifier.sol                    | 10 +++-
+ 6 files changed, 107 insertions(+), 33 deletions(-)
+```
+
 Generated with discovered.json: 0xa18e8f6b7461533079ddeaa1545fa7d542388152
 
 # Diff at Tue, 29 Apr 2025 09:41:07 GMT:

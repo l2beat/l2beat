@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xb9d1eb03ea3614c5e585075def4d68d1fc081657
+
+# Diff at Fri, 02 May 2025 17:23:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 21802913
+- current block number: 21802913
+
+## Description
+
+Upgrade to new contracts (untemplatized). Since they have recent source code very similar to normal op stack (not fraxtal branded) and custom gas token support, this is assumed to be the latest custom gas token contracts that the op stack is officially supporting.
+
+No significant changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802913 (main branch discovery), not current.
+
+```diff
+    contract Frax Multisig  (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      name:
+-        "frxETHMultisig"
++        "Frax Multisig "
+    }
+```
+
+```diff
+    contract sfrxETH (0xac3E018457B222d93114458476f3E3416Abbe38F) {
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+      template:
++        "fraxtal/sfrxETH"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 2 (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      name:
+-        "FraxtalTimelockMultisig"
++        "Fraxtal Multisig 2"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 1 (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      name:
+-        "FraxtalMultisig"
++        "Fraxtal Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0xbdede2de0e95d5c4a9d807148d94dc3b5f4ba3f1
 
 # Diff at Tue, 29 Apr 2025 08:19:03 GMT:

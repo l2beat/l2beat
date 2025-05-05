@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21802913,
-  "configHash": "0x1d781dd65abb1fcacf4a21238771fc5f34159a0501b924b37e9fcc942545c777",
+  "configHash": "0xa8a588e8ccf37f2ac1449ad7160e9f73ac6daa57b3183c27aacca6fddd4150e1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -565,7 +565,7 @@
       "derivedName": "FraxEtherMinter"
     },
     {
-      "name": "frxETHMultisig",
+      "name": "Frax Multisig ",
       "address": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -730,6 +730,7 @@
       "name": "sfrxETH",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
       "type": "Contract",
+      "template": "fraxtal/sfrxETH",
       "sourceHashes": [
         "0xfe65651a8179606cdf20c60070a93224cb7b8fd4e89fb0d668b795503e8da33c"
       ],
@@ -763,7 +764,7 @@
       "derivedName": "sfrxETH"
     },
     {
-      "name": "FraxtalTimelockMultisig",
+      "name": "Fraxtal Multisig 2",
       "address": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -885,7 +886,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "FraxtalMultisig",
+      "name": "Fraxtal Multisig 1",
       "address": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1644,6 +1645,7 @@
     "fraxtal/FraxEtherMinter": "0xf0613acc9cc6152ba1e739f49480f2343ff1cd0559d158669ad5c04ba088046d",
     "fraxtal/frxETH": "0xd0b37c15c111eef32b02139bf4be8d60c2c864ca2bc292ce40efad364876b556",
     "fraxtal/FrxEthMinter": "0x1c1e0859bdf378f91cefaae8a3c6214f3cfc8bffed72c2280139e4586a4d2a11",
+    "fraxtal/sfrxETH": "0x658424c4c1ef4b2085df560f7d1996c64bc333438d1b73d648d47a26a44fa7db",
     "fraxtal/Timelock": "0xddc387cb7e3e5d997b993c8702f986c6be80b6b460277bb796c259ddc0bb52ec",
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
@@ -1653,9 +1655,9 @@
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
     "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
     "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   },
-  "permissionsConfigHash": "0xf45a1e7075b22ebe06498487a814ee5542c8e003f94abcafdb67adfbad12d602"
+  "permissionsConfigHash": "0xe8601b276d64e6fbca45c7febc17d13b775ac19d3046c543cd8ac6fb60e8090f"
 }
