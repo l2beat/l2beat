@@ -7,7 +7,13 @@ import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
-import { explorerApiKey, explorerType, explorerUrl, rpcUrl } from './args'
+import {
+  explorerApiKey,
+  explorerChainId,
+  explorerType,
+  explorerUrl,
+  rpcUrl,
+} from './args'
 import { EthereumAddressValue } from './types'
 
 export const DetectProxy = command({
@@ -19,6 +25,7 @@ export const DetectProxy = command({
     explorerUrl,
     type: explorerType,
     apiKey: explorerApiKey,
+    chainId: explorerChainId,
   },
   handler: async (args) => {
     const logger = new CliLogger()
@@ -27,6 +34,7 @@ export const DetectProxy = command({
       type: (args.type as ExplorerConfig['type']) ?? 'etherscan',
       url: args.explorerUrl ?? 'ERROR',
       apiKey: args.apiKey ?? 'ERROR',
+      chainId: args.chainId ?? 1,
     }
     const provider = await getProvider(args.rpcUrl, explorer)
 

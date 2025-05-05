@@ -46,6 +46,7 @@ export class EtherscanClient implements IEtherscanClient {
     protected readonly apiKey: string,
     protected readonly minTimestamp: UnixTime,
     protected readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
+    protected readonly defaultParams: Record<string, string> = {},
     protected readonly logger = Logger.SILENT,
   ) {
     this.callWithRetries = this.rateLimiter.wrap(
@@ -61,8 +62,16 @@ export class EtherscanClient implements IEtherscanClient {
     url: string,
     apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
+    defaultParams: Record<string, string> = {},
   ): EtherscanClient {
-    return new EtherscanClient(httpClient, url, apiKey, 0, unsupportedMethods)
+    return new EtherscanClient(
+      httpClient,
+      url,
+      apiKey,
+      0,
+      unsupportedMethods,
+      defaultParams,
+    )
   }
 
   // Etherscan API is not stable enough to trust it to return "closest" block.
@@ -245,10 +254,15 @@ export class EtherscanClient implements IEtherscanClient {
     action: string,
     params: Record<string, string>,
   ): Promise<unknown> {
+    const queryParams = {
+      ...this.defaultParams,
+      ...params,
+    }
+
     const query = new URLSearchParams({
       module,
       action,
-      ...params,
+      ...queryParams,
       apikey: this.apiKey,
     })
     const url = `${this.url}?${query.toString()}`
