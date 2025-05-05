@@ -1319,5 +1319,6 @@
   "rewrite/static/meta-images/zk-catalog/projects/treasure/opengraph-image.png": "9fc7b1264cb53958a922c82dc6ed3e24",
   "rewrite/static/meta-images/zk-catalog/projects/zeronetwork/opengraph-image.png": "8a3d40c8b738314f212390410f23f8c1",
   "rewrite/static/meta-images/zk-catalog/projects/zkcandy/opengraph-image.png": "726c8fc753d7f7834828ec1d51994892",
-  "rewrite/static/meta-images/zk-catalog/projects/zksync-era/opengraph-image.png": "78aecf1a0a1dd4d38b4068734b311fa7"
+  "rewrite/static/meta-images/zk-catalog/projects/zksync-era/opengraph-image.png": "78aecf1a0a1dd4d38b4068734b311fa7",
+  "rewrite/static/meta-images/scaling/projects/yellowstone/opengraph-image.png": "63ff5da53f7ce781e06a89ee36a0feb6"
 }
