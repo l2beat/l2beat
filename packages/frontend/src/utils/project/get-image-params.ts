@@ -11,7 +11,7 @@ export interface ImageParams {
 }
 
 export function getImageParams(filePath: string): ImageParams | undefined {
-  if (env.REWRITE) {
+  if (env.NEXT_PUBLIC_REWRITE) {
     const manifest = getManifest(
       env.NODE_ENV === 'production',
       path.join(process.cwd(), 'rewrite'),
