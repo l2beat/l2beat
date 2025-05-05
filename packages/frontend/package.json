@@ -22,7 +22,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts",
-    "rewrite:generate-og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts",
+    "rewrite:generate-og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts && pnpm rewrite:tinify",
     "rewrite:tinify": "tsx rewrite/scripts/tinify"
   },
   "dependencies": {
