@@ -483,13 +483,13 @@ export const linea: ScalingProject = {
   },
   stateDerivation: {
     nodeSoftware:
-      'The node software (Besu) and a guide to reconstruct the state from L1 is available [here](https://doc-linea-git-state-recovery-consensys-ddffed67.vercel.app/get-started/how-to/state-recovery).',
+      'The node software ([Linea Besu](https://github.com/Consensys/linea-besu-package)) and a guide to reconstruct the state from L1 is available [here](https://doc-linea-git-state-recovery-consensys-ddffed67.vercel.app/get-started/how-to/state-recovery). Other node implementations like Nethermind, Geth or Erigon can sync too, but state derivation from L1 and Linea-specific features [are unsupported](https://docs.linea.build/get-started/how-to/run-a-node).',
     compressionScheme:
-      '',
+      'Linea uses a [bespoke lossless compression scheme](https://github.com/Consensys/linea-monorepo/blob/main/docs/architecture-description.md#blob-compressor) based on LZSS (deflate-like). It is available as a [dedicated library](https://github.com/Consensys/compress) and a [zk-decompression circuit](https://github.com/Consensys/gnark/tree/master/std/compress) in Gnark.',
     genesisState:
-      '',
+      'Is available via the official Linea docs for Linea Besu (preloaded), [Besu](https://docs.linea.build/get-started/how-to/run-a-node/besu#step-2-download-the-genesis-file-and-besu-configuration-file), [Erigon](https://docs.linea.build/get-started/how-to/run-a-node/erigon#step-2-download-the-genesis-file), [Nethermind](https://docs.linea.build/get-started/how-to/run-a-node/nethermind), [Geth](https://docs.linea.build/get-started/how-to/run-a-node/geth#step-2-download-the-genesis-file).',
     dataFormat:
-      '',
+      'Linea groups L2 blocks [into batches](https://lineascan.build/batches) which are then posted to L1 for proving. Each batch (whether sent as a blob or compressed calldata) contains L2 blocks. Blocks in turn include the [transactions with unnecessary data stripped](https://community.linea.build/t/proposal-state-reconstruction-from-l1-blobs/8038#p-22077-block-data-sent-to-l1-in-the-compressed-blob-2). More info on [the compression, packing and blob structure](https://github.com/Consensys/linea-monorepo/blob/main/docs/architecture-description.md#blob-compressor).',
   },
   stateValidation: {
     description:

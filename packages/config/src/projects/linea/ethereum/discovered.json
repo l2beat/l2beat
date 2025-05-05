@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22273396,
+  "blockNumber": 22415188,
   "configHash": "0x85898b79a67cc08497e4451bc8ed63fc84363ec99380a0aa63afe4aece452d4f",
   "entries": [
     {
@@ -560,11 +560,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x5b67923302ac6a9f0dd6327b970474101c7b7ec58b3619d2f24a31fa768e47c5",
-        "currentFinalizedState": "0x95bedd0e8c94140265734072a01111eda4e8631af1bba2b47a3e9ae6670f885c",
+        "currentFinalizedShnarf": "0xdb892be05f64972db747dbaa7d68ffaba9eefc9549b0b03024be47c613eb0d6e",
+        "currentFinalizedState": "0x573b1028e1bd21b61fcf41ad64fd744ddf7fd8d88e4deacc2d7a091f978f1526",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "6000110000000000000000",
+        "currentPeriodAmountInWei": "16300000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
