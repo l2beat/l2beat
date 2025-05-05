@@ -18,7 +18,7 @@ import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAgg
 import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { AnomaliesIndexer } from './modules/liveness/indexers/AnomaliesIndexer'
-import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
+import { LivenessAggregatingIndexer2 } from './modules/liveness/indexers/LivenessAggregatingIndexer2'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -110,11 +110,21 @@ export function createTrackedTxsModule(
     })
   }
 
-  let livenessAggregatingIndexer: LivenessAggregatingIndexer | undefined
+  // let livenessAggregatingIndexer: LivenessAggregatingIndexer | undefined
+  let livenessAggregatingIndexer2: LivenessAggregatingIndexer2 | undefined
   let anomaliesIndexer: AnomaliesIndexer | undefined
 
   if (config.trackedTxsConfig.uses.liveness) {
-    livenessAggregatingIndexer = new LivenessAggregatingIndexer({
+    // livenessAggregatingIndexer = new LivenessAggregatingIndexer({
+    //   db: peripherals.database,
+    //   projects: config.trackedTxsConfig.projects,
+    //   parents: [trackedTxsIndexer],
+    //   indexerService,
+    //   minHeight: config.trackedTxsConfig.minTimestamp,
+    //   logger: logger.tag({ feature: 'liveness' }),
+    // })
+
+    livenessAggregatingIndexer2 = new LivenessAggregatingIndexer2({
       db: peripherals.database,
       projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
@@ -142,9 +152,10 @@ export function createTrackedTxsModule(
       await subModule?.start?.()
     }
     await trackedTxsIndexer.start()
-    await l2CostPricesIndexer?.start()
-    await l2CostsAggregatorIndexer?.start()
-    await livenessAggregatingIndexer?.start()
+    // await l2CostPricesIndexer?.start()
+    // await l2CostsAggregatorIndexer?.start()
+    // await livenessAggregatingIndexer?.start()
+    await livenessAggregatingIndexer2?.start()
     await anomaliesIndexer?.start()
   }
 

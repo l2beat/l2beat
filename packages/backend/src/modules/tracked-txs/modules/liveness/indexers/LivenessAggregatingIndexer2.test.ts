@@ -1,0 +1,266 @@
+import { expect, mockFn, mockObject } from 'earl'
+import { LivenessAggregatingIndexer2 } from './LivenessAggregatingIndexer2'
+import type { Database, LivenessRecord } from '@l2beat/database'
+import type { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { Logger } from '@l2beat/backend-tools'
+import {
+  ProjectId,
+  type SavedConfiguration,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
+import type { TrackedTxProject } from '../../../../../config/Config'
+import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+
+const NOW = UnixTime.now()
+
+const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
+const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
+
+const MOCK_PROJECTS: TrackedTxProject[] = [
+  {
+    id: ProjectId('mocked-project'),
+    isArchived: false,
+    configurations: [
+      mockObject<TrackedTxConfigEntry>({
+        id: MOCK_CONFIGURATION_ID,
+        type: 'liveness',
+        subtype: MOCK_CONFIGURATION_TYPE,
+        untilTimestamp: UnixTime.now(),
+      }),
+    ],
+  },
+]
+
+const MOCK_CONFIGURATIONS = [
+  mockObject<Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>>({
+    id: MOCK_CONFIGURATION_ID,
+    maxHeight: null,
+    currentHeight: 1,
+  }),
+]
+
+const MOCK_LIVENESS: LivenessRecord[] = [
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
+    timestamp: NOW - 1 * UnixTime.HOUR,
+  }),
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
+    timestamp: NOW - 3 * UnixTime.HOUR,
+  }),
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
+    timestamp: NOW - 7 * UnixTime.HOUR,
+  }),
+]
+
+describe(LivenessAggregatingIndexer2.name, () => {
+  describe(LivenessAggregatingIndexer2.prototype.update.name, () => {
+    it('use correct time range when backfilling, on midnight', async () => {
+      const indexer = createIndexer({ tag: 'update-return' })
+      const mockGenerateLiveness = mockFn().resolvesTo([])
+      indexer.generateLiveness = mockGenerateLiveness
+
+      // 00:00:00 someday
+      const safeHeight = UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY
+      const parentSafeHeight = NOW
+
+      const result = await indexer.update(safeHeight, parentSafeHeight)
+
+      // 00:00:00 same day as safeHeight
+      const expectedFrom = safeHeight
+      // 23:59:59 same day as safeHeight
+      const expectedTo = safeHeight + 1 * UnixTime.DAY - 1
+
+      expect(mockGenerateLiveness).toHaveBeenCalledWith(
+        expectedFrom,
+        expectedTo,
+      )
+      expect(result).toEqual(expectedTo)
+    })
+
+    it('use correct time range when backfilling, on middle of the day', async () => {
+      const indexer = createIndexer({ tag: 'update-return' })
+      const mockGenerateLiveness = mockFn().resolvesTo([])
+      indexer.generateLiveness = mockGenerateLiveness
+
+      // 12:00:00 someday
+      const safeHeight =
+        UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY + 12 * UnixTime.HOUR
+      const parentSafeHeight = NOW
+
+      const result = await indexer.update(safeHeight, parentSafeHeight)
+
+      // 00:00:00 same day as safeHeight
+      const expectedFrom = UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY
+      // 23:59:59 same day as safeHeight
+      const expectedTo = expectedFrom + 1 * UnixTime.DAY - 1
+
+      expect(mockGenerateLiveness).toHaveBeenCalledWith(
+        expectedFrom,
+        expectedTo,
+      )
+      expect(result).toEqual(expectedTo)
+    })
+
+    it('use correct time range when fully synced, on middle of the day', async () => {
+      const indexer = createIndexer({ tag: 'update-return' })
+      const mockGenerateLiveness = mockFn().resolvesTo([])
+      indexer.generateLiveness = mockGenerateLiveness
+
+      // round hour
+      const parentSafeHeight = UnixTime.toStartOf(NOW, 'hour')
+      // round hour - 1 hour as not yet synced
+      const safeHeight = parentSafeHeight - 1 * UnixTime.HOUR
+
+      const result = await indexer.update(safeHeight, parentSafeHeight)
+
+      // 00:00:00 of current day
+      const expectedFrom = UnixTime.toStartOf(safeHeight, 'day')
+      // 23:59:59 of current day
+      const expectedTo = parentSafeHeight
+
+      expect(mockGenerateLiveness).toHaveBeenCalledWith(
+        expectedFrom,
+        expectedTo,
+      )
+      expect(result).toEqual(expectedTo)
+    })
+
+    it('use correct time range when fully synced, on midnight', async () => {
+      const indexer = createIndexer({ tag: 'update-return' })
+      const mockGenerateLiveness = mockFn().resolvesTo([])
+      indexer.generateLiveness = mockGenerateLiveness
+
+      // 00:00:00 of current day
+      const safeHeight = UnixTime.toStartOf(NOW, 'day')
+      // 01:00:00 of current day
+      const parentSafeHeight = safeHeight + 1 * UnixTime.HOUR
+
+      const result = await indexer.update(safeHeight, parentSafeHeight)
+
+      // 00:00:00 of current day
+      const expectedFrom = safeHeight
+      // 01:00:00 of current day
+      const expectedTo = parentSafeHeight
+
+      expect(mockGenerateLiveness).toHaveBeenCalledWith(
+        expectedFrom,
+        expectedTo,
+      )
+      expect(result).toEqual(expectedTo)
+    })
+
+    it('handles time range with min height', async () => {
+      // 12:00:00 of some day
+      const safeHeight =
+        UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY + 12 * UnixTime.HOUR
+      const indexer = createIndexer({
+        tag: 'update-return',
+        minHeight: safeHeight,
+      })
+      const mockGenerateLiveness = mockFn().resolvesTo([])
+      indexer.generateLiveness = mockGenerateLiveness
+
+      const parentSafeHeight = NOW
+
+      const result = await indexer.update(safeHeight, parentSafeHeight)
+
+      // 12:00:00 of some day - we do not round it to start of day
+      const expectedFrom = safeHeight
+      // 23:59:59 of some day
+      const expectedTo = safeHeight + 12 * UnixTime.HOUR - 1
+
+      expect(mockGenerateLiveness).toHaveBeenCalledWith(
+        expectedFrom,
+        expectedTo,
+      )
+      expect(result).toEqual(expectedTo)
+    })
+
+    it('should save data to db', async () => {
+      const mockAggregatedLivenessRepository = mockObject<
+        Database['aggregatedLiveness2']
+      >({
+        upsertMany: mockFn().resolvesTo(1),
+      })
+      const indexer = createIndexer({
+        tag: 'update-return',
+        aggregatedLivenessRepository: mockAggregatedLivenessRepository,
+      })
+      const mockAggregatedLiveness: AggregatedLiveness2Record[] = [
+        mockObject<AggregatedLiveness2Record>({
+          min: 10,
+          avg: 20,
+          max: 30,
+          timestamp: NOW,
+        }),
+        mockObject<AggregatedLiveness2Record>({
+          min: 20,
+          avg: 30,
+          max: 40,
+          timestamp: NOW,
+        }),
+      ]
+      indexer.generateLiveness = mockFn().resolvesTo(mockAggregatedLiveness)
+
+      const parentSafeHeight = UnixTime.toStartOf(NOW, 'hour')
+      const safeHeight = parentSafeHeight - 1 * UnixTime.HOUR
+
+      const result = await indexer.update(safeHeight, parentSafeHeight)
+
+      expect(mockAggregatedLivenessRepository.upsertMany).toHaveBeenCalledWith(
+        mockAggregatedLiveness,
+      )
+      expect(result).toEqual(parentSafeHeight)
+    })
+  })
+
+  describe(LivenessAggregatingIndexer2.prototype.invalidate.name, () => {
+    it('should return new safeHeigh and not delete data', async () => {
+      const livenessRepositoryMock = mockObject<Database['liveness']>({
+        deleteAll: mockFn().resolvesTo(1),
+      })
+
+      const targetHeight = UnixTime.now()
+
+      const indexer = createIndexer({
+        tag: 'invalidate',
+        livenessRepository: livenessRepositoryMock,
+      })
+
+      const result = await indexer.invalidate(targetHeight)
+
+      expect(livenessRepositoryMock.deleteAll).not.toHaveBeenCalled()
+
+      expect(result).toEqual(targetHeight)
+    })
+  })
+})
+
+function createIndexer(options: {
+  tag: string
+  livenessRepository?: Database['liveness']
+  aggregatedLivenessRepository?: Database['aggregatedLiveness2']
+  indexerService?: IndexerService
+  minHeight?: number
+}) {
+  return new LivenessAggregatingIndexer2({
+    tags: { tag: options.tag },
+    indexerService: options.indexerService ?? mockObject<IndexerService>(),
+    logger: Logger.SILENT,
+    minHeight: options.minHeight ?? 0,
+    parents: [],
+    db: mockObject<Database>({
+      liveness:
+        options.livenessRepository ?? mockObject<Database['liveness']>(),
+      aggregatedLiveness2:
+        options.aggregatedLivenessRepository ??
+        mockObject<Database['aggregatedLiveness2']>({
+          upsertMany: mockFn().resolvesTo(1),
+        }),
+    }),
+    projects: MOCK_PROJECTS,
+  })
+}
