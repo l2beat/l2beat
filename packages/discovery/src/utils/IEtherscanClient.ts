@@ -3,6 +3,7 @@ import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { BlockscoutClient } from './BlockscoutClient'
 import { EtherscanClient } from './EtherscanClient'
 import { RoutescanClient } from './RoutescanClient'
+import { SourcifyClient } from './SourcifyClient'
 
 // If a given instance of Etherscan does not support some endpoint set a
 // corresponding variable to true, otherwise do not set to anything -
@@ -38,6 +39,11 @@ interface RoutescanExplorerConfig {
   unsupported?: EtherscanUnsupportedMethods
 }
 
+interface SourcifyExplorerConfig {
+  type: 'sourcify'
+  chainId: number
+}
+
 export interface Transaction {
   input: string
   to: EthereumAddress
@@ -49,6 +55,7 @@ export type ExplorerConfig =
   | EtherscanV1ExplorerConfig
   | BlockscoutExplorerConfig
   | RoutescanExplorerConfig
+  | SourcifyExplorerConfig
 
 export interface ContractSource {
   name: string
@@ -106,6 +113,9 @@ export function getExplorerClient(
     }
     case 'blockscout': {
       return new BlockscoutClient(httpClient, config.url, config.unsupported)
+    }
+    case 'sourcify': {
+      return new SourcifyClient(httpClient, config.chainId)
     }
     default: {
       throw new Error('Unknown explorer type')

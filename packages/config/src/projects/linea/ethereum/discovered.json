@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22273396,
+  "blockNumber": 22415188,
   "configHash": "0x85898b79a67cc08497e4451bc8ed63fc84363ec99380a0aa63afe4aece452d4f",
   "entries": [
     {
@@ -207,6 +207,21 @@
       "derivedName": "BridgedToken"
     },
     {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
+      "type": "Contract",
+      "template": "linea/Verifier",
+      "sourceHashes": [
+        "0x7ffe47dd82e25e61467c2b267669b2c48ea49c8a7f1a744fea45ab189bc8b455"
+      ],
+      "proxyType": "immutable",
+      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
+      "sinceTimestamp": 1744893263,
+      "sinceBlock": 22288746,
+      "values": { "$immutable": true },
+      "derivedName": "PlonkVerifierMainnetFull"
+    },
+    {
       "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
       "type": "EOA",
       "proxyType": "EOA",
@@ -346,7 +361,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 55,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -389,7 +404,7 @@
       "name": "PlonkVerifierForMultiTypeDataAggregation",
       "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
       "type": "Contract",
-      "template": "linea/PlonkVerifierForMultiTypeDataAggregation",
+      "template": "linea/Verifier",
       "sourceHashes": [
         "0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4"
       ],
@@ -545,11 +560,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xa8e464db6d14b5b3a7860c18f08136625c48afa0fae2197bf4b91ba0a979b981",
-        "currentFinalizedState": "0x24531380257a8ad8766bccfd989d83181920f27e1e0ed43073dbba1637325ece",
+        "currentFinalizedShnarf": "0xdb892be05f64972db747dbaa7d68ffaba9eefc9549b0b03024be47c613eb0d6e",
+        "currentFinalizedState": "0x573b1028e1bd21b61fcf41ad64fd744ddf7fd8d88e4deacc2d7a091f978f1526",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "1265380000000000000",
+        "currentPeriodAmountInWei": "16300000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -595,7 +610,7 @@
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
           "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
-          "0x1111111111111111111111111111111111111111",
+          "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
           "0x0000000000000000000000000000000000000000",
           "0x1111111111111111111111111111111111111111",
           "0x1111111111111111111111111111111111111111",
@@ -1072,6 +1087,9 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
+    "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
     "0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
     ],
@@ -1253,9 +1271,9 @@
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/LineaRollup": "0xa8e1636adc0e8d43cb35610deb22d12e36cb300a775c6fece3a57296ef551145",
-    "linea/PlonkVerifierForMultiTypeDataAggregation": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/Roles": "0xa2464d6b0b8a583e2a25b7127ea401ba7f63faf48f95f5fb9838cebca0c98aba",
-    "linea/TokenBridge": "0xaa1287667ece38f474859679ed0569d43b19a19bbdb2a21a1a5701c5a15fe1cc"
+    "linea/TokenBridge": "0xaa1287667ece38f474859679ed0569d43b19a19bbdb2a21a1a5701c5a15fe1cc",
+    "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xec86c2d65d435c9384d569e695791eccf5b0485b8789ea148a5b041c6bd4d617"
+  "permissionsConfigHash": "0xa7dfeb6fc78e5e2841238c4346cbbf089b50bead767a8b1820fb014ce51f27a4"
 }

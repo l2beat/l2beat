@@ -20,6 +20,10 @@ export function getExplorer(
     config.explorerType !== 'etherscan' || config.explorerApiKey !== undefined,
     'When using etherscan you should provide the API key using --etherscan-key.',
   )
+  assert(
+    config.explorerType !== 'sourcify' || config.explorerChainId !== undefined,
+    'When using sourcify you should provide the chainId using --explorer-chain-id.',
+  )
 
   const httpClient = new HttpClient()
   const client = getExplorerClient(httpClient, {

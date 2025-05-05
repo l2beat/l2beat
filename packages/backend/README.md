@@ -97,12 +97,14 @@ FEATURES=tvs,!tvs.*,tvs.ethereum
 - `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
   https://www.coingecko.com/en/api/pricing
 
+- `ETHERSCAN_API_URL` - Etherscan API url
+- `ETHERSCAN_API_KEY` - Etherscan API key
+  Blockscout doesn't need it.
+
 - `<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
 - `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
   60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
-- `<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan.
-  Blockscout doesn't need it.
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:
