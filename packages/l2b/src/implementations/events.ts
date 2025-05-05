@@ -46,6 +46,10 @@ export async function getEvents(
       explorerType !== 'etherscan' || explorerApiKey !== undefined,
       'When using etherscan you should provide the API key using --etherscan-key.',
     )
+    assert(
+      explorerType !== 'sourcify' || explorerChainId !== undefined,
+      'When using sourcify you should provide the chainId using --explorer-chain-id.',
+    )
 
     const proxyDetector = new ProxyDetector()
     const result = await proxyDetector.detectProxy(provider, address)
