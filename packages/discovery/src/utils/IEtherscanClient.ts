@@ -56,6 +56,7 @@ export type ExplorerConfig =
   | BlockscoutExplorerConfig
   | RoutescanExplorerConfig
   | SourcifyExplorerConfig
+
 export interface ContractSource {
   name: string
   isVerified: boolean
