@@ -31,7 +31,7 @@ export const explorerType = option({
 
 export const explorerChainId = option({
   type: optional(number),
-  long: 'etherscan-chain-id',
+  long: 'explorer-chain-id',
   short: 'c',
   defaultValue: () => 1,
 })
