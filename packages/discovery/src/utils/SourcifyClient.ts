@@ -144,18 +144,18 @@ export class SourcifyClient implements IEtherscanClient {
   }
 
   getFirstTxTimestamp(_address: EthereumAddress): Promise<UnixTime> {
-    throw new Error('getFirstTxTimestamp: Not implemented')
+    throw new Error(notImplementedMessage('getFirstTxTimestamp'))
   }
 
   getAtMost10RecentOutgoingTxs(
     _address: EthereumAddress,
     _blockNumber: number,
   ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]> {
-    throw new Error('getAtMost10RecentOutgoingTxs: Not implemented')
+    throw new Error(notImplementedMessage('getAtMost10RecentOutgoingTxs'))
   }
 
   getBlockNumberAtOrBefore(_timestamp: UnixTime): Promise<number> {
-    throw new Error('getBlockNumberAtOrBefore: Not implemented')
+    throw new Error(notImplementedMessage('getBlockNumberAtOrBefore'))
   }
 }
 
@@ -228,3 +228,7 @@ const SourcifySourceSchema = z.object({
     transactionHash: z.string().nullable(),
   }),
 })
+
+function notImplementedMessage(feature: string) {
+  return `Sourcify feature not implemented: sourcify only supports source code fetching. ${feature} is not supported by this explorer.`
+}
