@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22336710,
+  "blockNumber": 22417833,
   "configHash": "0x6b113709a01b4c011c82f02891a984c98a08c2f4a42414976f0bbec9d41c0332",
   "entries": [
     {
@@ -60,8 +60,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 325,
-        "latestBlock": 1269120,
+        "latestAuthoritySetId": 337,
+        "latestBlock": 1318080,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -116,13 +116,13 @@
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1372,
+        "messageId": 1407,
         "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
         "pendingDefaultAdmin": {
-          "newAdmin": "0x0000000000000000000000000000000000000000",
-          "schedule": 0
+          "newAdmin": "0x45828180bbE489350D621d002968A0585406d487",
+          "schedule": 1746442211
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "vectorx": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
@@ -267,6 +267,64 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
+      "name": "TimelockController",
+      "address": "0x45828180bbE489350D621d002968A0585406d487",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0x98201d53847b5f763bccbb14f9d4e7ffa8a4ed16c8a4a388949f76850c3d1671"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 1d.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "description": "manage all access control roles."
+        }
+      ],
+      "sinceTimestamp": 1745960099,
+      "sinceBlock": 22377231,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x45828180bbE489350D621d002968A0585406d487",
+              "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+          }
+        },
+        "Canceller": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "0x45828180bbE489350D621d002968A0585406d487",
+          "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+        ],
+        "Executor": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 86400,
+        "getMinDelayFormatted": "1d",
+        "Proposer": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "derivedName": "TimelockController"
+    },
+    {
       "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -298,6 +356,37 @@
           "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
         },
         {
+          "permission": "interact",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "interact",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "description": "manage all access control roles.",
+          "via": [
+            {
+              "address": "0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "description": "manage all access control roles."
+        },
+        {
+          "permission": "interact",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "description": "propose transactions."
+        },
+        {
           "permission": "upgrade",
           "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
         },
@@ -311,6 +400,11 @@
         {
           "permission": "act",
           "from": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+        },
+        {
+          "permission": "act",
+          "from": "0x45828180bbE489350D621d002968A0585406d487",
+          "delay": 86400
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -333,7 +427,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 6,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -490,6 +584,53 @@
       "function routes(bytes4) view returns (address verifier, bool frozen)",
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x45828180bbE489350D621d002968A0585406d487": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
     ],
     "0x737539737b44493F65c17eAfE165197b6410d254": [
       "error AccessControlBadConfirmation()",
@@ -716,10 +857,11 @@
   "usedTemplates": {
     "avail/AvailBridgeV1": "0x1e30044e2ab7a26fa8c43ab28fbb2c5afaf96522cd40309de731d20185455f9f",
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/TimelockController": "0xc5781953d228673a1223e3cdd7b2ff789b81c8df6095c511bfa2d486f013fa99",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "succinct/SP1Vector": "0xba71ec9709d89d352f7a245e5b72cf3434f4e06994cd62092c06382309a93fa3",
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x18dcc6f628917f5030b5ff975ab72deb711fd374fbb0001f7117b357857c13a2"
+  "permissionsConfigHash": "0x34c8324d73a21cd5060d85a8de3b08f54f44d2431c6461031715b2d9a9c04e28"
 }
