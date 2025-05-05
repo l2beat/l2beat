@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf4a0e070ee83a13c9ee4293765543cc3f65aa594
+
+# Diff at Tue, 29 Apr 2025 08:19:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21937199
+- current block number: 21937199
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937199 (main branch discovery), not current.
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x42303634F37956687fB7ff2c6146AC842481A052) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x122bd71530cdbb228f47acd5873db93a842bda6a
 
 # Diff at Tue, 04 Mar 2025 10:39:31 GMT:

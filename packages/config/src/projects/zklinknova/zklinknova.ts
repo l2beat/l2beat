@@ -82,6 +82,8 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
   'minDelay',
 )
 
+const chainId = 810180
+
 export const zklinknova: ScalingProject = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
@@ -117,11 +119,11 @@ export const zklinknova: ScalingProject = {
   },
   chainConfig: {
     name: 'zklinknova',
-    chainId: 810180,
+    chainId,
     explorerUrl: 'https://explorer.zklink.io',
     sinceTimestamp: UnixTime(1709273393),
     apis: [
-      { type: 'etherscan', url: 'https://explorer-api.zklink.io/api' },
+      { type: 'etherscan', chainId },
       { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 1500 },
     ],
   },

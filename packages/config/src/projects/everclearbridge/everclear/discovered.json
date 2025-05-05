@@ -47,13 +47,6 @@
         "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
       ],
       "proxyType": "Everclear proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getCurrentEpoch",
         "gasConfig",
@@ -179,13 +172,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1726461025,
       "sinceBlock": 388,
       "values": {
@@ -694,5 +680,6 @@
       "event Upgraded(address indexed implementation)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x75ece50b4716472bf639b4a789c982de212b7669cd28d4c04da5e9db261ff0b4"
 }

@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x42c52d12c1af5a5f5c42541287f8ede9844ac16a
+
+# Diff at Tue, 29 Apr 2025 08:19:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 82818646
+- current block number: 82818646
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 82818646 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}]
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}]
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}]
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}]
+    }
+```
+
 Generated with discovered.json: 0xb26ae6f76aa692d812feaae7499b7ef275ec5bfd
 
 # Diff at Thu, 10 Apr 2025 14:44:07 GMT:

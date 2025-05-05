@@ -24,6 +24,7 @@ import {
   boolean,
   command,
   flag,
+  option,
   optional,
   positional,
   run,
@@ -46,6 +47,12 @@ const args = {
     long: 'include-zero-amounts',
     short: 'iza',
     description: 'Include zero amounts in the config',
+  }),
+  exclude: option({
+    type: optional(string),
+    long: 'exclude',
+    short: 'e',
+    description: 'Exclude projects from TVS calculation',
   }),
 }
 
@@ -70,10 +77,20 @@ const cmd = command({
     const tokens = await ps.getTokens()
 
     if (!args.project) {
-      projects = await ps.getProjects({
-        select: ['escrows', 'tvsInfo'],
-        optional: ['chainConfig', 'isBridge'],
-      })
+      if (args.exclude) {
+        logger.info(`Excluding projects: ${args.exclude}`)
+      }
+
+      const excludedProjects = args.exclude
+        ? args.exclude.split(',').map((p) => ProjectId(p.trim()))
+        : []
+
+      projects = (
+        await ps.getProjects({
+          select: ['escrows', 'tvsInfo'],
+          optional: ['chainConfig', 'isBridge'],
+        })
+      ).filter((project) => !excludedProjects.includes(project.id))
 
       if (!projects) {
         logger.error('No TVS projects found')

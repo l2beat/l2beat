@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0xe268fc30a4a379a78ff4381d2c7297b2c2890e526a6224e162baa0d5d38ab723",
+  "configHash": "0x57862ac3cb88313fc67576ddbbfc87c80b76eec519cd13756fc76849aa0df8bb",
   "entries": [
     {
       "name": "PeggedTokenBridge",
@@ -49,13 +49,6 @@
         "0x985f30f6f1cec4239d77034618e116e07dae859f0ded01ba80f897dadb7101f3"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1649432556,
       "sinceBlock": 14546010,
       "values": {
@@ -340,13 +333,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-          "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
-        }
-      ],
       "sinceTimestamp": 1691384579,
       "sinceBlock": 17860848,
       "values": {
@@ -977,5 +963,6 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb"
-  }
+  },
+  "permissionsConfigHash": "0xe37452469982e707cd693f7c5e37ac023574e202f90df5c8b903f4ad05386223"
 }

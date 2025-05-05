@@ -1,5 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 
+import type { ExplorerConfig } from '../utils/IEtherscanClient'
 import { chains } from './chains'
 import type { DiscoveryChainConfig } from './types'
 
@@ -72,16 +73,26 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
             url: chainConfig.explorer.url,
             unsupported: chainConfig.explorer.unsupported,
           }
-        : {
-            type: chainConfig.explorer.type,
-            url: chainConfig.explorer.url,
-            apiKey: env.string([
-              `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-              `${ENV_NAME}_ETHERSCAN_API_KEY`,
-              //support for legacy local configs
-              `DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`,
-            ]),
-            unsupported: chainConfig.explorer.unsupported,
-          },
+        : chainConfig.explorer.type === 'etherscan'
+          ? {
+              type: chainConfig.explorer.type,
+              chainId: chainConfig.chainId,
+              url: 'https://api.etherscan.io/v2/api',
+              apiKey: env.string([
+                `ETHERSCAN_API_KEY_FOR_DISCOVERY`,
+                `ETHERSCAN_API_KEY`,
+              ]),
+            }
+          : ({
+              type: chainConfig.explorer.type,
+              url: chainConfig.explorer.url,
+              apiKey: env.string([
+                `${ENV_NAME}_ETHERSCAN_V1_API_KEY_FOR_DISCOVERY`,
+                `${ENV_NAME}_ETHERSCAN_V1_API_KEY`,
+                //support for legacy local configs
+                `DISCOVERY_${ENV_NAME}_ETHERSCAN_V1_API_KEY`,
+              ]),
+              unsupported: chainConfig.explorer.unsupported,
+            } as ExplorerConfig),
   }
 }

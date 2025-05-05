@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 21184911,
-  "configHash": "0xc2b13a6c262c7b9c6d2a14b0e21bade7c88da52806c6d56b35d20f93eff5e639",
+  "configHash": "0x6ccfc851e63b88c45bcf77e4df480b433464e780da704ea659928093c98b056c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -19,14 +19,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "sinceTimestamp": 1715334959,
       "sinceBlock": 19838878,
       "values": {
@@ -149,14 +141,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -279,18 +263,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
@@ -366,18 +338,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -416,24 +376,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
@@ -509,13 +451,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -551,13 +486,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -609,23 +537,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x33397410000A219fa5a476c5B51032B367C77e78",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
-          "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -1056,8 +967,9 @@
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
     "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0xfd83dfc25abb8986aaf49c9a7d70940b764b485dc9e7b345771df3cc0c40f20a"
 }

@@ -2,7 +2,7 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 21981331,
-  "configHash": "0x484a053e302c39c3d4068f325660ce6df6ccf81e3c05c3633c8482491cf698d7",
+  "configHash": "0x82f9c8b48992bc15a4ffb8141f6e7e3a3f06cfba992a51c66cfb1e804d178e3b",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -160,42 +160,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8fDEC5EE435501571034A78a7F3AA167185969b3",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -1018,5 +982,6 @@
     "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
     "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
     "starkex/StarkExchangeOld": "0x29ada8bacbbcfd689014ac1d7a27676e4dcd1d2e7704591c00e47b94c6cd0cf7"
-  }
+  },
+  "permissionsConfigHash": "0x220d8c48d45618edd6cead19598d6d356e87f9f9538ad8eb62011a02907df78c"
 }

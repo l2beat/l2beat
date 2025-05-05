@@ -77,6 +77,24 @@
     },
     {
       "mode": "auto",
+      "id": "lumia-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa2036f0538221a77A3937F1379699f44945018d0",
+        "chain": "lumia",
+        "decimals": 18,
+        "sinceTimestamp": 1719499031
+      }
+    },
+    {
+      "mode": "auto",
       "id": "lumia-TONCOIN",
       "priceId": "the-open-network",
       "symbol": "TONCOIN",

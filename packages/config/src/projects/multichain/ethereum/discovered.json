@@ -2,7 +2,7 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0x466d73c76907606bf476d35ab6cc93158477faa0e4f92c8d323cd25b9806966e",
+  "configHash": "0x141bacbc2bca0821396ba268fc7ffaba851f25dc89659a24e69e9ab93fcbfee5",
   "entries": [
     {
       "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
@@ -142,5 +142,6 @@
       "function withdrawNative(address token, uint256 amount, address to) returns (uint256)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x034a6992c0eb98ce2616c94fdd499e339620b2174e0fe09e856a8b355d7427c6"
 }

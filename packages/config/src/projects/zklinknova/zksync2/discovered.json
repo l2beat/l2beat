@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0xe5b55b57d496a797b3fa13f031e7581d8e264e72d8d93f813191476d75f4815d",
+  "configHash": "0xf2a882d564f26baa0e4af9fba938b1a356e3e5c939be9bd4e853c905f797d588",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -78,13 +78,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
-          "via": [{ "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }]
-        }
-      ],
       "sinceTimestamp": 1709297079,
       "sinceBlock": 27865488,
       "values": {
@@ -112,13 +105,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709280624,
       "sinceBlock": 27849895,
       "values": {
@@ -275,5 +261,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

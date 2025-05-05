@@ -4,6 +4,8 @@ import {
   TemplateService,
   colorize,
   combineStructureAndColor,
+  generateClingoForProject,
+  generatePermissionConfigHash,
   getDiscoveryPaths,
   makeEntryStructureConfig,
 } from '@l2beat/discovery'
@@ -247,4 +249,28 @@ describe('discovery config.jsonc', () => {
       }
     }
   })
+
+  it('model-permissions is up to date', () => {
+    for (const configs of chainConfigs ?? []) {
+      for (const c of configs) {
+        const discovery = configReader.readDiscovery(c.name, c.chain)
+        const clingoInput = generateClingoForProject(
+          c.name,
+          configReader,
+          templateService,
+        )
+        const hash = generatePermissionConfigHash(clingoInput)
+        assert(
+          hash === discovery.permissionsConfigHash,
+          [
+            '',
+            `Permissions model of "${c.name}" is not up to date.`,
+            `Run \`l2b model-permissions ${c.name}\`.`,
+            `or to refresh all projects: \`l2b model-permissions all\`.`,
+            '',
+          ].join('\n\n'),
+        )
+      }
+    }
+  }).timeout(10000)
 })

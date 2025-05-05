@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x04d61cc532635df5a295bcd100a6826315304df1
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 17968825
+- current block number: 17968825
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13A9594a2696D3c35F9D6E4Be6b332f699C57801","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xDf5d165A7EB95D26355c56d53799B7da1240e585","via":[]}]
+    }
+```
+
+```diff
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xDf5d165A7EB95D26355c56d53799B7da1240e585","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe039dd867d6dcb0b82f8400d41f3a1c43c282b08
 
 # Diff at Tue, 04 Mar 2025 10:39:40 GMT:

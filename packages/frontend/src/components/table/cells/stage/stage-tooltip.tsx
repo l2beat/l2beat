@@ -8,6 +8,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-tooltip-content'
 import { WarningBar } from '~/components/warning-bar'
 import { featureFlags } from '~/consts/feature-flags'
+import { EmergencyIcon } from '~/icons/emergency'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -17,9 +18,14 @@ import { cn } from '~/utils/cn'
 export interface StageTooltipProps {
   stageConfig: ProjectScalingStage
   isAppchain: boolean
+  emergencyWarning?: string
 }
 
-export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
+export function StageTooltip({
+  stageConfig,
+  isAppchain,
+  emergencyWarning,
+}: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
   const missing =
     stageConfig.stage !== 'UnderReview'
@@ -59,7 +65,14 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
         )
       ) : null}
       <HorizontalSeparator className="my-3" />
-
+      {emergencyWarning && (
+        <Callout
+          color="yellow"
+          body={emergencyWarning}
+          icon={<EmergencyIcon className="size-4" />}
+          className={cn('mb-3 !gap-2 px-3 py-2')}
+        />
+      )}
       {stageConfig.stage === 'UnderReview' && (
         <p>
           Projects under review might present uncompleted information & data.

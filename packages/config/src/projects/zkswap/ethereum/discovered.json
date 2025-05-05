@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 20311131,
-  "configHash": "0x034ae6206cc6d5e8659185ff724f82c1ddd9242390cdf8346df1e49e16c978c9",
+  "configHash": "0xfb35f1d7694c6c1794a1a9a7eb4562570f829f5fdd1740fd0ae341c64ce317ca",
   "entries": [
     {
       "name": "Governance",
@@ -13,13 +13,6 @@
         "0xdefeaa4f5c4b5e82fe2f743a1c06665f15c301ff4d76a526669ac3fb869d5869"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -46,13 +39,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -100,13 +86,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -193,13 +172,6 @@
         "0x86daad8532338dd22b2ad525c7955746dab5c88fca7bbd2e1a7fc07f47b2c5e3"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "numberOfPendingWithdrawals",
@@ -243,13 +215,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -494,5 +459,6 @@
       "function validators(address) view returns (bool)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x496241bff67a5d5f518b3cd578d76c17281ab595d757dcd1f902bf549c8891b6"
 }

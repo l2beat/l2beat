@@ -78,6 +78,7 @@ export const scalingSummaryColumns = [
           href={`/scaling/projects/${ctx.row.original.slug}#stage`}
           stageConfig={ctx.row.original.stage}
           isAppchain={ctx.row.original.capability === 'appchain'}
+          emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
         />
       ),
       sortingFn: sortStages,
@@ -101,7 +102,6 @@ export const scalingSummaryColumns = [
             tvsWarnings={value.warnings}
             breakdown={value.breakdown}
             change={value.change}
-            gasTokens={ctx.row.original.gasTokens}
           />
         )
       },

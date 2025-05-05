@@ -37,9 +37,11 @@
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "Arbitrum Multisig 2",
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "Arbitrum Security Council",
 
-    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Multisig 1",
-    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 2",
-    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Multisig 3",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 1",
+    "0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110": "Base Multisig 2",
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Coordinator Multisig",
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Governance Multisig",
+    "0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": "Base Security Council",
 
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZK Foundation Multisig",
@@ -86,7 +88,7 @@
 
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "Paradex Multisig",
 
-    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "AbstractChainAdminMultisig",
+    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "Abstract Multisig",
 
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
 
@@ -318,7 +320,8 @@
         "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
         "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
         "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
-        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
+        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
+        "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
       }
     },
     "OpStackAbsolutePrestate": {

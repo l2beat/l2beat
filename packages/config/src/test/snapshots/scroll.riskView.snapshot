@@ -15,15 +15,15 @@
     value: "None"
   }
   proposerFailure: {
-    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
-    orderHint: -Infinity
-    sentiment: "bad"
-    value: "Cannot withdraw"
+    description: "If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge."
+    sentiment: "good"
+    value: "Self propose"
   }
   sequencerFailure: {
-    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
-    sentiment: "bad"
-    value: "No mechanism"
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 7d delay on this operation. Proposing new blocks requires creating ZK proofs."
+    orderHint: 604800
+    sentiment: "good"
+    value: "Self sequence"
   }
   stateValidation: {
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
