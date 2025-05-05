@@ -186,7 +186,7 @@ The KintoAppRegistry contract is also governed via the AccessManager by the Secu
 
 Another critical contract on the Appchain is called KintoID. Permissioned actors with the 'KYC provider' role in the KintoID contract can 'sanction' (freeze) user smart wallets, preventing them from transacting.
 To protect users from this role which is mostly held by EOAs, a sanction expires if not confirmed by the Security Council within ${formatSeconds(sanctionExpirySeconds)}.
-An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds - 2 * 24 * 60 * 60)} cooldown window during which they cannot be sanctioned again.
+An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.
 
 The canonical (enforced) smartwallet for users on Kinto can be upgraded via the KintoWalletFactory, using the same path via the AccessManager.
 Additionally, each smart wallet must use a recoverer address custodied by Turnkey. This allows users to reset the wallet signers via their email in case they lose their passkey.
