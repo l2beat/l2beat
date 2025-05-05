@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 21944318,
-  "configHash": "0x6f92300d7167ca62d62a00a095f9bfc55585f95e0a5c66c7529f65e257ea1311",
+  "configHash": "0x02fa938f76ef95abecaeed4c3bda074d62855e75d4e76137d3d27b34bee44db7",
   "entries": [
     {
       "name": "Treasurer",
@@ -33,13 +33,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -84,10 +77,10 @@
         "delegatesTokenMessaging": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "eid": 30101,
         "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getReceiveLibrary": [
-          "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
-          true
-        ],
+        "getReceiveLibrary": {
+          "lib": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "isDefault": true
+        },
         "getRegisteredLibraries": [
           "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
           "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
@@ -592,10 +585,10 @@
       "sinceBlock": 19093729,
       "values": {
         "$immutable": true,
-        "getExecutorConfig": [
-          10000,
-          "0x173272739Bd7Aa6e4e214714048a9fE699453059"
-        ],
+        "getExecutorConfig": {
+          "maxMessageSize": 10000,
+          "executor": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+        },
         "messageLibType": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
@@ -669,17 +662,17 @@
       "sinceBlock": 19093731,
       "values": {
         "$immutable": true,
-        "getUlnConfig": [
-          20,
-          2,
-          0,
-          0,
-          [
+        "getUlnConfig": {
+          "confirmations": 20,
+          "requiredDVNCount": 2,
+          "optionalDVNCount": 0,
+          "optionalDVNThreshold": 0,
+          "requiredDVNs": [
             "0x8FafAE7Dd957044088b3d0F67359C327c6200d18",
             "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
           ],
-          []
-        ],
+          "optionalDVNs": []
+        },
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
@@ -697,13 +690,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1687808675,
       "sinceBlock": 17565748,
       "values": {
@@ -2004,5 +1990,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x5706a59399c824e14cc625a3eb30d0938a9b6c1c11668fb20edb3e10356db3ae"
 }

@@ -6,7 +6,7 @@ import type { IProvider } from '../provider/IProvider'
 import type { Handler, HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
-import { ArrayHandler } from './user/ArrayHandler'
+import { ArrayHandler, getArrayFragment } from './user/ArrayHandler'
 import { StorageHandler } from './user/StorageHandler'
 import { toFunctionFragment } from './utils/toFunctionFragment'
 
@@ -240,6 +240,8 @@ describe(executeHandlers.name, () => {
       blockNumber: 123,
       chain: 'foo',
     })
+    const arrayMethod = 'function bar(uint256) external view returns (uint256)'
+    const arrayFragment = getArrayFragment(toFunctionFragment(arrayMethod))
     const values = await executeHandlers(
       provider,
       [
@@ -250,7 +252,7 @@ describe(executeHandlers.name, () => {
             method: 'bar',
             length: '{{ foo }}',
           },
-          ['function bar(uint256) external view returns (uint256)'],
+          [arrayMethod],
         ),
         new SimpleMethodHandler(method),
       ],
@@ -261,6 +263,7 @@ describe(executeHandlers.name, () => {
       { field: 'foo', fragment, value: 3 },
       {
         field: 'bar',
+        fragment: arrayFragment,
         value: [0x12345678, 0x12345678, 0x12345678],
         ignoreRelative: undefined,
       },

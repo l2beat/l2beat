@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "blockNumber": 131964914,
-  "configHash": "0xd33125ccb657906837c14883df85e8ecbd86047bf7555aa673d8d6b627fef058",
+  "configHash": "0x42b5d143739fc83370e61abb3a83b8b7b375fc833df6938743804f07bc3bec23",
   "entries": [
     {
       "name": "StargatePoolMigratable",
@@ -552,5 +552,6 @@
       "function transferOwnership(address newOwner)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x5706a59399c824e14cc625a3eb30d0938a9b6c1c11668fb20edb3e10356db3ae"
 }

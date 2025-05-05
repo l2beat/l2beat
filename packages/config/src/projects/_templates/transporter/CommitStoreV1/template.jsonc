@@ -10,12 +10,18 @@
       "handler": {
         "type": "call",
         "args": [],
-        "method": "getDynamicConfig",
-        "pickFields": ["priceRegistry"]
-      }
+        "method": "getDynamicConfig"
+      },
+      "edit": ["get", "priceRegistry"]
     },
     "getStaticConfig": {
-      "returnType": "(tuple(ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address armProxy))"
+      "edit": [
+        "shape",
+        ["chainSelector", ["format", "ChainIdMap"]],
+        ["sourceChainSelector", ["format", "ChainIdMap"]],
+        "onRamp",
+        "armProxy"
+      ]
     }
   }
 }

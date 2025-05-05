@@ -2,7 +2,7 @@
   "name": "settlus",
   "chain": "ethereum",
   "blockNumber": 22244007,
-  "configHash": "0xa4b0afff6e377b0eed94dfc3927d0f571bcfd911dbd007fa27f06ac3b3b7c217",
+  "configHash": "0x90030318c6fe96cd2ce6dbdcfbdafcd3c3a70f505e48e0c751b610b041de30e1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -29,14 +29,6 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -117,24 +109,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x57669299e2a7D5BE46Ba817d8039C1350af830e8",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
@@ -307,13 +281,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -556,41 +523,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "via": [
-            {
-              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "via": [
-            {
-              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
-            },
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
-          ]
-        },
-        {
-          "permission": "guard",
-          "to": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
-        }
-      ],
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
@@ -893,13 +825,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
@@ -941,19 +866,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "description": "can pull funds from the contract in case of emergency.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
@@ -989,14 +901,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -1092,13 +996,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -1213,14 +1110,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
-        }
-      ],
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
       "values": {
@@ -1241,13 +1130,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
@@ -1308,18 +1190,6 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -1420,13 +1290,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
@@ -1485,14 +1348,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
-        }
-      ],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -2261,7 +2116,7 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
-    "gnosisSafeModules/LivenessModule": "0xafb9aa875756d89f2d9c8673f33aad5a3959f8bc2d5a538d4772d4a62e1902be",
+    "gnosisSafeModules/LivenessModule": "0x649656e7dda2f87bdeca0dc9a6bb23b2dc62c32ed6d1fdf245c3dcc2f6e80f74",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
     "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
     "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
@@ -2271,10 +2126,11 @@
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
     "opstack/MIPS": "0xd12d2689d2079778eb7b76ccef58c6919f21c6631fc03341b6287a2a84b4fe89",
     "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal2": "0x5ba77f6b8361011141fe9735a9f73c434c1b306dae23a1689845371e79d68d5f",
-    "opstack/PermissionedDisputeGame": "0x6eae084a3d86ff3b3f4ea8fc8591bda5a4145c5e0d9a896bb7eb74b6de964f9c",
+    "opstack/OptimismPortal2": "0x4e07890d088dde04c91da95ae82fb3afac97525e47080508da6c741a49d29818",
+    "opstack/PermissionedDisputeGame": "0x709d9cdeb77ad9cd56b80cba43f92d64bef04a4976fa79e98bdb987cc6f00aa8",
     "opstack/PreimageOracle": "0xdad9efe0df74ac3a11918603d36b0b60b59ea7690452f74d581d6712a2675d82",
     "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+  },
+  "permissionsConfigHash": "0xf78bfa822279e80b5bdc6fc8c293613bcb19af5178ba4939a67cfebc84953f48"
 }

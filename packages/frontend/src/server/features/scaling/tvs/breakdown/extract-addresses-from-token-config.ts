@@ -5,11 +5,11 @@ import type {
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
-import { type EthereumAddress, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 
 export type Address = {
-  address: EthereumAddress
+  address: string
   chain: string
 }
 
@@ -54,6 +54,7 @@ function collectAddressesFromFormula(
       })
       break
     case 'totalSupply':
+    case 'starknetTotalSupply':
     case 'circulatingSupply':
       if (formula.address !== 'native') {
         addresses.push({

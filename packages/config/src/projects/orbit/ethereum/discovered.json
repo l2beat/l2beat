@@ -2,7 +2,7 @@
   "name": "orbit",
   "chain": "ethereum",
   "blockNumber": 20792032,
-  "configHash": "0x95d8b4c80d2a0cb120cc5c0772538d80c4111a0ec3e3d583b9272d7b064f0277",
+  "configHash": "0xbe5e2b8d80ae2b69d1330a1e539e91ba8b59304c4dbdbc02f420d14728a6dfed",
   "entries": [
     {
       "name": "",
@@ -10,13 +10,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1708655927,
       "sinceBlock": 19287370,
       "values": {
@@ -153,13 +146,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
-          "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
-        }
-      ],
       "sinceTimestamp": 1649902126,
       "sinceBlock": 14580778,
       "values": {
@@ -188,13 +174,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
-          "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
-        }
-      ],
       "sinceTimestamp": 1649903842,
       "sinceBlock": 14580894,
       "values": {
@@ -228,13 +207,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
-          "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
-        }
-      ],
       "sinceTimestamp": 1649902155,
       "sinceBlock": 14580782,
       "values": {
@@ -270,13 +242,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
-          "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
-        }
-      ],
       "sinceTimestamp": 1649905062,
       "sinceBlock": 14580990,
       "values": {
@@ -514,5 +479,6 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb"
-  }
+  },
+  "permissionsConfigHash": "0x99c72d1d8562e9003f05080e54860251fc859062b04a128d112f53199b3e5b1e"
 }

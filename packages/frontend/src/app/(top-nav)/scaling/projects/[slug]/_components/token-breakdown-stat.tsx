@@ -19,10 +19,9 @@ interface Props {
   tokenTvs:
     | NonNullable<ProjectScalingEntry['header']['tvs']>['tokens']
     | undefined
-  gasTokens?: string[]
 }
 
-export function TokenBreakdownStat({ tokenTvs, gasTokens }: Props) {
+export function TokenBreakdownStat({ tokenTvs }: Props) {
   const tokenWarnings = tokenTvs?.warnings ?? []
   const anyBadWarnings = tokenWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tokenWarnings.some(
@@ -90,7 +89,6 @@ export function TokenBreakdownStat({ tokenTvs, gasTokens }: Props) {
           stablecoin={tokenTvs.breakdown.stablecoin}
           associatedTokenSymbols={tokenTvs.associatedTokens}
           tvsWarnings={tokenTvs.warnings}
-          gasTokens={gasTokens}
         />
       </TooltipContent>
     </Tooltip>

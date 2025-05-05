@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 22208513,
-  "configHash": "0xe6cf3018ab53841539ed6b869f9b2a6e59b02857e0cc0f2048ce3254b5f69f34",
+  "configHash": "0x317fd4162816ea5ec89f1517c2af76013a1f71e03dcf74e13a38c9e0bca9829d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -25,19 +25,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [],
       "sinceTimestamp": 1717522343,
       "sinceBlock": 20019970,
@@ -90,13 +77,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [],
       "sinceTimestamp": 1717522307,
       "sinceBlock": 20019967,
@@ -177,14 +157,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-          "description": "can remove and add validators, update their voting power, and change the required threshold.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [],
       "sinceTimestamp": 1692154667,
       "sinceBlock": 17924561,
@@ -257,25 +229,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
-          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["chainHead", "getHead"],
       "sinceTimestamp": 1717522271,
       "sinceBlock": 20019964,
@@ -345,13 +298,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1725540911,
       "sinceBlock": 20684519,
       "values": {
@@ -475,13 +421,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1725540863,
       "sinceBlock": 20684515,
@@ -531,19 +470,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "it can pause the chain and update the gas token.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1725540839,
       "sinceBlock": 20684513,
@@ -596,14 +522,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1725540887,
       "sinceBlock": 20684517,
       "values": {
@@ -1181,5 +1099,6 @@
     "lightlink/SystemConfig": "0x848fd23fbc0ff3a3b507b613b825f3cbfcc97aada56b8d205b1e802eba0f7225",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75"
-  }
+  },
+  "permissionsConfigHash": "0xb240b919bb947da147d484ce062ec203fd947c4608b98c15cbef1111a8010cda"
 }

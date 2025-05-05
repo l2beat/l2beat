@@ -5,6 +5,7 @@ import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
 import type { Milestone } from '@l2beat/config'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/tooltip'
@@ -89,6 +90,24 @@ function ChartContainer<T extends { timestamp: number }>({
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
+
+  useEventListener(
+    'touchstart',
+    () => {
+      document.body.classList.add('overflow-x-clip')
+      document.documentElement.classList.add('overflow-x-clip')
+    },
+    ref,
+  )
+  useEventListener(
+    'touchend',
+    () => {
+      document.body.classList.remove('overflow-x-clip')
+      document.documentElement.classList.remove('overflow-x-clip')
+    },
+    ref,
+  )
+
   const hasData = data && data.length > 1
   return (
     <ChartContext.Provider value={{ meta }}>

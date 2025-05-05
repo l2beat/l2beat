@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0x823a6e70af2370fe8b43a8b5238189606b5df01081228ab6e2ee5da50c504855",
+  "configHash": "0x310fdcb3a6987ac5b2c8cf3c39c59cfdd737243b285ce759c4442d6d51a50f36",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -190,40 +190,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -691,8 +657,9 @@
   },
   "usedTemplates": {
     "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
-    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
+    "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
     "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
     "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
-  }
+  },
+  "permissionsConfigHash": "0x0e4384190b113ac1b1bb6e2e968f46470a125f92aa5bc8190a6291b5a4d28845"
 }

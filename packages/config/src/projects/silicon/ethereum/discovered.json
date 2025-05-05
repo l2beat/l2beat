@@ -1,8 +1,8 @@
 {
   "name": "silicon",
   "chain": "ethereum",
-  "blockNumber": 21766766,
-  "configHash": "0x5df3b6f2ba50249a59e0689b6f586e18f66d3b23c92781b8880d36bf2f606cee",
+  "blockNumber": 22397534,
+  "configHash": "0xca8d34c31a364054e01b2165200574ba9101a7fba99b3e2e5ec059a982a5822e",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -54,19 +54,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-          "via": [{ "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }]
-        }
-      ],
       "sinceTimestamp": 1724259359,
       "sinceBlock": 20578326,
       "values": {
@@ -84,18 +71,18 @@
         "getAmountOfMembers": 3,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "http://silicon-mainnet-da-3.nodeinfra.com:8444",
-            "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
-          ],
-          [
-            "http://da1.silicon.network:8444",
-            "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
-          ],
-          [
-            "http://da2.silicon.network:8444",
-            "0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
-          ]
+          {
+            "url": "http://silicon-mainnet-da-3.nodeinfra.com:8444",
+            "addr": "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
+          },
+          {
+            "url": "http://da1.silicon.network:8444",
+            "addr": "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
+          },
+          {
+            "url": "http://da2.silicon.network:8444",
+            "addr": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
+          }
         ],
         "owner": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
         "requiredAmountOfSignatures": 2
@@ -133,43 +120,29 @@
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1724183531,
       "sinceBlock": 20572039,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
             "2024-08-20T19:52:11.000Z",
             "0xc47c5c6b0ea1740437487c101b78895a761501a35bfa97a77d79e803151ccf41",
             ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ],
+          [
+            "2025-04-29T13:09:35.000Z",
+            "0xdadc987a1a0f2da5a24bcf9c6958c3e4bbe015686cfd2f954ba4f3ee4884dc07",
+            ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "admin": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -189,7 +162,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x814b554af8b5ea56547505dfedf64b9f13c06492fdf24dde51e9b12a21c231dc",
+        "lastAccInputHash": "0xfd20867a5ac0777134040030e3587f45f627dff5ae3b5b1d1aed125aef947cc9",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "silicon-zk",
@@ -201,7 +174,7 @@
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
         "trustedSequencer": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
-        "trustedSequencerURL": "http://sequencer.silicon.network:8123"
+        "trustedSequencerURL": "https://rpc.silicon.network"
       },
       "fieldMeta": {
         "forceBatchAddress": {
@@ -209,7 +182,7 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
-      "derivedName": "PolygonValidiumStorageMigration",
+      "derivedName": "PolygonValidiumEtrog",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -261,11 +234,39 @@
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
       "error ExceedMaxVerifyBatches()",
+      "error FinalAccInputHashDoesNotMatch()",
       "error FinalNumBatchBelowLastVerifiedBatch()",
       "error FinalNumBatchDoesNotMatchPendingState()",
       "error FinalPendingStateNumInvalid()",
@@ -289,6 +290,7 @@
       "error InvalidRangeBatchTimeTarget()",
       "error InvalidRangeForceBatchTimeout()",
       "error InvalidRangeMultiplierBatchFee()",
+      "error L1InfoTreeLeafCountInvalid()",
       "error MaxTimestampSequenceInvalid()",
       "error NewAccInputHashDoesNotExist()",
       "error NewPendingStateTimeoutMustBeLower()",
@@ -320,6 +322,7 @@
       "event ForceBatch(uint64 indexed forceBatchNum, bytes32 lastGlobalExitRoot, address sequencer, bytes transactions)",
       "event InitialSequenceBatches(bytes transactions, bytes32 lastGlobalExitRoot, address sequencer)",
       "event Initialized(uint8 version)",
+      "event RollbackBatches(uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
       "event SequenceBatches(uint64 indexed numBatch, bytes32 l1InfoRoot)",
       "event SequenceForceBatches(uint64 indexed numBatch)",
       "event SetDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
@@ -357,7 +360,6 @@
       "function generateInitializeTransaction(uint32 networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, bytes _gasTokenMetadata) view returns (bytes)",
       "function globalExitRootManager() view returns (address)",
       "function initialize(address _admin, address sequencer, uint32 networkID, address _gasTokenAddress, string sequencerURL, string _networkName)",
-      "function initializeMigration()",
       "function isSequenceWithDataAvailabilityAllowed() view returns (bool)",
       "function lastAccInputHash() view returns (bytes32)",
       "function lastForceBatch() view returns (uint64)",
@@ -366,9 +368,10 @@
       "function onVerifyBatches(uint64 lastVerifiedBatch, bytes32 newStateRoot, address aggregator)",
       "function pendingAdmin() view returns (address)",
       "function pol() view returns (address)",
+      "function rollbackBatches(uint64 targetBatch, bytes32 accInputHashToRollback)",
       "function rollupManager() view returns (address)",
-      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)",
-      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase, bytes dataAvailabilityMessage)",
+      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)",
+      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase, bytes dataAvailabilityMessage)",
       "function sequenceForceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches)",
       "function setDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
       "function setForceBatchAddress(address newForceBatchAddress)",
@@ -379,33 +382,6 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
-    ],
-    "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
       "constructor()",
@@ -437,5 +413,6 @@
     "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0x70665ebc4b0d34fe2de9b40a7ca04b2f20c03dec4b341ee94a2fc16527a7b7c2"
 }

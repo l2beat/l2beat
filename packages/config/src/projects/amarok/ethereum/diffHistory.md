@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x3a978f15c7269092b36ab238cd40ee69b3d49c49
+Generated with discovered.json: 0x59c87fa9886465ec0b83171220c660d7b1e0918e
+
+# Diff at Tue, 29 Apr 2025 08:18:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21629064
+- current block number: 21629064
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+    contract Relayer10 (0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134","via":[{"address":"0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"}]},{"permission":"upgrade","to":"0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b","via":[]}]
+    }
+```
+
+```diff
+    contract Relayer5 (0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9","via":[]}]
+    }
+```
+
+```diff
+    contract Relayer1 (0xaBcC9b596420A9E9172FD5938620E265a0f9Df92) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134","via":[{"address":"0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"}]},{"permission":"upgrade","to":"0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x8f3c3693df5e37efe5a6513fe290f34401cafaf5
 
 # Diff at Tue, 04 Mar 2025 10:38:54 GMT:
 

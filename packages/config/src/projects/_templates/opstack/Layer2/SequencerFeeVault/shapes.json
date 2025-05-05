@@ -10,5 +10,11 @@
     "address": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
     "chain": "ink",
     "blockNumber": 10183769
+  },
+  "SequencerFeeVault_v1_3_0": {
+    "hash": "0xa6e80925a541b18f301edb66231f85cc8aee7aba084674ca3e2822f55d5295d1",
+    "address": "0xd53210eE20948eCFF8B6B8180E29657e0ce8492d",
+    "chain": "base",
+    "blockNumber": 29605802
   }
 }

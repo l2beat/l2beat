@@ -1,3 +1,152 @@
+Generated with discovered.json: 0x32ca68770b5d0acb9ebc1bfde30d37e23d12f7dc
+
+# Diff at Tue, 29 Apr 2025 08:19:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22336710
+- current block number: 22336710
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22336710 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","description":"can freeze the Vector contract and update the list of authorized relayers.","via":[]},{"permission":"interact","to":"0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474","description":"can call commitHeaderRange() to commit block ranges to the Vector contract.","via":[]},{"permission":"upgrade","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[]}]
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930","description":"pause the bridge.","via":[]},{"permission":"interact","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.","via":[]},{"permission":"upgrade","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}]
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x4f19e1c1a1b47fe77d64dbfe805e57c7762bc60d
+
+# Diff at Thu, 24 Apr 2025 10:31:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22336710
+- current block number: 22336710
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22336710 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.oldVerifier:
+-        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++        {"verifier":"0xc350F063C13a3Ca21331610fe159E697a5c9c2FB","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
+      values.oldVerifier2:
+-        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",true]
++        {"verifier":"0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01.
+      values.oldVerifier3:
+-        ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",true]
++        {"prover":"0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08.
+      values.oldVerifier4:
+-        ["0x1764C29FBd94865198588f10FC75D4f6636d158d",true]
++        {"verifier":"0x1764C29FBd94865198588f10FC75D4f6636d158d","frozen":true}
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5:
+-        ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",true]
++        {"prover":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","frozen":true}
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier:
+-        ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",false]
++        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+    }
+```
+
+Generated with discovered.json: 0x485af2ff4d0ad4b48c69ddb1d6575cd1123f26cd
+
+# Diff at Thu, 24 Apr 2025 05:13:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6466cdaa8544f9f09e2fd2435efdaa3e02a1919f block: 22188870
+- current block number: 22336710
+
+## Description
+
+Add the Avail bridge (uses vector and is shared by L2s for merkle proofs)... config: colorize, bridge is verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188870 (main branch discovery), not current.
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      name:
+-        "AvailMultisig"
++        "Avail Multisig 1"
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.1.description:
++        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x194d174e8fec4d9db4b1fe53d82b96e689dc23a7
 
 # Diff at Thu, 03 Apr 2025 14:55:22 GMT:

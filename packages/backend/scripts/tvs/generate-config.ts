@@ -13,11 +13,18 @@ import {
   type TvsToken,
 } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type LegacyToken,
+  ProjectId,
+  type TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   boolean,
   command,
   flag,
+  option,
   optional,
   positional,
   run,
@@ -26,7 +33,8 @@ import {
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
 import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
-import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
+import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
+import { mapLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/mapLegacyConfig'
 
 const args = {
   project: positional({
@@ -39,6 +47,12 @@ const args = {
     long: 'include-zero-amounts',
     short: 'iza',
     description: 'Include zero amounts in the config',
+  }),
+  exclude: option({
+    type: optional(string),
+    long: 'exclude',
+    short: 'e',
+    description: 'Exclude projects from TVS calculation',
   }),
 }
 
@@ -54,15 +68,29 @@ const cmd = command({
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-    let projects: Project<'tvlConfig', 'chainConfig' | 'isBridge'>[] | undefined
+    let projects:
+      | Project<'escrows' | 'tvsInfo', 'chainConfig' | 'isBridge'>[]
+      | undefined
 
     const start = Date.now()
 
+    const tokens = await ps.getTokens()
+
     if (!args.project) {
-      projects = await ps.getProjects({
-        select: ['tvlConfig'],
-        optional: ['chainConfig', 'isBridge'],
-      })
+      if (args.exclude) {
+        logger.info(`Excluding projects: ${args.exclude}`)
+      }
+
+      const excludedProjects = args.exclude
+        ? args.exclude.split(',').map((p) => ProjectId(p.trim()))
+        : []
+
+      projects = (
+        await ps.getProjects({
+          select: ['escrows', 'tvsInfo'],
+          optional: ['chainConfig', 'isBridge'],
+        })
+      ).filter((project) => !excludedProjects.includes(project.id))
 
       if (!projects) {
         logger.error('No TVS projects found')
@@ -71,7 +99,7 @@ const cmd = command({
     } else {
       const project = await ps.getProject({
         id: ProjectId(args.project),
-        select: ['tvlConfig'],
+        select: ['escrows', 'tvsInfo'],
         optional: ['chainConfig', 'isBridge'],
       })
 
@@ -94,6 +122,7 @@ const cmd = command({
       projects.map(async (project) => {
         return await generateConfigForProject(
           project,
+          tokens,
           chains,
           logger,
           localStorage,
@@ -160,7 +189,8 @@ const cmd = command({
 run(cmd, process.argv.slice(2))
 
 async function generateConfigForProject(
-  project: Project<'tvlConfig', 'chainConfig'>,
+  project: Project<'escrows' | 'tvsInfo', 'chainConfig'>,
+  tokens: LegacyToken[],
   chains: Map<string, ChainConfig>,
   logger: Logger,
   localStorage: LocalStorage,
@@ -182,7 +212,15 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, chains, logger, localStorage, rpc)
+  const legacyConfig = getLegacyConfig(project, tokens)
+  return mapLegacyConfig(
+    project,
+    legacyConfig,
+    chains,
+    logger,
+    localStorage,
+    rpc,
+  )
 }
 
 function initLogger(env: Env) {

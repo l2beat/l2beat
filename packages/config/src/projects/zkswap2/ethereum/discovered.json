@@ -2,7 +2,7 @@
   "name": "zkswap2",
   "chain": "ethereum",
   "blockNumber": 16767881,
-  "configHash": "0xeb5d04c26aac90cb2a8683f5fecb9090faabe79d762727ae64dbf3af8cd3fbbd",
+  "configHash": "0x6c874d1f0e4ade72106fd1c8b704e75e9589d94a901ebe7d129e76609b66f3eb",
   "entries": [
     {
       "name": "UpgradeGatekeeper",
@@ -62,13 +62,6 @@
         "0xe57a7d24585183351134b42cf28e1fe88dc44f62c93f606e49489c95fb235b3a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -90,13 +83,6 @@
         "0xe89f1035c59a163546a58952321af25209cc7c946f7fe23f50b535818c980d29"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "firstPriorityRequestId",
@@ -149,13 +135,6 @@
         "0xfe2c75fea0224e9fcb9594039d0179faaeb8db2a5bd3a9219433c90b069d049d"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -214,13 +193,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -253,13 +225,6 @@
         "0x86e6238a6b2cd0e01b10a66c120be7cfb092bbeb23c0b83e457b160062477b45"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -628,5 +593,6 @@
       "function zkSyncExitAddress() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x744bf7b868c5ebcc699e20fd84925dba096b07b4d59591f04d4684b7fc4d3b54"
 }

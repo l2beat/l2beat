@@ -1,4 +1,110 @@
-Generated with discovered.json: 0xaad0fd9223951f36994b8e09b45464cca15e9027
+Generated with discovered.json: 0x3489d05b747e06db081610c8b194944ee54d3cca
+
+# Diff at Tue, 29 Apr 2025 08:19:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22243976
+- current block number: 22243976
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22243976 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x0407af506d86bFA5e401099b2fC2355590638f19) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x2171E6d3B7964fA9654Ce41dA8a8fFAff2Cc70be) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f","via":[]},{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0x4deC2aA521108d78d983c0c12656c6CF8631F2ED) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"set and change address mappings.","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract DelayedWETH (0xBb70D595147A141e268532BFEF61A8c25054d26D) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"can pull funds from the contract in case of emergency.","via":[]},{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract DelayedWETH (0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"can pull funds from the contract in case of emergency.","via":[]},{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xfd1255b6c09D939E7F3896A16C32CDBCD6F8B40A) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0xC7fCbE26c1Db751d63869F72F782a56710f6be5A","via":[]},{"permission":"upgrade","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}]
+    }
+```
+
+Generated with discovered.json: 0x34425974767d48b5d9d0ca5c8101dae12a89badf
 
 # Diff at Fri, 11 Apr 2025 13:15:49 GMT:
 

@@ -1,4 +1,94 @@
-Generated with discovered.json: 0xf95dbe1f4e31e711e7c1112df4cb54f4cd42afe8
+Generated with discovered.json: 0xcbb4864366c98cb050f8658ebaff9fceba5bf089
+
+# Diff at Tue, 29 Apr 2025 08:19:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22323047
+- current block number: 22323047
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22323047 (main branch discovery), not current.
+
+```diff
+    contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A) {
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6","description":"change the ISM and hooks, whitelist new routes and update destination fees.","via":[]},{"permission":"upgrade","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}]
+    }
+```
+
+```diff
+    contract DomainRoutingIsm (0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944) {
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","description":"manage the domain -> ISM contract mapping.","via":[]}]
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543) {
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6","description":"change the ISM and hooks, whitelist new routes and update destination fees.","via":[]},{"permission":"upgrade","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}]
+    }
+```
+
+```diff
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","description":"change the default ISM and hooks for this chain that are used for all connected contracts that do not override them.","via":[]},{"permission":"interact","to":"0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751","description":"verify messages for destination contracts that do not specify a custom ISM.","via":[]},{"permission":"upgrade","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}]
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09) {
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6","description":"change the ISM and hooks, whitelist new routes and update destination fees.","via":[]},{"permission":"upgrade","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}]
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c) {
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e","description":"change the ISM and hooks, whitelist new routes and update destination fees.","via":[]},{"permission":"upgrade","to":"0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e","via":[{"address":"0x9Fca159607687AE26367d66166e680A930af0780"}]}]
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6","description":"change the ISM and hooks, whitelist new routes and update destination fees.","via":[]},{"permission":"upgrade","to":"0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}]
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2) {
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCEA8039076E35a825854c5C2f85659430b06ec96","description":"change the ISM and hooks, whitelist new routes and update destination fees.","via":[]},{"permission":"upgrade","to":"0xCEA8039076E35a825854c5C2f85659430b06ec96","via":[{"address":"0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"}]}]
+    }
+```
+
+```diff
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e) {
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
+      issuedPermissions:
+-        [{"permission":"validateBridge2","to":"0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc","via":[]},{"permission":"validateBridge2","to":"0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97","via":[]},{"permission":"validateBridge2","to":"0xEa83086a62617A7228ce4206FAe2ea8b0ab23513","via":[]},{"permission":"validateBridge2","to":"0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x7aab1fcae3f6fd561d1708cb9783b33df61d4c01
 
 # Diff at Tue, 22 Apr 2025 12:16:20 GMT:
 

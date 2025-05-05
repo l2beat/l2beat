@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 21973864,
-  "configHash": "0x3b3a1907c1d9af184bbad6ea03d07f1cb53daf37b6426bd9a8d91d209f750710",
+  "configHash": "0x7a58268eaa03160594c2d4b4db722f4a9dc8cf9b721b0a17da384a12f891f29c",
   "entries": [
     {
       "name": "ExchangeV3",
@@ -13,13 +13,6 @@
         "0x7e59ed579f658f2c8c645a1794f79626a3d8578e8700d19bbd866122f9dd9b8e"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -998,5 +991,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x0d34393ce05e790369b2bc884d32567c209f43c8d945ecee03b9fce1d8d551b3"
 }

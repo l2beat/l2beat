@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "linea",
   "blockNumber": 15810734,
-  "configHash": "0x9c2252bd593768424bfffc27db7f52659af5b0d0f4cfa959d23acc01b1ac3766",
+  "configHash": "0x6cc27cc4ca0c25459abc1c1dec21e7fa522ca7a470deb026f2646aac836e08f4",
   "entries": [
     {
       "name": "TokenMessaging",
@@ -282,5 +282,6 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x5706a59399c824e14cc625a3eb30d0938a9b6c1c11668fb20edb3e10356db3ae"
 }

@@ -89,7 +89,7 @@
             "method": "executionDelay",
             "args": []
           },
-          "returnType": "(FormatSeconds)"
+          "edit": ["format", "FormatSeconds"]
         },
         "revertedBlocks": {
           "handler": {
@@ -139,7 +139,7 @@
             "method": "minDelay",
             "args": []
           },
-          "returnType": "(FormatSeconds)"
+          "edit": ["format", "FormatSeconds"]
         },
         "owner": {
           "permissions": [{ "type": "act" }]

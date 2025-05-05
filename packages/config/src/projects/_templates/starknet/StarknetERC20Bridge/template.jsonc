@@ -39,7 +39,7 @@
         "method": "function getRemainingIntradayAllowance(address token) view returns (uint256)",
         "args": ["{{bridgedToken}}"]
       },
-      "returnType": "(UintMaxMeansInactive)"
+      "edit": ["format", "UintMaxMeansInactive"]
     },
     "maxTotalBalance": {
       "description": "The maximum total balance that can be locked in the bridge.",
@@ -57,7 +57,7 @@
         "method": "function getStatus(address token) view returns (uint8)",
         "args": ["{{bridgedToken}}"]
       },
-      "returnType": "(TokenStatus)"
+      "edit": ["format", "TokenStatus"]
     },
     "withdrawLimitPct": {
       "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.",

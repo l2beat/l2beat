@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xd5e2fb5a6bd9bf254e6b8049eb7b17a63ad2a83e
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22188866
+- current block number: 22188866
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188866 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x51D5C516c818dcf63E67B28cB2516166D8578c06) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"set and change address mappings.","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa010dE167788ed7d95c770AC478997D3207236AF) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"can toggle between the optimistic mode and not optimistic (ZK) mode.","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xeBf5859b7646ca9cf8A981613569bF28394F2571) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x9Fb23129982c993743Eb9bB156af8CC8Fa2aC761","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+Generated with discovered.json: 0x0c80ea15a0383258aad603a64aca4fba5d53c4ae
+
+# Diff at Thu, 24 Apr 2025 10:30:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22188866
+- current block number: 22188866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188866 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.oldVerifier:
+-        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++        {"verifier":"0xc350F063C13a3Ca21331610fe159E697a5c9c2FB","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
+      values.oldVerifier2:
+-        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",true]
++        {"verifier":"0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01.
+      values.oldVerifier3:
+-        ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",true]
++        {"prover":"0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08.
+      values.oldVerifier4:
+-        ["0x1764C29FBd94865198588f10FC75D4f6636d158d",true]
++        {"verifier":"0x1764C29FBd94865198588f10FC75D4f6636d158d","frozen":true}
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5:
+-        ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",true]
++        {"prover":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","frozen":true}
+      values.opSuccinctVerifier:
+-        ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",false]
++        {"verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier:
+-        ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",false]
++        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+    }
+```
+
+Generated with discovered.json: 0x4650c8d5c9dd866400fba172bd09ac13cd135ca3
+
+# Diff at Wed, 23 Apr 2025 13:20:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2f39eabda7f7e886e8b7711bdb4fc317e976d746 block: 22188866
+- current block number: 22188866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22188866 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "SP1VerifierGatewayMultisig"
+    }
+```
+
 Generated with discovered.json: 0x3f1ab78a7039f639a7a94a74f6f074e52b8eab2f
 
 # Diff at Thu, 03 Apr 2025 14:54:56 GMT:

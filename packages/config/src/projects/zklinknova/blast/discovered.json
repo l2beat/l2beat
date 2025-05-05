@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "blast",
   "blockNumber": 16435499,
-  "configHash": "0xbc66af8e35ac2ec2e9e0e6ed09f1ab958f77ecce244c48b9da8c38828a1973a9",
+  "configHash": "0xb3ee6a7f041f3ab475b025573db7f3a3533461cd04cd7b2f134aacf5b99d6ebe",
   "entries": [
     {
       "address": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
@@ -24,13 +24,6 @@
         "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -95,13 +88,6 @@
         "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1710418385,
       "sinceBlock": 804285,
       "values": {
@@ -203,13 +189,6 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
-          "via": [{ "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19" }]
-        }
-      ],
       "sinceTimestamp": 1710427013,
       "sinceBlock": 808599,
       "values": {
@@ -499,5 +478,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

@@ -50,7 +50,8 @@ const difftasticPath = option({
 
 const mode = option({
   type: DiffingModeType,
-  description: 'mode in which diff will be generated, either together or split',
+  description:
+    'mode in which diff will be generated, either together or split.',
   long: 'mode',
   short: 'm',
   defaultValue: () => 'together' as const,
@@ -59,7 +60,7 @@ const mode = option({
 const displayMode = option({
   type: DisplayModeType,
   description:
-    'mode in which diff will be shown, either inline or side-by-side',
+    'mode in which diff will be shown, either inline or side-by-side.',
   long: 'display-mode',
   short: 'd',
   defaultValue: () => 'inline' as const,
@@ -67,7 +68,7 @@ const displayMode = option({
 
 export const diffContext = option({
   type: number,
-  description: 'number of additional lines to show around the difference',
+  description: 'number of additional lines to show around the difference.',
   long: 'context',
   short: 'c',
   defaultValue: () => 3,
@@ -77,7 +78,7 @@ export const diffContext = option({
 const PowerdiffPath = command({
   name: 'path',
   description:
-    'Compare two directories recursively using difftastic and serve the result',
+    'Compare two directories recursively using difftastic and serve the result.',
   args: {
     leftPath: positional({ type: Directory, displayName: 'leftPath' }),
     rightPath: positional({ type: Directory, displayName: 'rightPath' }),
@@ -108,7 +109,7 @@ const PowerdiffPath = command({
 const PowerdiffDiscovery = command({
   name: 'discovery',
   description:
-    'Compare two directories recursively using difftastic and serve the result',
+    'Compare two directories recursively using difftastic and serve the result.',
   args: {
     chain: positional({ type: string, displayName: 'chain' }),
     project: positional({ type: string, displayName: 'project' }),
@@ -155,7 +156,7 @@ const PowerdiffDiscovery = command({
 
 export const Powerdiff = subcommands({
   name: 'powerdiff',
-  description: 'Compare project similarities based on flat sources',
+  description: 'Compare project similarities based on flat sources.',
   cmds: {
     path: PowerdiffPath,
     discovery: PowerdiffDiscovery,

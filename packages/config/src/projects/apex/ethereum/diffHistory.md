@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xcd426307e31d61b5305a6a457a206731df7d0414
+Generated with discovered.json: 0x974273816d6c30b5362bffd4075145887311a87e
+
+# Diff at Tue, 29 Apr 2025 08:18:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21981180
+- current block number: 21981180
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981180 (main branch discovery), not current.
+
+```diff
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","via":[]},{"permission":"governStarknet","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","via":[]},{"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","description":"manage the token admin role.","via":[]},{"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"operateStarknet","to":"0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb","via":[]},{"permission":"upgrade","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","delay":1209600,"via":[]},{"permission":"upgrade","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","delay":1209600,"via":[]}]
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","via":[]},{"permission":"interact","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"operateStarknet","to":"0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169","via":[]},{"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"upgrade","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","delay":1209600,"via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x40280776b8fb294a14358ad2a0c19137298eb51a
 
 # Diff at Thu, 10 Apr 2025 14:42:08 GMT:
 

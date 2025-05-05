@@ -9,6 +9,8 @@ export interface LinkWithThumbnailProps {
   title: string
   description?: string
   src: string
+  width: number
+  height: number
   href: string
   topAccessory?: React.ReactNode
   orientation?: 'vertical' | 'horizontal'
@@ -38,8 +40,8 @@ export function LinkWithThumbnail({
           orientation === 'horizontal' &&
             'max-w-36 rounded-md transition-all group-hover:scale-105 md:max-w-48',
         )}
-        height={674}
-        width={1200}
+        height={props.height}
+        width={props.width}
       />
       <div
         className={cn(

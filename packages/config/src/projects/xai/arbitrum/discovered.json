@@ -2,7 +2,7 @@
   "name": "xai",
   "chain": "arbitrum",
   "blockNumber": 324577860,
-  "configHash": "0xba2e9ba30d0231859f21b854c6f6457a55bc719e509595bfe4deb02a240331aa",
+  "configHash": "0x713572941d7c9ba45eef6b67a436b61580929f5a98611546acba27cbd29f3020",
   "entries": [
     {
       "name": "XaiMultisig2",
@@ -130,16 +130,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -201,16 +191,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -254,16 +234,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704476020,
       "sinceBlock": 167416353,
       "values": {
@@ -338,16 +308,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -377,16 +337,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -568,13 +518,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages beacon addresses for the v2 staking pools.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
       "sinceTimestamp": 1712865943,
       "sinceBlock": 200013514,
       "values": {
@@ -664,16 +607,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -775,13 +708,6 @@
         "0x4fb5ce09fed416c49adb85057e748a97d8987e93d10a84ab6c10c85217a9d4ad"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
       "sinceTimestamp": 1701801219,
       "sinceBlock": 157193649,
       "values": {
@@ -811,40 +737,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
-        },
-        {
-          "permission": "sequence",
-          "to": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -932,16 +824,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -976,16 +858,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [
-            { "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" },
-            { "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704476020,
       "sinceBlock": 167416353,
       "values": {
@@ -1024,13 +896,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is the contract where Xai Sentry Keys for running a sentry node are minted.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1701801243,
       "sinceBlock": 157193743,
@@ -1159,31 +1024,6 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
-          "via": [{ "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" }]
-        },
-        {
-          "permission": "validate",
-          "to": "0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": []
-        },
-        {
-          "permission": "validate",
-          "to": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -1305,7 +1145,8 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
-            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }
         }
       ],
@@ -1338,13 +1179,6 @@
         "0xc9c19fb4d016fe3bcc74ab045b2d6a2231e661f4d86cbb0cac0dc5d1301fb49a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
       "sinceTimestamp": 1730222058,
       "sinceBlock": 268948639,
       "values": {
@@ -1491,13 +1325,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
       "ignoreInWatchMode": ["getPoolsCount"],
       "sinceTimestamp": 1712865940,
       "sinceBlock": 200013500,
@@ -1599,13 +1426,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "challengeCounter",
         "getKycWalletCount",
@@ -2830,9 +2650,10 @@
     "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
     "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
     "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
-    "orbitstack/RollupProxy_fastConfirm": "0xc7fb90b328704727b36009a58af78ba33b8c575391e9f530cf458bf214f77b00",
-    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/RollupProxy_fastConfirm": "0x15096a7a30984da8dead5ecf3a39299ca438a6f3869a0ff528f1ddb261e095b1",
+    "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x5733950d07b5fcdee140a821c46296c55776cd0a4a0c9fc9f221cc17e1ca7658"
 }

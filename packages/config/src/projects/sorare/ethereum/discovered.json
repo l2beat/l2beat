@@ -2,7 +2,7 @@
   "name": "sorare",
   "chain": "ethereum",
   "blockNumber": 21981156,
-  "configHash": "0x0f8dba895def25ff2f0d368ebe436525f5a1b720a41185687ae2d0eec433f64e",
+  "configHash": "0x414dbfad067c9e9a8ae8f45a3d325bb4db067fcc0962f4b1d6f56ee52ca133f3",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -266,64 +266,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x5918481F777dBe437De249492B90AffB4e655de4",
-          "via": []
-        },
-        {
-          "permission": "governStarknet",
-          "to": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x5918481F777dBe437De249492B90AffB4e655de4",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x63881ac44293E22F3c3183a0C4113586ABb3e653",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5918481F777dBe437De249492B90AffB4e655de4",
-          "delay": 1209600,
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
-          "delay": 1209600,
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -962,8 +904,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
-    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
+    "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
     "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
     "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
-  }
+  },
+  "permissionsConfigHash": "0xff884092f9fc8e5ddd858914cef6e92f7f177556578f9623fee7bb85a826e6bb"
 }

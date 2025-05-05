@@ -11,17 +11,13 @@ import { UpdateNotifierRepository } from './discovery/update-notifier/repository
 import { DatabaseClient } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
+import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
-import { AmountRepository } from './tvl/amount/repository'
-import { BlockTimestampRepository } from './tvl/block-timestamp/repository'
-import { PriceRepository } from './tvl/price/repository'
-import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
-import { ValueRepository } from './tvl/value/repository'
 import { TvsAmountRepository } from './tvs/amount/repository'
 import { TvsBlockTimestampRepository } from './tvs/block-timestamp/repository'
 import { TvsPriceRepository } from './tvs/price/repository'
@@ -56,14 +52,6 @@ export function createDatabase(config?: PoolConfig) {
     flatSources: new FlatSourcesRepository(db),
     // #endregion
 
-    // #region TVL
-    amount: new AmountRepository(db),
-    blockTimestamp: new BlockTimestampRepository(db),
-    price: new PriceRepository(db),
-    tvlCleaner: new TvlCleanerRepository(db),
-    value: new ValueRepository(db),
-    // #endregion
-
     // #region UIF
     indexerConfiguration: new IndexerConfigurationRepository(db),
     indexerState: new IndexerStateRepository(db),
@@ -72,6 +60,7 @@ export function createDatabase(config?: PoolConfig) {
     // #region Other
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     aggregatedLiveness: new AggregatedLivenessRepository(db),
+    aggregatedLiveness2: new AggregatedLiveness2Repository(db),
     anomalies: new AnomaliesRepository(db),
     finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),

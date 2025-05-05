@@ -77,12 +77,7 @@ const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     name: 'EVM compatible smart contracts are supported',
     description:
       'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-      },
-    ],
+    risks: [],
     references: [
       {
         title: 'Inside Arbitrum Nitro',
@@ -97,12 +92,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     name: 'EVM compatible and Stylus smart contracts are supported',
     description:
       'Arbitrum One supports smart contracts written in Solidity and other programming languages (Rust, C++) that compile to WASM. Such smart contracts are executed by nodes using either a geth fork or [a fork of wasmer](https://github.com/OffchainLabs/wasmer) inside the Nitro node, and can be proven with the onchain WASM VM.',
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-      },
-    ],
+    risks: [],
     references: [
       {
         title: 'Inside Arbitrum Nitro',
@@ -328,6 +318,7 @@ function defaultStateValidation(
 
 const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
+  '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3',
 ]
 
 // TODO: Add blobstream delay when timelock is enabled
@@ -568,8 +559,6 @@ function orbitStackCommon(
             } as ProjectTechnologyChoice
           }
         })(),
-      stateCorrectness:
-        templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         daProvider.technology,

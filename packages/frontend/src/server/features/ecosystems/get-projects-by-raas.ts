@@ -1,13 +1,10 @@
 import type { Project } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { getProjectIcon } from '../utils/get-project-icon'
 
 export type ProjectByRaas = Record<
   string,
-  {
-    id: ProjectId
-    slug: string
-    name: string
-  }[]
+  { projects: UsedInProjectWithIcon[]; icon: string }
 >
 
 export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
@@ -15,11 +12,15 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
     const raas = curr.scalingInfo.raas
     if (!raas) return acc
     if (!acc[raas]) {
-      acc[raas] = []
+      acc[raas] = {
+        projects: [],
+        icon: getProjectIcon(raas.toLowerCase()),
+      }
     }
-    acc[raas].push({
+    acc[raas].projects.push({
       id: curr.id,
       slug: curr.slug.toString(),
+      icon: getProjectIcon(curr.slug),
       name: curr.name,
     })
     return acc

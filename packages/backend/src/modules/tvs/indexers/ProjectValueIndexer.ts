@@ -1,4 +1,3 @@
-import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { TvsToken } from '@l2beat/config'
 import type { ProjectValueRecord, TokenValueRecord } from '@l2beat/database'
 import {
@@ -7,12 +6,13 @@ import {
   type RemovalConfiguration,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { ProjectValueConfig } from '../types'
 
 interface ProjectValueIndexerDeps

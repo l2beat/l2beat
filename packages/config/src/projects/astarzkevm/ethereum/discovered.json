@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0x28794d5aa2f897a56bf7120f67f4ce98e957ef5e0bee60689eabca9418b414d5",
+  "configHash": "0x85fa0ea591c2352a84c10e5fcd753f625ba6f1c6402adb7942a617c2eaad14f7",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -65,25 +65,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1708632059,
       "sinceBlock": 19285389,
@@ -217,19 +198,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "via": [{ "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }]
-        }
-      ],
       "sinceTimestamp": 1708624559,
       "sinceBlock": 19284769,
       "values": {
@@ -247,26 +215,26 @@
         "getAmountOfMembers": 5,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://dac1-zkevm.astar.network",
-            "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
-          ],
-          [
-            "https://dac3-zkevm.astar.network",
-            "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
-          ],
-          [
-            "https://dac2-zkevm.astar.network",
-            "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
-          ],
-          [
-            "https://dac4-zkevm.astar.network",
-            "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
-          ],
-          [
-            "https://dac0-zkevm.astar.network",
-            "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
-          ]
+          {
+            "url": "https://dac1-zkevm.astar.network",
+            "addr": "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
+          },
+          {
+            "url": "https://dac3-zkevm.astar.network",
+            "addr": "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
+          },
+          {
+            "url": "https://dac2-zkevm.astar.network",
+            "addr": "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
+          },
+          {
+            "url": "https://dac4-zkevm.astar.network",
+            "addr": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
+          },
+          {
+            "url": "https://dac0-zkevm.astar.network",
+            "addr": "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
+          }
         ],
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "requiredAmountOfSignatures": 3
@@ -609,5 +577,6 @@
     "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0xd52988339e409141d8904acf64a0d2cd4cccdae220979801f8196d2dcbfdb3fe"
 }

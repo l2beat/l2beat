@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 22243970,
-  "configHash": "0x2cb275d5fadab1d8bf14979d7a43e623214c1e82ac9a689b4ac8c2865f497318",
+  "configHash": "0x240367ee17218d4ae62da7238151f2ca91cc01aa2b15d692fa34eae5f9281a37",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -36,25 +36,35 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
-        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
-        "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
-        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
-        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
-        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
+        "oldVerifier": {
+          "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+          "frozen": true
+        },
+        "oldVerifier2": {
+          "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+          "frozen": true
+        },
+        "oldVerifier3": {
+          "prover": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
+          "frozen": true
+        },
+        "oldVerifier4": {
+          "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+          "frozen": true
+        },
+        "oldVerifier5": {
+          "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "frozen": true
+        },
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
+        "verifier": {
+          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "frozen": false
+        }
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -109,31 +119,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
-          "description": "can freeze the bridge contract and update the list of authorized relayers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
       "sinceBlock": 20027685,
@@ -476,5 +461,6 @@
     "succinct/SP1Blobstream": "0x886e792aba1703e94c7eb1c129babcca484bd908a355b129879c543fdca7d523",
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
-  }
+  },
+  "permissionsConfigHash": "0x91ad5d6529b2e900dfaa22733cf080d3a154db4bcc3d18b661efa049a05925e8"
 }

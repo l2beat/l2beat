@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22188901,
-  "configHash": "0x3569c6cfa9bf554f1e1bfe199cbfd36a11bdbacdf8d4d24cedbdd31daeb3ff24",
+  "blockNumber": 22330737,
+  "configHash": "0x58910ebb343f82ecd0c0152d9b6df39abc17e9093f2f86b2de141508eaa221ee",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -18,17 +18,6 @@
         "0x8b92d5e0137768d72db79ce9eeffbfaae0d55d02e0c3f2f4d87e0ae24beb94d1"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1737695795,
       "sinceBlock": 21692210,
       "values": {
@@ -79,17 +68,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "latestBlockNumber",
         "latestOutputIndex",
@@ -119,12 +97,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 24903000,
-        "latestOutputIndex": 13835,
-        "nextBlockNumber": 24904800,
-        "nextFinalizeOutputIndex": 13667,
-        "nextOutputIndex": 13836,
-        "nextOutputMinL2Timestamp": 1743689989,
+        "latestBlockNumber": 25758000,
+        "latestOutputIndex": 14310,
+        "nextBlockNumber": 25759800,
+        "nextFinalizeOutputIndex": 14142,
+        "nextOutputIndex": 14311,
+        "nextOutputMinL2Timestamp": 1745399989,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -152,50 +130,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "execute transactions that are ready.",
-          "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "propose transactions.",
-          "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -287,17 +221,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "activatedValidatorCount",
         "activatedValidatorTotalWeight",
@@ -322,7 +245,7 @@
         ],
         "$upgradeCount": 2,
         "activatedValidatorCount": 9,
-        "activatedValidatorTotalWeight": "31723384761745083215624839",
+        "activatedValidatorTotalWeight": "31619924081214869050881424",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -336,7 +259,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x16876e5c608cec36968517A9Eb345269D308D94a",
+        "nextValidator": "0x3A68B16303AF7969aE0E84DEd82dbF865D725547",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -367,22 +290,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1693880555,
       "sinceBlock": 18067269,
@@ -408,7 +315,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 22187836
+          "prevBlockNum": 22317805
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -446,31 +353,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" }
-          ]
-        },
-        {
-          "permission": "sequence",
-          "to": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1693880543,
       "sinceBlock": 18067268,
@@ -555,25 +437,35 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
-        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
-        "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
-        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
-        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
-        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
+        "oldVerifier": {
+          "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+          "frozen": true
+        },
+        "oldVerifier2": {
+          "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+          "frozen": true
+        },
+        "oldVerifier3": {
+          "prover": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
+          "frozen": true
+        },
+        "oldVerifier4": {
+          "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+          "frozen": true
+        },
+        "oldVerifier5": {
+          "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "frozen": true
+        },
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0x0000000000000000000000000000000000000000", false]
+        "verifier": {
+          "prover": "0x0000000000000000000000000000000000000000",
+          "frozen": false
+        }
       },
       "fieldMeta": {
         "verifier": {
@@ -607,17 +499,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -712,17 +593,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1693880591,
       "sinceBlock": 18067272,
@@ -738,7 +608,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4346,
+        "messageNonce": 4352,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -765,17 +635,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1693287695,
       "sinceBlock": 18018264,
       "values": {
@@ -924,17 +783,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1693287719,
       "sinceBlock": 18018266,
       "values": {
@@ -972,23 +820,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
-          "description": "dismiss ongoing challenges and override state roots (`forceDeleteOutput()`).",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1693880615,
       "sinceBlock": 18067274,
       "values": {
@@ -1072,16 +903,6 @@
         "0x531e0a3d7e3c3cf7433e6462f1606d0470104dfd9eb9e500fecc14e8334670dd"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1700121851,
       "sinceBlock": 18583133,
       "values": {
@@ -1112,18 +933,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1693880603,
       "sinceBlock": 18067273,
       "values": {
@@ -1176,17 +985,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1729473899,
       "sinceBlock": 21010650,
       "values": {
@@ -1224,17 +1022,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1281,7 +1068,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22188901,
+        "clock": 22330737,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1318,7 +1105,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig 1",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1377,77 +1164,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x16876e5c608cec36968517A9Eb345269D308D94a",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x27EFE61C5266e461995141f57b4D13F13c83f786",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1670,7 +1386,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22188901,
+        "clock": 22330737,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1771,23 +1487,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
-          "description": "become a validator without posting a bond.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "via": [
-            { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
-            { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["nextValidator", "validatorCount"],
       "sinceTimestamp": 1693880567,
       "sinceBlock": 18067270,
@@ -2713,12 +2412,13 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
+    "global/Timelock": "0x2a557f1c66ae4b55d5b565ca43f14de3cffa034ccf145cec23f477a3730ecf2d",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
     "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
     "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
-  }
+  },
+  "permissionsConfigHash": "0x380a50f020e6b3ddcbec10cb9d3aa3f288f47d00506b85a621bb845ca9bf5d1b"
 }

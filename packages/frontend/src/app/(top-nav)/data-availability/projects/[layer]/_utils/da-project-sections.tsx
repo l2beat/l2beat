@@ -5,6 +5,7 @@ import type { ProjectsChangeReport } from '~/server/features/projects-change-rep
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getDaThroughputSection } from './get-da-throughput-section'
@@ -85,10 +86,7 @@ export async function getRegularDaProjectSections({
     props: {
       id: 'da-layer-technology',
       title: 'Technology',
-      diagram: {
-        type: 'da-layer-technology',
-        slug: layer.slug,
-      },
+      diagram: getDiagramParams('da-layer-technology', layer.slug),
       content: layer.daLayer.technology.description,
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
@@ -116,10 +114,10 @@ export async function getRegularDaProjectSections({
     props: {
       id: 'da-bridge-technology',
       title: 'Technology',
-      diagram: {
-        type: 'da-bridge-technology',
-        slug: `${layer.slug}-${bridge?.slug ?? 'no-bridge'}`,
-      },
+      diagram: getDiagramParams(
+        'da-bridge-technology',
+        `${layer.slug}-${bridge?.slug ?? 'no-bridge'}`,
+      ),
       content:
         bridge?.daBridge.technology.description ??
         'No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.',
@@ -292,10 +290,7 @@ export async function getEthereumDaProjectSections({
     props: {
       id: 'da-layer-technology',
       title: 'Technology',
-      diagram: {
-        type: 'da-layer-technology',
-        slug: layer.slug,
-      },
+      diagram: getDiagramParams('da-layer-technology', layer.slug),
       content: layer.daLayer.technology.description.concat(
         '\n\n',
         bridge.daBridge.technology.description,

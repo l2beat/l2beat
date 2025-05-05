@@ -164,27 +164,31 @@ export const polygonpos: ScalingProject = {
       currentValidatorSetCap,
     ),
   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description:
-        'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
-        },
-      ],
-    },
     // dataAvailability: {},
     //operator: {},
     //forceTransactions: {},

@@ -1,3 +1,4 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 
@@ -197,13 +198,10 @@ export class ZkGovProposalAnalyzer {
       )
 
       // Add header to details output
-      this.addHeaderToOutput(detailsOutput, proposalInfo, proposalState)
+      this.addL2HeaderToOutput(detailsOutput, proposalInfo, proposalState)
 
       // Add timeline to details output
-      this.addTimelineToOutput(detailsOutput, timeline)
-
-      // Add additional proposal details to details output
-      this.addAdditionalProposalDetailsToOutput(detailsOutput, proposalInfo)
+      this.addTimelineToOutput(detailsOutput, timeline, 'L2 Proposal Timeline')
 
       // Add L1 information to details output if available
       if (executionInfo && l1MessageInfo) {
@@ -290,61 +288,29 @@ export class ZkGovProposalAnalyzer {
 
     // Add a clear separator
     output.push('\n' + chalk.bold.blue('='.repeat(80)))
-    output.push(chalk.bold.blue('DETAILED ANALYSIS'))
+    output.push(chalk.bold.blue('Flow / status details'))
     output.push(chalk.bold.blue('='.repeat(80)))
   }
 
   /**
    * Add header information to output array (without duplicating description)
    */
-  private addHeaderToOutput(
+  private addL2HeaderToOutput(
     output: string[],
     proposalInfo: ProposalInfo,
     proposalState: ProposalState,
   ): void {
     // Header
-    output.push(chalk.bold.blue('\n' + '='.repeat(80)))
-    output.push(
-      chalk.bold.blue(
-        `ZKsync Governance Proposal Analysis - ID: ${proposalInfo.proposalId}`,
-      ),
-    )
-    output.push(chalk.bold.blue('='.repeat(80)))
+    output.push(chalk.bold.magenta('\n' + '='.repeat(80)))
+    output.push(chalk.bold.magenta('L2 Proposal Information'))
+    output.push(chalk.bold.magenta('='.repeat(80)))
 
     // Proposal basic info (without repeating description)
+    output.push(chalk.bold('\nL2 proposal ID: ') + proposalInfo.proposalId)
     output.push(chalk.bold('\nProposer: ') + proposalInfo.proposer)
     output.push(
       chalk.bold('Current State: ') + this.formatProposalState(proposalState),
     )
-  }
-
-  /**
-   * Add additional proposal details to output (without repeating description and calldata)
-   */
-  private addAdditionalProposalDetailsToOutput(
-    output: string[],
-    proposalInfo: ProposalInfo,
-  ): void {
-    output.push(chalk.bold.green('\n' + '='.repeat(80)))
-    output.push(chalk.bold.green('Additional Proposal Information'))
-    output.push(chalk.bold.green('='.repeat(80)))
-
-    // Add vote timing information
-    const voteStartDate = new Date(proposalInfo.voteStart.toNumber() * 1000)
-    const voteEndDate = new Date(proposalInfo.voteEnd.toNumber() * 1000)
-
-    output.push(chalk.bold('\nVoting Period:'))
-    output.push(
-      `Start: ${voteStartDate.toISOString()} (${this.formatTimeDistance(voteStartDate)})`,
-    )
-    output.push(
-      `End: ${voteEndDate.toISOString()} (${this.formatTimeDistance(voteEndDate)})`,
-    )
-
-    // Add transaction details
-    output.push(chalk.bold('\nProposal Creation:'))
-    output.push(`Block: ${proposalInfo.blockNumber}`)
-    output.push(`Transaction: ${proposalInfo.txHash}`)
   }
 
   /**
@@ -782,14 +748,15 @@ export class ZkGovProposalAnalyzer {
   }
 
   /**
-   * Add timeline to output array
+   * Add timeline to output array with custom title
    */
   private addTimelineToOutput(
     output: string[],
     timeline: TimelineEvent[],
+    title: string,
   ): void {
     output.push(chalk.bold.cyan('\n' + '='.repeat(80)))
-    output.push(chalk.bold.cyan('Proposal Timeline'))
+    output.push(chalk.bold.cyan(title))
     output.push(chalk.bold.cyan('='.repeat(80)))
 
     // Sort timeline by time
@@ -860,6 +827,159 @@ export class ZkGovProposalAnalyzer {
   }
 
   /**
+   * Build L1 upgrade timeline similar to proposal timeline
+   */
+  private buildL1UpgradeTimeline(
+    upgradeInfo: UpgradeInfo,
+    upgradeState: UpgradeState,
+    upgradeStatus: UpgradeStatusInfo,
+  ): TimelineEvent[] {
+    const timeline: TimelineEvent[] = []
+
+    // 1. Upgrade Created
+    const creationTime = new Date(upgradeStatus.creationTimestamp * 1000)
+    timeline.push({
+      status: 'Created',
+      time: creationTime,
+      description: 'L1 upgrade proposal was created',
+      txHash: upgradeInfo.txHash,
+      color: 'blue',
+      isCurrent: upgradeState === UpgradeState.None,
+    })
+
+    // 2. Legal Veto Period
+    timeline.push({
+      status: 'Legal Veto Period',
+      time: creationTime,
+      description: upgradeStatus.guardiansExtendedLegalVeto
+        ? `Time to review and/or coordinate for non-approval (extended: ${formatSeconds(EXTENDED_LEGAL_VETO_PERIOD)})`
+        : `Time to review and/or coordinate for non-approval (standard: ${formatSeconds(STANDARD_LEGAL_VETO_PERIOD)})`,
+      color: 'yellow',
+      isCurrent: upgradeState === UpgradeState.LegalVetoPeriod,
+    })
+
+    // 3. Legal Veto Period End
+    const vetoEndTime = new Date(
+      (upgradeStatus.creationTimestamp +
+        (upgradeStatus.guardiansExtendedLegalVeto
+          ? EXTENDED_LEGAL_VETO_PERIOD
+          : STANDARD_LEGAL_VETO_PERIOD)) *
+        1000,
+    )
+
+    timeline.push({
+      status: 'Legal Veto Period Ended',
+      time: vetoEndTime,
+      description: `'Waiting' state can be approved by Guardians (${formatSeconds(UPGRADE_WAIT_OR_EXPIRE_PERIOD)}), SC (immediate) or expire (${formatSeconds(UPGRADE_WAIT_OR_EXPIRE_PERIOD)})`,
+      color: 'blue',
+      isCurrent: false,
+    })
+
+    // 4. Security Council Approval (if happened)
+    if (upgradeStatus.securityCouncilApprovalTimestamp > 0) {
+      const scApprovalTime = new Date(
+        upgradeStatus.securityCouncilApprovalTimestamp * 1000,
+      )
+
+      timeline.push({
+        status: 'SC Approved',
+        time: scApprovalTime,
+        description: `Security Council approved the upgrade, can be executed after ${formatSeconds(UPGRADE_DELAY_PERIOD)}`,
+        color: 'green',
+        isCurrent: false,
+      })
+
+      // 5. Ready for Execution time
+      const readyTime = new Date(
+        (upgradeStatus.securityCouncilApprovalTimestamp +
+          UPGRADE_DELAY_PERIOD) *
+          1000,
+      )
+
+      timeline.push({
+        status: 'Ready for Execution',
+        time: readyTime,
+        description: 'Upgrade is ready to be executed',
+        color: 'green',
+        isCurrent: upgradeState === UpgradeState.Ready,
+      })
+
+      // 6. Execution (if executed)
+      if (upgradeStatus.executed) {
+        // We don't have exact execution time, so use the ready time as an approximation
+        const execTime = new Date(readyTime.getTime() + 1000) // Just add 1 second
+
+        timeline.push({
+          status: 'Executed (Done)',
+          time: execTime,
+          description: 'Upgrade was executed on L1',
+          color: 'green',
+          isCurrent: upgradeState === UpgradeState.Done,
+        })
+      } else if (upgradeState === UpgradeState.Expired) {
+        // 6b. Expired (if applicable)
+        const expiryTime = new Date(
+          (upgradeStatus.securityCouncilApprovalTimestamp +
+            UPGRADE_DELAY_PERIOD +
+            UPGRADE_WAIT_OR_EXPIRE_PERIOD) *
+            1000,
+        )
+
+        timeline.push({
+          status: 'Expired',
+          time: expiryTime,
+          description: 'Upgrade expired without execution',
+          color: 'red',
+          isCurrent: true,
+        })
+      }
+    } else {
+      // Alternative flow: Security Council hasn't approved
+      const waitingEndTime = new Date(
+        (upgradeStatus.creationTimestamp +
+          (upgradeStatus.guardiansExtendedLegalVeto
+            ? EXTENDED_LEGAL_VETO_PERIOD
+            : STANDARD_LEGAL_VETO_PERIOD) +
+          UPGRADE_WAIT_OR_EXPIRE_PERIOD) *
+          1000,
+      )
+
+      // Show Guardian Approval status
+      if (upgradeStatus.guardiansApproval) {
+        timeline.push({
+          status: 'Guardians Approved',
+          time: vetoEndTime, // Approximate time TODO: fetch exact time from events
+          description: `Guardians approved the upgrade, allowing for execution after ${formatSeconds(UPGRADE_WAIT_OR_EXPIRE_PERIOD)}`,
+          color: 'green',
+          isCurrent: false,
+        })
+      }
+
+      // Always show the waiting status
+      timeline.push({
+        status: 'Waiting for Approval',
+        time: vetoEndTime,
+        description: 'Waiting for Guardians and/or Security Council approval',
+        color: 'yellow',
+        isCurrent: upgradeState === UpgradeState.Waiting,
+      })
+
+      // Add expiry info
+      timeline.push({
+        status:
+          upgradeState === UpgradeState.Expired ? 'Expired' : 'Will Expire',
+        time: waitingEndTime,
+        description:
+          'Upgrade expires if not approved by Guardians and/or Security Council',
+        color: upgradeState === UpgradeState.Expired ? 'red' : 'yellow',
+        isCurrent: upgradeState === UpgradeState.Expired,
+      })
+    }
+
+    return timeline
+  }
+
+  /**
    * Add L1 information to output array
    */
   private addL1InfoToOutput(
@@ -876,7 +996,9 @@ export class ZkGovProposalAnalyzer {
     output.push(chalk.bold.magenta('L1 Upgrade Information'))
     output.push(chalk.bold.magenta('='.repeat(80)))
 
-    output.push(chalk.bold('\nL1 Message Hash: ') + l1MessageInfo.hash)
+    output.push(
+      chalk.bold('\nL1 Upgrade ID (from L2 message): ') + l1MessageInfo.hash,
+    )
     output.push(
       chalk.bold('L2 -> L1 Message Origin: ') +
         chalk.dim(`Tx: ${l2ExecutionTxHash}`),
@@ -899,7 +1021,9 @@ export class ZkGovProposalAnalyzer {
           chalk.dim(`Tx: ${upgradeInfo.txHash}`) +
           ')',
       )
-      output.push(chalk.bold('L1 Upgrade ID: ') + upgradeInfo.id)
+      output.push(
+        chalk.bold('L1 Upgrade ID (from L1 event): ') + upgradeInfo.id,
+      )
 
       // Show upgrade state
       if (upgradeState !== null) {
@@ -907,95 +1031,17 @@ export class ZkGovProposalAnalyzer {
           chalk.bold('\nL1 Upgrade State: ') +
             this.formatUpgradeState(upgradeState),
         )
-      }
-
-      // Create L1 upgrade timeline if we have status information
-      if (upgradeStatus) {
-        output.push(chalk.bold.cyan('\nL1 Upgrade Timeline:'))
-
-        const creationTime = new Date(upgradeStatus.creationTimestamp * 1000)
-        output.push(
-          `• ${chalk.cyan('Created')}: ${creationTime.toISOString()} (${this.formatTimeDistance(creationTime)})`,
-        )
-
-        // Calculate veto period end time
-        const vetoEndTime = new Date(
-          (upgradeStatus.creationTimestamp +
-            (upgradeStatus.guardiansExtendedLegalVeto
-              ? EXTENDED_LEGAL_VETO_PERIOD
-              : STANDARD_LEGAL_VETO_PERIOD)) *
-            1000,
-        )
-
-        // Show if legal veto was extended
-        if (upgradeStatus.guardiansExtendedLegalVeto) {
-          const standardVetoEnd = new Date(
-            (upgradeStatus.creationTimestamp + STANDARD_LEGAL_VETO_PERIOD) *
-              1000,
-          )
-          output.push(
-            `• ${chalk.yellow('Standard Legal Veto End')}: ${standardVetoEnd.toISOString()} (${this.formatTimeDistance(standardVetoEnd)})`,
-          )
-          output.push(
-            `• ${chalk.yellow('Extended Legal Veto End')}: ${vetoEndTime.toISOString()} (${this.formatTimeDistance(vetoEndTime)})`,
-          )
-        } else {
-          output.push(
-            `• ${chalk.yellow('Legal Veto Period End')}: ${vetoEndTime.toISOString()} (${this.formatTimeDistance(vetoEndTime)})`,
-          )
-        }
-
-        // Show status based on current state
-        if (upgradeStatus.securityCouncilApprovalTimestamp > 0) {
-          const scApprovalTime = new Date(
-            upgradeStatus.securityCouncilApprovalTimestamp * 1000,
-          )
-          output.push(
-            `• ${chalk.green('Security Council Approval')}: ${scApprovalTime.toISOString()} (${this.formatTimeDistance(scApprovalTime)})`,
+        // Create L1 upgrade timeline if we have status information
+        if (upgradeStatus) {
+          // Build the L1 upgrade timeline
+          const l1Timeline = this.buildL1UpgradeTimeline(
+            upgradeInfo,
+            upgradeState,
+            upgradeStatus,
           )
 
-          const readyTime = new Date(
-            (upgradeStatus.securityCouncilApprovalTimestamp +
-              UPGRADE_DELAY_PERIOD) *
-              1000,
-          )
-          output.push(
-            `• ${chalk.green('Ready for Execution')}: ${readyTime.toISOString()} (${this.formatTimeDistance(readyTime)})`,
-          )
-
-          if (upgradeStatus.executed) {
-            output.push(`• ${chalk.green('Executed')}: Yes`)
-          } else if (upgradeState === UpgradeState.Ready) {
-            output.push(
-              `• ${chalk.yellow('Execution Status')}: Ready to be executed`,
-            )
-          } else if (upgradeState === UpgradeState.Expired) {
-            output.push(`• ${chalk.red('Execution Status')}: Expired`)
-          } else {
-            output.push(`• ${chalk.yellow('Execution Status')}: Waiting`)
-          }
-        } else {
-          // If Security Council didn't approve, show waiting period and guardian approval info
-          const waitingEndTime = new Date(
-            (upgradeStatus.creationTimestamp +
-              (upgradeStatus.guardiansExtendedLegalVeto
-                ? EXTENDED_LEGAL_VETO_PERIOD
-                : STANDARD_LEGAL_VETO_PERIOD) +
-              UPGRADE_WAIT_OR_EXPIRE_PERIOD) *
-              1000,
-          )
-
-          if (upgradeStatus.guardiansApproval) {
-            output.push(`• ${chalk.green('Guardians Approval')}: Yes`)
-            output.push(
-              `• ${chalk.yellow('Ready for Execution')}: ${waitingEndTime.toISOString()} (${this.formatTimeDistance(waitingEndTime)})`,
-            )
-          } else {
-            output.push(`• ${chalk.yellow('Guardians Approval')}: No`)
-            output.push(
-              `• ${chalk.yellow('Expires If Not Approved By')}: ${waitingEndTime.toISOString()} (${this.formatTimeDistance(waitingEndTime)})`,
-            )
-          }
+          // Add the timeline to output with the L1-specific title
+          this.addTimelineToOutput(output, l1Timeline, 'L1 Upgrade Timeline')
         }
       }
     } else {

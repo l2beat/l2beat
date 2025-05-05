@@ -2,7 +2,7 @@
   "name": "sollet",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x8a5cc7f8da16083929cbe84e4c6c2ccec6b04e01e1fdb59f569c6cf65dac2b7b",
+  "configHash": "0xf0f0a256a1d37793d378f13a40a4055ccbe91a8e9eace705c0b53df52d1967ba",
   "entries": [
     {
       "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
@@ -49,5 +49,6 @@
       "function withdrawEth(address recipient, uint256 amount, uint256 nonce, bytes signature)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x53ea0dad7859088a99f982a98f0841529e4cb1bd8c805f661e5257c18b63ebbc"
 }

@@ -12,7 +12,7 @@ import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
-export async function getBridgeRiskEntries() {
+export async function getBridgesRiskEntries() {
   const [tvs, projectsChangeReport, projects] = await Promise.all([
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),

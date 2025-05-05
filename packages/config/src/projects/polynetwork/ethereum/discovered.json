@@ -2,7 +2,7 @@
   "name": "polynetwork",
   "chain": "ethereum",
   "blockNumber": 20675914,
-  "configHash": "0x5c63257d9270257fd11c60f2a9f4e3836904d81f95eaa17376fcb2b0f160cdd4",
+  "configHash": "0xd6624b0e8ae7840da716fa546a59cef0b21852d5eaec454072562b668fb8292f",
   "entries": [
     {
       "address": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
@@ -531,5 +531,6 @@
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x238cadc8474d1da30c3b69d75979527598224b3c0282fd309976dc89e35cec7e"
 }

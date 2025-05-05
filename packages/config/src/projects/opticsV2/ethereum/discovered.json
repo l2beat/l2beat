@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 21937191,
-  "configHash": "0x7670fdcc70b99733da3f49c25d005670fca98f8150e45e54e7d833ac6881bbda",
+  "configHash": "0x2d599f8b6ee18ff0ce240811d89772e9b13ced70e51d32cf62092a403ccba117",
   "entries": [
     {
       "name": "HomeUpgradeBeacon",
@@ -26,13 +26,6 @@
         "0x3fa6a34a243dd0723157d70d7d21fc377ce2b0f38dea55d089556c264972063f"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1637962173,
       "sinceBlock": 13692126,
@@ -158,13 +151,6 @@
         "0x5bd24b5259f733f1cb0c93cd38718fd109ef8701385499565ac77523dac5dfd7"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637963549,
       "sinceBlock": 13692228,
       "values": {
@@ -275,13 +261,6 @@
         "0xd4e593cba02e81da0882f30e09e38c2015c6f635b3911e27d19b579b1b92eba5"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "committedRoot",
         "count",
@@ -348,13 +327,6 @@
         "0xfe51330f918cf664ca579984982dbeeab54d9a2461dcd1938ff2d46b9c77b306"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637961347,
       "sinceBlock": 13692072,
       "values": {
@@ -656,5 +628,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x1efe2e52f7bc799f7b010ca9b94d315ab5efa0e172a1ec17436fe0c345dc7e5a"
 }

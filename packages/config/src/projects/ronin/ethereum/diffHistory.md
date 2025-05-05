@@ -1,4 +1,61 @@
-Generated with discovered.json: 0x748e597733cd3814243db93cd947dfbd9dc6f5aa
+Generated with discovered.json: 0x2820154a68d457a0cd93bbb8bafa43988e565e3b
+
+# Diff at Tue, 29 Apr 2025 08:19:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22346547
+- current block number: 22346547
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346547 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e","via":[]}]
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x419a3e7ce479f2f0c5c59fea459e6555c62747e0
+
+# Diff at Fri, 25 Apr 2025 14:11:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c29f37e6f9358f91b847d140615c705e0d4deb52 block: 22324341
+- current block number: 22346547
+
+## Description
+
+Migration complete. Moved to under review.
+
+## Watched changes
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      values.paused:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xb5e81ccce2cca10a6825ffb10dce8a109d9f3646
 
 # Diff at Tue, 22 Apr 2025 12:02:32 GMT:
 

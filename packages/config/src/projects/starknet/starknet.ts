@@ -14,10 +14,9 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ESCROW } from '../../common'
@@ -1032,20 +1031,10 @@ export const starknet: ScalingProject = {
       },
     },
     {
-      rollupNodeLink: 'https://github.com/NethermindEth/juno',
+      rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
     },
   ),
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          title: 'What is Starknet',
-          url: 'https://starkware.co/starknet/',
-        },
-      ],
-    },
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
@@ -1067,10 +1056,11 @@ export const starknet: ScalingProject = {
   stateDerivation: {
     nodeSoftware:
       'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
-    compressionScheme: "Starknet doesn't use any compression scheme.",
+    compressionScheme:
+      'Starknet uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
     genesisState: 'There is no non-empty genesis state.',
     dataFormat:
-      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/).',
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
   },
   stateValidation: {
     description:
@@ -1081,6 +1071,15 @@ export const starknet: ScalingProject = {
         description:
           'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
         risks: [],
+      },
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title: 'What is Starknet',
+            url: 'https://starkware.co/starknet/',
+          },
+        ],
       },
     ],
     proofVerification: {

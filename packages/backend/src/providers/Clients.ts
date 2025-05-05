@@ -1,7 +1,6 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
-  BlobClient,
-  BlobScanClient,
+  BeaconChainClient,
   type BlockClient,
   BlockIndexerClient,
   CelestiaRpcClient,
@@ -26,13 +25,13 @@ export interface Clients {
   loopring: LoopringClient | undefined
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
-  blob: BlobClient | undefined
-  blobscan: { daLayer: string; client: BlobScanClient }[]
-  celestia: { daLayer: string; client: CelestiaRpcClient }[]
-  avail: { daLayer: string; client: PolkadotRpcClient }[]
+  beacon: BeaconChainClient | undefined
+  celestia: CelestiaRpcClient | undefined
+  avail: PolkadotRpcClient | undefined
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: RpcClient[]
+  starknetClients: StarknetClient[]
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -42,10 +41,9 @@ export function initClients(config: Config, logger: Logger): Clients {
   let loopringClient: LoopringClient | undefined
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient | undefined
-  let blobClient: BlobClient | undefined
-  const blobscan = []
-  const celestia = []
-  const avail = []
+  let beaconChainClient: BeaconChainClient | undefined
+  let celestia: CelestiaRpcClient | undefined
+  let avail: PolkadotRpcClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -167,21 +165,8 @@ export function initClients(config: Config, logger: Logger): Clients {
   if (config.da) {
     for (const layer of config.da.layers) {
       switch (layer.type) {
-        case 'ethereum': {
-          const client = new BlobScanClient({
-            callsPerMinute: layer.callsPerMinute,
-            baseUrl: layer.url,
-            retryStrategy: 'UNRELIABLE',
-            sourceName: layer.name,
-            logger,
-            http,
-          })
-          blobscan.push({ daLayer: layer.name, client })
-          break
-        }
-
         case 'celestia': {
-          const client = new CelestiaRpcClient({
+          celestia = new CelestiaRpcClient({
             callsPerMinute: layer.callsPerMinute,
             url: layer.url,
             retryStrategy: 'RELIABLE',
@@ -189,13 +174,12 @@ export function initClients(config: Config, logger: Logger): Clients {
             logger,
             http,
           })
-          celestia.push({ daLayer: layer.name, client })
-          blockClients.push(client)
+          blockClients.push(celestia)
           break
         }
 
         case 'avail': {
-          const client = new PolkadotRpcClient({
+          avail = new PolkadotRpcClient({
             callsPerMinute: layer.callsPerMinute,
             url: layer.url,
             retryStrategy: 'RELIABLE',
@@ -203,8 +187,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             logger,
             http,
           })
-          avail.push({ daLayer: layer.name, client })
-          blockClients.push(client)
+          blockClients.push(avail)
         }
       }
     }
@@ -219,11 +202,10 @@ export function initClients(config: Config, logger: Logger): Clients {
     retryStrategy: 'RELIABLE',
   })
 
-  if (ethereumClient && config.beaconApi.url) {
-    blobClient = new BlobClient({
+  if (config.beaconApi.url) {
+    beaconChainClient = new BeaconChainClient({
       sourceName: 'beaconApi',
       beaconApiUrl: config.beaconApi.url,
-      rpcClient: ethereumClient,
       logger,
       http,
       callsPerMinute: config.beaconApi.callsPerMinute,
@@ -251,12 +233,12 @@ export function initClients(config: Config, logger: Logger): Clients {
     loopring: loopringClient,
     degate: degateClient,
     coingecko: coingeckoClient,
-    blob: blobClient,
-    blobscan,
+    beacon: beaconChainClient,
     celestia,
     avail,
     getStarknetClient,
     getRpcClient,
     rpcClients,
+    starknetClients,
   }
 }

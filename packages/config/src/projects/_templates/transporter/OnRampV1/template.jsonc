@@ -36,26 +36,30 @@
       "handler": {
         "type": "call",
         "args": [],
-        "method": "getStaticConfig",
-        "pickFields": ["linkToken"]
-      }
+        "method": "getStaticConfig"
+      },
+      "edit": ["get", "linkToken"]
     },
     "staticConfigAddresses": {
       "handler": {
         "type": "call",
         "args": [],
-        "method": "getStaticConfig",
-        "pickFields": ["prevOnRamp", "armProxy"]
-      }
+        "method": "getStaticConfig"
+      },
+      "edit": ["pick", "prevOnRamp", "armProxy"]
     },
     "staticConfigChains": {
       "handler": {
         "type": "call",
         "args": [],
-        "method": "getStaticConfig",
-        "pickFields": ["chainSelector", "destChainSelector"]
+        "method": "getStaticConfig"
       },
-      "returnType": "(ChainIdMap[])"
+      "edit": [
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["set", "destChainSelector", ["format", "ChainIdMap"]],
+        ["pick", "chainSelector", "destChainSelector"]
+      ]
     },
     "tokenAddresses": {
       "handler": {

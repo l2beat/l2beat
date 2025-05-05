@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21723798,
-  "configHash": "0xe32ba27fdcc0d12b6f173a95ddf82ad39c50976abd5378d23af092392e86a7fa",
+  "configHash": "0xeacdb397749b95804ce8f3537969b42cca3aff4857d295751291fea99353026a",
   "entries": [
     {
       "name": "Factory",
@@ -63,8 +63,26 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 111, 3, 6972, 123288869, 4693517785, 0, 4933066040],
-          [true, 109, 3, 3027, 794923628, 22256024558, 0, 3178428232]
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 3,
+            "weight": 6972,
+            "balance": 123288869,
+            "lkb": 4693517785,
+            "credits": 0,
+            "idealBalance": 4933066040
+          },
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 3,
+            "weight": 3027,
+            "balance": 794923628,
+            "lkb": 22256024558,
+            "credits": 0,
+            "idealBalance": 3178428232
+          }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
@@ -118,49 +136,76 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 11, 13, 0, 0, 0, 0, 0],
-          [true, 10, 13, 0, 0, 0, 0, 0],
-          [
-            true,
-            111,
-            13,
-            2120,
-            "243521150174811537877",
-            "84898493333563254675",
-            "36545590553657262713",
-            "97813492241757089607"
-          ],
-          [
-            true,
-            110,
-            13,
-            4192,
-            "285165685974761855770",
-            "107831935426955140379",
-            0,
-            "355016416195357698478"
-          ],
-          [
-            true,
-            184,
-            13,
-            1203,
-            "32628600624684683148",
-            "9485980472058643131",
-            0,
-            "61870918656491290741"
-          ],
-          [
-            true,
-            183,
-            13,
-            2483,
-            "698248522118425554320",
-            "162707502782815116826",
-            0,
-            "388843451805785811788"
-          ],
-          [true, 214, 13, 2300, 0, "2646491575579306304854", 0, 0]
+          {
+            "ready": true,
+            "dstChainId": 11,
+            "dstPoolId": 13,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 10,
+            "dstPoolId": 13,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 13,
+            "weight": 2120,
+            "balance": "243521150174811537877",
+            "lkb": "84898493333563254675",
+            "credits": "36545590553657262713",
+            "idealBalance": "97813492241757089607"
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 13,
+            "weight": 4192,
+            "balance": "285165685974761855770",
+            "lkb": "107831935426955140379",
+            "credits": 0,
+            "idealBalance": "355016416195357698478"
+          },
+          {
+            "ready": true,
+            "dstChainId": 184,
+            "dstPoolId": 13,
+            "weight": 1203,
+            "balance": "32628600624684683148",
+            "lkb": "9485980472058643131",
+            "credits": 0,
+            "idealBalance": "61870918656491290741"
+          },
+          {
+            "ready": true,
+            "dstChainId": 183,
+            "dstPoolId": 13,
+            "weight": 2483,
+            "balance": "698248522118425554320",
+            "lkb": "162707502782815116826",
+            "credits": 0,
+            "idealBalance": "388843451805785811788"
+          },
+          {
+            "ready": true,
+            "dstChainId": 214,
+            "dstPoolId": 13,
+            "weight": 2300,
+            "balance": 0,
+            "lkb": "2646491575579306304854",
+            "credits": 0,
+            "idealBalance": 0
+          }
         ],
         "convertRate": 1,
         "decimals": 18,
@@ -219,66 +264,66 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [
-            true,
-            109,
-            20,
-            1000,
-            "110625822546651114332011",
-            "34530886257149690165747",
-            "2804076153503367378501",
-            "110447100819232404208485"
-          ],
-          [
-            true,
-            111,
-            20,
-            1000,
-            "98281137361258828164533",
-            "70786162329284883315604",
-            0,
-            "101913982472226931858032"
-          ],
-          [
-            true,
-            102,
-            20,
-            5000,
-            "136017627170524635951695",
-            "35039946099534536961545",
-            "17295149482550931110499",
-            "136017627170524635951695"
-          ],
-          [
-            true,
-            110,
-            20,
-            2500,
-            "38190850913005389387425",
-            "4987526851882391326014",
-            0,
-            "202293436882353983248525"
-          ],
-          [
-            true,
-            106,
-            20,
-            500,
-            "108252279213856725074175",
-            "2397166514188127092990",
-            "13712975922427937636912",
-            "107571899971518353725732"
-          ],
-          [
-            true,
-            112,
-            20,
-            0,
-            "7987504438728615266",
-            "1095457356361792822367",
-            "35872067910060589139",
-            0
-          ]
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 20,
+            "weight": 1000,
+            "balance": "110625822546651114332011",
+            "lkb": "34530886257149690165747",
+            "credits": "2804076153503367378501",
+            "idealBalance": "110447100819232404208485"
+          },
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 20,
+            "weight": 1000,
+            "balance": "98281137361258828164533",
+            "lkb": "70786162329284883315604",
+            "credits": 0,
+            "idealBalance": "101913982472226931858032"
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 20,
+            "weight": 5000,
+            "balance": "136017627170524635951695",
+            "lkb": "35039946099534536961545",
+            "credits": "17295149482550931110499",
+            "idealBalance": "136017627170524635951695"
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 20,
+            "weight": 2500,
+            "balance": "38190850913005389387425",
+            "lkb": "4987526851882391326014",
+            "credits": 0,
+            "idealBalance": "202293436882353983248525"
+          },
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 20,
+            "weight": 500,
+            "balance": "108252279213856725074175",
+            "lkb": "2397166514188127092990",
+            "credits": "13712975922427937636912",
+            "idealBalance": "107571899971518353725732"
+          },
+          {
+            "ready": true,
+            "dstChainId": 112,
+            "dstPoolId": 20,
+            "weight": 0,
+            "balance": "7987504438728615266",
+            "lkb": "1095457356361792822367",
+            "credits": "35872067910060589139",
+            "idealBalance": 0
+          }
         ],
         "convertRate": 1,
         "decimals": 18,
@@ -382,77 +427,266 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 6, 1, 0, 0, 0, 0, 0],
-          [true, 6, 2, 0, 0, 0, 0, 0],
-          [true, 2, 5, 0, 0, 0, 0, 0],
-          [true, 2, 2, 0, 0, 97617046195, 0, 0],
-          [true, 9, 1, 0, 0, 0, 0, 0],
-          [true, 9, 2, 0, 0, 0, 0, 0],
-          [true, 10, 1, 0, 0, 0, 0, 0],
-          [true, 10, 2, 0, 0, 0, 0, 0],
-          [true, 11, 1, 0, 0, 0, 0, 0],
-          [true, 12, 1, 0, 0, 0, 0, 0],
-          [true, 1, 1, 0, 0, 0, 0, 0],
-          [true, 112, 1, 0, 57182239607, 7378087, 0, 0],
-          [true, 101, 1, 0, 0, 0, 0, 0],
-          [
-            true,
-            111,
-            1,
-            127,
-            111787107329,
-            23638667770,
-            3999147613,
-            106984346301
-          ],
-          [true, 106, 1, 100, 81958261363, 18940810711, 0, 126547144900],
-          [
-            true,
-            106,
-            2,
-            100,
-            56767339579,
-            8413927257,
-            13334894207,
-            56760240861
-          ],
-          [
-            true,
-            102,
-            5,
-            325,
-            12876198454,
-            33025182056,
-            37465800258,
-            12807083710
-          ],
-          [true, 102, 2, 6390, 1371191158690, 970689485532, 0, 1684031988538],
-          [true, 109, 1, 100, 149552815143, 23211013886, 0, 219899899907],
-          [true, 109, 2, 470, 31546376682, 101092185025, 0, 60801659462],
-          [true, 110, 1, 100, 82232069649, 22490427820, 0, 98822229643],
-          [true, 110, 2, 1917, 84825963344, 408542958117, 0, 92752294825],
-          [true, 112, 21, 100, 0, 0, 486063660540, 0],
-          [true, 184, 1, 704, 582536455908, 118543507121, 0, 674759054786],
-          [
-            true,
-            177,
-            2,
-            100,
-            62133166503,
-            10637639684,
-            12863247867,
-            316246145916
-          ],
-          [
-            true,
-            181,
-            2,
-            675,
-            49314093999,
-            129742488485,
-            17151412173,
-            40855988924
-          ]
+          {
+            "ready": true,
+            "dstChainId": 6,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 6,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 2,
+            "dstPoolId": 5,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 2,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 97617046195,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 9,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 9,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 10,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 10,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 11,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 12,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 1,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 112,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 57182239607,
+            "lkb": 7378087,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 101,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 1,
+            "weight": 127,
+            "balance": 111787107329,
+            "lkb": 23638667770,
+            "credits": 3999147613,
+            "idealBalance": 106984346301
+          },
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 1,
+            "weight": 100,
+            "balance": 81958261363,
+            "lkb": 18940810711,
+            "credits": 0,
+            "idealBalance": 126547144900
+          },
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 2,
+            "weight": 100,
+            "balance": 56767339579,
+            "lkb": 8413927257,
+            "credits": 13334894207,
+            "idealBalance": 56760240861
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 5,
+            "weight": 325,
+            "balance": 12876198454,
+            "lkb": 33025182056,
+            "credits": 37465800258,
+            "idealBalance": 12807083710
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 2,
+            "weight": 6390,
+            "balance": 1371191158690,
+            "lkb": 970689485532,
+            "credits": 0,
+            "idealBalance": 1684031988538
+          },
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 1,
+            "weight": 100,
+            "balance": 149552815143,
+            "lkb": 23211013886,
+            "credits": 0,
+            "idealBalance": 219899899907
+          },
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 2,
+            "weight": 470,
+            "balance": 31546376682,
+            "lkb": 101092185025,
+            "credits": 0,
+            "idealBalance": 60801659462
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 1,
+            "weight": 100,
+            "balance": 82232069649,
+            "lkb": 22490427820,
+            "credits": 0,
+            "idealBalance": 98822229643
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 2,
+            "weight": 1917,
+            "balance": 84825963344,
+            "lkb": 408542958117,
+            "credits": 0,
+            "idealBalance": 92752294825
+          },
+          {
+            "ready": true,
+            "dstChainId": 112,
+            "dstPoolId": 21,
+            "weight": 100,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 486063660540,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 184,
+            "dstPoolId": 1,
+            "weight": 704,
+            "balance": 582536455908,
+            "lkb": 118543507121,
+            "credits": 0,
+            "idealBalance": 674759054786
+          },
+          {
+            "ready": true,
+            "dstChainId": 177,
+            "dstPoolId": 2,
+            "weight": 100,
+            "balance": 62133166503,
+            "lkb": 10637639684,
+            "credits": 12863247867,
+            "idealBalance": 316246145916
+          },
+          {
+            "ready": true,
+            "dstChainId": 181,
+            "dstPoolId": 2,
+            "weight": 675,
+            "balance": 49314093999,
+            "lkb": 129742488485,
+            "credits": 17151412173,
+            "idealBalance": 40855988924
+          }
         ],
         "convertRate": 1,
         "decimals": 6,
@@ -506,7 +740,16 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 151, 19, 1, 14320135939, 13832596241, 0, 10904753043]
+          {
+            "ready": true,
+            "dstChainId": 151,
+            "dstPoolId": 19,
+            "weight": 1,
+            "balance": 14320135939,
+            "lkb": 13832596241,
+            "credits": 0,
+            "idealBalance": 10904753043
+          }
         ],
         "convertRate": 1,
         "decimals": 6,
@@ -558,14 +801,14 @@
         "localChainId": 101,
         "nonceContract": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
-        "stargateArbConfig": [
-          2,
-          20,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          2,
-          15,
-          "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
-        ],
+        "stargateArbConfig": {
+          "inboundProofLibraryVersion": 2,
+          "inboundBlockConfirmations": 20,
+          "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E",
+          "outboundProofType": 2,
+          "outboundBlockConfirmations": 15,
+          "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+        },
         "stargateOracles": [
           "0x0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
           "0x000000000000000000000000d56e4eab23cb81f43168f9f45211eb027b9ac7cc"
@@ -573,14 +816,14 @@
         "stargateRelayers": [
           "0x000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e"
         ],
-        "stargateScrollConfig": [
-          2,
-          5,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          2,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
+        "stargateScrollConfig": {
+          "inboundProofLibraryVersion": 2,
+          "inboundBlockConfirmations": 5,
+          "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E",
+          "outboundProofType": 2,
+          "outboundBlockConfirmations": 15,
+          "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+        },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0
       },
@@ -616,7 +859,16 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 111, 14, 1, 6345355351, 2035729489, 0, 7464975826]
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 14,
+            "weight": 1,
+            "balance": 6345355351,
+            "lkb": 2035729489,
+            "credits": 0,
+            "idealBalance": 7464975826
+          }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
@@ -651,13 +903,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661536020,
       "sinceBlock": 15416736,
       "values": {
@@ -781,17 +1026,26 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 2, 11, 0, 0, 0, 0, 0],
-          [
-            true,
-            102,
-            11,
-            1,
-            "149754503838052406330318",
-            "142788269050033952719340",
-            0,
-            "150187895115101214061398"
-          ]
+          {
+            "ready": true,
+            "dstChainId": 2,
+            "dstPoolId": 11,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 11,
+            "weight": 1,
+            "balance": "149754503838052406330318",
+            "lkb": "142788269050033952719340",
+            "credits": 0,
+            "idealBalance": "150187895115101214061398"
+          }
         ],
         "convertRate": 1,
         "decimals": 18,
@@ -910,13 +1164,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661531835,
       "sinceBlock": 15416448,
       "values": {
@@ -1005,12 +1252,66 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 106, 16, 0, 8486638791, 7181765, 0, 0],
-          [true, 111, 16, 0, 89274947, 92056518, 0, 0],
-          [true, 102, 16, 100, 0, 5741988893, 0, 0],
-          [true, 110, 16, 0, 6569437649, 5801339, 0, 0],
-          [true, 109, 16, 0, 1100984681, 5941861, 0, 0],
-          [true, 151, 16, 0, 75723213, 1840209437, 0, 0]
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 16,
+            "weight": 0,
+            "balance": 8486638791,
+            "lkb": 7181765,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 16,
+            "weight": 0,
+            "balance": 89274947,
+            "lkb": 92056518,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 16,
+            "weight": 100,
+            "balance": 0,
+            "lkb": 5741988893,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 16,
+            "weight": 0,
+            "balance": 6569437649,
+            "lkb": 5801339,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 16,
+            "weight": 0,
+            "balance": 1100984681,
+            "lkb": 5941861,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 151,
+            "dstPoolId": 16,
+            "weight": 0,
+            "balance": 75723213,
+            "lkb": 1840209437,
+            "credits": 0,
+            "idealBalance": 0
+          }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
@@ -1069,16 +1370,16 @@
         "batched": false,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [
-            true,
-            181,
-            22,
-            1,
-            "11186088223323498747",
-            "678042691237684668",
-            0,
-            "10454123001913728781"
-          ]
+          {
+            "ready": true,
+            "dstChainId": 181,
+            "dstPoolId": 22,
+            "weight": 1,
+            "balance": "11186088223323498747",
+            "lkb": "678042691237684668",
+            "credits": 0,
+            "idealBalance": "10454123001913728781"
+          }
         ],
         "convertRate": 1,
         "decimals": 18,
@@ -1216,26 +1517,26 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [
-            true,
-            102,
-            17,
-            0,
-            "23892617538829308918324",
-            1433941682010602,
-            0,
-            "21054398665965012824756"
-          ],
-          [
-            true,
-            151,
-            17,
-            1,
-            "3005244096238289353664",
-            "164685309453845127263",
-            0,
-            "5297444856829526347774"
-          ]
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 17,
+            "weight": 0,
+            "balance": "23892617538829308918324",
+            "lkb": 1433941682010602,
+            "credits": 0,
+            "idealBalance": "21054398665965012824756"
+          },
+          {
+            "ready": true,
+            "dstChainId": 151,
+            "dstPoolId": 17,
+            "weight": 1,
+            "balance": "3005244096238289353664",
+            "lkb": "164685309453845127263",
+            "credits": 0,
+            "idealBalance": "5297444856829526347774"
+          }
         ],
         "convertRate": 1,
         "decimals": 18,
@@ -1302,50 +1603,266 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 6, 1, 0, 0, 0, 0, 0],
-          [true, 6, 2, 0, 0, 0, 0, 0],
-          [true, 2, 5, 0, 0, 0, 0, 0],
-          [true, 2, 2, 0, 0, 0, 0, 0],
-          [true, 9, 1, 0, 0, 0, 0, 0],
-          [true, 9, 2, 0, 0, 0, 0, 0],
-          [true, 10, 1, 0, 0, 0, 0, 0],
-          [true, 10, 2, 0, 0, 0, 0, 0],
-          [true, 11, 1, 0, 0, 0, 0, 0],
-          [true, 12, 1, 0, 0, 0, 0, 0],
-          [true, 1, 2, 0, 0, 0, 0, 0],
-          [true, 112, 1, 0, 48527224498, 760717, 0, 0],
-          [true, 101, 2, 0, 0, 0, 0, 0],
-          [true, 111, 1, 2394, 106991984803, 665205031279, 0, 106882018848],
-          [true, 106, 1, 674, 65641759991, 116149088038, 0, 126559518666],
-          [true, 106, 2, 108, 56767339579, 5781448709, 4419510761, 56764968593],
-          [true, 102, 5, 643, 54966695371, 150920362928, 0, 54964989852],
-          [true, 102, 2, 1119, 81953079480, 65499227820, 0, 116604408779],
-          [
-            true,
-            109,
-            1,
-            932,
-            56960732447,
-            147216310730,
-            31114978438,
-            219709537517
-          ],
-          [true, 109, 2, 89, 57361926351, 17367204373, 0, 60801659462],
-          [true, 110, 1, 2953, 145395296163, 381732350239, 0, 211784392903],
-          [
-            true,
-            110,
-            2,
-            313,
-            93544434399,
-            18460457342,
-            12430053853,
-            92749001662
-          ],
-          [true, 112, 21, 0, 0, 0, 0, 0],
-          [true, 184, 1, 775, 53570265014, 28648834698, 0, 107096727303],
-          [true, 214, 1, 675, 1000000, 641631543145, 21529979913, 1000000],
-          [true, 181, 1, 675, 7760858747, 232152209620, 20981963776, 7760191965]
+          {
+            "ready": true,
+            "dstChainId": 6,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 6,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 2,
+            "dstPoolId": 5,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 2,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 9,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 9,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 10,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 10,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 11,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 12,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 1,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 112,
+            "dstPoolId": 1,
+            "weight": 0,
+            "balance": 48527224498,
+            "lkb": 760717,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 101,
+            "dstPoolId": 2,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 1,
+            "weight": 2394,
+            "balance": 106991984803,
+            "lkb": 665205031279,
+            "credits": 0,
+            "idealBalance": 106882018848
+          },
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 1,
+            "weight": 674,
+            "balance": 65641759991,
+            "lkb": 116149088038,
+            "credits": 0,
+            "idealBalance": 126559518666
+          },
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 2,
+            "weight": 108,
+            "balance": 56767339579,
+            "lkb": 5781448709,
+            "credits": 4419510761,
+            "idealBalance": 56764968593
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 5,
+            "weight": 643,
+            "balance": 54966695371,
+            "lkb": 150920362928,
+            "credits": 0,
+            "idealBalance": 54964989852
+          },
+          {
+            "ready": true,
+            "dstChainId": 102,
+            "dstPoolId": 2,
+            "weight": 1119,
+            "balance": 81953079480,
+            "lkb": 65499227820,
+            "credits": 0,
+            "idealBalance": 116604408779
+          },
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 1,
+            "weight": 932,
+            "balance": 56960732447,
+            "lkb": 147216310730,
+            "credits": 31114978438,
+            "idealBalance": 219709537517
+          },
+          {
+            "ready": true,
+            "dstChainId": 109,
+            "dstPoolId": 2,
+            "weight": 89,
+            "balance": 57361926351,
+            "lkb": 17367204373,
+            "credits": 0,
+            "idealBalance": 60801659462
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 1,
+            "weight": 2953,
+            "balance": 145395296163,
+            "lkb": 381732350239,
+            "credits": 0,
+            "idealBalance": 211784392903
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 2,
+            "weight": 313,
+            "balance": 93544434399,
+            "lkb": 18460457342,
+            "credits": 12430053853,
+            "idealBalance": 92749001662
+          },
+          {
+            "ready": true,
+            "dstChainId": 112,
+            "dstPoolId": 21,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 0
+          },
+          {
+            "ready": true,
+            "dstChainId": 184,
+            "dstPoolId": 1,
+            "weight": 775,
+            "balance": 53570265014,
+            "lkb": 28648834698,
+            "credits": 0,
+            "idealBalance": 107096727303
+          },
+          {
+            "ready": true,
+            "dstChainId": 214,
+            "dstPoolId": 1,
+            "weight": 675,
+            "balance": 1000000,
+            "lkb": 641631543145,
+            "credits": 21529979913,
+            "idealBalance": 1000000
+          },
+          {
+            "ready": true,
+            "dstChainId": 181,
+            "dstPoolId": 1,
+            "weight": 675,
+            "balance": 7760858747,
+            "lkb": 232152209620,
+            "credits": 20981963776,
+            "idealBalance": 7760191965
+          }
         ],
         "convertRate": 1,
         "decimals": 6,
@@ -1399,8 +1916,26 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 111, 15, 7342, 2545443634, 5722588575, 0, 42472674],
-          [true, 110, 15, 2158, 494253890, 2693579804, 0, 494253890]
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 15,
+            "weight": 7342,
+            "balance": 2545443634,
+            "lkb": 5722588575,
+            "credits": 0,
+            "idealBalance": 42472674
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 15,
+            "weight": 2158,
+            "balance": 494253890,
+            "lkb": 2693579804,
+            "credits": 0,
+            "idealBalance": 494253890
+          }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
@@ -1459,9 +1994,36 @@
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
-          [true, 111, 7, 1803, 91825260, 697790943, 0, 3719341453],
-          [true, 106, 7, 4713, 36282368, 3933166809, 0, 1482387530],
-          [true, 110, 7, 3482, 21566266, 3331237541, 0, 849584453]
+          {
+            "ready": true,
+            "dstChainId": 111,
+            "dstPoolId": 7,
+            "weight": 1803,
+            "balance": 91825260,
+            "lkb": 697790943,
+            "credits": 0,
+            "idealBalance": 3719341453
+          },
+          {
+            "ready": true,
+            "dstChainId": 106,
+            "dstPoolId": 7,
+            "weight": 4713,
+            "balance": 36282368,
+            "lkb": 3933166809,
+            "credits": 0,
+            "idealBalance": 1482387530
+          },
+          {
+            "ready": true,
+            "dstChainId": 110,
+            "dstPoolId": 7,
+            "weight": 3482,
+            "balance": 21566266,
+            "lkb": 3331237541,
+            "credits": 0,
+            "idealBalance": 849584453
+          }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
@@ -3035,5 +3597,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x3522a68318198268d394c5ff6cc5ef78f2cd076d10b871a7dc7b2b1e5e307439"
 }

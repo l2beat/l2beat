@@ -2,7 +2,7 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
-  "configHash": "0x884849a905eb21ac0c274ccfc932c8dd424c8b321200d4f561f631d7b5ed7395",
+  "configHash": "0xc9bd66f111d47dc0f813a712e1ab7cc5009aa16b2bf32597899e785a33ca079c",
   "entries": [
     {
       "address": "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
@@ -80,13 +80,6 @@
         "0x81d007102ce6d41c4e245cc562c41b762d6fe49738f3dac3eb5e159caa6dc853"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1629082107,
       "sinceBlock": 13033669,
       "values": {
@@ -612,5 +605,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x116ad6623362ee3a3a9667dea5094f440ea4ba4bb1663e3d7877583335c41a81"
 }

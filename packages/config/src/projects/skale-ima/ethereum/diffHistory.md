@@ -1,4 +1,86 @@
-Generated with discovered.json: 0xb4b47344b1c6939c7e8db9f65c8631e2206f5272
+Generated with discovered.json: 0x0ae77797b22f54c621f01f5593738cc503669f41
+
+# Diff at Tue, 29 Apr 2025 08:19:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21744185
+- current block number: 21744185
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744185 (main branch discovery), not current.
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x037c97285e08aedee5b28a2735b9c3d18f837e4c
 
 # Diff at Tue, 04 Mar 2025 10:39:54 GMT:
 

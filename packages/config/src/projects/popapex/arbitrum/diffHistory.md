@@ -1,4 +1,189 @@
-Generated with discovered.json: 0x705304d99d9ad770106625795f42d9bc43aaf31d
+Generated with discovered.json: 0xed55c5582afdfd78c7696eab60a8fbfdbb21b298
+
+# Diff at Fri, 02 May 2025 17:25:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 331093486
+- current block number: 331093486
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331093486 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3:
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x532b048c750ebdff17f8fcb0c1fadbfa8150f25e
+
+# Diff at Tue, 29 Apr 2025 08:19:20 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 331093486
+- current block number: 331093486
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331093486 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+```diff
+    contract Outbox (0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3d0b021E1d2A8747411E3724d5165716B35448f3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"}]},{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"}]},{"permission":"validate","to":"0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x7b18A3073774e00C072DeBd390ed6fE4251493A7) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions:
+-        [{"permission":"sequence","to":"0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]},{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+```diff
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56","via":[{"address":"0x3d0b021E1d2A8747411E3724d5165716B35448f3"},{"address":"0xCC6f49cff395c4d160C61112522700dcB007c41d"}]}]
+    }
+```
+
+Generated with discovered.json: 0x2474992e8277ed693da602bea2fd60150be7535b
+
+# Diff at Mon, 28 Apr 2025 12:22:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 315644682
+- current block number: 331093486
+
+## Description
+
+Minor Arbitrum upgrade [3.1.0](https://github.com/OffchainLabs/nitro-contracts/releases/tag/v3.1.0) that everyone is doing atm.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"
++        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.$pastUpgrades.2:
++        ["2025-01-23T20:27:56.000Z","0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]]
+      values.$pastUpgrades.1.2:
+-        "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17"
++        "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046"
+      values.$pastUpgrades.1.1:
+-        "2025-01-23T20:27:56.000Z"
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.1.0:
+-        ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
++        "2024-02-21T19:17:28.000Z"
+      values.$pastUpgrades.0.2:
+-        "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046"
++        "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b"
+      values.$pastUpgrades.0.1.0:
+-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.$pastUpgrades.0.0:
+-        "2024-02-21T19:17:28.000Z"
++        "2025-04-25T21:55:46.000Z"
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+      values.$implementation:
+-        "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
++        "0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
+      values.$pastUpgrades.1:
++        ["2025-04-25T21:55:46.000Z","0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",["0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@315644682 => .flat}/Inbox/Inbox.sol     | 52 +++++++++++++++++-----
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++---
+ 2 files changed, 59 insertions(+), 17 deletions(-)
+```
+
+Generated with discovered.json: 0x49c8fcccb0d8a2aee5fa89a2b7d40013d6c1202f
 
 # Diff at Tue, 18 Mar 2025 08:14:58 GMT:
 

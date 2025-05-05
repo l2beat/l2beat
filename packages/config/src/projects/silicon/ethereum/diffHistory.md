@@ -1,4 +1,115 @@
-Generated with discovered.json: 0x72a36ad8a06ee3e054c978f3c39ac0f9171d8c46
+Generated with discovered.json: 0x4af048fa907bfda5ed2a1ff350ddd97ce6a75e18
+
+# Diff at Fri, 02 May 2025 17:24:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 21766766
+- current block number: 22397534
+
+## Description
+
+Upgrade to known source: validium type 7 (latest validium). Updated sequencer url.
+
+## Watched changes
+
+```diff
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      values.$implementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.$pastUpgrades.1:
++        ["2025-04-29T13:09:35.000Z","0xdadc987a1a0f2da5a24bcf9c6958c3e4bbe015686cfd2f954ba4f3ee4884dc07",["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.trustedSequencerURL:
+-        "http://sequencer.silicon.network:8123"
++        "https://rpc.silicon.network"
+      derivedName:
+-        "PolygonValidiumStorageMigration"
++        "PolygonValidiumEtrog"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Validium/PolygonValidiumEtrog.sol}             | 203 +++++++++++----------
+ 1 file changed, 111 insertions(+), 92 deletions(-)
+```
+
+Generated with discovered.json: 0xca8c220898a117ef7f8a6b327dce62eb51d1692d
+
+# Diff at Tue, 29 Apr 2025 08:19:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21766766
+- current block number: 21766766
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7","description":"manage the members of the data availability committee and the threshold for valid commitments.","via":[]},{"permission":"upgrade","to":"0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7","via":[{"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}]}]
+    }
+```
+
+```diff
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71","description":"sole address that can force batches.","via":[]},{"permission":"interact","to":"0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"sequence","to":"0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xdb469a019ccf8d75ae2e8d365966cfbf6e62db12
+
+# Diff at Thu, 24 Apr 2025 10:30:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21766766
+- current block number: 21766766
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      values.members.2:
+-        ["http://da2.silicon.network:8444","0x88eb99475d70cCdB891171344c7Ee90688Fa134c"]
++        {"url":"http://da2.silicon.network:8444","addr":"0x88eb99475d70cCdB891171344c7Ee90688Fa134c"}
+      values.members.1:
+-        ["http://silicon-mainnet-da-3.nodeinfra.com:8444","0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"]
++        {"url":"http://da1.silicon.network:8444","addr":"0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"}
+      values.members.0:
+-        ["http://da1.silicon.network:8444","0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"]
++        {"url":"http://silicon-mainnet-da-3.nodeinfra.com:8444","addr":"0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"}
+    }
+```
+
+Generated with discovered.json: 0x7fda88dffb4e775f0674b352ac22b1e389237ead
 
 # Diff at Thu, 10 Apr 2025 14:43:13 GMT:
 

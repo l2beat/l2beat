@@ -43,6 +43,7 @@ export class UpdateNotifier {
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly updateMessagesService: UpdateMessagesService,
+    private readonly disabledChains: string[],
   ) {
     this.logger = this.logger.for(this)
   }
@@ -172,7 +173,10 @@ export class UpdateNotifier {
     }
 
     let internals = ''
-    const header = `${await getDailyReminderHeader(timestamp)}\n${internals}\n`
+    const header = `${await getDailyReminderHeader(
+      timestamp,
+      this.disabledChains,
+    )}\n${internals}\n`
 
     if (!isEmpty(reminders)) {
       const monospaceBlockFence = '```'
@@ -188,7 +192,10 @@ export class UpdateNotifier {
       internals = ':white_check_mark: everything is up to date'
     }
 
-    const notifyMessage = `${await getDailyReminderHeader(timestamp)}\n${internals}\n`
+    const notifyMessage = `${await getDailyReminderHeader(
+      timestamp,
+      this.disabledChains,
+    )}\n${internals}\n`
 
     await this.notify(notifyMessage, 'INTERNAL')
     this.logger.info('Daily reminder sent', { reminders })
@@ -308,10 +315,18 @@ export async function generateTemplatizedStatus(): Promise<string> {
   return `\n### Templatized projects:\n\`\`\`${table}\`\`\`\n`
 }
 
-async function getDailyReminderHeader(timestamp: UnixTime): Promise<string> {
+async function getDailyReminderHeader(
+  timestamp: UnixTime,
+  disabledChains: string[],
+): Promise<string> {
   const templatizedProjectsString = await generateTemplatizedStatus()
 
-  return `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${templatizedProjectsString}\n:x: Detected changes with following severities :x:`
+  const disabledChainsMessage =
+    disabledChains.length > 0
+      ? `:warning: Disabled chains: ${disabledChains.map((c) => `\`${c}\``).join(', ')}\n`
+      : ''
+
+  return `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${disabledChainsMessage}${templatizedProjectsString}\n:x: Detected changes with following severities :x:`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {

@@ -15,13 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -58,13 +51,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Provides the current gas price for L2 transactions.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -98,13 +84,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -133,13 +112,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -169,13 +141,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -200,13 +165,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns the latest L1 block number.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -229,13 +187,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -263,13 +214,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "basefee",
         "hash",
@@ -319,13 +263,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -349,13 +286,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -380,13 +310,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Administration contract for other contract proxies.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -473,13 +396,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -508,13 +424,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -543,13 +452,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -572,13 +474,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -1160,5 +1055,6 @@
     "opstack/Layer2/OptimismMintableERC721Factory": "0xbb8ec39d7870faca409a8c1ff8da350ef80d61228a6aa0e950e8de4b9294f909",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
-  }
+  },
+  "permissionsConfigHash": "0x00d6032b47f8f8b33094fbedd1fd40dd945cfe63ccd23bfa47791db18d2a8edd"
 }

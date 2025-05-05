@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "blockNumber": 4745686,
-  "configHash": "0xde9d042f9974ccea478d7323cb9f077300a4a28fe635f873290d7e5515a5176a",
+  "configHash": "0xc521e064378eef6e39e1047434f7739ff2f37f392a94bae6e9b6d3c5612e01b3",
   "entries": [
     {
       "name": "MantaProxyAdmin",
@@ -42,13 +42,6 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-          "via": [{ "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05" }]
-        }
-      ],
       "sinceTimestamp": 1709295839,
       "sinceBlock": 1507188,
       "values": {
@@ -166,13 +159,6 @@
         "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -247,13 +233,6 @@
         "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709279189,
       "sinceBlock": 1505523,
       "values": {
@@ -456,5 +435,6 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

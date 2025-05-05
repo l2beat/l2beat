@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22297690,
-  "configHash": "0x9d3166e7fdbd0d4ee03be1554c6cf369801e3fdcddb72834fc1144687f7ae027",
+  "blockNumber": 22346378,
+  "configHash": "0xec1eb1e5c6a9c37069734899ce9165fb41c4def933333292a7418d46eaa9a551",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -63,32 +63,6 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f",
-          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -437,29 +411,29 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3272455,
+        "getFirstUnprocessedPriorityTx": 3272826,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 17,
-        "getPriorityTreeRoot": "0x2bcf0525796ca70d38613dedd3b3ff66742fffb8fcecf47ab07f9c39e7668f0e",
+        "getPriorityQueueSize": 27,
+        "getPriorityTreeRoot": "0x979766ae72f7f4709125aa626e05f78ae14423dab8f49372bc008650d6468ef9",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 498760,
-        "getTotalBatchesExecuted": 498755,
-        "getTotalBatchesVerified": 498758,
-        "getTotalBlocksCommitted": 498760,
-        "getTotalBlocksExecuted": 498755,
-        "getTotalBlocksVerified": 498758,
-        "getTotalPriorityTxs": 3272472,
-        "getTransactionFilterer": "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f",
+        "getTotalBatchesCommitted": 498924,
+        "getTotalBatchesExecuted": 498919,
+        "getTotalBatchesVerified": 498922,
+        "getTotalBlocksCommitted": 498924,
+        "getTotalBlocksExecuted": 498919,
+        "getTotalBlocksVerified": 498922,
+        "getTotalPriorityTxs": 3272853,
+        "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -663,18 +637,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -702,24 +664,6 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "TransactionFilterer",
-      "address": "0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
-        }
-      ],
-      "sinceTimestamp": 1744727411,
-      "sinceBlock": 22274987,
-      "values": { "$immutable": true },
-      "derivedName": ""
-    },
-    {
       "name": "ValidatorTimelock",
       "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
@@ -729,18 +673,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -776,14 +708,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1325,8 +1249,9 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/v26/Diamond": "0x748a53ab23ca7de7668b62f01a1e436cda12fe5b08cf1bd1bfcde11f6dba8ffe",
-    "shared-zk-stack/ValidatorTimelock": "0xb0a9eee97036385e26460c74be8e8196ad5c4872d104d7ecd6d3a00bd59ac2f8",
+    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
+    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0xf70a07bff2973b2a4ca4b64edca17226bc5ee90da1aa186077513fb506ab9397"
 }

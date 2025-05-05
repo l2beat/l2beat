@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22188870,
-  "configHash": "0xe08a90103551bf5632d38f75ed6562155e8a20e8d3df11cd9929b73e5c8ee83e",
+  "blockNumber": 22336710,
+  "configHash": "0x6b113709a01b4c011c82f02891a984c98a08c2f4a42414976f0bbec9d41c0332",
   "entries": [
     {
       "name": "Vector",
@@ -15,25 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
-          "description": "can freeze the Vector contract and update the list of authorized relayers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
       "sinceTimestamp": 1720128227,
       "sinceBlock": 20235805,
@@ -79,8 +60,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 304,
-        "latestBlock": 1179840,
+        "latestAuthoritySetId": 325,
+        "latestBlock": 1269120,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -90,6 +71,104 @@
         "VERSION": "2.0.0"
       },
       "derivedName": "SP1Vector"
+    },
+    {
+      "name": "AvailBridgeV1",
+      "address": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+      "type": "Contract",
+      "template": "avail/AvailBridgeV1",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.",
+      "ignoreInWatchMode": ["messageId"],
+      "sinceTimestamp": 1720568903,
+      "sinceBlock": 20272316,
+      "values": {
+        "$admin": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B",
+        "$implementation": "0x737539737b44493F65c17eAfE165197b6410d254",
+        "$pastUpgrades": [
+          [
+            "2024-07-09T23:48:23.000Z",
+            "0x980ea7f295336624f103c47b5ec482f90c2c90f4b7d05140ceb5d40aa077963c",
+            ["0x737539737b44493F65c17eAfE165197b6410d254"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"]
+          }
+        },
+        "avail": "0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmin": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "defaultAdminAC": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
+        "defaultAdminDelay": 0,
+        "defaultAdminDelayIncreaseWait": 432000,
+        "feePerByte": 0,
+        "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "fees": 0,
+        "messageId": 1372,
+        "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "paused": false,
+        "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
+        "pendingDefaultAdmin": {
+          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "schedule": 0
+        },
+        "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
+        "vectorx": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      },
+      "derivedName": "AvailBridgeV1",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Avail Multisig 2",
+      "address": "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "pause the bridge."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1714942703,
+      "sinceBlock": 19806426,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xE458b870F2F59a49915591282f1Bb688901767AD",
+          "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A",
+          "0xAD379D3275a18bd4BB741C3b291a3778D51c3304",
+          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xaa1f4f952a6426a00ccec6d54335b96618ad734b97d6dcdf9ffd0de3c38797fe",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 3,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
@@ -102,6 +181,30 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ProxyAdmin",
+      "address": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+        }
+      ],
+      "sinceTimestamp": 1720568903,
+      "sinceBlock": 20272316,
+      "values": {
+        "$immutable": true,
+        "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
       "name": "SP1VerifierGateway",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
@@ -111,25 +214,35 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
-        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
-        "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
-        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
-        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
-        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
+        "oldVerifier": {
+          "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+          "frozen": true
+        },
+        "oldVerifier2": {
+          "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+          "frozen": true
+        },
+        "oldVerifier3": {
+          "prover": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
+          "frozen": true
+        },
+        "oldVerifier4": {
+          "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+          "frozen": true
+        },
+        "oldVerifier5": {
+          "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "frozen": true
+        },
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
+        "verifier": {
+          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "frozen": false
+        }
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -164,7 +277,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AvailMultisig",
+      "name": "Avail Multisig 1",
       "address": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -180,8 +293,24 @@
           "description": "can freeze the Vector contract and update the list of authorized relayers."
         },
         {
+          "permission": "interact",
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+        },
+        {
           "permission": "upgrade",
           "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "via": [{ "address": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -318,6 +447,31 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x054fd961708D8E2B9c10a63F6157c74458889F0a": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": [
+      "constructor(address _singleton)"
+    ],
+    "0x36194271a00dBBBae314E83dA56d0FF75fDa367B": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -336,6 +490,95 @@
       "function routes(bytes4) view returns (address verifier, bool frozen)",
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x737539737b44493F65c17eAfE165197b6410d254": [
+      "error AccessControlBadConfirmation()",
+      "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
+      "error AccessControlEnforcedDefaultAdminRules()",
+      "error AccessControlInvalidDefaultAdmin(address defaultAdmin)",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AlreadyBridged()",
+      "error ArrayLengthMismatch()",
+      "error BlobRootEmpty()",
+      "error BridgeRootEmpty()",
+      "error DataRootCommitmentEmpty()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FeeTooLow()",
+      "error InvalidAssetId()",
+      "error InvalidDataLength()",
+      "error InvalidDataRootProof()",
+      "error InvalidDestinationOrAmount()",
+      "error InvalidDomain()",
+      "error InvalidFungibleTokenTransfer()",
+      "error InvalidInitialization()",
+      "error InvalidLeaf()",
+      "error InvalidMerkleProof()",
+      "error InvalidMessage()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error Unimplemented()",
+      "error UnlockFailed()",
+      "error WithdrawFailed()",
+      "event DefaultAdminDelayChangeCanceled()",
+      "event DefaultAdminDelayChangeScheduled(uint48 newDelay, uint48 effectSchedule)",
+      "event DefaultAdminTransferCanceled()",
+      "event DefaultAdminTransferScheduled(address indexed newAdmin, uint48 acceptSchedule)",
+      "event Initialized(uint64 version)",
+      "event MessageReceived(bytes32 indexed from, address indexed to, uint256 messageId)",
+      "event MessageSent(address indexed from, bytes32 indexed to, uint256 messageId)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function acceptDefaultAdminTransfer()",
+      "function avail() view returns (address)",
+      "function beginDefaultAdminTransfer(address newAdmin)",
+      "function cancelDefaultAdminTransfer()",
+      "function changeDefaultAdminDelay(uint48 newDelay)",
+      "function defaultAdmin() view returns (address)",
+      "function defaultAdminDelay() view returns (uint48)",
+      "function defaultAdminDelayIncreaseWait() view returns (uint48)",
+      "function feePerByte() view returns (uint256)",
+      "function feeRecipient() view returns (address)",
+      "function fees() view returns (uint256)",
+      "function getFee(uint256 length) view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(uint256 newFeePerByte, address newFeeRecipient, address newAvail, address governance, address pauser, address newVectorx)",
+      "function isBridged(bytes32) view returns (bool)",
+      "function isSent(uint256) view returns (bytes32)",
+      "function messageId() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function pendingDefaultAdmin() view returns (address newAdmin, uint48 schedule)",
+      "function pendingDefaultAdminDelay() view returns (uint48 newDelay, uint48 schedule)",
+      "function receiveAVAIL(tuple(bytes1 messageType, bytes32 from, bytes32 to, uint32 originDomain, uint32 destinationDomain, bytes data, uint64 messageId) message, tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex) input)",
+      "function receiveERC20(tuple(bytes1 messageType, bytes32 from, bytes32 to, uint32 originDomain, uint32 destinationDomain, bytes data, uint64 messageId) message, tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex))",
+      "function receiveETH(tuple(bytes1 messageType, bytes32 from, bytes32 to, uint32 originDomain, uint32 destinationDomain, bytes data, uint64 messageId) message, tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex))",
+      "function receiveMessage(tuple(bytes1 messageType, bytes32 from, bytes32 to, uint32 originDomain, uint32 destinationDomain, bytes data, uint64 messageId) message, tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex) input)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollbackDefaultAdminDelay()",
+      "function sendAVAIL(bytes32 recipient, uint256 amount)",
+      "function sendERC20(bytes32, bytes32 recipient, uint256 amount) view",
+      "function sendETH(bytes32 recipient) payable",
+      "function sendMessage(bytes32 recipient, bytes data) payable",
+      "function setPaused(bool status)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokens(bytes32) view returns (address)",
+      "function updateFeePerByte(uint256 newFeePerByte)",
+      "function updateFeeRecipient(address newFeeRecipient)",
+      "function updateTokens(bytes32[] assetIds, address[] tokenAddresses)",
+      "function updateVectorx(address newVectorx)",
+      "function vectorx() view returns (address)",
+      "function verifyBlobLeaf(tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex) input) view returns (bool)",
+      "function verifyBridgeLeaf(tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex) input) view returns (bool)",
+      "function withdrawFees()"
     ],
     "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": [
       "constructor(address _singleton)"
@@ -471,9 +714,12 @@
     ]
   },
   "usedTemplates": {
+    "avail/AvailBridgeV1": "0x1e30044e2ab7a26fa8c43ab28fbb2c5afaf96522cd40309de731d20185455f9f",
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "succinct/SP1Vector": "0xba71ec9709d89d352f7a245e5b72cf3434f4e06994cd62092c06382309a93fa3",
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
-  }
+  },
+  "permissionsConfigHash": "0x18dcc6f628917f5030b5ff975ab72deb711fd374fbb0001f7117b357857c13a2"
 }

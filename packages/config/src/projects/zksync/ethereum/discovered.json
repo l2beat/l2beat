@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 22081893,
-  "configHash": "0x304fa3f3bf072031ca7da202f314890149a1580e14d4dd317ac6e2073b908d68",
+  "configHash": "0x903968450b318865876e6bd0e75b1f2ee68d51ba659c1ffa4064d5b896986796",
   "entries": [
     {
       "name": "Multisig 1",
@@ -157,13 +157,6 @@
         "0x56f13113f7f861d8b45c18702ac8aa2b4d13d510e35a53f063d80afb36d0785f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalTokens"],
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
@@ -285,13 +278,6 @@
         "0xcf125cd39e9e7620aea95320666f3e3c19a3ae1da200337d94d11de29e8d97af"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
@@ -372,13 +358,6 @@
         "0x51cc7e771fc0a90a4ac4c584004569333b8e5355dea67cb3b6a5e19d602e4a7c"
       ],
       "proxyType": "zkSync Lite proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
@@ -884,5 +863,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x01772df6e93e45e13c047f2d208b2992406c1db7bc153722f8fd1fe98522911c"
 }

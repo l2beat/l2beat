@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x00e823ffc47275fa14f2149756c19efe83f3ff0e
+Generated with discovered.json: 0x8b91dbab713eb42241f07f84ba98f394780f8106
+
+# Diff at Tue, 29 Apr 2025 08:19:31 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 57470008
+- current block number: 57470008
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57470008 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3334552599C9aA1FE08CfF276A02033FF37646ca","via":[{"address":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"}]}]
+    }
+```
+
+```diff
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3334552599C9aA1FE08CfF276A02033FF37646ca","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x94494ddac9eed75619ca664dab77463dd287c530
 
 # Diff at Thu, 10 Apr 2025 14:43:45 GMT:
 

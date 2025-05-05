@@ -1,4 +1,133 @@
-Generated with discovered.json: 0x7342c07405928a0902c83f960f63985044c1f561
+Generated with discovered.json: 0x028cb195a24834eaceb268f71a89e27127fa855d
+
+# Diff at Tue, 29 Apr 2025 08:19:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22336708
+- current block number: 22336708
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22336708 (main branch discovery), not current.
+
+```diff
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0xe4644b6d106A18062344c0A853666bc0B8f052d1","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","via":[{"address":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x4cc87B0A504047967CeD9A955431B3229237e7de","via":[]},{"permission":"validateZkStack","to":"0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x4cc87B0A504047967CeD9A955431B3229237e7de","via":[]},{"permission":"validateZkStack","to":"0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f","via":[]}]
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xe14828E4405239dD331F194F1B7883eeD73bCBF3","description":"set the conversion factor for gas token deposits.","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x18717a4ba57198e0ec10341273217b5ae8a0495d
+
+# Diff at Thu, 24 Apr 2025 05:13:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6466cdaa8544f9f09e2fd2435efdaa3e02a1919f block: 22181511
+- current block number: 22336708
+
+## Description
+
+L1DAValidator update to a contract that integrates with Vector (SP1) Avail DA bridge.
+
+## Watched changes
+
+```diff
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
++        "0x8f50d93B9955B285f787043B30B5F51D09bE0120"
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "0x907b30407249949521Bf0c89A43558dae200146A"
++        "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      values.$members.6:
++        "0x14574dfC6B7aF658c5033BA95673864947956521"
+      values.$members.5:
+-        "0x14574dfC6B7aF658c5033BA95673864947956521"
++        "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
+      values.$members.4:
+-        "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
++        "0x3b6036d410cA018661324766680674921a8b2d89"
+      values.$members.3:
+-        "0x3b6036d410cA018661324766680674921a8b2d89"
++        "0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
+      values.$members.2:
+-        "0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
++        "0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
+      values.$members.1:
+-        "0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
++        "0x90E10C37d8d9e854e7775B0069728642A1F88610"
+      values.$members.0:
+-        "0x90E10C37d8d9e854e7775B0069728642A1F88610"
++        "0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AvailL1DAValidator (0x8f50d93B9955B285f787043B30B5F51D09bE0120)
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+```
+
+## Source code changes
+
+```diff
+.../AvailL1DAValidator.sol}                        | 60 +++++++++++++++++-----
+ 1 file changed, 48 insertions(+), 12 deletions(-)
+```
+
+Generated with discovered.json: 0x0365b2d257ecf331b9adda2fd2d4f1567e3f00f1
 
 # Diff at Thu, 10 Apr 2025 14:43:19 GMT:
 

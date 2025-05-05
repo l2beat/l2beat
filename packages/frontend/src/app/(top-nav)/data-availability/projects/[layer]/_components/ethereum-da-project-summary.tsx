@@ -35,7 +35,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
   return (
     <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
       <section id="summary" className="w-full">
-        <ProjectHeader title={project.name} slug={project.slug} />
+        <ProjectHeader project={project} />
         <div className="mt-6 flex w-full flex-col gap-4">
           <div className="flex flex-row items-start gap-10">
             <div className="w-full">

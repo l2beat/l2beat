@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 21723791,
-  "configHash": "0x860e84ef84fcfc524b6df75ba1a9f16cf62d24651c5b4b0149f715fab84376be",
+  "configHash": "0x9f02de2684195472c3ee9959f3c666ca1174b688a60c2e6a4dad0bcd27aee610",
   "entries": [
     {
       "name": "LayerZero Proof Library",
@@ -127,13 +127,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661536020,
       "sinceBlock": 15416736,
       "values": {
@@ -279,13 +272,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661531835,
       "sinceBlock": 15416448,
       "values": {
@@ -760,5 +746,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xb6f628b4d80715dafd7ed4103ab474535200e8a400632a048d9bbc3941393abb"
 }

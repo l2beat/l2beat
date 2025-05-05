@@ -15,7 +15,7 @@ export const soneium = opStackL2({
     name: 'Soneium',
     slug: 'soneium',
     stateValidationImage: 'opfp',
-    tvlWarning: {
+    tvsWarning: {
       value:
         'The total TVS doublecounts underlying assets for solvBTC.BBN and solvBTC since they are locked on Soneium. We are working on a fix.',
       sentiment: 'warning',

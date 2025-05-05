@@ -1,4 +1,68 @@
-Generated with discovered.json: 0x9c7444d0ab6b04595d4a006c73efcc8c0609b084
+Generated with discovered.json: 0x050e09fb8bd8b381be22676403f3eb8e9c0a8b3a
+
+# Diff at Tue, 29 Apr 2025 08:19:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21981677
+- current block number: 21981677
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981677 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x258862dec9a77db57b398c441390783293E2a7A1","description":"manage the members of the data availability committee and the threshold for valid commitments.","via":[]},{"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a"}]}]
+    }
+```
+
+```diff
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x258862dec9a77db57b398c441390783293E2a7A1","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0x258862dec9a77db57b398c441390783293E2a7A1","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xc84e03c6da834aa3bbe391b4aa5da3c0f1b546b5
+
+# Diff at Thu, 24 Apr 2025 10:30:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21981677
+- current block number: 21981677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981677 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://prism-da-2.eu-north-2.gateway.fm/","0xf1cACD549400824D54c8794e63C5368C296FDA00"]
++        {"url":"https://prism-da-1.eu-north-2.gateway.fm/","addr":"0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"}
+      values.members.0:
+-        ["https://prism-da-1.eu-north-2.gateway.fm/","0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"]
++        {"url":"https://prism-da-2.eu-north-2.gateway.fm/","addr":"0xf1cACD549400824D54c8794e63C5368C296FDA00"}
+    }
+```
+
+Generated with discovered.json: 0x77d780f19ae4c3edad1919d89cef8d0eb6d38e2e
 
 # Diff at Thu, 10 Apr 2025 14:42:41 GMT:
 

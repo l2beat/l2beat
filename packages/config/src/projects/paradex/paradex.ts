@@ -12,7 +12,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   EXITS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -22,7 +21,7 @@ import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
-import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
+import { STATE_VALIDATION } from '../../common/stateValidation'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -200,6 +199,7 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1725811535),
+          untilTimestamp: UnixTime(1744056299), // april 9 2025
           programHashes: [
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
@@ -210,8 +210,29 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1725811535),
+          untilTimestamp: UnixTime(1744056299), // april 9 2025
           programHashes: [
             '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1744056299),
+          programHashes: [
+            '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1744056299),
+          programHashes: [
+            '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator
           ],
         },
       },
@@ -278,30 +299,46 @@ export const paradex: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: false,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink:
+        'https://docs.paradex.trade/documentation/paradex-chain/node-setup',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
+  stateDerivation: {
+    nodeSoftware:
+      'SN stack-compatible node software can be used, please find the Paradex-specific node setup guide [in their docs](https://docs.paradex.trade/documentation/paradex-chain/node-setup).The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
+    compressionScheme:
+      'Paradex uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
+    genesisState: 'There is no non-empty genesis state.',
+    dataFormat:
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
+  },
+  stateValidation: {
+    categories: [STATE_VALIDATION.VALIDITY_PROOFS],
+  },
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {

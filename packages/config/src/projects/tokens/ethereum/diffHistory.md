@@ -1,4 +1,102 @@
-Generated with discovered.json: 0x65af1c95c2d7d9bb8b04bb910400ae37b797a7bf
+Generated with discovered.json: 0x859feba5b2c382d43e277dd545561080e425a40e
+
+# Diff at Tue, 29 Apr 2025 08:19:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22123688
+- current block number: 22123688
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123688 (main branch discovery), not current.
+
+```diff
+    contract ValidatorsExitBusOracle (0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract CSAccounting (0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract AccountingOracle (0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract WithdrawalQueueERC721 (0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract WithdrawalVault (0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2e59A20f205bB85a89C53f1936454680651E618e","via":[]}]
+    }
+```
+
+```diff
+    contract LidoLocator (0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract MintManager (0xCa14076A3cec95448BaD179cc19B351A4204B88B) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x909d0CB383Ecc77e44daE5d0146cF476f611f62b","via":[]}]
+    }
+```
+
+```diff
+    contract CSFeeDistributor (0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract CSModule (0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract StakingRouter (0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x3017778cb63cabe14a9edede5cbf874232512f36
 
 # Diff at Tue, 25 Mar 2025 11:42:40 GMT:
 

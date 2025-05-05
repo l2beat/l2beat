@@ -1,11 +1,7 @@
-import { BridgesTvsChart } from '~/components/chart/tvs/bridges-tvs-chart'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BridgesHeader } from '../_components/bridges-header'
-import { BridgesSummaryTables } from './_components/bridges-summary-tables'
+import { BridgesSummaryPage } from './_page'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -24,16 +20,8 @@ export default async function Page() {
   ])
 
   return (
-    <>
-      <HydrateClient>
-        <TableFilterContextProvider>
-          <BridgesHeader>Summary</BridgesHeader>
-          <PrimaryCard>
-            <BridgesTvsChart />
-          </PrimaryCard>
-          <BridgesSummaryTables {...entries} />
-        </TableFilterContextProvider>
-      </HydrateClient>
-    </>
+    <HydrateClient>
+      <BridgesSummaryPage entries={entries} />
+    </HydrateClient>
   )
 }

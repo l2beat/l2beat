@@ -2,5 +2,8 @@
   "extends": ["../../biome.json"],
   "linter": {
     "enabled": false
+  },
+  "files": {
+    "ignore": ["./rewrite/static"]
   }
 }

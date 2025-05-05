@@ -8,7 +8,7 @@ import type { Database } from '@l2beat/database'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import { CirculatingSupplyAmountIndexer } from './CirculatingSupplyAmountIndexer'
 
 describe(CirculatingSupplyAmountIndexer.name, () => {

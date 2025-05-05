@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22181511,
-  "configHash": "0x62e0f05dd00fb08467e05af5fb89c4fec435c546a14d2a044a365b65e09e7d3d",
+  "configHash": "0xee3a08cf2009a094828489a9178493bd9a6df50ba12d5734c4353e9fde73bbd6",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -112,18 +112,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x2572835e02b59078711aa0800490e80975e4169d",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -164,26 +152,6 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "via": [{ "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -450,18 +418,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x2572835e02b59078711aa0800490e80975e4169d",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -513,14 +469,6 @@
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
       "proxyType": "immutable",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
-          "description": "set the conversion factor for gas token deposits.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -984,9 +932,10 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
-    "shared-zk-stack/v26/Diamond": "0x748a53ab23ca7de7668b62f01a1e436cda12fe5b08cf1bd1bfcde11f6dba8ffe",
+    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/ValidatorTimelock": "0xb0a9eee97036385e26460c74be8e8196ad5c4872d104d7ecd6d3a00bd59ac2f8",
+    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x88a471fb7e50f62d0506a5119704ef2aef61e379a7a21709fffd3cc357aa48b8"
 }

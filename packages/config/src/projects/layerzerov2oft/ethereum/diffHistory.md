@@ -1,4 +1,102 @@
-Generated with discovered.json: 0x5b68627cf0f9f2192e2d9f6c6d591973934a75f2
+Generated with discovered.json: 0xff729e031a9e3a88bdce85906c003455ab7068db
+
+# Diff at Tue, 29 Apr 2025 08:19:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22174829
+- current block number: 22174829
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","via":[]}]
+    }
+```
+
+```diff
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8","via":[{"address":"0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"}]}]
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xe16d201cA134345601631D327a971A3741646B0d","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xcde83e025e3f3be2a1f67950ef9306f141c9def1
+
+# Diff at Thu, 24 Apr 2025 10:30:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 22174829
+- current block number: 22174829
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
++++ description: The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed.
++++ severity: HIGH
+      values.defaultReceiveLib_rsETH:
+-        ["0xc02Ab410f0734EFa3F14628780e6e695156024C2",true]
++        {"lib":"0xc02Ab410f0734EFa3F14628780e6e695156024C2","isDefault":true}
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
++++ description: The default executor can be different for every OApp. In practice it is the same for most OApps. (LayerZero Executor) Should be reviewed if changed.
++++ severity: HIGH
+      values.defaultExecutor_ENA:
+-        [10000,"0x173272739Bd7Aa6e4e214714048a9fE699453059"]
++        {"maxMessageSize":10000,"executor":"0x173272739Bd7Aa6e4e214714048a9fE699453059"}
++++ description: The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_CYBER:
+-        [15,2,0,0,["0x589dEDbD617e0CBcB916A9223F4d1300c294236b","0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x589dEDbD617e0CBcB916A9223F4d1300c294236b","0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"],"optionalDVNs":[]}
++++ description: The verification config of the ENAOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_ENA:
+-        [15,2,0,0,["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],"optionalDVNs":[]}
++++ description: The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_sfrxETH:
+-        [15,2,0,0,["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x380275805876Ff19055EA900CDb2B46a94ecF20D","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],"optionalDVNs":[]}
++++ description: The verification config of the USDT0OFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_USDT0:
+-        [15,2,0,0,["0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],[]]
++        {"confirmations":15,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2","0x589dEDbD617e0CBcB916A9223F4d1300c294236b"],"optionalDVNs":[]}
+    }
+```
+
+Generated with discovered.json: 0xbfb2c8c436d4d43b9767005df6943ba704382723
 
 # Diff at Tue, 01 Apr 2025 15:04:02 GMT:
 

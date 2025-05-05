@@ -6,7 +6,7 @@ import { cn } from '~/utils/cn'
 
 interface Props {
   expiresAt: number
-  size?: 'lg' | 'md' | 'sm'
+  size?: 'lg' | 'md' | 'sm' | 'xs'
   className?: string
   withBackground?: boolean
 }
@@ -84,6 +84,7 @@ function TimePart({
         size === 'lg' && 'text-[28px]',
         size === 'md' && 'text-2xl leading-none',
         size === 'sm' && 'text-[18px]',
+        size === 'xs' && 'px-1.5 py-[3.5px] text-[18px]',
         className,
       )}
     >
