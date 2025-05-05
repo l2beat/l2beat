@@ -8,6 +8,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('base')
 const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
+const chainId = 8453
 
 export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
@@ -136,7 +137,7 @@ export const base: ScalingProject = opStackL2({
   isNodeAvailable: true,
   chainConfig: {
     name: 'base',
-    chainId: 8453,
+    chainId,
     explorerUrl: 'https://basescan.org',
     // ~ Timestamp of block number 0 on Base
     // https://basescan.org/block/0
@@ -157,7 +158,7 @@ export const base: ScalingProject = opStackL2({
         url: 'https://developer-access-mainnet.base.org',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.basescan.org/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
     ],
   },

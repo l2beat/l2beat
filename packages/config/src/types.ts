@@ -254,11 +254,11 @@ export type ChainApiConfig =
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
-  | ChainExplorerApi<'etherscan'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
-  | ChainStarkexApi
+  | StarkexApi
+  | EtherscanApi
 
 export interface ChainBasicApi<T extends string> {
   type: T
@@ -273,9 +273,15 @@ export interface ChainExplorerApi<T extends string> {
   contractCreationUnsupported?: boolean
 }
 
-export interface ChainStarkexApi {
+export interface StarkexApi {
   type: 'starkex'
   product: string[]
+}
+
+export interface EtherscanApi {
+  type: 'etherscan'
+  chainId: number
+  contractCreationUnsupported?: boolean
 }
 
 // #endregion

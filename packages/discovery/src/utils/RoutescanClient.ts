@@ -28,7 +28,7 @@ export class RoutescanClient
     unsupportedMethods: EtherscanUnsupportedMethods = {},
     logger = Logger.SILENT,
   ) {
-    super(httpClient, url, '', minTimestamp, unsupportedMethods, logger)
+    super(httpClient, url, '', minTimestamp, unsupportedMethods, {}, logger)
   }
 
   /**

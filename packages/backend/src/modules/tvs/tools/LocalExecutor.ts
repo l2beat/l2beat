@@ -1,4 +1,4 @@
-import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
+import { type Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainBasicApi, ChainConfig, ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import {
@@ -177,11 +177,10 @@ export class LocalExecutor {
             new RateLimiter({ callsPerMinute: 120 }),
             {
               type: etherscanApi.type,
-              url: etherscanApi.url,
-              apiKey: this.env.string(
-                Env.key(chainConfig.name, 'ETHERSCAN_API_KEY'),
-              ),
+              url: this.env.string('ETHERSCAN_API_URL'),
+              apiKey: this.env.string('ETHERSCAN_API_KEY'),
               chain: chainConfig.name,
+              chainId: etherscanApi.chainId,
             },
           ),
         )

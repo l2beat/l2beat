@@ -21,11 +21,13 @@ export async function getEvents(
   explorerUrl?: string,
   explorerApiKey?: string,
   explorerType?: string,
+  explorerChainId?: number,
 ) {
   const explorer = {
     type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
     url: explorerUrl ?? 'ERROR',
     apiKey: explorerApiKey ?? 'ERROR',
+    chainId: explorerChainId ?? -1,
   }
   const provider = await getProvider(rpcUrl, explorer)
 
