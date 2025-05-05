@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22367585,
-  "configHash": "0x6b740adab8a9a0edfa200644b7003fe05a45f33950e2c73dd30488b658e72fea",
+  "blockNumber": 22397530,
+  "configHash": "0x86a4e3781b6f3b508960beecd860ad07815fb04fda4fec0c157ce004514bca87",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -192,20 +192,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            },
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
@@ -229,7 +215,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xb0bed3146b3ebe68f952abf03c85afbc0b6ff014ed2e3166dad0ebd799f3fc06",
+        "getRoot": "0x252e9d0f362a44fa51fb05244965a86afa0b91eaa6a06b3aee55ead971f371a6",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -319,66 +305,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
-      "issuedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "to": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-          "via": []
-        },
-        {
-          "permission": "aggregatePolygon",
-          "to": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
-          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            },
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -499,15 +425,15 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x7b51c2522ef8059f69fc0c0b4bd170fc3a1b64856c45c0c4b552e84e1b6efdcf",
+        "getRollupExitRoot": "0xf29f6880761b6ced5b866740405613e4d864fc0e09e3c01f3a60b34cd1c8f141",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1745843579,
+        "lastAggregationTimestamp": 1746204683,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14, 17],
+        "pessimisticProofSenders": [14, 17, 18, 19],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
-        "rollupCount": 18,
+        "rollupCount": 19,
         "rollupsDataV2": [
           {
             "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -593,9 +519,9 @@
           {
             "rollupContract": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
             "chainID": 2355,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            "forkID": 9,
-            "rollupTypeID": 4,
+            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
@@ -665,6 +591,15 @@
           {
             "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
             "chainID": 45056,
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupTypeID": 10,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          },
+          {
+            "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+            "chainID": 8088,
             "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
             "forkID": 12,
             "rollupTypeID": 10,
@@ -755,8 +690,8 @@
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
-        "totalSequencedBatches": 717182,
-        "totalVerifiedBatches": 716693,
+        "totalSequencedBatches": 720393,
+        "totalVerifiedBatches": 719821,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -793,20 +728,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            },
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
       "sinceTimestamp": 1679653151,
       "sinceBlock": 16896720,
@@ -832,8 +753,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 57706,
-        "getRoot": "0xc611ff5e8509eafab7a8c0b1f324832c5935030c0399e7aa94e1ca02bfebe1d6",
+        "depositCount": 57870,
+        "getRoot": "0xbd90f05a830d59bcd5388e9696933e7ec2b9c4c5813c8625bda679ff22ee7e38",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",
@@ -918,7 +839,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -953,30 +874,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay",
-          "via": [
-            {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
-            }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1726,5 +1623,6 @@
     "polygon-cdk/PolygonRollupManager_pessimistic": "0xc9535092402045470b254bc911e193803f0a82bc0e78932c1c810ce000a79c63",
     "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
     "polygon-cdk/Timelock": "0x78901e9bf86645856ac7e8fb50da9c1b6d749c8a1e7ee7f2d432ab6ab0d71c34"
-  }
+  },
+  "permissionsConfigHash": "0x8c520e587126cfbf8447b8e9552e8ff5ea322d5bbafec09a9f9980a1e578f15f"
 }

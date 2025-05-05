@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x2a8dab502d8ab4d187d0fda61474fb868db19265
+
+# Diff at Tue, 29 Apr 2025 08:19:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 16767881
+- current block number: 16767881
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7","via":[]}]
+    }
+```
+
+```diff
+    contract Governance (0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7","via":[]}]
+    }
+```
+
+```diff
+    contract VerifierExit (0xb56878d21F6b101f48bb55f1AA9D3F624f04E513) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7","via":[]}]
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x318f79c310adf3faf3d245daa2dfa521a07d9085
 
 # Diff at Tue, 04 Mar 2025 10:40:18 GMT:

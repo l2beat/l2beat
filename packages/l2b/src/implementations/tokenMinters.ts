@@ -14,16 +14,8 @@ export async function getTokenMinterEvents(
   logger: CliLogger,
   address: EthereumAddress,
   rpcUrl: string,
-  explorerUrl?: string,
-  explorerApiKey?: string,
-  explorerType?: 'etherscan' | 'blockscout',
 ) {
-  const explorer = {
-    type: explorerType ?? 'etherscan',
-    url: explorerUrl ?? 'ERROR',
-    apiKey: explorerApiKey ?? 'ERROR',
-  }
-  const provider = await getProvider(rpcUrl, explorer)
+  const provider = await getProvider(rpcUrl)
 
   const iface = new utils.Interface(ROLE_EVENTS)
   const roleGrantedTopic = iface.getEventTopic('RoleGranted')

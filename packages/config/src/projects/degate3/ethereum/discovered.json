@@ -2,7 +2,7 @@
   "name": "degate3",
   "chain": "ethereum",
   "blockNumber": 21394291,
-  "configHash": "0xf6d1d2dc30674445bc60fd26e3e68953d158287726e5ad4eb3f1a562f5ff2fd9",
+  "configHash": "0x1e3b40fd01f9fe9641d8cc4eee56b3f3e499649718c486351b55bcfecab6abd8",
   "entries": [
     {
       "name": "TimeLock1",
@@ -77,13 +77,6 @@
         "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1699746983,
       "sinceBlock": 18552104,
       "values": {
@@ -191,13 +184,6 @@
         "0x0eb913bdd3a56c7e954cf0d749fde579620dce50157f8736c1938de91acd7127"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -658,5 +644,6 @@
       "function setPendingAdmin(address pendingAdmin_)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x661c368a9ae9405be2a28bacd8ef36824736edbd89e8e96c0bc578b108d52f05"
 }

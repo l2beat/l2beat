@@ -1,4 +1,8 @@
-import { type IProvider, ProxyDetector } from '@l2beat/discovery'
+import {
+  type ExplorerConfig,
+  type IProvider,
+  ProxyDetector,
+} from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
 import {
@@ -19,13 +23,16 @@ export async function getEvents(
   rpcUrl: string,
   explorerUrl?: string,
   explorerApiKey?: string,
-  explorerType?: 'etherscan' | 'blockscout',
+  explorerType?: string,
+  explorerChainId?: number,
 ) {
   const explorer = {
     type: explorerType ?? 'etherscan',
     url: explorerUrl ?? 'ERROR',
     apiKey: explorerApiKey ?? 'ERROR',
-  }
+    chainId: explorerChainId ?? -1,
+  } as ExplorerConfig
+
   const provider = await getProvider(rpcUrl, explorer)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))

@@ -77,6 +77,8 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
   periodInSeconds,
 )} time window.`
 
+const chainId = 59144
+
 export const linea: ScalingProject = {
   type: 'layer2',
   id: ProjectId('linea'),
@@ -346,7 +348,7 @@ export const linea: ScalingProject = {
   },
   chainConfig: {
     name: 'linea',
-    chainId: 59144,
+    chainId,
     explorerUrl: 'https://lineascan.build',
     sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
     gasTokens: ['ETH'],
@@ -361,7 +363,7 @@ export const linea: ScalingProject = {
     coingeckoPlatform: 'linea',
     apis: [
       { type: 'rpc', url: 'https://linea-mainnet.infura.io/v3' },
-      { type: 'etherscan', url: 'https://api.lineascan.build/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
     ],
   },

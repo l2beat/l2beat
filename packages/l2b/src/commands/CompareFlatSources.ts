@@ -18,7 +18,7 @@ import { discoveryPath } from './args'
 
 const forceTableFlag = flag({
   description:
-    'Force the table to be displayed even if the terminal is too small',
+    'Force the table to be displayed even if the terminal is too small.',
   type: boolean,
   long: 'force-table',
   short: 'f',
@@ -27,7 +27,7 @@ const forceTableFlag = flag({
 
 const CompareProjectSources = command({
   name: 'compare-project-sources',
-  description: 'Compare similarities between flat contracts of two projects',
+  description: 'Compare similarities between flat contracts of two projects.',
   version: '1.0.0',
   args: {
     firstProject: positional({ type: string, displayName: 'firstProject' }),
@@ -79,7 +79,7 @@ const CompareProjectSourceOnSource = command({
 
 const MostSimilarFlatSources = command({
   name: 'most-similar-flat-sources',
-  description: 'Compare and find the most similar project to the one given',
+  description: 'Compare and find the most similar project to the one given.',
   version: '1.0.0',
   args: {
     project: positional({ type: string, displayName: 'project' }),
@@ -104,7 +104,7 @@ const MostSimilarFlatSources = command({
 
 const CompareAllFlatSources = command({
   name: 'compare-all-flat-sources',
-  description: 'Compare similarities of all projects',
+  description: 'Compare similarities of all projects.',
   version: '1.0.0',
   args: {
     discoveryPath,
@@ -146,7 +146,7 @@ const CompareAllFlatSources = command({
 
 export const CompareFlatSources = subcommands({
   name: 'compare-flat-sources',
-  description: 'Compare project similarities based on flat sources',
+  description: 'Compare project similarities based on flat sources.',
   cmds: {
     all: CompareAllFlatSources,
     similar: MostSimilarFlatSources,

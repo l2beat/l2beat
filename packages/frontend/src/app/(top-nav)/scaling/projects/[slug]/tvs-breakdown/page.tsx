@@ -25,8 +25,8 @@ export async function generateMetadata(props: Props) {
   }
 
   return getDefaultMetadata({
-    title: `${project.name} | TVS Breakdown – L2BEAT`,
-    description: `${project.name} project TVS Breakdown overview on L2BEAT. In depth scaling protocol analysis. Ethereum scaling analytics and research.`,
+    title: `${project.name} | TVS Breakdown - L2BEAT`,
+    description: `See a detailed breakdown of ${project.name}'s TVS on L2BEAT.`,
   })
 }
 

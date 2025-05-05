@@ -18,7 +18,7 @@ export const explorerUrl = option({
   type: HttpUrl,
   long: 'explorer-url',
   short: 'u',
-  defaultValue: () => 'https://api.etherscan.io/api',
+  defaultValue: () => 'https://api.etherscan.io/v2/api',
   defaultValueIsSerializable: true,
 })
 
@@ -29,15 +29,16 @@ export const explorerType = option({
   defaultValue: () => 'etherscan' as const,
 })
 
+export const explorerChainId = option({
+  type: optional(number),
+  long: 'etherscan-chain-id',
+  short: 'c',
+  defaultValue: () => 1,
+})
+
 export const explorerApiKey = option({
   type: optional(string),
   env: 'L2B_ETHERSCAN_API_KEY',
   long: 'etherscan-key',
   short: 'k',
-})
-
-export const chainId = option({
-  type: optional(number),
-  long: 'chain-id',
-  short: 'c',
 })

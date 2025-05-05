@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 22208595,
-  "configHash": "0x947c8fb6f0abe4daf790420ab6c940bee632d46b103cf64897b0fc346c877cbc",
+  "configHash": "0x419a319a006733c7a99714918f4e0d06ba7ea468de535b62445cd05c1a1169db",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -383,13 +383,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestRoot"],
       "sinceTimestamp": 1688671151,
       "sinceBlock": 17636832,
@@ -670,5 +663,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x239bd475c73e064a397ac60c49ac6bc42cd6e4e81f91f68709ec5c361905a83d"
 }

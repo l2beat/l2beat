@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0x56659266879fbf6ff69e6bb3e53fc612058ea327d8232ff3fd19c9d18f4f748b",
+  "configHash": "0xac1665159e2455073f20e651a62637d12acb72700fc3b4f794859b818b3bcda5",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -31,13 +31,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalBridgedDAI"],
       "sinceTimestamp": 1695199499,
       "sinceBlock": 18175991,
@@ -95,13 +88,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "sequence",
-          "to": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1706364971,
       "sinceBlock": 19098451,
@@ -186,13 +172,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1700125979,
       "sinceBlock": 18583475,
       "values": {
@@ -276,13 +255,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1703945135,
       "sinceBlock": 18898811,
       "values": {
@@ -727,5 +699,6 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
     "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+  },
+  "permissionsConfigHash": "0x21e158c4a293fe6c76f5d3e598bda4a959f316e386b3b4b70b1b2efee87f4d35"
 }

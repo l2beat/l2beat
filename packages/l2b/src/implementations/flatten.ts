@@ -1,25 +1,14 @@
 import { flattenStartingFrom } from '@l2beat/discovery'
-import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { type CliLogger, HttpClient } from '@l2beat/shared'
+import type { IEtherscanClient } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import type { CliLogger } from '@l2beat/shared'
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { createExplorerClient } from './createExplorerForCli'
 
 export async function fetchAndFlatten(
   address: EthereumAddress,
-  explorerUrl: string,
-  apiKey: string | undefined,
-  chainId: number | undefined,
-  type: ExplorerConfig['type'],
+  client: IEtherscanClient,
   logger: CliLogger,
   includeAll: boolean,
 ): Promise<string> {
-  const httpClient = new HttpClient()
-  const client = createExplorerClient(httpClient, type, {
-    chainId,
-    url: explorerUrl.toString(),
-    apiKey: apiKey ?? 'YourApiKeyToken',
-  })
-
   logger.logLine('Fetching contract source code...')
   const source = await client.getContractSource(address)
 

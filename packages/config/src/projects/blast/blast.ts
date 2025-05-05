@@ -8,6 +8,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('blast')
+const chainId = 81457
 
 export const blast: ScalingProject = opStackL2({
   addedAt: UnixTime(1700555008), // 2023-11-21T08:23:28Z
@@ -74,7 +75,7 @@ export const blast: ScalingProject = opStackL2({
   chainConfig: {
     name: 'blast',
     coingeckoPlatform: 'blast',
-    chainId: 81457,
+    chainId,
     explorerUrl: 'https://blastscan.io',
     sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
     multicallContracts: [
@@ -87,7 +88,7 @@ export const blast: ScalingProject = opStackL2({
     ],
     apis: [
       { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 1500 },
-      { type: 'etherscan', url: 'https://api.blastscan.io/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   finality: {

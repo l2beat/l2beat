@@ -1,9 +1,8 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type {
   BeaconChainBlob,
   BeaconChainClient,
-  BlobScanClient,
   RpcClient,
 } from '../../clients'
 import type { DaBlobProvider } from './DaProvider'
@@ -15,27 +14,12 @@ const BEACON_CHAIN_GENESIS_TIMESTAMP = 1606824023
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
-    private readonly blobScanClient: BlobScanClient,
     private readonly beaconChainClient: BeaconChainClient,
     private readonly rpcClient: RpcClient,
     readonly daLayer: string,
   ) {}
 
   async getBlobs(from: number, to: number): Promise<EthereumBlob[]> {
-    const blobScanResult = await this.blobScanClient.getBlobs(from, to)
-
-    if (blobScanResult.length > 0) {
-      return blobScanResult.map((blob) => ({
-        type: 'ethereum',
-        daLayer: this.daLayer,
-        blockTimestamp: UnixTime.fromDate(new Date(blob.blockTimestamp)),
-        size: BLOB_SIZE_BYTES,
-        inbox: blob.transaction.to,
-        sequencer: blob.transaction.from,
-      }))
-    }
-
-    // fallback to RPC + beacon chain
     const getBlobs = []
     for (let blockNumber = from; blockNumber <= to; blockNumber++) {
       getBlobs.push(this.getBlobsFromBeaconChain(blockNumber))

@@ -18,6 +18,7 @@ export interface CommonProjectEntry {
         underReview?: UnderReviewStatus
         syncWarning?: string
         countdowns?: ProjectCountdownsWithContext
+        emergencyWarning?: string
       }
     | undefined
   description?: string

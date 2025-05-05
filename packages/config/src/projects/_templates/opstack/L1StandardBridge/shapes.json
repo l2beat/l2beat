@@ -124,5 +124,11 @@
     "address": "0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A",
     "chain": "ethereum",
     "blockNumber": 22346130
+  },
+  "L1StandardBridgeCGT": {
+    "hash": "0x343d5f78c514c42169e2cdc872dfe7a44e424a7b5692fca5810f5d2b69b85054",
+    "address": "0x318F7008D7B5541546248D248Fd1eB41A57a9E41",
+    "chain": "ethereum",
+    "blockNumber": 22395854
   }
 }

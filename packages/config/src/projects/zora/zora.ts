@@ -44,7 +44,7 @@ export const zora: ScalingProject = opStackL2({
     minTimestamp: UnixTime(1710386579),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'analyze',
+    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'zora',

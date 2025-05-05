@@ -6,12 +6,15 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
+const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
+const chainId = 8453
 
 export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   discovery,
   genesisTimestamp,
+  additionalDiscoveries: { ['base']: l2Discovery },
   display: {
     name: 'Base',
     slug: 'base',
@@ -134,7 +137,7 @@ export const base: ScalingProject = opStackL2({
   isNodeAvailable: true,
   chainConfig: {
     name: 'base',
-    chainId: 8453,
+    chainId,
     explorerUrl: 'https://basescan.org',
     // ~ Timestamp of block number 0 on Base
     // https://basescan.org/block/0
@@ -155,7 +158,7 @@ export const base: ScalingProject = opStackL2({
         url: 'https://developer-access-mainnet.base.org',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.basescan.org/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
     ],
   },
@@ -172,9 +175,9 @@ export const base: ScalingProject = opStackL2({
         principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: false,
+        usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -187,6 +190,14 @@ export const base: ScalingProject = opStackL2({
     },
   ),
   milestones: [
+    {
+      title: 'Base achieves Stage 1',
+      url: 'https://base.mirror.xyz/tWDMlGp48fF0MeADcLQruUBq1Qxkou4O5x3ax8Rm3jA',
+      date: '2025-04-29T00:00:00Z',
+      description:
+        'Through an upgrade in their governance process and a Security Council, Base is now stage 1.',
+      type: 'general',
+    },
     {
       title: 'Fault proofs!',
       url: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
@@ -217,8 +228,19 @@ export const base: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
+  upgradesAndGovernance:
+    'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Optimism Security Council multisig, with a Safe Module that allows the OP Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The OP Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
-    text: `a contract receives a malicious code upgrade. Upgrades must be approved by both the BaseMultisig1 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
+    text: `a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
+  },
+  nonTemplateRiskView: {
+    exitWindow: {
+      value: 'None',
+      description:
+        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 3 parties: Base multisig, the Op Foundation Operations multisig, and the Base Security Council.',
+      sentiment: 'bad',
+      orderHint: 0, // 0-7 days
+    },
   },
 })

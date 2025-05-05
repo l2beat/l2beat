@@ -5,7 +5,7 @@ import { EthereumAddressValue, HttpUrl } from './types'
 
 export const DeploymentTimestamp = command({
   name: 'deployment-timestamp',
-  description: 'Gets the timestamp of a contract deployment',
+  description: 'Gets the timestamp of a contract deployment.',
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),

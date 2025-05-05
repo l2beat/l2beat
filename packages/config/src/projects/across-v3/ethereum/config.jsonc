@@ -37,6 +37,10 @@
     "0x3B03509645713718B78951126E0A6de6f10043f5": "AcrossConfigStore"
   },
   "overrides": {
+    "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61": {
+      // HubPoolStore
+      "ignoreMethods": ["relayMessageCallData"]
+    },
     "0xc186fA914353c44b2E33eBE05f21846F1048bEda": {
       // HubPool
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],

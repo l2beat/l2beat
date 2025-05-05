@@ -15,6 +15,14 @@ export interface EtherscanUnsupportedMethods {
 interface EtherscanExplorerConfig {
   type: 'etherscan'
   url: string
+  chainId: number
+  apiKey: string
+  unsupported?: EtherscanUnsupportedMethods
+}
+
+interface EtherscanV1ExplorerConfig {
+  type: 'etherscan-v1'
+  url: string
   apiKey: string
   unsupported?: EtherscanUnsupportedMethods
 }
@@ -44,6 +52,7 @@ export interface Transaction {
 
 export type ExplorerConfig =
   | EtherscanExplorerConfig
+  | EtherscanV1ExplorerConfig
   | BlockscoutExplorerConfig
   | RoutescanExplorerConfig
   | SourcifyExplorerConfig
@@ -76,12 +85,21 @@ export function getExplorerClient(
   config: ExplorerConfig,
 ): IEtherscanClient {
   switch (config.type) {
+    case 'etherscan-v1': {
+      return EtherscanClient.createForDiscovery(
+        httpClient,
+        config.url,
+        config.apiKey,
+        config.unsupported,
+      )
+    }
     case 'etherscan': {
       return EtherscanClient.createForDiscovery(
         httpClient,
         config.url,
         config.apiKey,
         config.unsupported,
+        { chainId: config.chainId.toString() },
       )
     }
     case 'routescan': {

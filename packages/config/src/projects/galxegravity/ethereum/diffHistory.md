@@ -1,3 +1,273 @@
+Generated with discovered.json: 0x4daaef5734e6757e718f556511382cb8ba1bce68
+
+# Diff at Fri, 02 May 2025 17:23:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22367357
+- current block number: 22396423
+
+## Description
+
+Upgrade to Celestia DA + blobstream, but the HostIO contract (pointing to blobstream) is unverified.
+
+Decompilation allows to verify that it is pointing to `0x7cf3876f681dbb6eda8f6ffc45d66b996df08fae` at least.
+
+using Celestia-Nitro v3.3.2 root.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x0003A96B27ce73505b43ea1b71a5aB06bec568C4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract ChallengeManager (0x68466622Aae5a9Ffd02530247d75Dd107f06B333) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.$implementation:
+-        "0x02E05A9245C5853f895daDcc3A8216C953C8736B"
++        "0x531c78AA0e0126Cef52c2027AA026Aa6e2929194"
+      values.$pastUpgrades.2:
++        ["2024-05-18T17:37:23.000Z","0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]]
+      values.$pastUpgrades.1.2:
+-        "2024-05-18T17:37:23.000Z"
++        "2025-01-27T14:58:35.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
++        "0xe11d3d807bd73ee2b941638788ccc55113045530f5b5fa5f2c7150ca54af8787"
+      values.$pastUpgrades.1.0:
+-        "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312"
++        ["0x02E05A9245C5853f895daDcc3A8216C953C8736B"]
+      values.$pastUpgrades.0.2:
+-        "2025-01-27T14:58:35.000Z"
++        "0x89bb6d5ad4aee106eb3057f96b1c3dc685bc40dc798d267f429c486b114fbd25"
+      values.$pastUpgrades.0.1:
+-        "0xe11d3d807bd73ee2b941638788ccc55113045530f5b5fa5f2c7150ca54af8787"
++        "2025-04-28T22:49:23.000Z"
+      values.$pastUpgrades.0.0.0:
+-        "0x02E05A9245C5853f895daDcc3A8216C953C8736B"
++        "0x531c78AA0e0126Cef52c2027AA026Aa6e2929194"
+      values.$upgradeCount:
+-        2
++        3
+      values.osp:
+-        "0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC"
++        "0x0537c93dA3b1f8A525204165d1d93De0534c262f"
+    }
+```
+
+```diff
+    contract Inbox (0x7AD2a94BefF3294a31894cFb5ba4206957a53c19) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      values.$implementation:
+-        "0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4"
++        "0x81eEEbb902693A3a90948Fe0A661aedb35271054"
+      values.$pastUpgrades.2:
++        ["2025-04-28T22:49:23.000Z","0x89bb6d5ad4aee106eb3057f96b1c3dc685bc40dc798d267f429c486b114fbd25",["0x81eEEbb902693A3a90948Fe0A661aedb35271054"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
+      values.$implementation:
+-        "0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"
++        "0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50"
+      values.$pastUpgrades.2:
++        ["2025-04-28T22:49:23.000Z","0x89bb6d5ad4aee106eb3057f96b1c3dc685bc40dc798d267f429c486b114fbd25",["0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.reader4844:
+-        "0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74"
++        "0x58f9a83EF35a241bcAc7EC4fB6e7DBcE2A1D1125"
+      values.sequencerVersion:
+-        "0x88"
++        "0x63"
+      values.CELESTIA_MESSAGE_HEADER_FLAG:
++        "0x63"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RollupProxy (0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x0537c93dA3b1f8A525204165d1d93De0534c262f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x6982e35C878cD2b5aF8Dcf06f33c4EfB01D6f482)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x856EA788977Bc771E8Ca87471baeC507A0f54771)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x9c40D14A2FC3f0A2f5fe804436f8e312224472C5)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xcaBf38d8eADdE0BC6C91655242AFB4Da92a63FCe)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../OneStepProverHostIo.sol => /dev/null           | 1860 --------------------
+ .../SequencerInbox/SequencerInbox.sol              |  117 +-
+ 2 files changed, 46 insertions(+), 1931 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367357 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3:
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x221d1c39ff4a02730a87d97e92c28985cbd92099
+
+# Diff at Tue, 29 Apr 2025 08:19:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22367357
+- current block number: 22367357
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367357 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x68466622Aae5a9Ffd02530247d75Dd107f06B333) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract Bridge (0x7983403dDA368AA7d67145a9b81c5c517F364c42) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract Inbox (0x7AD2a94BefF3294a31894cFb5ba4206957a53c19) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions:
+-        [{"permission":"sequence","to":"0xBa369bd77a346babCd282cB1a015194E8ec54542","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xa5D23c69894241825dAffB570c3c742C0F52df96) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"},{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}]
+    }
+```
+
+```diff
+    contract RollupProxy (0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"}]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xa5D23c69894241825dAffB570c3c742C0F52df96"}]},{"permission":"validate","to":"0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe62efb899b5e5194460d44dd1815819ef157efd5
 
 # Diff at Mon, 28 Apr 2025 11:47:09 GMT:

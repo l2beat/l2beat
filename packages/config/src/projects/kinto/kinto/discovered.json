@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 845013,
-  "configHash": "0x912d150d4fad8a815a3d4f2df0831e6dd6f744b5baa0d97dd5bb435c8166dbb9",
+  "configHash": "0xade990bb1cbc04741ef10db55755b09be04d95287dbbc231e79568b8499ccd76",
   "entries": [
     {
       "name": "NioGuardians",
@@ -13,14 +13,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1729791292,
       "sinceBlock": 234135,
@@ -100,13 +92,6 @@
         "0xbebfa9aff71fc0a56d9ace8b954fdb908f8ee88406caf04c17c0c64eaad15f43"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1705342186,
       "sinceBlock": 169,
       "values": {
@@ -186,13 +171,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Paymaster used for user transactions eligible for sponsorship.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["getDeposit"],
       "sinceTimestamp": 1703803667,
       "sinceBlock": 68,
@@ -1110,48 +1088,6 @@
       ],
       "proxyType": "immutable",
       "description": "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
-          "delay": 604800,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
-          "delay": 950400,
-          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
-          "delay": 950400,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
-          "description": "confirm sanctions, making them permanent without providing an exit window.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "delay": 1036800,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "description": "approve smart wallet recoveries for any KintoWallet.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1686,44 +1622,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "sinceTimestamp": 1703803592,
       "sinceBlock": 59,
@@ -3993,5 +3891,6 @@
   },
   "usedTemplates": {
     "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1"
-  }
+  },
+  "permissionsConfigHash": "0x844ff3e03fa3560dd4a830cb5508c0d7f1290a922f27201633cb0ea60ad01b39"
 }

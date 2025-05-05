@@ -19,6 +19,7 @@ const CLIENT_CONFIG = {
   NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('false'),
   NEXT_PUBLIC_ECOSYSTEMS: coerceBoolean.default('false'),
+  NEXT_PUBLIC_REWRITE: coerceBoolean.default('false'),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -40,7 +41,6 @@ const SERVER_CONFIG = {
   VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
-  REWRITE: coerceBoolean.default('false'),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -53,8 +53,8 @@ function createEnv(): Env {
   const isClient = typeof window !== 'undefined'
 
   for (const key in env) {
-    if (env[key] === '') {
-      delete env[key]
+    if (env[key as keyof Env] === '') {
+      delete env[key as keyof Env]
     }
   }
 
@@ -70,11 +70,36 @@ function createEnv(): Env {
   })
 }
 
-function getEnv(): Record<string, string | undefined> {
+function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
   if (typeof process === 'undefined') {
     // @ts-expect-error - window.__ENV__ is not typed
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return window.__ENV__
   }
-  return { ...process.env }
+
+  // As NextJS bundler inlines the env variables, we need to do this manually
+  // https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser
+  return {
+    // Server
+    DATABASE_URL: process.env.DATABASE_URL,
+    ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
+    MOCK: process.env.MOCK,
+    NODE_ENV: process.env.NODE_ENV,
+    CRON_SECRET: process.env.CRON_SECRET,
+    VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
+    VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    VERCEL_URL: process.env.VERCEL_URL,
+    EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
+    EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
+    // Client
+    NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
+    NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
+    NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
+    NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
+    NEXT_PUBLIC_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
+    NEXT_PUBLIC_ECOSYSTEMS: process.env.NEXT_PUBLIC_ECOSYSTEMS,
+    NEXT_PUBLIC_REWRITE: process.env.NEXT_PUBLIC_REWRITE,
+  }
 }

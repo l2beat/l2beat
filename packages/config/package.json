@@ -23,7 +23,8 @@
     "tokens:verify": "sh scripts/tokens/verify.sh",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
     "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools",
-    "diff": "./scripts/diff/diff.sh"
+    "diff": "./scripts/diff/diff.sh",
+    "tvs:update-schema": "ts-node ./scripts/tvs/update-schema.ts"
   },
   "dependencies": {
     "@l2beat/discovery": "workspace:*",
@@ -47,6 +48,7 @@
     "dotenv": "^16.4.5",
     "jsonc-parser": "^3.2.0",
     "node-fetch": "^2.6.7",
-    "p-limit": "^6.1.0"
+    "p-limit": "^6.1.0",
+    "zod-to-json-schema": "^3.24.4"
   }
 }

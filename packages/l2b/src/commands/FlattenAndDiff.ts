@@ -1,12 +1,16 @@
 import { writeFileSync } from 'fs'
 import path from 'path'
 import { flattenStartingFrom } from '@l2beat/discovery'
-import { HttpClient } from '@l2beat/shared'
 import { command, option, positional, string } from 'cmd-ts'
-import { createExplorerClient } from '../implementations/createExplorerForCli'
+import { getExplorer } from '../implementations/common/getExplorer'
 import { powerdiff } from '../implementations/powerdiff'
 import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
-import { chainId, explorerApiKey, explorerType, explorerUrl } from './args'
+import {
+  explorerApiKey,
+  explorerChainId,
+  explorerType,
+  explorerUrl,
+} from './args'
 import { EthereumAddressValue } from './types'
 
 export const FlattenAndDiff = command({
@@ -23,9 +27,9 @@ export const FlattenAndDiff = command({
       displayName: 'rightAddress',
     }),
     explorerUrl,
-    type: explorerType,
-    apiKey: explorerApiKey,
-    chainId: chainId,
+    explorerType,
+    explorerApiKey,
+    explorerChainId,
     difftasticPath: option({
       type: string,
       long: 'difftastic-path',
@@ -50,12 +54,7 @@ export const FlattenAndDiff = command({
     diffContext,
   },
   handler: async (args) => {
-    const httpClient = new HttpClient()
-    const client = createExplorerClient(httpClient, args.type, {
-      chainId: args.chainId,
-      url: args.explorerUrl.toString(),
-      apiKey: args.apiKey ?? 'YourApiKeyToken',
-    })
+    const client = getExplorer(args)
 
     console.log('Fetching contract source code...')
     const leftSource = await client.getContractSource(args.leftAddress)

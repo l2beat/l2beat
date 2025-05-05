@@ -91,7 +91,7 @@ export const fraxtal: ScalingProject = opStackL2({
       },
       {
         type: 'etherscan',
-        url: 'https://api.fraxscan.com/api',
+        chainId: 252,
       },
     ],
   },

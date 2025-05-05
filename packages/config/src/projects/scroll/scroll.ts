@@ -54,6 +54,7 @@ const upgradeDelay = discovery.getContractValue<number>(
 )
 
 const finalizationPeriod = 0
+const chainId = 534352
 
 export const scroll: ScalingProject = {
   type: 'layer2',
@@ -139,7 +140,7 @@ export const scroll: ScalingProject = {
   ),
   chainConfig: {
     name: 'scroll',
-    chainId: 534352,
+    chainId,
     explorerUrl: 'https://scrollscan.com',
     sinceTimestamp: UnixTime(1696917600),
     multicallContracts: [
@@ -154,7 +155,7 @@ export const scroll: ScalingProject = {
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },
-      { type: 'etherscan', url: 'https://api.scrollscan.com/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   config: {
@@ -625,6 +626,8 @@ export const scroll: ScalingProject = {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
     [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
   },
+  upgradesAndGovernance:
+    'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposal through the `AgoraGovernor` contract on L2. However, upgrades are not triggered automatically, the Security Council is in charge of executing upgrades.',
   milestones: [
     {
       title: 'Scroll Euclid upgrade',
