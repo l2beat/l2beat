@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 331086890,
-  "configHash": "0x7e8b479a2700967f8d0ae1fe4fe3caae2d94a492187b8bd51b8dc52612590d25",
+  "configHash": "0xb32385c7b0e47f61cf2a035ed650f59db58000a26182b60e3612cf08f54603a5",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",

@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "base",
   "blockNumber": 29605802,
-  "configHash": "0x9cabdf4e4e7df8420b11323094ee37e8d8eb10b7970d728040b028665e41d4ac",
+  "configHash": "0xf7b088a2147948005475ada64af0967c04ded92fa3b182a5391230069ddb3461",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -15,6 +15,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
+      "ignoreInWatchMode": ["netFeeRevenue", "lastDisbursementTime"],
       "sinceTimestamp": 1686802803,
       "sinceBlock": 6728,
       "values": {
@@ -1211,7 +1212,7 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/FeeDisburser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/FeeDisburser": "0x81e7cda064e8ed1c095231c79d03776318eb054eb93de239160734991736e1b2",
     "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",

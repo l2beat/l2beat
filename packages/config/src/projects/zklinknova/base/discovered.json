@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "base",
   "blockNumber": 27445725,
-  "configHash": "0x1def5510ec85ad4af0ad10675f1f03f0e7717042ea0dcb128a2943d7bc02d7ce",
+  "configHash": "0x76ebfaa886ad02f938760feda182b339d97212a25d4289ef06277c976851cb5c",
   "entries": [
     {
       "name": "BaseL2Gateway",

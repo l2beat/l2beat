@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x150032fb3a29de21258fc28f5c5b895a87fb9907
+
+# Diff at Fri, 02 May 2025 17:24:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22166274
+- current block number: 22397523
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a) {
+    +++ description: None
+      values.$members.3:
+-        "0x909e36B512Ed45250fdff513523119d825647695"
++        "0x6D9700B84F999a71D7701d6D537f32F1528f379A"
+      values.$members.2:
+-        "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd"
++        "0x909e36B512Ed45250fdff513523119d825647695"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166274 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3:
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x352bd5bf3f8e910745c688548f4fc70633363d2c
 
 # Diff at Tue, 29 Apr 2025 08:19:09 GMT:
