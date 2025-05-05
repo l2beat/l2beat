@@ -19,7 +19,11 @@ export function EcosystemsRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getEcosystemProjectData(manifest, req.params.slug)
+      const data = await getEcosystemProjectData(
+        manifest,
+        req.params.slug,
+        req.originalUrl,
+      )
       if (!data || !env.NEXT_PUBLIC_ECOSYSTEMS) {
         res.status(404).send('Not found')
         return
