@@ -563,6 +563,24 @@ export const linea: ScalingProject = {
             },
           ],
         },
+        {
+          name: 'LineaVerifier (ProofType 4)',
+          description:
+            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main circuit',
+              proofSystem: '?',
+              mainArithmetization: '?',
+              mainPCS: '?',
+            },
+          ],
+        },
       ],
     },
   },
