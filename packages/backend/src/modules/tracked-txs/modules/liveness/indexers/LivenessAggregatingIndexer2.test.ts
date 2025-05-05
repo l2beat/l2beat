@@ -237,6 +237,91 @@ describe(LivenessAggregatingIndexer2.name, () => {
       expect(result).toEqual(targetHeight)
     })
   })
+
+  describe(LivenessAggregatingIndexer2.prototype.generateLiveness.name, () => {
+    it('should generate aggregated liveness', async () => {
+      const mockLivenessRepository = mockObject<Database['liveness']>({
+        getRecordsInRangeWithLatestBefore: mockFn().resolvesTo(MOCK_LIVENESS),
+      })
+
+      const mockIndexerService = mockObject<IndexerService>({
+        getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
+      })
+
+      const indexer = createIndexer({
+        tag: 'generateLiveness',
+        livenessRepository: mockLivenessRepository,
+        indexerService: mockIndexerService,
+      })
+
+      const result = await indexer.generateLiveness(
+        NOW - 3 * UnixTime.HOUR,
+        NOW,
+      )
+
+      expect(
+        mockLivenessRepository.getRecordsInRangeWithLatestBefore,
+      ).toHaveBeenCalledWith(
+        [MOCK_CONFIGURATION_ID],
+        NOW - 3 * UnixTime.HOUR,
+        NOW,
+      )
+
+      expect(result).toEqual([
+        {
+          avg: 3 * UnixTime.HOUR,
+          max: 4 * UnixTime.HOUR,
+          min: 2 * UnixTime.HOUR,
+          projectId: 'mocked-project',
+          subtype: 'batchSubmissions',
+          timestamp: NOW - 3 * UnixTime.HOUR,
+        },
+      ])
+    })
+  })
+
+  describe(LivenessAggregatingIndexer2.prototype.aggregateRecords.name, () => {
+    it('should aggregate records', async () => {
+      const indexer = createIndexer({ tag: 'aggregatedRecords' })
+
+      const result = indexer.aggregateRecords(
+        MOCK_PROJECTS[0].id,
+        'batchSubmissions',
+        MOCK_LIVENESS.map((record) => ({
+          ...record,
+          id: MOCK_CONFIGURATION_ID,
+          subtype: MOCK_CONFIGURATION_TYPE,
+        })),
+        NOW,
+      )
+
+      expect(result).toEqual({
+        avg: ((4 + 2) / 2) * UnixTime.HOUR,
+        max: 4 * UnixTime.HOUR,
+        min: 2 * UnixTime.HOUR,
+        projectId: 'mocked-project',
+        subtype: 'batchSubmissions',
+        timestamp: NOW,
+      })
+    })
+
+    it('should skip if no data to calculate intervals', async () => {
+      const indexer = createIndexer({ tag: 'aggregatedRecords' })
+
+      const result = indexer.aggregateRecords(
+        MOCK_PROJECTS[0].id,
+        'batchSubmissions',
+        MOCK_LIVENESS.slice(0, 1).map((record) => ({
+          ...record,
+          id: MOCK_CONFIGURATION_ID,
+          subtype: MOCK_CONFIGURATION_TYPE,
+        })),
+        NOW,
+      )
+
+      expect(result).toEqual(undefined)
+    })
+  })
 })
 
 function createIndexer(options: {

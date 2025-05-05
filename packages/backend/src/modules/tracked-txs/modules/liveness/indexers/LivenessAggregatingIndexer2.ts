@@ -76,10 +76,13 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
         this.$.db,
       )
 
-      const livenessRecords = await livenessWithConfig.getWithinTimeRange(
-        from,
-        to,
-      )
+      // for every considered time range we also take latest record before `from`
+      // for each configuration to calculate interval for first record in time range
+      const livenessRecords =
+        await livenessWithConfig.getWithinTimeRangeWithLatestBeforeFrom(
+          from,
+          to,
+        )
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
@@ -126,9 +129,19 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
     livenessRecords: LivenessRecordWithConfig[],
     timestamp: UnixTime,
   ): AggregatedLiveness2Record | undefined {
-    // TODO: fix this take latest record (?)
-    if (livenessRecords.length <= 1) return
-    const intervals = calculateIntervals(livenessRecords)
+    // here we have few records before timestamp as we take one for each configuration
+    // so here we need to filter out all and leave only the latest before timestamp
+    const timeRangeStartIndex = livenessRecords.findIndex(
+      (r) => r.timestamp < timestamp,
+    )
+    const timeRangeRecords =
+      timeRangeStartIndex === -1
+        ? livenessRecords
+        : livenessRecords.slice(0, timeRangeStartIndex + 1)
+
+    // if <= 1 record, than we can't calculate intervals
+    if (timeRangeRecords.length <= 1) return
+    const intervals = calculateIntervals(timeRangeRecords)
     const stats = calculateStats(intervals)
 
     return {
