@@ -16,7 +16,7 @@ export const yellowstone: ScalingProject = upcomingL3({
     category: 'Optimium',
     stack: 'Arbitrum',
     links: {
-      websites: ['https://www.litprotocol.com/'],
+      websites: ['https://litprotocol.com/'],
       documentation: ['https://developer.litprotocol.com/'],
       explorers: ['https://yellowstone-explorer.litprotocol.com/'],
       socialMedia: [
