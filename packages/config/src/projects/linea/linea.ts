@@ -99,6 +99,7 @@ export const linea: ScalingProject = {
       documentation: ['https://docs.linea.build/'],
       explorers: [
         'https://lineascan.build/',
+        'https://lineaplorer.build/',
         'https://explorer.linea.build/',
         'https://linea.l2scan.co/',
       ],
