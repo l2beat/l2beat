@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "reservedContracts",
+    "systemContracts",
+    "tokenByIndex",
+    "tokenIdToApp",
+    "ownerOf"
+  ],
+  "ignoreRelatives": ["getReservedContracts", "getSystemContracts"],
+  "ignoreInWatchMode": ["totalSupply", "appCount"],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+        }
+      ]
+    },
+    "getSystemContracts": {
+      "description": "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`.",
+      "severity": "HIGH"
+    }
+  }
+}
