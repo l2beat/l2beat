@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync } from 'fs'
 import sqlite3 from 'sqlite3' // SQLite Client
 import type { DiscoveryCache } from './DiscoveryCache'
+import path from 'path'
 
 const DEFAULT_DATABASE_DIR = 'cache'
 const DEFAULT_DATABASE_FILENAME = 'discovery.sqlite'
@@ -10,12 +11,13 @@ export class SQLiteCache implements DiscoveryCache {
   private initialized: boolean = false
 
   constructor(databaseUrl?: string) {
-    if (databaseUrl === undefined) {
-      if (!existsSync(DEFAULT_DATABASE_DIR)) {
-        mkdirSync(DEFAULT_DATABASE_DIR, { recursive: true })
-      }
-      databaseUrl = `${DEFAULT_DATABASE_DIR}/${DEFAULT_DATABASE_FILENAME}`
+    databaseUrl ??= `${DEFAULT_DATABASE_DIR}/${DEFAULT_DATABASE_FILENAME}`
+
+    const databaseDir = path.dirname(databaseUrl)
+    if (!existsSync(databaseDir)) {
+      mkdirSync(databaseDir, { recursive: true })
     }
+
     this.db = new sqlite3.Database(databaseUrl)
   }
 
@@ -39,7 +41,7 @@ export class SQLiteCache implements DiscoveryCache {
       await this.query(
         `
         INSERT INTO cache(key, value)
-        VALUES($1, $2) 
+        VALUES($1, $2)
         ON CONFLICT(key) DO UPDATE SET value=$2`,
         [key, value],
       )
@@ -53,13 +55,13 @@ export class SQLiteCache implements DiscoveryCache {
       return
     }
 
-    this.initialized = true
     await this.query(`
       CREATE TABLE IF NOT EXISTS cache (
         key TEXT PRIMARY KEY,
         value TEXT
       )
     `)
+    this.initialized = true
   }
 
   private query(query: string, values?: unknown[]): Promise<unknown[]> {
