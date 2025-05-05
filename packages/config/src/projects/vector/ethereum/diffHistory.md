@@ -2,7 +2,7 @@ Generated with discovered.json: 0x82c8f962f3732fed1f41bdfffa07c044c93b6371
 
 # Diff at Mon, 05 May 2025 14:37:14 GMT:
 
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@277ef8f5adf45205d5b920c1ebfc0f7db8d19aff block: 22336710
 - current block number: 22417833
 
