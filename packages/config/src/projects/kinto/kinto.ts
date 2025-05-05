@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, assert, formatSeconds } from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -9,10 +9,8 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('kinto')
 const l2discovery = new ProjectDiscovery('kinto', 'kinto')
 
-// !!!!!!! l2critDelay WILL NEED TO BE INCREASED TO 12d FROM 11d !!!!!!!!!!!!
-const l2critDelay = 11 * 24 * 60 * 60
+const l2critDelay = 12 * 24 * 60 * 60
 
-// asserts as soon as the permissions are fully in place (-->04/01)
 // const contractKeys = [
 //   'edKintoMultisig2ADMIN',
 //   'edKintoMultisig2UPGRADER',
