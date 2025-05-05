@@ -41,7 +41,7 @@ export function getManifest(isProduction: boolean, rootDir: string) {
         return url
       },
       getImage(url: string) {
-        const content = fs.readFileSync(path.join(rootDir, url))
+        const content = fs.readFileSync(path.join(rootDir, 'static', url))
         const dimensions = imageSize(content)
         return {
           src: url,
