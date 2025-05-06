@@ -47,23 +47,32 @@ async function getLivenessData() {
     configurations,
     'liveness',
   )
-
   const projectIds = trackedTxsProjects.map((p) => p.id)
+
   const targetTimestamp =
     UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-  const records30Days = await db.aggregatedLiveness2.getAggregatesByTimeRange([
-    targetTimestamp - 30 * UnixTime.DAY,
-    targetTimestamp,
-  ])
-  const records90Days = await db.aggregatedLiveness2.getAggregatesByTimeRange([
-    targetTimestamp - 90 * UnixTime.DAY,
-    targetTimestamp,
-  ])
-  const recordsMax = await db.aggregatedLiveness2.getAggregatesByTimeRange([
-    UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')), // minTimestamp for TrackedTxsIndexer
-    targetTimestamp,
-  ])
+  const records30Days = groupBy(
+    await db.aggregatedLiveness2.getAggregatesByTimeRange([
+      targetTimestamp - 30 * UnixTime.DAY,
+      targetTimestamp,
+    ]),
+    (r) => r.projectId,
+  )
+  const records90Days = groupBy(
+    await db.aggregatedLiveness2.getAggregatesByTimeRange([
+      targetTimestamp - 90 * UnixTime.DAY,
+      targetTimestamp,
+    ]),
+    (r) => r.projectId,
+  )
+  const recordsMax = groupBy(
+    await db.aggregatedLiveness2.getAggregatesByTimeRange([
+      UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')), // minTimestamp for TrackedTxsIndexer
+      targetTimestamp,
+    ]),
+    (r) => r.projectId,
+  )
 
   const last30Days = UnixTime.toStartOf(
     UnixTime.now() - 30 * UnixTime.DAY,
@@ -80,13 +89,9 @@ async function getLivenessData() {
       (p) => p.id === project.id,
     )?.livenessConfig
 
-    const project30Days = records30Days.filter(
-      (r) => r.projectId === project.id,
-    )
-    const project90Days = records90Days.filter(
-      (r) => r.projectId === project.id,
-    )
-    const projectMax = recordsMax.filter((r) => r.projectId === project.id)
+    const project30Days = records30Days[project.id]
+    const project90Days = records90Days[project.id]
+    const projectMax = recordsMax[project.id]
     if (
       isEmpty(project30Days) &&
       isEmpty(project90Days) &&
@@ -141,9 +146,9 @@ async function getLivenessData() {
 }
 
 function mapAggregatedLivenessRecords(
-  records30Days: Omit<AggregatedLiveness2Record, 'timestamp'>[],
-  records90Days: Omit<AggregatedLiveness2Record, 'timestamp'>[],
-  recordsMax: Omit<AggregatedLiveness2Record, 'timestamp'>[],
+  records30Days: Omit<AggregatedLiveness2Record, 'timestamp'>[] | undefined,
+  records90Days: Omit<AggregatedLiveness2Record, 'timestamp'>[] | undefined,
+  recordsMax: Omit<AggregatedLiveness2Record, 'timestamp'>[] | undefined,
   subtype: TrackedTxsConfigSubtype,
   project: TrackedTxsProject,
   configurations: IndexerConfigurationRecord[],
@@ -165,9 +170,9 @@ function mapAggregatedLivenessRecords(
   )
   const maxAnomalyDuration = Math.max(...todaysAnomalies.map((a) => a.duration))
 
-  const last30Days = records30Days.find((r) => r.subtype === subtype)
-  const last90Days = records90Days.find((r) => r.subtype === subtype)
-  const max = recordsMax.find((r) => r.subtype === subtype)
+  const last30Days = records30Days?.find((r) => r.subtype === subtype)
+  const last90Days = records90Days?.find((r) => r.subtype === subtype)
+  const max = recordsMax?.find((r) => r.subtype === subtype)
   return {
     '30d': last30Days
       ? {
