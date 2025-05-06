@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb3e74ea78a2eb62e97cbd70fe9de733d4c8897ee
+Generated with discovered.json: 0x556d464f7244b27479eca358c18cdf4392f85972
 
-# Diff at Tue, 06 May 2025 13:46:28 GMT:
+# Diff at Tue, 06 May 2025 13:53:35 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208559
-- current block number: 22425050
+- current block number: 22425084
 
 ## Description
 
@@ -509,7 +509,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```diff
 +   Status: CREATED
     contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5)
-    +++ description: None
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
 ```
 
 ```diff
