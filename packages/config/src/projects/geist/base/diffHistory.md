@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x8314a3320b04a04b7df636dc53b9fb14aab14d6d
+
+# Diff at Tue, 06 May 2025 10:04:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76bab41abbae565c3c67522863645fa6d26e7444 block: 28317508
+- current block number: 29868235
+
+## Description
+
+Added a new UpgradeExecutor EOA.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+      values.executors.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.executors.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.executors.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+    }
+```
+
 Generated with discovered.json: 0x553105daf483a5d92c42d46ab1eb0a9aa80f4b26
 
 # Diff at Fri, 02 May 2025 17:25:28 GMT:
