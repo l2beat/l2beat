@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "optimism",
-  "blockNumber": 135462637,
+  "blockNumber": 135473637,
   "configHash": "0x42b5d143739fc83370e61abb3a83b8b7b375fc833df6938743804f07bc3bec23",
   "entries": [
     {
@@ -41,14 +41,14 @@
         "lpToken": "0x9f58A79D81477130C0C6D74b96e1397db9765ab1",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "644888230084560324",
-        "poolBalance": 287954829675,
+        "plannerFee": "646381844624410619",
+        "poolBalance": 286719909380,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-        "treasuryFee": 20840586108,
-        "tvl": 265379366026
+        "treasuryFee": 20845672006,
+        "tvl": 263870077860
       },
       "derivedName": "StargatePoolMigratable"
     },
@@ -89,14 +89,14 @@
         "lpToken": "0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "506005944136511098",
-        "poolBalance": 17326575713575,
+        "plannerFee": "507985363519863303",
+        "poolBalance": 15596768070685,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-        "treasuryFee": 39669205032,
-        "tvl": 453258978933
+        "treasuryFee": 39690037864,
+        "tvl": 454024970018
       },
       "derivedName": "StargatePoolUSDC"
     },
@@ -140,14 +140,14 @@
         "lpToken": "0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "573741900570075760",
-        "poolBalance": "18044261927000000000000",
+        "plannerFee": "587948400047838206",
+        "poolBalance": "17719326074000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 28856108,
-        "tvl": "1488141520000000000000"
+        "treasuryFee": 28874407,
+        "tvl": "1488361430000000000000"
       },
       "derivedName": "StargatePoolNative"
     },

@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "linea",
-  "blockNumber": 18722032,
+  "blockNumber": 18731275,
   "configHash": "0x6cc27cc4ca0c25459abc1c1dec21e7fa522ca7a470deb026f2646aac836e08f4",
   "entries": [
     {
@@ -85,14 +85,14 @@
         "lpToken": "0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
-        "plannerFee": "955697914924167281",
-        "poolBalance": "19629639812000000000000",
+        "plannerFee": "965909936873089042",
+        "poolBalance": "19685968030000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 33582382,
-        "tvl": "1898196137000000000000"
+        "treasuryFee": 33591142,
+        "tvl": "1890917179000000000000"
       },
       "derivedName": "StargatePoolNative"
     },
