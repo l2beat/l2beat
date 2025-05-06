@@ -138,6 +138,13 @@ This method allows ZK rollups to prove that the data used in their validity proo
         frequency: 12, // 12 seconds
         sinceTimestamp: 1710288000, // 2024-03-13
       },
+      {
+        // EIP-7691
+        size: 1179648, // 1.125 MiB (max-blob-gas, 9 blobs)
+        target: 786432, // 0.75 MiB  (target-blob-gas, 6 blobs)
+        frequency: 12,
+        sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
+      },
     ],
     finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
