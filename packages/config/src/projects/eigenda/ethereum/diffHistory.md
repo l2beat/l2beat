@@ -8,7 +8,7 @@ Generated with discovered.json: 0xfefb7e7251cc723e365f8564a69ecb36474544f6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New EigenDAOperationsMultisig as owner of core contracts. EigenDA has not upgraded to the allocation manager and its operators set yet, still uses AVS registry.
 
 ## Watched changes
 
