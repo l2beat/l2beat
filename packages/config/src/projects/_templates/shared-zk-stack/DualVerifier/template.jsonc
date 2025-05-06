@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A router contract for verifiers. Routes verification requests to {{FFLONK_VERIFIER}} or {{PLONK_VERIFIER}} depending on the supplied proof type.",
+  "fields": {
+    "verificationKeyHash": {
+      "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
+    }
+  }
+}

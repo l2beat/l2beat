@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+  "fields": {
+    "verificationKeyHash": {
+      "description": "keccak256 hash of the verification keys.",
+      "severity": "HIGH"
+    }
+  }
+}
