@@ -14,6 +14,13 @@ export const rpcUrl = option({
   short: 'u',
 })
 
+export const chainName = option({
+  type: optional(string),
+  description: 'Chain whose configurations to use',
+  long: 'chain-name',
+  short: 'c',
+})
+
 export const explorerUrl = option({
   type: HttpUrl,
   long: 'explorer-url',
@@ -32,7 +39,7 @@ export const explorerType = option({
 export const explorerChainId = option({
   type: optional(number),
   long: 'explorer-chain-id',
-  short: 'c',
+  short: 'i',
   defaultValue: () => 1,
 })
 

@@ -5,6 +5,7 @@ import { getExplorer } from '../implementations/common/getExplorer'
 import { fetchAndFlatten } from '../implementations/flatten'
 import { matchFile, readAndHashFile } from '../implementations/matchFlat'
 import {
+    chainName,
   explorerApiKey,
   explorerChainId,
   explorerType,
@@ -59,6 +60,7 @@ const MatchFlatAddress = command({
     directory: positional({ type: Directory, displayName: 'flat-database' }),
     minSimilarity,
     maxResults,
+    chainName,
     explorerUrl,
     explorerType,
     explorerApiKey,

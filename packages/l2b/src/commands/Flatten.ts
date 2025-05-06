@@ -5,6 +5,7 @@ import { boolean, command, flag, option, positional, string } from 'cmd-ts'
 import { getExplorer } from '../implementations/common/getExplorer'
 import { fetchAndFlatten } from '../implementations/flatten'
 import {
+    chainName,
   explorerApiKey,
   explorerChainId,
   explorerType,
@@ -19,6 +20,7 @@ export const Flatten = command({
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
+    chainName,
     explorerUrl,
     explorerType,
     explorerApiKey,

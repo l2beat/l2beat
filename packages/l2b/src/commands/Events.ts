@@ -1,7 +1,14 @@
 import { CliLogger } from '@l2beat/shared'
 import { command, positional, restPositionals, string } from 'cmd-ts'
 import { getEvents } from '../implementations/events'
-import { explorerApiKey, explorerType, explorerUrl, rpcUrl } from './args'
+import {
+  chainName,
+  explorerApiKey,
+  explorerChainId,
+  explorerType,
+  explorerUrl,
+  rpcUrl,
+} from './args'
 import { EthereumAddressValue } from './types'
 
 export const Events = command({
@@ -11,20 +18,14 @@ export const Events = command({
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
     topics: restPositionals({ type: string, displayName: 'address' }),
     rpcUrl,
+    chainName,
     explorerUrl,
-    type: explorerType,
-    apiKey: explorerApiKey,
+    explorerType,
+    explorerApiKey,
+    explorerChainId,
   },
   handler: async (args) => {
     const logger = new CliLogger()
-    await getEvents(
-      logger,
-      args.address,
-      args.topics,
-      args.rpcUrl,
-      args.explorerUrl,
-      args.apiKey,
-      args.type,
-    )
+    await getEvents(logger, args)
   },
 })
