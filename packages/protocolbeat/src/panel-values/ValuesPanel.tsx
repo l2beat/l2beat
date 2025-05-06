@@ -112,8 +112,10 @@ function Display({
         <p className="flex items-center">
           <p className="flex items-center gap-1 font-bold">
             <AddressIcon type={selected.type} />
-            {selected.name ??
-              (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
+            {selected.name ?? 'Unknown'}
+            {selected.type === 'Unverified' && (
+              <span className="text-aux-red"> (Unverified)</span>
+            )}
           </p>
           {copy}
         </p>

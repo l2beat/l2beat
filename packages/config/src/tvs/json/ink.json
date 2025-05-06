@@ -74,7 +74,7 @@
       "isAssociated": false
     },
     {
-      "mode": "custom",
+      "mode": "auto",
       "id": "ink-kBTC",
       "priceId": "kraken-wrapped-btc",
       "symbol": "kBTC",
@@ -86,35 +86,6 @@
         "chain": "ink",
         "decimals": 8,
         "sinceTimestamp": 1741953292
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "kraken-wrapped-btc",
-            "amount": {
-              "type": "totalSupply",
-              "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
-              "chain": "ink",
-              "decimals": 8,
-              "sinceTimestamp": 1741953292
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "kraken-wrapped-btc",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
-              "chain": "ink",
-              "escrowAddress": "0xa121dA5300DA25e85C2581E57b1C63E328F58a60",
-              "decimals": 8,
-              "sinceTimestamp": 1741953292
-            }
-          }
-        ]
       },
       "category": "other",
       "source": "external",

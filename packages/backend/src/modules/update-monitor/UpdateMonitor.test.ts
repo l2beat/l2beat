@@ -942,6 +942,7 @@ function mockConfig(name: string, chain = 'ethereum'): ConfigRegistry {
 const mockDiff: DiscoveryDiff[] = [
   {
     address: ADDRESS_A,
+    addressType: 'Contract',
     name: NAME_A,
     description: undefined,
     diff: [
@@ -957,6 +958,7 @@ const mockDiff: DiscoveryDiff[] = [
   },
   {
     address: ADDRESS_B,
+    addressType: 'Contract',
     name: NAME_B,
     description: undefined,
     diff: [

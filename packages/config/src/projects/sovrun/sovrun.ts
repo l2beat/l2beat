@@ -17,6 +17,7 @@ export const sovrun: ScalingProject = upcomingL2({
     links: {
       websites: ['https://sovrun.org/'],
       explorers: ['https://testnet-l2-explorer-hyperliquid.sovrun.org/'],
+      documentation: ['https://docs.sovrun.org/'],
       socialMedia: [
         'https://medium.com/@sovrun',
         'https://discord.com/invite/Sovrun',

@@ -238,6 +238,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     isBridge: true,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
+    escrows: p.config.escrows,
   }
 }
 
