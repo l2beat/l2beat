@@ -580,6 +580,7 @@
       "address": "0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

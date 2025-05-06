@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { ApiAddressType } from '../api/types'
 import { IconContract } from '../icons/IconContract'
 import { IconContractUnverified } from '../icons/IconContractUnverified'
@@ -24,5 +25,12 @@ export function AddressIcon(props: {
     Unknown: IconContractUnverified,
   }[props.type]
 
-  return <Icon className={props.className} />
+  return (
+    <Icon
+      className={clsx(
+        props.className,
+        props.type === 'Unverified' && 'text-aux-red',
+      )}
+    />
+  )
 }

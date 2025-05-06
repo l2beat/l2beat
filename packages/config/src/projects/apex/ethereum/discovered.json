@@ -118,6 +118,7 @@
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -647,6 +648,7 @@
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
