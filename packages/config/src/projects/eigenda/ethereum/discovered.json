@@ -1,12 +1,12 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 22396600,
+  "blockNumber": 22424553,
   "configHash": "0x3815e819a7a57ad8f04b4a1bcc324ca79b533d940ed9ac931a712e734e3b02c2",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
-      "name": "Safe",
+      "name": "EigenDAOperationsMultisig",
       "address": "0x002721B4790d97dC140a049936aA710152Ba92D5",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -883,7 +883,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 95928,
+        "batchId": 96734,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -915,7 +915,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 95928,
+        "taskNumber": 96734,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1521,5 +1521,5 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0xa80a621cbf0aa9560bfccead72540055b1ebbbd76223579df1102906e5584302"
+  "permissionsConfigHash": "0x6f8bcc9b344aa061c64949a904ac02a1f43d24f5df39ec4568093913c6579561"
 }

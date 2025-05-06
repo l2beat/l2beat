@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe42cc3442237d5f885df947afd56c00b83a41aca
+Generated with discovered.json: 0xfefb7e7251cc723e365f8564a69ecb36474544f6
 
-# Diff at Tue, 06 May 2025 10:05:53 GMT:
+# Diff at Tue, 06 May 2025 12:06:00 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208508
-- current block number: 22396600
+- current block number: 22424553
 
 ## Description
 
@@ -85,15 +85,15 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x002721B4790d97dC140a049936aA710152Ba92D5)
+    contract EigenDAOperationsMultisig (0x002721B4790d97dC140a049936aA710152Ba92D5)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../projects/eigenda/ethereum/.flat/Safe/Safe.sol  | 1088 ++++++++++++++++++++
- .../eigenda/ethereum/.flat/Safe/SafeProxy.p.sol    |   37 +
+.../.flat/EigenDAOperationsMultisig/Safe.sol       | 1088 ++++++++++++++++++++
+ .../EigenDAOperationsMultisig/SafeProxy.p.sol      |   37 +
  2 files changed, 1125 insertions(+)
 ```
 

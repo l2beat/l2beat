@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x52337dca7ef8670ac2d19f82fd6d6fb2ac72bfa7
+Generated with discovered.json: 0x5e0532f0ae4e1c1b9a9230021c7feadddb59b642
 
-# Diff at Tue, 06 May 2025 10:05:55 GMT:
+# Diff at Tue, 06 May 2025 12:07:50 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208559
-- current block number: 22390330
+- current block number: 22424561
 
 ## Description
 
@@ -14,7 +14,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 - DelegationManager.sol -  EIP-712-compliant delegation via signatures, added modular pausing via PauserRegistry. New slashing logic and withdraw queue handling, undelegate _removeSharesAndQueueWithdrawal function is updated to be slashing-aware. It introduces scaledShares, slashingFactors, and DepositScalingFactor mechanics to ensure withdrawals accurately reflect any slashing that occurred during delegation.
 - EigenPod.sol - changes to checkpoint logic, custom error types for gas efficiency
 - EigenPodManager.sol - BeaconChainSlashingFactor was added to track how much of a staker's restaked balance remains post-slashing
-- PermissionedController.sol - New contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses. 
+- PermissionedController.sol - New contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
 
 ## Watched changes
 

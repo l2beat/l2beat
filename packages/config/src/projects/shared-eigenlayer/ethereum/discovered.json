@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 22390330,
+  "blockNumber": 22424561,
   "configHash": "0x5141eb1df7505beb27a73e298351b4399c4f8a1e4cba4c085301a5f8e3a954af",
   "entries": [
     {
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xf8151f0000000000",
-        "get_deposit_root": "0x5a8f97394e69201eaed5bde375538eac33556d667ad365e32bbf0704d03aa217"
+        "get_deposit_count": "0x592e1f0000000000",
+        "get_deposit_root": "0x2a46b9ba4b46822da96894d1e3420a4a9c472902935b95b4954fa7bbd0684918"
       },
       "derivedName": "DepositContract"
     },
@@ -210,7 +210,9 @@
           "0x96b6a29D7B98519Ae66E6398BD27A76B30a5dC3f",
           "0x203b9Acb40DfBB911f1e39C784EAB639418dae04",
           "0x5Bf17dFaA1B76Bb6C5C47F568636877F94C09b65",
-          "0x506D3bDef8C9E671928F1ffF135E0e0642B59AA4"
+          "0x506D3bDef8C9E671928F1ffF135E0e0642B59AA4",
+          "0x5b4AD76a6a2F4a0A8C7CBf499e6533B57da2eF2d",
+          "0x1d32272FfdA06e9EDE3CA854D8D9AaAe8328d795"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "domainSeparator": "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb",
@@ -1018,7 +1020,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33540,
+        "numPods": 33559,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
