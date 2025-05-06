@@ -6,6 +6,7 @@ import { getExplorer } from '../implementations/common/getExplorer'
 import { powerdiff } from '../implementations/powerdiff'
 import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
 import {
+  chainName,
   explorerApiKey,
   explorerChainId,
   explorerType,
@@ -26,6 +27,7 @@ export const FlattenAndDiff = command({
       type: EthereumAddressValue,
       displayName: 'rightAddress',
     }),
+    chainName,
     explorerUrl,
     explorerType,
     explorerApiKey,

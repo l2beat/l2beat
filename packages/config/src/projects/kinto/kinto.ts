@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -9,43 +14,37 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('kinto')
 const l2discovery = new ProjectDiscovery('kinto', 'kinto')
 
-// !!!!!!! l2critDelay WILL NEED TO BE INCREASED TO 12d FROM 11d !!!!!!!!!!!!
-const l2critDelay = 11 * 24 * 60 * 60
+const l2critDelay = 12 * 24 * 60 * 60 // 1) force tx: 0d 2) be sanctioned: 1d 3) sanction expiry/cooldown, force tx: 4d 4) execute forced tx: 5d 5) exit window left: 7d
 
-// asserts as soon as the permissions are fully in place (-->04/01)
-// const contractKeys = [
-//   'edKintoMultisig2ADMIN',
-//   'edKintoMultisig2UPGRADER',
-//   'edScADMIN',
-//   'edScUPGRADER',
-//   'edScSECURITY_COUNCIL',
-//   'tadKintoAppRegistry',
-//   'tadKintoID',
-//   'tadKintoWalletFactory',
-// ]
-// assert(
-//   contractKeys.every(
-//     (key) =>
-//       l2critDelay ===
-//       l2discovery.getContractValue<number>('AccessManager', key),
-//   ),
-//   '11d delay in Accessmanager changed, edit gov section',
-// )
-// assert(
-//   l2critDelay ===
-//     l2discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'),
-//   'recovery time in the KintoWallet is not 12d, malicious recoveries do not provide a 7d exit window.',
-// )
+const contractKeys = [
+  'edKintoMultisig2ADMIN',
+  'tadKintoAppRegistry',
+  'tadKintoID',
+  'tadKintoWalletFactory',
+]
+assert(
+  contractKeys.every(
+    (key) =>
+      l2critDelay ===
+      l2discovery.getContractValue<number>('AccessManager', key),
+  ),
+  '12d delay in Accessmanager changed, edit gov section',
+)
+assert(
+  l2critDelay ===
+    l2discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'),
+  'recovery time in the KintoWallet is not 12d, malicious recoveries do not provide a 7d exit window.',
+)
+assert(
+  l2critDelay ===
+    l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD'),
+  'exit window period in the KintoID is not 12d, malicious sanctions do not provide a 7d exit window.',
+)
 
 const sanctionExpirySeconds = l2discovery.getContractValue<number>(
   'KintoID',
   'SANCTION_EXPIRY_PERIOD',
 )
-
-// assert(
-//   l2critDelay - (sanctionExpirySeconds + 2 * 24 * 60 * 60) === 7 * 24 * 60 * 60, // upgrade delay must be 1d force tx + sanctionExpirySeconds + 1d force tx + 7d exit window
-//   'sanctioned user does not have 7d to exit',
-// )
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
