@@ -2,6 +2,7 @@ import type {
   AnomalyRecord,
   IndexerConfigurationRecord,
 } from '@l2beat/database'
+import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, isEmpty, range } from 'lodash'
@@ -18,7 +19,6 @@ import type {
   LivenessProject,
   LivenessResponse,
 } from './types'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 
 export async function getLiveness() {
   if (env.MOCK) {
