@@ -1,8 +1,4 @@
-import {
-  type ExplorerConfig,
-  type IProvider,
-  ProxyDetector,
-} from '@l2beat/discovery'
+import { type IProvider, ProxyDetector } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
 import {
@@ -15,24 +11,23 @@ import {
 import chalk from 'chalk'
 import { utils } from 'ethers'
 import { getProvider } from './common/GetProvider'
+import { getExplorerConfig } from './common/getExplorer'
 
-export async function getEvents(
-  logger: CliLogger,
-  address: EthereumAddress,
-  inputTopics: string[],
-  rpcUrl: string,
-  explorerUrl?: string,
-  explorerApiKey?: string,
-  explorerType?: string,
-  explorerChainId?: number,
-) {
-  const explorer = {
-    type: explorerType ?? 'etherscan',
-    url: explorerUrl ?? 'ERROR',
-    apiKey: explorerApiKey ?? 'ERROR',
-    chainId: explorerChainId ?? -1,
-  } as ExplorerConfig
+export interface EventArgs {
+  address: EthereumAddress
+  topics: string[]
+  rpcUrl: string
+  chainName: string | undefined
+  explorerUrl: string
+  explorerApiKey: string | undefined
+  explorerType: string
+  explorerChainId: number | undefined
+}
 
+export async function getEvents(logger: CliLogger, args: EventArgs) {
+  const { address, topics: inputTopics, rpcUrl } = args
+
+  const explorer = getExplorerConfig(args)
   const provider = await getProvider(rpcUrl, explorer)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
@@ -40,15 +35,6 @@ export async function getEvents(
   if (!onlyHashedTopics) {
     logger.logLine(
       'Some of the topics you provided are not hashes, trying to match them to the ABI',
-    )
-    assert(explorerUrl !== undefined)
-    assert(
-      explorerType !== 'etherscan' || explorerApiKey !== undefined,
-      'When using etherscan you should provide the API key using --etherscan-key.',
-    )
-    assert(
-      explorerType !== 'sourcify' || explorerChainId !== undefined,
-      'When using sourcify you should provide the chainId using --explorer-chain-id.',
     )
 
     const proxyDetector = new ProxyDetector()
