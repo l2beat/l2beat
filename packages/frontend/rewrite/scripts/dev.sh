@@ -42,9 +42,18 @@ tailwindcss \
   --watch < /dev/tty &
 pids+=($!)
 
-NEXT_PUBLIC_REWRITE=true tsx \
-  --tsconfig ./rewrite/tsconfig.json \
-  --watch rewrite/src/index.ts &
+esbuild \
+  rewrite/src/index.ts \
+  --bundle \
+  --platform=node \
+  --packages=external \
+  --tsconfig=rewrite/tsconfig.json \
+  --jsx=automatic \
+  --watch=forever \
+  --outfile=rewrite/dist/server/index.js &
+pids+=($!)
+
+NEXT_PUBLIC_REWRITE=true node --watch rewrite/dist/server/index.js &
 pids+=($!)
 
 echo "All processes started. Press Ctrl+C to exit."
