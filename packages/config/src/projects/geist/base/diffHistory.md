@@ -1,26 +1,39 @@
-Generated with discovered.json: 0x9934cd8551a2e091cabaab3e501d43fc4acfe76b
+Generated with discovered.json: 0x67226c2e16f551ef5427ca9e7233b94024862358
 
-# Diff at Tue, 06 May 2025 10:57:05 GMT:
+# Diff at Tue, 06 May 2025 15:38:34 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 28317508
-- current block number: 28317508
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 28317508
+- current block number: 29878278
 
 ## Description
 
+Added a new UpgradeExecutor EOA.
+
+Config:
 Marking EOAs if they control the highest number of upgrade permissions in the project.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 28317508 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    EOA  (0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7) {
-    +++ description: None
-      controlsMajorityOfUpgradePermissions:
-+        true
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+      values.executors.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.executors.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.executors.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
     }
 ```
 
