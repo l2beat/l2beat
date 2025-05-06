@@ -159,7 +159,7 @@ export async function updateDiffHistoryForChain(
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {
   const ignoredFields = [
-    'derivedName', // we don't want changes to derivedName to trigger diff
+    'implementationNames', // we don't want changes to implementationNames to trigger diff
   ]
   for (const diff of diffs) {
     diff.diff = diff.diff?.filter(
