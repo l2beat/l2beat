@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x556d464f7244b27479eca358c18cdf4392f85972
+Generated with discovered.json: 0x684d93637905949f967fd73830f52a742f6461bc
 
-# Diff at Tue, 06 May 2025 13:53:35 GMT:
+# Diff at Tue, 06 May 2025 14:04:44 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208559
-- current block number: 22425084
+- current block number: 22425139
 
 ## Description
 
@@ -21,7 +21,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```diff
 -   Status: DELETED
     contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060)
-    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
 ```
 
 ```diff
@@ -70,8 +70,12 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```diff
     contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
     +++ description: None
-      directlyReceivedPermissions.1:
--        {"permission":"act","from":"0x0c431C66F4dE941d089625E5B423D00707977060"}
+      directlyReceivedPermissions.1.from:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      directlyReceivedPermissions.0.from:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
     }
 ```
 
@@ -196,9 +200,35 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```
 
 ```diff
--   Status: DELETED
-    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390)
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
     +++ description: None
+      values.$members.9:
++        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.8:
++        "0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
+      values.$members.7:
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.6:
++        "0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
+      values.$members.5:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
++        "0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
+      values.$members.4:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.$members.3:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
+      values.$members.2:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "0x7474E1D80E844e6EdB430841DeEF702a6B747863"
+      values.multisigThreshold:
+-        "1 of 6 (17%)"
++        "1 of 10 (10%)"
+      directlyReceivedPermissions.0.from:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+    }
 ```
 
 ```diff
@@ -437,13 +467,16 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
       receivedPermissions.2.from:
 -        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
 +        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
-      directlyReceivedPermissions.2:
--        {"permission":"act","from":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}
       directlyReceivedPermissions.1.from:
 -        "0x0c431C66F4dE941d089625E5B423D00707977060"
-+        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
       directlyReceivedPermissions.1.delay:
-+        864000
++        2073600
+      directlyReceivedPermissions.0.from:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      directlyReceivedPermissions.0.delay:
+-        2073600
     }
 ```
 
@@ -527,7 +560,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```diff
 +   Status: CREATED
     contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806)
-    +++ description: None
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
 ```
 
 ## Source code changes
@@ -537,8 +570,6 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
  .../.flat/AllocationManager/AllocationManager.sol  | 6259 +++++++++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  272 +-
  .../DelegationManager/DelegationManager.sol        | 6326 ++++++++++++++------
- .../GnosisSafe.sol => /dev/null                    |  953 ---
- .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
  .../{.flat@22208559 => .flat}/EigenPod.sol         | 1502 +++--
  .../EigenPodManager/EigenPodManager.sol            | 3894 ++++++++++--
  .../{.flat@22208559 => .flat}/PauserRegistry.sol   |   33 +-
@@ -549,7 +580,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
  .../{.flat@22208559 => .flat}/StrategyBase.sol     |  888 ++-
  .../StrategyFactory/StrategyFactory.sol            |  613 +-
  .../StrategyManager/StrategyManager.sol            | 5170 +++++++++++++---
- 16 files changed, 25149 insertions(+), 7137 deletions(-)
+ 14 files changed, 25149 insertions(+), 6149 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -557,6 +588,18 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22208559 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      template:
+-        "eigenlayer/PauserRegistry"
++        "eigenlayer/EigenDAPauserRegistry"
+      description:
+-        "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager."
++        "Defines and stores pauser and unpauser roles for EigenDA contracts."
+    }
+```
 
 ```diff
     contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {

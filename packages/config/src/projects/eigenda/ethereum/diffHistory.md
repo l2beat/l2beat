@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd819073bf035404d3b78a2c6de47938d1cba6bde
+Generated with discovered.json: 0xf46e92b6d0ce8eb16a9e843204fdd229ba11ceff
 
-# Diff at Tue, 06 May 2025 13:54:53 GMT:
+# Diff at Tue, 06 May 2025 14:04:58 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208508
-- current block number: 22425091
+- current block number: 22425142
 
 ## Description
 
@@ -29,35 +29,6 @@ New EigenDAOperationsMultisig as owner of core contracts. EigenDA has not upgrad
       values.owner:
 -        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
 +        "0x002721B4790d97dC140a049936aA710152Ba92D5"
-    }
-```
-
-```diff
-    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
-    +++ description: None
-      values.$members.9:
-+        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
-      values.$members.8:
-+        "0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
-      values.$members.7:
-+        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
-      values.$members.6:
-+        "0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
-      values.$members.5:
--        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
-+        "0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
-      values.$members.4:
--        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
-+        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
-      values.$members.3:
--        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
-+        "0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
-      values.$members.2:
--        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
-+        "0x7474E1D80E844e6EdB430841DeEF702a6B747863"
-      values.multisigThreshold:
--        "1 of 6 (17%)"
-+        "1 of 10 (10%)"
     }
 ```
 
@@ -104,6 +75,22 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22208508 (main branch discovery), not current.
 
 ```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      template:
+-        "eigenlayer/PauserRegistry"
++        "eigenlayer/EigenDAPauserRegistry"
+      description:
+-        "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager."
++        "Defines and stores pauser and unpauser roles for EigenDA contracts."
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge"}]
+      receivedPermissions:
++        [{"permission":"interact","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge"}]
+    }
+```
+
+```diff
 -   Status: DELETED
     contract UpgradeableBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9)
     +++ description: None
@@ -130,6 +117,12 @@ discovery. Values are for block 22208508 (main branch discovery), not current.
 ```diff
 -   Status: DELETED
     contract EigenLayerProtocolCouncil (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390)
     +++ description: None
 ```
 
