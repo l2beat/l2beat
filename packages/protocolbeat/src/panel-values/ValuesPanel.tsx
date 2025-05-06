@@ -136,12 +136,18 @@ function Display({
               <span className="inline font-bold">
                 template/{selected.template.id}
               </span>
-              <div className="flex flex-row gap-1">
-                <span className="inline italic">{selected.template.name}</span>
-                {selected.template.hasCriteria && (
-                  <span className="inline text-aux-yellow">{'(criteria)'}</span>
-                )}
-              </div>
+              {selected.template.shape && (
+                <div className="flex flex-row gap-1">
+                  <span className="inline italic">
+                    {selected.template.shape.name}
+                  </span>
+                  {selected.template.shape.hasCriteria && (
+                    <span className="inline text-aux-yellow">
+                      {'(criteria)'}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
