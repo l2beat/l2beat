@@ -36,10 +36,10 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
     parentSafeHeight: number,
   ): Promise<number> {
     const from =
-      safeHeight === this.$.minHeight
-        ? safeHeight
+      safeHeight <= this.$.minHeight
+        ? this.$.minHeight
         : UnixTime.toStartOf(safeHeight, 'day')
-    const endOfDay = UnixTime.toStartOf(safeHeight, 'day') + UnixTime.DAY - 1
+    const endOfDay = UnixTime.toStartOf(from, 'day') + UnixTime.DAY - 1
 
     const to = parentSafeHeight > endOfDay ? endOfDay : parentSafeHeight
 
