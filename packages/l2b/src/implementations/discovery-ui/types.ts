@@ -141,8 +141,10 @@ export interface ErrorFieldValue {
 export interface ApiProjectContract extends ApiAddressEntry {
   template?: {
     id: string
-    name: string
-    hasCriteria: boolean
+    shape?: {
+      name: string
+      hasCriteria: boolean
+    }
   }
   proxyType?: string
   fields: Field[]

@@ -90,7 +90,7 @@ export function getProject(
           templateService.loadContractTemplateColor(entry.template),
         )
 
-        const templateData = getTemplateData(templateService, entry)
+        const template = getTemplate(templateService, entry)
 
         return contractFromDiscovery(
           chain,
@@ -99,7 +99,7 @@ export function getProject(
           contractConfig,
           contractColorConfig,
           discovery.abis,
-          templateData,
+          template,
         )
       })
       .sort(orderAddressEntries)
@@ -146,20 +146,28 @@ function getRoles(entry: EntryParameters): string[] {
   return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
 }
 
-function getTemplateData(
+function getTemplate(
   templateService: TemplateService,
   contract: EntryParameters,
-) {
-  const templateData = getShapeFromOutputEntry(templateService, contract)
-
-  if (!templateData || !contract.template) {
+): ApiProjectContract['template'] {
+  if (!contract.template) {
     return
+  }
+
+  const shape = getShapeFromOutputEntry(templateService, contract)
+
+  if (!shape) {
+    return {
+      id: contract.template,
+    }
   }
 
   return {
     id: contract.template,
-    name: templateData.name,
-    hasCriteria: templateData.criteria !== undefined,
+    shape: {
+      name: shape.name,
+      hasCriteria: shape.criteria !== undefined,
+    },
   }
 }
 
@@ -183,7 +191,7 @@ function contractFromDiscovery(
   contractConfig: ContractConfig,
   contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
-  templateData: { id: string; name: string; hasCriteria: boolean } | undefined,
+  template: ApiProjectContract['template'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -221,7 +229,7 @@ function contractFromDiscovery(
     name: getContractName(contract),
     type: getContractType(contract),
     roles: getRoles(contract),
-    template: templateData,
+    template: template,
     proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
