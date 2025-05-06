@@ -1,3 +1,176 @@
+Generated with discovered.json: 0xbb4032c376aa6822736675a35c744676b198b543
+
+# Diff at Tue, 06 May 2025 12:35:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 22346393
+- current block number: 22424695
+
+## Description
+
+Security Council is added to the to critical bridge admin permissions (ETHBridge and STRKBridge).
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","delay":259200}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","delay":259200}
+      receivedPermissions.6:
++        {"permission":"governStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"disable the withdrawal limit."}
+      receivedPermissions.4:
++        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"disable the withdrawal limit."}
+      receivedPermissions.3:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."}
+      receivedPermissions.2:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"enable the withdrawal limit."}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.1.description:
++        "enable the withdrawal limit."
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.0.description:
++        "manage critical access control roles and the role that can upgrade the implementation."
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      receivedPermissions.2.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.2.delay:
++        259200
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","0xCA112018fEB729458b628AadC8f996f9deCbCa0c","0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.SECURITY_ADMIN.members.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      directlyReceivedPermissions.2.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      directlyReceivedPermissions.2.delay:
++        259200
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin.2:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.UPGRADE_GOVERNOR.members.2:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.SECURITY_ADMIN.members.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      values.$members.15:
++        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
++        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
++        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.10:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.9:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.8:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.7:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.5:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+      values.$members.4:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.3:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.multisigThreshold:
+-        "3 of 12 (25%)"
++        "3 of 16 (19%)"
+    }
+```
+
 Generated with discovered.json: 0x34414e5388b9d72d502550d7cacb712bfa16d60c
 
 # Diff at Tue, 29 Apr 2025 08:19:13 GMT:
