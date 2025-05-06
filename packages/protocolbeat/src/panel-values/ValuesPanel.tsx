@@ -125,16 +125,22 @@ function Display({
             ))}
           </div>
         )}
-        <div className="flex flex-row divide-x divide-coffee-400 font-mono text-xs">
+        <div className="flex flex-col gap-0.5 divide-coffee-400 pt-0.5 font-mono text-xs">
           {'proxyType' in selected && selected.proxyType && (
-            <p className="px-1 text-aux-cyan first:pl-0">
-              {selected.proxyType}
-            </p>
+            <p className="text-aux-cyan">{selected.proxyType}</p>
           )}
           {'template' in selected && selected.template && (
-            <p className="px-1 text-aux-orange first:pl-0">
-              template/{selected.template}
-            </p>
+            <div className="flex flex-col gap-0.5 text-aux-orange">
+              <span className="inline font-bold">
+                template/{selected.template.id}
+              </span>
+              <div className="flex flex-row gap-1">
+                <span className="inline italic">{selected.template.name}</span>
+                {selected.template.hasCriteria && (
+                  <span className="inline text-aux-yellow">{'(criteria)'}</span>
+                )}
+              </div>
+            </div>
           )}
         </div>
         <div className="font-mono text-xs">

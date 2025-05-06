@@ -5,6 +5,7 @@ import {
   type EntryParameters,
   type TemplateService,
   getChainShortName,
+  getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
 } from '@l2beat/discovery'
@@ -89,6 +90,8 @@ export function getProject(
           templateService.loadContractTemplateColor(entry.template),
         )
 
+        const templateData = getTemplateData(templateService, entry)
+
         return contractFromDiscovery(
           chain,
           meta,
@@ -96,6 +99,7 @@ export function getProject(
           contractConfig,
           contractColorConfig,
           discovery.abis,
+          templateData,
         )
       })
       .sort(orderAddressEntries)
@@ -142,6 +146,23 @@ function getRoles(entry: EntryParameters): string[] {
   return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
 }
 
+function getTemplateData(
+  templateService: TemplateService,
+  contract: EntryParameters,
+) {
+  const templateData = getShapeFromOutputEntry(templateService, contract)
+
+  if (!templateData || !contract.template) {
+    return
+  }
+
+  return {
+    id: contract.template,
+    name: templateData.name,
+    hasCriteria: templateData.criteria !== undefined,
+  }
+}
+
 function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
   if (a.name && b.name) {
     return a.name.localeCompare(b.name)
@@ -162,6 +183,7 @@ function contractFromDiscovery(
   contractConfig: ContractConfig,
   contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
+  templateData: { id: string; name: string; hasCriteria: boolean } | undefined,
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -199,7 +221,7 @@ function contractFromDiscovery(
     name: getContractName(contract),
     type: getContractType(contract),
     roles: getRoles(contract),
-    template: contract.template,
+    template: templateData,
     proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],

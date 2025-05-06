@@ -18,7 +18,7 @@ import { readJsonc } from '../utils/readJsonc'
 
 export const TEMPLATES_PATH = path.join('_templates')
 
-interface ShapeCriteria {
+export interface ShapeCriteria {
   validAddresses?: string[]
 }
 
@@ -328,10 +328,7 @@ export class TemplateService {
     return JSON.parse(readFileSync(shapePath, 'utf8')) as ShapeSchema
   }
 
-  findShapeByTemplateAndHash(
-    templateId: string,
-    hash: Hash256,
-  ): [string, ShapeSchema[string]] | undefined {
+  findShapeByTemplateAndHash(templateId: string, hash: Hash256) {
     const allTemplates = this.listAllTemplates()
     const entry = allTemplates[templateId]
     if (!entry || !entry.shapePath) {
@@ -339,7 +336,16 @@ export class TemplateService {
     }
 
     const shapes = this.readShapeSchema(entry.shapePath)
-    return Object.entries(shapes).find(([_, s]) => s.hash === hash)
+
+    const shapeFound = Object.entries(shapes).find(([_, s]) => s.hash === hash)
+
+    if (!shapeFound) {
+      return undefined
+    }
+
+    const [shapeKey, shape] = shapeFound
+
+    return { name: shapeKey, shape, criteria: entry.criteria }
   }
 }
 
