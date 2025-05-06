@@ -1,15 +1,16 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { underReviewL3 } from '../../templates/underReview'
 
-export const moonchain: ScalingProject = underReviewL2({
+export const moonchain: ScalingProject = underReviewL3({
   id: 'moonchain',
   capability: 'universal',
   addedAt: UnixTime(1746542403),
+  hostChain: ProjectId('arbitrum'),
   display: {
     name: 'MXCzkEVM Moonchain',
     slug: 'moonchain',
-    stack: 'Taiko', // Moonchain is fork from taiko.
+    stack: 'Taiko',
     description:
       'MXCzkEVM Moonchain is a Layer3 Ethereum-compatible Optimistic Rollup on Arbitrum, focused on data exchange and communication in the IoT DePIN sector.',
     purposes: ['Universal'],
@@ -30,8 +31,8 @@ export const moonchain: ScalingProject = underReviewL2({
         'https://x.com/Moonchain_com',
         'https://linktr.ee/Moonchain_com',
         'https://medium.com/@Moonchain_com',
-        'https://www.youtube.com/@Moonchain_com',
-        'https://www.tiktok.com/@moonchain_com',
+        'https://youtube.com/@Moonchain_com',
+        'https://tiktok.com/@moonchain_com',
       ],
     },
   },
