@@ -167,7 +167,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "EverclearHubGateway",
       "address": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
       "type": "Contract",
       "unverified": true,
@@ -681,5 +681,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x75ece50b4716472bf639b4a789c982de212b7669cd28d4c04da5e9db261ff0b4"
+  "permissionsConfigHash": "0xe7bc819f20b988aeb8ee0ad0b2d7fb9a55c2c43dfc200e07e3720004cd776aac"
 }
