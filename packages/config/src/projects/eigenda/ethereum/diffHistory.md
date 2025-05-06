@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x021da97e45ee8912bbff8adabfb7a8bb24a5c25a
+Generated with discovered.json: 0xe42cc3442237d5f885df947afd56c00b83a41aca
 
-# Diff at Fri, 02 May 2025 14:05:17 GMT:
+# Diff at Tue, 06 May 2025 10:05:53 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@2b416a2682a6346947ff8f432469bc39157f1420 block: 22208508
+- comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208508
 - current block number: 22396600
 
 ## Description
@@ -221,7 +221,7 @@ discovery. Values are for block 22208508 (main branch discovery), not current.
     +++ description: None
 ```
 
-Generated with discovered.json: 0xc9ea916ea1e577e4d8373acc18375732b3e1c66b
+Generated with discovered.json: 0x0b75298d35c1f03996e9da699866e6ff2d2ab796
 
 # Diff at Tue, 29 Apr 2025 08:19:02 GMT:
 
