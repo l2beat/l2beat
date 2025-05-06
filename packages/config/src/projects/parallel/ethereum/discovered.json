@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 22397523,
+  "blockNumber": 22425701,
   "configHash": "0xd444a5f432cba4822ad62bfce4ef74d626f984b769b9bd53e583850b5dc171f6",
   "entries": [
     {
@@ -211,18 +211,16 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xb6559478b59836376dA9937c4C697dDb21779E49",
-          "0x9EBe5cabad9748263DbE1304064AdAb285c0f515",
           "0x13E83b0423534Eb6D542237F590096CEE5077056",
-          "0x6D9700B84F999a71D7701d6D537f32F1528f379A",
+          "0x3968de97416c875F50FFC60A4A4E84378bF16Ad5",
           "0x909e36B512Ed45250fdff513523119d825647695"
         ],
         "$threshold": 3,
         "domainSeparator": "0x6e237ad581a439ffc2e231c9cd6afb96d6fb8ea94dda95bbe7e04673cf4c6597",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 238,
+        "multisigThreshold": "3 of 3 (100%)",
+        "nonce": 248,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -313,6 +311,11 @@
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"
       },
       "derivedName": "RollupEventInbox"
+    },
+    {
+      "address": "0x3968de97416c875F50FFC60A4A4E84378bF16Ad5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4",
@@ -660,11 +663,6 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "address": "0x6D9700B84F999a71D7701d6D537f32F1528f379A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ERC20Gateway",
       "address": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
       "type": "Contract",
@@ -764,11 +762,6 @@
       "sinceBlock": 19432743,
       "values": { "$immutable": true },
       "derivedName": "OneStepProverMath"
-    },
-    {
-      "address": "0x9EBe5cabad9748263DbE1304064AdAb285c0f515",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "CustomGateway",
@@ -890,11 +883,6 @@
       },
       "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "0xb6559478b59836376dA9937c4C697dDb21779E49",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -1889,5 +1877,5 @@
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xe747c088f0924bbe4157cd6c52be82fcdc0be1057d2f5d886a05d8e4e0191c40"
+  "permissionsConfigHash": "0xacd361c64ca747806a8977609b29dd3d0839082c2bd74654af4a8e5229ccf651"
 }

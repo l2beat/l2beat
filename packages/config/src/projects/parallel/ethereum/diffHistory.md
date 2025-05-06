@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xac78bfe1363e3df5b836de05fa617340b3bd8416
+
+# Diff at Tue, 06 May 2025 15:57:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e14d6ca6cfb9c51927744033947048a6b7efb278 block: 22397523
+- current block number: 22425701
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a) {
+    +++ description: None
+      values.$members.4:
+-        "0x13E83b0423534Eb6D542237F590096CEE5077056"
+      values.$members.3:
+-        "0x6D9700B84F999a71D7701d6D537f32F1528f379A"
+      values.$members.2:
+-        "0x909e36B512Ed45250fdff513523119d825647695"
++        "0x13E83b0423534Eb6D542237F590096CEE5077056"
+      values.$members.1:
+-        "0x9EBe5cabad9748263DbE1304064AdAb285c0f515"
++        "0x3968de97416c875F50FFC60A4A4E84378bF16Ad5"
+      values.$members.0:
+-        "0xb6559478b59836376dA9937c4C697dDb21779E49"
++        "0x909e36B512Ed45250fdff513523119d825647695"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 3 (100%)"
+    }
+```
+
 Generated with discovered.json: 0x03b30add7166041c3990818efc4aa06da1050020
 
 # Diff at Tue, 06 May 2025 10:56:54 GMT:
