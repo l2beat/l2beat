@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xc9eae0a5755d689083ec5a5fc57f3493f9a6e561
+Generated with discovered.json: 0xe55ebfef01443bfb09f28997206c82c70df472a2
 
 # Diff at Fri, 02 May 2025 17:25:16 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc9eae0a5755d689083ec5a5fc57f3493f9a6e561
 
 ## Description
 
-Config related: The last update scheduled (and executed) was [Adopt Timeboost + Nova Fee Sweep](https://www.tally.xyz/gov/arbitrum/proposal/14881197137069494959448952699217598923721993392617887469969318742509097999570?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9).
+Security Council member sync (assuming cohort change).
 
 ## Watched changes
 
