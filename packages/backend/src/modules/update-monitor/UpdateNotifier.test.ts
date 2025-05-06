@@ -65,6 +65,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [{ key: 'A', before: '1', after: '2' }],
         },
       ]
@@ -154,6 +155,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [
             {
               key: 'A',
@@ -255,6 +257,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [
             { key: 'A', before: 'A'.repeat(1000), after: 'B'.repeat(1000) },
           ],
@@ -349,6 +352,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [{ key: 'errors', after: 'Execution reverted' }],
         },
       ]

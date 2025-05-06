@@ -6,6 +6,9 @@
     "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa", // hub gw
     "0xa05A3380889115bf313f1Db9d5f335157Be4D816" // hub
   ],
+  "names": {
+    "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa": "EverclearHubGateway"
+  },
   "overrides": {
     // hub
     "0xa05A3380889115bf313f1Db9d5f335157Be4D816": {

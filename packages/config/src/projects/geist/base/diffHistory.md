@@ -1,14 +1,17 @@
-Generated with discovered.json: 0x8314a3320b04a04b7df636dc53b9fb14aab14d6d
+Generated with discovered.json: 0x67226c2e16f551ef5427ca9e7233b94024862358
 
-# Diff at Tue, 06 May 2025 10:04:05 GMT:
+# Diff at Tue, 06 May 2025 15:38:34 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@76bab41abbae565c3c67522863645fa6d26e7444 block: 28317508
-- current block number: 29868235
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 28317508
+- current block number: 29878278
 
 ## Description
 
 Added a new UpgradeExecutor EOA.
+
+Config:
+Marking EOAs if they control the highest number of upgrade permissions in the project.
 
 ## Watched changes
 

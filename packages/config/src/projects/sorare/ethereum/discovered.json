@@ -39,6 +39,7 @@
       "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",

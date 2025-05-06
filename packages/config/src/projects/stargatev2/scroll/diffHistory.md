@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc7879e721c4e85c715b55c6b2b8c7a0976c5f85c
+Generated with discovered.json: 0x85984407dc57c2b352a9105a8e292fb12ccb6a14
 
-# Diff at Tue, 06 May 2025 09:37:10 GMT:
+# Diff at Tue, 06 May 2025 15:41:17 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@76bab41abbae565c3c67522863645fa6d26e7444 block: 13418769
-- current block number: 15236521
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 13418769
+- current block number: 15243619
 
 ## Description
 
@@ -21,7 +21,7 @@ Modified liquidity parameter deficitOffset for native and USDC pools.
     }
 ```
 
-Generated with discovered.json: 0x429c8287ac17d660daa5c2aea83d567bf378e91e
+Generated with discovered.json: 0x353a211ec57bff3b3b404b8ba45fd8a1a8df5c02
 
 # Diff at Tue, 04 Mar 2025 10:42:44 GMT:
 

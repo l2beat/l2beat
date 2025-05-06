@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe77cebe7dd6f1f663c47a928574850f59419b5a2
+Generated with discovered.json: 0x472c704a94aea1c26beebadf89b0b0ad1c8531d9
 
-# Diff at Tue, 06 May 2025 09:37:07 GMT:
+# Diff at Tue, 06 May 2025 15:41:16 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@76bab41abbae565c3c67522863645fa6d26e7444 block: 21944318
-- current block number: 22423799
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 21944318
+- current block number: 22425618
 
 ## Description
 
@@ -27,6 +27,33 @@ Modified liquidity parameter deficitOffset for native and USDC pools.
       values.deficitOffset:
 -        100000000000000
 +        4000000000000
+    }
+```
+
+Generated with discovered.json: 0x07e446b60a527c388cbf1396e458eb1a8acf4ee0
+
+# Diff at Tue, 06 May 2025 13:32:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@09b97f14e3365304f798b0b4fc6971d693d1eb2f block: 21944318
+- current block number: 21944318
+
+## Description
+
+ethereum
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract PriceFeed (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      name:
+-        ""
++        "PriceFeed"
     }
 ```
 
