@@ -20,6 +20,7 @@
       "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
