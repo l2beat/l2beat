@@ -28,6 +28,7 @@ const MOCK_PROJECTS: TrackedTxProject[] = [
         type: 'liveness',
         subtype: MOCK_CONFIGURATION_TYPE,
         untilTimestamp: UnixTime.now(),
+        projectId: ProjectId('mocked-project'),
       }),
     ],
   },
@@ -307,7 +308,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
     })
 
     it('should use only latest before timestamp, and filter out all before', async () => {
-      const indexer = createIndexer({ tag: 'aggregate-records' })
+      const indexer = createIndexer({ tag: 'aggregate-only-one-latest' })
 
       const start = UnixTime.toStartOf(NOW, 'day')
 
@@ -350,7 +351,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
     })
 
     it('should still calculate if no records before start', async () => {
-      const indexer = createIndexer({ tag: 'aggregate-records' })
+      const indexer = createIndexer({ tag: 'aggregate-if-no-records-before' })
 
       const start = UnixTime.toStartOf(NOW, 'day')
 

@@ -1,6 +1,6 @@
 import type { Database } from '@l2beat/database'
 import {
-  type ProjectId,
+  ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -18,6 +18,7 @@ import { calculateStats } from '../utils/calculateStats'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import { groupBy } from 'lodash'
 
 export interface LivenessAggregatingIndexer2Deps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -64,55 +65,69 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
       'tracked_txs_indexer',
     )
 
-    for (const project of this.$.projects) {
-      const activeConfigs = getActiveConfigurations(project, configurations)
+    const allProjectConfigs = this.$.projects
+      .flatMap((p) => getActiveConfigurations(p, configurations))
+      .filter((c) => c !== undefined)
 
-      if (!activeConfigs) {
+    const livenessWithConfig = new LivenessWithConfigService(
+      allProjectConfigs,
+      this.$.db,
+    )
+
+    // for every considered time range we also take latest record before `from`
+    // for each configuration to calculate interval for first record in time range
+    const livenessRecords =
+      await livenessWithConfig.getWithinTimeRangeWithLatestBeforeFrom(from, to)
+
+    const groupedConfigs = groupBy(allProjectConfigs, (c) => c.projectId)
+
+    for (const project of Object.keys(groupedConfigs)) {
+      const projectConfigs = groupedConfigs[project]
+
+      if (projectConfigs.length === 0) {
         continue
       }
 
-      const livenessWithConfig = new LivenessWithConfigService(
-        activeConfigs,
-        this.$.db,
+      const activeConfigIds = projectConfigs.map((c) => c.id)
+      const projectLivenessRecords = livenessRecords.filter((r) =>
+        activeConfigIds.includes(r.id),
       )
 
-      // for every considered time range we also take latest record before `from`
-      // for each configuration to calculate interval for first record in time range
-      const livenessRecords =
-        await livenessWithConfig.getWithinTimeRangeWithLatestBeforeFrom(
-          from,
-          to,
-        )
-
-      if (livenessRecords.length === 0) {
+      if (projectLivenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
-          projectId: project.id,
+          projectId: project,
         })
         continue
       }
 
       this.logger.debug('Liveness records loaded', {
-        projectId: project.id,
+        projectId: project,
         count: livenessRecords.length,
       })
 
-      const [batchSubmissions, stateUpdates, proofSubmissions] =
-        groupByType(livenessRecords)
+      const [batchSubmissions, stateUpdates, proofSubmissions] = groupByType(
+        projectLivenessRecords,
+      )
 
       aggregatedRecords.push(
         this.aggregateRecords(
-          project.id,
+          ProjectId(project),
           'batchSubmissions',
           batchSubmissions,
           from,
         ),
       )
       aggregatedRecords.push(
-        this.aggregateRecords(project.id, 'stateUpdates', stateUpdates, from),
+        this.aggregateRecords(
+          ProjectId(project),
+          'stateUpdates',
+          stateUpdates,
+          from,
+        ),
       )
       aggregatedRecords.push(
         this.aggregateRecords(
-          project.id,
+          ProjectId(project),
           'proofSubmissions',
           proofSubmissions,
           from,
