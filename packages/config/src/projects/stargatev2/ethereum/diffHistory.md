@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7d6b55bbf9be19442980536abc685e678ed49b4a
+
+# Diff at Tue, 06 May 2025 13:23:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b140e89b6bfa22af8e947558a345fd3f6e6cc810 block: 21944318
+- current block number: 21944318
+
+## Description
+
+ethereum
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract PriceFeed (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      name:
+-        ""
++        "PriceFeed"
+    }
+```
+
 Generated with discovered.json: 0x859b864b5e9a5312f0ec7d967bc3a005a129adae
 
 # Diff at Tue, 29 Apr 2025 08:19:29 GMT:

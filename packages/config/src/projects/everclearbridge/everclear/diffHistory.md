@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0278276de8216c9e86a357e368ab06f9d5b48d4c
+
+# Diff at Tue, 06 May 2025 13:20:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b140e89b6bfa22af8e947558a345fd3f6e6cc810 block: 1122116
+- current block number: 1122116
+
+## Description
+
+everclear
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1122116 (main branch discovery), not current.
+
+```diff
+    contract EverclearHubGateway (0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa) {
+    +++ description: None
+      name:
+-        ""
++        "EverclearHubGateway"
+    }
+```
+
 Generated with discovered.json: 0xec4773fd507f8820236087bc5025494557a42ae4
 
 # Diff at Tue, 29 Apr 2025 08:19:25 GMT:

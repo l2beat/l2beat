@@ -685,7 +685,7 @@
       "derivedName": "ReceiveUln302"
     },
     {
-      "name": "",
+      "name": "PriceFeed",
       "address": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
       "type": "Contract",
       "unverified": true,

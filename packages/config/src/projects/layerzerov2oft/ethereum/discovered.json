@@ -53,7 +53,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "LayerZero Executor",
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "type": "Contract",
       "unverified": true,
