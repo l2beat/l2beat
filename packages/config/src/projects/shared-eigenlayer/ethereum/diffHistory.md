@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x67706ba5d498a52a8a3ca03fc24fd1e41f165675
+Generated with discovered.json: 0xb3e74ea78a2eb62e97cbd70fe9de733d4c8897ee
 
-# Diff at Tue, 06 May 2025 12:33:01 GMT:
+# Diff at Tue, 06 May 2025 13:46:28 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208559
-- current block number: 22424684
+- current block number: 22425050
 
 ## Description
 
@@ -203,7 +203,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 
 ```diff
     contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
-    +++ description: None
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
       values.implementation:
 -        "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430"
 +        "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e"
@@ -232,6 +232,10 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 +        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
       values.version:
 +        "1.3.0"
+      template:
++        "eigenlayer/StrategyFactory"
+      description:
++        "Factory contract for permissionless strategy creation via beacon proxies."
     }
 ```
 
@@ -511,7 +515,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```diff
 +   Status: CREATED
     contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39)
-    +++ description: None
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
 ```
 
 ```diff
@@ -546,6 +550,38 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
  .../StrategyFactory/StrategyFactory.sol            |  613 +-
  .../StrategyManager/StrategyManager.sol            | 5170 +++++++++++++---
  16 files changed, 25149 insertions(+), 7137 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208559 (main branch discovery), not current.
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      template:
++        "eigenlayer/StrategiesBeacon"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      template:
++        "eigenlayer/StrategiesBeacon"
+      description:
++        "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: None
+      description:
+-        "Factory contract for permissionless strategy creation via beacon proxies."
+    }
 ```
 
 Generated with discovered.json: 0x6636ac3bc1bff5fc8302b043472ab7ce1b69df75

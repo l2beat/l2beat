@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 22424684,
-  "configHash": "0x5141eb1df7505beb27a73e298351b4399c4f8a1e4cba4c085301a5f8e3a954af",
+  "blockNumber": 22425050,
+  "configHash": "0xa05fa60c42406ac2231803268173b52123b8b9616771acecaf36a4ca664d235f",
   "entries": [
     {
       "address": "0x00000000000000000000000000000000000E16E4",
@@ -55,6 +55,7 @@
       "name": "StrategiesBeacon",
       "address": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
       "type": "Contract",
+      "template": "eigenlayer/StrategiesBeacon",
       "sourceHashes": [
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
@@ -572,10 +573,12 @@
       "name": "UpgradeableBeacon",
       "address": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
       "type": "Contract",
+      "template": "eigenlayer/StrategiesBeacon",
       "sourceHashes": [
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
       "proxyType": "immutable",
+      "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
       "sinceTimestamp": 1686348959,
       "sinceBlock": 17445565,
       "values": {
@@ -589,6 +592,7 @@
       "name": "StrategyFactory",
       "address": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
       "type": "Contract",
+      "template": "eigenlayer/StrategyFactory",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x00392f5dcb8592d0f6f83640dbd27a38aa84cfbafabae75f5e3219f0f0f73ae4"
@@ -1075,11 +1079,13 @@
       "name": "AllocationManager",
       "address": "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
       "type": "Contract",
+      "template": "eigenlayer/AllocationManager",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x82974ffe4d2eaf842109ba34b64dc6aaacd4ab2040d3c53815e2cdf43946630b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.",
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -2870,6 +2876,7 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/AllocationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/AVSDirectory": "0xc57750a5155e09049ae1ea4afd500090b460c5844ccb1d2d973da7af0d8d96f7",
     "eigenlayer/DelegationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EIGEN token": "0x47c3793e522d863027dd4d7d9ae9f79149767db55e073a2fb68ac71a6be7412b",
@@ -2877,7 +2884,9 @@
     "eigenlayer/EigenPodManager": "0xf1378651f0f74d64b9ef4ecb62fc6b0908c5fa61d0228aea84689e975859f4cf",
     "eigenlayer/RewardAllStakersActionGenerator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RewardsCoordinator": "0x6808f3647434cff5e6faad71aaaa768e5a2232d0d0bba9b3998cb36a0efe79d9",
+    "eigenlayer/StrategiesBeacon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/Strategy": "0x5b542b237664461cc9425426a34e0cf216d43947d261781837a5c00bbebfbc9b",
+    "eigenlayer/StrategyFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/StrategyManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/TimelockControllerOwning": "0x59a5edadc54910cb1de46acbf90c6438938dc8cfdcf165be92fe954134783f2c",
     "eigenlayer/TokenHopper": "0x2d11e019aadd23bb3977879af9e11d7021f86ccb0c073820375d508372480683",

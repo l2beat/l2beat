@@ -95,14 +95,6 @@
         "currRewardsCalculationEndTimestamp"
       ]
     },
-    "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": {
-      // StrategiesBeacon
-      "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
-    },
-    "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": {
-      // StrategyFactory
-      "description": "Factory contract for permissionless strategy creation via beacon proxies."
-    },
     "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": {
       // bEIGEN token
       "ignoreInWatchMode": ["totalSupply"],
