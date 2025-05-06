@@ -79,7 +79,7 @@ export class DiscoveryRunner {
 
     const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
 
-    return { discovery, flatSources }
+    return { discovery: withoutUndefinedKeys(discovery), flatSources }
   }
 
   async discoverWithRetry(
@@ -195,3 +195,7 @@ const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
   help: 'Average duration of methods in high level provider calls done during discovery',
   labelNames: ['chain', 'method'],
 })
+
+function withoutUndefinedKeys<T extends object>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T
+}

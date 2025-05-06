@@ -8,6 +8,7 @@ interface EtherscanOptions {
   url: string
   apiKey: string
   chain: string
+  chainId: number
 }
 
 interface BlockscoutOptions {
@@ -105,6 +106,7 @@ export class BlockIndexerClient {
 
     if (this.options.type === 'etherscan') {
       query.append('apikey', this.options.apiKey)
+      query.append('chainId', this.options.chainId.toString())
     }
     const url = `${this.options.url}?${query.toString()}`
 

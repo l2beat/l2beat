@@ -6673,6 +6673,27 @@
       }
     },
     {
+      "name": "Kraken Wrapped Bitcoin",
+      "coingeckoId": "kraken-wrapped-btc",
+      "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "symbol": "kBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1727371173,
+      "coingeckoListingTimestamp": 1730160000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
+          }
+        ]
+      }
+    },
+    {
       "name": "Kwenta",
       "coingeckoId": "kwenta",
       "address": "0x920Cf626a271321C151D027030D5d08aF699456b",
@@ -7100,6 +7121,27 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kraken Wrapped Bitcoin",
+      "coingeckoId": "kraken-wrapped-btc",
+      "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "symbol": "kBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1745509030,
+      "coingeckoListingTimestamp": 1730160000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
           }
         ]
       }

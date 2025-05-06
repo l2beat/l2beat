@@ -4,5 +4,11 @@
     "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "TimelockController_Vector": {
+    "hash": "0x98201d53847b5f763bccbb14f9d4e7ffa8a4ed16c8a4a388949f76850c3d1671",
+    "address": "0x45828180bbE489350D621d002968A0585406d487",
+    "chain": "ethereum",
+    "blockNumber": 22417833
   }
 }

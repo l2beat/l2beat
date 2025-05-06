@@ -1,17 +1,18 @@
 import { readFileSync } from 'fs'
 import path from 'path'
 import { assert } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 import { getAllStaticPngs } from './utils/getAllStaticPngs'
 import { hashPng } from './utils/hashPng'
-import { getMetadata } from './utils/metadata'
+import { getTinifiyMetadata } from './utils/tinifyMetadata'
 
-describe('tinify', () => {
+// TODO: Uncomment this when we start using rewrite on production
+// eslint-disable-next-line mocha/no-skipped-tests
+describe.skip('tinify', () => {
   const pngs = getAllStaticPngs(path.join(process.cwd(), 'rewrite/static'))
 
   it('got every image tinified', () => {
-    const metadata = getMetadata()
+    const metadata = getTinifiyMetadata()
 
     const missing = pngs.filter((png) => {
       const hash = metadata[path.relative(process.cwd(), png)]
@@ -19,11 +20,15 @@ describe('tinify', () => {
       return hash !== hashPng(buffer)
     })
 
-    expect(missing).toEqual([])
+    if (missing.length > 0) {
+      throw new Error(
+        `Not all images were tinified. Run \`pnpm rewrite:tinify\` to tinify them.`,
+      )
+    }
   })
 
   it('made sure every logo has proper dimensions and size', () => {
-    const metadata = getMetadata()
+    const metadata = getTinifiyMetadata()
     const icons = pngs.filter((p) =>
       p.startsWith(path.join(process.cwd(), 'rewrite/static/icons')),
     )

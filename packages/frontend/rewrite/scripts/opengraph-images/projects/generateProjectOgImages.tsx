@@ -18,29 +18,31 @@ export async function generateProjectOgImages(
   })
 
   for (const project of projects) {
-    const type = getOpengraphProjectType(project)
-    if (!type) {
-      console.log(`Skipping ${project.name} because it has no type`)
+    const types = getOpengraphProjectTypes(project)
+    if (types.length === 0) {
+      console.log(`Skipping ${project.name} because it has no types`)
       continue
     }
 
-    const outputDir = path.join(
-      process.cwd(),
-      `rewrite/static/meta-images/${type}/projects/${project.slug}`,
-    )
-    const outputFile = path.join(outputDir, 'opengraph-image.png')
-    if (existsSync(outputFile)) {
-      continue
+    for (const type of types) {
+      const outputDir = path.join(
+        process.cwd(),
+        `rewrite/static/meta-images/${type}/projects/${project.slug}`,
+      )
+      const outputFile = path.join(outputDir, 'opengraph-image.png')
+      if (existsSync(outputFile)) {
+        continue
+      }
+
+      console.time(`[PROJECT DETAILS] ${project.name}`)
+      const pngBuffer = await generateProjectOgImage(project, type, size, fonts)
+
+      mkdirSync(outputDir, {
+        recursive: true,
+      })
+      writeFileSync(outputFile, pngBuffer)
+      console.timeEnd(`[PROJECT DETAILS] ${project.name}`)
     }
-
-    console.time(`[PROJECT DETAILS] ${project.name}`)
-    const pngBuffer = await generateProjectOgImage(project, type, size, fonts)
-
-    mkdirSync(outputDir, {
-      recursive: true,
-    })
-    writeFileSync(outputFile, pngBuffer)
-    console.timeEnd(`[PROJECT DETAILS] ${project.name}`)
   }
 }
 
@@ -84,22 +86,25 @@ async function generateProjectOgImage(
   return resvg.render().asPng()
 }
 
-export function getOpengraphProjectType(
+export function getOpengraphProjectTypes(
   project: Project<
     never,
     'isScaling' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
   >,
 ) {
+  const types: ('scaling' | 'bridges' | 'zk-catalog' | 'data-availability')[] =
+    []
   if (project.isScaling) {
-    return 'scaling'
+    types.push('scaling')
   }
   if (project.isBridge) {
-    return 'bridges'
+    types.push('bridges')
   }
   if (project.isZkCatalog) {
-    return 'zk-catalog'
+    types.push('zk-catalog')
   }
   if (project.isDaLayer) {
-    return 'data-availability'
+    types.push('data-availability')
   }
+  return types
 }

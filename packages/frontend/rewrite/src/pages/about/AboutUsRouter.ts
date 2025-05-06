@@ -9,7 +9,7 @@ export function AboutUsRouter(
   render: RenderFunction,
 ) {
   app.get('/about-us', async (req, res) => {
-    const data = await getAboutUsData(manifest)
+    const data = await getAboutUsData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })

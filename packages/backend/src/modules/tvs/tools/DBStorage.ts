@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
+import type { TokenValue } from '../types'
 import type { DataStorage } from './DataStorage'
 
 export class DBStorage implements DataStorage {
@@ -140,5 +141,9 @@ export class DBStorage implements DataStorage {
       chain,
       timestamp,
     )
+  }
+
+  async getLastNonZeroValues(timestamp: number): Promise<TokenValue[]> {
+    return await this.db.tvsTokenValue.getLastNonZeroValue(timestamp)
   }
 }

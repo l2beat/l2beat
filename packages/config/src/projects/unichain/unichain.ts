@@ -8,6 +8,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('unichain')
 const l2discovery = new ProjectDiscovery('unichain', 'unichain')
 const genesisTimestamp = UnixTime(1730748359)
+const chainId = 130
 
 export const unichain: ScalingProject = opStackL2({
   addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
@@ -98,7 +99,7 @@ export const unichain: ScalingProject = opStackL2({
   ],
   chainConfig: {
     name: 'unichain',
-    chainId: 130,
+    chainId,
     coingeckoPlatform: 'unichain',
     explorerUrl: 'https://uniscan.xyz',
     multicallContracts: [
@@ -116,7 +117,7 @@ export const unichain: ScalingProject = opStackL2({
         url: 'https://mainnet.unichain.org',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.uniscan.xyz/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   milestones: [
