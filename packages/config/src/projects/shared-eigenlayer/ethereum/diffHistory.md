@@ -8,7 +8,13 @@ Generated with discovered.json: 0x52337dca7ef8670ac2d19f82fd6d6fb2ac72bfa7
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+- AVSDirectory.sol - library changes for operator registration with signature validation, modular pausing functionality managed by a PauserRegistry. Marked registerOperatorToAVS as deprecated, only to be used by legacy M2 AVSs that have not integrated with operator sets.
+- AllocationManager.sol - New contract used for creating Operator Sets, and letting Operator register to Operator Sets. Each AVS defines one or more Operator Sets that Operators may opt into. By opting into the Operator Set for an AVS, Operators gain access to the AVS rewards, and the AVS slashing risks.
+The Allocation Manager also tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake. 
+- DelegationManager.sol -  EIP-712-compliant delegation via signatures, added modular pausing via PauserRegistry. New slashing logic and withdraw queue handling, undelegate _removeSharesAndQueueWithdrawal function is updated to be slashing-aware. It introduces scaledShares, slashingFactors, and DepositScalingFactor mechanics to ensure withdrawals accurately reflect any slashing that occurred during delegation.
+- EigenPod.sol - changes to checkpoint logic, custom error types for gas efficiency
+- EigenPodManager.sol - BeaconChainSlashingFactor was added to track how much of a staker's restaked balance remains post-slashing
+- PermissionedController.sol - New contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses. 
 
 ## Watched changes
 
