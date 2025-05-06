@@ -34,6 +34,7 @@ import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
 import { mindchain } from '../projects/mindchain/mindchain'
 import { molten } from '../projects/molten/molten'
+import { moonchain } from '../projects/moonchain/moonchain'
 import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
 import { nums } from '../projects/nums/nums'
@@ -62,7 +63,6 @@ import { xai } from '../projects/xai/xai'
 import { xrone } from '../projects/xrone/xrone'
 import { yellowstone } from '../projects/yellowstone/yellowstone'
 import { zklinknova } from '../projects/zklinknova/zklinknova'
-import { moonchain } from '../projects/moonchain/moonchain'
 
 export const layer3s: ScalingProject[] = [
   anomaly,

@@ -1,8 +1,8 @@
 {
   "name": "moonchain",
   "chain": "arbitrum",
-  "blockNumber": 329145543,
-  "configHash": "0x2a001ac406129a9fc43b586b14aea150a11bdbcfdd7deccd6ba6284aabfd6eb1",
+  "blockNumber": 333866588,
+  "configHash": "0xacb4423daa2fb01aca6c743b07b0fed53c62ef55fd803c0a1acdcaab5bf8b117",
   "entries": [
     {
       "name": "",
@@ -35,13 +35,6 @@
         "0x8e2145c70c7121c39e86cbc12668ffac3141632ec74dcc3ca02e2434db407f9a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009596,
       "sinceBlock": 307854128,
       "values": {
@@ -69,6 +62,39 @@
       "derivedName": "ERC20Vault"
     },
     {
+      "name": "SignalService",
+      "address": "0x3e0c0dAB767FE8BA386175F0d4C92D45A1A6A4Df",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x70dbccbeaddac568923fa21ad8a3044c2b4795ed914ccb67a472cab62ad04d64"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1746533696,
+      "sinceBlock": 333841702,
+      "values": {
+        "$admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
+        "$implementation": "0x4Ec94Df1dF11E15A2cca20a727DABa3b1778D3Fa",
+        "$pastUpgrades": [
+          [
+            "2025-05-06T12:14:56.000Z",
+            "0x083167856ebe6085f2a06956ee10f31c45ab0c3a59e5bf1f39ca2e098e56d28c",
+            ["0x4Ec94Df1dF11E15A2cca20a727DABa3b1778D3Fa"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "addressManager": "0xE7623Fc10eCDA172A023D64f4cebC1682F84BB26",
+        "impl": "0x4Ec94Df1dF11E15A2cca20a727DABa3b1778D3Fa",
+        "inNonReentrant": false,
+        "lastUnpausedAt": 0,
+        "owner": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "derivedName": "SignalService"
+    },
+    {
       "name": "AutomataDcapV3Attestation",
       "address": "0x478932D33a02A14C354c18055AFdFc7fb04E1cA5",
       "type": "Contract",
@@ -77,13 +103,6 @@
         "0x34411700c48dedb2a5e893c4d1210efdca582d749f503a708b159e8991a72dea"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009664,
       "sinceBlock": 307854401,
       "values": {
@@ -128,13 +147,6 @@
         "0xc7e0efadafde2afb2491501eb172f8ec5b85ffbd28704c7386edeb160bef137f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009680,
       "sinceBlock": 307854462,
       "values": {
@@ -167,13 +179,6 @@
         "0x8ef20f588865c3478ea98fd0b259ad0355eba9061302b22e8cc65345752285a2"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nextMessageId"],
       "sinceTimestamp": 1740009589,
       "sinceBlock": 307854100,
@@ -199,7 +204,7 @@
         "impl": "0xFB2FBf7fecE48d76FF80DDa5dB1B06473f9323Ed",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
-        "nextMessageId": 14,
+        "nextMessageId": 17,
         "owner": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
         "paused": false,
         "pendingOwner": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
@@ -218,13 +223,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getStateVariables",
         "getLastSyncedBlock",
@@ -317,27 +315,27 @@
           "ontakeForkHeight": 755879
         },
         "getLastSyncedBlock": {
-          "blockId_": 791279,
-          "blockHash_": "0xd72f310513c569f5b71991c813048a44e5cb39500d2312a362ad4276cfe05fd5",
-          "stateRoot_": "0x78635df2384d57a36f5bc2a7a5c59befb14b0a522a58895d192ee113f9e03e14",
-          "verifiedAt_": 1745338144
+          "blockId_": 800431,
+          "blockHash_": "0xa6f61e14436bf8f137d7e3b757d879aede044f03ca2abb20dd1a26a0ef352ef2",
+          "stateRoot_": "0x751fdd2eff662be62448e706f5ec5c81438560154dea88232f72c8113a6b1976",
+          "verifiedAt_": 1746524265
         },
         "getLastVerifiedBlock": {
-          "blockId_": 791290,
-          "blockHash_": "0xc3acc486a6904ece953a7a70c6e26ef9aaeb0423a0bdab995a818179379cda84",
+          "blockId_": 800436,
+          "blockHash_": "0x15b8573c1832ad88c9c0974c0c9090b5338761cf15c3fd73d3f85fbae688b120",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1745338444
+          "verifiedAt_": 1746524903
         },
         "getStateVariables": [
           {
             "genesisHeight": 307854503,
             "genesisTimestamp": 1740009690,
-            "lastSyncedBlockId": 791279,
-            "lastSynecdAt": 1745353510
+            "lastSyncedBlockId": 800431,
+            "lastSynecdAt": 1746539138
           },
           {
-            "numBlocks": 791620,
-            "lastVerifiedBlockId": 791290,
+            "numBlocks": 800613,
+            "lastVerifiedBlockId": 800436,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -361,19 +359,19 @@
         "return_liveness_bond": "0x0000000000000000000000000000000000000000",
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
-        "signal_service": "0xB31EBab3Ac38B9B021CCe679B4059b790413Fa4E",
+        "signal_service": "0x3e0c0dAB767FE8BA386175F0d4C92D45A1A6A4Df",
         "sp1_remote_verifier": "0x1597FF85e87199b974F7c582C865E6374D558159",
         "state": {
           "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "slotA": {
             "genesisHeight": 307854503,
             "genesisTimestamp": 1740009690,
-            "lastSyncedBlockId": 791279,
-            "lastSynecdAt": 1745353510
+            "lastSyncedBlockId": 800431,
+            "lastSynecdAt": 1746539138
           },
           "slotB": {
-            "numBlocks": 791620,
-            "lastVerifiedBlockId": 791290,
+            "numBlocks": 800613,
+            "lastVerifiedBlockId": 800436,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -408,6 +406,10 @@
         {
           "permission": "upgrade",
           "from": "0x3160284BC2F4d7F5b170C70a0Ee0bC5333c7F39e"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x3e0c0dAB767FE8BA386175F0d4C92D45A1A6A4Df"
         },
         {
           "permission": "upgrade",
@@ -448,16 +450,38 @@
       "values": {
         "$immutable": true,
         "active_tiers": [
-          [
-            "0x746965725f736778000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
-          ],
-          [
-            "0x746965725f677561726469616e00000000000000000000000000000000000000"
-          ],
-          ["0x0000000000000000000000000000000000000000000000000000000000000000"]
+          {
+            "verifierName": "0x746965725f736778000000000000000000000000000000000000000000000000",
+            "validityBond": 0,
+            "contestBond": 0,
+            "cooldownWindow": 1440,
+            "provingWindow": 300,
+            "maxBlocksToVerifyPerProof": 0
+          },
+          {
+            "verifierName": "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+            "validityBond": 0,
+            "contestBond": 0,
+            "cooldownWindow": 240,
+            "provingWindow": 3120,
+            "maxBlocksToVerifyPerProof": 0
+          },
+          {
+            "verifierName": "0x746965725f677561726469616e00000000000000000000000000000000000000",
+            "validityBond": 0,
+            "contestBond": 0,
+            "cooldownWindow": 1440,
+            "provingWindow": 3120,
+            "maxBlocksToVerifyPerProof": 0
+          },
+          {
+            "verifierName": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "validityBond": 0,
+            "contestBond": 0,
+            "cooldownWindow": 0,
+            "provingWindow": 255,
+            "maxBlocksToVerifyPerProof": 0
+          }
         ],
         "BOND_UNIT": 0,
         "getTierIds": [200, 900, 1000, 100],
@@ -565,13 +589,6 @@
         "0xc5494433938477bd6046407af140856966dac73b3844732137a650def9c90604"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009669,
       "sinceBlock": 307854419,
       "values": {
@@ -628,10 +645,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xB31EBab3Ac38B9B021CCe679B4059b790413Fa4E"
-        },
-        {
-          "permission": "upgrade",
           "from": "0xb6f0d291B118f9F562d4Db388351Faf62A99c921"
         },
         {
@@ -654,22 +667,15 @@
       "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x5cf4039866e6277c4e774b08c453d69c55d29513d7faabb46bd38a508084bac8"
+        "0xbaf629f3a4d98a75aefb28cd3d0b7c9fcf8a19e002767aae2f1db15bb21f2efa"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1687777847,
       "sinceBlock": 105080283,
       "values": {
         "$admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-        "$implementation": "0xE344f2Bac3fc83299Fff3E0573477714a0F9022d",
+        "$implementation": "0x20e01BBFD507A0A2D04bC6d06944D8c9eD7bC5Fa",
         "$pastUpgrades": [
           [
             "2023-06-26T11:10:47.000Z",
@@ -695,11 +701,16 @@
             "2025-04-09T08:52:49.000Z",
             "0x15edc5371750941ba24af1481cfd9edcc9a1263547c3c4a8d6a653d7320e00c8",
             ["0xE344f2Bac3fc83299Fff3E0573477714a0F9022d"]
+          ],
+          [
+            "2025-04-24T01:15:25.000Z",
+            "0xea4296bc2b5e574544266802f2100796dcd60ebe0669bf100734667e2ca67e3d",
+            ["0x20e01BBFD507A0A2D04bC6d06944D8c9eD7bC5Fa"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "addressManager": "0xF5146A105d14BDA41B866CaD0f96b8Ce3A4F19dF",
-        "clock": 1745353865,
+        "clock": 1746539930,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x08889f08d549c906b991ca0a00d7436f8bef9b231dabe4b60e48aaefc265030f",
@@ -712,7 +723,7 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "impl": "0xE344f2Bac3fc83299Fff3E0573477714a0F9022d",
+        "impl": "0x20e01BBFD507A0A2D04bC6d06944D8c9eD7bC5Fa",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
         "name": "MXC Token",
@@ -721,7 +732,7 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
         "symbol": "MXC",
-        "totalSupply": "2921231314970000124480651264"
+        "totalSupply": "2931691289280000124480651264"
       },
       "derivedName": "MxcToken"
     },
@@ -734,13 +745,6 @@
         "0xe9226757b46a6fe74675bfef698e23f8904313fb0fae8a07c97c9062789fb011"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009687,
       "sinceBlock": 307854492,
       "values": {
@@ -766,46 +770,6 @@
       "derivedName": "SP1Verifier"
     },
     {
-      "name": "SignalService",
-      "address": "0xB31EBab3Ac38B9B021CCe679B4059b790413Fa4E",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1740009583,
-      "sinceBlock": 307854078,
-      "values": {
-        "$admin": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-        "$implementation": "0x7382bCbd6B361e218e1c1c3180201C2dA6f3d210",
-        "$pastUpgrades": [
-          [
-            "2025-02-19T23:59:43.000Z",
-            "0x6ced8d830a170104b61bb05d568f52409bd56ee7880f77bd0b5601a6e4aadde2",
-            ["0x82752Cce4bfF032764b51ef2a1a271458fa30764"]
-          ],
-          [
-            "2025-02-19T23:59:46.000Z",
-            "0x3349c6513ee9bf0106d3004447924e28ee7c6b4c16bc2886966769eaae67e2b0",
-            ["0x1CA4A851736576cb2e46Fa7c413b2310b9AC7632"]
-          ],
-          [
-            "2025-02-19T23:59:46.000Z",
-            "0x3349c6513ee9bf0106d3004447924e28ee7c6b4c16bc2886966769eaae67e2b0",
-            ["0x82752Cce4bfF032764b51ef2a1a271458fa30764"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "proxiableUUID": "EXPECT_REVERT"
-      },
-      "derivedName": ""
-    },
-    {
       "name": "GuardianMinorityProver",
       "address": "0xb6f0d291B118f9F562d4Db388351Faf62A99c921",
       "type": "Contract",
@@ -815,13 +779,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for blocks proven by Guardian minority.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009641,
       "sinceBlock": 307854307,
       "values": {
@@ -861,13 +818,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for Guardian proven blocks.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009644,
       "sinceBlock": 307854319,
       "values": {
@@ -906,13 +856,6 @@
         "0xc3321d24fb24d60b41e930bc58c17502b3b3a10368b59b2e6d97ef2b203e0022"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009578,
       "sinceBlock": 307854058,
       "values": {
@@ -947,13 +890,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for SGX proven blocks.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nextInstanceId"],
       "sinceTimestamp": 1740009636,
       "sinceBlock": 307854289,
@@ -991,13 +927,6 @@
         "0xc3321d24fb24d60b41e930bc58c17502b3b3a10368b59b2e6d97ef2b203e0022"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xaEab056F5B6138f9c2Ff4936437f0CC992863AE8",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1740009621,
       "sinceBlock": 307854227,
       "values": {
@@ -1068,6 +997,78 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyBatchProof(tuple(bytes32 metaHash, bytes32 blobHash, address prover, uint64 blockId, bool isContesting, bool blobUsed, address msgSender, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran)[], tuple(uint16 tier, bytes data)) pure",
       "function verifyProof(tuple(bytes32 metaHash, bytes32 blobHash, address prover, uint64 blockId, bool isContesting, bool blobUsed, address msgSender) _ctx, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) _tran, tuple(uint16 tier, bytes data) _proof) view"
+    ],
+    "0x20e01BBFD507A0A2D04bC6d06944D8c9eD7bC5Fa": [
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error TT_INVALID_PARAM()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function CLOCK_MODE() pure returns (string)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function batchTransfer(address[] recipients, uint256[] amounts) returns (bool)",
+      "function burn(address from, uint256 amount)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
+      "function clock() view returns (uint48)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address account) view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
+      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getVotes(address account) view returns (uint256)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function init(address _owner, address _recipient)",
+      "function init2(address _addressManager, address _owner, address _oldTokenVault, address _recipient)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function symbol() pure returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x3160284BC2F4d7F5b170C70a0Ee0bC5333c7F39e": [
       "constructor(address _logic, bytes _data) payable",
@@ -1222,6 +1223,12 @@
       "function version() view returns (uint32)",
       "function withdrawTaikoToken(address _to, uint256 _amount)"
     ],
+    "0x3e0c0dAB767FE8BA386175F0d4C92D45A1A6A4Df": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x478932D33a02A14C354c18055AFdFc7fb04E1cA5": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1281,6 +1288,74 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x4Ec94Df1dF11E15A2cca20a727DABa3b1778D3Fa": [
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error LTP_INVALID_ACCOUNT_PROOF()",
+      "error LTP_INVALID_INCLUSION_PROOF()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error SS_EMPTY_PROOF()",
+      "error SS_INVALID_HOPS_WITH_LOOP()",
+      "error SS_INVALID_LAST_HOP_CHAINID()",
+      "error SS_INVALID_MID_HOP_CHAINID()",
+      "error SS_INVALID_STATE()",
+      "error SS_SIGNAL_NOT_FOUND()",
+      "error SS_UNAUTHORIZED()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Authorized(address indexed addr, bool authorized)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ChainDataSynced(uint64 indexed chainId, uint64 indexed blockId, bytes32 indexed kind, bytes32 data, bytes32 signal)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event SignalSent(address app, bytes32 signal, bytes32 slot, bytes32 value)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function authorize(address _addr, bool _authorize)",
+      "function getSignalSlot(uint64 _chainId, address _app, bytes32 _signal) pure returns (bytes32)",
+      "function getSyncedChainData(uint64 _chainId, bytes32 _kind, uint64 _blockId) view returns (uint64 blockId_, bytes32 chainData_)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _sharedAddressManager)",
+      "function init2(address _owner, address _sharedAddressManager)",
+      "function isAuthorized(address addr) view returns (bool authorized)",
+      "function isChainDataSynced(uint64 _chainId, bytes32 _kind, uint64 _blockId, bytes32 _chainData) view returns (bool)",
+      "function isSignalSent(address _app, bytes32 _signal) view returns (bool)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proveSignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) returns (uint256 numCacheOps_)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function sendSignal(bytes32 _signal) returns (bytes32)",
+      "function signalForChainData(uint64 _chainId, bytes32 _kind, uint64 _blockId) pure returns (bytes32)",
+      "function syncChainData(uint64 _chainId, bytes32 _kind, uint64 _blockId, bytes32 _chainData) returns (bytes32)",
+      "function topBlockId(uint64 chainId, bytes32 kind) view returns (uint64 blockId)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifySignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) view"
     ],
     "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1362,12 +1437,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xaF7bB4d74Bdf6A44b1c6C9feD3A6606f8943064d": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0xB31EBab3Ac38B9B021CCe679B4059b790413Fa4E": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1671,77 +1740,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xE344f2Bac3fc83299Fff3E0573477714a0F9022d": [
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error INVALID_PAUSE_STATUS()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_DENIED()",
-      "error RESOLVER_INVALID_MANAGER()",
-      "error RESOLVER_UNEXPECTED_CHAINID()",
-      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
-      "error TT_INVALID_PARAM()",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
-      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function CLOCK_MODE() pure returns (string)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function addressManager() view returns (address)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function batchTransfer(address[] recipients, uint256[] amounts) returns (bool)",
-      "function burn(address from, uint256 amount)",
-      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
-      "function clock() view returns (uint48)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function delegate(address delegatee)",
-      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
-      "function delegates(address account) view returns (address)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
-      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
-      "function getVotes(address account) view returns (uint256)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function init(address _owner, address _recipient)",
-      "function lastUnpausedAt() view returns (uint64)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function numCheckpoints(address account) view returns (uint32)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function symbol() pure returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0xE7623Fc10eCDA172A023D64f4cebC1682F84BB26": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1836,5 +1834,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x5f5ecf49110e997c974a2ed76834a1cf048ad5efce311199f99a31a15d261b99"
 }

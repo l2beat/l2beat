@@ -523,7 +523,6 @@
             "type": "array",
             "method": "getTier",
             "indices": "{{ getTierIds }}",
-            "pickFields": ["verifierName"]
           }
         },
         "TIER_SGX": {
