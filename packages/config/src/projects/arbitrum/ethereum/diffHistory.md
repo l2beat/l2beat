@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe55ebfef01443bfb09f28997206c82c70df472a2
 
 ## Description
 
-Security Council member sync (assuming cohort change).
+Config related: The last update scheduled (and executed) was [Adopt Timeboost + Nova Fee Sweep](https://www.tally.xyz/gov/arbitrum/proposal/14881197137069494959448952699217598923721993392617887469969318742509097999570?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9).
 
 ## Watched changes
 
