@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa2b3d5f24b51f610c5378a283b8770daa2fa5691
+
+# Diff at Tue, 06 May 2025 10:57:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 324576418
+- current block number: 324576418
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 324576418 (main branch discovery), not current.
+
+```diff
+    EOA  (0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x9739b18229454129fc712c2cea156b062b2bf5a2
 
 # Diff at Fri, 02 May 2025 17:25:20 GMT:

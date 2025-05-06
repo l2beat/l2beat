@@ -77,6 +77,8 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     proxyType: e.proxyType,
     displayName: e.displayName,
     description: e.description,
+    controlsMajorityOfUpgradePermissions:
+      e.controlsMajorityOfUpgradePermissions,
     receivedPermissions: e.receivedPermissions,
     directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,

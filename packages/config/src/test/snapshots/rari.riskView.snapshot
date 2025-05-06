@@ -2,8 +2,8 @@
 
 {
   dataAvailability: {
-    description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators."
-    sentiment: "warning"
+    description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client."
+    sentiment: "bad"
     value: "External"
   }
   exitWindow: {
@@ -28,11 +28,10 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
-    orderHint: 1
-    secondLine: "6d 8h challenge period"
+    description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     sentiment: "bad"
-    value: "Fraud proofs (INT)"
+    value: "None"
   }
 }
 
@@ -40,8 +39,8 @@
 
 {
   dataAvailability: {
-    description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators."
-    sentiment: "warning"
+    description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client."
+    sentiment: "bad"
     value: "External"
   }
   exitWindow: {
@@ -64,10 +63,9 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
-    orderHint: 1
-    secondLine: "6d 8h challenge period"
+    description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     sentiment: "bad"
-    value: "Fraud proofs (INT)"
+    value: "None"
   }
 }

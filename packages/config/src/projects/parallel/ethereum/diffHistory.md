@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7a6cb718a0559e596394295323c3d68e635d7d00
+Generated with discovered.json: 0xac78bfe1363e3df5b836de05fa617340b3bd8416
 
-# Diff at Tue, 06 May 2025 09:26:43 GMT:
+# Diff at Tue, 06 May 2025 15:57:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 22397523
-- current block number: 22423761
+- comparing to: main@e14d6ca6cfb9c51927744033947048a6b7efb278 block: 22397523
+- current block number: 22425701
 
 ## Description
 
@@ -31,6 +31,32 @@ ms signer change.
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "3 of 3 (100%)"
+    }
+```
+
+Generated with discovered.json: 0x03b30add7166041c3990818efc4aa06da1050020
+
+# Diff at Tue, 06 May 2025 10:56:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 22397523
+- current block number: 22397523
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397523 (main branch discovery), not current.
+
+```diff
+    EOA  (0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
     }
 ```
 

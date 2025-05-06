@@ -293,6 +293,7 @@
       "address": "0x666372fEfB85dA96a1a56667638321605afe95bC",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -626,6 +627,7 @@
       "address": "0xE559cf25AE191566d4A2E1cd5A533475179672A0",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
