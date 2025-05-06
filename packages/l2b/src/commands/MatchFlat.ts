@@ -5,7 +5,7 @@ import { getExplorer } from '../implementations/common/getExplorer'
 import { fetchAndFlatten } from '../implementations/flatten'
 import { matchFile, readAndHashFile } from '../implementations/matchFlat'
 import {
-    chainName,
+  chainName,
   explorerApiKey,
   explorerChainId,
   explorerType,

@@ -6,7 +6,7 @@ import { getExplorer } from '../implementations/common/getExplorer'
 import { powerdiff } from '../implementations/powerdiff'
 import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
 import {
-    chainName,
+  chainName,
   explorerApiKey,
   explorerChainId,
   explorerType,

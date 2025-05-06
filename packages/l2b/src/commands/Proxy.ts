@@ -3,6 +3,7 @@ import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
+import { getExplorerConfig } from '../implementations/common/getExplorer'
 import {
   chainName,
   explorerApiKey,
@@ -12,7 +13,6 @@ import {
   rpcUrl,
 } from './args'
 import { EthereumAddressValue } from './types'
-import { getExplorerConfig } from '../implementations/common/getExplorer'
 
 export const DetectProxy = command({
   name: 'proxy',

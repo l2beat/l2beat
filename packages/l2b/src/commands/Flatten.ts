@@ -5,7 +5,7 @@ import { boolean, command, flag, option, positional, string } from 'cmd-ts'
 import { getExplorer } from '../implementations/common/getExplorer'
 import { fetchAndFlatten } from '../implementations/flatten'
 import {
-    chainName,
+  chainName,
   explorerApiKey,
   explorerChainId,
   explorerType,

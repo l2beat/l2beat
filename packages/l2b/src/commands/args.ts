@@ -16,8 +16,8 @@ export const rpcUrl = option({
 
 export const chainName = option({
   type: optional(string),
-  description: 'Chain whose configurations to use',
-  long: 'chain-name',
+  description: 'Chain whose configurations to use for explorer access',
+  long: 'explorer-chain-name',
   short: 'c',
 })
 
