@@ -5,13 +5,13 @@ import { expect } from 'earl'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 import { getAllStaticPngs } from './utils/getAllStaticPngs'
 import { hashPng } from './utils/hashPng'
-import { getMetadata } from './utils/metadata'
+import { getTinifiyMetadata } from './utils/tinifyMetadata'
 
 describe('tinify', () => {
   const pngs = getAllStaticPngs(path.join(process.cwd(), 'rewrite/static'))
 
   it('got every image tinified', () => {
-    const metadata = getMetadata()
+    const metadata = getTinifiyMetadata()
 
     const missing = pngs.filter((png) => {
       const hash = metadata[path.relative(process.cwd(), png)]
@@ -23,7 +23,7 @@ describe('tinify', () => {
   })
 
   it('made sure every logo has proper dimensions and size', () => {
-    const metadata = getMetadata()
+    const metadata = getTinifiyMetadata()
     const icons = pngs.filter((p) =>
       p.startsWith(path.join(process.cwd(), 'rewrite/static/icons')),
     )

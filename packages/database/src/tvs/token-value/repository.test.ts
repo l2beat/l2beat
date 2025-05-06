@@ -329,6 +329,34 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.getLastNonZeroValue.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        // Token A with multiple timestamps
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
+        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000),
+
+        // Token B with zero value at some timestamps
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('b', 'ethereum', UnixTime(130), 0, 0, 0, 0),
+
+        // Token C with a single timestamp
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+
+    it('returns latest non-zero record for each token at or before timestamp', async () => {
+      const result = await repository.getLastNonZeroValue(UnixTime(150))
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+  })
+
   describe(TokenValueRepository.prototype.deleteByConfigInTimeRange
     .name, () => {
     it('deletes data in range for matching config', async () => {

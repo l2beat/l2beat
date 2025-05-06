@@ -44,44 +44,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/api/projects/:project/code/:address', (req, res) => {
-    const response = getCode(
-      paths,
-      configReader,
-      req.params.project,
-      req.params.address,
-    )
-    res.json(response)
-  })
-
-  app.get('/api/projects/:project/codeSearch/:searchTerm', (req, res) => {
-    const response = searchCode(
-      paths,
-      configReader,
-      req.params.project,
-      req.params.searchTerm,
-    )
-    res.json(response)
-  })
-
   app.get('/', (_req, res) => {
     res.redirect('/ui')
   })
 
   app.get(['/ui', '/ui/*'], (_req, res) => {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
-  })
-
-  app.get('/api/terminal/discover', (req, res) => {
-    const { project, chain, devMode } = req.query
-    if (!project || !chain || !devMode) {
-      res.status(400).send('Missing required parameters')
-      return
-    }
-    executeTerminalCommand(
-      `(cd ${path.dirname(paths.discovery)} && l2b discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
-      res,
-    )
   })
 
   app.get('/api/terminal/match-flat', (req, res) => {
@@ -110,16 +78,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   if (!readonly) {
-    app.get('/api/projects/:project/code/:address', (req, res) => {
-      const response = getCode(
-        paths,
-        configReader,
-        req.params.project,
-        req.params.address,
-      )
-      res.json(response)
-    })
-
     app.get('/api/projects/:project/code/:address', (req, res) => {
       const response = getCode(
         paths,

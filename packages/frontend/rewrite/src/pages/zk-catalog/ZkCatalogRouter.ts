@@ -1,5 +1,5 @@
 import type { Router } from 'express'
-import { validateRoute } from 'rewrite/src/ssr/validateRoute'
+import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderFunction } from '../../ssr/server'
@@ -12,7 +12,7 @@ export function ZkCatalogRouter(
   render: RenderFunction,
 ) {
   app.get('/zk-catalog', async (req, res) => {
-    const data = await getZkCatalogData(manifest)
+    const data = await getZkCatalogData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
@@ -23,7 +23,11 @@ export function ZkCatalogRouter(
       params: z.object({ slug: z.string() }),
     }),
     async (req, res) => {
-      const data = await getZkCatalogProjectData(manifest, req.params.slug)
+      const data = await getZkCatalogProjectData(
+        manifest,
+        req.params.slug,
+        req.originalUrl,
+      )
       if (!data) {
         res.status(404).send('Not found')
         return

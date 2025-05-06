@@ -1304,6 +1304,7 @@
   "rewrite/static/meta-images/zk-catalog/projects/sp1-vector/opengraph-image.png": "bcea4cbd3ada0487c46939cd51710cbc",
   "rewrite/static/meta-images/zk-catalog/projects/worldcoin-semaphore/opengraph-image.png": "8d4ae68e58c0b98ed411e7ff136589c9",
   "rewrite/static/meta-images/zk-catalog/projects/worldcoin-smtb/opengraph-image.png": "e57e20186c8989f7b88361d126e6d6fd",
+  "rewrite/static/apple-icon.png": "2f327edda6b731b14cfb92dabe8d0f82",
   "rewrite/static/meta-images/zk-catalog/projects/abstract/opengraph-image.png": "ebc589ad1ab8d86f180b5cf6dd466d16",
   "rewrite/static/meta-images/zk-catalog/projects/cronoszkevm/opengraph-image.png": "03022b14f9c77f422b3cd050e2f59a86",
   "rewrite/static/meta-images/zk-catalog/projects/degate3/opengraph-image.png": "b0e9e2ce77577233bfd919768bb5c128",
@@ -1318,5 +1319,6 @@
   "rewrite/static/meta-images/zk-catalog/projects/treasure/opengraph-image.png": "9fc7b1264cb53958a922c82dc6ed3e24",
   "rewrite/static/meta-images/zk-catalog/projects/zeronetwork/opengraph-image.png": "8a3d40c8b738314f212390410f23f8c1",
   "rewrite/static/meta-images/zk-catalog/projects/zkcandy/opengraph-image.png": "726c8fc753d7f7834828ec1d51994892",
-  "rewrite/static/meta-images/zk-catalog/projects/zksync-era/opengraph-image.png": "78aecf1a0a1dd4d38b4068734b311fa7"
+  "rewrite/static/meta-images/zk-catalog/projects/zksync-era/opengraph-image.png": "78aecf1a0a1dd4d38b4068734b311fa7",
+  "rewrite/static/meta-images/scaling/projects/yellowstone/opengraph-image.png": "63ff5da53f7ce781e06a89ee36a0feb6"
 }

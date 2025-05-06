@@ -47,6 +47,8 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
+const chainId = 255
+
 export const kroma: ScalingProject = {
   type: 'layer2',
   id: ProjectId('kroma'),
@@ -108,14 +110,14 @@ export const kroma: ScalingProject = {
   },
   chainConfig: {
     name: 'kroma',
-    chainId: 255,
+    chainId,
     coingeckoPlatform: 'kroma',
     explorerUrl: 'https://kromascan.com',
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
     apis: [
       { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 1500 },
-      { type: 'etherscan', url: 'https://api.kromascan.com/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   config: {

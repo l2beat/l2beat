@@ -65,12 +65,12 @@ export async function getBridgesProjectEntry(
   project: Project<
     | 'statuses'
     | 'tvsInfo'
-    | 'tvsConfig'
     | 'bridgeInfo'
     | 'bridgeRisks'
     | 'bridgeTechnology'
     | 'display',
     // optional
+    | 'tvsConfig'
     | 'chainConfig'
     | 'archivedAt'
     | 'isUpcoming'

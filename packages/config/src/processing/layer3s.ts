@@ -61,6 +61,7 @@ import { vessel } from '../projects/vessel/vessel'
 import { winr } from '../projects/winr/winr'
 import { xai } from '../projects/xai/xai'
 import { xrone } from '../projects/xrone/xrone'
+import { yellowstone } from '../projects/yellowstone/yellowstone'
 import { zklinknova } from '../projects/zklinknova/zklinknova'
 
 export const layer3s: ScalingProject[] = [
@@ -127,4 +128,5 @@ export const layer3s: ScalingProject[] = [
   syndr,
   winr,
   xrone,
+  yellowstone,
 ]
