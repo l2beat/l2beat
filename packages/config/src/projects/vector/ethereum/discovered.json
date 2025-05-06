@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22417833,
+  "blockNumber": 22423561,
   "configHash": "0x6b113709a01b4c011c82f02891a984c98a08c2f4a42414976f0bbec9d41c0332",
   "entries": [
     {
@@ -61,7 +61,7 @@
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
         "latestAuthoritySetId": 337,
-        "latestBlock": 1318080,
+        "latestBlock": 1321440,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -100,7 +100,7 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+            "members": ["0x45828180bbE489350D621d002968A0585406d487"]
           },
           "PAUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -109,20 +109,20 @@
         },
         "avail": "0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmin": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
-        "defaultAdminAC": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
+        "defaultAdmin": "0x45828180bbE489350D621d002968A0585406d487",
+        "defaultAdminAC": ["0x45828180bbE489350D621d002968A0585406d487"],
         "defaultAdminDelay": 0,
         "defaultAdminDelayIncreaseWait": 432000,
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1407,
-        "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "messageId": 1408,
+        "owner": "0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
         "pendingDefaultAdmin": {
-          "newAdmin": "0x45828180bbE489350D621d002968A0585406d487",
-          "schedule": 1746442211
+          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "schedule": 0
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "vectorx": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
@@ -279,6 +279,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+        },
+        {
+          "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
           "description": "manage all access control roles."
         }
@@ -353,7 +358,13 @@
         {
           "permission": "interact",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
+          "via": [
+            {
+              "address": "0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -427,7 +438,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -863,5 +874,5 @@
     "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x34c8324d73a21cd5060d85a8de3b08f54f44d2431c6461031715b2d9a9c04e28"
+  "permissionsConfigHash": "0x3ea3a74ea0c344fcdf56c23322497e63c4b0e07e361e8743591347026899f408"
 }

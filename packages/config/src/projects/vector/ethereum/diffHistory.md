@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x213fd5f93e5972980c402c655137fce25fe334b5
+
+# Diff at Tue, 06 May 2025 08:46:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76bab41abbae565c3c67522863645fa6d26e7444 block: 22417833
+- current block number: 22423561
+
+## Description
+
+Finalized the transfer of admin and owner roles to a 1d timelock controller.
+
+## Watched changes
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.defaultAdmin:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.defaultAdminAC.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.owner:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x0000000000000000000000000000000000000000"
+      values.pendingDefaultAdmin.schedule:
+-        1746442211
++        0
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."}
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.8.description:
++        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+      receivedPermissions.8.via:
++        [{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]
+      receivedPermissions.7.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.7.via:
+-        [{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.6.description:
+-        "manage all access control roles."
+      receivedPermissions.6.via.0.address:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+      receivedPermissions.6.via.0.delay:
+-        86400
+      receivedPermissions.5.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.5.description:
+-        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
++        "manage all access control roles."
+      receivedPermissions.5.via:
++        [{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]
+    }
+```
+
 Generated with discovered.json: 0x82c8f962f3732fed1f41bdfffa07c044c93b6371
 
 # Diff at Mon, 05 May 2025 14:37:14 GMT:
