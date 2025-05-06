@@ -2,7 +2,7 @@
   "name": "moonchain",
   "chain": "arbitrum",
   "blockNumber": 333866588,
-  "configHash": "0xacb4423daa2fb01aca6c743b07b0fed53c62ef55fd803c0a1acdcaab5bf8b117",
+  "configHash": "0x064f8b6b1d011ce94f192ebe4f2e1d04781e1f79ea9d8b0be142c63d09f1826b",
   "entries": [
     {
       "name": "",
@@ -91,7 +91,6 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "derivedName": "SignalService"
     },
     {

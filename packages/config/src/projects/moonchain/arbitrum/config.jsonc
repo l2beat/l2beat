@@ -9,6 +9,7 @@
     "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a",
     "0x817bdF595d88e5b0165993E4a6AF04F092584Fb7"
   ],
+  // EXTERNAL contribution pls verify TODO
   "names": {
     "0x4C3924E619E2eE83cFD565c1432cb621ca8af7A0": "MoonchainBridge",
     "0x3160284BC2F4d7F5b170C70a0Ee0bC5333c7F39e": "SharedERC20Vault",
@@ -28,6 +29,9 @@
     "0x478932D33a02A14C354c18055AFdFc7fb04E1cA5": "AutomataDcapV3Attestation"
   },
   "overrides": {
+    "0x3e0c0dAB767FE8BA386175F0d4C92D45A1A6A4Df":{
+      "ignoreMethods": ["proxiableUUID"]
+    },
     "0x4A5C01E22C60D8189419f6Ae7F6d47B1e470FC5b": {
       // Risc0Verifier
       "ignoreMethods": ["proxiableUUID"]
