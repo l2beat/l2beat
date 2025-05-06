@@ -1,8 +1,4 @@
-import {
-  type ProjectId,
-  type TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLiveness2Record, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness2 } from './select'
@@ -49,19 +45,7 @@ export class AggregatedLiveness2Repository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectIds(
-    projectIds: ProjectId[],
-  ): Promise<AggregatedLiveness2Record[]> {
-    if (projectIds.length === 0) return []
-    const rows = await this.db
-      .selectFrom('AggregatedLiveness2')
-      .select(selectAggregatedLiveness2)
-      .where('projectId', 'in', projectIds)
-      .execute()
-    return rows.map(toRecord)
-  }
-
-  async getAggragatesByTimeRange(
+  async getAggregatesByTimeRange(
     range: [UnixTime, UnixTime],
   ): Promise<Omit<AggregatedLiveness2Record, 'timestamp'>[]> {
     const [from, to] = range
@@ -85,23 +69,5 @@ export class AggregatedLiveness2Repository extends BaseRepository {
       subtype: row.subtype as TrackedTxsConfigSubtype,
       avg: Number(row.avg),
     }))
-  }
-
-  async getByProjectIdSubtypeAndRange(
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
-    range: [UnixTime, UnixTime],
-  ): Promise<AggregatedLiveness2Record[]> {
-    const [from, to] = range
-    const rows = await this.db
-      .selectFrom('AggregatedLiveness2')
-      .select(selectAggregatedLiveness2)
-      .where('projectId', '=', projectId)
-      .where('subtype', '=', subtype)
-      .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<=', UnixTime.toDate(to))
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
   }
 }

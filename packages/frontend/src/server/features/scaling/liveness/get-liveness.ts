@@ -52,15 +52,15 @@ async function getLivenessData() {
   const targetTimestamp =
     UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-  const records30Days = await db.aggregatedLiveness2.getAggragatesByTimeRange([
+  const records30Days = await db.aggregatedLiveness2.getAggregatesByTimeRange([
     targetTimestamp - 30 * UnixTime.DAY,
     targetTimestamp,
   ])
-  const records90Days = await db.aggregatedLiveness2.getAggragatesByTimeRange([
+  const records90Days = await db.aggregatedLiveness2.getAggregatesByTimeRange([
     targetTimestamp - 90 * UnixTime.DAY,
     targetTimestamp,
   ])
-  const recordsMax = await db.aggregatedLiveness2.getAggragatesByTimeRange([
+  const recordsMax = await db.aggregatedLiveness2.getAggregatesByTimeRange([
     UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')), // minTimestamp for TrackedTxsIndexer
     targetTimestamp,
   ])

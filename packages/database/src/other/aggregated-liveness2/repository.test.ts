@@ -95,99 +95,99 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     })
   })
 
-  describe(AggregatedLiveness2Repository.prototype.getByProjectIds.name, () => {
-    it('should return all rows for projects', async () => {
-      const results = await repository.getByProjectIds([PROJECT_A])
-
-      expect(results).toEqualUnsorted([DATA[0]!])
-    })
-
-    it('should return empty array if no projects', async () => {
-      await repository.deleteAll()
-      const results = await repository.getByProjectIds([])
-
-      expect(results).toEqualUnsorted([])
-    })
-  })
-
-  describe(AggregatedLiveness2Repository.prototype.getByProjectIdSubtypeAndRange
+  describe(AggregatedLiveness2Repository.prototype.getAggregatesByTimeRange
     .name, () => {
-    it('returns rows within the specified range for a project and subtype', async () => {
-      const rangeStart = START - 1 * UnixTime.HOUR
-      const rangeEnd = START - 1 * UnixTime.HOUR
-      const results = await repository.getByProjectIdSubtypeAndRange(
-        PROJECT_A,
-        'batchSubmissions',
-        [rangeStart, rangeEnd],
-      )
-
-      expect(results).toEqual([DATA[0]])
-    })
-
-    it('should return empty array if no records match the range', async () => {
-      const rangeStart = START - 5 * UnixTime.HOUR
-      const rangeEnd = START - 4 * UnixTime.HOUR
-      const results = await repository.getByProjectIdSubtypeAndRange(
-        PROJECT_A,
-        'batchSubmissions',
-        [rangeStart, rangeEnd],
-      )
-
-      expect(results).toEqual([])
-    })
-
-    it('should return empty array if project id does not exist', async () => {
-      const rangeStart = START - 1 * UnixTime.HOUR
-      const rangeEnd = START - 1 * UnixTime.HOUR
-      const results = await repository.getByProjectIdSubtypeAndRange(
-        ProjectId('non-existent'),
-        'batchSubmissions',
-        [rangeStart, rangeEnd],
-      )
-
-      expect(results).toEqual([])
-    })
-
-    it('should handle inclusive range boundaries, sorted ascending by timestamp', async () => {
-      const dataWithBoundaries = [
+    it('returns aggregates for a given time range, grouped by project and subtype', async () => {
+      await repository.deleteAll()
+      const NEW_DATA: AggregatedLiveness2Record[] = [
+        // project A - batchSubmissions
         {
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
-          min: 1,
-          avg: 1,
-          max: 1,
+          min: 10,
+          avg: 20,
+          max: 30,
           timestamp: START,
         },
         {
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
-          min: 2,
-          avg: 2,
-          max: 2,
-          timestamp: START + 1 * UnixTime.HOUR,
+          min: 20,
+          avg: 30,
+          max: 40,
+          timestamp: START - 1 * UnixTime.HOUR,
         },
         {
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
-          min: 3,
-          avg: 3,
-          max: 3,
-          timestamp: START + 2 * UnixTime.HOUR,
+          min: 30,
+          avg: 40,
+          max: 50,
+          timestamp: START - 2 * UnixTime.HOUR,
         },
-      ] as const satisfies AggregatedLiveness2Record[]
-      await repository.upsertMany(dataWithBoundaries)
-
-      const rangeStart = START + 1 * UnixTime.HOUR
-      const rangeEnd = START + 2 * UnixTime.HOUR
-      const results = await repository.getByProjectIdSubtypeAndRange(
-        PROJECT_A,
-        'batchSubmissions',
-        [rangeStart, rangeEnd],
-      )
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          min: 40,
+          avg: 50,
+          max: 60,
+          timestamp: START - 3 * UnixTime.HOUR,
+        },
+        // project A - stateUpdates
+        {
+          projectId: PROJECT_A,
+          subtype: 'stateUpdates',
+          min: 30,
+          avg: 40,
+          max: 50,
+          timestamp: START - 1 * UnixTime.HOUR,
+        },
+        {
+          projectId: PROJECT_A,
+          subtype: 'stateUpdates',
+          min: 40,
+          avg: 50,
+          max: 60,
+          timestamp: START - 2 * UnixTime.HOUR,
+        },
+        // project B - stateUpdates
+        {
+          projectId: PROJECT_B,
+          subtype: 'stateUpdates',
+          min: 10,
+          avg: 10,
+          max: 10,
+          timestamp: START - 2 * UnixTime.HOUR,
+        },
+      ]
+      await repository.upsertMany(NEW_DATA)
+      const results = await repository.getAggregatesByTimeRange([
+        START - 2 * UnixTime.HOUR,
+        START,
+      ])
 
       expect(results).toEqualUnsorted([
-        dataWithBoundaries[1],
-        dataWithBoundaries[2],
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          min: 10,
+          avg: 30,
+          max: 50,
+        },
+        {
+          projectId: PROJECT_A,
+          subtype: 'stateUpdates',
+          min: 30,
+          avg: 45,
+          max: 60,
+        },
+        {
+          projectId: PROJECT_B,
+          subtype: 'stateUpdates',
+          min: 10,
+          avg: 10,
+          max: 10,
+        },
       ])
     })
   })
