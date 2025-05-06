@@ -16,7 +16,7 @@ export const Events = command({
   description: 'Fetches all events matching a given address and topics.',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
-    topics: restPositionals({ type: string, displayName: 'address' }),
+    topics: restPositionals({ type: string, displayName: 'topics' }),
     rpcUrl,
     chainName,
     explorerUrl,
