@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb042557d9116a2d48428c29d9895e90df15f9b75
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config related: templatize 3 contracts and tighten discodriven permissions.
 
 ## Config/verification related changes
 
