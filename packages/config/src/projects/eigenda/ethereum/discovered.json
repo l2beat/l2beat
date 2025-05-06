@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 22424686,
+  "blockNumber": 22424729,
   "configHash": "0x3815e819a7a57ad8f04b4a1bcc324ca79b533d940ed9ac931a712e734e3b02c2",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -883,7 +883,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 96738,
+        "batchId": 96739,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -915,7 +915,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 96738,
+        "taskNumber": 96739,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1000,11 +1000,13 @@
       "name": "IndexRegistry",
       "address": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
       "type": "Contract",
+      "template": "eigenlayer/IndexRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x0a21d40cd8eeee384b8feb55d745d69c6793753a08622872cc24972811a97da9"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A registry contract that keeps track of an ordered list of operators for each quorum.",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -1515,6 +1517,7 @@
     "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EigenDAServiceManager": "0x2d11dbc84d77f4f12aa67ed1e3f678e4954d53b2e03973f5dd6a24faacf0afbc",
     "eigenlayer/EjectionManager": "0xe9a60b43999e814f77706e311fc4de0bc270faf2aeb8edd76afc4bc1d38936df",
+    "eigenlayer/IndexRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/PauserRegistry": "0x0ec68cbcfada757ce4d184b3ad2f6f8d08d51e01ea981090e78323d850557281",
     "eigenlayer/RegistryCoordinator": "0x20f2acaa365af18611d618b040f8539a3fd3086fa7c793921a5d2903290db765",
     "eigenlayer/StakeRegistry": "0x354e5717008504cef09d88027f76fe2fe308210a96b59fce263f4d8ec5868080",

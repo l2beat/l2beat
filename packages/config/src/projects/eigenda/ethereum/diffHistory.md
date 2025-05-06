@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xcc96730d1e6d96ad31dd9846b16402d1f325df52
+Generated with discovered.json: 0x89c89d4ad036cb73fdf9d121c09f709203c09e81
 
-# Diff at Tue, 06 May 2025 12:33:23 GMT:
+# Diff at Tue, 06 May 2025 12:42:00 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208508
-- current block number: 22424686
+- current block number: 22424729
 
 ## Description
 
@@ -183,6 +183,16 @@ discovery. Values are for block 22208508 (main branch discovery), not current.
 -   Status: DELETED
     contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
     +++ description: None
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      template:
++        "eigenlayer/IndexRegistry"
+      description:
++        "A registry contract that keeps track of an ordered list of operators for each quorum."
+    }
 ```
 
 ```diff
