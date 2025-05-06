@@ -1,11 +1,12 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import { type FieldDiff, diffContracts } from './diffContracts'
-import type { EntryParameters } from './types'
+import type { EntryParameters, StructureEntry } from './types'
 
 export interface DiscoveryDiff {
   name?: string
   address: EthereumAddress
+  addressType: StructureEntry['type']
   description?: string
   diff?: FieldDiff[]
   type?: 'created' | 'deleted'
@@ -27,6 +28,7 @@ export function diffDiscovery(
         modifiedOrDeleted.push({
           name: previousContract.name,
           address: previousContract.address,
+          addressType: previousContract.type,
           description: previousContract.description,
           type: 'deleted',
         })
@@ -57,6 +59,7 @@ export function diffDiscovery(
       modifiedOrDeleted.push({
         name: currentContract.name,
         address: currentContract.address,
+        addressType: currentContract.type,
         description: currentContract.description,
         diff,
       })
@@ -74,6 +77,7 @@ export function diffDiscovery(
         created.push({
           name: currentContract.name,
           address: currentContract.address,
+          addressType: currentContract.type,
           description: currentContract.description,
           type: 'created',
         })

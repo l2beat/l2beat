@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x71c0fc49fd6a584890abfb77d53ac9733390af7b
 
-# Diff at Tue, 06 May 2025 10:30:18 GMT:
+# Diff at Tue, 06 May 2025 10:57:02 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 331086890
@@ -17,7 +17,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 331086890 (main branch discovery), not current.
 
 ```diff
-    contract L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    EOA L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
     +++ description: None
       controlsMajorityOfUpgradePermissions:
 +        true

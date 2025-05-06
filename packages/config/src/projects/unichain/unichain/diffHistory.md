@@ -1,6 +1,6 @@
 Generated with discovered.json: 0xfee8ed21ac81497e7ee2af209a530b7926fee68f
 
-# Diff at Tue, 06 May 2025 10:30:26 GMT:
+# Diff at Tue, 06 May 2025 10:57:10 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 15457819
@@ -17,7 +17,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 15457819 (main branch discovery), not current.
 
 ```diff
-    contract UnichainProxyAdminOwner_L2Alias (0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    EOA UnichainProxyAdminOwner_L2Alias (0x7E6c183F538abb8572F5cd17109C617b994d6944) {
     +++ description: None
       controlsMajorityOfUpgradePermissions:
 +        true

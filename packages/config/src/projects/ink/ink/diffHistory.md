@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x2c03eafbf8ff28c8aa09649887bf16c13ec6edea
 
-# Diff at Tue, 06 May 2025 10:30:23 GMT:
+# Diff at Tue, 06 May 2025 10:57:07 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 8196210
@@ -17,7 +17,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 8196210 (main branch discovery), not current.
 
 ```diff
-    contract SuperchainProxyAdminOwner_L2Alias (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    EOA SuperchainProxyAdminOwner_L2Alias (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
     +++ description: None
       controlsMajorityOfUpgradePermissions:
 +        true

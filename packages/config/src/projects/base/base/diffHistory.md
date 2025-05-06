@@ -1,6 +1,6 @@
 Generated with discovered.json: 0xa63396a54978256eaa955fc1f23a612b490d060b
 
-# Diff at Tue, 06 May 2025 10:30:20 GMT:
+# Diff at Tue, 06 May 2025 10:57:04 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 29605802
@@ -17,7 +17,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 29605802 (main branch discovery), not current.
 
 ```diff
-    contract Base Governance Multisig - L2 Alias (0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d) {
+    EOA Base Governance Multisig - L2 Alias (0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d) {
     +++ description: None
       controlsMajorityOfUpgradePermissions:
 +        true

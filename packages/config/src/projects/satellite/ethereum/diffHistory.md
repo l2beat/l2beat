@@ -1,6 +1,6 @@
 Generated with discovered.json: 0xfa9f735796af0d4095ec6c7157d99f590c4e6b13
 
-# Diff at Tue, 06 May 2025 10:30:11 GMT:
+# Diff at Tue, 06 May 2025 10:56:55 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 20017695
@@ -17,7 +17,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20017695 (main branch discovery), not current.
 
 ```diff
-    contract undefined (0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05) {
+    EOA  (0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05) {
     +++ description: None
       controlsMajorityOfUpgradePermissions:
 +        true
