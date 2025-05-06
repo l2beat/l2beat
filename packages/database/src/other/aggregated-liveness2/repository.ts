@@ -61,6 +61,32 @@ export class AggregatedLiveness2Repository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getAggragatesByTimeRange(
+    range: [UnixTime, UnixTime],
+  ): Promise<Omit<AggregatedLiveness2Record, 'timestamp'>[]> {
+    const [from, to] = range
+
+    const rows = await this.db
+      .selectFrom('AggregatedLiveness2')
+      .select([
+        'projectId',
+        'subtype',
+        (eb) => eb.fn.min('min').as('min'),
+        (eb) => eb.fn.avg('avg').as('avg'),
+        (eb) => eb.fn.max('max').as('max'),
+      ])
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .groupBy(['projectId', 'subtype'])
+      .execute()
+
+    return rows.map((row) => ({
+      ...row,
+      subtype: row.subtype as TrackedTxsConfigSubtype,
+      avg: Number(row.avg),
+    }))
+  }
+
   async getByProjectIdSubtypeAndRange(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
