@@ -3,6 +3,7 @@
   "displayName": "OptimismPortal",
   "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
   "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreRelatives": ["gasPayingToken"],
   "ignoreInWatchMode": ["params"],
   "fields": {
     "guardian": {

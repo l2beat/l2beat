@@ -79,7 +79,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
           <input
             ref={inputRef}
             type="text"
-            className="w-full bg-transparent outline-none"
+            className="w-full bg-transparent outline-none selection:bg-autumn-300 selection:text-coffee-900"
             placeholder="Search by name or address (or in code with % prefix)"
             autoFocus
             value={searchTerm}

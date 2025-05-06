@@ -5,8 +5,8 @@ import { Env } from './env'
 describe(Env.name, () => {
   describe(Env.key.name, () => {
     it('returns correct environment variable key', () => {
-      const result = Env.key('polygon-pos', 'ETHERSCAN_API_KEY')
-      expect(result).toEqual('POLYGONPOS_ETHERSCAN_API_KEY')
+      const result = Env.key('polygon-pos', 'RPC_URL')
+      expect(result).toEqual('POLYGONPOS_RPC_URL')
     })
   })
 

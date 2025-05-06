@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 22367347,
-  "configHash": "0xde7adf480b2c5d1c2d4cacc6aa16fa8564a42689e3e65cd29e686c3d20e5f456",
+  "configHash": "0x5e9cdf3d955d55948c6ef94fc7d13a58e8eaf4b17fa4d27c5147432985f11b8c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1037,7 +1037,7 @@
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
     "opstack/L1StandardBridge_facet": "0x2403705a27b6bee93340628002435f297c8b311481edae40e209abb4603dfb53",
     "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
     "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
     "opstack/SystemConfig_facet": "0x2af6ec8e946ed7442ff2ac252f1f05f7e9348f8b9af1169cba14a9d28aa8cf3e"
   },

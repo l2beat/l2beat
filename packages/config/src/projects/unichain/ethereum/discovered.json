@@ -1,8 +1,8 @@
 {
   "name": "unichain",
   "chain": "ethereum",
-  "blockNumber": 22346270,
-  "configHash": "0x86e16972d81134087fbedc2b369d24849a4a434ab30a9f5c5ff810c4a0e7dce2",
+  "blockNumber": 22397542,
+  "configHash": "0xe7e2c711a820ca2034977461a22dd22090e543ac2ac47cb69dfab3a77cd745f8",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -125,7 +125,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 22346257
+          "prevBlockNum": 22397521
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -241,7 +241,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 4036,
+        "gameCount": 4207,
         "gameImpls": [
           "0x56ebb9eaE4f33ceaED3672446E3812D77F8a8A2c",
           "0x67d59AC1166bA17612BE0Edf275187E38Cbf9B99",
@@ -376,7 +376,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 67,
+        "nonce": 68,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1217,7 +1217,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634726",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636311",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1290,7 +1290,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 103,
+        "nonce": 104,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1689,11 +1689,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x76296E091fa39089236E133674296F0b75ea4A89",
+        "anchorGame": "0x9c676e2cBDB609f8d4D350CBfEFC308322c4708A",
         "disputeGameFactory": "0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "getAnchorRoot": [
-          "0x9e916eaf78fe3a6af2fb659794c9352478e98e14f2be808e63ec45faed61c8a3",
-          14228515
+          "0x1ec2c9fdbde0a08b567b40c081bdf9221981613771b5eb72bd6e62f7cf9da9aa",
+          14849965
         ],
         "portal": "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
         "respectedGameType": 0,

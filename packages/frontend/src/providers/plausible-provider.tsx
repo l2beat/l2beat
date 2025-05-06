@@ -4,8 +4,16 @@ import NextPlausibleProvider from 'next-plausible'
 import { useTheme } from 'next-themes'
 import { env } from '~/env'
 
-export function PlausibleProvider({ children }: { children: React.ReactNode }) {
+export function PlausibleProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const { resolvedTheme } = useTheme()
+
+  if (env.NEXT_PUBLIC_REWRITE) {
+    return children
+  }
 
   return (
     <NextPlausibleProvider

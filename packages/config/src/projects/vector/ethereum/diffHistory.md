@@ -1,4 +1,96 @@
-Generated with discovered.json: 0x4916d82fe0084825e1a76d74b6b7c66a09624d8c
+Generated with discovered.json: 0x82c8f962f3732fed1f41bdfffa07c044c93b6371
+
+# Diff at Mon, 05 May 2025 14:37:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@277ef8f5adf45205d5b920c1ebfc0f7db8d19aff block: 22336710
+- current block number: 22417833
+
+## Description
+
+The Avail bridge default admin is scheduled to be changed to a timelock smart contract.
+
+## Watched changes
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.pendingDefaultAdmin.schedule:
+-        0
++        1746442211
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"0x45828180bbE489350D621d002968A0585406d487","description":"manage all access control roles.","via":[{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."}
+      receivedPermissions.4:
++        {"permission":"interact","from":"0x45828180bbE489350D621d002968A0585406d487","description":"manage all access control roles."}
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.3.description:
++        "execute transactions that are ready."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.2.via:
+-        [{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
+      receivedPermissions.2.description:
++        "can freeze the Vector contract and update the list of authorized relayers."
+      receivedPermissions.1.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.1.description:
+-        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
++        "propose transactions."
+      receivedPermissions.0.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.0.description:
+-        "can freeze the Vector contract and update the list of authorized relayers."
++        "cancel queued transactions."
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+      directlyReceivedPermissions.0.from:
+-        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      directlyReceivedPermissions.0.delay:
++        86400
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+## Source code changes
+
+```diff
+.../vector/ethereum/.flat/TimelockController.sol   | 1011 ++++++++++++++++++++
+ 1 file changed, 1011 insertions(+)
+```
+
+Generated with discovered.json: 0x32ca68770b5d0acb9ebc1bfde30d37e23d12f7dc
 
 # Diff at Tue, 29 Apr 2025 08:19:15 GMT:
 

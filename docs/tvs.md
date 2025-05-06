@@ -41,7 +41,7 @@ As there are endless possibilities for token implementation (native gas tokens, 
 
 There are three types of formulas:
 
-- `AmountFormula` - describes how the amount of a given token will be captured. Currently we support for types of amount formulas: `balanceOfEscrow`, `totalSupply`, `circulatingSupply`, `const`
+- `AmountFormula` - describes how the amount of a given token will be captured. Currently we support for types of amount formulas: `balanceOfEscrow`, `totalSupply`, `starknetTotalSupply`, `circulatingSupply` or `const`
 ```
 {
    type: 'balanceOfEscrow'
@@ -59,6 +59,15 @@ There are three types of formulas:
    sinceTimestamp: UnixTime
    untilTimestamp?: UnixTime
    address: EthereumAddress                // address of a token contract
+   decimals: number
+ }
+
+ {
+   type: 'starknetTotalSupply'
+   chain: string
+   sinceTimestamp: UnixTime
+   untilTimestamp?: UnixTime
+   address: string                        // address of a token contract
    decimals: number
  }
  
@@ -210,11 +219,12 @@ Examples:
 TVS configuration can be either created manually by editing the JSON file and setting the mode of tokens to `manual` or automatically by using following script:
 
 ```
-pnpm tvs:generate [project] [--include-zero-amounts | --help]
+pnpm tvs:generate [project] [--include-zero-amounts | --exclude | --help]
 ```
 
 - `project` - provide the id of a project for which you want to calculate TVS (if empty TVS will be calculated for all projects)
 - `include-zero-amounts` - by default config generation remove tokens which final value is zero, you can disable this 
+- `exclude` - coma delimited list of projects to exclude from config generation (in case of temporary issues) 
 
 This script uses two inputs:
 

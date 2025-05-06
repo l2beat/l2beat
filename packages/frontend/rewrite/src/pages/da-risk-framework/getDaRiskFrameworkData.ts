@@ -1,12 +1,20 @@
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/server'
 import type { Manifest } from '~/utils/Manifest'
 
-export function getDaRiskFrameworkData(manifest: Manifest): RenderData {
+export function getDaRiskFrameworkData(
+  manifest: Manifest,
+  url: string,
+): RenderData {
   return {
     head: {
       manifest,
-      title: 'L2BEAT - Data Availability Risk Framework',
-      description: 'L2BEAT - Data Availability Risk Framework',
+      metadata: getMetadata(manifest, {
+        title: 'Data Availability Risk Framework - L2BEAT',
+        openGraph: {
+          url,
+        },
+      }),
     },
     ssr: {
       page: 'DaRiskFrameworkPage',
