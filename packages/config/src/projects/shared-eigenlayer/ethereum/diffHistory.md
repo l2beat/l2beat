@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5e0532f0ae4e1c1b9a9230021c7feadddb59b642
+Generated with discovered.json: 0x67706ba5d498a52a8a3ca03fc24fd1e41f165675
 
-# Diff at Tue, 06 May 2025 12:07:50 GMT:
+# Diff at Tue, 06 May 2025 12:33:01 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208559
-- current block number: 22424561
+- current block number: 22424684
 
 ## Description
 
@@ -77,14 +77,10 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 
 ```diff
     contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
-    +++ description: None
-      template:
--        "eigenlayer/DelegationManager"
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
       sourceHashes.0:
 -        "0x236f85a005803b10e03d97356b1569532271b43a19b27c7479079c51b731709e"
 +        "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766"
-      description:
--        "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator."
       values.$implementation:
 -        "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"
 +        "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
@@ -279,19 +275,17 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 +        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
       values.version:
 +        "1.3.0"
+      template:
++        "eigenlayer/RewardsCoordinator"
     }
 ```
 
 ```diff
     contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
-    +++ description: None
-      template:
--        "eigenlayer/StrategyManager"
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
       sourceHashes.0:
 -        "0x02ef571f391efe8c4fe859f372cc691e345de88a1fc59df7f13eacbd8bba7bfa"
 +        "0xa50d63fab44e951546763a60992b2c223d1b089ebbd81504210b24beadcf5b50"
-      description:
--        "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
       values.$implementation:
 -        "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"
 +        "0xba4b2b8A076851A3044882493C2e36503d50b925"
@@ -356,8 +350,6 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 ```diff
     contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
     +++ description: None
-      template:
--        "eigenlayer/EigenPodManager"
       sourceHashes.0:
 -        "0x0e8b710d3b23eeae5d441beddd0f023fb1532922dee0f7daf4098658bc4f4d32"
 +        "0x6396fbec37d6d3c9c0b56494c6373e983a77e0980eaf9ab4782333de488449e5"
@@ -506,14 +498,8 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
 
 ```diff
 +   Status: CREATED
-    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
-    +++ description: Ethereum Beacon Chain deposit contract.
-```
-
-```diff
-+   Status: CREATED
     contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
@@ -547,7 +533,6 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
  .../.flat/AllocationManager/AllocationManager.sol  | 6259 +++++++++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  272 +-
  .../DelegationManager/DelegationManager.sol        | 6326 ++++++++++++++------
- .../ethereum/.flat/DepositContract.sol             |  160 +
  .../GnosisSafe.sol => /dev/null                    |  953 ---
  .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
  .../{.flat@22208559 => .flat}/EigenPod.sol         | 1502 +++--
@@ -560,7 +545,7 @@ The Allocation Manager also tracks allocation of stake to a Operator Set, and en
  .../{.flat@22208559 => .flat}/StrategyBase.sol     |  888 ++-
  .../StrategyFactory/StrategyFactory.sol            |  613 +-
  .../StrategyManager/StrategyManager.sol            | 5170 +++++++++++++---
- 17 files changed, 25309 insertions(+), 7137 deletions(-)
+ 16 files changed, 25149 insertions(+), 7137 deletions(-)
 ```
 
 Generated with discovered.json: 0x6636ac3bc1bff5fc8302b043472ab7ce1b69df75

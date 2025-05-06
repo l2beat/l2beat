@@ -16,5 +16,11 @@
     "address": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "StrategyBase.sol": {
+    "hash": "0xa8977021c807da9ada79ae0a11a62aa80d60ee5c15615df7acdd595f6dfbca9d",
+    "address": "0x0EC17ef9c00F360DB28CA8008684a4796b11E456",
+    "chain": "ethereum",
+    "blockNumber": 22424645
   }
 }

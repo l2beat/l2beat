@@ -4,5 +4,11 @@
     "address": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "EigenPod.sol": {
+    "hash": "0xb9003523799a738cfe8c3050cc6ae9ff810658b91b1917bf4942e87c30247657",
+    "address": "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e",
+    "chain": "ethereum",
+    "blockNumber": 22424645
   }
 }
