@@ -34,9 +34,9 @@ import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
 import { mindchain } from '../projects/mindchain/mindchain'
 import { molten } from '../projects/molten/molten'
+import { moonchain } from '../projects/moonchain/moonchain'
 import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
-import { mxc } from '../projects/mxc/mxc'
 import { nums } from '../projects/nums/nums'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
@@ -115,7 +115,7 @@ export const layer3s: ScalingProject[] = [
   molten,
   muster,
   mvchain,
-  mxc,
+  moonchain,
   nums,
   unite,
   vessel,
