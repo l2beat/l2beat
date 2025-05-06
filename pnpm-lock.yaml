@@ -358,8 +358,8 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
       clingo-wasm:
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.3.2
+        version: 0.3.2
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
@@ -2802,8 +2802,8 @@ packages:
   '@radix-ui/react-switch@1.1.2':
     resolution: {integrity: sha512-zGukiWHjEdBCRyXvKR6iXAQG6qXm2esuAD6kDOi9Cn+1X6ev3ASo4+CsYaD6Fov9r/AQFekqnD/7+V0Cs6/98g==}
     peerDependencies:
-      '@types/react': 19.0.8
-      '@types/react-dom': 19.0.3
+      '@types/react': '*'
+      '@types/react-dom': '*'
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
     peerDependenciesMeta:
@@ -4183,8 +4183,8 @@ packages:
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
-  clingo-wasm@0.1.1:
-    resolution: {integrity: sha512-Y3OhhL5Vnwh3m03M3XRx2gLpYlJHsUj6FjMdI/dMF8YvQpdm8s3kNtohAql1cvASyb3kQP0IX/s/tX1FwF/1Mw==}
+  clingo-wasm@0.3.2:
+    resolution: {integrity: sha512-0ZdaGgekZaO8hLF3PE0fcs4FjR+GAdVeMTTzVgm8L1OuCl4A8+/H1V8urBMJYlV6+HH+gAweDxFq1MVgM4lDKQ==}
 
   cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
@@ -11518,7 +11518,7 @@ snapshots:
 
   client-only@0.0.1: {}
 
-  clingo-wasm@0.1.1:
+  clingo-wasm@0.3.2:
     dependencies:
       '@types/emscripten': 1.40.0
 
