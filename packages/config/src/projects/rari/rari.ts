@@ -46,6 +46,12 @@ export const rari: ScalingProject = orbitStackL3({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
   },
+  proofSystemInactive: proofsDisabled, // TEMPORARY overwrite while the proof system is disabled (OSPHostIO = 0x0)
+  stateValidation: {
+    isUnderReview: true,
+    categories: [],
+  },
+  // END temp overwrites
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start  },
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
