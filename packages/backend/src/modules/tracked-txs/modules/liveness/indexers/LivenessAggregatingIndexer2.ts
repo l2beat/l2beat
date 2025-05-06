@@ -1,9 +1,11 @@
 import type { Database } from '@l2beat/database'
+import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 import {
   ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
@@ -17,8 +19,6 @@ import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
-import { groupBy } from 'lodash'
 
 export interface LivenessAggregatingIndexer2Deps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

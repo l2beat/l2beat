@@ -1,17 +1,17 @@
-import { expect, mockFn, mockObject } from 'earl'
-import { LivenessAggregatingIndexer2 } from './LivenessAggregatingIndexer2'
-import type { Database, LivenessRecord } from '@l2beat/database'
-import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { Logger } from '@l2beat/backend-tools'
+import type { Database, LivenessRecord } from '@l2beat/database'
+import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import {
   ProjectId,
-  UnixTime,
   type SavedConfiguration,
+  UnixTime,
 } from '@l2beat/shared-pure'
-import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
+import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
+import { LivenessAggregatingIndexer2 } from './LivenessAggregatingIndexer2'
 
 const NOW = UnixTime.now()
 
