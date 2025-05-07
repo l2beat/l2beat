@@ -2,13 +2,12 @@ import { parseAbiParameter } from 'abitype'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { encodeAbiParameters } from 'viem'
-import { decodeType, type ParsedType, parseType } from './encoding'
+import { type ParsedType, decodeType, parseType } from './encoding'
 
 describe(decodeType.name, () => {
   it('uint', () => {
-    const t = parseAbiParameter('uint')
-    const e = encodeAbiParameters([t], [12345n])
-    const d = decodeType(t, e)
+    const e = encode('uint', 12345n)
+    const d = decodeType('uint', e)
     expect(d).toEqual({
       name: '',
       abi: 'uint256',
@@ -18,9 +17,8 @@ describe(decodeType.name, () => {
   })
 
   it('uint8', () => {
-    const t = parseAbiParameter('uint8')
-    const e = encodeAbiParameters([t], [15])
-    const d = decodeType(t, e)
+    const e = encode('uint8', 15)
+    const d = decodeType('uint8', e)
     expect(d).toEqual({
       name: '',
       abi: 'uint8',
@@ -30,14 +28,13 @@ describe(decodeType.name, () => {
   })
 
   it('uint overflow', () => {
-    const e = encodeAbiParameters([parseAbiParameter('uint32')], [12345678])
-    expect(() => decodeType(parseAbiParameter('uint8'), e)).toThrow()
+    const e = encode('uint32', 12345678)
+    expect(() => decodeType('uint8', e)).toThrow()
   })
 
   it('int (negative)', () => {
-    const t = parseAbiParameter('int')
-    const e = encodeAbiParameters([t], [-12345n])
-    const d = decodeType(t, e)
+    const e = encode('int', -12345n)
+    const d = decodeType('int', e)
     expect(d).toEqual({
       name: '',
       abi: 'int256',
@@ -47,9 +44,8 @@ describe(decodeType.name, () => {
   })
 
   it('int (positive)', () => {
-    const t = parseAbiParameter('int')
-    const e = encodeAbiParameters([t], [12345n])
-    const d = decodeType(t, e)
+    const e = encode('int', 12345n)
+    const d = decodeType('int', e)
     expect(d).toEqual({
       name: '',
       abi: 'int256',
@@ -59,9 +55,8 @@ describe(decodeType.name, () => {
   })
 
   it('int8', () => {
-    const t = parseAbiParameter('int8')
-    const e = encodeAbiParameters([t], [-17])
-    const d = decodeType(t, e)
+    const e = encode('int8', -17)
+    const d = decodeType('int8', e)
     expect(d).toEqual({
       name: '',
       abi: 'int8',
@@ -71,9 +66,8 @@ describe(decodeType.name, () => {
   })
 
   it('int8 min', () => {
-    const t = parseAbiParameter('int8')
-    const e = encodeAbiParameters([t], [-128])
-    const d = decodeType(t, e)
+    const e = encode('int8', -128)
+    const d = decodeType('int8', e)
     expect(d).toEqual({
       name: '',
       abi: 'int8',
@@ -83,17 +77,13 @@ describe(decodeType.name, () => {
   })
 
   it('int overflow', () => {
-    const e = encodeAbiParameters([parseAbiParameter('int32')], [-12345678])
-    expect(() => decodeType(parseAbiParameter('int8'), e)).toThrow()
+    const e = encode('int32', -12345678)
+    expect(() => decodeType('int8', e)).toThrow()
   })
 
   it('address', () => {
-    const t = parseAbiParameter('address')
-    const e = encodeAbiParameters(
-      [t],
-      ['0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'],
-    )
-    const d = decodeType(t, e)
+    const e = encode('address', '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')
+    const d = decodeType('address', e)
     expect(d).toEqual({
       name: '',
       abi: 'address',
@@ -106,14 +96,13 @@ describe(decodeType.name, () => {
   })
 
   it('address overflow', () => {
-    const e = encodeAbiParameters([parseAbiParameter('int')], [-1n])
-    expect(() => decodeType(parseAbiParameter('address'), e)).toThrow()
+    const e = encode('int', -1n)
+    expect(() => decodeType('address', e)).toThrow()
   })
 
   it('bool true', () => {
-    const t = parseAbiParameter('bool')
-    const e = encodeAbiParameters([t], [true])
-    const d = decodeType(t, e)
+    const e = encode('bool', true)
+    const d = decodeType('bool', e)
     expect(d).toEqual({
       name: '',
       abi: 'bool',
@@ -123,9 +112,8 @@ describe(decodeType.name, () => {
   })
 
   it('bool false', () => {
-    const t = parseAbiParameter('bool')
-    const e = encodeAbiParameters([t], [false])
-    const d = decodeType(t, e)
+    const e = encode('bool', false)
+    const d = decodeType('bool', e)
     expect(d).toEqual({
       name: '',
       abi: 'bool',
@@ -135,13 +123,13 @@ describe(decodeType.name, () => {
   })
 
   it('bool overflow', () => {
-    const e = encodeAbiParameters([parseAbiParameter('uint')], [2n])
-    expect(() => decodeType(parseAbiParameter('bool'), e)).toThrow()
+    const e = encode('uint', 2n)
+    expect(() => decodeType('bool', e)).toThrow()
   })
 
   it('bytes32', () => {
     const encoded: `0x${string}` = `0x${'deadbeef'.repeat(8)}`
-    const d = decodeType(parseAbiParameter('bytes32'), encoded)
+    const d = decodeType('bytes32', encoded)
     expect(d).toEqual({
       name: '',
       abi: 'bytes32',
@@ -151,8 +139,8 @@ describe(decodeType.name, () => {
   })
 
   it('bytes4', () => {
-    const encoded: `0x${string}` = `0x${'deadbeef'.padStart(64, '0')}`
-    const d = decodeType(parseAbiParameter('bytes4'), encoded)
+    const encoded = encode('bytes4', '0xdeadbeef')
+    const d = decodeType('bytes4', encoded)
     expect(d).toEqual({
       name: '',
       abi: 'bytes4',
@@ -162,15 +150,14 @@ describe(decodeType.name, () => {
   })
 
   it('bytes4 overflow', () => {
-    const encoded: `0x${string}` = `0x${'deadbeef12'.padStart(64, '0')}`
-    expect(() => decodeType(parseAbiParameter('bytes4'), encoded)).toThrow()
+    const encoded = encode('bytes5', '0xdeadbeef12')
+    expect(() => decodeType('bytes4', encoded)).toThrow()
   })
 
   it('bytes', () => {
     const bytes: `0x${string}` = `0x${'ab12'.repeat(20)}`
-    const t = parseAbiParameter('bytes')
-    const e: `0x${string}` = `0x${encodeAbiParameters([t], [bytes]).slice(66)}`
-    const d = decodeType(t, e)
+    const e = encode('bytes', bytes)
+    const d = decodeType('bytes', e)
     expect(d).toEqual({
       name: '',
       abi: 'bytes',
@@ -181,9 +168,8 @@ describe(decodeType.name, () => {
 
   it('string', () => {
     const s = 'I like pancakes!'
-    const t = parseAbiParameter('string')
-    const e: `0x${string}` = `0x${encodeAbiParameters([t], [s]).slice(66)}`
-    const d = decodeType(t, e)
+    const e = encode('string', s)
+    const d = decodeType('string', e)
     expect(d).toEqual({
       name: '',
       abi: 'string',
@@ -193,9 +179,8 @@ describe(decodeType.name, () => {
   })
 
   it('uint[2]', () => {
-    const t = parseAbiParameter('uint[2]')
-    const e = encodeAbiParameters([t], [[1n, 2n]])
-    const d = decodeType(t, e)
+    const e = encode('uint[2]', [1n, 2n])
+    const d = decodeType('uint[2]', e)
     expect(d).toEqual({
       name: '',
       abi: 'uint256[2]',
@@ -219,7 +204,69 @@ describe(decodeType.name, () => {
       },
     })
   })
+
+  it('uint[]', () => {
+    const e = encode('uint[]', [1n, 2n])
+    const d = decodeType('uint[]', e)
+    expect(d).toEqual({
+      name: '',
+      abi: 'uint256[]',
+      encoded: e,
+      decoded: {
+        type: 'array',
+        value: [
+          {
+            name: '',
+            abi: 'uint256',
+            encoded: `0x${'0'.repeat(63)}1`,
+            decoded: { type: 'number', value: '1' },
+          },
+          {
+            name: '',
+            abi: 'uint256',
+            encoded: `0x${'0'.repeat(63)}2`,
+            decoded: { type: 'number', value: '2' },
+          },
+        ],
+      },
+    })
+  })
+
+  it('string[]', () => {
+    const e = encode('string[]', ['foo', 'bar'])
+    const d = decodeType('string[]', e)
+    expect(d).toEqual({
+      name: '',
+      abi: 'string[]',
+      encoded: e,
+      decoded: {
+        type: 'array',
+        value: [
+          {
+            name: '',
+            abi: 'string',
+            encoded: encode('string', 'foo'),
+            decoded: { type: 'string', value: 'foo' },
+          },
+          {
+            name: '',
+            abi: 'string',
+            encoded: encode('string', 'bar'),
+            decoded: { type: 'string', value: 'bar' },
+          },
+        ],
+      },
+    })
+  })
 })
+
+function encode(type: string, value: unknown): `0x${string}` {
+  const encoded = encodeAbiParameters([parseAbiParameter(type)], [value])
+  if (parseType(type).dynamic) {
+    return `0x${encoded.slice(66)}`
+  }
+  return encoded
+}
 
 describe(parseType.name, () => {
   const testCases: ParsedType[] = [

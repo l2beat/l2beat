@@ -1,4 +1,3 @@
-import type { AbiParameter } from 'abitype'
 import { hexToString } from 'viem'
 
 const INT_COMPLEMENT = 2n ** 255n
@@ -48,11 +47,8 @@ export interface AbiArray {
   value: AbiValue[]
 }
 
-export function decodeType(
-  type: AbiParameter,
-  encoded: `0x${string}`,
-): AbiValue {
-  return decodeParsed(parseType(type.type), encoded)
+export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
+  return decodeParsed(parseType(type), encoded)
 }
 
 function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
@@ -61,14 +57,14 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     let offset = 0
     const staticData: `0x${string}`[] = []
     const dynamicOffsets: (bigint | undefined)[] = []
-    const dynamicData: string[] = []
     for (const element of type.tupleElements) {
       const end = offset + element.size
+      // TODO: validate offset size
       const bytes: `0x${string}` = `0x${encoded.slice(2 + offset * 64, 2 + end * 64)}`
       staticData.push(bytes)
       offset = end
-      dynamicData.push('0x')
       if (element.dynamic) {
+        // TODO: validate offset size
         const dynamicOffset = BigInt(bytes)
         dynamicOffsets.push(dynamicOffset)
       } else {
@@ -80,6 +76,33 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       // biome-ignore lint/style/noNonNullAssertion: It's there
       return decodeParsed(e, staticData[i]!)
     })
+    return { ...common, decoded: { type: 'array', value: array } }
+  }
+  if (type.arrayElement) {
+    const element = type.arrayElement
+    if (encoded.length < 66) {
+      throw new Error(`Invalid encoding, array too short`)
+    }
+    const length = Number(encoded.slice(0, 66))
+    let offset = 1
+    const staticData: `0x${string}`[] = []
+    const dynamicOffsets: (bigint | undefined)[] = []
+    for (let i = 0; i < length; i++) {
+      const end = offset + element.size
+      // TODO: validate offset size
+      const bytes: `0x${string}` = `0x${encoded.slice(2 + offset * 64, 2 + end * 64)}`
+      staticData.push(bytes)
+      offset = end
+      if (element.dynamic) {
+        // TODO: validate offset size
+        const dynamicOffset = BigInt(bytes)
+        dynamicOffsets.push(dynamicOffset)
+      } else {
+        dynamicOffsets.push(undefined)
+      }
+    }
+    dynamicOffsets.push(BigInt((encoded.length - 2) / 2))
+    const array = staticData.map((bytes) => decodeParsed(element, bytes))
     return { ...common, decoded: { type: 'array', value: array } }
   }
   if (type.type === 'bytes') {
@@ -124,11 +147,11 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
   }
   if (type.type.startsWith('bytes')) {
     const size = parseInt(type.type.slice('bytes'.length))
-    const prefix = encoded.slice(0, -size * 2)
-    if (!/^0x0*$/.test(prefix)) {
+    const suffix = encoded.slice(2 + size * 2)
+    if (!/^0*$/.test(suffix)) {
       throw new Error(`Invalid encoding, ${type.type} too large`)
     }
-    const bytes: `0x${string}` = `0x${encoded.slice(-size * 2)}`
+    const bytes = encoded.slice(0, 2 + size * 2) as `0x${string}`
     return { ...common, decoded: { type: 'bytes', value: bytes } }
   }
   throw new Error('Invalid type')
@@ -198,11 +221,12 @@ export function parseType(type: string): ParsedType {
     }
     elements.push(type.slice(from, type.length - 1))
     const tupleElements = elements.map((x) => parseType(x.trim()))
+    const typeName = `(${tupleElements.map((x) => x.type).join(', ')})`
     const dynamic = tupleElements.some((x) => x.dynamic)
     const size = dynamic
       ? 1
       : tupleElements.reduce((size, e) => size + e.size, 0)
-    return { type: type, size, dynamic, tupleElements }
+    return { type: typeName, size, dynamic, tupleElements }
   }
   if (type.endsWith(']')) {
     const openBracket = type.lastIndexOf('[')
@@ -210,7 +234,7 @@ export function parseType(type: string): ParsedType {
     const countString = type.slice(openBracket + 1, -1)
     if (countString.length === 0) {
       return {
-        type: type,
+        type: `${elementType.type}[]`,
         size: 1,
         dynamic: true,
         arrayElement: elementType,
@@ -218,11 +242,16 @@ export function parseType(type: string): ParsedType {
     }
     const length = Number(countString)
     return {
-      type: type,
+      type: `${elementType.type}[${length}]`,
       size: elementType.dynamic ? 1 : elementType.size * length,
       dynamic: elementType.dynamic,
       tupleElements: new Array(length).fill(elementType),
     }
+  }
+  if (type === 'uint') {
+    type = 'uint256'
+  } else if (type === 'int') {
+    type = 'int256'
   }
   return {
     type: type,
