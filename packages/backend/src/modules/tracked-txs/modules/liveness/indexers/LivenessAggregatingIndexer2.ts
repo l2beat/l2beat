@@ -166,6 +166,7 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
       avg: stats.averageInSeconds,
       max: stats.maximumInSeconds,
       timestamp,
+      numberOfRecords: intervals.length,
     }
   }
 }
