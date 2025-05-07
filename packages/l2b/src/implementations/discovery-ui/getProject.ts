@@ -240,6 +240,7 @@ function contractFromDiscovery(
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     sources: [],
+    implementationNames: contract.implementationNames,
   }
 }
 

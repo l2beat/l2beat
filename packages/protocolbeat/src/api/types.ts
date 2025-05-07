@@ -150,6 +150,7 @@ export interface ApiProjectContract extends ApiAddressEntry {
   fields: Field[]
   abis: ApiAbi[]
   sources: { name: string; code: string }[]
+  implementationNames?: Record<string, string>
 }
 
 export interface ApiAbi {
