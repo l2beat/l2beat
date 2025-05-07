@@ -19,6 +19,16 @@ export const arbitrumOrbit: BaseProject = {
     primary: '#12AAFF',
     secondary: '#12AAFF',
   },
+  milestones: [
+    {
+      title: 'Arbitrum Orbit launch',
+      url: 'https://arbitrumfoundation.medium.com/arbitrum-the-next-phase-of-decentralization-e7f8b37b5226',
+      date: '2023-03-16T00:00:00.00Z',
+      description:
+        'Arbitrum Foundation announces the launch of the Arbitrum Orbit stack.',
+      type: 'general',
+    },
+  ],
   ecosystemConfig: {
     links: {
       buildOn:
