@@ -171,9 +171,9 @@ function Display({
         )}
 
         {selected.description && (
-          <p className="pt-1 pb-1 font-serif text-sm italic">
-            {selected.description}
-          </p>
+          <WithHeadline headline="Description">
+            <p className="font-serif text-sm italic">{selected.description}</p>
+          </WithHeadline>
         )}
       </div>
       {selected.referencedBy.length > 0 && (
