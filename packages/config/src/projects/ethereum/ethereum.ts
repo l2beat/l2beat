@@ -222,9 +222,9 @@ This method allows ZK rollups to prove that the data used in their validity proo
     {
       title: 'Blob throughput increase',
       url: 'https://eips.ethereum.org/EIPS/eip-7691',
-      date: '2025-05-07T10:05:00Z',
+      date: '2025-05-07T10:00:00Z',
       description:
-        'The Pectra hardfork increases the blob limit per block, raising the maximum from 6 to 9 blobs and the target from 3 to 6 blobs.',
+        'Pectra hardfork increases blob limits: target from 3 to 6 blobs and max from 6 to 9 blobs.',
       type: 'general',
     },
   ],
