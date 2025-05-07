@@ -36,13 +36,20 @@ export const aptos: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
+      value: 'EOA',
       description:
-        'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
+        'Transfers need to be independently confirmed by an oracle attesting to source chain checkpoints and a relayer providing a merkle proof of the transfer event.',
+      sentiment: 'bad',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
+      description:
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
+      value: 'EOA',
+      secondLine: 'EOA',
       description:
         'Token Bridge contracts are not upgradable but the owner (EOA) can remove all the funds after 1 week delay. LayerZero contracts are upgradable without delay.',
       sentiment: 'bad',
