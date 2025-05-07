@@ -23,7 +23,7 @@ export function PanelHeader(props: { id: PanelId }) {
   const selectedAddress = usePanelStore((state) => state.selected)
 
   const availablePanels = isReadOnly
-    ? PANEL_IDS.filter((id) => id !== 'terminal' && id !== 'code')
+    ? PANEL_IDS.filter((id) => id !== 'terminal')
     : PANEL_IDS
 
   return (
