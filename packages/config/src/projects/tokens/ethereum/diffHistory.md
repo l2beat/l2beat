@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x618b66099f7f2c0e2b1ffb768fd853ecfeecea30
+
+# Diff at Tue, 06 May 2025 12:38:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 22123688
+- current block number: 22424710
+
+## Description
+
+Bumped consensus version. This is the consensus/oracle used for validator exits because exits are currently not triggerable from L1 (will be solved with pectra).
+
+## Watched changes
+
+```diff
+    contract ValidatorsExitBusOracle (0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      values.getConsensusVersion:
+-        2
++        3
+    }
+```
+
+```diff
+    contract AccountingOracle (0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      values.getConsensusVersion:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0x859feba5b2c382d43e277dd545561080e425a40e
 
 # Diff at Tue, 29 Apr 2025 08:19:23 GMT:

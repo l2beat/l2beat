@@ -46,6 +46,12 @@ export const rari: ScalingProject = orbitStackL3({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
   },
+  proofSystemInactive: proofsDisabled, // TEMPORARY overwrite while the proof system is disabled (OSPHostIO = 0x0)
+  stateValidation: {
+    isUnderReview: true,
+    categories: [],
+  },
+  // END temp overwrites
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start  },
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
@@ -135,6 +141,13 @@ export const rari: ScalingProject = orbitStackL3({
       description:
         'RARI is the first chain to integrate Espresso TEE sequencer.',
       type: 'general',
+    },
+    {
+      title: 'RARI disables proof system',
+      url: 'https://arbiscan.io/address/0x01ad6e65e01928938448a1fcf5c93bf7bfe720e0#readContract#F5',
+      date: '2025-05-05T00:00:00.00Z',
+      description: 'The proof system and reference to Blobstream are disabled.',
+      type: 'incident',
     },
   ],
 })

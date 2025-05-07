@@ -70,14 +70,17 @@ export class LocalExecutor {
     return result
   }
 
-  async getLastNonZeroValues(timestamp: number): Promise<TokenValue[]> {
+  async getLastNonZeroValues(
+    timestamp: number,
+    projectId: string | undefined,
+  ): Promise<TokenValue[]> {
     if (!this.dbStorage) {
       return []
     }
     this.logger.info(
       `Fetching last non-zero values from DB for timestamp ${timestamp}`,
     )
-    return await this.dbStorage.getLastNonZeroValues(timestamp)
+    return await this.dbStorage.getLastNonZeroValues(timestamp, projectId)
   }
 
   private async initDataFormulaExecutor(
