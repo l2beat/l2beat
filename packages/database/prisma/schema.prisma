@@ -184,14 +184,14 @@ model AggregatedLiveness {
 }
 
 model AggregatedLiveness2 {
-  timestamp DateTime @db.Timestamp(6)
-  projectId String   @db.VarChar(255)
-  subtype   String   @db.VarChar(255)
-  min       Int
-  avg       Int
-  max       Int
+  timestamp       DateTime @db.Timestamp(6)
+  projectId       String   @db.VarChar(255)
+  subtype         String   @db.VarChar(255)
+  min             Int
+  avg             Int
+  max             Int
   numberOfRecords Int
-  
+
   @@id([timestamp, projectId, subtype])
 }
 
