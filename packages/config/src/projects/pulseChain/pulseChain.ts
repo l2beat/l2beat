@@ -125,10 +125,7 @@ export const pulseChain: Bridge = {
       actors: [
         discovery.getPermissionDetails(
           'BridgeValidators',
-          discovery.getPermissionedAccounts(
-            'BridgeValidators',
-            '$members',
-          ),
+          discovery.getPermissionedAccounts('BridgeValidators', '$members'),
           `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures are required.`,
         ),
         discovery.getPermissionDetails(
