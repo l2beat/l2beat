@@ -39,7 +39,7 @@ export function contractDiffToMarkdown(
   }
 
   const contractDescription = diff?.description ?? 'None'
-  const contractLine = `    contract ${diff.name} (${diff.address.toString()})`
+  const contractLine = `    ${diff.addressType === 'EOA' ? 'EOA' : 'contract'} ${diff.name ?? ''} (${diff.address.toString()})`
   const descriptionLine = `    +++ description: ${contractDescription}`
   if (diff.diff) {
     result.push(`${contractLine} {`)

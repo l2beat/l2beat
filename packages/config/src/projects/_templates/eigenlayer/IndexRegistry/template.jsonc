@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A registry contract that keeps track of an ordered list of operators for each quorum."
+}

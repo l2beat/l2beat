@@ -315,6 +315,7 @@
       "address": "0x5e31608B400F45846043E93747D72A1a02c5a2f5",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

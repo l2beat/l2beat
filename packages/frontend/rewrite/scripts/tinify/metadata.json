@@ -1321,5 +1321,10 @@
   "rewrite/static/meta-images/zk-catalog/projects/zkcandy/opengraph-image.png": "726c8fc753d7f7834828ec1d51994892",
   "rewrite/static/meta-images/zk-catalog/projects/zksync-era/opengraph-image.png": "78aecf1a0a1dd4d38b4068734b311fa7",
   "rewrite/static/meta-images/scaling/projects/epicchain/opengraph-image.png": "04ee0670bb650b3a1949cf13eaf8a8f2",
-  "rewrite/static/meta-images/scaling/projects/yellowstone/opengraph-image.png": "63ff5da53f7ce781e06a89ee36a0feb6"
+  "rewrite/static/meta-images/scaling/projects/yellowstone/opengraph-image.png": "63ff5da53f7ce781e06a89ee36a0feb6",
+  "rewrite/static/icons/yellowstone.png": "d408331578775ba7adbc19be66dcca0b",
+  "rewrite/static/images/upgrades-and-governance/base.png": "7cf0a863e3185e2a01ac407332bfbf4e",
+  "rewrite/static/images/upgrades-and-governance/scroll.png": "cd1b77ada6d59a8edf50089d8df16a67",
+  "rewrite/static/meta-images/governance/publications/governance-review-49.png": "b91eb19674d010538426c2c6d9a832cf",
+  "rewrite/static/meta-images/governance/publications/governance-review-50.png": "2308ba3eeabd0bc37e41924cfc811460"
 }

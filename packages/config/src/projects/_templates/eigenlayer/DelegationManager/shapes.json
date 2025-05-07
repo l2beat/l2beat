@@ -4,5 +4,11 @@
     "address": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "DelegationManager.sol": {
+    "hash": "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766",
+    "address": "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73",
+    "chain": "ethereum",
+    "blockNumber": 22424645
   }
 }

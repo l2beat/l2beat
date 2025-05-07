@@ -49,7 +49,6 @@ export default async function Page(props: Props) {
       'display',
       'statuses',
       'tvsInfo',
-      'tvsConfig',
       'bridgeInfo',
       'bridgeRisks',
       'bridgeTechnology',
@@ -57,6 +56,7 @@ export default async function Page(props: Props) {
     ],
     where: ['isBridge'],
     optional: [
+      'tvsConfig',
       'chainConfig',
       'archivedAt',
       'isUpcoming',

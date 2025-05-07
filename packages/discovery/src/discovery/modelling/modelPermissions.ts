@@ -13,7 +13,10 @@ import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
 import { generateClingoFromModelLp } from './generateClingo'
 import { generateClingoFromPermissionsConfig } from './generateClingo'
-import { parseUltimatePermissionFact } from './parseUltimatePermissionFact'
+import {
+  parseEoaWithMajorityUpgradePermissionsFacts,
+  parseUltimatePermissionFact,
+} from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
 export async function modelPermissions(
@@ -34,19 +37,25 @@ export async function modelPermissions(
   return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
 }
 
-export async function buildPermissionsOutput(
+export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
-) {
+): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
   const ultimatePermissionFacts = kb.getFacts('ultimatePermission')
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
     parseUltimatePermissionFact(fact, modelIdRegistry),
   )
+  const eoaWithMajorityUpgradePermissions =
+    parseEoaWithMajorityUpgradePermissionsFacts(
+      kb.getFacts('eoaWithMajorityUpgradePermissions'),
+      modelIdRegistry,
+    )
   return {
     permissionsConfigHash,
     permissions: ultimatePermissions,
+    eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
   }
 }
 

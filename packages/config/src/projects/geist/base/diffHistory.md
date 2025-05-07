@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x67226c2e16f551ef5427ca9e7233b94024862358
+
+# Diff at Tue, 06 May 2025 15:38:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 28317508
+- current block number: 29878278
+
+## Description
+
+Added a new UpgradeExecutor EOA.
+
+Config:
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+      values.executors.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.executors.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.executors.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+    }
+```
+
 Generated with discovered.json: 0x553105daf483a5d92c42d46ab1eb0a9aa80f4b26
 
 # Diff at Fri, 02 May 2025 17:25:28 GMT:

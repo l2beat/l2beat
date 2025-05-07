@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 331086890,
+  "blockNumber": 333894848,
   "configHash": "0xb32385c7b0e47f61cf2a035ed650f59db58000a26182b60e3612cf08f54603a5",
   "entries": [
     {
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 32480,
+        "exitNum": 32715,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway",
@@ -1015,6 +1015,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L2BaseFee",
       "address": "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649",
       "type": "Contract",
@@ -1305,12 +1310,12 @@
           "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-          "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
-          "0x5a09A94eE8198D3c474d723337aa58023810022C",
-          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
+          "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
+          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
+          "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+          "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
         ],
         "getFirstCohort": [
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
@@ -1321,12 +1326,12 @@
           "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
         ],
         "getSecondCohort": [
-          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-          "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
-          "0x5a09A94eE8198D3c474d723337aa58023810022C",
-          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
+          "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
+          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
+          "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+          "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
         ],
         "l2CoreGovTimelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "MAX_SECURITY_COUNCILS": 500,
@@ -1366,7 +1371,7 @@
           ]
         ],
         "securityCouncilsLength": 4,
-        "updateNonce": 12
+        "updateNonce": 13
       },
       "fieldMeta": {
         "getBothCohorts": {
@@ -1407,6 +1412,11 @@
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xd92023E9d9911199a6711321D1277285e6d4e2db",
@@ -1510,6 +1520,11 @@
       "derivedName": "UpgradeableBeacon"
     },
     {
+      "address": "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CoreGovernor",
       "address": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
       "type": "Contract",
@@ -1584,6 +1599,7 @@
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2767,5 +2783,5 @@
     "orbitstack/layer2/TreasuryTimelock": "0x3e0115480caa634049a16ebe5fb1e09a3834d2087140901945bcd301bd46789f",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x25a34648155a91264ae1062dd01dc03ed9db101801c73a3a4f9f66e285cb5380"
   },
-  "permissionsConfigHash": "0x69992fcbd9ca70c86feba656652692784f136a3198ee1721623e01615779fd54"
+  "permissionsConfigHash": "0xdd8437b4e8e0d0d3e6d767a22af5d57a01f794dfc1d81d728b30704f7c8681ee"
 }

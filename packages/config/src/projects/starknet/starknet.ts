@@ -281,6 +281,7 @@ export const starknet: ScalingProject = {
     name: 'starknet',
     chainId: undefined,
     gasTokens: ['ETH', 'STRK'],
+    sinceTimestamp: UnixTime(1637069048), // block 0
     apis: [
       {
         type: 'starknet',
