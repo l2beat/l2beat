@@ -158,11 +158,11 @@ function Display({
           </>
         )}
 
-        {selected.roles.concat(['foo', 'bar']).length > 0 && (
+        {selected.roles.length > 0 && (
           <div className="font-mono text-xs">
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
-                {selected.roles.concat(['Upgrade', 'RugMeBaby']).map((role) => (
+                {selected.roles.map((role) => (
                   <p className="text-aux-teal ">{role}</p>
                 ))}
               </div>
