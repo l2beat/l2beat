@@ -119,39 +119,7 @@ function Display({
           </p>
           {copy}
         </p>
-        {selected.roles.length > 0 && (
-          <div className="flex flex-row divide-x divide-coffee-400 font-mono text-sm">
-            {'Roles:'}
-            {selected.roles.map((role) => (
-              <p className="px-1 text-aux-teal ">{role}</p>
-            ))}
-          </div>
-        )}
-        <div className="flex flex-col gap-0.5 divide-coffee-400 pt-0.5 font-mono text-xs">
-          {'proxyType' in selected && selected.proxyType && (
-            <p className="text-aux-cyan">{selected.proxyType}</p>
-          )}
-          {'template' in selected && selected.template && (
-            <div className="flex flex-col gap-0.5 text-aux-orange">
-              <span className="inline font-bold">
-                template/{selected.template.id}
-              </span>
-              {selected.template.shape && (
-                <div className="flex flex-row gap-1">
-                  <span className="inline italic">
-                    {selected.template.shape.name}
-                  </span>
-                  {selected.template.shape.hasCriteria && (
-                    <span className="inline text-aux-yellow">
-                      {'(criteria)'}
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-        <div className="font-mono text-xs">
+        <WithHeadline headline="Address">
           <AddressDisplay
             simplified
             value={{
@@ -160,7 +128,48 @@ function Display({
               addressType: selected.type,
             }}
           />
-        </div>
+        </WithHeadline>
+        {'proxyType' in selected && selected.proxyType && (
+          <WithHeadline headline="Proxy Type">
+            <p className="text-aux-cyan">{selected.proxyType}</p>
+          </WithHeadline>
+        )}
+        {'template' in selected && selected.template && (
+          <>
+            <WithHeadline headline="Template">
+              <div className="flex flex-col gap-0.5 text-aux-orange">
+                <span className="inline font-bold">{selected.template.id}</span>
+              </div>
+            </WithHeadline>
+            {selected.template.shape && (
+              <WithHeadline headline="Shape">
+                <div className="flex flex-col gap-0.5 text-aux-orange">
+                  <span className="flex items-center gap-1">
+                    {selected.template.shape.name}
+                    {selected.template.shape.hasCriteria && (
+                      <Badge className="bg-aux-yellow/10 px-1 py-0.5 text-aux-yellow">
+                        + Criteria
+                      </Badge>
+                    )}
+                  </span>
+                </div>
+              </WithHeadline>
+            )}
+          </>
+        )}
+
+        {selected.roles.concat(['foo', 'bar']).length > 0 && (
+          <div className="font-mono text-xs">
+            <WithHeadline headline="Roles">
+              <div className="flex gap-1">
+                {selected.roles.concat(['Upgrade', 'RugMeBaby']).map((role) => (
+                  <p className="text-aux-teal ">{role}</p>
+                ))}
+              </div>
+            </WithHeadline>
+          </div>
+        )}
+
         {selected.description && (
           <p className="pt-1 pb-1 font-serif text-sm italic">
             {selected.description}
@@ -281,5 +290,27 @@ function canCopy(selected: ApiProjectContract | ApiAddressEntry) {
     selected.type !== 'Unverified' &&
     selected.type !== 'Unknown' &&
     selected.type !== 'EOA'
+  )
+}
+
+function Badge(props: { children: React.ReactNode; className?: string }) {
+  return (
+    <span
+      className={`flex max-w-fit items-center justify-center gap-1 rounded-md px-2 py-0.5 text-xs ${props.className}`}
+    >
+      {props.children}
+    </span>
+  )
+}
+
+function WithHeadline(props: {
+  headline: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="mb-1 flex flex-col font-mono text-xs">
+      <span className="text-coffee-400">{props.headline}</span>
+      {props.children}
+    </div>
   )
 }
