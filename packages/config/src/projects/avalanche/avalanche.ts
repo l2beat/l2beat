@@ -96,19 +96,26 @@ export const avalanche: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description: '6/8 Intel SGX',
+      value: 'Offchain 6/8',
+      description: 'A 6/8 Intel SGX allegedgly controls the escrowing EOA.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'EOA',
-      description: 'Avalanche Bridge uses EOA for Escrow',
+      secondLine: 'EOA',
+      description: 'Avalanche Bridge uses an EOA as escrow.',
+      sentiment: 'bad',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
+      description:
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
     destinationToken: {
       value: 'Wrapped',
       description:
-        'Tokens transferred end up as wrapped ERC20 proxies, the contract is named BridgeToken',
+        'Tokens transferred end up as wrapped ERC20 tokens, the contract implementation is named BridgeToken',
       sentiment: 'bad',
     },
   },
@@ -168,7 +175,7 @@ export const avalanche: Bridge = {
           discovery.formatPermissionedAccounts([
             EthereumAddress('0x8EB8a3b98659Cce290402893d0123abb75E3ab28'),
           ]),
-          'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
+          'Off-chain Multisig 6/8 (EOA on Ethereum) using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
         ),
       ],
     },
