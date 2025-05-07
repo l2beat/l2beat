@@ -27,6 +27,7 @@ export class AggregatedLiveness2Repository extends BaseRepository {
               min: eb.ref('excluded.min'),
               avg: eb.ref('excluded.avg'),
               max: eb.ref('excluded.max'),
+              numberOfRecords: eb.ref('excluded.numberOfRecords'),
             })),
         )
         .execute()
