@@ -1,7 +1,7 @@
 {
   "name": "pulseChain",
   "chain": "ethereum",
-  "blockNumber": 22430843,
+  "blockNumber": 22431228,
   "configHash": "0xc179421215947cd942d988bac3cb2d48efbca59fd2f3d5073d51e188170f97b8",
   "entries": [
     {
@@ -114,6 +114,11 @@
         "upgradeabilityOwner": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "validatorCount": 8,
         "version": 1
+      },
+      "fieldMeta": {
+        "$members": {
+          "description": "Array of the signers in the validator multisig"
+        }
       },
       "implementationNames": {
         "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "EternalStorageProxy",
