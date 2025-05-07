@@ -12,6 +12,7 @@ import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { makeEntryStructureConfig } from '../config/structureUtils'
+import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -285,14 +286,14 @@ export class TemplateService {
     }
   }
 
-  addToShape(
+  async addToShape(
     templateId: string,
     chain: string,
     address: EthereumAddress,
     fileName: string,
     blockNumber: number,
     source: ContractSource,
-  ): void {
+  ): Promise<void> {
     assert(this.exists(templateId), 'Template does not exist')
     const allTemplates = this.listAllTemplates()
     const entry = allTemplates[templateId]
@@ -317,7 +318,7 @@ export class TemplateService {
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     const templatePath = join(resolvedRootPath, templateId)
     const shapePath = join(templatePath, 'shapes.json')
-    writeFileSync(shapePath, JSON.stringify(shapes, null, 2))
+    writeFileSync(shapePath, await toPrettyJson(shapes))
   }
 
   readShapeSchema(shapePath: string | undefined): ShapeSchema {
