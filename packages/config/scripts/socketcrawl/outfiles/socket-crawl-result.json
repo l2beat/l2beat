@@ -49,11 +49,11 @@
         "name": "Lombard Staked Bitcoin",
         "symbol": "LBTC",
         "decimals": 8,
-        "tvl": 242.89381674,
-        "tvlRaw": "24289381674",
+        "tvl": 232.62987762,
+        "tvlRaw": "23262987762",
         "isConfigured": true,
-        "usdValue": 20062543.47509052,
-        "usdPrice": 82598
+        "usdValue": 21705530.7313341,
+        "usdPrice": 93305
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -68,11 +68,11 @@
         "name": "Staked USDe",
         "symbol": "sUSDe",
         "decimals": 18,
-        "tvl": 10273349.948200596,
-        "tvlRaw": "10273349948200596081490638",
+        "tvl": 9468524.548507538,
+        "tvlRaw": "9468524548507537608513789",
         "isConfigured": true,
-        "usdValue": 11917085.939912692,
-        "usdPrice": 1.16
+        "usdValue": 11078173.721753819,
+        "usdPrice": 1.17
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -87,15 +87,72 @@
         "name": "rswETH",
         "symbol": "rswETH",
         "decimals": 18,
-        "tvl": 1037.9737110786657,
-        "tvlRaw": "1037973711078665589641",
+        "tvl": 1025.1072430188663,
+        "tvlRaw": "1025107243018866165551",
         "isConfigured": true,
-        "usdValue": 1677687.288953558,
-        "usdPrice": 1616.31
+        "usdValue": 1889959.4707365932,
+        "usdPrice": 1843.67
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": []
+    },
+    {
+      "plugAddress": "0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3",
+      "hubOrBridgeAddress": "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50",
+      "siblingChainSlug": 957,
+      "token": {
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "name": "Coinbase Wrapped BTC",
+        "symbol": "cbBTC",
+        "decimals": 8,
+        "tvl": 12.00591214,
+        "tvlRaw": "1200591214",
+        "isConfigured": true,
+        "usdValue": 1126202.58238056,
+        "usdPrice": 93804
+      },
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "ownerName": "LyraMultisig",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
+      "hubOrBridgeAddress": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+      "siblingChainSlug": 957,
+      "token": {
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "tvl": 1062637.569962,
+        "tvlRaw": "1062637569962",
+        "isConfigured": true,
+        "usdValue": 1062603.5655597611,
+        "usdPrice": 0.999968
+      },
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "ownerName": "LyraMultisig",
+      "tags": ["multiplug"]
+    },
+    {
+      "plugAddress": "0x22d8360eB04F46195c7B02A66658C375948d8A99",
+      "hubOrBridgeAddress": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+      "siblingChainSlug": 957,
+      "token": {
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "tvl": 1062637.569962,
+        "tvlRaw": "1062637569962",
+        "isConfigured": true,
+        "usdValue": 1062603.5655597611,
+        "usdPrice": 0.999968
+      },
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "ownerName": "LyraMultisig",
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x254691C06Da387c1050C726cF498eFdA89083820",
@@ -106,11 +163,11 @@
         "name": "USDe",
         "symbol": "USDe",
         "decimals": 18,
-        "tvl": 677097.9399779849,
-        "tvlRaw": "677097939977984850766324",
+        "tvl": 655255.3484218037,
+        "tvlRaw": "655255348421803725562871",
         "isConfigured": true,
-        "usdValue": 676261.0469241721,
-        "usdPrice": 0.998764
+        "usdValue": 655255.3484218037,
+        "usdPrice": 1
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -128,8 +185,8 @@
         "tvl": 253.62145403360608,
         "tvlRaw": "253621454033606092885",
         "isConfigured": true,
-        "usdValue": 412966.7411738401,
-        "usdPrice": 1628.28
+        "usdValue": 468154.7695715528,
+        "usdPrice": 1845.88
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -144,11 +201,11 @@
         "name": "Tether USD",
         "symbol": "USDT",
         "decimals": 6,
-        "tvl": 283991.544679,
-        "tvlRaw": "283991544679",
+        "tvl": 232472.100388,
+        "tvlRaw": "232472100388",
         "isConfigured": true,
-        "usdValue": 283833.36138861376,
-        "usdPrice": 0.999443
+        "usdValue": 232420.72405381425,
+        "usdPrice": 0.999779
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -163,49 +220,49 @@
         "name": "Tether USD",
         "symbol": "USDT",
         "decimals": 6,
-        "tvl": 283991.544679,
-        "tvlRaw": "283991544679",
+        "tvl": 232472.100388,
+        "tvlRaw": "232472100388",
         "isConfigured": true,
-        "usdValue": 283833.36138861376,
-        "usdPrice": 0.999443
+        "usdValue": 232420.72405381425,
+        "usdPrice": 0.999779
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": ["multiplug"]
     },
     {
-      "plugAddress": "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
-      "hubOrBridgeAddress": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+      "plugAddress": "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
+      "hubOrBridgeAddress": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
       "siblingChainSlug": 957,
       "token": {
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "name": "USD Coin",
-        "symbol": "USDC",
-        "decimals": 6,
-        "tvl": 197258.654173,
-        "tvlRaw": "197258654173",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "name": "Wrapped BTC",
+        "symbol": "WBTC",
+        "decimals": 8,
+        "tvl": 1.10635158,
+        "tvlRaw": "110635158",
         "isConfigured": true,
-        "usdValue": 197252.7364133748,
-        "usdPrice": 0.99997
+        "usdValue": 103710.50346077999,
+        "usdPrice": 93741
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": ["multiplug"]
     },
     {
-      "plugAddress": "0x22d8360eB04F46195c7B02A66658C375948d8A99",
-      "hubOrBridgeAddress": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+      "plugAddress": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
+      "hubOrBridgeAddress": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
       "siblingChainSlug": 957,
       "token": {
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "name": "USD Coin",
-        "symbol": "USDC",
-        "decimals": 6,
-        "tvl": 197258.654173,
-        "tvlRaw": "197258654173",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "name": "Wrapped BTC",
+        "symbol": "WBTC",
+        "decimals": 8,
+        "tvl": 1.10635158,
+        "tvlRaw": "110635158",
         "isConfigured": true,
-        "usdValue": 197252.7364133748,
-        "usdPrice": 0.99997
+        "usdValue": 103710.50346077999,
+        "usdPrice": 93741
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -223,8 +280,27 @@
         "tvl": 24718.633133155152,
         "tvlRaw": "24718633133155151477828",
         "isConfigured": true,
-        "usdValue": 24718.633133155152,
-        "usdPrice": 1
+        "usdValue": 24712.379318972464,
+        "usdPrice": 0.999747
+      },
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "ownerName": "LyraMultisig",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x094570E556C8E58119E21f47759F02F50Ae3bB49",
+      "hubOrBridgeAddress": "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5",
+      "siblingChainSlug": 957,
+      "token": {
+        "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+        "name": "ether.fi BTC",
+        "symbol": "eBTC",
+        "decimals": 8,
+        "tvl": 0.02929264,
+        "tvlRaw": "2929264",
+        "isConfigured": true,
+        "usdValue": 2743.87088144,
+        "usdPrice": 93671
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -239,11 +315,11 @@
         "name": "Wrapped Ether",
         "symbol": "WETH",
         "decimals": 18,
-        "tvl": 12.985980763470877,
-        "tvlRaw": "12985980763470877305",
+        "tvl": 0.5405524212329413,
+        "tvlRaw": "540552421232941336",
         "isConfigured": true,
-        "usdValue": 20325.007791946446,
-        "usdPrice": 1565.15
+        "usdValue": 958.4913367576146,
+        "usdPrice": 1773.17
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -258,91 +334,72 @@
         "name": "Wrapped Ether",
         "symbol": "WETH",
         "decimals": 18,
-        "tvl": 12.985980763470877,
-        "tvlRaw": "12985980763470877305",
+        "tvl": 0.5405524212329413,
+        "tvlRaw": "540552421232941336",
         "isConfigured": true,
-        "usdValue": 20325.007791946446,
-        "usdPrice": 1565.15
+        "usdValue": 958.4913367576146,
+        "usdPrice": 1773.17
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": ["multiplug"]
     },
     {
-      "plugAddress": "0x094570E556C8E58119E21f47759F02F50Ae3bB49",
-      "hubOrBridgeAddress": "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5",
+      "plugAddress": "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
+      "hubOrBridgeAddress": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
       "siblingChainSlug": 957,
       "token": {
-        "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
-        "name": "ether.fi BTC",
-        "symbol": "eBTC",
-        "decimals": 8,
-        "tvl": 0.02929264,
-        "tvlRaw": "2929264",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "name": "Wrapped liquid staked Ether 2.0",
+        "symbol": "wstETH",
+        "decimals": 18,
+        "tvl": 0.3896879548287132,
+        "tvlRaw": "389687954828713196",
         "isConfigured": true,
-        "usdValue": 2413.5670728,
-        "usdPrice": 82395
+        "usdValue": 828.5779108340998,
+        "usdPrice": 2126.26
+      },
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "ownerName": "LyraMultisig",
+      "tags": ["multiplug"]
+    },
+    {
+      "plugAddress": "0xdCcFb24f983586144c085426dbfa3414045E19a3",
+      "hubOrBridgeAddress": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
+      "siblingChainSlug": 957,
+      "token": {
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "name": "Wrapped liquid staked Ether 2.0",
+        "symbol": "wstETH",
+        "decimals": 18,
+        "tvl": 0.3896879548287132,
+        "tvlRaw": "389687954828713196",
+        "isConfigured": true,
+        "usdValue": 828.5779108340998,
+        "usdPrice": 2126.26
+      },
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "ownerName": "LyraMultisig",
+      "tags": ["multiplug"]
+    },
+    {
+      "plugAddress": "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3",
+      "hubOrBridgeAddress": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+      "siblingChainSlug": 957,
+      "token": {
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "name": "Wrapped eETH",
+        "symbol": "weETH",
+        "decimals": 18,
+        "tvl": 0.21361633072745884,
+        "tvlRaw": "213616330727458835",
+        "isConfigured": true,
+        "usdValue": 403.54474654054974,
+        "usdPrice": 1889.11
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": []
-    },
-    {
-      "plugAddress": "0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3",
-      "hubOrBridgeAddress": "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50",
-      "siblingChainSlug": 957,
-      "token": {
-        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-        "name": "Coinbase Wrapped BTC",
-        "symbol": "cbBTC",
-        "decimals": 8,
-        "tvl": 0.02432336,
-        "tvlRaw": "2432336",
-        "isConfigured": true,
-        "usdValue": 2010.6175843199999,
-        "usdPrice": 82662
-      },
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "ownerName": "LyraMultisig",
-      "tags": []
-    },
-    {
-      "plugAddress": "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
-      "hubOrBridgeAddress": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-      "siblingChainSlug": 957,
-      "token": {
-        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "name": "Wrapped BTC",
-        "symbol": "WBTC",
-        "decimals": 8,
-        "tvl": 0.00864154,
-        "tvlRaw": "864154",
-        "isConfigured": true,
-        "usdValue": 714.0072425,
-        "usdPrice": 82625
-      },
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "ownerName": "LyraMultisig",
-      "tags": ["multiplug"]
-    },
-    {
-      "plugAddress": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
-      "hubOrBridgeAddress": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-      "siblingChainSlug": 957,
-      "token": {
-        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "name": "Wrapped BTC",
-        "symbol": "WBTC",
-        "decimals": 8,
-        "tvl": 0.00864154,
-        "tvlRaw": "864154",
-        "isConfigured": true,
-        "usdValue": 714.0072425,
-        "usdPrice": 82625
-      },
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "ownerName": "LyraMultisig",
-      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x083Add2A9afa97Efb6412b293145ce965eCE3600",
@@ -364,61 +421,23 @@
       "tags": []
     },
     {
-      "plugAddress": "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3",
-      "hubOrBridgeAddress": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+      "plugAddress": "0x94104d7801f30d2f9069118C65Fe63A3A11515B1",
+      "hubOrBridgeAddress": "0x383a4EdB30E896b8d2d044Be87079D45c0EA7065",
       "siblingChainSlug": 957,
       "token": {
-        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-        "name": "Wrapped eETH",
-        "symbol": "weETH",
+        "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+        "name": "Solv BTC",
+        "symbol": "SolvBTC",
         "decimals": 18,
-        "tvl": 0.1397632731017087,
-        "tvlRaw": "139763273101708686",
+        "tvl": 0.000433486699889992,
+        "tvlRaw": "433486699889992",
         "isConfigured": true,
-        "usdValue": 232.79529820913007,
-        "usdPrice": 1665.64
+        "usdValue": 40.63157535408873,
+        "usdPrice": 93732
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": []
-    },
-    {
-      "plugAddress": "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
-      "hubOrBridgeAddress": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
-      "siblingChainSlug": 957,
-      "token": {
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "name": "Wrapped liquid staked Ether 2.0",
-        "symbol": "wstETH",
-        "decimals": 18,
-        "tvl": 0.0719047235163969,
-        "tvlRaw": "71904723516396897",
-        "isConfigured": true,
-        "usdValue": 134.8853517971738,
-        "usdPrice": 1875.89
-      },
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "ownerName": "LyraMultisig",
-      "tags": ["multiplug"]
-    },
-    {
-      "plugAddress": "0xdCcFb24f983586144c085426dbfa3414045E19a3",
-      "hubOrBridgeAddress": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
-      "siblingChainSlug": 957,
-      "token": {
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "name": "Wrapped liquid staked Ether 2.0",
-        "symbol": "wstETH",
-        "decimals": 18,
-        "tvl": 0.0719047235163969,
-        "tvlRaw": "71904723516396897",
-        "isConfigured": true,
-        "usdValue": 134.8853517971738,
-        "usdPrice": 1875.89
-      },
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "ownerName": "LyraMultisig",
-      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E",
@@ -432,8 +451,8 @@
         "tvl": 60.007442163773526,
         "tvlRaw": "60007442163773528724",
         "isConfigured": true,
-        "usdValue": 38.45630937763374,
-        "usdPrice": 0.640859
+        "usdValue": 37.75110191732507,
+        "usdPrice": 0.629107
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -451,31 +470,12 @@
         "tvl": 60.007442163773526,
         "tvlRaw": "60007442163773528724",
         "isConfigured": true,
-        "usdValue": 38.45630937763374,
-        "usdPrice": 0.640859
+        "usdValue": 37.75110191732507,
+        "usdPrice": 0.629107
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
       "tags": ["multiplug"]
-    },
-    {
-      "plugAddress": "0x94104d7801f30d2f9069118C65Fe63A3A11515B1",
-      "hubOrBridgeAddress": "0x383a4EdB30E896b8d2d044Be87079D45c0EA7065",
-      "siblingChainSlug": 957,
-      "token": {
-        "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
-        "name": "Solv BTC",
-        "symbol": "SolvBTC",
-        "decimals": 18,
-        "tvl": 0.000433486699889992,
-        "tvlRaw": "433486699889992",
-        "isConfigured": true,
-        "usdValue": 35.639109031455696,
-        "usdPrice": 82215
-      },
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "ownerName": "LyraMultisig",
-      "tags": []
     },
     {
       "plugAddress": "0xA2bE759B86CeA53372C3e9a882047cdC3884D568",
@@ -489,8 +489,8 @@
         "tvl": 0.000316061676113395,
         "tvlRaw": "316061676113395",
         "isConfigured": true,
-        "usdValue": 25.74132714937934,
-        "usdPrice": 81444
+        "usdValue": 29.3953161869263,
+        "usdPrice": 93005
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -509,7 +509,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 0.999709
+        "usdPrice": 0.999586
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -585,7 +585,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.99946
+        "usdPrice": 0.999357
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -737,7 +737,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999443
+        "usdPrice": 0.999779
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
@@ -756,7 +756,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999443
+        "usdPrice": 0.999779
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
@@ -815,7 +815,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.99997
+        "usdPrice": 0.999968
       },
       "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
       "ownerName": "HookOwnerEOA",
@@ -834,7 +834,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1565.15
+        "usdPrice": 1773.17
       },
       "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
       "ownerName": "HookOwnerEOA",
@@ -851,11 +851,11 @@
         "name": null,
         "symbol": null,
         "decimals": 18,
-        "tvl": 13541.572749308982,
-        "tvlRaw": "13541572749308981485976",
+        "tvl": 10585.023787145652,
+        "tvlRaw": "10585023787145651138918",
         "isConfigured": true,
-        "usdValue": 18025593.733787667,
-        "usdPrice": 1331.13
+        "usdValue": 15697166.875385517,
+        "usdPrice": 1482.96
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -870,11 +870,11 @@
         "name": "Wrapped liquid staked Ether 2.0",
         "symbol": "wstETH",
         "decimals": 18,
-        "tvl": 4372.767940964406,
-        "tvlRaw": "4372767940964406124045",
+        "tvl": 2727.975140964406,
+        "tvlRaw": "2727975140964406124045",
         "isConfigured": true,
-        "usdValue": 8202831.65277572,
-        "usdPrice": 1875.89
+        "usdValue": 5800384.423226979,
+        "usdPrice": 2126.26
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -889,11 +889,11 @@
         "name": "Staked USDe",
         "symbol": "sUSDe",
         "decimals": 18,
-        "tvl": 625835.8916059763,
-        "tvlRaw": "625835891605976257272567",
+        "tvl": 590490.8627059762,
+        "tvlRaw": "590490862705976257272567",
         "isConfigured": true,
-        "usdValue": 725969.6342629325,
-        "usdPrice": 1.16
+        "usdValue": 690874.3093659922,
+        "usdPrice": 1.17
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -908,11 +908,11 @@
         "name": "Wrapped eETH",
         "symbol": "weETH",
         "decimals": 18,
-        "tvl": 203.58182259893013,
-        "tvlRaw": "203581822598930129644",
+        "tvl": 185.54012259893014,
+        "tvlRaw": "185540122598930129644",
         "isConfigured": true,
-        "usdValue": 339094.026993682,
-        "usdPrice": 1665.64
+        "usdValue": 350505.7010028649,
+        "usdPrice": 1889.11
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -927,10 +927,10 @@
         "name": "Savings Dai",
         "symbol": "sDAI",
         "decimals": 18,
-        "tvl": 287615.2281900129,
-        "tvlRaw": "287615228190012887947161",
+        "tvl": 284668.96369001287,
+        "tvlRaw": "284668963690012887947161",
         "isConfigured": true,
-        "usdValue": 333633.664700415,
+        "usdValue": 330215.9978804149,
         "usdPrice": 1.16
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -946,14 +946,33 @@
         "name": "USD Coin",
         "symbol": "USDC",
         "decimals": 6,
-        "tvl": 287048.092047,
-        "tvlRaw": "287048092047",
+        "tvl": 277434.736198,
+        "tvlRaw": "277434736198",
         "isConfigured": true,
-        "usdValue": 287039.48060423863,
-        "usdPrice": 0.99997
+        "usdValue": 277425.8582864417,
+        "usdPrice": 0.999968
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
+      "tags": []
+    },
+    {
+      "plugAddress": "0xab722902681A260762084A78A2d8f19CfA6A46Ef",
+      "hubOrBridgeAddress": "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9",
+      "siblingChainSlug": 7887,
+      "token": {
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "name": "Coinbase Wrapped BTC",
+        "symbol": "cbBTC",
+        "decimals": 8,
+        "tvl": 1.66192887,
+        "tvlRaw": "166192887",
+        "isConfigured": true,
+        "usdValue": 155895.57572147998,
+        "usdPrice": 93804
+      },
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "ownerName": "KintoEOA",
       "tags": []
     },
     {
@@ -965,30 +984,11 @@
         "name": "ChainLink Token",
         "symbol": "LINK",
         "decimals": 18,
-        "tvl": 6825.7748,
-        "tvlRaw": "6825774800000000000000",
+        "tvl": 6423.7148,
+        "tvlRaw": "6423714800000000000000",
         "isConfigured": true,
-        "usdValue": 85936.504732,
-        "usdPrice": 12.59
-      },
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
-      "ownerName": "KintoEOA",
-      "tags": []
-    },
-    {
-      "plugAddress": "0xb9703b625c3B846B58DFdaDBceF77e34a1C59965",
-      "hubOrBridgeAddress": "0x1D18263107a138C7fb0De65b4a78d193ff9664c1",
-      "siblingChainSlug": 7887,
-      "token": {
-        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "name": "Tether USD",
-        "symbol": "USDT",
-        "decimals": 6,
-        "tvl": 82928.064781,
-        "tvlRaw": "82928064781",
-        "isConfigured": true,
-        "usdValue": 82881.87384891698,
-        "usdPrice": 0.999443
+        "usdValue": 85435.40684,
+        "usdPrice": 13.3
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1003,14 +1003,33 @@
         "name": "Wrapped Ether",
         "symbol": "WETH",
         "decimals": 18,
-        "tvl": 34.884458685314534,
-        "tvlRaw": "34884458685314536037",
+        "tvl": 39.92308399491636,
+        "tvlRaw": "39923083994916357832",
         "isConfigured": true,
-        "usdValue": 54599.41051132005,
-        "usdPrice": 1565.15
+        "usdValue": 70790.41484726584,
+        "usdPrice": 1773.17
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
+      "tags": []
+    },
+    {
+      "plugAddress": "0xb9703b625c3B846B58DFdaDBceF77e34a1C59965",
+      "hubOrBridgeAddress": "0x1D18263107a138C7fb0De65b4a78d193ff9664c1",
+      "siblingChainSlug": 7887,
+      "token": {
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "name": "Tether USD",
+        "symbol": "USDT",
+        "decimals": 6,
+        "tvl": 38575.619569,
+        "tvlRaw": "38575619569",
+        "isConfigured": true,
+        "usdValue": 38567.09435707525,
+        "usdPrice": 0.999779
+      },
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "ownerName": "KintoEOA",
       "tags": []
     },
     {
@@ -1022,30 +1041,11 @@
         "name": "Wrapped BTC",
         "symbol": "WBTC",
         "decimals": 8,
-        "tvl": 0.31807515,
-        "tvlRaw": "31807515",
+        "tvl": 0.35895331,
+        "tvlRaw": "35895331",
         "isConfigured": true,
-        "usdValue": 26280.959268749997,
-        "usdPrice": 82625
-      },
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
-      "ownerName": "KintoEOA",
-      "tags": []
-    },
-    {
-      "plugAddress": "0xab722902681A260762084A78A2d8f19CfA6A46Ef",
-      "hubOrBridgeAddress": "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9",
-      "siblingChainSlug": 7887,
-      "token": {
-        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-        "name": "Coinbase Wrapped BTC",
-        "symbol": "cbBTC",
-        "decimals": 8,
-        "tvl": 0.29231972,
-        "tvlRaw": "29231972",
-        "isConfigured": true,
-        "usdValue": 24163.73269464,
-        "usdPrice": 82662
+        "usdValue": 33648.64223271,
+        "usdPrice": 93741
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1060,11 +1060,30 @@
         "name": "Wrapped SOL",
         "symbol": "SOL",
         "decimals": 9,
-        "tvl": 180.503118287,
-        "tvlRaw": "180503118287",
+        "tvl": 160.497008287,
+        "tvlRaw": "160497008287",
         "isConfigured": true,
-        "usdValue": 21312.00317614609,
-        "usdPrice": 118.07
+        "usdValue": 22943.047334626648,
+        "usdPrice": 142.95
+      },
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "ownerName": "KintoEOA",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E",
+      "hubOrBridgeAddress": "0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD",
+      "siblingChainSlug": 7887,
+      "token": {
+        "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",
+        "name": "Ondo",
+        "symbol": "ONDO",
+        "decimals": 18,
+        "tvl": 17262.63744795025,
+        "tvlRaw": "17262637447950246725852",
+        "isConfigured": true,
+        "usdValue": 14414.474895412937,
+        "usdPrice": 0.83501
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1082,8 +1101,8 @@
         "tvl": 25441.92373216,
         "tvlRaw": "2544192373216",
         "isConfigured": true,
-        "usdValue": 13041.123034325503,
-        "usdPrice": 0.512584
+        "usdValue": 12363.528279566885,
+        "usdPrice": 0.485951
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1101,30 +1120,11 @@
         "tvl": 11405.144363695726,
         "tvlRaw": "11405144363695726965651",
         "isConfigured": true,
-        "usdValue": 11391.047605262198,
-        "usdPrice": 0.998764
+        "usdValue": 11405.144363695726,
+        "usdPrice": 1
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
-      "tags": []
-    },
-    {
-      "plugAddress": "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E",
-      "hubOrBridgeAddress": "0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD",
-      "siblingChainSlug": 7887,
-      "token": {
-        "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",
-        "name": "Ondo",
-        "symbol": "ONDO",
-        "decimals": 18,
-        "tvl": 11561.018447950246,
-        "tvlRaw": "11561018447950246725852",
-        "isConfigured": true,
-        "usdValue": 10160.724771497617,
-        "usdPrice": 0.878878
-      },
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
-      "ownerName": "KintoEOA",
       "tags": []
     },
     {
@@ -1136,49 +1136,11 @@
         "name": "ether.fi governance token",
         "symbol": "ETHFI",
         "decimals": 18,
-        "tvl": 15214.188549396646,
-        "tvlRaw": "15214188549396645025026",
+        "tvl": 15051.143049396645,
+        "tvlRaw": "15051143049396645025026",
         "isConfigured": true,
-        "usdValue": 7225.689781953498,
-        "usdPrice": 0.474931
-      },
-      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-      "ownerName": "KintoMultisig",
-      "tags": []
-    },
-    {
-      "plugAddress": "0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff",
-      "hubOrBridgeAddress": "0xdb161cdc9c11892922F7121a409b196f3b00e640",
-      "siblingChainSlug": 7887,
-      "token": {
-        "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-        "name": "Eigen",
-        "symbol": "EIGEN",
-        "decimals": 18,
-        "tvl": 8185.42149972027,
-        "tvlRaw": "8185421499720269916660",
-        "isConfigured": true,
-        "usdValue": 6639.874768407588,
-        "usdPrice": 0.811183
-      },
-      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-      "ownerName": "KintoMultisig",
-      "tags": []
-    },
-    {
-      "plugAddress": "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96",
-      "hubOrBridgeAddress": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
-      "siblingChainSlug": 7887,
-      "token": {
-        "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
-        "name": "ENA",
-        "symbol": "ENA",
-        "decimals": 18,
-        "tvl": 20012.595004234452,
-        "tvlRaw": "20012595004234452768737",
-        "isConfigured": true,
-        "usdValue": 6377.433662594397,
-        "usdPrice": 0.318671
+        "usdValue": 7405.102175730952,
+        "usdPrice": 0.491996
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1196,11 +1158,49 @@
         "tvl": 43.04927038392368,
         "tvlRaw": "43049270383923680230",
         "isConfigured": true,
-        "usdValue": 5834.037122429337,
-        "usdPrice": 135.52
+        "usdValue": 7125.945726650886,
+        "usdPrice": 165.53
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff",
+      "hubOrBridgeAddress": "0xdb161cdc9c11892922F7121a409b196f3b00e640",
+      "siblingChainSlug": 7887,
+      "token": {
+        "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "name": "Eigen",
+        "symbol": "EIGEN",
+        "decimals": 18,
+        "tvl": 6688.79239972027,
+        "tvlRaw": "6688792399720269916660",
+        "isConfigured": true,
+        "usdValue": 5227.184239702995,
+        "usdPrice": 0.781484
+      },
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "ownerName": "KintoMultisig",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96",
+      "hubOrBridgeAddress": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+      "siblingChainSlug": 7887,
+      "token": {
+        "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+        "name": "ENA",
+        "symbol": "ENA",
+        "decimals": 18,
+        "tvl": 19762.762604234453,
+        "tvlRaw": "19762762604234452768737",
+        "isConfigured": true,
+        "usdValue": 5163.67390152219,
+        "usdPrice": 0.261283
+      },
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "ownerName": "KintoMultisig",
       "tags": []
     },
     {
@@ -1215,27 +1215,27 @@
         "tvl": 1203.01,
         "tvlRaw": "1203010000000000000000",
         "isConfigured": true,
-        "usdValue": 872.8318754,
-        "usdPrice": 0.72554
+        "usdValue": 906.92156977,
+        "usdPrice": 0.753877
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
       "tags": []
     },
     {
-      "plugAddress": "0x4a43eD818411585fEAaf667a2D3E2605962084e0",
-      "hubOrBridgeAddress": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
+      "plugAddress": "0x10ed00FDb26Ec6BE0183e6f14D8275d5898B0721",
+      "hubOrBridgeAddress": "0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C",
       "siblingChainSlug": 7887,
       "token": {
-        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
-        "name": "Tether Gold",
-        "symbol": "XAUt",
-        "decimals": 6,
-        "tvl": 0.250813,
-        "tvlRaw": "250813",
+        "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "name": "Coinbase Wrapped Staked ETH",
+        "symbol": "cbETH",
+        "decimals": 18,
+        "tvl": 0.3254185725825901,
+        "tvlRaw": "325418572582590086",
         "isConfigured": true,
-        "usdValue": 810.79315258,
-        "usdPrice": 3232.66
+        "usdValue": 632.6495011435392,
+        "usdPrice": 1944.11
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1253,8 +1253,27 @@
         "tvl": 0.1607791866895183,
         "tvlRaw": "160779186689518302",
         "isConfigured": true,
-        "usdValue": 520.7959415246876,
-        "usdPrice": 3239.2
+        "usdValue": 544.6684351643473,
+        "usdPrice": 3387.68
+      },
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "ownerName": "KintoEOA",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x4a43eD818411585fEAaf667a2D3E2605962084e0",
+      "hubOrBridgeAddress": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
+      "siblingChainSlug": 7887,
+      "token": {
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "name": "Tether Gold",
+        "symbol": "XAUt",
+        "decimals": 6,
+        "tvl": 0.151763,
+        "tvlRaw": "151763",
+        "isConfigured": true,
+        "usdValue": 513.6889200300001,
+        "usdPrice": 3384.81
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1272,8 +1291,8 @@
         "tvl": 1.849998308080382,
         "tvlRaw": "1849998308080381929",
         "isConfigured": true,
-        "usdValue": 6.178994348988475,
-        "usdPrice": 3.34
+        "usdValue": 5.771994721210792,
+        "usdPrice": 3.12
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1288,11 +1307,11 @@
         "name": "Dai Stablecoin",
         "symbol": "DAI",
         "decimals": 18,
-        "tvl": 1.1,
-        "tvlRaw": "1100000000000000000",
+        "tvl": 1.7953,
+        "tvlRaw": "1795300000000000000",
         "isConfigured": true,
-        "usdValue": 1.1,
-        "usdPrice": 1
+        "usdValue": 1.7948457891,
+        "usdPrice": 0.999747
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1310,8 +1329,8 @@
         "tvl": 0.5833311108380841,
         "tvlRaw": "583331110838084089",
         "isConfigured": true,
-        "usdValue": 0.5831415282270617,
-        "usdPrice": 0.999675
+        "usdValue": 0.5830009454293498,
+        "usdPrice": 0.999434
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1330,7 +1349,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1766.8
+        "usdPrice": 2009.26
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1349,7 +1368,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1716.05
+        "usdPrice": 1945.76
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1387,7 +1406,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1764.23
+        "usdPrice": 2005.25
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1425,7 +1444,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.540597
+        "usdPrice": 1.47
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1463,7 +1482,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1876.13
+        "usdPrice": 2128
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1501,26 +1520,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1567.61
-      },
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
-      "ownerName": "KintoEOA",
-      "tags": []
-    },
-    {
-      "plugAddress": "0x10ed00FDb26Ec6BE0183e6f14D8275d5898B0721",
-      "hubOrBridgeAddress": "0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C",
-      "siblingChainSlug": 7887,
-      "token": {
-        "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
-        "name": "Coinbase Wrapped Staked ETH",
-        "symbol": "cbETH",
-        "decimals": 18,
-        "tvl": 0,
-        "tvlRaw": "0",
-        "isConfigured": true,
-        "usdValue": 0,
-        "usdPrice": 1715.11
+        "usdPrice": 1771.99
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1539,7 +1539,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 0.999391
+        "usdPrice": 0.99991
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1558,7 +1558,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1567.61
+        "usdPrice": 1771.99
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1577,7 +1577,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1
+        "usdPrice": 0.999747
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1596,7 +1596,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 82747
+        "usdPrice": 93789
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1634,7 +1634,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.62493
+        "usdPrice": 0.64303
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1653,7 +1653,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 12.67
+        "usdPrice": 13.3
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1672,7 +1672,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 136.48
+        "usdPrice": 165.27
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1710,7 +1710,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1563.4
+        "usdPrice": 1769.54
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1729,7 +1729,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1.074
+        "usdPrice": 1.091
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1805,7 +1805,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.159293
+        "usdPrice": 0.112406
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1841,11 +1841,11 @@
         "name": "USD0 Liquid Bond",
         "symbol": "USD0++",
         "decimals": 18,
-        "tvl": 2074440.5817004924,
-        "tvlRaw": "2074440581700492417489776",
+        "tvl": 1592771.8175256043,
+        "tvlRaw": "1592771817525604313136427",
         "isConfigured": true,
-        "usdValue": 1987009.1345035618,
-        "usdPrice": 0.957853
+        "usdValue": 1546342.519044733,
+        "usdPrice": 0.97085
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1859,11 +1859,11 @@
         "name": "Staked USDe",
         "symbol": "sUSDe",
         "decimals": 18,
-        "tvl": 1276314.5454796646,
-        "tvlRaw": "1276314545479664626608556",
+        "tvl": 1209573.2070890933,
+        "tvlRaw": "1209573207089093203337225",
         "isConfigured": true,
-        "usdValue": 1480524.8727564109,
-        "usdPrice": 1.16
+        "usdValue": 1415200.652294239,
+        "usdPrice": 1.17
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1877,11 +1877,11 @@
         "name": "USD Coin",
         "symbol": "USDC",
         "decimals": 6,
-        "tvl": 1256847.049397,
-        "tvlRaw": "1256847049397",
+        "tvl": 1221847.344054,
+        "tvlRaw": "1221847344054",
         "isConfigured": true,
-        "usdValue": 1256809.3439855182,
-        "usdPrice": 0.99997
+        "usdValue": 1221808.2449389903,
+        "usdPrice": 0.999968
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1895,10 +1895,10 @@
         "name": "Savings Dai",
         "symbol": "sDAI",
         "decimals": 18,
-        "tvl": 127182.42933880303,
-        "tvlRaw": "127182429338803028874362",
+        "tvl": 128057.54117287775,
+        "tvlRaw": "128057541172877759318577",
         "isConfigured": true,
-        "usdValue": 147531.6180330115,
+        "usdValue": 148546.7477605382,
         "usdPrice": 1.16
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
@@ -1913,11 +1913,11 @@
         "name": "Wrapped Ether",
         "symbol": "WETH",
         "decimals": 18,
-        "tvl": 0.12587841211517745,
-        "tvlRaw": "125878412115177444",
+        "tvl": 0.4914592145270024,
+        "tvlRaw": "491459214527002409",
         "isConfigured": true,
-        "usdValue": 197.01859672207,
-        "usdPrice": 1565.15
+        "usdValue": 871.4407354228449,
+        "usdPrice": 1773.17
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1931,11 +1931,11 @@
         "name": "Solv BTC",
         "symbol": "SolvBTC",
         "decimals": 18,
-        "tvl": 0,
-        "tvlRaw": "0",
+        "tvl": 0.002342417334362239,
+        "tvlRaw": "2342417334362239",
         "isConfigured": true,
-        "usdValue": 0,
-        "usdPrice": 82215
+        "usdValue": 219.5594615844414,
+        "usdPrice": 93732
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1949,11 +1949,29 @@
         "name": "Wrapped liquid staked Ether 2.0",
         "symbol": "wstETH",
         "decimals": 18,
+        "tvl": 0.040690489242039274,
+        "tvlRaw": "40690489242039274",
+        "isConfigured": true,
+        "usdValue": 86.51855965577843,
+        "usdPrice": 2126.26
+      },
+      "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
+      "tags": []
+    },
+    {
+      "plugAddress": "0x376f76B657a384e980F6Ea96e885654eC8F3ED61",
+      "hubOrBridgeAddress": "0x847579e12CFb96a3357d9C51e374330af61716C2",
+      "siblingChainSlug": 8008,
+      "token": {
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "name": "Wrapped eETH",
+        "symbol": "weETH",
+        "decimals": 18,
         "tvl": 0,
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1875.89
+        "usdPrice": 1889.11
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -2396,8 +2414,8 @@
         "tvl": 406746.7477,
         "tvlRaw": "406746747700000000000001",
         "isConfigured": true,
-        "usdValue": 4429.691725696758,
-        "usdPrice": 0.01089054
+        "usdValue": 6351.1389570266965,
+        "usdPrice": 0.01561448
       },
       "owner": "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13",
       "ownerName": "LooksRareMultisig",
@@ -2509,11 +2527,11 @@
         "name": "USD Coin",
         "symbol": "USDC",
         "decimals": 6,
-        "tvl": 20920.518566,
-        "tvlRaw": "20920518566",
+        "tvl": 27265.948566,
+        "tvlRaw": "27265948566",
         "isConfigured": true,
-        "usdValue": 20919.89095044302,
-        "usdPrice": 0.99997
+        "usdValue": 27265.076055645884,
+        "usdPrice": 0.999968
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2531,8 +2549,8 @@
         "tvl": 499.65,
         "tvlRaw": "499650000",
         "isConfigured": true,
-        "usdValue": 499.37169494999995,
-        "usdPrice": 0.999443
+        "usdValue": 499.53957734999994,
+        "usdPrice": 0.999779
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2550,8 +2568,8 @@
         "tvl": 326224.515955125,
         "tvlRaw": "326224515955125",
         "isConfigured": false,
-        "usdValue": 177.40089177639697,
-        "usdPrice": 0.0005438
+        "usdValue": 327.12163337400153,
+        "usdPrice": 0.00100275
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2588,7 +2606,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.00000689
+        "usdPrice": 0.00000766
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2607,7 +2625,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1565.15
+        "usdPrice": 1773.17
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2626,7 +2644,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.00001201
+        "usdPrice": 0.00001242
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2645,7 +2663,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 4.02661e-7
+        "usdPrice": 6.01315e-7
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2664,7 +2682,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.512584
+        "usdPrice": 0.485951
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2681,11 +2699,11 @@
         "name": "Staked deUSD",
         "symbol": "sdeUSD",
         "decimals": 18,
-        "tvl": 14484200.836946728,
-        "tvlRaw": "14484200836946728026553917",
+        "tvl": 11590749.694626728,
+        "tvlRaw": "11590749694626728026553917",
         "isConfigured": true,
-        "usdValue": 14947695.263729023,
-        "usdPrice": 1.032
+        "usdValue": 12019607.433327917,
+        "usdPrice": 1.037
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2700,11 +2718,11 @@
         "name": "USD Coin",
         "symbol": "USDC",
         "decimals": 6,
-        "tvl": 1702687.718176,
-        "tvlRaw": "1702687718176",
+        "tvl": 3409626.174174,
+        "tvlRaw": "3409626174174",
         "isConfigured": true,
-        "usdValue": 1702636.6375444548,
-        "usdPrice": 0.99997
+        "usdValue": 3409517.0661364263,
+        "usdPrice": 0.999968
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2719,11 +2737,11 @@
         "name": "deUSD",
         "symbol": "deUSD",
         "decimals": 18,
-        "tvl": 13195.984941350047,
-        "tvlRaw": "13195984941350047766218",
+        "tvl": 13269.004941350047,
+        "tvlRaw": "13269004941350047766218",
         "isConfigured": true,
-        "usdValue": 13188.859109481718,
-        "usdPrice": 0.99946
+        "usdValue": 13260.47297117276,
+        "usdPrice": 0.999357
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2741,8 +2759,8 @@
         "tvl": 458.424,
         "tvlRaw": "458424000000000000000",
         "isConfigured": true,
-        "usdValue": 457.85738793599995,
-        "usdPrice": 0.998764
+        "usdValue": 458.424,
+        "usdPrice": 1
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2760,8 +2778,8 @@
         "tvl": 458.424,
         "tvlRaw": "458424000000000000000",
         "isConfigured": true,
-        "usdValue": 457.85738793599995,
-        "usdPrice": 0.998764
+        "usdValue": 458.424,
+        "usdPrice": 1
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
@@ -2779,8 +2797,8 @@
         "tvl": 181.1,
         "tvlRaw": "181100000000000000000",
         "isConfigured": true,
-        "usdValue": 210.07599999999996,
-        "usdPrice": 1.16
+        "usdValue": 211.88699999999997,
+        "usdPrice": 1.17
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2798,8 +2816,8 @@
         "tvl": 0.084,
         "tvlRaw": "84000000000000000",
         "isConfigured": true,
-        "usdValue": 131.47260000000003,
-        "usdPrice": 1565.15
+        "usdValue": 148.94628,
+        "usdPrice": 1773.17
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2817,8 +2835,8 @@
         "tvl": 0.0001,
         "tvlRaw": "10000",
         "isConfigured": true,
-        "usdValue": 8.262500000000001,
-        "usdPrice": 82625
+        "usdValue": 9.3741,
+        "usdPrice": 93741
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2837,7 +2855,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1875.89
+        "usdPrice": 2126.26
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2856,7 +2874,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1875.89
+        "usdPrice": 2126.26
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
@@ -2875,7 +2893,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1
+        "usdPrice": 0.999747
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2894,7 +2912,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999443
+        "usdPrice": 0.999779
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",

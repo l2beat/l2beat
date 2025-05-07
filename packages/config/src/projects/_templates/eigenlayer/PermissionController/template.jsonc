@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses."
+}

@@ -136,8 +136,10 @@ const cmd = command({
     )
 
     logger.info('Executing TVS to exclude zero-valued tokens')
-    const lastNonZeroValues =
-      await localExecutor.getLastNonZeroValues(timestamp)
+    const lastNonZeroValues = await localExecutor.getLastNonZeroValues(
+      timestamp,
+      args.project ?? undefined,
+    )
     const tvs = await localExecutor.getTvs(
       regeneratedProjects.map((p) => ({
         ...p,

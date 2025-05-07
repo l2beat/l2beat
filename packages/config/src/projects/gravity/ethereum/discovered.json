@@ -27,7 +27,9 @@
         "state_lastValsetCheckpoint": "0x1c0c3fcf1daf0414ee98c705c0b3678017a37d39c2511b3175c71da08b811433",
         "state_lastValsetNonce": 1022
       },
-      "derivedName": "Gravity"
+      "implementationNames": {
+        "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": "Gravity"
+      }
     }
   ],
   "abis": {

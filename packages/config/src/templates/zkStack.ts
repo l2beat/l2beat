@@ -543,7 +543,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
           {
             name: 'ZKsyncEraVerifier',
             description:
-              'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
+              'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/zksync-crypto/tree/main/crates/boojum) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
             verified: 'no',
             contractAddress: EthereumAddress(
               '0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66',
@@ -553,7 +553,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
               {
                 name: 'Final wrap',
                 ...PROOFS.PLONKSNARK('Aztec ceremony'),
-                link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
+                link: 'https://github.com/matter-labs/zksync-protocol/blob/main/crates/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
               },
               {
                 name: 'Aggregation circuit',
@@ -561,7 +561,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
                 mainArithmetization: 'Plonkish',
                 mainPCS: 'LPC',
                 trustedSetup: 'None',
-                link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
+                link: 'https://github.com/matter-labs/zksync-protocol/blob/7dfcc81eccc3984793646a5a47e4cd68757955a2/crates/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
               },
               {
                 name: 'Main circuit',
@@ -569,7 +569,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
                 mainArithmetization: 'Plonkish',
                 mainPCS: 'LPC',
                 trustedSetup: 'None',
-                link: 'https://github.com/matter-labs/era-zkevm_circuits',
+                link: 'https://github.com/matter-labs/zksync-protocol/tree/main/crates/zkevm_circuits',
               },
             ],
           },

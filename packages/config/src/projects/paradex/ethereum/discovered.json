@@ -51,7 +51,10 @@
         "nonce": 13,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
@@ -226,7 +229,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": "Proxy",
+        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -342,7 +348,10 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Starknet",
+      "implementationNames": {
+        "0xF338cad020D506e8e3d9B4854986E0EcE6C23640": "Proxy",
+        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04": "Starknet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -436,7 +445,10 @@
         "nonce": 12,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0xFF57A3bB6465501c993acF8f3b29125a862661C0": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     }
   ],
   "abis": {
@@ -740,7 +752,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
+    "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
     "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183"
   },
   "permissionsConfigHash": "0x05bc6f14c5d8471d0d496677f0e22e3b380d6caad51140cec1c4f40fa0205abd"

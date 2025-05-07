@@ -43,7 +43,9 @@
         "thresholdPercentage": 75,
         "version": "1.2.0"
       },
-      "derivedName": "LivenessModule"
+      "implementationNames": {
+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
+      }
     },
     {
       "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
@@ -81,7 +83,10 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
@@ -129,7 +134,10 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.2.2"
       },
-      "derivedName": "AnchorStateRegistry"
+      "implementationNames": {
+        "0x190B6ecEE5A2ddF39669288B9B8daEa4641ae8b1": "Proxy",
+        "0x7b465370BB7A333f99edd19599EB7Fb1c2D3F8D2": "AnchorStateRegistry"
+      }
     },
     {
       "name": "PreimageOracle",
@@ -155,7 +163,9 @@
         "proposals": [],
         "version": "1.1.4"
       },
-      "derivedName": "PreimageOracle"
+      "implementationNames": {
+        "0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": "PreimageOracle"
+      }
     },
     {
       "name": "LivenessGuard",
@@ -179,7 +189,9 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "version": "1.0.0"
       },
-      "derivedName": "LivenessGuard"
+      "implementationNames": {
+        "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
+      }
     },
     {
       "name": "L1ERC20TokenBridge",
@@ -257,7 +269,10 @@
         "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d",
         "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
-      "derivedName": "L1LidoTokensBridge"
+      "implementationNames": {
+        "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a": "OssifiableProxy",
+        "0xf034dE8BD85A434d9Dc68F03382B589f86791425": "L1LidoTokensBridge"
+      }
     },
     {
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
@@ -324,7 +339,9 @@
           "description": "Prestate tag for known prestates."
         }
       },
-      "derivedName": "PermissionedDisputeGame",
+      "implementationNames": {
+        "0x3D56d47b9E7E34A46612BadC70377F74051E6b17": "PermissionedDisputeGame"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -398,7 +415,10 @@
         "nonce": 67,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x4665374939642965EfD8357D4568D2A77f677429",
@@ -454,7 +474,10 @@
         "nonce": 8,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x509182eC226b3B71D36A3255A80EF0b1A9D43033": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "DisputeGameFactory",
@@ -499,7 +522,10 @@
         "permissionedGamesTotal": 1760,
         "version": "1.0.1"
       },
-      "derivedName": "DisputeGameFactory",
+      "implementationNames": {
+        "0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0": "Proxy",
+        "0x4bbA758F006Ef09402eF31724203F316ab74e4a0": "DisputeGameFactory"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -535,7 +561,9 @@
         "isUpgrading": false,
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -579,7 +607,10 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.4.0"
       },
-      "derivedName": "L1ERC721Bridge",
+      "implementationNames": {
+        "0x5933e323bE8896DfaCd1cD671442F27dAA10a053": "Proxy",
+        "0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013": "L1ERC721Bridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -685,7 +716,10 @@
         "nonce": 14,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
@@ -820,7 +854,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3": "Proxy",
+        "0x340f923E5c7cbB2171146f64169EC9d5a9FfE647": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -893,7 +930,10 @@
         "nonce": 23,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "OptimismPortal2",
@@ -954,7 +994,10 @@
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
-      "derivedName": "OptimismPortal2",
+      "implementationNames": {
+        "0x88e529A6ccd302c948689Cd5156C83D4614FAE92": "Proxy",
+        "0xB443Da3e07052204A02d630a8933dAc05a0d6fB4": "OptimismPortal2"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1020,7 +1063,9 @@
         "isUpgrading": false,
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a": "ProxyAdmin"
+      }
     },
     {
       "address": "0x92827223f6b397CE9F208eE352bacA710765cACb",
@@ -1077,7 +1122,10 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.2.0"
       },
-      "derivedName": "SuperchainConfig",
+      "implementationNames": {
+        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
+        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7": "SuperchainConfig"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1119,7 +1167,10 @@
         "totalSupply": 0,
         "version": "1.3.0"
       },
-      "derivedName": "DelayedWETH"
+      "implementationNames": {
+        "0x9AEA1FD851b63d57Ba4Fc556B0e0c170126C9EAf": "Proxy",
+        "0x5e40B9231B86984b5150507046e354dbFbeD3d9e": "DelayedWETH"
+      }
     },
     {
       "name": "OpFoundationOperationsSafe",
@@ -1175,7 +1226,10 @@
         "nonce": 103,
         "VERSION": "1.1.1"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "Proxy",
+        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
     },
     {
       "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
@@ -1239,7 +1293,10 @@
         "TX_BASE_GAS": 21000,
         "version": "2.6.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f": "ResolvedDelegateProxy",
+        "0x5D5a095665886119693F0B41d8DFeE78da033e8B": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1268,7 +1325,9 @@
         "$immutable": true,
         "owner": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1324,7 +1383,10 @@
         "BRIDGE": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
         "version": "1.10.1"
       },
-      "derivedName": "OptimismMintableERC20Factory"
+      "implementationNames": {
+        "0xc1047e30EFC9E172cFe7aa0219895B6a43fC415F": "Proxy",
+        "0x5493f4677A186f64805fe7317D6993ba4863988F": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "Optimism Security Council",
@@ -1372,7 +1434,10 @@
         "nonce": 25,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -1417,7 +1482,10 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "L1OpUSDCBridgeAdapter"
+      "implementationNames": {
+        "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb": "ERC1967Proxy",
+        "0xcfF35e3C0B8D197A6Ce10802cd649FBb9957dA07": "L1OpUSDCBridgeAdapter"
+      }
     },
     {
       "name": "DeputyGuardianModule",
@@ -1444,7 +1512,9 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
       },
-      "derivedName": "DeputyGuardianModule"
+      "implementationNames": {
+        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B": "DeputyGuardianModule"
+      }
     },
     {
       "address": "0xd45F9F3990C48AfA5C90404c7a748b4c23FB2cba",
@@ -1477,7 +1547,9 @@
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "derivedName": "Lib_AddressManager",
+      "implementationNames": {
+        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1512,7 +1584,10 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607": "L1ChugSplashProxy",
+        "0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1537,7 +1612,9 @@
         "oracle": "0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
         "version": "1.0.0"
       },
-      "derivedName": "MIPS64"
+      "implementationNames": {
+        "0xF027F4A985560fb13324e943edf55ad6F1d15Dc1": "MIPS64"
+      }
     }
   ],
   "abis": {
@@ -2543,26 +2620,26 @@
     ]
   },
   "usedTemplates": {
-    "circle/L1OpUSDCBridgeAdapter": "0x93956593e5d71a81a3e2b4f0b8eca3577496ade7b64f97e40ece86f28a1798d1",
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "circle/L1OpUSDCBridgeAdapter": "0x7b0fd1c71ea89926c8c9ca49fd95cae9afc360f88c556a040665a4e1f50221a0",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
-    "gnosisSafeModules/LivenessModule": "0x649656e7dda2f87bdeca0dc9a6bb23b2dc62c32ed6d1fdf245c3dcc2f6e80f74",
-    "lido/L1LidoTokensBridge": "0x8cb6e28132e5ef736ea3e03d1d51b04ddbf1bf6e90e383d0e59e39934cf6d45e",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
-    "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
-    "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
-    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
-    "opstack/MIPS": "0xd12d2689d2079778eb7b76ccef58c6919f21c6631fc03341b6287a2a84b4fe89",
-    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal2": "0x4e07890d088dde04c91da95ae82fb3afac97525e47080508da6c741a49d29818",
-    "opstack/PermissionedDisputeGame": "0x709d9cdeb77ad9cd56b80cba43f92d64bef04a4976fa79e98bdb987cc6f00aa8",
-    "opstack/PreimageOracle": "0xdad9efe0df74ac3a11918603d36b0b60b59ea7690452f74d581d6712a2675d82",
-    "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
+    "gnosisSafeModules/DeputyGuardianModule": "0x2ac08dd61da2b2fa9573299ac5d5655d1610eded8d72a53907070bb41f17f3b9",
+    "gnosisSafeModules/LivenessModule": "0x02a2171f6f593d4f9b509a9f8aa4e50662de6a8dfc6b84128255163b33809f02",
+    "lido/L1LidoTokensBridge": "0xfbf3e83ab86a74d691bbceaf7d057f48ce1eb84928da555a82dee64747e5facc",
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
+    "opstack/DelayedWETH": "0x23d6aedd9fd736bb10884dc1269bfaafb4403d524ea6ba91d0ef99fe7a1b643f",
+    "opstack/DisputeGameFactory": "0x67f69b090ef8ef37890cb4e7c28b9ee1844641f6c4eb75ff15cba998839606ed",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
+    "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal2": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
+    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
+    "opstack/SuperchainConfig": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
   },
   "permissionsConfigHash": "0x80f9510abbe47a8ee1ad0170a11a2f6a6a1d25fc55c2bd150586e623b8905540"
 }

@@ -29,7 +29,9 @@
         "paused": false,
         "whiteLister": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
       },
-      "derivedName": "EthCrossChainManager"
+      "implementationNames": {
+        "0x14413419452Aaf089762A0c5e95eD2A13bBC488C": "EthCrossChainManager"
+      }
     },
     {
       "name": "Lock Proxy 1",
@@ -47,7 +49,9 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
       },
-      "derivedName": "LockProxy"
+      "implementationNames": {
+        "0x250e76987d838a75310c34bf422ea9f1AC4Cc906": "LockProxy"
+      }
     },
     {
       "name": "Lock Proxy 3",
@@ -62,7 +66,9 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035": ""
+      }
     },
     {
       "name": "Lock Proxy 7",
@@ -80,7 +86,9 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
       },
-      "derivedName": "LockProxy"
+      "implementationNames": {
+        "0x51ba447DaD1de30b91286471BcB570F69ECE968D": "LockProxy"
+      }
     },
     {
       "address": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459",
@@ -103,7 +111,9 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
       },
-      "derivedName": "LockProxy"
+      "implementationNames": {
+        "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868": "LockProxy"
+      }
     },
     {
       "name": "EthCrossChainManagerProxy",
@@ -123,7 +133,9 @@
         "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
         "paused": false
       },
-      "derivedName": "EthCrossChainManagerProxy"
+      "implementationNames": {
+        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": "EthCrossChainManagerProxy"
+      }
     },
     {
       "address": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E",
@@ -139,7 +151,9 @@
       "sinceTimestamp": 1691038067,
       "sinceBlock": 17832183,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC": ""
+      }
     },
     {
       "address": "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725",
@@ -163,7 +177,9 @@
         "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "paused": false
       },
-      "derivedName": "LockProxyWithLP"
+      "implementationNames": {
+        "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": "LockProxyWithLP"
+      }
     },
     {
       "name": "PolyWrapper",
@@ -204,7 +220,9 @@
           "description": "This is the number of lockProxy escrows registered in the bridge."
         }
       },
-      "derivedName": "PolyWrapper"
+      "implementationNames": {
+        "0x81910675DbaF69deE0fD77570BFD07f8E436386A": "PolyWrapper"
+      }
     },
     {
       "address": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02",
@@ -231,7 +249,9 @@
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false
       },
-      "derivedName": "EthCrossChainData"
+      "implementationNames": {
+        "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": "EthCrossChainData"
+      }
     },
     {
       "address": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
@@ -254,7 +274,9 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
       },
-      "derivedName": "LockProxy"
+      "implementationNames": {
+        "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": "LockProxy"
+      }
     },
     {
       "address": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c",
@@ -277,7 +299,9 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
       },
-      "derivedName": "LockProxy"
+      "implementationNames": {
+        "0xf6378141BC900020a438F3914e4C3ceA29907b27": "LockProxy"
+      }
     }
   ],
   "abis": {

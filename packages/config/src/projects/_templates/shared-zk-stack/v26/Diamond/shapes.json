@@ -28,5 +28,11 @@
     "address": "0x36b026c39125964D99596CE302866B5A59E4dE27",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "Diamond_v27": {
+    "hash": "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25",
+    "address": "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
+    "chain": "ethereum",
+    "blockNumber": 22423854
   }
 }

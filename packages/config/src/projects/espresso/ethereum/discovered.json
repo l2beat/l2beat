@@ -44,7 +44,10 @@
         "nonce": 1,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc",
@@ -128,7 +131,10 @@
         "stateHistoryRetentionPeriod": 864000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "LightClient"
+      "implementationNames": {
+        "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "ERC1967Proxy",
+        "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": "LightClient"
+      }
     },
     {
       "address": "0xf4b7676d9EC86D2011aB87855424219a97DEB40c",

@@ -30,8 +30,7 @@ export function colorize(
     )
 
     result.entries.push({
-      name: entryConfig.name ?? entryConfig.displayName ?? e.derivedName,
-      displayName: undefined, // TODO(radomski): This field is useless, can be removed
+      name: entryConfig.name ?? entryConfig.displayName ?? e.name,
       description: interpolateString(entryConfig.description, e),
       references: getReferences(entryConfig, e),
       category: resolveCategory(entryConfig),

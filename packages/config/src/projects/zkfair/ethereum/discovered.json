@@ -34,7 +34,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x0110B1B231aA3b96a94c900eb3056297526AB725": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2",
@@ -91,7 +94,10 @@
         "trustedSequencerURL": "http://main-rpc-1.zkfair-internal.mainnet:8123",
         "verifyBatchTimeTarget": 1800
       },
-      "derivedName": "CDKValidium"
+      "implementationNames": {
+        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5": "TransparentUpgradeableProxy",
+        "0x668965757127549f8755D2eEd10494B06420213b": "CDKValidium"
+      }
     },
     {
       "address": "0x3226ECf79dc7007063599A334832d015B48aBDBc",
@@ -187,7 +193,9 @@
         "cdkValidium": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
         "getMinDelay": 86400
       },
-      "derivedName": "CDKValidiumTimelock"
+      "implementationNames": {
+        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17": "CDKValidiumTimelock"
+      }
     },
     {
       "address": "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
@@ -219,7 +227,10 @@
         "bridgeAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
         "rollupAddress": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
       },
-      "derivedName": "PolygonZkEVMGlobalExitRoot"
+      "implementationNames": {
+        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b": "TransparentUpgradeableProxy",
+        "0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615": "PolygonZkEVMGlobalExitRoot"
+      }
     },
     {
       "address": "0x75575Dc1adD71eA794A52D83f836a13F7891C527",
@@ -237,7 +248,9 @@
       "sinceTimestamp": 1702879247,
       "sinceBlock": 18810958,
       "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier"
+      "implementationNames": {
+        "0x769E285d2120472c3400A09684B82A842012F46d": "FflonkVerifier"
+      }
     },
     {
       "name": "ZKFairOwner",
@@ -269,7 +282,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x9231622437bD57349cC9a15CDEc5383627DEbA17",
@@ -334,7 +350,10 @@
       "fieldMeta": {
         "members": { "description": "URL and address of the DAC member" }
       },
-      "derivedName": "CDKDataCommittee"
+      "implementationNames": {
+        "0x997CfB0838544f68E59f877EDc905001456F125b": "TransparentUpgradeableProxy",
+        "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc": "CDKDataCommittee"
+      }
     },
     {
       "name": "OldBridge",
@@ -361,7 +380,10 @@
         ],
         "$upgradeCount": 2
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861": "TransparentUpgradeableProxy",
+        "0x58371687dc997A7A11154bBcA72aEb15e4Db8F46": ""
+      }
     },
     {
       "address": "0x9d8616545C9941138832EebC58Cb498E0ef21a13",
@@ -392,7 +414,9 @@
       "sinceTimestamp": 1742988323,
       "sinceBlock": 22130765,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e": ""
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -427,7 +451,9 @@
         "$immutable": true,
         "owner": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3": "ProxyAdmin"
+      }
     },
     {
       "address": "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87",
@@ -772,7 +798,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
   "permissionsConfigHash": "0xec6e876484d2dc1c50f82b9c9c6336286a3bb4f705bd0cab9dcf1ae26f095ed7"
