@@ -101,7 +101,6 @@ export const linea: ScalingProject = {
         'https://lineascan.build/',
         'https://lineaplorer.build/',
         'https://explorer.linea.build/',
-        'https://linea.l2scan.co/',
       ],
       repositories: [
         'https://github.com/Consensys?q=linea&type=all&language=&sort=stargazers',
