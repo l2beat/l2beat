@@ -143,7 +143,10 @@ export class DBStorage implements DataStorage {
     )
   }
 
-  async getLastNonZeroValues(timestamp: number): Promise<TokenValue[]> {
-    return await this.db.tvsTokenValue.getLastNonZeroValue(timestamp)
+  async getLastNonZeroValues(
+    timestamp: number,
+    project: string | undefined,
+  ): Promise<TokenValue[]> {
+    return await this.db.tvsTokenValue.getLastNonZeroValue(timestamp, project)
   }
 }
