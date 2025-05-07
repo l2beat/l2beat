@@ -23,7 +23,11 @@ export const blast: ScalingProject = opStackL2({
       websites: ['https://blast.io/en'],
       apps: ['https://blast.io/en/bridge'],
       documentation: ['https://docs.blast.io/about-blast'],
-      explorers: ['https://blastscan.io', 'https://blastplorer.info/', 'https://blastexplorer.io'],
+      explorers: [
+        'https://blastscan.io',
+        'https://blastplorer.info/',
+        'https://blastexplorer.io',
+      ],
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
