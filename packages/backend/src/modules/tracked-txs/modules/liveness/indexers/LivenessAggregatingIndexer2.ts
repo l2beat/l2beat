@@ -166,6 +166,8 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
       avg: stats.averageInSeconds,
       max: stats.maximumInSeconds,
       timestamp,
+      // We are saving the number of records to later correctly calculate the average for a given time range.
+      // This ensures we calculate the correct average from all records, not just from daily aggregations.
       numberOfRecords: intervals.length,
     }
   }
