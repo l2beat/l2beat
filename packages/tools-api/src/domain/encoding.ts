@@ -1,5 +1,3 @@
-import { hexToString } from 'viem'
-
 const INT_COMPLEMENT = 2n ** 255n
 
 export interface AbiValue {
@@ -194,6 +192,16 @@ function decodeBytes(type: string, encoded: `0x${string}`): `0x${string}` {
     throw new Error(`Invalid encoding, ${type} too long`)
   }
   return `0x${data}`
+}
+
+function hexToString(bytes: `0x${string}`) {
+  const length = (bytes.length - 2) / 2
+  const buffer = new Uint8Array(length)
+  for (let i = 0; i < length; i++) {
+    const byte = parseInt(bytes.slice(2 + i * 2, 2 + (i + 1) * 2), 16)
+    buffer[i] = byte
+  }
+  return new TextDecoder().decode(buffer)
 }
 
 export interface ParsedType {
