@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8d442d286d71fa4f89d5d02fa3b5243490167f1f
+
+# Diff at Wed, 07 May 2025 11:00:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22424710
+- current block number: 22431247
+
+## Description
+
+Increased the number of minter multisig members from 12 to 16, threshold stayed unchanged.
+
+## Watched changes
+
+```diff
+    contract Safe (0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      values.$members.15:
++        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
++        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
++        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.10:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.9:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.8:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.7:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.5:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+      values.$members.4:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.3:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.multisigThreshold:
+-        "7 of 12 (58%)"
++        "7 of 16 (44%)"
+    }
+```
+
 Generated with discovered.json: 0x1019dedf2391a3023ca4e7717df51ade1c896aec
 
 # Diff at Tue, 06 May 2025 12:38:29 GMT:

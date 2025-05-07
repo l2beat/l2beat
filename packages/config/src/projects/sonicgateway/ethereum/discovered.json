@@ -1,7 +1,7 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 22297572,
+  "blockNumber": 22431552,
   "configHash": "0xdffffa86646b9cde707aff63f5b7df9283f6f441de2082ddc1852baa322dd337",
   "entries": [
     {
@@ -304,7 +304,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 32,
+        "nonce": 34,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -463,7 +463,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 20924666,
+        "lastBlockNum": 24985800,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -493,9 +493,9 @@
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 20924666,
-        "lastState": "0x05a41fd45cf5c9c0fb5da2b38f9894f4d8669ced14fb47731ed73e0a6e19163f",
-        "lastUpdateTime": 1744998407,
+        "lastBlockNum": 24985800,
+        "lastState": "0x2a788f25a88a36ab41e4b0dc719c9834a8d5dc85a1dd848be0de2ec293dd9920",
+        "lastUpdateTime": 1746614783,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
       "implementationNames": {
@@ -556,6 +556,10 @@
             "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+          },
+          "TERMINATOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           }
