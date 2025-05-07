@@ -12,10 +12,10 @@ import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { makeEntryStructureConfig } from '../config/structureUtils'
+import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
-import { toPrettyJson } from '../output/toPrettyJson'
 
 export const TEMPLATES_PATH = path.join('_templates')
 
