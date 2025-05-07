@@ -12,7 +12,6 @@ describe(getSourceOutputPath.name, () => {
     type: 'Contract' as const,
     name,
     address: EthereumAddress.random(),
-    derivedName: undefined,
     isVerified: true,
     deploymentTimestamp: UnixTime(1234),
     deploymentBlockNumber: 9876,

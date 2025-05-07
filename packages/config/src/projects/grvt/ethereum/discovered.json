@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 22181511,
-  "configHash": "0x7b3a7fb3014cecff025553508461d45895e76743a16efd5e8ee1adef14229326",
+  "configHash": "0xb390b7f5fa85959c11b223f94184eec50fd6b46a8b00fbe9a3e91ef270ef1818",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -81,7 +81,10 @@
         "nonce": 12,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "GRVTTransactionFilterer",
@@ -139,7 +142,10 @@
           "0x8829AD80E425C646DAB305381ff105169FeEcE56"
         ]
       },
-      "derivedName": "GRVTTransactionFilterer"
+      "implementationNames": {
+        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a": "TransparentUpgradeableProxy",
+        "0x8319feDe99061C6723c86D366a903e8fa3a0f541": "GRVTTransactionFilterer"
+      }
     },
     {
       "address": "0x58D14960E0a2be353eDdE61ad719196A2b816522",
@@ -201,7 +207,9 @@
           "0x0b114d4675Cb79507e68F2616c93e124122c6ef0"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -237,7 +245,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -278,7 +288,9 @@
           "0x58D14960E0a2be353eDdE61ad719196A2b816522"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -299,7 +311,9 @@
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
-      "derivedName": "ValidiumL1DAValidator",
+      "implementationNames": {
+        "0x907b30407249949521Bf0c89A43558dae200146A": "ValidiumL1DAValidator"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -323,7 +337,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -371,7 +387,10 @@
         "owner": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "GRVTBridgeProxy"
+      "implementationNames": {
+        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "TransparentUpgradeableProxy",
+        "0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780": "GRVTBridgeProxy"
+      }
     },
     {
       "name": "GrvtZkEvm",
@@ -631,7 +650,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -667,7 +692,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Governance"
+      "implementationNames": {
+        "0xe81d64195072e4d09639b31Abb257d0096FEa9d1": "Governance"
+      }
     },
     {
       "address": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",

@@ -310,7 +310,10 @@
         "nonce": 30,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "LORDSBridge",
@@ -330,7 +333,9 @@
         "l2Bridge": "3518527153270494256475755541726550738597926965391766941271488561627919771187",
         "starknet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
       },
-      "derivedName": "LordsL1Bridge",
+      "implementationNames": {
+        "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LordsL1Bridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -363,7 +368,9 @@
           "0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
         ]
       },
-      "derivedName": "L1Escrow"
+      "implementationNames": {
+        "0x0437465dfb5B79726e35F08559B0cBea55bb585C": "L1Escrow"
+      }
     },
     {
       "address": "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
@@ -476,7 +483,10 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarkgateManager",
+      "implementationNames": {
+        "0x0c5aE94f8939182F2D06097025324D1E537d5B60": "Proxy",
+        "0x64608BDF1867110f622391196989bF4cE37BBb33": "StarkgateManager"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -536,7 +546,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
-      "derivedName": "StarkgateRegistry",
+      "implementationNames": {
+        "0x1268cc171c54F2000402DfF20E93E60DF4c96812": "Proxy",
+        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC": "StarkgateRegistry"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -627,7 +640,10 @@
         "nonce": 7,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
@@ -772,7 +788,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -956,7 +975,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1015,7 +1037,10 @@
         "nonce": 2,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
@@ -1115,7 +1140,10 @@
         "nonce": 29,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5",
@@ -1149,7 +1177,9 @@
           "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
-      "derivedName": "L1DAIBridge",
+      "implementationNames": {
+        "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DAIBridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1309,7 +1339,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
-      "derivedName": "StarknetEthBridge",
+      "implementationNames": {
+        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "Proxy",
+        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95": "StarknetEthBridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1467,7 +1500,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1605,7 +1641,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1766,7 +1805,10 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Starknet",
+      "implementationNames": {
+        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Proxy",
+        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04": "Starknet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1837,7 +1879,9 @@
         "executionExpiration": 4838400,
         "owner": "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
       },
-      "derivedName": "DelayedExecutor",
+      "implementationNames": {
+        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c": "DelayedExecutor"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1998,7 +2042,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2139,7 +2186,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2276,7 +2326,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2408,7 +2461,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2544,7 +2600,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2706,7 +2765,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
-      "derivedName": "StarknetTokenBridge",
+      "implementationNames": {
+        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "Proxy",
+        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -2847,7 +2909,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2920,7 +2985,10 @@
         "nonce": 4,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "UNIBridge",
@@ -3034,7 +3102,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -4159,11 +4230,11 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "maker/L1Escrow": "0xb42f4a4e99cd96e0fdced856d5700812b16948444eb8bf9b0d9f41c6faec9de4",
     "starknet/DelayedExecutor": "0xd487cb8f4fc40dae5f302c2e60f6841921dafce3fde8b3461e75549ced30f87f",
-    "starknet/L1EscrowDAI": "0x11860373e3ee0b340522a4db6b06453800bfca89646791df878b7e935c5dc6d8",
+    "starknet/L1EscrowDAI": "0x3e7ec24586a5b0460c26ec640c00e29df45f1d5f47ef6701a13cb7f6056bc6c1",
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x74cd8ae86590963abb3809a0f4f1dc2d5c6600a8c54d63bdcb9d727e4735d45b",
     "starknet/StarkgateRegistry": "0xf97ce3e8949e1a09811b01712acc2c09b944bad3bb8505e4b5f817c75a11c3ae",
-    "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
+    "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
     "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183",
     "starknet/StarknetEthBridge": "0xbc8ae085a45e96134776ef38c00c9c7ebcd5b7b7c0818c0bfd287e1d11bb0597",
     "starknet/StarknetMultiBridge": "0x61321009feca9bb05ddf52331ab3017dfcf7a1f09b3b248cc6bb1fe910cedb07"

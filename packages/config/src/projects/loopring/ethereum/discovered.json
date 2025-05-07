@@ -103,7 +103,10 @@
         "shutdownTriggered": [],
         "version": "3.6.0"
       },
-      "derivedName": "ExchangeV3"
+      "implementationNames": {
+        "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": "OwnedUpgradabilityProxy",
+        "0x26d8Ba776a067C5928841985bCe342f75BAE7E82": "ExchangeV3"
+      }
     },
     {
       "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
@@ -142,7 +145,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
       },
-      "derivedName": "LoopringIOExchangeOwner"
+      "implementationNames": {
+        "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": "LoopringIOExchangeOwner"
+      }
     },
     {
       "address": "0x1F28F10176F89F4E9985873B84d14e75751BB3D1",
@@ -329,7 +334,9 @@
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "AgentRegistry"
+      "implementationNames": {
+        "0x39B9bf169a7e225ba037C443A40460c77438ea14": "AgentRegistry"
+      }
     },
     {
       "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
@@ -382,7 +389,9 @@
         "tokenSellerAddress": "0x0000000000000000000000000000000000000000",
         "userStakingPoolAddress": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b"
       },
-      "derivedName": "ProtocolFeeVault"
+      "implementationNames": {
+        "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": "ProtocolFeeVault"
+      }
     },
     {
       "name": "ForcedWithdrawalAgent",
@@ -408,7 +417,9 @@
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "ForcedWithdrawalAgent"
+      "implementationNames": {
+        "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": "ForcedWithdrawalAgent"
+      }
     },
     {
       "address": "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
@@ -440,7 +451,9 @@
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "BlockVerifier"
+      "implementationNames": {
+        "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef": "BlockVerifier"
+      }
     },
     {
       "name": "DefaultDepositContract",
@@ -458,7 +471,9 @@
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "DefaultDepositContract"
+      "implementationNames": {
+        "0x674bdf20A0F284D710BC40872100128e2d66Bd3f": "DefaultDepositContract"
+      }
     },
     {
       "address": "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
@@ -503,7 +518,9 @@
         "totalBurned": "21202657081400454651658000",
         "totalSupply": "1373873397442457437622945100"
       },
-      "derivedName": "LRC_v2"
+      "implementationNames": {
+        "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": "LRC_v2"
+      }
     },
     {
       "address": "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
@@ -553,7 +570,10 @@
         "nonce": 216,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "LoopringV3",
@@ -580,7 +600,9 @@
         "tokenRegistrationFeeLRCDelta": 0,
         "totalStake": 0
       },
-      "derivedName": "LoopringV3"
+      "implementationNames": {
+        "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71": "LoopringV3"
+      }
     },
     {
       "address": "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
@@ -608,7 +630,9 @@
       "sinceTimestamp": 1603946697,
       "sinceBlock": 11149548,
       "values": { "$immutable": true },
-      "derivedName": "FastWithdrawalAgent"
+      "implementationNames": {
+        "0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31": "FastWithdrawalAgent"
+      }
     },
     {
       "address": "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
@@ -642,7 +666,9 @@
           "claimedAt": 1615983279
         }
       },
-      "derivedName": "UserStakingPool"
+      "implementationNames": {
+        "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": "UserStakingPool"
+      }
     }
   ],
   "abis": {

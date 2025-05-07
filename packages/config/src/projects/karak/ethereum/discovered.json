@@ -66,7 +66,10 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
-      "derivedName": "L2OutputOracle",
+      "implementationNames": {
+        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637": "Proxy",
+        "0x394317B191f5c7A371e74594776B1EfDc33d10D6": "L2OutputOracle"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -118,7 +121,9 @@
         "isUpgrading": false,
         "owner": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C": "ProxyAdmin"
+      }
     },
     {
       "address": "0x282DB123D1cbf5437c295EA0df0137E5FaDbD117",
@@ -214,7 +219,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x2964E7dE071467217f642AEe0f5A3a2b8c3193A6",
@@ -303,7 +311,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0x622333688CC1878C7ff4205c89bDe051798788A7": "Proxy",
+        "0x01D5303F326B992845eef2782D4c9a7c6DdE4470": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -352,7 +363,10 @@
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.4.0"
       },
-      "derivedName": "L1ERC721Bridge",
+      "implementationNames": {
+        "0x952851CecB07705A5bb483C1CE080F97e1E7491E": "Proxy",
+        "0xc4550911Df26E604aA560dee6a9b66D0CA933482": "L1ERC721Bridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -406,7 +420,10 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.7.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d": "ResolvedDelegateProxy",
+        "0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -439,7 +456,10 @@
         "otherBridge": "0x4200000000000000000000000000000000000010",
         "version": "1.4.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3": "L1ChugSplashProxy",
+        "0xC4De51792746960FC0ac78360b8e9c6E103F3B13": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -487,7 +507,10 @@
         "systemConfig": "0x622333688CC1878C7ff4205c89bDe051798788A7",
         "version": "1.10.0"
       },
-      "derivedName": "OptimismPortal",
+      "implementationNames": {
+        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73": "Proxy",
+        "0x3fe449Ef47228F03f979F9D955196494243cdf7E": "OptimismPortal"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -518,7 +541,10 @@
         "BRIDGE": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
         "version": "1.6.0"
       },
-      "derivedName": "OptimismMintableERC20Factory"
+      "implementationNames": {
+        "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB": "Proxy",
+        "0xe1863A873f61fDD16560cAa7692a2A994b51E76A": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "AddressManager",
@@ -536,7 +562,9 @@
         "$immutable": true,
         "owner": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -880,16 +908,16 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
-    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
-    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
+    "opstack/L2OutputOracle": "0xdc22201273b90a248801424705d5602a5e68d8c60a2eaa84ca3ce386f9b71942",
+    "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal": "0x6887b4bbf169bbbc6b50b3dcc2ceff2da0df7a824a84827301b57063bc0f1ba9",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
   },
   "permissionsConfigHash": "0x7f12f88ab675e800ca6f97172f5c11c6822443dd292495466836914bbbf779a3"
 }

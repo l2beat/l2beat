@@ -52,7 +52,10 @@
         "BRIDGE": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "version": "1.10.1-beta.4"
       },
-      "derivedName": "OptimismMintableERC20Factory"
+      "implementationNames": {
+        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc": "Proxy",
+        "0x72D205182538207478dA7baFf0181884993D279A": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -119,7 +122,10 @@
         "systemConfig": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
         "version": "2.4.1-beta.2"
       },
-      "derivedName": "L1CrossDomainMessengerCGT",
+      "implementationNames": {
+        "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed": "ResolvedDelegateProxy",
+        "0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618": "L1CrossDomainMessengerCGT"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -175,7 +181,9 @@
         "isUpgrading": false,
         "owner": "0xe0d7755252873c4eF5788f7f45764E0e17610508"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA": "ProxyAdmin"
+      }
     },
     {
       "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
@@ -288,7 +296,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfigCGT",
+      "implementationNames": {
+        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2": "Proxy",
+        "0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D": "SystemConfigCGT"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -319,7 +330,10 @@
         "systemConfig": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
         "version": "2.2.1-beta.2"
       },
-      "derivedName": "L1StandardBridgeCGT",
+      "implementationNames": {
+        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2": "L1ChugSplashProxy",
+        "0x318F7008D7B5541546248D248Fd1eB41A57a9E41": "L1StandardBridgeCGT"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -385,7 +399,10 @@
         "systemConfig": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
         "version": "2.8.1-beta.4"
       },
-      "derivedName": "OptimismPortalCGT",
+      "implementationNames": {
+        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D": "Proxy",
+        "0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f": "OptimismPortalCGT"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -417,7 +434,9 @@
         "redemptionQueue": "0xfDC69e6BE352BD5644C438302DE4E311AAD5565b",
         "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
       },
-      "derivedName": "EtherRouter"
+      "implementationNames": {
+        "0x5acAf61d339dd123e60ba450Ea38fbC49445007C": "EtherRouter"
+      }
     },
     {
       "name": "frxETH Token",
@@ -448,7 +467,9 @@
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "totalSupply": "120433513916627207388221"
       },
-      "derivedName": "frxETH"
+      "implementationNames": {
+        "0x5E8422345238F34275888049021821E8E08CAa1f": "frxETH"
+      }
     },
     {
       "address": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
@@ -501,7 +522,10 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
-      "derivedName": "SuperchainConfig",
+      "implementationNames": {
+        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4": "Proxy",
+        "0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4": "SuperchainConfig"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -576,7 +600,10 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
-      "derivedName": "L2OutputOracle",
+      "implementationNames": {
+        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4": "Proxy",
+        "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65": "L2OutputOracle"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -618,7 +645,9 @@
         "sfrxEthToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
       },
-      "derivedName": "FraxEtherMinter"
+      "implementationNames": {
+        "0x7Bc6bad540453360F744666D625fec0ee1320cA3": "FraxEtherMinter"
+      }
     },
     {
       "name": "Frax Multisig ",
@@ -675,7 +704,10 @@
         "nonce": 1282,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "FrxEthTimelock",
@@ -711,7 +743,9 @@
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Timelock"
+      "implementationNames": {
+        "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA": "Timelock"
+      }
     },
     {
       "name": "AddressManager",
@@ -729,7 +763,9 @@
         "$immutable": true,
         "owner": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -789,7 +825,10 @@
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.2.0-beta.1"
       },
-      "derivedName": "L1ERC721Bridge",
+      "implementationNames": {
+        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5": "Proxy",
+        "0x7eecF36F384732F229D494E072a48fF294861fC2": "L1ERC721Bridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -827,7 +866,9 @@
         "totalAssets": "89501649229145151538375",
         "totalSupply": "79783488108981763565454"
       },
-      "derivedName": "sfrxETH"
+      "implementationNames": {
+        "0xac3E018457B222d93114458476f3E3416Abbe38F": "sfrxETH"
+      }
     },
     {
       "name": "Fraxtal Multisig 2",
@@ -891,7 +932,10 @@
         "nonce": 6424,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "frxETH Minter",
@@ -929,7 +973,9 @@
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "withholdRatio": 980000
       },
-      "derivedName": "frxETHMinter"
+      "implementationNames": {
+        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138": "frxETHMinter"
+      }
     },
     {
       "address": "0xc28339c70054bC22255A74E927a0B9e9A475F224",
@@ -1049,7 +1095,10 @@
         "nonce": 40,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xe0d7755252873c4eF5788f7f45764E0e17610508": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
@@ -1738,22 +1787,22 @@
   },
   "usedTemplates": {
     "fraxtal/EtherRouter": "0xef59c702121fa237b84c63a50a8d185e10fc145a4439ffa2a288c2492719b1d2",
-    "fraxtal/FraxEtherMinter": "0xf0613acc9cc6152ba1e739f49480f2343ff1cd0559d158669ad5c04ba088046d",
-    "fraxtal/frxETH": "0xd0b37c15c111eef32b02139bf4be8d60c2c864ca2bc292ce40efad364876b556",
-    "fraxtal/FrxEthMinter": "0x1c1e0859bdf378f91cefaae8a3c6214f3cfc8bffed72c2280139e4586a4d2a11",
+    "fraxtal/FraxEtherMinter": "0x12055f63a452240c600d2fe2a7df4ead01140b5f10db9f1e4fa17e568988af91",
+    "fraxtal/frxETH": "0x309343979a98b09b7a1feca2cae6478857b23c4779b1d52e609c5163d5e0605b",
+    "fraxtal/FrxEthMinter": "0xec349b6ba74d5ac0cfb49b936b4a2fe20fefd898197873842e54e5135e92b6d3",
     "fraxtal/sfrxETH": "0x658424c4c1ef4b2085df560f7d1996c64bc333438d1b73d648d47a26a44fa7db",
-    "fraxtal/Timelock": "0xddc387cb7e3e5d997b993c8702f986c6be80b6b460277bb796c259ddc0bb52ec",
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "fraxtal/Timelock": "0x8486fbd68e789064a1383f98e67434789d2d6c86809ad454bbd9e12aced6b980",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
-    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
-    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
-    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
+    "opstack/L2OutputOracle": "0xdc22201273b90a248801424705d5602a5e68d8c60a2eaa84ca3ce386f9b71942",
+    "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal": "0x6887b4bbf169bbbc6b50b3dcc2ceff2da0df7a824a84827301b57063bc0f1ba9",
+    "opstack/SuperchainConfigFake": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
   },
   "permissionsConfigHash": "0xf658977610744e717f4eb71d101435935772da097614e7cfc3c29a9adfb14e1c"
 }

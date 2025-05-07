@@ -34,7 +34,10 @@
         "router": "0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1OrbitCustomGateway",
+      "implementationNames": {
+        "0x0bFd15d408c856aA5CC65f49B3A1d4441D9Cb11e": "TransparentUpgradeableProxy",
+        "0x17e7F68ce50A77e55C7834ddF31AEf86403B8010": "L1OrbitCustomGateway"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -73,7 +76,10 @@
         "router": "0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1OrbitERC20Gateway",
+      "implementationNames": {
+        "0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae": "TransparentUpgradeableProxy",
+        "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f": "L1OrbitERC20Gateway"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -107,7 +113,10 @@
         "paused": false,
         "sequencerInbox": "0x51a68C63669109BED585347B847c23DcA1cF9713"
       },
-      "derivedName": "ERC20Inbox",
+      "implementationNames": {
+        "0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE": "TransparentUpgradeableProxy",
+        "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab": "ERC20Inbox"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -181,7 +190,10 @@
           "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
-      "derivedName": "ERC20Bridge",
+      "implementationNames": {
+        "0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7": "TransparentUpgradeableProxy",
+        "0x487c44f484dbD5e7163D2FCE47fa1a5780446b46": "ERC20Bridge"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -225,7 +237,10 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A"
       },
-      "derivedName": "ERC20Outbox",
+      "implementationNames": {
+        "0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8": "TransparentUpgradeableProxy",
+        "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0": "ERC20Outbox"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -319,7 +334,10 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
-      "derivedName": "SequencerInbox",
+      "implementationNames": {
+        "0x51a68C63669109BED585347B847c23DcA1cF9713": "TransparentUpgradeableProxy",
+        "0x15Edf46734defab7F874E17FbC3A01fadC2FD5D6": "SequencerInbox"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -426,7 +444,11 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
+      "implementationNames": {
+        "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A": "RollupProxy",
+        "0x31c97a0A216CCd730bd8ab3ecAA97eACbA27b11a": "RollupAdminLogic",
+        "0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1": "RollupUserLogic"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -517,7 +539,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"]
       },
-      "derivedName": "UpgradeExecutor",
+      "implementationNames": {
+        "0x65e556838D665e04737Be37816d12Fae633c7d83": "TransparentUpgradeableProxy",
+        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1": "UpgradeExecutor"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -538,7 +563,9 @@
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
       "values": { "$immutable": true },
-      "derivedName": "ValidatorUtils"
+      "implementationNames": {
+        "0x6c21303F5986180B1394d2C89f3e883890E2867b": "ValidatorUtils"
+      }
     },
     {
       "name": "Caldera Multisig 1",
@@ -669,7 +696,10 @@
         "nonce": 66,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x7dA2598c1AfCA5Cb0149904Cd55C7b08647e091a",
@@ -696,7 +726,9 @@
       "sinceTimestamp": 1733061785,
       "sinceBlock": 280243096,
       "values": { "$immutable": true },
-      "derivedName": "OneStepProver0"
+      "implementationNames": {
+        "0x95C8bB5D2039e9A8Aeed92DdCCdFbA283A6084Ad": "OneStepProver0"
+      }
     },
     {
       "name": "ChallengeManager",
@@ -738,7 +770,10 @@
         "sequencerInbox": "0x51a68C63669109BED585347B847c23DcA1cF9713",
         "totalChallengesCreated": 0
       },
-      "derivedName": "ChallengeManager",
+      "implementationNames": {
+        "0x9Df55ed5546D9837E28f95f22daA66383957b16f": "TransparentUpgradeableProxy",
+        "0xa8Ae2ed62A978e2108a1C7CBfdb43a5CBfdd2aD0": "ChallengeManager"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -778,7 +813,10 @@
         "bridge": "0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7",
         "rollup": "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A"
       },
-      "derivedName": "ERC20RollupEventInbox"
+      "implementationNames": {
+        "0xBB769cAfc77b8Eadbcdeb8FAAE7369F9df244754": "TransparentUpgradeableProxy",
+        "0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb": "ERC20RollupEventInbox"
+      }
     },
     {
       "address": "0xBE755b46b0fE7b53782C8DA79eCE0b353a5729B0",
@@ -803,7 +841,9 @@
       "sinceTimestamp": 1733061786,
       "sinceBlock": 280243103,
       "values": { "$immutable": true },
-      "derivedName": "OneStepProverMemory"
+      "implementationNames": {
+        "0xC0FCF2284a31f051253a4db86213EAaDC09f3791": "OneStepProverMemory"
+      }
     },
     {
       "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9",
@@ -823,7 +863,9 @@
       "sinceTimestamp": 1733061788,
       "sinceBlock": 280243109,
       "values": { "$immutable": true },
-      "derivedName": "OneStepProverMath"
+      "implementationNames": {
+        "0xd87B426d53B17BeEe316D262aA81cdDBaA96C826": "OneStepProverMath"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -882,7 +924,9 @@
         "$immutable": true,
         "owner": "0x65e556838D665e04737Be37816d12Fae633c7d83"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xDAa72c39422ad709DDd609e12E75A13267474347": "ProxyAdmin"
+      }
     },
     {
       "name": "GatewayRouter",
@@ -915,7 +959,10 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1OrbitGatewayRouter",
+      "implementationNames": {
+        "0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1": "TransparentUpgradeableProxy",
+        "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe": "L1OrbitGatewayRouter"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -937,7 +984,9 @@
         "proverMath": "0xd87B426d53B17BeEe316D262aA81cdDBaA96C826",
         "proverMem": "0xC0FCF2284a31f051253a4db86213EAaDC09f3791"
       },
-      "derivedName": "OneStepProofEntry"
+      "implementationNames": {
+        "0xf6a307A5868eB9c4a00F5efbD1EF8462AC63783f": "OneStepProofEntry"
+      }
     },
     {
       "name": "OneStepProverHostIo",
@@ -952,7 +1001,9 @@
       "sinceTimestamp": 1733061790,
       "sinceBlock": 280243116,
       "values": { "$immutable": true },
-      "derivedName": "OneStepProverHostIo"
+      "implementationNames": {
+        "0xFe95b1f7cf7D7D14E9e38dEE0EFE1c9D3AaA3e69": "OneStepProverHostIo"
+      }
     }
   ],
   "abis": {
@@ -1679,24 +1730,24 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "orbitstack/Bridge": "0x90031b4e4f9fcb7d87cf53eb46e1eac9602ede912abdfa54f17d7d3aa96e3ea0",
-    "orbitstack/ChallengeManager": "0x317ce1255cf624f543073de5b2441b19aae9d5c87a1d18faa829c4abbebe8c18",
-    "orbitstack/CustomGateway": "0x3b1c0fc2fe8fd18e913bb5b7cc36442734d43562d357832acb061d9c40f09c23",
-    "orbitstack/ERC20Gateway": "0x5f18d477345e847765db562dda3557d072b959c47cc6f0403f1a6d317d1f4624",
-    "orbitstack/GatewayRouter": "0xe69c43c0e257aac7722518bb22b4ac48768f06e16a25c0be3b4a03d8ffc6d264",
-    "orbitstack/Inbox": "0x45f9b69916c043d8a695844685a99374143c20e6d5a13ceb145fdf6a1121825b",
-    "orbitstack/OneStepProofEntry": "0x9eb54e580161778d86b080078e2ee2b9780cc0cdc39d271fe6202028901f2589",
-    "orbitstack/OneStepProver0": "0xd52943a596387edc0931848e22e526893c934fa609baf10454c9f11b46bce1b1",
-    "orbitstack/OneStepProverHostIo": "0x8cef93d8938073b743f7a540589ae5a108425a5a9c6f16ba080df9c88fd0ad62",
-    "orbitstack/OneStepProverMath": "0x46314b895c9439d9614366eaf21a39c387137bbd00b4af934add687a1ad0131e",
-    "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
-    "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
-    "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
-    "orbitstack/RollupProxy_fastConfirm": "0x15096a7a30984da8dead5ecf3a39299ca438a6f3869a0ff528f1ddb261e095b1",
-    "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
-    "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
+    "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
+    "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
+    "orbitstack/CustomGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
+    "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/RollupProxy_fastConfirm": "0x62bcdde440d51d7b36d2dc693743937bfe2d1c2b65d58eee1a50ce06e2c7eddf",
+    "orbitstack/SequencerInbox": "0x3fa38bb34cc216c88f30e3bff0ec1476b82eada0b9ea2cd9bae17f45353666b2",
+    "orbitstack/UpgradeExecutor": "0x5ccb1a24de22513543702981322da392ea6d43ef971ebf7144c29a5605174b25",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0x4c5542bf27e19b14a4f4d4747a02ac8ff23c9bff5c391ebb87e0e3cbf3b1d283"

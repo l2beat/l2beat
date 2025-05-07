@@ -51,7 +51,10 @@
         "updater": "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98",
         "VERSION": 0
       },
-      "derivedName": "Replica"
+      "implementationNames": {
+        "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF": "UpgradeBeaconProxy",
+        "0x7f221A1850c12b57fed1f0831dd25399a13b68c2": "Replica"
+      }
     },
     {
       "name": "HomeUpgradeBeacon",
@@ -64,7 +67,9 @@
       "sinceTimestamp": 1641898210,
       "sinceBlock": 13983742,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0x063e871f8DB991CEAd34B557A00B157B360084cc": "UpgradeBeacon"
+      }
     },
     {
       "address": "0x06D8902cfae8235047DC7783875279311798c715",
@@ -82,7 +87,9 @@
       "sinceTimestamp": 1641898337,
       "sinceBlock": 13983756,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0x0876dFe4AcAe0e1c0a43302716483f5752298b71": "UpgradeBeacon"
+      }
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -95,7 +102,9 @@
       "sinceTimestamp": 1641899379,
       "sinceBlock": 13983838,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeaconProxy"
+      "implementationNames": {
+        "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79": "UpgradeBeaconProxy"
+      }
     },
     {
       "address": "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
@@ -146,7 +155,10 @@
         "VERSION": 0,
         "xAppConnectionManager": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F"
       },
-      "derivedName": "GovernanceRouter"
+      "implementationNames": {
+        "0x3009C99D370B780304D2098196f1EBF779a4777a": "UpgradeBeaconProxy",
+        "0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707": "GovernanceRouter"
+      }
     },
     {
       "address": "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f",
@@ -164,7 +176,9 @@
       "sinceTimestamp": 1641898261,
       "sinceBlock": 13983750,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0x67833a48b3F509d4252ac2c19cd604556eD6c981": "UpgradeBeacon"
+      }
     },
     {
       "address": "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98",
@@ -216,7 +230,10 @@
         "VERSION": 0,
         "xAppConnectionManager": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F"
       },
-      "derivedName": "EthereumBridgeRouter"
+      "implementationNames": {
+        "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3": "UpgradeBeaconProxy",
+        "0xe0db61ac718f502B485DEc66D013afbbE0B52F84": "EthereumBridgeRouter"
+      }
     },
     {
       "name": "UpdaterManager",
@@ -233,7 +250,9 @@
         "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
         "updater": "0xa728bE5Be33E60D9c65677EBa569555536e587E4"
       },
-      "derivedName": "UpdaterManager"
+      "implementationNames": {
+        "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715": "UpdaterManager"
+      }
     },
     {
       "name": "HomeBeaconProxy",
@@ -287,7 +306,10 @@
         "updaterManager": "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
         "VERSION": 0
       },
-      "derivedName": "Home"
+      "implementationNames": {
+        "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8": "UpgradeBeaconProxy",
+        "0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06": "Home"
+      }
     },
     {
       "name": "Governor",
@@ -320,7 +342,10 @@
         "nonce": 7,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x93277b8f5939975b9E6694d5Fd2837143afBf68A": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x9782A3C8128f5D1BD3C9655d03181ba5b420883E",
@@ -348,7 +373,9 @@
       "sinceTimestamp": 1669736603,
       "sinceBlock": 16076617,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeaconProxy"
+      "implementationNames": {
+        "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c": "UpgradeBeaconProxy"
+      }
     },
     {
       "address": "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
@@ -371,7 +398,9 @@
       "sinceTimestamp": 1641899423,
       "sinceBlock": 13983843,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00": "UpgradeBeacon"
+      }
     },
     {
       "address": "0xC69b66cc2811B509829448FBFfb2553c4CBb627e",
@@ -417,7 +446,10 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "UpgradeBeaconController",
@@ -451,7 +483,9 @@
         "$immutable": true,
         "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a"
       },
-      "derivedName": "UpgradeBeaconController"
+      "implementationNames": {
+        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e": "UpgradeBeaconController"
+      }
     },
     {
       "address": "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
@@ -486,7 +520,9 @@
           "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D"
         ]
       },
-      "derivedName": "XAppConnectionManager"
+      "implementationNames": {
+        "0xFe8874778f946Ac2990A29eba3CFd50760593B2F": "XAppConnectionManager"
+      }
     }
   ],
   "abis": {
