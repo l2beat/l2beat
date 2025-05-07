@@ -11,6 +11,7 @@ import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
+import { getImplementationNames } from '../source/getDerivedName'
 import {
   get$Beacons,
   get$Implementations,
@@ -26,7 +27,7 @@ interface AnalyzedCommon {
   address: EthereumAddress
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
-  derivedName: string | undefined
+  implementationNames?: Record<EthereumAddress, string>
   isVerified: boolean
   proxyType?: string
   implementations: EthereumAddress[]
@@ -178,13 +179,15 @@ export class AddressAnalyzer {
     const deployment = proxy.deployment
     const analysis = {
       type: isEOA ? 'EOA' : 'Contract',
-      name: isEOA ? config.name : (config.name ?? sources.name),
-      derivedName: isEOA ? undefined : sources.name,
+      name: isEOA ? undefined : sources.name,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,
+      implementationNames: isEOA
+        ? undefined
+        : getImplementationNames(address, sources),
       proxyType: proxy?.type,
       values: mergedValues,
       errors: { ...templateErrors, ...errors },

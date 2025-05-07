@@ -14,7 +14,6 @@ import { debridge } from '../projects/debridge/debridge'
 import { everclearbridge } from '../projects/everclearbridge/everclearbridge'
 import { fraxferry } from '../projects/fraxferry/fraxferry'
 import { gravity } from '../projects/gravity/gravity'
-import { harmony } from '../projects/harmony/harmony'
 import { hop } from '../projects/hop/hop'
 import { hyperlane } from '../projects/hyperlane/hyperlane'
 import { hyphen } from '../projects/hyphen/hyphen'
@@ -61,7 +60,6 @@ export const bridges: Bridge[] = [
   davos,
   everclearbridge,
   gravity,
-  harmony,
   hyperlane,
   chainport,
   hop,

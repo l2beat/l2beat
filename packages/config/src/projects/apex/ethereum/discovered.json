@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21981180,
-  "configHash": "0x19d33f1c327ea102d2ff8c06b165362e0fb672bbcad6392c014c45f6208cb452",
+  "configHash": "0x9f3428947e733ed7d2b149363994886d83a44a651762a88287daea1ad94ad0bc",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -54,7 +54,9 @@
           "description": "Includes DAC members and threshold."
         }
       },
-      "derivedName": "Committee",
+      "implementationNames": {
+        "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": "Committee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -78,7 +80,9 @@
         "programHash": "770346231394331402493200980986217737662224545740427952627288191358999988146",
         "programHashMapped": "ApeX-USDT"
       },
-      "derivedName": "FinalizableGpsFactAdapter",
+      "implementationNames": {
+        "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22": "FinalizableGpsFactAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -118,6 +122,7 @@
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -209,7 +214,9 @@
           "description": "Includes DAC members and threshold."
         }
       },
-      "derivedName": "Committee",
+      "implementationNames": {
+        "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800": "Committee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -387,7 +394,14 @@
           "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
         }
       },
-      "derivedName": "Proxy",
+      "implementationNames": {
+        "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": "Proxy",
+        "0x8C43C9bec15d82D153C52518030e0a9590ABD35d": "StarkPerpetual",
+        "0x540Ad8576d2F90f28994ab001622F964945854A8": "AllVerifiers",
+        "0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310": "PerpetualTokensAndRamping",
+        "0x45de249eEa8f9CDB70943B17CceDeb42F5BA0175": "PerpetualState",
+        "0x31e2d974BaC547101413c24C23443AD488423f64": "PerpetualForcedActions"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -411,7 +425,9 @@
         "hasRegisteredFact": false,
         "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
       },
-      "derivedName": "PerpetualEscapeVerifier"
+      "implementationNames": {
+        "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD": "PerpetualEscapeVerifier"
+      }
     },
     {
       "address": "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",
@@ -467,7 +483,10 @@
         "nonce": 6,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "StarkPerpetualUSDT",
@@ -588,7 +607,14 @@
           "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
         }
       },
-      "derivedName": "Proxy",
+      "implementationNames": {
+        "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b": "Proxy",
+        "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4": "StarkPerpetual",
+        "0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E": "AllVerifiers",
+        "0x3F3A131caB7eb5b4EAE9497Bebb9E06bE80F2809": "PerpetualTokensAndRamping",
+        "0x5BfbE850d18b73ed98FB830e0A5E9F4970Bb93dA": "PerpetualState",
+        "0x229BbdF97eBc4993efe1433c0ae4A0bE79A4fe21": "PerpetualForcedActions"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -612,7 +638,9 @@
         "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
         "programHashMapped": "ApeX-USDC 20250130"
       },
-      "derivedName": "FinalizableGpsFactAdapter",
+      "implementationNames": {
+        "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953": "FinalizableGpsFactAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -647,6 +675,7 @@
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -1316,9 +1345,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
-    "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
-    "starkex/StarkPerpetual": "0x491138cc31c40b798c5278ae5bfe2f45fad75a40f08728e4e9f82f32c8a7a9cc"
+    "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
+    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/StarkPerpetual": "0x903f514b88caac1d83815c927eeb78ab045ea9eb8c455cd469433e071039d07a"
   },
   "permissionsConfigHash": "0xfc4502ff4b3620142113ac6202d1c2715c52125fb7dce05c2408eaa6e85fe827"
 }

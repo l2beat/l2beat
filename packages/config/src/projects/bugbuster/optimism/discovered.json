@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0x1732c9e2d89ce2319fdfd09536785d2aed98936ed7721171d507f8cf0305456c",
+  "configHash": "0x89a4c6dc457e87ad2464fdd8d634328843baf6321a82ab966132d1ae5eb143af",
   "entries": [
     {
       "name": "History",
@@ -18,7 +18,9 @@
         "$immutable": true,
         "owner": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
       },
-      "derivedName": "History"
+      "implementationNames": {
+        "0x04395d494624D2B6e30C0dfDB74498a2839f805d": "History"
+      }
     },
     {
       "name": "BugBuster",
@@ -36,7 +38,9 @@
         "getTemplateHash": "0x8fa989ac6c95375f2f07c8fa900a87bce79ae243a5a5f90c9531ccc9e1fceafc",
         "owner": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
       },
-      "derivedName": "CartesiDApp"
+      "implementationNames": {
+        "0x3FF5C7383F614256053c3F6B86A47bA974937299": "CartesiDApp"
+      }
     },
     {
       "name": "Authority",
@@ -53,7 +57,9 @@
         "getHistory": "0x04395d494624D2B6e30C0dfDB74498a2839f805d",
         "owner": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
       },
-      "derivedName": "Authority"
+      "implementationNames": {
+        "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": "Authority"
+      }
     },
     {
       "name": "InputBox",
@@ -66,7 +72,9 @@
       "sinceTimestamp": 1690464759,
       "sinceBlock": 107432991,
       "values": { "$immutable": true },
-      "derivedName": "InputBox"
+      "implementationNames": {
+        "0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox"
+      }
     },
     {
       "address": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3",
@@ -87,7 +95,9 @@
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
       },
-      "derivedName": "ERC20Portal"
+      "implementationNames": {
+        "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal"
+      }
     },
     {
       "address": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5",

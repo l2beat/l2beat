@@ -44,7 +44,7 @@ export const abstract: ScalingProject = zkStackL2({
     sinceTimestamp: genesisTimestamp,
     coingeckoPlatform: 'abstract',
     apis: [
-      { type: 'etherscan', url: 'https://api.abscan.org/api' },
+      { type: 'etherscan', chainId },
       { type: 'rpc', url: 'https://api.mainnet.abs.xyz', callsPerMinute: 1500 },
     ],
   },

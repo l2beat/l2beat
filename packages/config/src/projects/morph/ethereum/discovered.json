@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0x810d23099f226cec4c8695ab70542ee0f70da821dfb129149f35bc2af426a1ab",
+  "configHash": "0x4d96bedc57ca50838259f3a3a6d7da0caccd6dd61a67a87135a6eaeb5815762c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -102,7 +102,10 @@
         "stakingValue": "1000000000000000000",
         "withdrawalLockBlocks": 3
       },
-      "derivedName": "L1Staking"
+      "implementationNames": {
+        "0x0Dc417F8AF88388737c5053FF73f345f080543F7": "TransparentUpgradeableProxy",
+        "0xDb0734109051DaAB5c32E45e9a5ad0548B2df714": "L1Staking"
+      }
     },
     {
       "address": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
@@ -153,7 +156,10 @@
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
-      "derivedName": "L1ETHGateway"
+      "implementationNames": {
+        "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "TransparentUpgradeableProxy",
+        "0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": "L1ETHGateway"
+      }
     },
     {
       "address": "0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb",
@@ -220,7 +226,9 @@
         "$immutable": true,
         "owner": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin"
+      }
     },
     {
       "address": "0x323a78C1c910b282dE98a557d735628A02E00983",
@@ -294,7 +302,10 @@
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
-      "derivedName": "L1MessageQueueWithGasPriceOracle"
+      "implementationNames": {
+        "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "TransparentUpgradeableProxy",
+        "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": "L1MessageQueueWithGasPriceOracle"
+      }
     },
     {
       "address": "0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F",
@@ -336,7 +347,10 @@
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
-      "derivedName": "L1StandardERC20Gateway"
+      "implementationNames": {
+        "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "TransparentUpgradeableProxy",
+        "0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301": "L1StandardERC20Gateway"
+      }
     },
     {
       "address": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
@@ -419,7 +433,9 @@
         "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1]
       },
-      "derivedName": "MultipleVersionRollupVerifier"
+      "implementationNames": {
+        "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": "MultipleVersionRollupVerifier"
+      }
     },
     {
       "address": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
@@ -523,7 +539,10 @@
         "gateways": ["0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"],
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       },
-      "derivedName": "L1GatewayRouter"
+      "implementationNames": {
+        "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "TransparentUpgradeableProxy",
+        "0x6D9623d44C4A1629815D9d6236FF25C4f82Cc819": "L1GatewayRouter"
+      }
     },
     {
       "name": "MorphRollup",
@@ -623,7 +642,10 @@
         "revertReqIndex": 0,
         "verifier": "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
-      "derivedName": "Rollup"
+      "implementationNames": {
+        "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
+        "0x43190DfD1F572Cb56B1942B44482d1774151D77A": "Rollup"
+      }
     },
     {
       "address": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
@@ -786,7 +808,10 @@
         "nonce": 30,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
@@ -887,7 +912,10 @@
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": true
       },
-      "derivedName": "EnforcedTxGateway"
+      "implementationNames": {
+        "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": "TransparentUpgradeableProxy",
+        "0xCb13746Fc891fC2e7D824870D00a26F43fE6123e": "EnforcedTxGateway"
+      }
     },
     {
       "address": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
@@ -971,7 +999,10 @@
         "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "xDomainMessageSender": "0x000000000000000000000000000000000000dEaD"
       },
-      "derivedName": "L1CrossDomainMessenger"
+      "implementationNames": {
+        "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304": "TransparentUpgradeableProxy",
+        "0x0cC37d5239F9027A1269f53D83c73084D538f3a9": "L1CrossDomainMessenger"
+      }
     },
     {
       "address": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
@@ -1011,7 +1042,9 @@
         "programVkey": "0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c",
         "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
       },
-      "derivedName": "ZkEvmVerifierV1"
+      "implementationNames": {
+        "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": "ZkEvmVerifierV1"
+      }
     },
     {
       "name": "Morph Multisig 1",
@@ -1095,7 +1128,10 @@
         "nonce": 1,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0xF2FF0509520fAf35B511074466A509e00d73C307",
@@ -1162,7 +1198,9 @@
         "$immutable": true,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       },
-      "derivedName": "Whitelist"
+      "implementationNames": {
+        "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist"
+      }
     }
   ],
   "abis": {
@@ -1636,7 +1674,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
   "permissionsConfigHash": "0x51963444ea067dc1f5f278fc7bb3d77250a325ce7d7a01b3da0ee6aefd4ddd30"

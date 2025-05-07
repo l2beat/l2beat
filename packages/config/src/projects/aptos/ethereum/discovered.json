@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 21723791,
-  "configHash": "0x5287541092b3e2b7244bc00f17441ec4b23c4072a1aec08b20c0270dafac6db5",
+  "configHash": "0xb7e4a705758a9c8f3dce7e26aa3aadbe06bce65a0e37928f5a47143216e70758",
   "entries": [
     {
       "name": "LayerZero Proof Library",
@@ -23,7 +23,9 @@
         "stargateTokenAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
         "utilsVersion": 1
       },
-      "derivedName": "FPValidator"
+      "implementationNames": {
+        "0x07245eEa05826F5984c7c3C8F478b04892e4df89": "FPValidator"
+      }
     },
     {
       "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
@@ -59,7 +61,9 @@
         "zroEnabled": false,
         "zroFee": 0
       },
-      "derivedName": "TreasuryV2"
+      "implementationNames": {
+        "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": "TreasuryV2"
+      }
     },
     {
       "name": "UltraLightNodeV2",
@@ -87,7 +91,9 @@
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0
       },
-      "derivedName": "UltraLightNodeV2"
+      "implementationNames": {
+        "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2"
+      }
     },
     {
       "name": "TokenBridge",
@@ -114,7 +120,9 @@
         "useCustomAdapterParams": true,
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "TokenBridge"
+      "implementationNames": {
+        "0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907": "TokenBridge"
+      }
     },
     {
       "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
@@ -146,7 +154,10 @@
         ],
         "$upgradeCount": 2
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x5a54fe5234E811466D5366846283323c954310B2": "OptimizedTransparentUpgradeableProxy",
+        "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1": ""
+      }
     },
     {
       "name": "NonceContract",
@@ -162,7 +173,9 @@
         "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       },
-      "derivedName": "NonceContract"
+      "implementationNames": {
+        "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068": "NonceContract"
+      }
     },
     {
       "name": "Aptos Multisig",
@@ -196,7 +209,10 @@
         "nonce": 884,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x65bb797c2B9830d891D87288F029ed8dACc19705": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "Endpoint",
@@ -223,23 +239,14 @@
         "latestVersion": 5,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
       },
-      "derivedName": "Endpoint"
+      "implementationNames": {
+        "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": "Endpoint"
+      }
     },
     {
       "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "",
-      "address": "0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1661531834,
-      "sinceBlock": 15416447,
-      "values": { "$immutable": true },
-      "derivedName": ""
     },
     {
       "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
@@ -311,7 +318,10 @@
         ],
         "$upgradeCount": 6
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x902F09715B6303d4173037652FA7377e5b98089E": "OptimizedTransparentUpgradeableProxy",
+        "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f": ""
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -333,23 +343,14 @@
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": "ProxyAdmin"
+      }
     },
     {
       "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "",
-      "address": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1661535988,
-      "sinceBlock": 15416732,
-      "values": { "$immutable": true },
-      "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
@@ -371,7 +372,9 @@
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9": "ProxyAdmin"
+      }
     },
     {
       "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
@@ -409,7 +412,10 @@
         "nonce": 219,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
@@ -747,5 +753,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0xb6f628b4d80715dafd7ed4103ab474535200e8a400632a048d9bbc3941393abb"
+  "permissionsConfigHash": "0x5d63626624b951e8f5ea0d51a060f59ff51a82060e5a8eb2b6709694da7a2529"
 }

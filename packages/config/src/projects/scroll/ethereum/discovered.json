@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22389279,
-  "configHash": "0x03017f4f169b2abc9989558860e3b7b2c35af0d57528aa4e4d320b14932d8bcb",
+  "configHash": "0xfe2f62acebc77662d3849e4b157306d023d57dbe1e155bcf22f8fe18cb9570b1",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -20,7 +20,9 @@
         "verifierDigest1": "0x001e7bcb266824cb08ad303990e90a9c4b901eaaa52e562e513df47d4c168949",
         "verifierDigest2": "0x0038553adf417a6a3df35d2fdfd14b892f1e49ba18937ece7960c1e7cee6e3dc"
       },
-      "derivedName": "ZkEvmVerifierPostEuclid",
+      "implementationNames": {
+        "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": "ZkEvmVerifierPostEuclid"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -34,7 +36,9 @@
       "sinceTimestamp": 1719379319,
       "sinceBlock": 20173741,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x03a72B00D036C479105fF98A1953b15d9c510110": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -167,7 +171,9 @@
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -257,7 +263,9 @@
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockController"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -304,7 +312,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2",
+      "implementationNames": {
+        "0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -433,7 +444,10 @@
         "nonce": 7,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "references": [
         {
           "text": "Security Council members - Scroll Docs",
@@ -493,7 +507,10 @@
         "nonce": 25,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf",
@@ -511,7 +528,9 @@
       "sinceTimestamp": 1712907503,
       "sinceBlock": 19638084,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x2293cd12e8564e8219d314b075867c2f66ac6941": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -566,7 +585,9 @@
         "plonkVerifier": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
         "verifierDigest": "0x30513ba1873ce1b9598c4faf101dccd32498e93c39e1f31a423390cbb1f81f7a"
       },
-      "derivedName": "ZkEvmVerifierV2",
+      "implementationNames": {
+        "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": "ZkEvmVerifierV2"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -597,7 +618,9 @@
         "verifierDigest1": "0x005df630e095f46df0109f12181a4bf4ff6a2e401e78f12f556b15c622d90660",
         "verifierDigest2": "0x0025771eef6c3413bbf64d460556238de411a9154ceb1e00ac91c73e0bfb30d3"
       },
-      "derivedName": "ZkEvmVerifierPostEuclid"
+      "implementationNames": {
+        "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828": "ZkEvmVerifierPostEuclid"
+      }
     },
     {
       "address": "0x383C148ba96956F985F6141B2D119add1C34e3B7",
@@ -678,7 +701,9 @@
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": "TimelockController"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -705,7 +730,9 @@
         "$immutable": true,
         "plonkVerifier": "0x2293cd12e8564e8219d314b075867c2f66ac6941"
       },
-      "derivedName": "ZkEvmVerifierV1",
+      "implementationNames": {
+        "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -719,7 +746,9 @@
       "sinceTimestamp": 1696780751,
       "sinceBlock": 18306805,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -776,7 +805,9 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "verifierVersions": [0, 1, 2, 3, 4, 6, 7]
       },
-      "derivedName": "MultipleVersionRollupVerifier",
+      "implementationNames": {
+        "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -824,7 +855,10 @@
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D"
       },
-      "derivedName": "L1MessageQueueV2",
+      "implementationNames": {
+        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "TransparentUpgradeableProxy",
+        "0xEfA158006b072793a49E622B26761cD0eC38591d": "L1MessageQueueV2"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -841,7 +875,9 @@
         "$immutable": true,
         "plonkVerifier": "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1"
       },
-      "derivedName": "ZkEvmVerifierV1",
+      "implementationNames": {
+        "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV1"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -884,7 +920,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1ERC721Gateway",
+      "implementationNames": {
+        "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "TransparentUpgradeableProxy",
+        "0xd1841c5756428812233eEA78afC17cb2D3e392bb": "L1ERC721Gateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -904,7 +943,9 @@
         "$immutable": true,
         "plonkVerifier": "0x03a72B00D036C479105fF98A1953b15d9c510110"
       },
-      "derivedName": "ZkEvmVerifierV1",
+      "implementationNames": {
+        "0x63FB51C55d9605a75F8872C80De260a00fACfaA2": "ZkEvmVerifierV1"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -945,7 +986,10 @@
         "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
         "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
       },
-      "derivedName": "L1LidoGateway",
+      "implementationNames": {
+        "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "TransparentUpgradeableProxy",
+        "0xF4f2066EE72D62e3caF9678459149BA7FCf2262F": "L1LidoGateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -983,7 +1027,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1CustomERC20Gateway",
+      "implementationNames": {
+        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "TransparentUpgradeableProxy",
+        "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": "L1CustomERC20Gateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -1039,7 +1086,10 @@
         "rollup": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
       },
-      "derivedName": "L1ScrollMessenger",
+      "implementationNames": {
+        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "TransparentUpgradeableProxy",
+        "0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b": "L1ScrollMessenger"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -1079,7 +1129,10 @@
         "nonce": 4,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x69C2eD64171bF5737c2B78bdF722e68a032B2825": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1148,7 +1201,10 @@
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
         }
       },
-      "derivedName": "EnforcedTxGateway",
+      "implementationNames": {
+        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": "TransparentUpgradeableProxy",
+        "0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc": "EnforcedTxGateway"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1295,7 +1351,9 @@
         "opsNoDelay": ["0x826714adD4dDA2b8750794A467C892c0Cd49216b"],
         "scNoDelay": ["0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
       },
-      "derivedName": "ScrollOwner",
+      "implementationNames": {
+        "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1333,7 +1391,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1WETHGateway",
+      "implementationNames": {
+        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "TransparentUpgradeableProxy",
+        "0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49": "L1WETHGateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -1373,7 +1434,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1ETHGateway",
+      "implementationNames": {
+        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905": "TransparentUpgradeableProxy",
+        "0x546E0bF31FB6e7babD493452e4e6999191367B42": "L1ETHGateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -1461,7 +1525,9 @@
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0x826714adD4dDA2b8750794A467C892c0Cd49216b": "TimelockController"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1505,7 +1571,10 @@
         },
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0x8432728A257646449245558B8b7Dbe51A16c7a4D": "TransparentUpgradeableProxy",
+        "0x6A124779fDf107c3F6BcB992731dCAaD09f2276A": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1524,7 +1593,9 @@
       "sinceTimestamp": 1722833027,
       "sinceBlock": 20460053,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -1549,7 +1620,9 @@
       "sinceTimestamp": 1724898419,
       "sinceBlock": 20631259,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -1587,7 +1660,10 @@
         "nonce": 5,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1620,7 +1696,10 @@
         "nonce": 43,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1666,7 +1745,10 @@
         "nonce": 4,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x9479ABfebefEea3c846163012a472b44F305b3d7": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1686,7 +1768,9 @@
       "sinceTimestamp": 1745397191,
       "sinceBlock": 22330533,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -1733,7 +1817,10 @@
         "owner": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1CustomERC20Gateway",
+      "implementationNames": {
+        "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "TransparentUpgradeableProxy",
+        "0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03": "L1CustomERC20Gateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -1831,7 +1918,10 @@
         "systemConfig": "0x8432728A257646449245558B8b7Dbe51A16c7a4D",
         "verifier": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
       },
-      "derivedName": "ScrollChain",
+      "implementationNames": {
+        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "TransparentUpgradeableProxy",
+        "0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f": "ScrollChain"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1883,7 +1973,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1CustomERC20Gateway",
+      "implementationNames": {
+        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": "TransparentUpgradeableProxy",
+        "0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c": "L1CustomERC20Gateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -1928,7 +2021,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1ERC1155Gateway",
+      "implementationNames": {
+        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": "TransparentUpgradeableProxy",
+        "0x244BF7aEf29F03916569470a51fA0794B62F8cd7": "L1ERC1155Gateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -2016,7 +2112,10 @@
         "nonce": 157,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xc1985e3712b33a5303e097e9CeD22E91338ba64d",
@@ -2048,7 +2147,10 @@
         "nonce": 6,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -2071,7 +2173,9 @@
         "plonkVerifier": "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
         "verifierDigest": "0x0a1904dbfff4614fb090b4b3864af4874f12680c32f07889e9ede8665097e5ec"
       },
-      "derivedName": "ZkEvmVerifierV2",
+      "implementationNames": {
+        "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": "ZkEvmVerifierV2"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -2083,7 +2187,9 @@
       "sinceTimestamp": 1743130487,
       "sinceBlock": 22142558,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": ""
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -2132,7 +2238,10 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
-      "derivedName": "L1StandardERC20Gateway",
+      "implementationNames": {
+        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": "TransparentUpgradeableProxy",
+        "0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c": "L1StandardERC20Gateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -2232,7 +2341,9 @@
         "$immutable": true,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xEB803eb3F501998126bf37bB823646Ed3D59d072": "ProxyAdmin"
+      }
     },
     {
       "address": "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
@@ -2380,7 +2491,10 @@
         "nonce": 22,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "L1USDCGateway",
@@ -2422,7 +2536,10 @@
         "totalBridgedUSDC": 19605685745987,
         "withdrawPaused": false
       },
-      "derivedName": "L1USDCGateway",
+      "implementationNames": {
+        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": "TransparentUpgradeableProxy",
+        "0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e": "L1USDCGateway"
+      },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
@@ -2457,7 +2574,10 @@
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
-      "derivedName": "L1GatewayRouter",
+      "implementationNames": {
+        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "TransparentUpgradeableProxy",
+        "0xb93Ac04010Bd61F45BF492022A5b49a902F798F3": "L1GatewayRouter"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -3603,7 +3723,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "scroll/EnforcedTxGateway": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
     "scroll/L1CustomERC20Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
@@ -3614,7 +3734,7 @@
     "scroll/L1MessageQueue": "0x5cec50d36f5c888cc9815ba4ee94ec48f3df987dc9b5ee78fbd46bd166e014b2",
     "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
     "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
-    "scroll/L1Timelock": "0x17275115a5a001259d842c060777b54be7fbef8787dc4da1b168c3e98734c86a",
+    "scroll/L1Timelock": "0x97f0a624e955d4f357fdcb7966d3a68dfcccc1fcce33de3b85d52eab6a2400ef",
     "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
     "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",

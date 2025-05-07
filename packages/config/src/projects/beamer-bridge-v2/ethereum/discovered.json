@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0x15d01fa565d00ef1ec81a29f356c8ef270c16d56ad95275468bb411fd791e91b",
+  "configHash": "0xc394c7e217524a1ecfcbb4fe68c79cc204c52a16d33359d4d7fcb371a68cbd2a",
   "entries": [
     {
       "name": "EthereumL1Messenger",
@@ -18,7 +18,9 @@
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
-      "derivedName": "EthereumL1Messenger"
+      "implementationNames": {
+        "0x12B8489913E2afBCed131d52c345C380BBB65baf": "EthereumL1Messenger"
+      }
     },
     {
       "name": "EthereumL2Messenger",
@@ -35,7 +37,9 @@
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
         "resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD"
       },
-      "derivedName": "EthereumL2Messenger"
+      "implementationNames": {
+        "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": "EthereumL2Messenger"
+      }
     },
     {
       "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
@@ -57,7 +61,9 @@
         "nativeMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
-      "derivedName": "OptimismL1Messenger"
+      "implementationNames": {
+        "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": "OptimismL1Messenger"
+      }
     },
     {
       "name": "ArbitrumL1Messenger",
@@ -75,7 +81,9 @@
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
-      "derivedName": "ArbitrumL1Messenger"
+      "implementationNames": {
+        "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": "ArbitrumL1Messenger"
+      }
     },
     {
       "name": "EthereumRequestManager",
@@ -131,7 +139,9 @@
         "paused": true,
         "protocolFeePPM": 0
       },
-      "derivedName": "RequestManager"
+      "implementationNames": {
+        "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": "RequestManager"
+      }
     },
     {
       "name": "Resolver",
@@ -147,7 +157,9 @@
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
-      "derivedName": "Resolver"
+      "implementationNames": {
+        "0xCb60516819a28431233195A8b7E0227C288B61AD": "Resolver"
+      }
     },
     {
       "name": "EthereumFillManager",
@@ -166,7 +178,9 @@
         "messenger": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
-      "derivedName": "FillManager"
+      "implementationNames": {
+        "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": "FillManager"
+      }
     },
     {
       "address": "0xdC256EC77E97448d29D88118e55C82067150b768",

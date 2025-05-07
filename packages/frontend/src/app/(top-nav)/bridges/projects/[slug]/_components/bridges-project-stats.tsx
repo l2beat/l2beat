@@ -95,6 +95,7 @@ export function BridgesProjectStats({ project }: Props) {
       />
       <ProjectStat
         title="Validated by"
+        tooltip="How are the messages sent via this bridge checked?"
         value={
           project.header.validatedBy ? (
             <SentimentText
@@ -128,12 +129,12 @@ function ProjectStat(props: ProjectStat) {
         props.className,
       )}
     >
-      <div className="flex flex-row gap-1.5">
+      <div className="flex flex-row items-center gap-1.5">
         <span className="text-xs text-secondary">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 md:size-3.5" variant="gray" />
+              <InfoIcon className="max-md:mt-0.5 md:size-3.5" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

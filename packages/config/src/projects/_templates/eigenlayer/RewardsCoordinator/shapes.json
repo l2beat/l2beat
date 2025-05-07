@@ -4,5 +4,11 @@
     "address": "0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "RewardsCoordinator.sol": {
+    "hash": "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df",
+    "address": "0xa505c0116aD65071F0130061F94745b7853220aB",
+    "chain": "ethereum",
+    "blockNumber": 22424645
   }
 }

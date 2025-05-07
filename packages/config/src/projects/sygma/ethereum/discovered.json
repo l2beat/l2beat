@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "blockNumber": 19532229,
-  "configHash": "0xba5b29b01737210d0ae1d7f85b369fe672f70056d4270f90c67a0814d3ca60b3",
+  "configHash": "0x7f2190afbbda77a2f73012fe2e0ff83bb3884ca8e19565b0541374f8257569c7",
   "entries": [
     {
       "address": "0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
@@ -35,7 +35,9 @@
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
-      "derivedName": "FeeHandlerRouter"
+      "implementationNames": {
+        "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": "FeeHandlerRouter"
+      }
     },
     {
       "name": "Permissionless Generic Handler",
@@ -52,7 +54,9 @@
         "$immutable": true,
         "MAX_FEE": 1000000
       },
-      "derivedName": "PermissionlessGenericHandler"
+      "implementationNames": {
+        "0x31282123E7bcd947e2c1Bc364d564839574fAdCD": "PermissionlessGenericHandler"
+      }
     },
     {
       "name": "Bridge",
@@ -74,7 +78,9 @@
         "handler2": "0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
         "paused": false
       },
-      "derivedName": "Bridge"
+      "implementationNames": {
+        "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": "Bridge"
+      }
     },
     {
       "address": "0x5a288b42dC222190D8cF5014A330c978ee42A5df",
@@ -112,7 +118,9 @@
         "$immutable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
-      "derivedName": "BasicFeeHandler"
+      "implementationNames": {
+        "0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7": "BasicFeeHandler"
+      }
     },
     {
       "address": "0xa399460Ce767b06297457178D2F9F8f144017E77",
@@ -156,7 +164,10 @@
         "nonce": 9,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xc4d8b2F5501C765dE0C5E12550118F397B197D05": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
@@ -178,7 +189,9 @@
         "$immutable": true,
         "defaultDecimals": 18
       },
-      "derivedName": "ERC20Handler"
+      "implementationNames": {
+        "0xC832588193cd5ED2185daDA4A531e0B26eC5B830": "ERC20Handler"
+      }
     },
     {
       "address": "0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
@@ -216,7 +229,10 @@
         "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
@@ -251,7 +267,9 @@
         "role_unpauseTransfers": "0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
         "role_Withdraw": "0xc4d8b2F5501C765dE0C5E12550118F397B197D05"
       },
-      "derivedName": "AccessControlSegregator"
+      "implementationNames": {
+        "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": "AccessControlSegregator"
+      }
     }
   ],
   "abis": {

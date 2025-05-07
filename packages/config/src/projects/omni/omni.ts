@@ -72,13 +72,14 @@ export const omni: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description: `${discovery.getMultisigStats('BridgeValidators_DAI')} Validator MultiSig`,
+      value: `Multisig (${discovery.getMultisigStats('BridgeValidators_DAI')})`,
+      description: `${discovery.getMultisigStats('BridgeValidators_DAI')} BridgeValidators Multisig with publicly disclosed, external signers (DAI and Omni bridges each have their own validator set).`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts can be upgraded by the Gnosis Bridge MultiSig',
+      value: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+      secondLine: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Gnosis Bridge Multisig')} Gnosis Bridge MultiSig`,
       sentiment: 'bad',
     },
     destinationToken: {
@@ -87,8 +88,32 @@ export const omni: Bridge = {
         BRIDGE_RISK_VIEW.CANONICAL.description +
         ' Tokens transferred end up as wrapped ERC677.',
     },
+    livenessFailure: {
+      value: 'No mechanism',
+      description:
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
+      sentiment: 'bad',
+    },
   },
   technology: {
+    otherConsiderations: [
+      {
+        name: 'Rehypothecation',
+        description:
+          'User assets in the bridge escrow are not locked and can be moved by permissioned actors. This is usually done to generate yield, which can then be forwarded to the users.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: "there's an exploit in external contracts that are used to invest user deposits.",
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'there are not enough tokens in the escrow to service withdrawals due to investing.',
+          },
+        ],
+        references: [],
+      },
+    ],
     destination: ['Gnosis Chain'],
     canonical: true,
     principleOfOperation: {
@@ -115,17 +140,10 @@ export const omni: Bridge = {
           category: 'Funds can be stolen if',
           text: 'validators sign a malicious message to mint or release tokens that they did not burn or lock on the other side.',
         },
-        {
-          category: 'Funds can be stolen if',
-          text: "there's an exploit in external contracts that are used to invest user deposits.",
-        },
+
         {
           category: 'Funds can be frozen if',
           text: "validators don't relay messages between chains.",
-        },
-        {
-          category: 'Funds can be frozen if',
-          text: "there's insufficient liquidity of the requested token in the escrow due to investing.",
         },
       ],
     },

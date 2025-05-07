@@ -1,0 +1,14 @@
+{
+  "PlonkVerifierForMultiTypeDataAggregation": {
+    "hash": "0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4",
+    "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
+    "chain": "ethereum",
+    "blockNumber": 22272939
+  },
+  "PlonkVerifierMainnetFull": {
+    "hash": "0x7ffe47dd82e25e61467c2b267669b2c48ea49c8a7f1a744fea45ab189bc8b455",
+    "address": "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
+    "chain": "ethereum",
+    "blockNumber": 22394879
+  }
+}

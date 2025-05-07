@@ -1,4 +1,29 @@
-Generated with discovered.json: 0x5c4a398904480f21336330c34e425c7e10debe53
+Generated with discovered.json: 0x6df0c7e4731464de15fe1e1f2fe6894c5ea70823
+
+# Diff at Mon, 05 May 2025 14:54:32 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@277ef8f5adf45205d5b920c1ebfc0f7db8d19aff block: 22208595
+- current block number: 22418260
+
+## Description
+
+Added a known 4/6 multisig as the second member of another known 1/2 multisig.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A) {
+    +++ description: None
+      values.$members.1:
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.multisigThreshold:
+-        "1 of 1 (100%)"
++        "1 of 2 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xb7e671e8630b0eb8b974b8f85599fca8f6599843
 
 # Diff at Tue, 29 Apr 2025 08:19:25 GMT:
 

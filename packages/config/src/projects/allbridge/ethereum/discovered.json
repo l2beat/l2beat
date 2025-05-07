@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 21723681,
-  "configHash": "0xc30126ac41cf278264f3f24323bb0d02be7bd037605497cc96d6552e0a5dfec7",
+  "configHash": "0xbe4a86d2ece37bada0ae9f15f17fbaffc1d4d845a25cd98f080ef43b4905f66b",
   "entries": [
     {
       "address": "0x01a494079DCB715f622340301463cE50cd69A4D0",
@@ -24,7 +24,9 @@
         "chainId": 1,
         "owner": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622"
       },
-      "derivedName": "GasOracle"
+      "implementationNames": {
+        "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": "GasOracle"
+      }
     },
     {
       "name": "AllbridgeMessenger",
@@ -42,7 +44,9 @@
         "otherChainIds": "0x0000010101010101010101010001000000000000000000000000000000000000",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
-      "derivedName": "Messenger"
+      "implementationNames": {
+        "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": "Messenger"
+      }
     },
     {
       "address": "0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5",
@@ -63,7 +67,9 @@
       "sinceTimestamp": 1662595853,
       "sinceBlock": 15493337,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50": ""
+      }
     },
     {
       "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
@@ -89,7 +95,9 @@
         "USDC_POOL": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
         "USDT_POOL": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D"
       },
-      "derivedName": "Bridge"
+      "implementationNames": {
+        "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": "Bridge"
+      }
     },
     {
       "address": "0x7234dB900E907398EdfAdA744d5Bf8A842B335BA",
@@ -148,7 +156,9 @@
         "totalSupply": 4228996248,
         "vUsdBalance": 2064802206
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D": "Pool"
+      }
     },
     {
       "name": "WormholeMessenger",
@@ -166,7 +176,9 @@
         "otherChainIds": "0x0000010001010100010101010001000000000000000000000000000000000000",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
-      "derivedName": "WormholeMessenger"
+      "implementationNames": {
+        "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": "WormholeMessenger"
+      }
     },
     {
       "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
@@ -182,7 +194,9 @@
       "sinceTimestamp": 1636666899,
       "sinceBlock": 13597354,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x93746538D4519C809827205Bd1C2c7a0E15bd74b": ""
+      }
     },
     {
       "name": "OldLPBridge",
@@ -201,7 +215,9 @@
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
         "wormholeMessenger": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
       },
-      "derivedName": "Bridge"
+      "implementationNames": {
+        "0xA314330482f325D38A83B492EF6B006224a3bea9": "Bridge"
+      }
     },
     {
       "name": "Pool",
@@ -257,7 +273,9 @@
         "totalSupply": 6528249557,
         "vUsdBalance": 3193634544
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d": "Pool"
+      }
     },
     {
       "address": "0xb7C522Adb3429e2C7474df324c7a3744A5803414",
@@ -276,7 +294,9 @@
         "$immutable": true,
         "owner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6": ""
+      }
     },
     {
       "name": "TokenBridge",
@@ -316,7 +336,9 @@
         "unlockSigner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
         "validator": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b"
       },
-      "derivedName": "Bridge"
+      "implementationNames": {
+        "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": "Bridge"
+      }
     },
     {
       "name": "CctpBridge",
@@ -335,7 +357,9 @@
         "getDomainByChainId": [5],
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
-      "derivedName": "CctpBridge"
+      "implementationNames": {
+        "0xC51397b75B783E31469bFaADE79913F3f82210d6": "CctpBridge"
+      }
     },
     {
       "name": "OldWormholeMessenger",
@@ -346,7 +370,9 @@
       "sinceTimestamp": 1662998060,
       "sinceBlock": 15521726,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F": ""
+      }
     },
     {
       "address": "0xF62e459Aa6a959c4224A7315F85e4703f462918A",

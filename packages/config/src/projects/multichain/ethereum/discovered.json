@@ -2,7 +2,7 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0x466d73c76907606bf476d35ab6cc93158477faa0e4f92c8d323cd25b9806966e",
+  "configHash": "0x141bacbc2bca0821396ba268fc7ffaba851f25dc89659a24e69e9ab93fcbfee5",
   "entries": [
     {
       "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
@@ -31,7 +31,9 @@
         "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
         "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "AnyswapV4Router"
+      "implementationNames": {
+        "0x6b7a87899490EcE95443e979cA9485CBE7E71522": "AnyswapV4Router"
+      }
     },
     {
       "name": "AnyswapV6Router",
@@ -51,7 +53,9 @@
         "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
         "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "AnyswapV6Router"
+      "implementationNames": {
+        "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": "AnyswapV6Router"
+      }
     }
   ],
   "abis": {

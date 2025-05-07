@@ -92,11 +92,11 @@ function isInRangeRecursive(
       includeStartingInFuture,
     )
   } else {
-    if (formula.untilTimestamp && formula.untilTimestamp < timestamp) {
+    if (formula.untilTimestamp && formula.untilTimestamp <= timestamp) {
       return false
     }
 
-    if (!includeStartingInFuture && formula.sinceTimestamp > timestamp) {
+    if (!includeStartingInFuture && formula.sinceTimestamp >= timestamp) {
       return false
     }
 

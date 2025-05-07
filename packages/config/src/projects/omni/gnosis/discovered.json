@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 39725195,
-  "configHash": "0xc6da1627b6c8e15d1fa05693fb0bcabe0ccdff1f3f2dbfb33be1e3dd2eb190c5",
+  "configHash": "0x13ebe5253f94ec82f1a9b47f21bb42d2dbff4ac99e40b4e0db607b3c3ca4b2d2",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -46,7 +46,9 @@
         "SOURCE_CHAIN_ID": 1,
         "YAHO": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
       },
-      "derivedName": "Yaru"
+      "implementationNames": {
+        "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": "Yaru"
+      }
     },
     {
       "name": "PermittableToken",
@@ -71,7 +73,9 @@
         "totalSupply": 0,
         "version": "1"
       },
-      "derivedName": "PermittableToken"
+      "implementationNames": {
+        "0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": "PermittableToken"
+      }
     },
     {
       "address": "0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
@@ -154,7 +158,10 @@
         "nonce": 590,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x507A7777E6DbF4680951E63fB3753a20F2c37706": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf",
@@ -194,7 +201,9 @@
         "rewardAddressCount": 1,
         "rewardAddressList": ["0x77bcb57ba7037e39063f1567ce734452bbD7a5F0"]
       },
-      "derivedName": "OmnibridgeFeeManager"
+      "implementationNames": {
+        "0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": "OmnibridgeFeeManager"
+      }
     },
     {
       "address": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
@@ -227,7 +236,9 @@
         "owner": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "requestGasLimit": 600000
       },
-      "derivedName": "SelectorTokenGasLimitManager"
+      "implementationNames": {
+        "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": "SelectorTokenGasLimitManager"
+      }
     },
     {
       "name": "HashiManager_Gnosis",
@@ -290,7 +301,10 @@
           "description": "If true, Hashi validation is mandatory"
         }
       },
-      "derivedName": "HashiManager",
+      "implementationNames": {
+        "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": "EternalStorageProxy",
+        "0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": "HashiManager"
+      },
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
@@ -363,7 +377,10 @@
         "validatorContract": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
         "version": 6
       },
-      "derivedName": "HomeAMB"
+      "implementationNames": {
+        "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": "EternalStorageProxy",
+        "0xA033535983d1aBcc2648af730EDCb198909903D7": "HomeAMB"
+      }
     },
     {
       "name": "GnosisSafeL2",
@@ -401,7 +418,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
     },
     {
       "name": "GnosisSafeL2",
@@ -462,7 +482,10 @@
         "nonce": 92,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
@@ -560,7 +583,10 @@
           "description": "Array of the signers in the validator multisig"
         }
       },
-      "derivedName": "BridgeValidators"
+      "implementationNames": {
+        "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": "EternalStorageProxy",
+        "0xb056BFEdc397D427697a75E3ff115a0954de4791": "BridgeValidators"
+      }
     },
     {
       "address": "0xa3a3456BC0c8ce4e0a0415B619803ee96509Ce30",
@@ -590,7 +616,9 @@
         "SOURCE_CHAIN_ID": 1,
         "verifier": "0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b"
       },
-      "derivedName": "SP1Helios"
+      "implementationNames": {
+        "0xa809c536c85b63a2676CbAc3C4064748AD3a2562": "SP1Helios"
+      }
     },
     {
       "name": "Hashi",
@@ -601,7 +629,9 @@
       ],
       "proxyType": "immutable",
       "values": { "$immutable": true },
-      "derivedName": "Hashi"
+      "implementationNames": {
+        "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
+      }
     },
     {
       "address": "0xB1dD1828794075f7521365163A93DE9e68e3c49f",
@@ -643,7 +673,10 @@
         "nonce": 5,
         "VERSION": "1.4.1"
       },
-      "derivedName": "SafeL2"
+      "implementationNames": {
+        "0xb1F43dc8B57562e7FA48157D73102a8e4a94975A": "SafeProxy",
+        "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "address": "0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -671,7 +704,9 @@
       "proxyType": "immutable",
       "description": "Contract handling outbound messages for the Hashi protocol.",
       "values": { "$immutable": true },
-      "derivedName": "Yaho"
+      "implementationNames": {
+        "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": "Yaho"
+      }
     },
     {
       "name": "Gnosis DAO EOA 2",
@@ -704,7 +739,9 @@
         "SOURCE_YAHO": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
         "SP1_HELIOS_ADDRESS": "0xa809c536c85b63a2676CbAc3C4064748AD3a2562"
       },
-      "derivedName": "SP1HeliosAdapter"
+      "implementationNames": {
+        "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A": "SP1HeliosAdapter"
+      }
     },
     {
       "address": "0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -729,7 +766,9 @@
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
         "owner": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd"
       },
-      "derivedName": "MultiTokenForwardingRulesManager"
+      "implementationNames": {
+        "0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": "MultiTokenForwardingRulesManager"
+      }
     },
     {
       "address": "0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
@@ -754,7 +793,9 @@
         "VERIFIER_HASH": "0x11b6a09d63d255ad425ee3a7f6211d5ec63fbde9805b40551c3136275b6f4eb4",
         "VERSION": "v4.0.0-rc.3"
       },
-      "derivedName": "SP1Verifier"
+      "implementationNames": {
+        "0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b": "SP1Verifier"
+      }
     },
     {
       "address": "0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
@@ -780,7 +821,9 @@
         "owner": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "tokenImage": "0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4"
       },
-      "derivedName": "TokenFactory"
+      "implementationNames": {
+        "0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": "TokenFactory"
+      }
     },
     {
       "address": "0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
@@ -814,7 +857,10 @@
         "nonce": 24,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0xEF138856d0581641A57245Ee5CFfc9ceaA059623": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
     },
     {
       "address": "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
@@ -892,7 +938,10 @@
         "upgradeabilityOwner": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "version": 8
       },
-      "derivedName": "HomeOmnibridge"
+      "implementationNames": {
+        "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": "EternalStorageProxy",
+        "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": "HomeOmnibridge"
+      }
     },
     {
       "name": "Karpatkey EOA",

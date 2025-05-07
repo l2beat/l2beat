@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0xc416629267a0dcb47bb788c05179fdc3ff02a37a21f0091da1cacf3541fd3694",
+  "configHash": "0x310fdcb3a6987ac5b2c8cf3c39c59cfdd737243b285ce759c4442d6d51a50f36",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -47,7 +47,9 @@
           "description": "Includes DAC members and threshold."
         }
       },
-      "derivedName": "FinalizableCommittee",
+      "implementationNames": {
+        "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669": "FinalizableCommittee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -70,7 +72,9 @@
         "programHash": "16830627573509542901909952446321116535677491650708854009406762893086223513",
         "programHashMapped": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)"
       },
-      "derivedName": "GpsFactRegistryAdapter",
+      "implementationNames": {
+        "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143": "GpsFactRegistryAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -116,6 +120,7 @@
       "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -161,7 +166,9 @@
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
-      "derivedName": "OrderRegistry"
+      "implementationNames": {
+        "0x806d435a82B0381bD884540c2235147c13B97fe6": "OrderRegistry"
+      }
     },
     {
       "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
@@ -288,7 +295,16 @@
           "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
         }
       },
-      "derivedName": "Proxy",
+      "implementationNames": {
+        "0xB62BcD40A24985f560b5a9745d478791d8F1945C": "Proxy",
+        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": "StarkExchange",
+        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
+        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": "TokensAndRamping",
+        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
+        "0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
+        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
+        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": "ProxyUtils"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
@@ -656,10 +672,10 @@
     ]
   },
   "usedTemplates": {
-    "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
-    "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
-    "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
-    "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
+    "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
+    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "starkex/StarkExchange": "0xfb69f71d65a0752a2088fe51c43f8d06488cc2a465e19b649b9e317de103ab09"
   },
   "permissionsConfigHash": "0x0e4384190b113ac1b1bb6e2e968f46470a125f92aa5bc8190a6291b5a4d28845"
 }

@@ -1,8 +1,8 @@
 {
   "name": "pulseChain",
   "chain": "ethereum",
-  "blockNumber": 17968825,
-  "configHash": "0xaa7e6ce66c8544847c07595834c6abf3b8bdf97507d8619513fbb9cdcffe72e1",
+  "blockNumber": 22431228,
+  "configHash": "0xc179421215947cd942d988bac3cb2d48efbca59fd2f3d5073d51e188170f97b8",
   "entries": [
     {
       "address": "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
@@ -46,7 +46,7 @@
         "bridgeContract": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 0 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 19591,
+        "getCurrentDay": 20215,
         "implementation": "0xB7DF1E00ae030e966E635ede273625240546B873",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef",
@@ -56,7 +56,10 @@
         "upgradeabilityOwner": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "version": 1
       },
-      "derivedName": "ForeignOmnibridge"
+      "implementationNames": {
+        "0x1715a3E4A142d8b698131108995174F37aEBA10D": "EternalStorageProxy",
+        "0xB7DF1E00ae030e966E635ede273625240546B873": "ForeignOmnibridge"
+      }
     },
     {
       "address": "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
@@ -67,16 +70,28 @@
       "name": "BridgeValidators",
       "address": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
       "type": "Contract",
+      "template": "gnosisbridge/BridgeValidators",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
         "0x5568dae309b68b3870831f43f7a6eb3459ab46bee27f0f282f5b9a0b2f2ed720"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Custom multisignature contract for Validator addresses.",
       "sinceTimestamp": 1684140779,
       "sinceBlock": 17264119,
       "values": {
         "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "$implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+        "$members": [
+          "0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0",
+          "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
+          "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
+          "0xfB18Da3bCA8057eB05aab6e77a32925949093533",
+          "0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa",
+          "0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E",
+          "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
+          "0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
+        ],
         "$pastUpgrades": [
           [
             "2023-05-15T08:53:47.000Z",
@@ -84,6 +99,7 @@
             ["0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
           ]
         ],
+        "$threshold": 5,
         "$upgradeCount": 1,
         "deployedAtBlock": 17264123,
         "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
@@ -95,22 +111,19 @@
         "implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
         "isInitialized": true,
         "owner": "0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f",
-        "requiredSignatures": 5,
         "upgradeabilityOwner": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "validatorCount": 8,
-        "validatorList": [
-          "0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0",
-          "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
-          "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
-          "0xfB18Da3bCA8057eB05aab6e77a32925949093533",
-          "0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa",
-          "0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E",
-          "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
-          "0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
-        ],
         "version": 1
       },
-      "derivedName": "BridgeValidators"
+      "fieldMeta": {
+        "$members": {
+          "description": "Array of the signers in the validator multisig"
+        }
+      },
+      "implementationNames": {
+        "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "EternalStorageProxy",
+        "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": "BridgeValidators"
+      }
     },
     {
       "address": "0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539",
@@ -120,7 +133,14 @@
     {
       "address": "0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "description": "change the threshold and manage signers."
+        }
+      ]
     },
     {
       "address": "0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef",
@@ -152,7 +172,9 @@
         "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
       },
-      "derivedName": "WETHOmnibridgeRouter"
+      "implementationNames": {
+        "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": "WETHOmnibridgeRouter"
+      }
     },
     {
       "name": "TokenFactory",
@@ -170,7 +192,9 @@
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
         "tokenImage": "0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
       },
-      "derivedName": "TokenFactory"
+      "implementationNames": {
+        "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02": "TokenFactory"
+      }
     },
     {
       "name": "PermittableToken",
@@ -197,7 +221,9 @@
         "totalSupply": 0,
         "version": "1"
       },
-      "derivedName": "PermittableToken"
+      "implementationNames": {
+        "0xA1077a294dDE1B09bB078844df40758a5D0f9a27": "PermittableToken"
+      }
     },
     {
       "name": "ForeignAMB",
@@ -243,7 +269,10 @@
         "validatorContract": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
         "version": 1
       },
-      "derivedName": "ForeignAMB"
+      "implementationNames": {
+        "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": "EternalStorageProxy",
+        "0xe98699957d3504aCD57ffF861E4b77b57eB02467": "ForeignAMB"
+      }
     },
     {
       "address": "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
@@ -254,6 +283,7 @@
       "address": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -287,11 +317,6 @@
     },
     {
       "address": "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -531,6 +556,8 @@
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ]
   },
-  "usedTemplates": {},
-  "permissionsConfigHash": "0x79bb67f77dec84c9b1b122be813b1f20e031bd456159c9b4af0032226197db25"
+  "usedTemplates": {
+    "gnosisbridge/BridgeValidators": "0x356534465ab0329c89ea80ed97f0ee0b0ca948e3dadde05fe442c4709d352d27"
+  },
+  "permissionsConfigHash": "0xb76a552effed22c4fdc08a5a3395345138d5152fdde60733faff4c1c46401660"
 }

@@ -1,6 +1,5 @@
 import { type IProvider, ProxyDetector } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
-import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import type { CliLogger } from '@l2beat/shared'
 import {
   assert,
@@ -12,21 +11,23 @@ import {
 import chalk from 'chalk'
 import { utils } from 'ethers'
 import { getProvider } from './common/GetProvider'
+import { getExplorerConfig } from './common/getExplorer'
 
-export async function getEvents(
-  logger: CliLogger,
-  address: EthereumAddress,
-  inputTopics: string[],
-  rpcUrl: string,
-  explorerUrl?: string,
-  explorerApiKey?: string,
-  explorerType?: string,
-) {
-  const explorer = {
-    type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
-    url: explorerUrl ?? 'ERROR',
-    apiKey: explorerApiKey ?? 'ERROR',
-  }
+export interface EventArgs {
+  address: EthereumAddress
+  topics: string[]
+  rpcUrl: string
+  chainName: string | undefined
+  explorerUrl: string
+  explorerApiKey: string | undefined
+  explorerType: string
+  explorerChainId: number | undefined
+}
+
+export async function getEvents(logger: CliLogger, args: EventArgs) {
+  const { address, topics: inputTopics, rpcUrl } = args
+
+  const explorer = getExplorerConfig(args)
   const provider = await getProvider(rpcUrl, explorer)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
@@ -34,11 +35,6 @@ export async function getEvents(
   if (!onlyHashedTopics) {
     logger.logLine(
       'Some of the topics you provided are not hashes, trying to match them to the ABI',
-    )
-    assert(explorerUrl !== undefined)
-    assert(
-      explorerType !== 'etherscan' || explorerApiKey !== undefined,
-      'When using etherscan you should provide the API key using --etherscan-key.',
     )
 
     const proxyDetector = new ProxyDetector()

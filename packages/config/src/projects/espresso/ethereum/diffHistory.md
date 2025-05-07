@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x3b9f17df265f035cf727e6dcfbb301d906603c94
+
+# Diff at Fri, 02 May 2025 17:23:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 21372994
+- current block number: 22397507
+
+## Description
+
+Minor upgrade of the HotShotLightClient contract (hardcoded verifier keys for the lightclient verifier are now public methods).
+
+## Watched changes
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      sourceHashes.1:
+-        "0xb39829b8c4f7adee8b3f63d4c34b18a92e40670401393ceb3af7105d95f4b8c4"
++        "0x6c8c2f6bb51ae2ffefb868f088dc9db0c6c7b920bc8fe97de669ee0d91e43090"
+      values.$implementation:
+-        "0x2E81FD03725158903FD32E41b0357C47941BB2c3"
++        "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"
+      values.$pastUpgrades.1:
++        ["2024-11-05T18:20:35.000Z","0x48bc49aef98e23cde6494da9897bac992ea11e7390c162bb86baa5a2c2209c4c",["0x2E81FD03725158903FD32E41b0357C47941BB2c3"]]
+      values.$pastUpgrades.0.2:
+-        ["0x2E81FD03725158903FD32E41b0357C47941BB2c3"]
++        "0x61a3f76709191c8149c61f1aed15846ac8debd71a50540f71d94f21882323e41"
+      values.$pastUpgrades.0.1:
+-        "2024-11-05T18:20:35.000Z"
++        "2025-05-01T16:57:23.000Z"
+      values.$pastUpgrades.0.0:
+-        "0x48bc49aef98e23cde6494da9897bac992ea11e7390c162bb86baa5a2c2209c4c"
++        ["0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../HotShotLightClient/LightClient.sol             | 72 +++++++++++++---------
+ 1 file changed, 43 insertions(+), 29 deletions(-)
+```
+
 Generated with discovered.json: 0x2251de852fcd46ef642fea8c91cac2509784a3c9
 
 # Diff at Tue, 29 Apr 2025 08:19:02 GMT:

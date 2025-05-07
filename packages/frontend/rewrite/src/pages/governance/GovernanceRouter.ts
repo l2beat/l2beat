@@ -1,5 +1,5 @@
 import type { Router } from 'express'
-import { validateRoute } from 'rewrite/src/ssr/validateRoute'
+import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '../../../../src/utils/Manifest'
 import type { RenderFunction } from '../../ssr/server'
@@ -13,13 +13,13 @@ export function GovernanceRouter(
   render: RenderFunction,
 ) {
   app.get('/governance', async (req, res) => {
-    const data = await getGovernanceData(manifest)
+    const data = await getGovernanceData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   app.get('/governance/publications', async (req, res) => {
-    const data = await getGovernancePublicationsData(manifest)
+    const data = await getGovernancePublicationsData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
@@ -30,7 +30,11 @@ export function GovernanceRouter(
       params: z.object({ id: z.string() }),
     }),
     async (req, res) => {
-      const data = await getGovernancePublicationData(manifest, req.params.id)
+      const data = await getGovernancePublicationData(
+        manifest,
+        req.params.id,
+        req.originalUrl,
+      )
 
       if (!data) {
         res.status(404).send('Not found')

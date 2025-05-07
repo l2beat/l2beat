@@ -1,6 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 
+const chainId = 56
+
 export const bsc: BaseProject = {
   id: ProjectId('bsc'),
   slug: 'bsc',
@@ -21,7 +23,7 @@ export const bsc: BaseProject = {
   },
   chainConfig: {
     name: 'bsc',
-    chainId: 56,
+    chainId,
     explorerUrl: 'https://bscscan.com',
     multicallContracts: [
       {
@@ -31,6 +33,6 @@ export const bsc: BaseProject = {
         version: '3',
       },
     ],
-    apis: [{ type: 'etherscan', url: 'https://api.bscscan.com/api' }],
+    apis: [{ type: 'etherscan', chainId }],
   },
 }

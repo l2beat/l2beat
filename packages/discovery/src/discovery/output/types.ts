@@ -77,7 +77,8 @@ export interface ContractCategory {
 export type StructureEntry = {
   type: 'Contract' | 'EOA'
   address: EthereumAddress
-  derivedName?: string
+  name?: string
+  implementationNames?: Record<EthereumAddress, string>
   template?: string
   sourceHashes?: string[]
   unverified?: true
@@ -92,7 +93,6 @@ export type StructureEntry = {
 
 export type ColorEntry = {
   name?: string
-  displayName?: string
   description?: string
   fieldMeta?: Record<string, FieldMeta>
   references?: ExternalReference[]
@@ -102,6 +102,7 @@ export type ColorEntry = {
 export type PermissionEntry = {
   receivedPermissions?: ReceivedPermission[]
   directlyReceivedPermissions?: ReceivedPermission[]
+  controlsMajorityOfUpgradePermissions?: boolean
 }
 
 export type EntryParameters = StructureEntry & ColorEntry & PermissionEntry
@@ -111,6 +112,7 @@ export interface ColorOutput {
 }
 
 export type PermissionsOutput = {
+  eoasWithMajorityUpgradePermissions?: EthereumAddress[]
   permissionsConfigHash: Hash256
   permissions: {
     receiver: string

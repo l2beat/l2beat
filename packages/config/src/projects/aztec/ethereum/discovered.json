@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 21387141,
-  "configHash": "0xac563f93db93c9cc6698a95a96096faaad6fd7b91e80fa8f15cf69f6efa6d129",
+  "configHash": "0x720b33fe3c959618764598dc69cbb4d21f7129a51bf24f48ff7ce2eef8d0510b",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -39,7 +39,9 @@
           "description": "Tip that gets added to a gas reimbursement for processing the rollup."
         }
       },
-      "derivedName": "AztecFeeDistributor"
+      "implementationNames": {
+        "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": "AztecFeeDistributor"
+      }
     },
     {
       "name": "TurboVerifier",
@@ -54,7 +56,9 @@
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
       "values": { "$immutable": true },
-      "derivedName": "TurboVerifier"
+      "implementationNames": {
+        "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": "TurboVerifier"
+      }
     },
     {
       "name": "RollupProcessor",
@@ -159,7 +163,9 @@
           "type": "PERMISSION"
         }
       },
-      "derivedName": "RollupProcessor"
+      "implementationNames": {
+        "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": "RollupProcessor"
+      }
     },
     {
       "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
@@ -194,7 +200,10 @@
         "nonce": 288,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xE298a76986336686CC3566469e3520d23D1a8aaD": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "FirstAnvilAddress",
@@ -346,9 +355,9 @@
     ]
   },
   "usedTemplates": {
-    "aztecv1/AztecFeeDistributor": "0x1bef7dba6769827a90943c431f6521f59d6d44379a236b5d5773affa9cfc60de",
-    "aztecv1/RollupProcessor": "0xd0b3daed9d3babccd7f4f9ba892bd118459b79f14a85391292d4c54c64f1400c",
-    "aztecv1/TurboVerifier": "0x0c711bbe5023db74519baeae6b62652ab1d26c7e9855d720ff62842af1dc04a7",
+    "aztecv1/AztecFeeDistributor": "0x5602627a4be04ccfcbdfb044ed52fbdeccd5274fe75e3ed0d5b1b30813dcd1f9",
+    "aztecv1/RollupProcessor": "0xc2e3d6e0eda7460e4f4273cf0a180b86dd114c2b9f25564076028a8e758140fe",
+    "aztecv1/TurboVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
   "permissionsConfigHash": "0x907fb235536ca51d0789ee77c4a48c4300088ceb205a39fc1219bb2e78e1f832"

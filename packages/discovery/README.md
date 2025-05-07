@@ -33,7 +33,7 @@ To run the discovery UI locally:
 
 Discovery is based on two sources of information: the chain's RPC and it's explorer.
 To run you will need to provide the RPC url to use: (`CHAIN_RPC_URL_FOR_DISCOVERY`).
-Also in most cases you'll be using a chain with an Etherscan instance for which you'll need to provide the api key: (`CHAIN_ETHERSCAN_API_KEY_FOR_DISCOVERY`).
+Explorer is also required, most chains use Etherscan, for those that do use it, it's enough to configure only (`ETHERSCAN_API_KEY_FOR_DISCOVERY`).
 If your chain uses Blockscout you don't need to provide it.
 Chain information is already precompiled in the file mentioned [above](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
 It stores information as the name, chain id, configuration of the multicall contract and the explorer instance.
@@ -47,15 +47,16 @@ Discovery can make use of additional environment variables such as:
 Example .env file
 
 ```
+# Shared EtherScan API key
+ETHERSCAN_API_KEY=<API_KEY>
+
 # Always starting from Ethereum
 ETHEREUM_RPC_URL_FOR_DISCOVERY=<RPC_URL>
-ETHEREUM_ETHERSCAN_API_KEY=<API_KEY>
 ETHEREUM_BEACON_API_URL_FOR_DISCOVERY=<BEACON_URL>                           # (optional)
 ETHEREUM_EVENT_RPC_URL_FOR_DISCOVERY=<RPC_URL_THAT_SUPPORTS_UNLIMITED_RANGE> # (optional)
 
 # But some of the handlers are going to switch to Arbitrum and fetch info from there
 ARBITRUM_RPC_URL_FOR_DISCOVERY=<RPC_URL>
-ARBITRUM_ETHERSCAN_API_KEY=<API_KEY>
 ```
 
 Tips:

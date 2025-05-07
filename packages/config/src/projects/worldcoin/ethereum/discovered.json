@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 22208595,
-  "configHash": "0x947c8fb6f0abe4daf790420ab6c940bee632d46b103cf64897b0fc346c877cbc",
+  "blockNumber": 22418260,
+  "configHash": "0x419a319a006733c7a99714918f4e0d06ba7ea468de535b62445cd05c1a1169db",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -26,10 +26,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 80,
+        "nonce": 82,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x0897316DFE7141DB1E182551c3e8077cf5dd9695": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -56,7 +59,10 @@
         "nonce": 51,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7",
@@ -85,7 +91,9 @@
         "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "VerifierLookupTable"
+      "implementationNames": {
+        "0x39CcB3b670651a14da8b3835f42924f49C2C5986": "VerifierLookupTable"
+      }
     },
     {
       "address": "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
@@ -117,7 +125,9 @@
         "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "VerifierLookupTable"
+      "implementationNames": {
+        "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49": "VerifierLookupTable"
+      }
     },
     {
       "name": "DeleteVerifierSize100",
@@ -130,7 +140,9 @@
       "sinceTimestamp": 1705017431,
       "sinceBlock": 18987089,
       "values": { "$immutable": true },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0x43B68ccBa7FC726540768fD1537c3179283140ed": "Verifier"
+      }
     },
     {
       "address": "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
@@ -167,10 +179,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 109,
+        "nonce": 113,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
@@ -198,7 +213,9 @@
       "sinceTimestamp": 1704776987,
       "sinceBlock": 18967237,
       "values": { "$immutable": true },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258": "Verifier"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -225,10 +242,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 45,
+        "nonce": 48,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xb67ac19693fB89880Ca5873f6a890E865b259c26": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
@@ -270,10 +290,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 74,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "DeleteVerifierSize10",
@@ -286,7 +309,9 @@
       "sinceTimestamp": 1705017371,
       "sinceBlock": 18987084,
       "values": { "$immutable": true },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1": "Verifier"
+      }
     },
     {
       "name": "SemaphoreVerifier",
@@ -299,7 +324,9 @@
       "sinceTimestamp": 1688036723,
       "sinceBlock": 17584544,
       "values": { "$immutable": true },
-      "derivedName": "SemaphoreVerifier"
+      "implementationNames": {
+        "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5": "SemaphoreVerifier"
+      }
     },
     {
       "address": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
@@ -317,7 +344,9 @@
       "sinceTimestamp": 1704777119,
       "sinceBlock": 18967248,
       "values": { "$immutable": true },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0xE44c83b9e1971A24EC698829297A0C4026B0CeF9": "Verifier"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -341,10 +370,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -362,16 +394,22 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"],
+        "$members": [
+          "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+          "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
+        ],
         "$threshold": 1,
         "domainSeparator": "0x180452edbeec3663940e6932f25fdc940988599b6fdc9937d77da5ec37217250",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 69,
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 70,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "WorldIdIdentityManager2",
@@ -413,7 +451,7 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
-        "latestRoot": "20535234106167532500999484013852939974794758791305569179198459264789841243239",
+        "latestRoot": "11723245542143325645711088622662242263965971813944812995176893208042144527659",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -427,7 +465,10 @@
           "description": "Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"
         }
       },
-      "derivedName": "WorldIDIdentityManagerImplV2"
+      "implementationNames": {
+        "0xf7134CE138832c1456F2a91D64621eE90c2bddEa": "WorldIDIdentityManager",
+        "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd": "WorldIDIdentityManagerImplV2"
+      }
     },
     {
       "name": "RegisterVerifierSize600",
@@ -440,7 +481,9 @@
       "sinceTimestamp": 1704777071,
       "sinceBlock": 18967244,
       "values": { "$immutable": true },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0xFC1c26E964F791f81a33F49D91f79456891AA1c1": "Verifier"
+      }
     }
   ],
   "abis": {
@@ -664,5 +707,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0x239bd475c73e064a397ac60c49ac6bc42cd6e4e81f91f68709ec5c361905a83d"
+  "permissionsConfigHash": "0x4456c4de3e23755565e194d364b2032844428d106f7edcd2d138e27de14d4d15"
 }

@@ -2,7 +2,7 @@
   "name": "abstract",
   "chain": "ethereum",
   "blockNumber": 22367139,
-  "configHash": "0xb8c31c05a701296719461b244c5c890db1590394e548030b09e53525d7d75883",
+  "configHash": "0x55466e921b3ff5f65732af70282201c8134fe7909a7b283c0d0042666a469e4e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -34,7 +34,10 @@
         "nonce": 3,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -325,7 +328,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -368,7 +377,10 @@
         "nonce": 2,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x325407EEC948b97429068AF0cd8A8D95F06315a4": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -425,7 +437,10 @@
         "nonce": 1,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x57533344e91d29f927AAEBee364A33633Bd205Ab": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -456,7 +471,10 @@
         "nonce": 2,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x58536761C97F5037931b56efeE922471add0eEe8": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -492,7 +510,9 @@
           "0x11805594be0229EF08429D775AF0c55f7c4535dE"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -525,7 +545,10 @@
         "nonce": 0,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -576,7 +599,10 @@
         "nonce": 11,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "ValidatorTimelock",
@@ -611,7 +637,9 @@
           "0x54aB716D465be3D5EEca64E63ac0048D7a81659a"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -647,7 +675,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -681,7 +711,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

@@ -17,6 +17,7 @@ export const surge: ScalingProject = upcomingL2({
       websites: ['https://surge.wtf/'],
       apps: ['https://bridge.hoodi.surge.wtf/'],
       explorers: ['https://explorer.hoodi.surge.wtf'],
+      documentation: ['https://docs.surge.wtf'],
       repositories: ['https://github.com/nethermindEth/surge'],
       socialMedia: ['https://x.com/NethermindEth'],
     },

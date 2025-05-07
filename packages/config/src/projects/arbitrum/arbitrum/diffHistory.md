@@ -1,4 +1,100 @@
-Generated with discovered.json: 0x0d43368195c457b6711b12da4aa6294c7b1c0a95
+Generated with discovered.json: 0x94b286830723d6dbd512f6791061f1318dd38b77
+
+# Diff at Tue, 06 May 2025 15:56:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e14d6ca6cfb9c51927744033947048a6b7efb278 block: 331086890
+- current block number: 333894848
+
+## Description
+
+SC member elections have concluded.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.8:
+-        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
++        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.7:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.6:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.5:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.4:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.2:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.getSecondCohort.4:
+-        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
++        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.getSecondCohort.3:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.getSecondCohort.2:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.1:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.updateNonce:
+-        12
++        13
+    }
+```
+
+Generated with discovered.json: 0x71c0fc49fd6a584890abfb77d53ac9733390af7b
+
+# Diff at Tue, 06 May 2025 10:57:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 331086890
+- current block number: 331086890
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331086890 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xeed621ab829e178730af08232cb0938c21c4567f
 
 # Diff at Tue, 29 Apr 2025 09:36:52 GMT:
 

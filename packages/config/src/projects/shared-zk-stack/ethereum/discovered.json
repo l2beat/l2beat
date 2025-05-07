@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22382816,
-  "configHash": "0x7510b3bddc3abb6e188549888ae3f786660fc3bc39064686cf2e21fd804c6932",
+  "blockNumber": 22423769,
+  "configHash": "0xe1194b601a08ead693b8a13cf489adc749c7206dddebd621908e49b813c83077",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -29,7 +29,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x015318c16AE443a20DE0A776dB06a59F0D279057": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -90,7 +93,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x13f07d9BF17615f6a17F272fe1A913168C275A66": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -128,7 +134,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -153,7 +162,9 @@
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": "ProxyAdmin"
+      }
     },
     {
       "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9",
@@ -200,7 +211,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -234,7 +248,8 @@
         "upgradeTimestamps": [
           { "_protocolVersion": 103079215106, "_upgradeTimestamp": 1722521507 },
           { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1736517600 },
-          { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1741773600 }
+          { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1741773600 },
+          { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1746435600 }
         ]
       },
       "fieldMeta": {
@@ -242,7 +257,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0x2cf3bD6a9056b39999F3883955E183F655345063": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -417,7 +434,10 @@
           "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."
         }
       },
-      "derivedName": "Bridgehub",
+      "implementationNames": {
+        "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "TransparentUpgradeableProxy",
+        "0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87": "Bridgehub"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -463,7 +483,10 @@
         "nonce": 2,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -497,7 +520,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -548,7 +574,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -622,10 +651,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 191,
+        "nonce": 194,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -652,7 +684,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -685,7 +720,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -718,7 +756,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -754,7 +795,10 @@
         ],
         "sharedTree": { "_height": 4, "_leafNumber": 15 }
       },
-      "derivedName": "MessageRoot",
+      "implementationNames": {
+        "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": "TransparentUpgradeableProxy",
+        "0x19347Fb8eD3E8e35eb4a01c8B18Bd330194Cf0ad": "MessageRoot"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -817,7 +861,9 @@
         "PROTOCOL_UPGRADE_HANDLER": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "derivedName": "Guardians",
+      "implementationNames": {
+        "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "Guardians"
+      },
       "references": [
         {
           "text": "Guardians - ZK Nation docs",
@@ -856,7 +902,10 @@
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "CTMDeploymentTracker",
+      "implementationNames": {
+        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860": "TransparentUpgradeableProxy",
+        "0x1E405E5cdF127Dc98Eb490AB0e97345f892Ff7E1": "CTMDeploymentTracker"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -947,7 +996,9 @@
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
         }
       },
-      "derivedName": "SecurityCouncil",
+      "implementationNames": {
+        "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410": "SecurityCouncil"
+      },
       "references": [
         {
           "text": "Security Council members - ZK Nation docs",
@@ -1003,7 +1054,10 @@
         "nonce": 13,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x69462a81ba94D64c404575f1899a464F123497A2": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1031,7 +1085,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1067,7 +1124,9 @@
       "sinceTimestamp": 1739108915,
       "sinceBlock": 21809357,
       "values": { "$immutable": true },
-      "derivedName": "RollupL1DAValidator",
+      "implementationNames": {
+        "0x72213dfe8CA61B0A782970dCFebFb877778f9119": "RollupL1DAValidator"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1095,7 +1154,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1144,7 +1206,10 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1188,7 +1253,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1AssetRouter",
+      "implementationNames": {
+        "0x8829AD80E425C646DAB305381ff105169FeEcE56": "TransparentUpgradeableProxy",
+        "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315": "L1AssetRouter"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1230,7 +1298,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1266,7 +1337,10 @@
         "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1343,7 +1417,10 @@
         "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1394,7 +1471,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "L1NativeTokenVault",
@@ -1435,7 +1515,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "WETH_TOKEN": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "L1NativeTokenVault",
+      "implementationNames": {
+        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6": "TransparentUpgradeableProxy",
+        "0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947": "L1NativeTokenVault"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1483,7 +1566,9 @@
         "$immutable": true,
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": "ProxyAdmin"
+      }
     },
     {
       "address": "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392",
@@ -1547,7 +1632,10 @@
         "storedBatchZero": "0xe3199bb31e1acf8a1667692d8536edcce799c58cfebe85e3e0adeb0ae788b291",
         "validatorTimelock": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       },
-      "derivedName": "ChainTypeManager",
+      "implementationNames": {
+        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": "TransparentUpgradeableProxy",
+        "0x6D598c77AF57Bfa17201483400615c61819dD45A": "ChainTypeManager"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1580,7 +1668,10 @@
         "nonce": 9,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1597,7 +1688,9 @@
       "sinceTimestamp": 1743440243,
       "sinceBlock": 22168232,
       "values": { "$immutable": true },
-      "derivedName": "L1GenesisUpgrade",
+      "implementationNames": {
+        "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C": "L1GenesisUpgrade"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1645,7 +1738,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1715,7 +1811,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1Nullifier",
+      "implementationNames": {
+        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": "TransparentUpgradeableProxy",
+        "0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518": "L1Nullifier"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1821,7 +1920,10 @@
         },
         "emergencyUpgradesExecuted": { "severity": "HIGH" }
       },
-      "derivedName": "ProtocolUpgradeHandler",
+      "implementationNames": {
+        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": "TransparentUpgradeableProxy",
+        "0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A": "ProtocolUpgradeHandler"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1857,7 +1959,9 @@
         "daPairs": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" }
       },
-      "derivedName": "RollupDAManager",
+      "implementationNames": {
+        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45": "RollupDAManager"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1989,7 +2093,9 @@
         "SECURITY_COUNCIL": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       },
-      "derivedName": "EmergencyUpgradeBoard",
+      "implementationNames": {
+        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6": "EmergencyUpgradeBoard"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -2037,7 +2143,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -2902,7 +3011,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
     "shared-zk-stack/EmergencyUpgradeBoard": "0xf0529192bd3663a9f0d22f9d6221b3b70a7b5bf83f48481fdf672ede9d755121",

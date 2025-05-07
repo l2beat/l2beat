@@ -140,6 +140,93 @@ describeDatabase(LivenessRepository.name, (db) => {
     })
   })
 
+  describe(LivenessRepository.prototype.getRecordsInRangeWithLatestBefore
+    .name, () => {
+    it('should return rows within given time range with latest before', async () => {
+      const NEW_DATA = [
+        {
+          timestamp: START - 3 * UnixTime.HOUR,
+          blockNumber: 12340,
+          txHash: '0xabcdef1234567891',
+          configurationId: txIdA,
+        },
+      ]
+      await repository.insertMany(NEW_DATA)
+
+      const results = await repository.getRecordsInRangeWithLatestBefore(
+        [txIdA],
+        START - 2 * UnixTime.HOUR,
+        START - 1 * UnixTime.HOUR,
+      )
+
+      expect(results).toEqual([DATA[1]!, NEW_DATA[0]!])
+    })
+
+    it('should return rows within given time range, exclusive to', async () => {
+      const NEW_DATA = [
+        {
+          timestamp: START,
+          blockNumber: 12340,
+          txHash: '0xabcdef1234567891',
+          configurationId: txIdA,
+        },
+      ]
+      await repository.insertMany(NEW_DATA)
+      const results = await repository.getByConfigurationIdWithinTimeRange(
+        [txIdA, txIdB],
+        START - 2 * UnixTime.HOUR,
+        START + 0 * UnixTime.HOUR,
+      )
+
+      expect(results).toEqual([DATA[0]!, DATA[1]!])
+    })
+
+    it('should return record before from for each configuration, desc timestamp', async () => {
+      await repository.deleteAll()
+      const NEW_DATA = [
+        {
+          timestamp: START - 1 * UnixTime.HOUR,
+          blockNumber: 12345,
+          txHash: '0x1234567890abcdef',
+          configurationId: txIdA,
+        },
+        {
+          timestamp: START - 2 * UnixTime.HOUR,
+          blockNumber: 12340,
+          txHash: '0xabcdef1234567890',
+          configurationId: txIdA,
+        },
+        {
+          timestamp: START - 3 * UnixTime.HOUR - 1,
+          blockNumber: 12340,
+          txHash: '0xabcdef1234567891',
+          configurationId: txIdA,
+        },
+        {
+          timestamp: START - 3 * UnixTime.HOUR,
+          blockNumber: 12346,
+          txHash: '0xabcdef1234567890',
+          configurationId: txIdB,
+        },
+        {
+          timestamp: START - 4 * UnixTime.HOUR,
+          blockNumber: 12346,
+          txHash: '0xabcdef1234567891',
+          configurationId: txIdB,
+        },
+      ]
+      await repository.insertMany(NEW_DATA)
+
+      const results = await repository.getRecordsInRangeWithLatestBefore(
+        [txIdA, txIdB],
+        START - 2 * UnixTime.HOUR,
+        START - 1 * UnixTime.HOUR,
+      )
+
+      expect(results).toEqual([NEW_DATA[1]!, NEW_DATA[3]!, NEW_DATA[2]!])
+    })
+  })
+
   describe(LivenessRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

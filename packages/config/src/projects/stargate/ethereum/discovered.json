@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21723798,
-  "configHash": "0x7188937dbb73899bdc50f18c042de189062755e1a0ba09626adc7eb673975d7e",
+  "configHash": "0xeacdb397749b95804ce8f3537969b42cca3aff4857d295751291fea99353026a",
   "entries": [
     {
       "name": "Factory",
@@ -36,7 +36,9 @@
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98"
       },
-      "derivedName": "Factory"
+      "implementationNames": {
+        "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": "Factory"
+      }
     },
     {
       "name": "DAI Pool",
@@ -109,7 +111,9 @@
         "totalSupply": 221185416780,
         "totalWeight": 9999
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d": "Pool"
+      }
     },
     {
       "name": "SG-ETH Pool",
@@ -232,7 +236,9 @@
         "totalSupply": "1942044391325720108125",
         "totalWeight": 12298
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x101816545F6bd2b1076434B54383a1E633390A2E": "Pool"
+      }
     },
     {
       "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
@@ -350,7 +356,9 @@
         "totalSupply": "704866653963671285539686",
         "totalWeight": 10000
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09": "Pool"
+      }
     },
     {
       "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
@@ -374,7 +382,9 @@
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "useLayerZeroToken": false
       },
-      "derivedName": "Bridge"
+      "implementationNames": {
+        "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97": "Bridge"
+      }
     },
     {
       "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
@@ -400,7 +410,9 @@
         "zroEnabled": false,
         "zroFee": 0
       },
-      "derivedName": "TreasuryV2"
+      "implementationNames": {
+        "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": "TreasuryV2"
+      }
     },
     {
       "name": "USDT Pool",
@@ -713,7 +725,9 @@
         "totalSupply": 2436050000187,
         "totalWeight": 11208
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x38EA452219524Bb87e18dE1C24D3bB59510BD783": "Pool"
+      }
     },
     {
       "name": "USDT Pool2",
@@ -776,7 +790,9 @@
         "totalSupply": 107129513050,
         "totalWeight": 1
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d": "Pool"
+      }
     },
     {
       "name": "UltraLightNodeV2",
@@ -827,7 +843,9 @@
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0
       },
-      "derivedName": "UltraLightNodeV2"
+      "implementationNames": {
+        "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2"
+      }
     },
     {
       "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
@@ -895,7 +913,9 @@
         "totalSupply": 2035325654,
         "totalWeight": 1
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x590d4f8A68583639f215f675F3a259Ed84790580": "Pool"
+      }
     },
     {
       "name": "TSS Oracle",
@@ -922,7 +942,10 @@
         ],
         "$upgradeCount": 2
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x5a54fe5234E811466D5366846283323c954310B2": "OptimizedTransparentUpgradeableProxy",
+        "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1": ""
+      }
     },
     {
       "name": "NonceContract",
@@ -938,7 +961,9 @@
         "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       },
-      "derivedName": "NonceContract"
+      "implementationNames": {
+        "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068": "NonceContract"
+      }
     },
     {
       "name": "StarGate Multisig",
@@ -972,7 +997,10 @@
         "nonce": 884,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x65bb797c2B9830d891D87288F029ed8dACc19705": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "Endpoint",
@@ -999,7 +1027,9 @@
         "latestVersion": 5,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
       },
-      "derivedName": "Endpoint"
+      "implementationNames": {
+        "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": "Endpoint"
+      }
     },
     {
       "name": "USDD Pool",
@@ -1072,7 +1102,9 @@
         "totalSupply": "149990084690792301371012",
         "totalWeight": 1
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x692953e758c3669290cb1677180c64183cEe374e": "Pool"
+      }
     },
     {
       "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
@@ -1122,7 +1154,9 @@
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "protocolFeeOwner": "0x65bb797c2B9830d891D87288F029ed8dACc19705"
       },
-      "derivedName": "Router"
+      "implementationNames": {
+        "0x8731d54E9D02c286767d56ac03e8037C07e01e98": "Router"
+      }
     },
     {
       "name": "StarGateFeeLibrary7",
@@ -1156,7 +1190,9 @@
         "PROTOCOL_FEE_FOR_SAME_TOKEN": 500000000000000,
         "PROTOCOL_SUBSIDY": 30000000000000
       },
-      "derivedName": "StargateFeeLibraryV07"
+      "implementationNames": {
+        "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F": "StargateFeeLibraryV07"
+      }
     },
     {
       "name": "LayerZero Relayer",
@@ -1203,7 +1239,10 @@
         ],
         "$upgradeCount": 6
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x902F09715B6303d4173037652FA7377e5b98089E": "OptimizedTransparentUpgradeableProxy",
+        "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f": ""
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -1225,7 +1264,9 @@
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": "ProxyAdmin"
+      }
     },
     {
       "name": "MAI Pool",
@@ -1338,7 +1379,9 @@
         "totalSupply": 2431718764,
         "totalWeight": 100
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": "Pool"
+      }
     },
     {
       "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
@@ -1406,7 +1449,9 @@
         "totalSupply": "1404536511829702396",
         "totalWeight": 1
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0xA572d137666DCbAdFA47C3fC41F15e90134C618c": "Pool"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -1428,7 +1473,9 @@
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9": "ProxyAdmin"
+      }
     },
     {
       "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
@@ -1466,7 +1513,10 @@
         "nonce": 219,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "Google Cloud Oracle",
@@ -1490,7 +1540,9 @@
         "vid": 101,
         "workerFeeLib": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
       },
-      "derivedName": "VerifierNetwork"
+      "implementationNames": {
+        "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "VerifierNetwork"
+      }
     },
     {
       "name": "METIS Pool",
@@ -1563,7 +1615,9 @@
         "totalSupply": "3492549083261638416473",
         "totalWeight": 1
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47": "Pool"
+      }
     },
     {
       "name": "VerifierFeeLib",
@@ -1576,7 +1630,9 @@
       "sinceTimestamp": 1694217119,
       "sinceBlock": 18095085,
       "values": { "$immutable": true },
-      "derivedName": "VerifierFeeLib"
+      "implementationNames": {
+        "0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
+      }
     },
     {
       "name": "USDC Pool",
@@ -1889,7 +1945,9 @@
         "totalSupply": 7059602647597,
         "totalWeight": 11350
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": "Pool"
+      }
     },
     {
       "name": "LUSD Pool",
@@ -1962,7 +2020,9 @@
         "totalSupply": 101505181168,
         "totalWeight": 9500
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2": "Pool"
+      }
     },
     {
       "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
@@ -2050,7 +2110,9 @@
         "totalSupply": 68679780532,
         "totalWeight": 9998
       },
-      "derivedName": "Pool"
+      "implementationNames": {
+        "0xfA0F307783AC21C39E939ACFF795e27b650F6e68": "Pool"
+      }
     }
   ],
   "abis": {

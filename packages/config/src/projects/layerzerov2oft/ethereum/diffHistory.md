@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x8610761f5f2faba06526f48c7b9ef7a9518468f5
+Generated with discovered.json: 0xf089e88969224aba8666dcf9a262b351d35709bf
+
+# Diff at Tue, 06 May 2025 13:32:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@09b97f14e3365304f798b0b4fc6971d693d1eb2f block: 22174829
+- current block number: 22174829
+
+## Description
+
+ethereum
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      name:
+-        ""
++        "LayerZero Executor"
+    }
+```
+
+Generated with discovered.json: 0xff729e031a9e3a88bdce85906c003455ab7068db
 
 # Diff at Tue, 29 Apr 2025 08:19:05 GMT:
 

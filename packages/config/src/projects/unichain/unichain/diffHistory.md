@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xd22f86ce0f69089d17bf5715ca959e894f11f6b2
+
+# Diff at Tue, 06 May 2025 10:57:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 15457819
+- current block number: 15457819
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15457819 (main branch discovery), not current.
+
+```diff
+    EOA UnichainProxyAdminOwner_L2Alias (0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x1727c1efc0647747d286ce6eb19a3ea479e54bfc
+
+# Diff at Fri, 02 May 2025 17:25:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 9916035
+- current block number: 15457819
+
+## Description
+
+config related: templatized the L1Splitter contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9916035 (main branch discovery), not current.
+
+```diff
+    contract L1Splitter (0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+      template:
++        "unichain/L1Splitter"
+      description:
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
+    }
+```
+
+```diff
+    contract L1Splitter (0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd).
+      template:
++        "unichain/L1Splitter"
+      description:
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd)."
+    }
+```
+
 Generated with discovered.json: 0x7c9926b96fa9e45c9df91b2a11e1357d1078cf35
 
 # Diff at Tue, 29 Apr 2025 08:19:30 GMT:

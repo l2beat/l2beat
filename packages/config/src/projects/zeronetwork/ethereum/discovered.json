@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 22181511,
-  "configHash": "0x725b75725e19455939a9de14b96111e11aff1e849c5c9bae6b612df9b313ee5a",
+  "configHash": "0xde72a773f1d4254d38b486a74eff51c160f701cac109c44c09e678263fa0a41b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -65,7 +65,10 @@
         "nonce": 5,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x3Bc72A56F9036B94ad14BF082bF93731e0545255",
@@ -125,7 +128,9 @@
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -161,7 +166,9 @@
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -207,7 +214,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -226,7 +235,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -487,7 +498,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",

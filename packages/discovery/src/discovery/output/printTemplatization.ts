@@ -51,14 +51,13 @@ export function printTemplatization(
 
       const nestedLines = []
       if (matchedShape !== undefined) {
-        const [shapeFileName, { chain, blockNumber, hash, address }] =
-          matchedShape
+        const { name, shape } = matchedShape
 
         nestedLines.push(
           ...[
-            shapeFileName,
-            `${chain} @ ${blockNumber} (${address})`,
-            `hash: ${hash}`,
+            name,
+            `${shape.chain} @ ${shape.blockNumber} (${shape.address})`,
+            `hash: ${shape.hash}`,
           ],
         )
       }
