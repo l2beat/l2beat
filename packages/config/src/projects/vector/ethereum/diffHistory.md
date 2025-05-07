@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x6b690562b38eb35c449fb12b04aeca7fd6f9818f
+
+# Diff at Wed, 07 May 2025 10:16:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22423561
+- current block number: 22431133
+
+## Description
+
+Updated owner of ProxyAdmin and 4/7 Avail multisig to the TimelockController.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      values.owner:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.6.via.1:
++        {"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+      receivedPermissions.6.via.0.address:
+-        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.6.via.0.delay:
++        86400
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+    }
+```
+
 Generated with discovered.json: 0xd87bac7b9ea3ad62608d63633846ad55e909d162
 
 # Diff at Tue, 06 May 2025 08:46:00 GMT:
