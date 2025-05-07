@@ -112,4 +112,12 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'Blobs create a new, cheap way to post data onchain that is specialized for rollups.',
     type: 'general',
   },
+  {
+    title: 'Pectra is live on mainnet',
+    date: '2025-05-07T10:05:00Z',
+    url: 'https://eips.ethereum.org/EIPS/eip-7691',
+    description:
+      'The Pectra hardfork increases the blob limit per block, raising the maximum from 6 to 9 blobs and the target from 3 to 6 blobs.',
+    type: 'general',
+  },
 ]
