@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import { getZkCatalogEntries } from '~/app/(side-nav)/zk-catalog/_utils/get-zk-catalog-entries'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
@@ -7,6 +8,7 @@ import type { RenderData } from '../../ssr/server'
 
 export async function getZkCatalogData(
   manifest: Manifest,
+  url: string,
 ): Promise<RenderData> {
   const [appLayoutProps, verifiers, projects] = await Promise.all([
     getAppLayoutProps(),
@@ -21,9 +23,14 @@ export async function getZkCatalogData(
   return {
     head: {
       manifest,
-      title: 'FAQ - L2BEAT',
-      description:
-        'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+      metadata: getMetadata(manifest, {
+        title: 'ZK Catalog - L2BEAT',
+        description: 'A catalog of the ZK projects with detailed research.',
+        openGraph: {
+          url,
+          image: '/meta-images/zk-catalog/opengraph-image.png',
+        },
+      }),
     },
     ssr: {
       page: 'ZkCatalogPage',

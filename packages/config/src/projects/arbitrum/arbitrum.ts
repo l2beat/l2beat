@@ -83,6 +83,8 @@ const maxTimeVariation = discovery.getContractValue<{
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
+const chainId = 42161
+
 export const arbitrum: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
@@ -153,7 +155,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   chainConfig: {
     name: 'arbitrum',
-    chainId: 42161,
+    chainId,
     explorerUrl: 'https://arbiscan.io',
     coingeckoPlatform: 'arbitrum-one',
     // ~ Timestamp of block number 0 on Arbitrum
@@ -178,7 +180,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         url: 'https://arb1.arbitrum.io/rpc',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.arbiscan.io/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },

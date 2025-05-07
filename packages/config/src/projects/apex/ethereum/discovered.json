@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21981180,
-  "configHash": "0x19d33f1c327ea102d2ff8c06b165362e0fb672bbcad6392c014c45f6208cb452",
+  "configHash": "0x9f3428947e733ed7d2b149363994886d83a44a651762a88287daea1ad94ad0bc",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -118,6 +118,7 @@
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -647,6 +648,7 @@
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",

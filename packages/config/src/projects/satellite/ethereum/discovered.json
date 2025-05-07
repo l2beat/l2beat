@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0xd1de18cc7679c3f4941cb1cb7b901aba5be1197b29d2ed28905b186ac9168fa4",
+  "configHash": "0x5d72de3411b274568f9d196dbf7248bd8b557517ae6a90716069d8eef6ce7c31",
   "entries": [
     {
       "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -134,6 +134,7 @@
       "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

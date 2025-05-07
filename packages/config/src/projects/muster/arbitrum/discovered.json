@@ -2,7 +2,7 @@
   "name": "muster",
   "chain": "arbitrum",
   "blockNumber": 324576418,
-  "configHash": "0x5495699f0378bfeacfe38bd26cf02bfa90c821a15c44ddaa2daf231dfbc34318",
+  "configHash": "0x221ada536b60aad043b62dc65f4df35cbfec3a3beb9e0829325b31bcbf387b75",
   "entries": [
     {
       "name": "UpgradeExecutor",
@@ -338,7 +338,8 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
-            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }
         }
       ],
@@ -461,6 +462,7 @@
       "address": "0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

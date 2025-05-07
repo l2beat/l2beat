@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 22208591,
-  "configHash": "0x92dd4970f59931ba1dda21357bf8c2c683486dcce01a41394ec585f55a789702",
+  "configHash": "0xbd9945fa05f0679c5561d7108adb17b4f6b26c1e13ad43ad69892cef89c2aa54",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -20,6 +20,7 @@
       "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

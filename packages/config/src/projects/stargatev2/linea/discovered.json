@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "linea",
-  "blockNumber": 15810734,
-  "configHash": "0x72e4e36c1e9b62ed3381e9259e4a5b026cc6aaae494d0970c272fe11f52005e1",
+  "blockNumber": 18731275,
+  "configHash": "0x6cc27cc4ca0c25459abc1c1dec21e7fa522ca7a470deb026f2646aac836e08f4",
   "entries": [
     {
       "name": "TokenMessaging",
@@ -70,7 +70,7 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": "8000000000000000000000",
+        "deficitOffset": "320000000000000000000",
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x6E3d884C96d640526F273C61dfcF08915eBd7e2B",
@@ -85,14 +85,14 @@
         "lpToken": "0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
-        "plannerFee": "542494962930812061",
-        "poolBalance": "16569394042000000000000",
+        "plannerFee": "965909936873089042",
+        "poolBalance": "19685968030000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 28120607,
-        "tvl": "4456999350000000000000"
+        "treasuryFee": 33591142,
+        "tvl": "1890917179000000000000"
       },
       "derivedName": "StargatePoolNative"
     },
@@ -283,5 +283,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x5706a59399c824e14cc625a3eb30d0938a9b6c1c11668fb20edb3e10356db3ae"
+  "permissionsConfigHash": "0x6745e5fe9cf7824b9243d07161fb0061a5a4cd82af144d25b5533ae367bbe621"
 }

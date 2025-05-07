@@ -1,4 +1,633 @@
-Generated with discovered.json: 0xd7527a347fb3c898a9fff35eec3fce254a26f8d5
+Generated with discovered.json: 0x684d93637905949f967fd73830f52a742f6461bc
+
+# Diff at Tue, 06 May 2025 14:19:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208559
+- current block number: 22425139
+
+## Description
+
+- AVSDirectory.sol - library changes for operator registration with signature validation, modular pausing functionality managed by a PauserRegistry. Marked registerOperatorToAVS as deprecated, only to be used by legacy M2 AVSs that have not integrated with operator sets.
+- AllocationManager.sol - New contract used for creating Operator Sets, and letting Operator register to Operator Sets. Each AVS defines one or more Operator Sets that Operators may opt into. By opting into the Operator Set for an AVS, Operators gain access to the AVS rewards, and the AVS slashing risks.
+The Allocation Manager also tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake. 
+- DelegationManager.sol -  EIP-712-compliant delegation via signatures, added modular pausing via PauserRegistry. New slashing logic and withdraw queue handling, undelegate _removeSharesAndQueueWithdrawal function is updated to be slashing-aware. It introduces scaledShares, slashingFactors, and DepositScalingFactor mechanics to ensure withdrawals accurately reflect any slashing that occurred during delegation.
+- EigenPod.sol - changes to checkpoint logic, custom error types for gas efficiency
+- EigenPodManager.sol - BeaconChainSlashingFactor was added to track how much of a staker's restaked balance remains post-slashing
+- PermissionedController.sol - New contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060)
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+```
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "0xe9FA8F904d97854C7389b68923262ADCC6C27827"
++        "0x0EC17ef9c00F360DB28CA8008684a4796b11E456"
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c"
++        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
+      sourceHashes.0:
+-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
++        "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143"
+      values.$implementation:
+-        "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"
++        "0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"
+      values.$pastUpgrades.1:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.DOMAIN_TYPEHASH:
+-        "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866"
+      values.domainSeparator:
+-        "0x8ceb9367dd5eb661ead5bb90d8bfd836c1293d5fd67da541d446e1954349df40"
++        "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb"
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.OPERATOR_SET_FORCE_DEREGISTRATION_TYPEHASH:
++        "0x4ee65f64218c67b68da66fd0db16560040a6b973290b9e71912d661ee53fe495"
+      values.OPERATOR_SET_REGISTRATION_TYPEHASH:
++        "0x809c5ac049c45b7a7f050a20f00c16cf63797efbf8b1eb8d749fdfa39ff8f929"
+      values.version:
++        "1.3.0"
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions.1.from:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      directlyReceivedPermissions.0.from:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      sourceHashes.0:
+-        "0x236f85a005803b10e03d97356b1569532271b43a19b27c7479079c51b731709e"
++        "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766"
+      values.$implementation:
+-        "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"
++        "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
+      values.$pastUpgrades.3:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.DOMAIN_TYPEHASH:
+-        "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866"
+      values.domainSeparator:
+-        "0x9bba7f98dd592dbd3fdbeef9fdebb4e19f8661950cb5dcc435fcad7824975fe1"
++        "0x4deda213116190048508c6bee5d6ab74a996621a8c8bc4014c9a860ec8119ade"
+      values.MAX_STAKER_OPT_OUT_WINDOW_BLOCKS:
+-        1296000
+      values.MAX_WITHDRAWAL_DELAY_BLOCKS:
+-        216000
+      values.minWithdrawalDelayBlocks:
+-        50400
++        100800
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.slasher:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      values.STAKER_DELEGATION_TYPEHASH:
+-        "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b"
+      values.allocationManager:
++        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
+      values.permissionController:
++        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      values.version:
++        "1.3.0"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.10.from:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      receivedPermissions.9.from:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.8.from:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.8.via.2.address:
+-        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      receivedPermissions.8.via.2.delay:
++        864000
+      receivedPermissions.8.via.1.address:
+-        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      receivedPermissions.8.via.0.address:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      receivedPermissions.8.via.0.delay:
+-        2073600
+      receivedPermissions.7.from:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      receivedPermissions.7.via.2.address:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
+      receivedPermissions.7.via.2.delay:
+-        864000
+      receivedPermissions.7.via.1.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
+      receivedPermissions.7.via.0.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      receivedPermissions.7.via.0.delay:
++        2073600
+      receivedPermissions.6.from:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.5.from:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.4.description:
+-        "executes scheduled operations after the delay"
+      receivedPermissions.4.via:
++        [{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      receivedPermissions.3.via:
+-        [{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]
+      receivedPermissions.3.description:
++        "executes scheduled operations after the delay"
+      receivedPermissions.2.from:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.1.from:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      values.$members.9:
++        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.8:
++        "0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
+      values.$members.7:
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.6:
++        "0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
+      values.$members.5:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
++        "0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
+      values.$members.4:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.$members.3:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
+      values.$members.2:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "0x7474E1D80E844e6EdB430841DeEF702a6B747863"
+      values.multisigThreshold:
+-        "1 of 6 (17%)"
++        "1 of 10 (10%)"
+      directlyReceivedPermissions.0.from:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430"
++        "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e"
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      sourceHashes.1:
+-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
++        "0x00392f5dcb8592d0f6f83640dbd27a38aa84cfbafabae75f5e3219f0f0f73ae4"
+      sourceHashes.0:
+-        "0xeac0eb693fee0b97ae0ce2176c60bd57f93b6f1264e6844e4bec7e4e4efdfeca"
++        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
+      values.$implementation:
+-        "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"
++        "0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
+      values.$pastUpgrades.1:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.version:
++        "1.3.0"
+      template:
++        "eigenlayer/StrategyFactory"
+      description:
++        "Factory contract for permissionless strategy creation via beacon proxies."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430)
+    +++ description: None
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      sourceHashes.0:
+-        "0xee70d5b56b152b7eac8c1b57b3e8f6c501adb6b0c780ff4b0b89b28fb38273fa"
++        "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df"
+      values.$implementation:
+-        "0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"
++        "0xa505c0116aD65071F0130061F94745b7853220aB"
+      values.$pastUpgrades.3:
++        ["2025-01-21T20:49:35.000Z","0xef2204dcbb42fffa76f11d266a475be5f14a0f377acfa83cbfb9042db77d93e7",["0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"]]
+      values.$pastUpgrades.2.2:
+-        ["0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"]
++        "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2"
+      values.$pastUpgrades.2.1:
+-        "0xef2204dcbb42fffa76f11d266a475be5f14a0f377acfa83cbfb9042db77d93e7"
++        ["0xa505c0116aD65071F0130061F94745b7853220aB"]
+      values.$pastUpgrades.2.0:
+-        "2025-01-21T20:49:35.000Z"
++        "2025-04-17T22:30:11.000Z"
+      values.$upgradeCount:
+-        3
++        4
+      values.domainSeparator:
+-        "0xdc66bf3c6fc5af0167275d317f59c04eb40cdc83022c80f21b5e7bb76e991066"
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.allocationManager:
++        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
+      values.permissionController:
++        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      values.version:
++        "1.3.0"
+      template:
++        "eigenlayer/RewardsCoordinator"
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      sourceHashes.0:
+-        "0x02ef571f391efe8c4fe859f372cc691e345de88a1fc59df7f13eacbd8bba7bfa"
++        "0xa50d63fab44e951546763a60992b2c223d1b089ebbd81504210b24beadcf5b50"
+      values.$implementation:
+-        "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"
++        "0xba4b2b8A076851A3044882493C2e36503d50b925"
+      values.$pastUpgrades.3:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0xba4b2b8A076851A3044882493C2e36503d50b925"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.DOMAIN_TYPEHASH:
+-        "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866"
+      values.domainSeparator:
+-        "0xdaba058ab21f198a04ec80cf0d39f943660a92a99bda5de5016f923f7e4962ef"
++        "0x12e2738060ebb37eceb9d44919c2fede717e592f513c1065ece34ca00bf2c18e"
+      values.eigenPodManager:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.slasher:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      values.DEFAULT_BURN_ADDRESS:
++        "0x00000000000000000000000000000000000E16E4"
+      values.getStrategiesWithBurnableShares:
++        [[],[]]
+      values.version:
++        "1.3.0"
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"}
+      directlyReceivedPermissions.7.from:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      directlyReceivedPermissions.6.from:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      directlyReceivedPermissions.5.from:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      directlyReceivedPermissions.4.from:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      directlyReceivedPermissions.3.from:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      directlyReceivedPermissions.2.from:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      directlyReceivedPermissions.1.from:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      directlyReceivedPermissions.0.from:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0e8b710d3b23eeae5d441beddd0f023fb1532922dee0f7daf4098658bc4f4d32"
++        "0x6396fbec37d6d3c9c0b56494c6373e983a77e0980eaf9ab4782333de488449e5"
+      values.$implementation:
+-        "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"
++        "0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"
+      values.$pastUpgrades.4:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.slasher:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      values.strategyManager:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      values.burnableETHShares:
++        0
+      values.version:
++        "1.3.0"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.10.from:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      receivedPermissions.9.from:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.8.from:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.8.via.2.address:
+-        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      receivedPermissions.8.via.2.delay:
++        864000
+      receivedPermissions.8.via.1.address:
+-        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      receivedPermissions.8.via.0.address:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      receivedPermissions.8.via.0.delay:
+-        2073600
+      receivedPermissions.7.from:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      receivedPermissions.7.via.2.address:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
+      receivedPermissions.7.via.2.delay:
+-        864000
+      receivedPermissions.7.via.1.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
+      receivedPermissions.7.via.0.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      receivedPermissions.7.via.0.delay:
++        2073600
+      receivedPermissions.6.from:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.5.from:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.4.from:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.3.from:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.2.from:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+      directlyReceivedPermissions.1.from:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      directlyReceivedPermissions.1.delay:
++        2073600
+      directlyReceivedPermissions.0.from:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      directlyReceivedPermissions.0.delay:
+-        2073600
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0x83E9115d334D248Ce39a6f36144aEaB5b3456e75","via":[{"address":"0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"},{"address":"0x942eaF324971440384e4cA0ffA39fC3bb369D67d"}]}
+      receivedPermissions.8.from:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
+      receivedPermissions.8.via.1.address:
+-        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      receivedPermissions.8.via.0.address:
+-        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      receivedPermissions.7.from:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      receivedPermissions.6.from:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.5.from:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.4.from:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.3.from:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.2.from:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.1.from:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.0.from:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5)
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+```
+
+```diff
++   Status: CREATED
+    contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39)
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806)
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+```
+
+## Source code changes
+
+```diff
+.../AVSDirectory/AVSDirectory.sol                  | 1711 ++++--
+ .../.flat/AllocationManager/AllocationManager.sol  | 6259 +++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  272 +-
+ .../DelegationManager/DelegationManager.sol        | 6326 ++++++++++++++------
+ .../{.flat@22208559 => .flat}/EigenPod.sol         | 1502 +++--
+ .../EigenPodManager/EigenPodManager.sol            | 3894 ++++++++++--
+ .../{.flat@22208559 => .flat}/PauserRegistry.sol   |   33 +-
+ .../PermissionController/PermissionController.sol  | 1332 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../RewardsCoordinator/RewardsCoordinator.sol      | 1780 ++++--
+ .../Slasher/Slasher.sol => /dev/null               |  789 ---
+ .../{.flat@22208559 => .flat}/StrategyBase.sol     |  888 ++-
+ .../StrategyFactory/StrategyFactory.sol            |  613 +-
+ .../StrategyManager/StrategyManager.sol            | 5170 +++++++++++++---
+ 14 files changed, 25149 insertions(+), 6149 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208559 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      template:
+-        "eigenlayer/PauserRegistry"
++        "eigenlayer/EigenDAPauserRegistry"
+      description:
+-        "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager."
++        "Defines and stores pauser and unpauser roles for EigenDA contracts."
+    }
+```
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      template:
++        "eigenlayer/StrategiesBeacon"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      template:
++        "eigenlayer/StrategiesBeacon"
+      description:
++        "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: None
+      description:
+-        "Factory contract for permissionless strategy creation via beacon proxies."
+    }
+```
+
+Generated with discovered.json: 0x6636ac3bc1bff5fc8302b043472ab7ce1b69df75
 
 # Diff at Tue, 29 Apr 2025 08:19:11 GMT:
 

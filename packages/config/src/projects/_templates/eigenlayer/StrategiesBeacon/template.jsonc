@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
+}

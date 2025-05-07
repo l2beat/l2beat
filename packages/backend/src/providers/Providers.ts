@@ -59,12 +59,7 @@ export class Providers {
     if (this.clients.beacon) {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
       blobProviders.push(
-        new EthereumDaProvider(
-          this.clients.beacon,
-          ethereumRpc,
-          'ethereum',
-          this.clients.blobscan,
-        ),
+        new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
       )
     }
     if (this.clients.celestia) {

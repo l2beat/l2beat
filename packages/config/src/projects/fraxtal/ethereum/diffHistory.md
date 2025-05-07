@@ -1,3 +1,334 @@
+Generated with discovered.json: 0xadb94308916d34ce0492b437e829b13d5f17627d
+
+# Diff at Tue, 06 May 2025 09:18:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 21802913
+- current block number: 22423720
+
+## Description
+
+Config related, see last upgrade for the analysis. pasting the description here again:
+
+Upgrade to new contracts (untemplatized). Since they have recent source code very similar to normal op stack (not fraxtal branded) and custom gas token support, this is assumed to be the latest custom gas token contracts that the op stack is officially supporting.
+
+No significant changes.
+
+## Watched changes
+
+```diff
+    contract OptimismMintableERC20Factory (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617"
++        "0xa4526e33eb750144164c05badf980525f867cae82e7db6e108b17aeb61b99924"
+      sourceHashes.0:
+-        "0x42f31c7757e8d3066477571abb4a04e8b817c654c63f6c9f12c96af2a3d000ca"
++        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617"
+      values.$implementation:
+-        "0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876"
++        "0x72D205182538207478dA7baFf0181884993D279A"
+      values.$pastUpgrades.3:
++        ["2024-02-01T18:20:11.000Z","0x71e0cfe8fa79e241d5e216cd9956ad54c2952516293aec0b47b9a96d8ee2b061",["0x1120ef11d4C3dc90Aa6BDfce16Ab049dd5d18aE0"]]
+      values.$pastUpgrades.2:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0x87520f4104878c7dcda3E9296B572A5fe034E129"]]
+      values.$pastUpgrades.1.2.0:
+-        "0x1120ef11d4C3dc90Aa6BDfce16Ab049dd5d18aE0"
++        "0x72D205182538207478dA7baFf0181884993D279A"
+      values.$pastUpgrades.1.1:
+-        "2024-02-01T18:20:11.000Z"
++        "2025-04-29T19:05:59.000Z"
+      values.$pastUpgrades.1.0:
+-        "0x71e0cfe8fa79e241d5e216cd9956ad54c2952516293aec0b47b9a96d8ee2b061"
++        "0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e"
+      values.$upgradeCount:
+-        2
++        4
+      values.version:
+-        "1.9.0"
++        "1.10.1-beta.4"
+      derivedName:
+-        "OptimismMintablePermitERC20Factory"
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b"
++        "0x4a84a5f83a1bfd93c2f1f066a4af23bab0de4929f91fe164cac53a77f2461edf"
+      sourceHashes.0:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b"
+      values.$implementation:
+-        "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"
++        "0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618"
+      values.$pastUpgrades.4:
++        ["2024-02-01T18:20:11.000Z","0xc7e0611b207fc226dc0412ebae0cd464b62b341c49a10a83315d916cdf527753",["0x31c25985E6b10CF335FC01cf9790aF4890d0505c"]]
+      values.$pastUpgrades.3:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618"]]
+      values.$pastUpgrades.2.2:
+-        "2024-02-01T18:20:11.000Z"
++        ["0x87520f4104878c7dcda3E9296B572A5fe034E129"]
+      values.$pastUpgrades.2.1:
+-        ["0x31c25985E6b10CF335FC01cf9790aF4890d0505c"]
++        "2025-04-29T19:05:59.000Z"
+      values.$pastUpgrades.2.0:
+-        "0xc7e0611b207fc226dc0412ebae0cd464b62b341c49a10a83315d916cdf527753"
++        "0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e"
+      values.$upgradeCount:
+-        3
++        5
+      values.version:
+-        "2.3.0"
++        "2.4.1-beta.2"
+      values.systemConfig:
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      derivedName:
+-        "L1CrossDomainMessenger"
++        "L1CrossDomainMessengerCGT"
+    }
+```
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0xbc39dcaa99e0ac5d2815c68d4b71402fec659f68f2096d36220eda3402d6afdd"
+      values.$implementation:
+-        "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"
++        "0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D"
+      values.$pastUpgrades.4:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0x87520f4104878c7dcda3E9296B572A5fe034E129"]]
+      values.$pastUpgrades.3:
++        ["2024-02-01T18:20:11.000Z","0xe7aacfcc1d50443042842246a38e54581e9dba154a9831660415e0fce5503e4d",["0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"]]
+      values.$pastUpgrades.2.2:
+-        "2024-02-01T18:20:11.000Z"
++        ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
+      values.$pastUpgrades.2.1:
+-        "0xe7aacfcc1d50443042842246a38e54581e9dba154a9831660415e0fce5503e4d"
++        "2024-05-14T20:13:47.000Z"
+      values.$pastUpgrades.2.0:
+-        ["0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"]
++        "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669"
+      values.$pastUpgrades.1.2.0:
+-        "0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"
++        "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"
+      values.$pastUpgrades.0.2:
+-        ["0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"]
++        "2025-04-29T19:05:59.000Z"
+      values.$pastUpgrades.0.1:
+-        "2024-05-14T20:13:47.000Z"
++        "0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e"
+      values.$pastUpgrades.0.0:
+-        "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669"
++        ["0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D"]
+      values.$upgradeCount:
+-        3
++        5
+      values.version:
+-        "1.12.0"
++        "2.3.0"
+      values.basefeeScalar:
++        500
+      values.blobbasefeeScalar:
++        0
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "0x0000000000000000000000000000000000000000"
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0","decimals_":18}
+      values.gasPayingTokenName:
++        "Frax Share"
+      values.gasPayingTokenSymbol:
++        "FXS"
+      values.isCustomGasToken:
++        true
+      values.maximumGasLimit:
++        200000000
+      derivedName:
+-        "SystemConfig"
++        "SystemConfigCGT"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0xe60978aadd7b7babd6a7af621f97d7f7e58f1e93f631dd66a13fe4eae9b14761"
+      sourceHashes.0:
+-        "0xe60978aadd7b7babd6a7af621f97d7f7e58f1e93f631dd66a13fe4eae9b14761"
++        "0x343d5f78c514c42169e2cdc872dfe7a44e424a7b5692fca5810f5d2b69b85054"
+      values.$implementation:
+-        "0x30Cd695249394eED44C576f2caEC5304be6455F9"
++        "0x318F7008D7B5541546248D248Fd1eB41A57a9E41"
+      values.version:
+-        "2.1.0"
++        "2.2.1-beta.2"
+      values.systemConfig:
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      derivedName:
+-        "L1StandardBridge"
++        "L1StandardBridgeCGT"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0xddf64101e7b6f558921307e9d122e69bbb712db51cff893729c03c588865838f"
++        "0x5c3bff13328150b2e8d53d43b6317fe29b36be456289a1724d7e6b548b702fb5"
+      values.$implementation:
+-        "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"
++        "0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f"
+      values.$pastUpgrades.4:
++        ["2024-05-14T20:13:47.000Z","0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"]]
+      values.$pastUpgrades.3:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0x87520f4104878c7dcda3E9296B572A5fe034E129"]]
+      values.$pastUpgrades.2.2.0:
+-        "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"
++        "0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"
+      values.$pastUpgrades.1.2.0:
+-        "0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"
++        "0x59B6903044Fa9439a5D621D3605789A6E654b1D6"
+      values.$pastUpgrades.1.1:
+-        "2024-05-14T20:13:47.000Z"
++        "2024-02-01T18:20:23.000Z"
+      values.$pastUpgrades.1.0:
+-        "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669"
++        "0xe7e33bcdd2dd085bcd43e933aefa52eeffb6a4656facdfae956eba8bfe2f537b"
+      values.$pastUpgrades.0.2:
+-        ["0x59B6903044Fa9439a5D621D3605789A6E654b1D6"]
++        "2025-04-29T19:05:59.000Z"
+      values.$pastUpgrades.0.1:
+-        "2024-02-01T18:20:23.000Z"
++        "0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e"
+      values.$pastUpgrades.0.0:
+-        "0xe7e33bcdd2dd085bcd43e933aefa52eeffb6a4656facdfae956eba8bfe2f537b"
++        ["0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f"]
+      values.$upgradeCount:
+-        3
++        5
+      values.FRXETH_MINTER:
+-        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      values.GUARDIAN:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      values.L2_ORACLE:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      values.SYSTEM_CONFIG:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      values.version:
+-        "2.5.0"
++        "2.8.1-beta.4"
+      values.gasPayingToken:
++        {"addr_":"0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0","decimals_":18}
+      derivedName:
+-        "FraxchainPortal"
++        "OptimismPortalCGT"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0xe599cf570ef24a19dd222aad5c0dfd249ecd9ed9a4b33d054028512ba4b2baf3"
+      values.$implementation:
+-        "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4"
++        "0x7eecF36F384732F229D494E072a48fF294861fC2"
+      values.$pastUpgrades.4:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0x7eecF36F384732F229D494E072a48fF294861fC2"]]
+      values.$pastUpgrades.3:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0x87520f4104878c7dcda3E9296B572A5fe034E129"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.version:
+-        "2.1.0"
++        "2.2.0-beta.1"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1CrossDomainMessengerCGT.sol}                 |  428 +++-
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  229 +-
+ .../L1StandardBridge/L1StandardBridgeCGT.sol}      |  824 +++++--
+ .../OptimismMintableERC20Factory.sol}              |   62 +-
+ .../OptimismPortal/OptimismPortalCGT.sol}          | 1204 ++++++++--
+ .../SystemConfig/SystemConfig.sol => /dev/null     |  818 -------
+ .../.flat/SystemConfig/SystemConfigCGT.sol         | 2330 ++++++++++++++++++++
+ 7 files changed, 4527 insertions(+), 1368 deletions(-)
+```
+
+Generated with discovered.json: 0xb9d1eb03ea3614c5e585075def4d68d1fc081657
+
+# Diff at Fri, 02 May 2025 17:23:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 21802913
+- current block number: 21802913
+
+## Description
+
+Upgrade to new contracts (untemplatized). Since they have recent source code very similar to normal op stack (not fraxtal branded) and custom gas token support, this is assumed to be the latest custom gas token contracts that the op stack is officially supporting.
+
+No significant changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802913 (main branch discovery), not current.
+
+```diff
+    contract Frax Multisig  (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      name:
+-        "frxETHMultisig"
++        "Frax Multisig "
+    }
+```
+
+```diff
+    contract sfrxETH (0xac3E018457B222d93114458476f3E3416Abbe38F) {
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+      template:
++        "fraxtal/sfrxETH"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 2 (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      name:
+-        "FraxtalTimelockMultisig"
++        "Fraxtal Multisig 2"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 1 (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      name:
+-        "FraxtalMultisig"
++        "Fraxtal Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0xbdede2de0e95d5c4a9d807148d94dc3b5f4ba3f1
 
 # Diff at Tue, 29 Apr 2025 08:19:03 GMT:

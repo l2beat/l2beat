@@ -3,7 +3,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
@@ -13,10 +12,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Gravity',
     slug: 'galxegravity',
@@ -35,7 +31,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
       ],
     },
   },
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
@@ -43,6 +39,10 @@ export const galxegravity: ScalingProject = orbitStackL2({
     type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
+  },
+  celestiaDa: {
+    sinceBlock: 5169794,
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU=',
   },
   chainConfig: {
     name: 'galxegravity',
@@ -65,5 +65,4 @@ export const galxegravity: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://explorer.gravity.xyz/api/v2' },
     ],
   },
-  customDa: AnytrustDAC({ discovery }),
 })

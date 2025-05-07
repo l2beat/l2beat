@@ -175,6 +175,21 @@ export const lyra: ScalingProject = opStackL2({
       chain: 'ethereum',
     },
     {
+      address: EthereumAddress('0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50'),
+      sinceTimestamp: UnixTime(1727390087),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['cbBTC'],
+      chain: 'ethereum',
+    },
+    {
       address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
       sinceTimestamp: UnixTime(1727390367),
       source: 'external',

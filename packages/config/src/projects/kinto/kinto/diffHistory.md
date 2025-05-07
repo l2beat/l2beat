@@ -1,4 +1,61 @@
-Generated with discovered.json: 0x3b175e7783779b74627cf454424c66c8353472df
+Generated with discovered.json: 0xb042557d9116a2d48428c29d9895e90df15f9b75
+
+# Diff at Mon, 05 May 2025 15:56:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 845013
+- current block number: 850146
+
+## Description
+
+Config related: templatize 3 contracts and tighten discodriven permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 845013 (main branch discovery), not current.
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      template:
++        "kinto/KintoAppRegistry"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      description:
+-        "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
++        "OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
+      fieldMeta.RoleAdminChanged.severity:
++        "HIGH"
+      fieldMeta.RoleGrantDelayChanged.severity:
++        "HIGH"
+      fieldMeta.TargetAdminDelayUpdated.severity:
++        "HIGH"
+      fieldMeta.TargetFunctionRoleUpdated.severity:
++        "HIGH"
+      fieldMeta.AdditionalRoleLabels.severity:
++        "HIGH"
+      fieldMeta.RolesGranted.severity:
++        "HIGH"
+      template:
++        "kinto/AccessManager"
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      template:
++        "kinto/KintoID"
+    }
+```
+
+Generated with discovered.json: 0xa1e826e1b1cced3b291cba940fd154066ed8f591
 
 # Diff at Tue, 29 Apr 2025 09:37:43 GMT:
 

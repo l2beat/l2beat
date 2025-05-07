@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 22187530,
-  "configHash": "0x9a048493bb8318f1155b62a35c3c3a3feb4c677ccddc78513ff66620aab9f3a5",
+  "configHash": "0x2eb9debc967e48fd8df2a130e0b3c5fd1966d303302a9ebbb77a8ed018667606",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -174,6 +174,7 @@
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

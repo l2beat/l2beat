@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x33cced590abc4e6c20630fbe16380539f752b8ef
+
+# Diff at Tue, 06 May 2025 12:56:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 330086535
+- current block number: 333851541
+
+## Description
+
+Upgrade to standard orbit stack contracts.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x79177caeDf321963EFed06E562017181B2e8aDC7"
++        "0x645341A2C76cD94324cBA658c19Acca2297b619C"
+      values.$pastUpgrades.2:
++        ["2024-11-13T04:34:48.000Z","0xa3cef71c7eacc17dedd4ff7a2c732cd42e982d2ca5c620fe8364225fce9760ab",["0x79177caeDf321963EFed06E562017181B2e8aDC7"]]
+      values.$pastUpgrades.1.2:
+-        ["0x79177caeDf321963EFed06E562017181B2e8aDC7"]
++        "0x6018ec86bbda22965cae10bd0862c749181c4101bbc3eaff562cfd66a67f0377"
+      values.$pastUpgrades.1.1:
+-        "2024-11-13T04:34:48.000Z"
++        "2025-05-05T16:52:06.000Z"
+      values.$pastUpgrades.1.0:
+-        "0xa3cef71c7eacc17dedd4ff7a2c732cd42e982d2ca5c620fe8364225fce9760ab"
++        ["0x645341A2C76cD94324cBA658c19Acca2297b619C"]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.0:
+-        "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"
++        "0xdec03E497222017550Fb83273d8FB4546eaDA625"
+      values.$pastUpgrades.1:
++        ["2025-05-05T16:52:06.000Z","0x6018ec86bbda22965cae10bd0862c749181c4101bbc3eaff562cfd66a67f0377",["0xdec03E497222017550Fb83273d8FB4546eaDA625"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../Inbox/ERC20Inbox.sol                           | 92 +++++++++++++++++++---
+ .../SequencerInbox/SequencerInbox.sol              | 24 ++++--
+ 2 files changed, 98 insertions(+), 18 deletions(-)
+```
+
+Generated with discovered.json: 0x4527cbbefb6541c35f0179c659c09f4e625c10af
+
+# Diff at Fri, 02 May 2025 17:25:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 330086535
+- current block number: 330086535
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 330086535 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3:
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x8d7d906d99fdd0f98dcb178fed9ac18690be66b3
 
 # Diff at Tue, 29 Apr 2025 08:19:20 GMT:

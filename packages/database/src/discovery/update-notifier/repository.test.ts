@@ -96,6 +96,7 @@ function mockRecord(
       {
         name: 'Contract',
         address: EthereumAddress.random(),
+        addressType: 'Contract',
         diff: [
           {
             key: 'key',

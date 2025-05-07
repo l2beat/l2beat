@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x86b405b1f13621cf99cc243fe0356fcc50591221
+
+# Diff at Tue, 06 May 2025 10:57:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 287771362
+- current block number: 287771362
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287771362 (main branch discovery), not current.
+
+```diff
+    EOA  (0x5e31608B400F45846043E93747D72A1a02c5a2f5) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x0d5a2a55957d61f9c4a50856ab1b9b4250c9d6fc
+
+# Diff at Fri, 02 May 2025 17:25:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 287771362
+- current block number: 287771362
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287771362 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3:
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x8a5604b14ecf078f61cbe3c08466a18e79b42ff8
 
 # Diff at Tue, 29 Apr 2025 08:19:20 GMT:

@@ -4,5 +4,11 @@
     "address": "0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1AssetRouter_v27": {
+    "hash": "0xba83b7c168ffa78d2e714cfb804ca1cd4f33807f6e9b2abb2820457d6d2bf77a",
+    "address": "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315",
+    "chain": "ethereum",
+    "blockNumber": 22374168
   }
 }

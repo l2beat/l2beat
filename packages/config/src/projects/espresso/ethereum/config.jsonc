@@ -15,12 +15,14 @@
       "ignoreMethods": [
         "proxiableUUID",
         "getHotShotCommitment",
-        "stateHistoryCommitments"
+        "stateHistoryCommitments",
+        "_getVk"
       ],
       "ignoreInWatchMode": [
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
-        "finalizedState"
+        "finalizedState",
+        "currentBlockNumber"
       ],
       "fields": {
         "permissionedProver": {

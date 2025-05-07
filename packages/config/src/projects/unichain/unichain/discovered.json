@@ -1,8 +1,8 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 9916035,
-  "configHash": "0x5c0341e3fe0f9d1284416960b483000cff433f35983648f7744f3d63876db930",
+  "blockNumber": 15457819,
+  "configHash": "0x99373713f9416963b4b3a566822d63924904a3ef76a977af16065f3338435c54",
   "entries": [
     {
       "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
@@ -52,7 +52,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620041",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620528",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -88,14 +88,14 @@
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 1612334258,
+        "blobBaseFee": 2295686953,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 1033347168,
+        "l1BaseFee": 1953164293,
         "version": "1.3.1-beta.1"
       },
       "derivedName": "GasPriceOracle"
@@ -262,10 +262,10 @@
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 1033347168,
+        "basefee": 1953164293,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 1612334258,
+        "blobBaseFee": 2295686953,
         "blobBaseFeeScalar": 900000,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -274,13 +274,13 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x911d24753ff56c5048d50ba9c1735e0bb32a1a184c20929f8fc9a0580e22763f",
+        "hash": "0xd14f106c8a0d554b844476d68a42352bef964d6cedcc37a9d77a7a0a96745998",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 21938092,
-        "sequenceNumber": 11,
-        "timestamp": 1740664331,
+        "number": 22397539,
+        "sequenceNumber": 10,
+        "timestamp": 1746206111,
         "version": "1.5.1-beta.1"
       },
       "derivedName": "L1Block"
@@ -566,10 +566,13 @@
       "name": "L1Splitter",
       "address": "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002",
       "type": "Contract",
+      "template": "unichain/L1Splitter",
       "sourceHashes": [
         "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
       ],
       "proxyType": "immutable",
+      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).",
+      "ignoreInWatchMode": ["lastDisbursementTime"],
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
@@ -587,17 +590,20 @@
       "name": "L1Splitter",
       "address": "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003",
       "type": "Contract",
+      "template": "unichain/L1Splitter",
       "sourceHashes": [
         "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
       ],
       "proxyType": "immutable",
+      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd).",
+      "ignoreInWatchMode": ["lastDisbursementTime"],
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
         "feeDisbursementInterval": 86400,
         "l1Recipient": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
-        "lastDisbursementTime": 0,
+        "lastDisbursementTime": 1746125949,
         "minWithdrawalAmount": "10000000000000000000",
         "owner": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -622,6 +628,7 @@
       "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1316,7 +1323,8 @@
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0xbb8ec39d7870faca409a8c1ff8da350ef80d61228a6aa0e950e8de4b9294f909",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
+    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
   "permissionsConfigHash": "0xe957e09c2d0e4fd2c655feda62c3c9a3f3258bae9a44796048e4624ba35d08d6"
 }

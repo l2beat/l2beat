@@ -1,8 +1,8 @@
 {
   "name": "everclearbridge",
   "chain": "ethereum",
-  "blockNumber": 22281661,
-  "configHash": "0x4b26bfb868725c22ca809a30ef3a3bec8ffd870454757168aa4ded40904d7db5",
+  "blockNumber": 22397509,
+  "configHash": "0x091c0ae423655ae3838a1d97ddf43b06354534aab045b88ce65452097e97a679",
   "entries": [
     {
       "name": "Permit2",
@@ -19,6 +19,28 @@
         "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
       },
       "derivedName": "Permit2"
+    },
+    {
+      "name": "FeeAdapter",
+      "address": "0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x491df1f9fb307ef51f4ffa8cd8876fba0894498b173c31b4967dace17c103e56"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743544847,
+      "sinceBlock": 22176906,
+      "values": {
+        "$immutable": true,
+        "feeRecipient": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
+        "feeSigner": "0xd148C7f37b346a4bD8e14f8c1f181f5f640481C8",
+        "owner": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+        "spoke": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+        "xerc20Module": "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
+      },
+      "derivedName": "FeeAdapter"
     },
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -121,13 +143,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 30,
+        "nonce": 37,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "EverclearSpokeV3",
+      "name": "EverclearSpokeV4",
       "address": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "unverified": true,
@@ -137,7 +159,7 @@
       "sinceBlock": 20760959,
       "values": {
         "$admin": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
-        "$implementation": "0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2",
+        "$implementation": "0xd18C19169e7C87e7d84f27AD412a56C5D743D560",
         "$pastUpgrades": [
           [
             "2024-09-16T05:00:59.000Z",
@@ -153,20 +175,26 @@
             "2025-04-15T09:38:11.000Z",
             "0x4fa770e2446e25bbf87e7464bbc9c15afa45a4c4afdda25e34ee74b5eef1b20f",
             ["0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2"]
+          ],
+          [
+            "2025-04-29T11:43:35.000Z",
+            "0x268194204aceb79917b36ea1388c32aea7467aafe8592a320d52fcc09985b6a6",
+            ["0xd18C19169e7C87e7d84f27AD412a56C5D743D560"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "callExecutor": "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99",
         "DOMAIN": 1,
         "EVERCLEAR": 25327,
+        "feeAdapter": "0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75",
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 2198, "last": 2197 },
+        "intentQueue": { "first": 3049, "last": 3048 },
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 2000000,
         "messageReceiver": "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 2197,
+        "nonce": 3048,
         "owner": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -175,12 +203,33 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "0x6281ea3060B26352b558C4F45767C90db482c4fd"
       },
-      "derivedName": "EverclearSpokeV3"
+      "derivedName": "EverclearSpokeV4"
     },
     {
       "address": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xd148C7f37b346a4bD8e14f8c1f181f5f640481C8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "XERC20Module",
+      "address": "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9aff47d01abd72fd0de348dd251ef19617a919c22f69666cc6decab253fcda16"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1726464287,
+      "sinceBlock": 20761078,
+      "values": {
+        "$immutable": true,
+        "spoke": "0xa05A3380889115bf313f1Db9d5f335157Be4D816"
+      },
+      "derivedName": "XERC20Module"
     },
     {
       "name": "",
@@ -228,10 +277,50 @@
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
     ],
+    "0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75": [
+      "constructor(address _spoke, address _feeRecipient, address _feeSigner, address _xerc20Module, address _owner)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error FailedInnerCall()",
+      "error FeeAdapter_InvalidDeadline()",
+      "error FeeAdapter_InvalidSignature()",
+      "error MultipleOrderAssets()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease)",
+      "error SafeERC20FailedOperation(address token)",
+      "event FeeRecipientUpdated(address indexed _updated, address indexed _previous)",
+      "event FeeSignerUpdated(address indexed _updated, address indexed _previous)",
+      "event IntentWithFeesAdded(bytes32 indexed _intentId, bytes32 indexed _initiator, uint256 _tokenFee, uint256 _nativeFee)",
+      "event OrderCreated(bytes32 indexed _orderId, bytes32 indexed _initiator, bytes32[] _intentIds, uint256 _tokenFee, uint256 _nativeFee)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function PERMIT2() view returns (address)",
+      "function acceptOwnership()",
+      "function feeRecipient() view returns (address)",
+      "function feeSigner() view returns (address)",
+      "function newIntent(uint32[] _destinations, bytes32 _receiver, address _inputAsset, bytes32 _outputAsset, uint256 _amount, uint24 _maxFee, uint48 _ttl, bytes _data, tuple(uint256 fee, uint256 deadline, bytes sig) _feeParams) payable returns (bytes32 _intentId, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
+      "function newIntent(uint32[] _destinations, address _receiver, address _inputAsset, address _outputAsset, uint256 _amount, uint24 _maxFee, uint48 _ttl, bytes _data, tuple(uint256 nonce, uint256 deadline, bytes signature) _permit2Params, tuple(uint256 fee, uint256 deadline, bytes sig) _feeParams) payable returns (bytes32 _intentId, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
+      "function newIntent(uint32[] _destinations, address _receiver, address _inputAsset, address _outputAsset, uint256 _amount, uint24 _maxFee, uint48 _ttl, bytes _data, tuple(uint256 fee, uint256 deadline, bytes sig) _feeParams) payable returns (bytes32 _intentId, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
+      "function newOrder(uint256 _fee, uint256 _deadline, bytes _sig, tuple(uint32[] destinations, address receiver, address inputAsset, address outputAsset, uint256 amount, uint24 maxFee, uint48 ttl, bytes data)[] _params) payable returns (bytes32 _orderId, bytes32[] _intentIds)",
+      "function newOrderSplitEvenly(uint32 _numIntents, uint256 _fee, uint256 _deadline, bytes _sig, tuple(uint32[] destinations, address receiver, address inputAsset, address outputAsset, uint256 amount, uint24 maxFee, uint48 ttl, bytes data) _params) payable returns (bytes32 _orderId, bytes32[] _intentIds)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function returnUnsupportedIntent(address _asset, uint256 _amount, address _recipient)",
+      "function spoke() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeRecipient(address _feeRecipient)",
+      "function updateFeeSigner(address _feeSigner)",
+      "function xerc20Module() view returns (address)"
+    ],
     "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": [
       "constructor(address _singleton)"
     ],
-    "0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2": [
+    "0xd18C19169e7C87e7d84f27AD412a56C5D743D560": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -242,6 +331,7 @@
       "error ERC1967NonPayable()",
       "error EverclearSpoke_ExecuteIntentCalldata_ExternalCallFailed()",
       "error EverclearSpoke_ExecuteIntentCalldata_InvalidStatus(bytes32 _intentId)",
+      "error EverclearSpoke_FeeAdapter_NotAuthorized()",
       "error EverclearSpoke_FillIntent_InsufficientFunds(uint256 _requested, uint256 _available)",
       "error EverclearSpoke_FillIntent_IntentExpired(bytes32 _intentId)",
       "error EverclearSpoke_FillIntent_InvalidStatus(bytes32 _intentId)",
@@ -278,6 +368,7 @@
       "event AssetTransferFailed(address indexed _asset, address indexed _recipient, uint256 _amount)",
       "event Deposited(address indexed _depositant, address indexed _asset, uint256 _amount)",
       "event ExternalCalldataExecuted(bytes32 indexed _intentId, bytes _returnData)",
+      "event FeeAdapterUpdated(address _newFeeAdapter)",
       "event FillQueueProcessed(bytes32 indexed _messageId, uint256 _firstIdx, uint256 _lastIdx, uint256 _quote)",
       "event GatewayUpdated(address _oldGateway, address _newGateway)",
       "event Initialized(uint64 version)",
@@ -307,11 +398,12 @@
       "function callExecutor() view returns (address)",
       "function deposit(address _asset, uint256 _amount)",
       "function executeIntentCalldata(tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent)",
+      "function feeAdapter() view returns (address)",
       "function fillIntent(tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent, uint24 _fee) returns (tuple(bytes32 intentId, bytes32 solver, bytes32 initiator, uint24 fee, uint48 executionTimestamp) _fillMessage)",
       "function fillIntentForSolver(address _solver, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent, uint256 _nonce, uint24 _fee, bytes _signature) returns (tuple(bytes32 intentId, bytes32 solver, bytes32 initiator, uint24 fee, uint48 executionTimestamp) _fillMessage)",
       "function fillQueue() view returns (uint256 first, uint256 last)",
       "function gateway() view returns (address)",
-      "function initialize(tuple(address gateway, address callExecutor, address messageReceiver, address lighthouse, address watchtower, uint32 hubDomain, address owner) _init)",
+      "function initialize(address _feeAdapter)",
       "function intentQueue() view returns (uint256 first, uint256 last)",
       "function lighthouse() view returns (address)",
       "function messageGasLimit() view returns (uint256)",
@@ -338,6 +430,7 @@
       "function strategies(address _asset) view returns (uint8 _strategy)",
       "function transferOwnership(address newOwner)",
       "function unpause()",
+      "function updateFeeAdapter(address _feeAdapter)",
       "function updateGateway(address _newGateway)",
       "function updateMessageGasLimit(uint256 _newGasLimit)",
       "function updateMessageReceiver(address _newMessageReceiver)",
@@ -345,6 +438,19 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function watchtower() view returns (address)",
       "function withdraw(address _asset, uint256 _amount)"
+    ],
+    "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4": [
+      "constructor(address _spoke)",
+      "error XERC20Module_HandleBurnStrategy_InsufficientBurningLimit(address _asset, uint256 _limit, uint256 _amount)",
+      "error XERC20Module_HandleStrategy_OnlySpoke()",
+      "error XERC20Module_MintDebt_InsufficientMintingLimit(address _asset, uint256 _limit, uint256 _amount)",
+      "event DebtMinted(address indexed _asset, address indexed _recipient, uint256 _amount)",
+      "event HandleMintStrategyFailed(address indexed _asset, address indexed _recipient, uint256 _amount)",
+      "function handleBurnStrategy(address _asset, address _user, uint256 _amount, bytes)",
+      "function handleMintStrategy(address _asset, address _recipient, address _fallbackRecipient, uint256 _amount, bytes) returns (bool _success)",
+      "function mintDebt(address _asset, address _recipient, uint256 _amount)",
+      "function mintable(address _user, address _asset) view returns (uint256 _amount)",
+      "function spoke() view returns (address)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -399,5 +505,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0xb7095269a66743df520d59f49fb16a5b3e6115504c75ab49c8520e1bf0d655d4"
+  "permissionsConfigHash": "0xe7bc819f20b988aeb8ee0ad0b2d7fb9a55c2c43dfc200e07e3720004cd776aac"
 }

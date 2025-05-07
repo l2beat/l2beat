@@ -4,7 +4,10 @@ import dotenv from 'dotenv'
 import tinify from 'tinify'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 import { getAllStaticPngs } from './utils/getAllStaticPngs'
-import { checkIfWasTinified, saveToMetadata } from './utils/metadata'
+import {
+  checkIfWasTinified,
+  saveToTinifyMetadata,
+} from './utils/tinifyMetadata'
 
 dotenv.config({
   path: './.env.local',
@@ -53,7 +56,7 @@ async function tinifyImage(filePath: string) {
   console.time(`Tinifying ${filePath}`)
   await tinify.fromFile(filePath).toFile(filePath)
   const tinifiedBuffer = readFileSync(filePath)
-  saveToMetadata(filePath, tinifiedBuffer)
+  saveToTinifyMetadata(filePath, tinifiedBuffer)
   console.timeEnd(`Tinifying ${filePath}`)
   return 1
 }
@@ -93,7 +96,7 @@ async function tinifyLogo(filePath: string, sourceBuffer: Buffer) {
   await tinified.toFile(filePath)
 
   const tinifiedBuffer = readFileSync(filePath)
-  saveToMetadata(filePath, tinifiedBuffer)
+  saveToTinifyMetadata(filePath, tinifiedBuffer)
   console.timeEnd(`Tinifying ${filePath}`)
   return 1
 }

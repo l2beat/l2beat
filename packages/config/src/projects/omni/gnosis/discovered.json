@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 39725195,
-  "configHash": "0xc6da1627b6c8e15d1fa05693fb0bcabe0ccdff1f3f2dbfb33be1e3dd2eb190c5",
+  "configHash": "0x3150ae54952e6dc9c92c729b3a716f249105ef2abe3d66c9f1c745c09d18e18f",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",

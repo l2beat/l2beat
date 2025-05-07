@@ -32,6 +32,7 @@ export async function getProvider(
         type: 'etherscan',
         url: 'ERROR',
         apiKey: 'ERROR',
+        chainId: -1,
       },
     },
   ]

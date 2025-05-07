@@ -9,7 +9,7 @@ export function DaRiskFrameworkRouter(
   render: RenderFunction,
 ) {
   app.get('/da-risk', (req, res) => {
-    const data = getDaRiskFrameworkData(manifest)
+    const data = getDaRiskFrameworkData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })

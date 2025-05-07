@@ -20,7 +20,7 @@ cleanup() {
     kill -9 $pid 2>/dev/null || true
   done
   # Make sure all processes in the current process group are terminated
-  pkill -P $ 2>/dev/null || true
+  pkill -P $$ 2>/dev/null || true
   # Exit the script
   exit 0
 }
@@ -42,7 +42,7 @@ tailwindcss \
   --watch < /dev/tty &
 pids+=($!)
 
-tsx \
+NEXT_PUBLIC_REWRITE=true tsx \
   --tsconfig ./rewrite/tsconfig.json \
   --watch rewrite/src/index.ts &
 pids+=($!)

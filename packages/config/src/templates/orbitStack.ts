@@ -163,6 +163,7 @@ interface OrbitStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  proofSystemInactive?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -318,6 +319,7 @@ function defaultStateValidation(
 
 const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
+  '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3',
 ]
 
 // TODO: Add blobstream delay when timelock is enabled
@@ -1042,18 +1044,32 @@ function getDAProvider(
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
   if (isUsingValidBlobstreamWmr) {
-    return {
-      riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
-      riskViewExitWindow: pickWorseRisk(
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-        RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-      ),
-      technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
-      layer: DA_LAYERS.CELESTIA,
-      bridge: DA_BRIDGES.BLOBSTREAM,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-      badge: BADGES.DA.CelestiaBlobstream,
-    }
+    if (templateVars.proofSystemInactive) {
+      return {
+        riskViewDA: RISK_VIEW.DATA_CELESTIA(false),
+        riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(
+          0,
+          selfSequencingDelaySeconds,
+        ),
+        technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+        layer: DA_LAYERS.CELESTIA,
+        bridge: DA_BRIDGES.NONE,
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        badge: BADGES.DA.Celestia,
+      }
+    } else
+      return {
+        riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
+        riskViewExitWindow: pickWorseRisk(
+          RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+          RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+        ),
+        technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
+        layer: DA_LAYERS.CELESTIA,
+        bridge: DA_BRIDGES.BLOBSTREAM,
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        badge: BADGES.DA.CelestiaBlobstream,
+      }
   } else {
     const DAC = templateVars.discovery.getContractValue<{
       membersCount: number

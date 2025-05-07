@@ -7,6 +7,7 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import type { Manifest } from '~/utils/Manifest'
 
+import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import { ps } from '~/server/projects'
 
 export async function getDataAvailabilityProjectData(
@@ -15,6 +16,7 @@ export async function getDataAvailabilityProjectData(
     layer: string
     bridge: string
   },
+  url: string,
 ): Promise<RenderData | undefined> {
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
@@ -25,8 +27,14 @@ export async function getDataAvailabilityProjectData(
   return {
     head: {
       manifest,
-      title: `${projectEntry.name} - L2BEAT`,
-      description: projectEntry.description,
+      metadata: getMetadata(manifest, {
+        title: `${projectEntry.name} - L2BEAT`,
+        description: projectEntry.description,
+        openGraph: {
+          url,
+          image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
+        },
+      }),
     },
     ssr: {
       page: 'DataAvailabilityProjectPage',

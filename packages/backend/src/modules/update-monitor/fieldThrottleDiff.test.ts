@@ -19,16 +19,19 @@ describe(fieldThrottleDiff.name, () => {
     {
       name: 'ContractA',
       address: ADDRESS_A,
+      addressType: 'Contract',
       diff: FIELDS_A,
     },
     {
       name: 'ContractB',
       address: ADDRESS_B,
+      addressType: 'Contract',
       diff: FIELDS_B,
     },
     {
       name: 'ContractC',
       address: ADDRESS_C,
+      addressType: 'Contract',
       diff: FIELDS_C,
     },
   ]
@@ -39,16 +42,19 @@ describe(fieldThrottleDiff.name, () => {
         {
           name: 'ContractA',
           address: ADDRESS_A,
+          addressType: 'Contract',
           diff: [FIELDS_A[0]],
         },
         {
           name: 'ContractB',
           address: ADDRESS_B,
+          addressType: 'Contract',
           diff: [FIELDS_B[0]],
         },
         {
           name: 'ContractB',
           address: ADDRESS_B,
+          addressType: 'Contract',
           diff: [FIELDS_B[1]],
         },
         DIFF[2],
@@ -57,6 +63,7 @@ describe(fieldThrottleDiff.name, () => {
         {
           name: 'ContractB',
           address: ADDRESS_B,
+          addressType: 'Contract',
           diff: [FIELDS_B[0]],
         },
         DIFF[2],
@@ -65,11 +72,13 @@ describe(fieldThrottleDiff.name, () => {
         {
           name: 'ContractA',
           address: ADDRESS_A,
+          addressType: 'Contract',
           diff: [FIELDS_A[0]],
         },
         {
           name: 'ContractB',
           address: ADDRESS_B,
+          addressType: 'Contract',
           diff: [FIELDS_B[1]],
         },
         DIFF[2],

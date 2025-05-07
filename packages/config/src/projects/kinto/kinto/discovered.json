@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 845013,
-  "configHash": "0x912d150d4fad8a815a3d4f2df0831e6dd6f744b5baa0d97dd5bb435c8166dbb9",
+  "blockNumber": 850146,
+  "configHash": "0x5428ae54cd9be8058dbc145740e7341782210fdba7d08c5ecb4b63f314322305",
   "entries": [
     {
       "name": "NioGuardians",
@@ -18,7 +18,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1745841339,
+        "clock": 1746452165,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -56,7 +56,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1745841339,
+        "clock": 1746452165,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -258,7 +258,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "29725237579713080475",
+        "getDeposit": "29820107590028460475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -552,7 +552,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4859,
+        "getNonce": 4870,
         "getOwnersCount": 4,
         "inRecovery": 0,
         "insurancePolicy": 0,
@@ -596,7 +596,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 49647,
+        "globalMessageCount": 50612,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -627,6 +627,7 @@
       "name": "KintoAppRegistry",
       "address": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
       "type": "Contract",
+      "template": "kinto/KintoAppRegistry",
       "sourceHashes": [
         "0xeeb4c186c20cc83c0dc547c387bbb8738f8a0b213ed2e8ecb325ad9326c326bc",
         "0xec7b652ce6b00a358ea1be503c5faf2a7bea3f40d4ff81bce6c02bf27a50a3c6"
@@ -752,7 +753,7 @@
           ]
         ],
         "$upgradeCount": 22,
-        "appCount": 75,
+        "appCount": 76,
         "getApproved": [
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
@@ -822,7 +823,7 @@
           "https://kinto.xyz/metadata/kintoapp/3",
           "https://kinto.xyz/metadata/kintoapp/4"
         ],
-        "totalSupply": 75
+        "totalSupply": 76
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
@@ -1050,7 +1051,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75670
+        "totalWallets": 75702
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory",
@@ -1083,11 +1084,12 @@
       "name": "AccessManager",
       "address": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
       "type": "Contract",
+      "template": "kinto/AccessManager",
       "sourceHashes": [
         "0x0be3dfeb685554b52db3a817fb494512b185e58a93ef6932d66a7d107ffab52c"
       ],
       "proxyType": "immutable",
-      "description": "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "description": "OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1568,15 +1570,19 @@
           "description": "The guardian permission allows canceling operations that have been scheduled under the role."
         },
         "RoleAdminChanged": {
+          "severity": "HIGH",
           "description": "The RoleAdmin permission is required to grant the role, revoke the role and update the execution delay for the respective role."
         },
         "RoleGrantDelayChanged": {
+          "severity": "HIGH",
           "description": "Grant delay for a given `roleId`."
         },
         "TargetAdminDelayUpdated": {
+          "severity": "HIGH",
           "description": "Delay for changing the AccessManager configuration of a given target contract."
         },
         "TargetFunctionRoleUpdated": {
+          "severity": "HIGH",
           "description": "Target addresses and function selectors accessible from a given role id."
         },
         "OperationScheduled": {
@@ -1584,9 +1590,13 @@
           "description": "List of scheduled operations."
         },
         "AdditionalRoleLabels": {
+          "severity": "HIGH",
           "description": "Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."
         },
-        "RolesGranted": { "description": "List of roles granted to accounts." },
+        "RolesGranted": {
+          "severity": "HIGH",
+          "description": "List of roles granted to accounts."
+        },
         "RolesRevoked": {
           "description": "List of roles revoked from accounts."
         }
@@ -1616,6 +1626,7 @@
       "name": "KintoID",
       "address": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
       "type": "Contract",
+      "template": "kinto/KintoID",
       "sourceHashes": [
         "0xc12cd857412232b0fa14c2227d0d0eb78d6be8ec427f4f01c6fa2a78fa3609c6",
         "0xce66d9a3bd58c2c9f8e48c03ed48f8ad7db1575dfaabe7a982cbd657b9577990"
@@ -1742,7 +1753,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1745841188,
+        "lastMonitoredAt": 1746448750,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3056,7 +3067,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75338,
+        "totalSupply": 75370,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
@@ -3890,7 +3901,10 @@
     ]
   },
   "usedTemplates": {
-    "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1"
+    "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1",
+    "kinto/AccessManager": "0x973f973e76e7603444a03fd4d48de2a38ecad709cc7c76e070f173c86d991262",
+    "kinto/KintoAppRegistry": "0xb3039ae3b2e3496e76ff42ff29845fecccf615300382914157c9d02611e2afac",
+    "kinto/KintoID": "0x42a67c6ab4a6b57a1cd73ef8ef2786b66d34cc910c08ed2297eab1d183371e29"
   },
   "permissionsConfigHash": "0x844ff3e03fa3560dd4a830cb5508c0d7f1290a922f27201633cb0ea60ad01b39"
 }

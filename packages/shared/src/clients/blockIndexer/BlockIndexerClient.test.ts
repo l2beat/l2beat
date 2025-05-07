@@ -11,6 +11,7 @@ const OPTIONS = {
   apiKey: 'key',
   url: API_URL,
   chain: 'chain',
+  chainId: 1,
 }
 
 const rate = new RateLimiter({ callsPerMinute: 10000 })
@@ -31,7 +32,7 @@ describe(BlockIndexerClient.name, () => {
       )
 
       expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=3141592653&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=3141592653&closest=before&apikey=key&chainId=1`,
         {},
       )
       expect(blockNumber).toEqual(result)
@@ -61,7 +62,7 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key&chainId=1`,
         {},
       )
 
@@ -69,7 +70,7 @@ describe(BlockIndexerClient.name, () => {
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
           timestamp - (10) * UnixTime.MINUTE
-        }&closest=before&apikey=key`,
+        }&closest=before&apikey=key&chainId=1`,
         {},
       )
 
@@ -102,7 +103,7 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key&chainId=1`,
         {},
       )
 
@@ -110,7 +111,7 @@ describe(BlockIndexerClient.name, () => {
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
           timestamp - (10) * UnixTime.MINUTE
-        }&closest=before&apikey=key`,
+        }&closest=before&apikey=key&chainId=1`,
         {},
       )
     })
@@ -137,7 +138,7 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key&chainId=1`,
         {},
       )
 
@@ -145,7 +146,7 @@ describe(BlockIndexerClient.name, () => {
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
           timestamp - (10) * UnixTime.MINUTE
-        }&closest=before&apikey=key`,
+        }&closest=before&apikey=key&chainId=1`,
         {},
       )
     })
@@ -171,7 +172,7 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key&chainId=1`,
         {},
       )
 
@@ -179,7 +180,7 @@ describe(BlockIndexerClient.name, () => {
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
           timestamp - (10) * UnixTime.MINUTE
-        }&closest=before&apikey=key`,
+        }&closest=before&apikey=key&chainId=1`,
         {},
       )
     })
@@ -214,7 +215,7 @@ describe(BlockIndexerClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
-            `${API_URL}?module=mod&action=act&foo=bar&baz=123&apikey=key`,
+            `${API_URL}?module=mod&action=act&foo=bar&baz=123&apikey=key&chainId=1`,
           )
           return { status: '1', message: 'OK', result: '' }
         },

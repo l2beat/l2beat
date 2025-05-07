@@ -1,7 +1,6 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   BeaconChainClient,
-  BlobScanClient,
   type BlockClient,
   BlockIndexerClient,
   CelestiaRpcClient,
@@ -27,7 +26,6 @@ export interface Clients {
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
-  blobscan: BlobScanClient | undefined
   celestia: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
   getRpcClient: (chain: string) => RpcClient
@@ -44,7 +42,6 @@ export function initClients(config: Config, logger: Logger): Clients {
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
-  let blobscan: BlobScanClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
 
@@ -168,18 +165,6 @@ export function initClients(config: Config, logger: Logger): Clients {
   if (config.da) {
     for (const layer of config.da.layers) {
       switch (layer.type) {
-        case 'ethereum': {
-          blobscan = new BlobScanClient({
-            callsPerMinute: layer.callsPerMinute,
-            baseUrl: layer.url,
-            retryStrategy: 'UNRELIABLE',
-            sourceName: layer.name,
-            logger,
-            http,
-          })
-          break
-        }
-
         case 'celestia': {
           celestia = new CelestiaRpcClient({
             callsPerMinute: layer.callsPerMinute,
@@ -249,7 +234,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     degate: degateClient,
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
-    blobscan,
     celestia,
     avail,
     getStarknetClient,

@@ -2,7 +2,7 @@
   "name": "myria",
   "chain": "ethereum",
   "blockNumber": 21981354,
-  "configHash": "0xcf60ce00c6a9d7aa37cbdf0ba7d0386550e578c80f6f7878e469bd4678d601aa",
+  "configHash": "0x8f9dfa91c3dd0530b7a4400075c0aef6dd6d353d22d83fc835294b64f8273e75",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -272,6 +272,7 @@
       "address": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",

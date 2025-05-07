@@ -2,7 +2,7 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21981677,
-  "configHash": "0x48de020e7abb600893be39295aa97269a7f9cd7190d2a5bb958b5b0ad7a3c44d",
+  "configHash": "0x005dffc73c29472a517ffc500bdfddfc6496bde76e8aca9c402725ecd5732079",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -196,6 +196,7 @@
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

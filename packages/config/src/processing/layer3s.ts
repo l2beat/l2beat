@@ -34,9 +34,9 @@ import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
 import { mindchain } from '../projects/mindchain/mindchain'
 import { molten } from '../projects/molten/molten'
+import { moonchain } from '../projects/moonchain/moonchain'
 import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
-import { mxc } from '../projects/mxc/mxc'
 import { nums } from '../projects/nums/nums'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
@@ -61,6 +61,7 @@ import { vessel } from '../projects/vessel/vessel'
 import { winr } from '../projects/winr/winr'
 import { xai } from '../projects/xai/xai'
 import { xrone } from '../projects/xrone/xrone'
+import { yellowstone } from '../projects/yellowstone/yellowstone'
 import { zklinknova } from '../projects/zklinknova/zklinknova'
 
 export const layer3s: ScalingProject[] = [
@@ -114,7 +115,7 @@ export const layer3s: ScalingProject[] = [
   molten,
   muster,
   mvchain,
-  mxc,
+  moonchain,
   nums,
   unite,
   vessel,
@@ -127,4 +128,5 @@ export const layer3s: ScalingProject[] = [
   syndr,
   winr,
   xrone,
+  yellowstone,
 ]

@@ -2,13 +2,14 @@
   "name": "layer2financezk",
   "chain": "ethereum",
   "blockNumber": 19825376,
-  "configHash": "0x6c9e1a8cb1510d901187df3dff9e7aa2ea1a3f125ab686c547235a22abed4dbd",
+  "configHash": "0xb367903b05f37053786287fa5a5821b0c282ae18b3cfe44cdf3f5ac751a41711",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
       "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",

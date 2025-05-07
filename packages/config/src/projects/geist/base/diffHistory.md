@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x67226c2e16f551ef5427ca9e7233b94024862358
+
+# Diff at Tue, 06 May 2025 15:38:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 28317508
+- current block number: 29878278
+
+## Description
+
+Added a new UpgradeExecutor EOA.
+
+Config:
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+      values.executors.2:
++        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
+      values.executors.1:
+-        "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.executors.0:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x01F010a5e001fe9d6940758EA5e8c777885E351e"
+    }
+```
+
+Generated with discovered.json: 0x553105daf483a5d92c42d46ab1eb0a9aa80f4b26
+
+# Diff at Fri, 02 May 2025 17:25:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 28317508
+- current block number: 28317508
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 28317508 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3:
++        "Celestia Nitro 3.3.2 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x720d01684dd2361f9acb1ee989152e4434b48790
 
 # Diff at Tue, 29 Apr 2025 08:19:23 GMT:

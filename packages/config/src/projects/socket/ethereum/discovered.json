@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 22245178,
-  "configHash": "0xbef1a18f63d492c2ed65bb25d9756ef6e85b46535cd2b890d5cfb0cb47b669d2",
+  "blockNumber": 22424578,
+  "configHash": "0xa3762fda50e1da8c9a5b58101b39dc9b169efe869680dddfaa81ea020424ccd6",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
@@ -225,6 +225,17 @@
       "derivedName": "Vault"
     },
     {
+      "name": "SolvBTC Vault (Polynomial)",
+      "address": "0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1744193267,
+      "sinceBlock": 22230650,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
       "name": "WETH Vault (Polynomial)",
       "address": "0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a",
       "type": "Contract",
@@ -315,7 +326,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 413,
+        "nonce": 418,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -528,6 +539,17 @@
       "derivedName": "Vault"
     },
     {
+      "name": "wstETH Vault (Polynomial)",
+      "address": "0x572A4080c16beD33Cf2E876ad969E2E35769EDB4",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1744192691,
+      "sinceBlock": 22230602,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
       "name": "USDC Vault (Zora)",
       "address": "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8",
       "type": "Contract",
@@ -579,6 +601,24 @@
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
       },
       "derivedName": "Hasher"
+    },
+    {
+      "name": "cbETH Vault (Kinto)",
+      "address": "0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1730657123,
+      "sinceBlock": 21108789,
+      "values": {
+        "$immutable": true,
+        "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      },
+      "derivedName": "Vault"
     },
     {
       "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
@@ -845,7 +885,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 13065,
+        "globalMessageCount": 13906,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -1023,7 +1063,8 @@
           "0x7163FaC3fc420923810cCA5d15949c1523F69B4a",
           "0x432684E7e764343c836d9c78b9245aa774323E40",
           "0x4B4ed8b47EA37FB0230472fAdaFAF12658f05Ad7",
-          "0x52DB079d07fb8C2F5FA158C3311d877f3769B01e"
+          "0x52DB079d07fb8C2F5FA158C3311d877f3769B01e",
+          "0x376f76B657a384e980F6Ea96e885654eC8F3ED61"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -1656,7 +1697,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 232,
+        "nonce": 255,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2747,6 +2788,49 @@
       "function packMessage(uint32 srcChainSlug_, address srcPlug_, uint32 dstChainSlug_, address dstPlug_, tuple(bytes32 msgId, uint256 executionFee, uint256 minMsgGasLimit, bytes32 executionParams, bytes payload) messageDetails_) pure returns (bytes32)",
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
+    ],
+    "0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C": [
+      "constructor(address token_)",
+      "error CannotTransferOrExecuteOnBridgeContracts()",
+      "error InsufficientMsgValue()",
+      "error InvalidConnector()",
+      "error InvalidTokenAddress()",
+      "error InvalidTokenContract()",
+      "error MessageIdMisMatched()",
+      "error NoPendingData()",
+      "error NoPermit(bytes32 role)",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAddressReceiver()",
+      "event BridgingTokens(address connector, address sender, address receiver, uint256 amount, bytes32 messageId)",
+      "event ConnectorStatusUpdated(address connector, bool status)",
+      "event HookUpdated(address newHook)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event RoleGranted(bytes32 indexed role, address indexed grantee)",
+      "event RoleRevoked(bytes32 indexed role, address indexed revokee)",
+      "event TokensBridged(address connecter, address receiver, uint256 amount, bytes32 messageId)",
+      "function bridge(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_, bytes execPayload_, bytes options_) payable",
+      "function bridgeType() view returns (bytes32)",
+      "function claimOwner()",
+      "function connectorCache(address) view returns (bytes)",
+      "function getMinFees(address connector_, uint256 msgGasLimit_, uint256 payloadSize_) view returns (uint256 totalFees)",
+      "function grantRole(bytes32 role_, address grantee_)",
+      "function hasRole(bytes32 role_, address address_) view returns (bool)",
+      "function hook__() view returns (address)",
+      "function identifierCache(bytes32) view returns (bytes)",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveInbound(uint32 siblingChainSlug_, bytes payload_) payable",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function retry(address connector_, bytes32 messageId_)",
+      "function revokeRole(bytes32 role_, address revokee_)",
+      "function token() view returns (address)",
+      "function updateConnectorStatus(address[] connectors, bool[] statuses)",
+      "function updateHook(address hook_, bool approve_)",
+      "function validConnectors(address) view returns (bool)"
     ],
     "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": [
       "constructor(address token_)",
@@ -4571,5 +4655,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0xd5e8d0cb4ade84c08dfdd037d74b89ab0a0d5c79b5867b2bf680d5eeaaca8e3c"
+  "permissionsConfigHash": "0xebfa2e6bcbf6c97504105572a66bae4dad23604141921e81317060273cee6168"
 }

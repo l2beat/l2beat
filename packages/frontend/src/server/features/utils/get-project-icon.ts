@@ -7,7 +7,7 @@ export function getProjectIcon(slug: string) {
 }
 
 export function getStaticAsset(filePath: string) {
-  if (env.REWRITE) {
+  if (env.NEXT_PUBLIC_REWRITE) {
     const manifest = getManifest(
       env.NODE_ENV === 'production',
       path.join(process.cwd(), 'rewrite'),

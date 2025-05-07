@@ -35,6 +35,18 @@ export class LivenessWithConfigService {
     return records.map((record) => this.toRecordWithConfiguration(record))
   }
 
+  async getWithinTimeRangeWithLatestBeforeFrom(from: UnixTime, to: UnixTime) {
+    const configurationIds = this.configurations.map((c) => c.id)
+
+    const records = await this.db.liveness.getRecordsInRangeWithLatestBefore(
+      configurationIds,
+      from,
+      to,
+    )
+
+    return records.map((record) => this.toRecordWithConfiguration(record))
+  }
+
   async getByTypeSince(subtype: TrackedTxsConfigSubtype, since: UnixTime) {
     const configurationIds = this.configurations
       .filter((c) => c.subtype === subtype)

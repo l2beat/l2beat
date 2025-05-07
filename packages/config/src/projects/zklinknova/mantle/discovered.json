@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 76775244,
-  "configHash": "0x1421e3b0085fdee733c14c749bbe5deca8cb237c785713efeaa7be488de08e70",
+  "blockNumber": 79197162,
+  "configHash": "0xd9ba90e82a18ef1d9148db794da8d347b673b79a3af2610ce734b421a3cfae2c",
   "entries": [
     {
       "name": "MantleOwner",
@@ -10,7 +10,7 @@
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
@@ -194,11 +194,11 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 50873,
+        "getTotalBatchesExecuted": 58797,
         "getTotalPriorityTxs": 880,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": true,
-        "totalBatchesExecuted": 50873,
+        "totalBatchesExecuted": 58797,
         "totalPriorityTxs": 880,
         "totalSyncedPriorityTxs": 880,
         "totalValidatorForwardFee": "1145994696585755653058",

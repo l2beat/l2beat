@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0xc416629267a0dcb47bb788c05179fdc3ff02a37a21f0091da1cacf3541fd3694",
+  "configHash": "0x310fdcb3a6987ac5b2c8cf3c39c59cfdd737243b285ce759c4442d6d51a50f36",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -116,6 +116,7 @@
       "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
