@@ -29,20 +29,27 @@ export function hashFirstSource(
   isVerified: boolean,
   perContractSources: PerContractSource[],
 ): Hash256 | undefined {
-  if (!isVerified || perContractSources.length < 1) {
+  return getFirstSourceHash(
+    isVerified,
+    perContractSources.map((s) => s.hash),
+  )
+}
+
+export function getFirstSourceHash(
+  isVerified: boolean,
+  hashes: (string | undefined)[],
+): Hash256 | undefined {
+  if (!isVerified || hashes.length < 1) {
     return undefined
   }
 
-  const source =
-    perContractSources.length === 1
-      ? perContractSources[0]
-      : perContractSources[1]
+  const sourceHash = hashes.length === 1 ? hashes[0] : hashes[1]
 
-  if (source === undefined) {
+  if (sourceHash === undefined) {
     throw Error('No sources found')
   }
 
-  return source.hash !== undefined ? Hash256(source.hash) : undefined
+  return Hash256(sourceHash)
 }
 
 export function contractFlatteningHash(

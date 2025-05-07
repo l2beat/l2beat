@@ -103,3 +103,4 @@ export {
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
 export { getChainConfigs } from './config/config.discovery'
+export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
