@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x592b0be1d3b59d90f9308956367576b26e63bf16
+
+# Diff at Wed, 07 May 2025 11:31:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22424695
+- current block number: 22431482
+
+## Description
+
+Moved 4 EOAs from Starkware security council minority multisig to Starkware security council.
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      values.$members.15:
++        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
++        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
++        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.10:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.9:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.8:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.7:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.5:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+      values.$members.4:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.3:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.multisigThreshold:
+-        "9 of 12 (75%)"
++        "9 of 16 (56%)"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      values.$members.15:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.10:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.9:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.8:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.7:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.6:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.5:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.multisigThreshold:
+-        "3 of 16 (19%)"
++        "3 of 12 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xb6fe4d92b92cbc7ab643b545e41963cb152fdc08
 
 # Diff at Tue, 06 May 2025 12:35:17 GMT:
