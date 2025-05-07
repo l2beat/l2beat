@@ -59,7 +59,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0x085b8B6407f150D62adB1EF926F7f304600ec714"]
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0x085b8B6407f150D62adB1EF926F7f304600ec714": "TimelockController"
+      }
     },
     {
       "name": "ZkTokenGovernor_deprecated",
@@ -150,7 +152,9 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkTokenGovernor",
+      "implementationNames": {
+        "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor"
+      },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -209,7 +213,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"]
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "TimelockController"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -268,7 +274,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TimelockController"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -358,7 +366,9 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkGovOpsGovernor",
+      "implementationNames": {
+        "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor"
+      },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -457,7 +467,10 @@
         "symbol": "ZK",
         "totalSupply": "13103157062315200000000000000"
       },
-      "derivedName": "ZkTokenV2"
+      "implementationNames": {
+        "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
+        "0x01a6715d3560241E09E865a46122bf347A576c09": "ZkTokenV2"
+      }
     },
     {
       "name": "Guardians_l2Alias",
@@ -581,7 +594,9 @@
         "votingDelay": 259200,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkProtocolGovernor",
+      "implementationNames": {
+        "0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor"
+      },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -704,7 +719,9 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkTokenGovernor",
+      "implementationNames": {
+        "0xb83FF6501214ddF40C91C9565d095400f3F45746": "ZkTokenGovernor"
+      },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -764,7 +781,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"]
       },
-      "derivedName": "TimelockController",
+      "implementationNames": {
+        "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "TimelockController"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -823,7 +842,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xC9E442574958f96C026DeF9a50C3236cab17428a"]
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0xC9E442574958f96C026DeF9a50C3236cab17428a": "TimelockController"
+      }
     },
     {
       "name": "ZKFoundationMultisig_l2Alias",
@@ -859,7 +880,9 @@
         "$immutable": true,
         "owner": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ProxyAdmin"
+      }
     },
     {
       "name": "ZkTokenTimelockController",
@@ -922,7 +945,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": "TimelockController"
+      }
     },
     {
       "name": "Guardians_l2Alias_deprecated",
@@ -1017,7 +1042,9 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkGovOpsGovernor",
+      "implementationNames": {
+        "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": "ZkGovOpsGovernor"
+      },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -1700,7 +1727,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "shared-zk-stack/TimelockController": "0x9e70dcb39a5b49774d7cfdd3e9edbea022ddd1ed82db3313ebcd83bf0af88e43",
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x10be13c3b1d138ac7962969b31c78e55aa0d45fc3133042d1457f930a120b6b8"

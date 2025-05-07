@@ -18,7 +18,9 @@
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
       },
-      "derivedName": "Permit2"
+      "implementationNames": {
+        "0x000000000022D473030F116dDEE9F6B43aC78BA3": "Permit2"
+      }
     },
     {
       "name": "FeeAdapter",
@@ -40,7 +42,9 @@
         "spoke": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
         "xerc20Module": "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
       },
-      "derivedName": "FeeAdapter"
+      "implementationNames": {
+        "0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75": "FeeAdapter"
+      }
     },
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -61,7 +65,9 @@
       "sinceTimestamp": 1726462943,
       "sinceBlock": 20760966,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66": ""
+      }
     },
     {
       "address": "0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
@@ -98,7 +104,10 @@
         ],
         "$upgradeCount": 1
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7": "",
+        "0xe0F010e465f15dcD42098dF9b99F1038c11B3056": ""
+      }
     },
     {
       "address": "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
@@ -146,7 +155,10 @@
         "nonce": 37,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "EverclearSpokeV4",
@@ -203,7 +215,10 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "0x6281ea3060B26352b558C4F45767C90db482c4fd"
       },
-      "derivedName": "EverclearSpokeV4"
+      "implementationNames": {
+        "0xa05A3380889115bf313f1Db9d5f335157Be4D816": "",
+        "0xd18C19169e7C87e7d84f27AD412a56C5D743D560": "EverclearSpokeV4"
+      }
     },
     {
       "address": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
@@ -229,7 +244,9 @@
         "$immutable": true,
         "spoke": "0xa05A3380889115bf313f1Db9d5f335157Be4D816"
       },
-      "derivedName": "XERC20Module"
+      "implementationNames": {
+        "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4": "XERC20Module"
+      }
     },
     {
       "name": "",
@@ -240,7 +257,9 @@
       "sinceTimestamp": 1726462919,
       "sinceBlock": 20760964,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99": ""
+      }
     }
   ],
   "abis": {

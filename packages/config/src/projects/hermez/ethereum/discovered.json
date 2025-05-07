@@ -28,7 +28,9 @@
         "$immutable": true,
         "owner": "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": "ProxyAdmin"
+      }
     },
     {
       "name": "HermezAuctionProtocol",
@@ -61,7 +63,10 @@
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
         "tokenHEZ": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
       },
-      "derivedName": "HermezAuctionProtocol"
+      "implementationNames": {
+        "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": "AdminUpgradeabilityProxy",
+        "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
+      }
     },
     {
       "address": "0x1DBA1131000664b884A1Ba238464159892252D3a",
@@ -79,7 +84,9 @@
       "sinceTimestamp": 1620206720,
       "sinceBlock": 12373414,
       "values": { "$immutable": true },
-      "derivedName": "Verifier2048"
+      "implementationNames": {
+        "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": "Verifier2048"
+      }
     },
     {
       "address": "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
@@ -109,7 +116,9 @@
         "pendingEmergencyCouncil": "0x0000000000000000000000000000000000000000",
         "pendingGovernance": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "WithdrawalDelayer"
+      "implementationNames": {
+        "0x392361427Ef5e17b69cFDd1294F31ab555c86124": "WithdrawalDelayer"
+      }
     },
     {
       "address": "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4",
@@ -127,7 +136,9 @@
       "sinceTimestamp": 1620206715,
       "sinceBlock": 12373413,
       "values": { "$immutable": true },
-      "derivedName": "Verifier400"
+      "implementationNames": {
+        "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": "Verifier400"
+      }
     },
     {
       "name": "VerifierWithdraw",
@@ -140,7 +151,9 @@
       "sinceTimestamp": 1620206929,
       "sinceBlock": 12373429,
       "values": { "$immutable": true },
-      "derivedName": "VerifierWithdraw"
+      "implementationNames": {
+        "0x4464A1E499cf5443541da6728871af1D5C4920ca": "VerifierWithdraw"
+      }
     },
     {
       "name": "Hermez2",
@@ -182,7 +195,9 @@
         "withdrawDelayerContract": "0x0000000000000000000000000000000000000000",
         "withdrawVerifier": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Hermez"
+      "implementationNames": {
+        "0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
+      }
     },
     {
       "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
@@ -216,7 +231,9 @@
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
         "tokenHEZ": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "HermezAuctionProtocol"
+      "implementationNames": {
+        "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
+      }
     },
     {
       "name": "Hermez",
@@ -270,7 +287,10 @@
         "withdrawDelayerContract": "0x392361427Ef5e17b69cFDd1294F31ab555c86124",
         "withdrawVerifier": "0x4464A1E499cf5443541da6728871af1D5C4920ca"
       },
-      "derivedName": "Hermez"
+      "implementationNames": {
+        "0xA68D85dF56E733A06443306A095646317B5Fa633": "AdminUpgradeabilityProxy",
+        "0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
+      }
     },
     {
       "address": "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
@@ -309,7 +329,10 @@
         "nonce": 1,
         "VERSION": "1.1.1"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xe1bbC673E537053c3536310851C6554BcfcF11Cd": "Proxy",
+        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
     },
     {
       "address": "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
@@ -330,7 +353,9 @@
         "$immutable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
-      "derivedName": "HermezGovernance"
+      "implementationNames": {
+        "0xf1B3b124842555782F98bE08d1357ABb8013F11c": "HermezGovernance"
+      }
     },
     {
       "name": "Timelock",
@@ -351,7 +376,9 @@
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Timelock"
+      "implementationNames": {
+        "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": "Timelock"
+      }
     }
   ],
   "abis": {

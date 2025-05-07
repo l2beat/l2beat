@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x61082a002179632dd21c259ece707b92ae5c71ae
+
+# Diff at Wed, 07 May 2025 07:57:33 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@0ad97a28a4acd494070977b13284d597fbcc6048 block: 79197162
+- current block number: 79197162
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 79197162 (main branch discovery), not current.
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+    }
+```
+
 Generated with discovered.json: 0xae5bb250ba72f80ef3048f766dc1f27c207b9b57
 
 # Diff at Tue, 06 May 2025 09:44:40 GMT:

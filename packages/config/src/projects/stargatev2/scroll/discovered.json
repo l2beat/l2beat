@@ -50,7 +50,9 @@
         "treasuryFee": 27234524247,
         "tvl": 168005142401
       },
-      "derivedName": "StargatePoolUSDC"
+      "implementationNames": {
+        "0x3Fc69CC4A842838bCDC9499178740226062b14E4": "StargatePoolUSDC"
+      }
     },
     {
       "name": "TokenMessaging",
@@ -96,7 +98,9 @@
           "description": "The highest currently registered assetID"
         }
       },
-      "derivedName": "TokenMessaging"
+      "implementationNames": {
+        "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePoolNative",
@@ -142,7 +146,9 @@
         "treasuryFee": 28805365,
         "tvl": "191597025000000000000"
       },
-      "derivedName": "StargatePoolNative"
+      "implementationNames": {
+        "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
+      }
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
