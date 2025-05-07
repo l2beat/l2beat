@@ -142,5 +142,12 @@ export const rari: ScalingProject = orbitStackL3({
         'RARI is the first chain to integrate Espresso TEE sequencer.',
       type: 'general',
     },
+    {
+      title: 'RARI disables proof system',
+      url: 'https://arbiscan.io/address/0x01ad6e65e01928938448a1fcf5c93bf7bfe720e0#readContract#F5',
+      date: '2025-05-05T00:00:00.00Z',
+      description: 'The proof system and reference to Blobstream are disabled.',
+      type: 'incident',
+    },
   ],
 })

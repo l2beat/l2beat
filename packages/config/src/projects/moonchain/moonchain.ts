@@ -9,6 +9,7 @@ export const moonchain: ScalingProject = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'MXCzkEVM Moonchain',
+    shortName: 'Moonchain',
     slug: 'moonchain',
     stack: 'Taiko',
     description:
@@ -57,13 +58,13 @@ export const moonchain: ScalingProject = underReviewL3({
       address: EthereumAddress('0x4C3924E619E2eE83cFD565c1432cb621ca8af7A0'),
       sinceTimestamp: UnixTime(1740009589),
       tokens: ['ETH'],
-      chain: 'ethereum',
+      chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0x3160284BC2F4d7F5b170C70a0Ee0bC5333c7F39e'),
       sinceTimestamp: UnixTime(1740009596),
       tokens: '*',
-      chain: 'ethereum',
+      chain: 'arbitrum',
     },
   ],
 })
