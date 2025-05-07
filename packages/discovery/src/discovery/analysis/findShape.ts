@@ -1,5 +1,6 @@
 import { undefinedIfEmpty } from '@l2beat/shared-pure'
-import { hashFirstSource } from '../../flatten/utils'
+import { getFirstSourceHash, hashFirstSource } from '../../flatten/utils'
+import type { EntryParameters } from '../output/types'
 import type { AnalyzedContract } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
 
@@ -27,4 +28,25 @@ export function getShapeFromAnalyzedContract(
     extendedTemplate.template,
     sourceHash,
   )
+}
+
+export function getShapeFromOutputEntry(
+  templateService: TemplateService,
+  entry: EntryParameters,
+) {
+  const { sourceHashes, template } = entry
+
+  if (!sourceHashes || !template) {
+    return
+  }
+
+  const isVerified = !entry.unverified
+
+  const sourceHash = getFirstSourceHash(isVerified, sourceHashes)
+
+  if (!sourceHash) {
+    return
+  }
+
+  return templateService.findShapeByTemplateAndHash(template, sourceHash)
 }

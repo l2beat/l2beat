@@ -16,7 +16,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsXColumn",
+      "implementationNames": {
+        "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": "EcdsaPointsXColumn"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -31,7 +33,9 @@
       "sinceTimestamp": 1721829143,
       "sinceBlock": 20376819,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey1Column",
+      "implementationNames": {
+        "0x032e5cDb729Ce94638ACA9e82A22688109B43046": "PoseidonPoseidonPartialRoundKey1Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -51,7 +55,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsXColumn",
+      "implementationNames": {
+        "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": "PedersenHashPointsXColumn"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -66,7 +72,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0x05C98569CA566a2035b87dE7d1b623C950798035": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -104,7 +112,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -119,7 +129,9 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -134,7 +146,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey1Column",
+      "implementationNames": {
+        "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": "PoseidonPoseidonPartialRoundKey1Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -172,7 +186,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -187,7 +203,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsYColumn",
+      "implementationNames": {
+        "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": "PedersenHashPointsYColumn"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -226,7 +244,10 @@
         "nonce": 7,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -263,7 +284,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0x243682b9A01455ac671c97D8dE686EBd4EE25791": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -278,7 +301,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "FriStatementContract",
+      "implementationNames": {
+        "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": "FriStatementContract"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -293,7 +318,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MerkleStatementContract",
+      "implementationNames": {
+        "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": "MerkleStatementContract"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -308,7 +335,9 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0x351666E9EeA6E012f08695ccd1923f37519563f1": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -346,7 +375,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -387,7 +418,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0x42AF9498647Be47A256C9cc8278eE94473Cb7771": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -464,7 +497,10 @@
         "upgradeActivationDelayFmt": "0s"
       },
       "fieldMeta": { "$admin": { "severity": "HIGH" } },
-      "derivedName": "CallProxy",
+      "implementationNames": {
+        "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "Proxy",
+        "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458": "CallProxy"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -479,7 +515,9 @@
       "sinceTimestamp": 1721829155,
       "sinceBlock": 20376820,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0x4742f8723CAE9C17Cb1D54708898904fB43621c9": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -494,7 +532,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey2Column",
+      "implementationNames": {
+        "0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": "PoseidonPoseidonFullRoundKey2Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -509,7 +549,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -524,7 +566,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -539,7 +583,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey0Column",
+      "implementationNames": {
+        "0x53daC4aB94955f35657463252a7b25F343A14451": "PoseidonPoseidonPartialRoundKey0Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -554,7 +600,9 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1368,7 +1416,9 @@
           "2345108766317314046"
         ]
       },
-      "derivedName": "CairoBootloaderProgram",
+      "implementationNames": {
+        "0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": "CairoBootloaderProgram"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1411,7 +1461,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1426,7 +1478,9 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1441,7 +1495,9 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1461,7 +1517,9 @@
       "sinceTimestamp": 1721829131,
       "sinceBlock": 20376818,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey1Column",
+      "implementationNames": {
+        "0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": "PoseidonPoseidonFullRoundKey1Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1505,7 +1563,9 @@
         "referenceFactRegistry": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
         "referralExpirationTime": 1729971851
       },
-      "derivedName": "GpsStatementVerifier",
+      "implementationNames": {
+        "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": "GpsStatementVerifier"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1520,7 +1580,9 @@
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1535,7 +1597,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0xA9db7bDfbc3664C8954f490e4d94B8607a080f23": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1571,7 +1635,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0xAaAe0edF6536de72E7163D293518c40011179f8a": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1586,7 +1652,9 @@
       "sinceTimestamp": 1721828735,
       "sinceBlock": 20376785,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1601,7 +1669,9 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1616,7 +1686,9 @@
       "sinceTimestamp": 1721829143,
       "sinceBlock": 20376819,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey0Column",
+      "implementationNames": {
+        "0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": "PoseidonPoseidonPartialRoundKey0Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1631,7 +1703,9 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly",
+      "implementationNames": {
+        "0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B": "CpuConstraintPoly"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1646,7 +1720,9 @@
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey0Column",
+      "implementationNames": {
+        "0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": "PoseidonPoseidonFullRoundKey0Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1661,7 +1737,9 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1676,7 +1754,9 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods",
+      "implementationNames": {
+        "0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84": "CpuOods"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1691,7 +1771,9 @@
       "sinceTimestamp": 1721829131,
       "sinceBlock": 20376818,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey2Column",
+      "implementationNames": {
+        "0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": "PoseidonPoseidonFullRoundKey2Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1734,7 +1816,9 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier",
+      "implementationNames": {
+        "0xe155154845950573EC5F518fC0D4950AB71303ff": "CpuFrilessVerifier"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1749,7 +1833,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsYColumn",
+      "implementationNames": {
+        "0xE3929Ea107238Ce59d64A3cE497f12b57846B716": "EcdsaPointsYColumn"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1765,7 +1851,9 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MemoryPageFactRegistry"
+      "implementationNames": {
+        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": "MemoryPageFactRegistry"
+      }
     },
     {
       "address": "0xebc8416179fE90854fe8B3f774801165572cfD7F",
@@ -1784,7 +1872,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey0Column",
+      "implementationNames": {
+        "0xedFfEA8296945aA91FC035Aefc8c33D737dBc573": "PoseidonPoseidonFullRoundKey0Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1799,7 +1889,9 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey1Column",
+      "implementationNames": {
+        "0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc": "PoseidonPoseidonFullRoundKey1Column"
+      },
       "category": { "name": "Spam", "priority": -1 }
     }
   ],
@@ -2115,8 +2207,8 @@
     "shared-sharp-verifier/CpuFrilessVerifier": "0x472c63729146d653de2dafc032021def31a3227f6c7bcb2dfd6fb7cc96c442fa",
     "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-sharp-verifier/SHARPVerifier": "0x1b6d2df648136e7e01e2f7dc4237e03ea8b9060aafee56c40b8cf45179dd5016",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x38e64c0bdc916fd8608162ff858b98f8da01ce76b5b786f5725572f8f2d785e9"
+    "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xc929e62e78117e1bf49dd633225c9442dddbbd8c8a0d88a05824a371ff0039d6"
   },
   "permissionsConfigHash": "0x9c0c765b738401583d888b377f21f6e8f69eaa9087262aebc450bf9c575b8ffd"
 }

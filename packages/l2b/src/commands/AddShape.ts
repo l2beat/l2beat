@@ -82,7 +82,7 @@ export const AddShape = command({
     logger.logLine('Fetching contract source code...')
     const source = await client.getContractSource(args.address)
 
-    templateService.addToShape(
+    await templateService.addToShape(
       args.template,
       args.chain,
       args.address,

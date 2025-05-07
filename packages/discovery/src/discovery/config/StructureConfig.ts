@@ -109,7 +109,6 @@ export const StructureContract = z.object({
   canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
   proxyType: z.optional(ManualProxyType),
-  displayName: z.string().optional(),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.array(z.string()).default([]),
   ignoreRelatives: z.array(z.string()).default([]),

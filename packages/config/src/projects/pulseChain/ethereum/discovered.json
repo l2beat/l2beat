@@ -56,7 +56,10 @@
         "upgradeabilityOwner": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "version": 1
       },
-      "derivedName": "ForeignOmnibridge"
+      "implementationNames": {
+        "0x1715a3E4A142d8b698131108995174F37aEBA10D": "EternalStorageProxy",
+        "0xB7DF1E00ae030e966E635ede273625240546B873": "ForeignOmnibridge"
+      }
     },
     {
       "address": "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
@@ -112,12 +115,10 @@
         "validatorCount": 8,
         "version": 1
       },
-      "fieldMeta": {
-        "$members": {
-          "description": "Array of the signers in the validator multisig"
-        }
-      },
-      "derivedName": "BridgeValidators"
+      "implementationNames": {
+        "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "EternalStorageProxy",
+        "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": "BridgeValidators"
+      }
     },
     {
       "address": "0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539",
@@ -166,7 +167,9 @@
         "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
       },
-      "derivedName": "WETHOmnibridgeRouter"
+      "implementationNames": {
+        "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": "WETHOmnibridgeRouter"
+      }
     },
     {
       "name": "TokenFactory",
@@ -184,7 +187,9 @@
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
         "tokenImage": "0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
       },
-      "derivedName": "TokenFactory"
+      "implementationNames": {
+        "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02": "TokenFactory"
+      }
     },
     {
       "name": "PermittableToken",
@@ -211,7 +216,9 @@
         "totalSupply": 0,
         "version": "1"
       },
-      "derivedName": "PermittableToken"
+      "implementationNames": {
+        "0xA1077a294dDE1B09bB078844df40758a5D0f9a27": "PermittableToken"
+      }
     },
     {
       "name": "ForeignAMB",
@@ -257,7 +264,10 @@
         "validatorContract": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
         "version": 1
       },
-      "derivedName": "ForeignAMB"
+      "implementationNames": {
+        "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": "EternalStorageProxy",
+        "0xe98699957d3504aCD57ffF861E4b77b57eB02467": "ForeignAMB"
+      }
     },
     {
       "address": "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",

@@ -49,7 +49,9 @@
           "type": "RISK_PARAMETER"
         }
       },
-      "derivedName": "StrategyBase"
+      "implementationNames": {
+        "0x0EC17ef9c00F360DB28CA8008684a4796b11E456": "StrategyBase"
+      }
     },
     {
       "name": "StrategiesBeacon",
@@ -68,7 +70,9 @@
         "implementation": "0x0EC17ef9c00F360DB28CA8008684a4796b11E456",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
-      "derivedName": "UpgradeableBeacon"
+      "implementationNames": {
+        "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "UpgradeableBeacon"
+      }
     },
     {
       "name": "TokenHopper",
@@ -108,7 +112,9 @@
           "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
         }
       },
-      "derivedName": "TokenHopper"
+      "implementationNames": {
+        "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper"
+      }
     },
     {
       "name": "AVSDirectory",
@@ -221,7 +227,10 @@
         "pauserRegistry": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "version": "1.3.0"
       },
-      "derivedName": "AVSDirectory"
+      "implementationNames": {
+        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": "TransparentUpgradeableProxy",
+        "0xA396D855D70e1A1ec1A0199ADB9845096683B6A2": "AVSDirectory"
+      }
     },
     {
       "address": "0x17919FAC7024d5b770322E5Cb81607D247654116",
@@ -254,7 +263,10 @@
         "$upgradeCount": 1,
         "version": "1.3.0"
       },
-      "derivedName": "PermissionController"
+      "implementationNames": {
+        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5": "TransparentUpgradeableProxy",
+        "0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1": "PermissionController"
+      }
     },
     {
       "address": "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
@@ -324,7 +336,10 @@
         "nonce": 22,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "DelegationManager",
@@ -378,7 +393,10 @@
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "version": "1.3.0"
       },
-      "derivedName": "DelegationManager"
+      "implementationNames": {
+        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": "TransparentUpgradeableProxy",
+        "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73": "DelegationManager"
+      }
     },
     {
       "address": "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
@@ -406,7 +424,9 @@
         "$immutable": true,
         "owner": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": "ProxyAdmin"
+      }
     },
     {
       "address": "0x45dcD05251F3327EcCd4766a9264DBDAab3A4065",
@@ -588,7 +608,10 @@
         "nonce": 10,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x4a3CD82B73821d075799680AcDff3e884B726777",
@@ -637,7 +660,10 @@
         "nonce": 27,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x5050389572f2d220ad927CcbeA0D406831012390": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71",
@@ -661,7 +687,9 @@
         "implementation": "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
-      "derivedName": "UpgradeableBeacon"
+      "implementationNames": {
+        "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073": "UpgradeableBeacon"
+      }
     },
     {
       "name": "StrategyFactory",
@@ -699,7 +727,10 @@
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "version": "1.3.0"
       },
-      "derivedName": "StrategyFactory"
+      "implementationNames": {
+        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": "TransparentUpgradeableProxy",
+        "0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66": "StrategyFactory"
+      }
     },
     {
       "address": "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5",
@@ -781,7 +812,9 @@
         ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53": "TimelockController"
+      }
     },
     {
       "address": "0x7474E1D80E844e6EdB430841DeEF702a6B747863",
@@ -850,7 +883,10 @@
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "version": "1.3.0"
       },
-      "derivedName": "RewardsCoordinator"
+      "implementationNames": {
+        "0x7750d328b314EfFa365A0402CcfD489B80B0adda": "TransparentUpgradeableProxy",
+        "0xa505c0116aD65071F0130061F94745b7853220aB": "RewardsCoordinator"
+      }
     },
     {
       "address": "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
@@ -882,7 +918,10 @@
         "nonce": 0,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "bEIGEN token",
@@ -938,7 +977,10 @@
           "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0."
         }
       },
-      "derivedName": "BackingEigen"
+      "implementationNames": {
+        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "TransparentUpgradeableProxy",
+        "0xF2b225815F70c9b327DC9db758A36c92A4279b17": "BackingEigen"
+      }
     },
     {
       "name": "StrategyManager",
@@ -990,7 +1032,10 @@
         "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
         "version": "1.3.0"
       },
-      "derivedName": "StrategyManager"
+      "implementationNames": {
+        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "TransparentUpgradeableProxy",
+        "0xba4b2b8A076851A3044882493C2e36503d50b925": "StrategyManager"
+      }
     },
     {
       "name": "EigenLayerProxyAdmin",
@@ -1045,7 +1090,9 @@
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": "ProxyAdmin"
+      }
     },
     {
       "address": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
@@ -1112,7 +1159,10 @@
         "pauserRegistry": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "version": "1.3.0"
       },
-      "derivedName": "EigenPodManager"
+      "implementationNames": {
+        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "TransparentUpgradeableProxy",
+        "0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77": "EigenPodManager"
+      }
     },
     {
       "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5",
@@ -1153,7 +1203,10 @@
         "nonce": 0,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "AllocationManager",
@@ -1188,7 +1241,10 @@
         "permissionController": "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
         "version": "1.3.0"
       },
-      "derivedName": "AllocationManager"
+      "implementationNames": {
+        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": "TransparentUpgradeableProxy",
+        "0x740058839A1668Af5700e5d7B062007275e77D25": "AllocationManager"
+      }
     },
     {
       "address": "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
@@ -1217,7 +1273,9 @@
         "firstSubmissionTriggerCutoff": 1727913600,
         "rewardsCoordinator": "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
       },
-      "derivedName": "RewardAllStakersActionGenerator"
+      "implementationNames": {
+        "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
+      }
     },
     {
       "address": "0x9b2C61521AF4AB9f4BE25297838F72a56462B578",
@@ -1270,7 +1328,9 @@
         "version": "1.3.0",
         "withdrawableRestakedExecutionLayerGwei": 0
       },
-      "derivedName": "EigenPod"
+      "implementationNames": {
+        "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e": "EigenPod"
+      }
     },
     {
       "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
@@ -1303,7 +1363,9 @@
         ],
         "unpauser": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
-      "derivedName": "PauserRegistry"
+      "implementationNames": {
+        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806": "PauserRegistry"
+      }
     },
     {
       "name": "EigenLayerTokenMultisig",
@@ -1337,7 +1399,10 @@
         "nonce": 83,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "EigenLayerOperationsMultisig",
@@ -1519,7 +1584,10 @@
         "nonce": 71,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -1581,7 +1649,9 @@
         ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockController"
+      }
     },
     {
       "address": "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
@@ -1693,7 +1763,10 @@
           "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0."
         }
       },
-      "derivedName": "Eigen"
+      "implementationNames": {
+        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "TransparentUpgradeableProxy",
+        "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0": "Eigen"
+      }
     },
     {
       "address": "0xED732DEb32034e603bEEEdA84605dAbb8933594b",
@@ -1831,7 +1904,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xFEA47018D632A77bA579846c840d5706705Dc598": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     }
   ],
   "abis": {
@@ -3006,7 +3082,7 @@
     "eigenlayer/StrategyManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/TimelockControllerOwning": "0x59a5edadc54910cb1de46acbf90c6438938dc8cfdcf165be92fe954134783f2c",
     "eigenlayer/TokenHopper": "0x2d11e019aadd23bb3977879af9e11d7021f86ccb0c073820375d508372480683",
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
   "permissionsConfigHash": "0x52804a83f0822df74d54d0f168ed86b0ebfe76934a368f47aca0832fe631a9ab"

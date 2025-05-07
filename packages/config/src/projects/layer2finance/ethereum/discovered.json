@@ -23,7 +23,9 @@
         "$immutable": true,
         "INIT_TRANSITION_STATE_ROOT": "0xcf277fb80a82478460e8988570b718f1e083ceb76f7e271a1a1497e5975f53ae"
       },
-      "derivedName": "TransitionDisputer"
+      "implementationNames": {
+        "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": "TransitionDisputer"
+      }
     },
     {
       "address": "0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
@@ -56,7 +58,9 @@
         "pendingDepositsExecuteHead": 321,
         "pendingDepositsTail": 321
       },
-      "derivedName": "RollupChain"
+      "implementationNames": {
+        "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": "RollupChain"
+      }
     },
     {
       "name": "Registry",
@@ -72,7 +76,9 @@
         "$immutable": true,
         "owner": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
       },
-      "derivedName": "Registry"
+      "implementationNames": {
+        "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": "Registry"
+      }
     }
   ],
   "abis": {

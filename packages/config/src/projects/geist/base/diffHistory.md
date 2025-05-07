@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd800e4b20f8214de38749d8838759e37ce410ff4
+
+# Diff at Wed, 07 May 2025 07:56:57 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@0ad97a28a4acd494070977b13284d597fbcc6048 block: 29878278
+- current block number: 29878278
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 29878278 (main branch discovery), not current.
+
+```diff
+    EOA  (0x01F010a5e001fe9d6940758EA5e8c777885E351e) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x67226c2e16f551ef5427ca9e7233b94024862358
 
 # Diff at Tue, 06 May 2025 15:38:34 GMT:

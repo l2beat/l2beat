@@ -138,6 +138,13 @@ This method allows ZK rollups to prove that the data used in their validity proo
         frequency: 12, // 12 seconds
         sinceTimestamp: 1710288000, // 2024-03-13
       },
+      {
+        // EIP-7691: Prague / Electra hard-fork – increased blob limits
+        size: 1_179_648, // 1.125 MiB (max 9 blobs × 128 KiB)
+        target: 786_432, // 0.75 MiB (target 6 blobs × 128 KiB)
+        frequency: 12, // unchanged: 12 s slot time
+        sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
+      },
     ],
     finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
@@ -211,5 +218,15 @@ This method allows ZK rollups to prove that the data used in their validity proo
       { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
     ],
   },
+  milestones: [
+    {
+      title: 'Blob throughput increase',
+      url: 'https://eips.ethereum.org/EIPS/eip-7691',
+      date: '2025-05-07T10:00:00Z',
+      description:
+        'Pectra hardfork increases blob limits: target from 3 to 6 blobs and max from 6 to 9 blobs.',
+      type: 'general',
+    },
+  ],
   activityConfig: { type: 'block', startBlock: 8929324 },
 }

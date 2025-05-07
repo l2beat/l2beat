@@ -5,6 +5,7 @@ import {
   type EntryParameters,
   type TemplateService,
   getChainShortName,
+  getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
 } from '@l2beat/discovery'
@@ -89,6 +90,8 @@ export function getProject(
           templateService.loadContractTemplateColor(entry.template),
         )
 
+        const template = getTemplate(templateService, entry)
+
         return contractFromDiscovery(
           chain,
           meta,
@@ -96,6 +99,7 @@ export function getProject(
           contractConfig,
           contractColorConfig,
           discovery.abis,
+          template,
         )
       })
       .sort(orderAddressEntries)
@@ -142,6 +146,31 @@ function getRoles(entry: EntryParameters): string[] {
   return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
 }
 
+function getTemplate(
+  templateService: TemplateService,
+  contract: EntryParameters,
+): ApiProjectContract['template'] {
+  if (!contract.template) {
+    return
+  }
+
+  const shape = getShapeFromOutputEntry(templateService, contract)
+
+  if (!shape) {
+    return {
+      id: contract.template,
+    }
+  }
+
+  return {
+    id: contract.template,
+    shape: {
+      name: shape.name,
+      hasCriteria: shape.criteria !== undefined,
+    },
+  }
+}
+
 function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
   if (a.name && b.name) {
     return a.name.localeCompare(b.name)
@@ -162,6 +191,7 @@ function contractFromDiscovery(
   contractConfig: ContractConfig,
   contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
+  template: ApiProjectContract['template'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -199,7 +229,7 @@ function contractFromDiscovery(
     name: getContractName(contract),
     type: getContractType(contract),
     roles: getRoles(contract),
-    template: contract.template,
+    template: template,
     proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],

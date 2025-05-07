@@ -15,7 +15,9 @@
       "sinceTimestamp": 1612414780,
       "sinceBlock": 11787727,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x6880f6Fd960D1581C2730a451A22EED1081cfD72": ""
+      },
       "references": [
         {
           "text": "Source Code",

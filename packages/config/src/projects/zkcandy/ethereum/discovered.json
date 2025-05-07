@@ -57,7 +57,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -98,7 +100,9 @@
           "0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -144,7 +148,9 @@
           "0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -192,7 +198,10 @@
         "nonce": 6,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x8eb156588D2FAD21dE0066BAA5BfDcd940695196": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "ValidiumL1DAValidator",
@@ -207,7 +216,9 @@
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
-      "derivedName": "ValidiumL1DAValidator",
+      "implementationNames": {
+        "0x907b30407249949521Bf0c89A43558dae200146A": "ValidiumL1DAValidator"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -241,7 +252,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -497,7 +510,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0xF2704433d11842d15aa76BBF0E00407267a99C92": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",

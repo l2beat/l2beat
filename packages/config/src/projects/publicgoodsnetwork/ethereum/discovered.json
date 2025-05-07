@@ -25,7 +25,9 @@
         "$immutable": true,
         "owner": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -69,7 +71,10 @@
         "ROOT": "0xdc8d72680e7aa76a53e17f537ee4455c1546c32badeac410313687a14bbe9625",
         "version": "1.0.0"
       },
-      "derivedName": "BalanceClaimer",
+      "implementationNames": {
+        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21": "Proxy",
+        "0xda926133e23F6681a5B9445A439F80889d030EFb": "BalanceClaimer"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -121,7 +126,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "Conduit Multisig 1",
@@ -204,7 +212,10 @@
         "nonce": 84,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -293,7 +304,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "Proxy",
+        "0x463B3777d3DD6a90234b594D1f94002267CE7948": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -346,7 +360,10 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e": "ResolvedDelegateProxy",
+        "0x1d8180D739D01dC97e837478af8d494215C5EF5e": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -422,7 +439,10 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
-      "derivedName": "L2OutputOracle",
+      "implementationNames": {
+        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608": "Proxy",
+        "0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348": "L2OutputOracle"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -473,7 +493,10 @@
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.7.0"
       },
-      "derivedName": "OptimismPortal",
+      "implementationNames": {
+        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c": "Proxy",
+        "0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09": "OptimismPortal"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -531,7 +554,9 @@
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4": "ProxyAdmin"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -558,7 +583,10 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.2.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b": "L1ChugSplashProxy",
+        "0xF5328094aE48F975CF588f361DDCC749F706aAF0": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -869,15 +897,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/BalanceClaimer": "0x24e44fc38c9e034a6d225cfb7211317b7a29ed67b54d2c9e15c02149e337e8b2",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1StandardBridge_PGN_withdraw": "0x3852c09d8350685a58228fb27f783365110503b2b81fa5c6b62e73be56107d05",
-    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismPortal_PGN_withdraw": "0x9493c4cbd6f089c547d22fcfa61305c17c2330777fa47540b7a035640b58e232",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/BalanceClaimer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1StandardBridge_PGN_withdraw": "0x08a7f20d6ee0b502acada9ae067a2ea21b4f8f5e8dc49f0990afb8670819754c",
+    "opstack/L2OutputOracle": "0xdc22201273b90a248801424705d5602a5e68d8c60a2eaa84ca3ce386f9b71942",
+    "opstack/OptimismPortal_PGN_withdraw": "0x4d765334368b153ff72549eccc8553c75f7c6a0b44ca57cac76c47781023db22",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
   },
   "permissionsConfigHash": "0xa7f10f463b39373f161adce442d9065dd88c14cc0a87eb2aea893bd5211f2a95"
 }
