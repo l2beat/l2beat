@@ -176,6 +176,21 @@ function Display({
           </WithHeadline>
         )}
       </div>
+      {'implementationNames' in selected && selected.implementationNames && (
+        <Folder title="Implementation names" collapsed={true}>
+          <div className="bg-coffee-900 px-5 py-2 font-mono text-sm">
+            {Object.entries(selected.implementationNames).map(
+              ([key, value]) => (
+                <div key={key} className="mb-1 flex items-center gap-2">
+                  <span className="text-coffee-400">{key}:</span>
+                  <span className="text-aux-cyan">{value}</span>
+                </div>
+              ),
+            )}
+          </div>
+        </Folder>
+      )}
+
       {selected.referencedBy.length > 0 && (
         <Folder title="Referenced by">
           <ol className="bg-coffee-900 py-0.5 pl-5">
