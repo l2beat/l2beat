@@ -86,7 +86,7 @@ export const sonicgateway: Bridge = {
   riskView: {
     validatedBy: {
       value: `Multisig (${validatorThresholdString})`,
-      description: `${validatorThresholdString} Validators with onchain transparent signer addresses.`,
+      description: `${validatorThresholdString} Validators with onchain signer addresses. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
