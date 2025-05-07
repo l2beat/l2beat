@@ -11,7 +11,7 @@ import {
   modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import { Analysis } from '@l2beat/discovery/dist/discovery/analysis/AddressAnalyzer'
+import type { Analysis } from '@l2beat/discovery/dist/discovery/analysis/AddressAnalyzer'
 import {
   type AllProviderStats,
   ProviderMeasurement,
