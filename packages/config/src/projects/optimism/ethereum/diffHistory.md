@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x784a1fb479970a8645868c1c2acda7c93ad9c7da
+
+# Diff at Thu, 08 May 2025 10:05:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22366063
+- current block number: 22437740
+
+## Description
+
+Introduction of the DeputyPause Module and the EOA superchain pauser. New dispute games deployed with identical code but 1.6.0 cannon64 prestates.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x1Ae178eBFEECd51709432EA5f37845Da0414EdFe)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        4
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x5738a876359b48A65d35482C93B43e2c1147B32B)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x1Ae178eBFEECd51709432EA5f37845Da0414EdFe"
++        "0x89D68b1D63AAA0db4af1163e81f56B76934292F8"
+      values.gameImpls.3:
+-        "0x5738a876359b48A65d35482C93B43e2c1147B32B"
++        "0xa1E0baCde89d899B3f24eEF3D179cC335A24E777"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x89D68b1D63AAA0db4af1163e81f56B76934292F8)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xa1E0baCde89d899B3f24eEF3D179cC335A24E777)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../optimism/ethereum/.flat/DeputyPauseModule.sol  | 1338 ++++++++++++++++++++
+ 1 file changed, 1338 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22366063 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x1Ae178eBFEECd51709432EA5f37845Da0414EdFe) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x5738a876359b48A65d35482C93B43e2c1147B32B) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
 Generated with discovered.json: 0xea9d4ca150b5a9b161ae82d6d7796eeb8116ac22
 
 # Diff at Tue, 29 Apr 2025 08:19:24 GMT:

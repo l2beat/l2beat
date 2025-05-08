@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 15127262,
-  "configHash": "0xdccd693e95b7c7ff1eb6c42d5363c340458cb769bd0c2b69bb13999b022d2aba",
+  "blockNumber": 15285599,
+  "configHash": "0x188910b6828d3a124c04aace380e5f0a6ee7cb75393c4a2117654249feaf0e03",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -105,7 +105,7 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0x4970e361f6168a301D1036348d625A8930B1AaB7",
+          "0xA0895eF86B766aFd455Fdb129A830A1C6CE054A1",
           "0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
           "0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
           "0x6626593C237f530D15aE9980A95ef938Ac15c35c",
@@ -123,7 +123,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -657,7 +657,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -734,11 +734,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "0x4970e361f6168a301D1036348d625A8930B1AaB7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD",
       "type": "EOA",
       "proxyType": "EOA"
@@ -789,9 +784,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xb847cb38851f5000d6953a02b5ec9097652b4c5581780785df73429e75d52179",
+        "messageRoot": "0x84c1797b0bb31bc4d43653ab084747da0e01580e0a42c8cc33220fce9b65e05e",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 204111,
+        "nextMessageIndex": 204254,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -1240,6 +1235,11 @@
       "type": "EOA",
       "proxyType": "EOA",
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "0xA0895eF86B766aFd455Fdb129A830A1C6CE054A1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD",
@@ -2849,5 +2849,5 @@
     "scroll/ScrollOwnerL2": "0x3c12807fd2f2ec81f8f74667d689ec0e64269ae7f029ed22c4f43b89c6cc03a4",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x235011363fc6855e8549bc65244f5aae0442c4f06d797c94eb697d881c86d32b"
+  "permissionsConfigHash": "0x97f4366ea29d6ed8312c47392b878bf508ecf113b0d2c65475feee4e494cae74"
 }

@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x8364d97f09dbc7bc00cd89f43f269c890b1ddc3f
+
+# Diff at Thu, 08 May 2025 08:50:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22244001
+- current block number: 22437741
+
+## Description
+
+superchain guardian connected, but not full superchain gov.
+
+OP stack DeputyPauser upgrade (see op mainnet for more info).
+
+## Watched changes
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.2:
++        {"permission":"guard","from":"0x11654D67e0360A82e5Badd272Ced336B80972135"}
+      receivedPermissions.1.from:
+-        "0x11654D67e0360A82e5Badd272Ced336B80972135"
++        "0x384e3AE4D5efC9471201039b555EAe496b2A7240"
+      receivedPermissions.0.from:
+-        "0x384e3AE4D5efC9471201039b555EAe496b2A7240"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.0.via:
++        [{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+## Source code changes
+
+```diff
+...0xC3BcdF5cb9AEA2cc4938C9D1AA866CF0BA6B19b5.sol} |    0
+ ...-0xdE1FCfB0851916CA5101820A69b13a4E276bd81F.sol |  152 +++
+ .../ethereum/.flat/DeputyGuardianModule.sol        |  156 +++
+ .../ethereum/.flat/DeputyPauseModule.sol           | 1338 ++++++++++++++++++++
+ .../ethereum/.flat/LivenessModule.sol              |  258 ++++
+ .../.flat/OpFoundationUpgradeSafe/GnosisSafe.sol   |  953 ++++++++++++++
+ .../OpFoundationUpgradeSafe/GnosisSafeProxy.p.sol  |   35 +
+ .../Optimism Guardian Multisig/GnosisSafe.sol      |  953 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../.flat/Optimism Security Council/GnosisSafe.sol |  953 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../Proxy.p.sol                                    |    0
+ .../SuperchainConfig.sol                           |    0
+ .../Proxy.p.sol                                    |  200 +++
+ .../SuperchainConfig.sol                           |  477 +++++++
+ .../ethereum/.flat/SuperchainProxyAdmin.sol        |  298 +++++
+ .../.flat/SuperchainProxyAdminOwner/GnosisSafe.sol |  953 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 18 files changed, 6831 insertions(+)
+```
+
 Generated with discovered.json: 0xb90df94d2efca2ffe0e9b3c7dddd173ac6cf9e76
 
 # Diff at Tue, 29 Apr 2025 08:19:09 GMT:

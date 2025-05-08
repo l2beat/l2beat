@@ -2,7 +2,7 @@
   "name": "cyber",
   "chain": "ethereum",
   "blockNumber": 22208300,
-  "configHash": "0xd46dc670774f49e9ce3be17f175b89f524b212cc73c27d869273586ad13b9f67",
+  "configHash": "0x400dca235120b168c092ca4375657986d8bb7a86c67b1b0098f25c3c9e0803d7",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

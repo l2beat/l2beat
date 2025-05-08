@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 22418260,
-  "configHash": "0x419a319a006733c7a99714918f4e0d06ba7ea468de535b62445cd05c1a1169db",
+  "blockNumber": 22438006,
+  "configHash": "0x08813c0c8c5c5f92d88a9007ec5122ccafe9bbb5de6daab3482e9ec401d115ca",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -26,7 +26,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 82,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -179,7 +179,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 113,
+        "nonce": 115,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -189,11 +189,6 @@
     },
     {
       "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -242,7 +237,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 48,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -282,15 +277,14 @@
           "0xb67ac19693fB89880Ca5873f6a890E865b259c26",
           "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
           "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
-          "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
           "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
         ],
         "$threshold": 4,
         "domainSeparator": "0xce9ce7c9364f5e5f2250654b75d97f836c46669ced1751a36a6a977404411f50",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 76,
+        "multisigThreshold": "4 of 5 (80%)",
+        "nonce": 78,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -370,44 +364,11 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 8,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1687282115,
-      "sinceBlock": 17522395,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
-          "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0x180452edbeec3663940e6932f25fdc940988599b6fdc9937d77da5ec37217250",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 70,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": "GnosisSafeProxy",
         "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
@@ -451,7 +412,7 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
-        "latestRoot": "11723245542143325645711088622662242263965971813944812995176893208042144527659",
+        "latestRoot": "1873347768414839429385811121927818573570718368440154139827539753470825837108",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -687,9 +648,6 @@
     "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": [
       "constructor(address _singleton)"
     ],
-    "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": [
-      "constructor(address _singleton)"
-    ],
     "0xf7134CE138832c1456F2a91D64621eE90c2bddEa": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -707,5 +665,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0x4456c4de3e23755565e194d364b2032844428d106f7edcd2d138e27de14d4d15"
+  "permissionsConfigHash": "0x6846098ea4455bde11b2f9e7d8dd5c2771ac620beffbdd3c214dd719d2147400"
 }

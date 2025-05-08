@@ -1,8 +1,8 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 22194719,
-  "configHash": "0x1319f5b5a3ee52304545d2dad36275841a8291f8e4cd467114c39afa36739798",
+  "blockNumber": 22437739,
+  "configHash": "0x04d6bc0412001a017085ad5f1627b4a5251cf6ba5c1fcb09a1388c6835011e8a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -96,6 +96,47 @@
       "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "DeputyPauseModule",
+      "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
+      "type": "Contract",
+      "template": "opstack/DeputyPauseModule",
+      "sourceHashes": [
+        "0x9ce85f452c217be52c8f91f907759e771e78bbcd9d8cda37e90e3cdd9a70cf15"
+      ],
+      "proxyType": "immutable",
+      "description": "Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+        }
+      ],
+      "sinceTimestamp": 1745572679,
+      "sinceBlock": 22345090,
+      "values": {
+        "$immutable": true,
+        "deputy": "0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
+        "deputyAuthMessageTypehash": "0x92e47526b2e32be4f66cd2600e9cda9147735107631c0b241a067693f49b7f38",
+        "deputyGuardianModule": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "DeputyPauseModule",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x126a736B18E0a64fBA19D421647A530E327E112C",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "foundationSafe": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "pauseMessageTypehash": "0xd64f31a1d64c5b7eede44a92f46995fef9325cb2533a7798a738932f156c4481",
+        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "version": "1.0.0-beta.2"
+      },
+      "implementationNames": {
+        "0x126a736B18E0a64fBA19D421647A530E327E112C": "DeputyPauseModule"
+      }
     },
     {
       "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
@@ -230,6 +271,53 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
+      "address": "0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "not revoked by the Security Council"
+            },
+            { "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
+            {
+              "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "restricted to the global pause function"
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "not revoked by the Security Council"
+            },
+            { "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
+            {
+              "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "restricted to the global pause function"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x126a736B18E0a64fBA19D421647A530E327E112C",
+          "condition": "restricted to the global pause function"
+        }
+      ]
+    },
+    {
       "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
       "type": "EOA",
       "proxyType": "EOA"
@@ -259,7 +347,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 70,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -314,10 +402,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 21794400,
-        "latestOutputIndex": 12107,
-        "nextBlockNumber": 21796200,
-        "nextOutputIndex": 12108,
+        "latestBlockNumber": 23259600,
+        "latestOutputIndex": 12921,
+        "nextBlockNumber": 23261400,
+        "nextOutputIndex": 12922,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -438,7 +526,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 89,
+        "nonce": 98,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -609,7 +697,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 12,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -898,7 +986,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 19,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -974,7 +1062,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 22194392
+          "prevBlockNum": 22437545
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -1090,7 +1178,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292833954",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292834671",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1183,11 +1271,11 @@
         ],
         "$threshold": 5,
         "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
-        "getModules": [],
-        "GnosisSafe_modules": [],
+        "getModules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
+        "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 101,
+        "nonce": 106,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1293,7 +1381,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 21,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1402,6 +1490,37 @@
     ],
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
       "constructor(address _singleton)"
+    ],
+    "0x126a736B18E0a64fBA19D421647A530E327E112C": [
+      "constructor(address _foundationSafe, address _deputyGuardianModule, address _superchainConfig, address _deputy, bytes _deputySignature)",
+      "error DeputyPauseModule_ExecutionFailed(string)",
+      "error DeputyPauseModule_InvalidDeputy()",
+      "error DeputyPauseModule_InvalidDeputyGuardianModule()",
+      "error DeputyPauseModule_NonceAlreadyUsed()",
+      "error DeputyPauseModule_NotFromSafe()",
+      "error DeputyPauseModule_SuperchainNotPaused()",
+      "error DeputyPauseModule_Unauthorized()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error InvalidShortString()",
+      "error StringTooLong(string str)",
+      "event DeputyGuardianModuleSet(address indexed deputyGuardianModule)",
+      "event DeputySet(address indexed deputy)",
+      "event EIP712DomainChanged()",
+      "event PauseTriggered(address indexed deputy, bytes32 nonce)",
+      "function deputy() view returns (address)",
+      "function deputyAuthMessageTypehash() pure returns (bytes32 deputyAuthMessageTypehash_)",
+      "function deputyGuardianModule() view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function foundationSafe() view returns (address foundationSafe_)",
+      "function pause(bytes32 _nonce, bytes _signature)",
+      "function pauseMessageTypehash() pure returns (bytes32 pauseMessageTypehash_)",
+      "function setDeputy(address _deputy, bytes _deputySignature)",
+      "function setDeputyGuardianModule(address _deputyGuardianModule)",
+      "function superchainConfig() view returns (address superchainConfig_)",
+      "function usedNonces(bytes32) view returns (bool)",
+      "function version() view returns (string)"
     ],
     "0x24424336F04440b1c28685a38303aC33C9D14a25": [
       "constructor(address _safe)",
@@ -1903,6 +2022,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0x2ac08dd61da2b2fa9573299ac5d5655d1610eded8d72a53907070bb41f17f3b9",
     "gnosisSafeModules/LivenessModule": "0x02a2171f6f593d4f9b509a9f8aa4e50662de6a8dfc6b84128255163b33809f02",
     "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/DeputyPauseModule": "0x0d2ec55d130dfc12157f643dd0e2def97d62c60ea5558a9cd904ae516233c31a",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
@@ -1912,5 +2032,5 @@
     "opstack/SuperchainConfig": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
     "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
   },
-  "permissionsConfigHash": "0x279fd3fe908cca117196e1e9d392eae847ffcee346342be930cfe1400a86c00d"
+  "permissionsConfigHash": "0x1490e26c091fb815118105aaafe31ae8ab77fc9046e47a25718395837cc1e8cd"
 }

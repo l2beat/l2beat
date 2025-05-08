@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x6b8977576fc5a26adc8788df702f6ff1da4601b4
+
+# Diff at Thu, 08 May 2025 10:03:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 82818646
+- current block number: 83508934
+
+## Description
+
+Config related.
+
+## Watched changes
+
+```diff
+    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 82818646 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x0270d77f23b57efa1151ef5ec7056e2e0a90c80d
 
 # Diff at Tue, 29 Apr 2025 08:19:27 GMT:

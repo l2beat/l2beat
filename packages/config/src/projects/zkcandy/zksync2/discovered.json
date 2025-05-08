@@ -2,7 +2,7 @@
   "name": "zkcandy",
   "chain": "zksync2",
   "blockNumber": 54952349,
-  "configHash": "0x1cfbdb610a1dad0470932f128d5c53fd4c2fc1c24d759aab170bee84d2d71768",
+  "configHash": "0x806c01d32fab3530b44eee19bfed9a7692725c8f8a1620ef43456c8578cc3fdc",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

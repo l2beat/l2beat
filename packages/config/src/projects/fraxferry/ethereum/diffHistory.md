@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x1af2e939351d7ac883c10daba92c95cfc39dc11a
+
+# Diff at Thu, 08 May 2025 09:21:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 21880952
+- current block number: 22437895
+
+## Description
+
+Two bridges paused, FE should correctly reflect it.
+
+## Watched changes
+
+```diff
+    contract FXS Ferry Bridge (Fraxtal) (0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Fraxtal) (0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x68f02b017d77db74573c98e626f38bb1560cbe29
 
 # Diff at Tue, 04 Mar 2025 10:39:10 GMT:

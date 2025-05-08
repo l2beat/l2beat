@@ -1,3 +1,108 @@
+Generated with discovered.json: 0xe2f8451543b5671bfb1c462ff54621b82357a232
+
+# Diff at Thu, 08 May 2025 09:50:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22423769
+- current block number: 22437978
+
+## Description
+
+New zk stack chain deployed: chainid 51888, validium, ETH for gas.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.14:
++        {"chainId":9637,"chainTypeManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.13.chainId:
+-        9637
++        388
+      values.chainsCreated.13.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.12.chainId:
+-        388
++        325
+      values.chainsCreated.12.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.11.chainId:
+-        325
++        320
+      values.chainsCreated.11.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.10.chainId:
+-        320
++        324
+      values.chainsCreated.10.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.9.chainId:
+-        324
++        51888
+      values.chainsCreated.9.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0x21bFaD8F0f781F367ACCb5276199B0c0E819CbD9"
+      values.getAllZKChainChainIDs.14:
++        388
+      values.getAllZKChainChainIDs.13:
+-        388
++        375
+      values.getAllZKChainChainIDs.12:
+-        375
++        325
+      values.getAllZKChainChainIDs.11:
+-        325
++        324
+      values.getAllZKChainChainIDs.10:
+-        324
++        320
+      values.getAllZKChainChainIDs.9:
+-        320
++        232
+      values.getAllZKChainChainIDs.8:
+-        232
++        9637
+      values.getAllZKChainChainIDs.7:
+-        9637
++        2904
+      values.getAllZKChainChainIDs.6:
+-        2904
++        2741
+      values.getAllZKChainChainIDs.5:
+-        2741
++        1345
+      values.getAllZKChainChainIDs.4:
+-        1345
++        1217
+      values.getAllZKChainChainIDs.3:
+-        1217
++        61166
+      values.getAllZKChainChainIDs.2:
+-        61166
++        51888
+      values.getAllZKChains.14:
++        "0xD231E2fD0DeC5993fCeae3E504930631876e8C63"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        15
++        16
+      values.getAggregatedRoot:
+-        "0x5054187811209ac55f16381dbcbbfb219fd033e43b680f7649de648ba69daaa6"
++        "0xd893aacecf7a4ed2d1aa0c30c3b52d12388abecacbaa7b6e63a5a7f00178f1cf"
+    }
+```
+
 Generated with discovered.json: 0x7f3103d711ae6ddefe7a0dce96c1114b9ac568c2
 
 # Diff at Tue, 06 May 2025 09:28:13 GMT:

@@ -2,7 +2,7 @@
   "name": "r0ar",
   "chain": "ethereum",
   "blockNumber": 22195184,
-  "configHash": "0xc7e7a179a0e6116240942a750d98c200fcea820c6fc80ab77c42a7a01a86efe4",
+  "configHash": "0x451e0baa5815c6757d6939093ae4f406425ea5fabcda71052b959d464c9d603a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -654,6 +654,7 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
             "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
             "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
             "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
@@ -1024,6 +1025,7 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
             "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
             "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
             "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
