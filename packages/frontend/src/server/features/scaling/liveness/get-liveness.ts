@@ -52,27 +52,22 @@ async function getLivenessData() {
   const targetTimestamp =
     UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-  const records30Days = groupBy(
-    await db.aggregatedLiveness2.getAggregatesByTimeRange([
-      targetTimestamp - 30 * UnixTime.DAY,
-      targetTimestamp,
-    ]),
-    (r) => r.projectId,
-  )
-  const records90Days = groupBy(
-    await db.aggregatedLiveness2.getAggregatesByTimeRange([
-      targetTimestamp - 90 * UnixTime.DAY,
-      targetTimestamp,
-    ]),
-    (r) => r.projectId,
-  )
-  const recordsMax = groupBy(
-    await db.aggregatedLiveness2.getAggregatesByTimeRange([
-      UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')), // minTimestamp for TrackedTxsIndexer
-      targetTimestamp,
-    ]),
-    (r) => r.projectId,
-  )
+  const [records30Days, records90Days, recordsMax] = (
+    await Promise.all([
+      db.aggregatedLiveness2.getAggregatesByTimeRange([
+        targetTimestamp - 30 * UnixTime.DAY,
+        targetTimestamp,
+      ]),
+      db.aggregatedLiveness2.getAggregatesByTimeRange([
+        targetTimestamp - 90 * UnixTime.DAY,
+        targetTimestamp,
+      ]),
+      db.aggregatedLiveness2.getAggregatesByTimeRange([
+        UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')), // minTimestamp for TrackedTxsIndexer
+        targetTimestamp,
+      ]),
+    ])
+  ).map((r) => groupBy(r, (r) => r.projectId))
 
   const last30Days = UnixTime.toStartOf(
     UnixTime.now() - 30 * UnixTime.DAY,
@@ -89,9 +84,9 @@ async function getLivenessData() {
       (p) => p.id === project.id,
     )?.livenessConfig
 
-    const project30Days = records30Days[project.id]
-    const project90Days = records90Days[project.id]
-    const projectMax = recordsMax[project.id]
+    const project30Days = records30Days?.[project.id]
+    const project90Days = records90Days?.[project.id]
+    const projectMax = recordsMax?.[project.id]
     if (
       isEmpty(project30Days) &&
       isEmpty(project90Days) &&
