@@ -1,4 +1,4 @@
-import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import type { TrackedTxConfigEntry } from '@l2beat/shared/frontend'
 import type { SavedConfiguration } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'

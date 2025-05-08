@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { TrackedTxCostsConfig } from '@l2beat/shared'
+import type { TrackedTxCostsConfig } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 
 export type TrackedTransactionsByType = {

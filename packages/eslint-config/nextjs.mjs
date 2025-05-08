@@ -130,6 +130,10 @@ const config = tsEslint.config(
               name: 'next/router',
               message: 'Use router from next/navigation',
             },
+            {
+              name: '@l2beat/shared',
+              message: 'Use @l2beat/shared/frontend',
+            },
           ],
         },
       ],
