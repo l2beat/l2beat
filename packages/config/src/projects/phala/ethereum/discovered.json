@@ -2,10 +2,48 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22438139,
-  "configHash": "0xe78a57f66a39a35261ecafab9a55f57b2f157458bdbb12fc2e4915523f0e519f",
+  "configHash": "0x6bc4f523baa29bd659ba7beed2cc638ab5d690dad925ef31f188a8456fe941fd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LivenessModule",
+      "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "type": "Contract",
+      "template": "gnosisSafeModules/LivenessModule",
+      "sourceHashes": [
+        "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
+      ],
+      "proxyType": "immutable",
+      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+        }
+      ],
+      "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
+      "values": {
+        "$immutable": true,
+        "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+        "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+        "livenessInterval": "98d",
+        "minOwners": 8,
+        "ownershipTransferredToFallback": false,
+        "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "thresholdPercentage": 75,
+        "version": "1.2.0"
+      },
+      "implementationNames": {
+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
+      }
+    },
+    {
+      "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -44,6 +82,11 @@
         "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GnosisSafeProxy",
         "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DeputyPauseModule",
@@ -138,6 +181,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
       "type": "Contract",
@@ -192,6 +240,32 @@
       },
       "implementationNames": {
         "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "LivenessGuard",
+      "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."
+        }
+      ],
+      "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
+      "values": {
+        "$immutable": true,
+        "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
       }
     },
     {
@@ -465,6 +539,11 @@
       }
     },
     {
+      "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
       "type": "EOA",
       "proxyType": "EOA"
@@ -476,6 +555,11 @@
     },
     {
       "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -590,6 +674,16 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x652BC529E171847E2fFddCeA13567643C84ccB5f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1StandardBridge",
       "address": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
       "type": "Contract",
@@ -634,7 +728,77 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OpFoundationUpgradeSafe",
+      "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            {
+              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "description": "takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+          "0x3041BA32f451F5850c147805F5521AC206421623",
+          "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+          "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 7 (71%)",
+        "nonce": 26,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x92827223f6b397CE9F208eE352bacA710765cACb",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -811,6 +975,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x9Fb23129982c993743Eb9bB156af8CC8Fa2aC761",
       "type": "EOA",
       "proxyType": "EOA",
@@ -966,6 +1135,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
@@ -1085,6 +1259,11 @@
         "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
         "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AddressManager",
@@ -1261,6 +1440,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1333,6 +1517,23 @@
       "function initialize(address _bridge)",
       "function version() view returns (string)"
     ],
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
+      "constructor(address _safe, address _livenessGuard, uint256 _livenessInterval, uint256 _minOwners, uint256 _thresholdPercentage, address _fallbackOwner)",
+      "error OwnerRemovalFailed(string)",
+      "event OwnershipTransferredToFallback()",
+      "event RemovedOwner(address indexed owner)",
+      "function canRemove(address _owner) view returns (bool canRemove_)",
+      "function fallbackOwner() view returns (address fallbackOwner_)",
+      "function getRequiredThreshold(uint256 _numOwners) view returns (uint256 threshold_)",
+      "function livenessGuard() view returns (address livenessGuard_)",
+      "function livenessInterval() view returns (uint256 livenessInterval_)",
+      "function minOwners() view returns (uint256 minOwners_)",
+      "function ownershipTransferredToFallback() view returns (bool)",
+      "function removeOwners(address[] _previousOwners, address[] _ownersToRemove)",
+      "function safe() view returns (address safe_)",
+      "function thresholdPercentage() view returns (uint256 thresholdPercentage_)",
+      "function version() view returns (string)"
+    ],
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
       "constructor(address _singleton)"
     ],
@@ -1390,6 +1591,16 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "0x24424336F04440b1c28685a38303aC33C9D14a25": [
+      "constructor(address _safe)",
+      "event OwnerRecorded(address owner)",
+      "function checkAfterExecution(bytes32, bool)",
+      "function checkTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, address msgSender)",
+      "function lastLive(address) view returns (uint256)",
+      "function safe() view returns (address safe_)",
+      "function showLiveness()",
+      "function version() view returns (string)"
     ],
     "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
       "constructor()",
@@ -1640,6 +1851,9 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
+      "constructor(address _singleton)"
     ],
     "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": [
       "constructor(address _admin)",
@@ -1936,6 +2150,7 @@
     "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "gnosisSafeModules/DeputyGuardianModule": "0x2ac08dd61da2b2fa9573299ac5d5655d1610eded8d72a53907070bb41f17f3b9",
+    "gnosisSafeModules/LivenessModule": "0x02a2171f6f593d4f9b509a9f8aa4e50662de6a8dfc6b84128255163b33809f02",
     "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
     "opstack/DeputyPauseModule": "0x0d2ec55d130dfc12157f643dd0e2def97d62c60ea5558a9cd904ae516233c31a",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
@@ -1950,5 +2165,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x6a5e48a5fe3bfa9cd415ae2fc629b761f2357d5f011e32f1de799ad6933006c4"
+  "permissionsConfigHash": "0xcd183d5b0b4c94a97d730ad958747df0b98b51f1d834d012f0e68a880c5bca5c"
 }

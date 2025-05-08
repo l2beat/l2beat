@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x855b63879bff7dbe970292e8e50d399d3f3614ac
+Generated with discovered.json: 0x86de04e8c2bd9466cd43bdf8141b1d819fb2a890
 
-# Diff at Thu, 08 May 2025 10:10:25 GMT:
+# Diff at Thu, 08 May 2025 10:53:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22188866
+- comparing to: main@ac8d52c849084548030762e31e48a2eb3c90bf3e block: 22188866
 - current block number: 22438139
 
 ## Description
@@ -79,6 +79,12 @@ OP stack DeputyPauser upgrade (see op mainnet for more info).
 
 ```diff
 +   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
++   Status: CREATED
     contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
     +++ description: None
 ```
@@ -91,6 +97,12 @@ OP stack DeputyPauser upgrade (see op mainnet for more info).
 
 ```diff
 +   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
     +++ description: None
 ```
@@ -98,6 +110,12 @@ OP stack DeputyPauser upgrade (see op mainnet for more info).
 ```diff
 +   Status: CREATED
     contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
     +++ description: None
 ```
 
@@ -132,7 +150,11 @@ OP stack DeputyPauser upgrade (see op mainnet for more info).
  ...-0xdE1FCfB0851916CA5101820A69b13a4E276bd81F.sol |  152 +++
  .../phala/ethereum/.flat/DeputyGuardianModule.sol  |  156 +++
  .../phala/ethereum/.flat/DeputyPauseModule.sol     | 1338 ++++++++++++++++++++
+ .../phala/ethereum/.flat/LivenessGuard.sol         |  582 +++++++++
+ .../phala/ethereum/.flat/LivenessModule.sol        |  258 ++++
  .../OPSuccinctL2OutputOracle.sol                   |   69 +-
+ .../.flat/OpFoundationUpgradeSafe/GnosisSafe.sol   |  953 ++++++++++++++
+ .../OpFoundationUpgradeSafe/GnosisSafeProxy.p.sol  |   35 +
  .../Optimism Guardian Multisig/GnosisSafe.sol      |  953 ++++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
  .../.flat/Optimism Security Council/GnosisSafe.sol |  953 ++++++++++++++
@@ -144,7 +166,7 @@ OP stack DeputyPauser upgrade (see op mainnet for more info).
  .../phala/ethereum/.flat/SuperchainProxyAdmin.sol  |  298 +++++
  .../.flat/SuperchainProxyAdminOwner/GnosisSafe.sol |  953 ++++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- 16 files changed, 5634 insertions(+), 20 deletions(-)
+ 20 files changed, 7462 insertions(+), 20 deletions(-)
 ```
 
 Generated with discovered.json: 0x706aae3242decc857baf3011b5ee440f7bb9a74a
