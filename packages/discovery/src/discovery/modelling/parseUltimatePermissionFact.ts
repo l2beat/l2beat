@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { Permission } from '../config/PermissionConfig'
 import type { ModelIdRegistry } from './ModelIdRegistry'
 import type { ClingoFact } from './clingoparser'
@@ -48,6 +48,19 @@ export function parseUltimatePermissionVia(
     delay: delay === 0 ? undefined : delay,
     condition: orUndefined(String, via.params[3]),
   }
+}
+
+export function parseEoaWithMajorityUpgradePermissionsFacts(
+  facts: ClingoFact[],
+  modelIdRegistry: ModelIdRegistry,
+): EthereumAddress[] | undefined {
+  const result = facts.map((f) => {
+    assert(f.atom === 'eoaWithMajorityUpgradePermissions')
+    return EthereumAddress(
+      modelIdRegistry.idToChainPrefixedAddress(String(f.params[0])),
+    )
+  })
+  return result.length === 0 ? undefined : result
 }
 
 export function orUndefined<V, C>(

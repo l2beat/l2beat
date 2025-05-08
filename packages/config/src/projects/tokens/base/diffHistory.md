@@ -1,4 +1,72 @@
-Generated with discovered.json: 0x8f1349a9c555262eb077ae82f48d471028870641
+Generated with discovered.json: 0x31e13bb4c6faec9367fc5399fb95b07b9e6d911b
+
+# Diff at Wed, 07 May 2025 11:00:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 29519230
+- current block number: 29913123
+
+## Description
+
+EOAs with admin permissions identified due to a change in config.
+
+## Watched changes
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 29519230 (main branch discovery), not current.
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x55af5c03fcf94e5fda07992b99df0ddead10fdc3
 
 # Diff at Tue, 29 Apr 2025 08:19:23 GMT:
 

@@ -14,7 +14,6 @@ import { DiscoveryEngine } from './DiscoveryEngine'
 
 const base = {
   ...EMPTY_ANALYZED_CONTRACT,
-  derivedName: undefined,
   isVerified: true,
   deploymentTimestamp: UnixTime(1234),
   deploymentBlockNumber: 9876,

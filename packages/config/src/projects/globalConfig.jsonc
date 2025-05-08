@@ -152,6 +152,16 @@
 
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "Succinct Multisig 1",
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "Succinct Multisig 2",
+
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerOperationsMultisig2",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
+    "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": "EigenLayerRewardsInitiatorMultisig",
+    "0x002721B4790d97dC140a049936aA710152Ba92D5": "EigenDAOperationsMultisig",
+    "0x942eaF324971440384e4cA0ffA39fC3bb369D67d": "EigenLayerBeigenOwningMultisig",
+    "0x5050389572f2d220ad927CcbeA0D406831012390": "EigenLayerPauserMultisig",
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
+    "0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "EigenLayerTokenMultisig",
     // eoa names (mostly for SCs)
     // arbitrum SC
     "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",

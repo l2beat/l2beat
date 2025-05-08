@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd22f86ce0f69089d17bf5715ca959e894f11f6b2
+
+# Diff at Tue, 06 May 2025 10:57:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 15457819
+- current block number: 15457819
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15457819 (main branch discovery), not current.
+
+```diff
+    EOA UnichainProxyAdminOwner_L2Alias (0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x1727c1efc0647747d286ce6eb19a3ea479e54bfc
 
 # Diff at Fri, 02 May 2025 17:25:50 GMT:

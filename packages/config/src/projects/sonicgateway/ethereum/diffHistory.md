@@ -1,4 +1,26 @@
-Generated with discovered.json: 0xd22eb54b2823814d654754ee14f55b40b8361cdb
+Generated with discovered.json: 0x2495e8ff2767ce63d3a8b08aab5114b7a40aad95
+
+# Diff at Wed, 07 May 2025 11:45:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22297572
+- current block number: 22431552
+
+## Description
+
+SonicGatewayMultisig was granted terminator role, it can terminate possibility to start new token deposits/withdrawals now. 
+
+## Watched changes
+
+```diff
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4) {
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+      values.accessControl.TERMINATOR_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]}
+    }
+```
+
+Generated with discovered.json: 0x41682c81de65e07a0995cd2b4e71cacb096aa25d
 
 # Diff at Tue, 29 Apr 2025 08:19:12 GMT:
 

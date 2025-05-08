@@ -29,7 +29,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Zora_Adapter"
+      "implementationNames": {
+        "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b": "Zora_Adapter"
+      }
     },
     {
       "name": "VotingToken",
@@ -56,7 +58,9 @@
           "100150034524092695877009517"
         ]
       },
-      "derivedName": "VotingToken"
+      "implementationNames": {
+        "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": "VotingToken"
+      }
     },
     {
       "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
@@ -89,7 +93,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "OP_Adapter"
+      "implementationNames": {
+        "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": "OP_Adapter"
+      }
     },
     {
       "name": "Arbitrum_Adapter",
@@ -121,7 +127,9 @@
         "RELAY_TOKENS_L2_GAS_LIMIT": 300000,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Arbitrum_Adapter"
+      "implementationNames": {
+        "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210": "Arbitrum_Adapter"
+      }
     },
     {
       "address": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
@@ -153,7 +161,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Redstone_Adapter"
+      "implementationNames": {
+        "0x188F8C95B7cfB7993B53a4F643efa687916f73fA": "Redstone_Adapter"
+      }
     },
     {
       "name": "HubPoolStore",
@@ -169,7 +179,9 @@
         "$immutable": true,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
       },
-      "derivedName": "HubPoolStore"
+      "implementationNames": {
+        "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61": "HubPoolStore"
+      }
     },
     {
       "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
@@ -199,7 +211,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Universal_Adapter"
+      "implementationNames": {
+        "0x22001f37B586792F25Ef9d19d99537C6446e0833": "Universal_Adapter"
+      }
     },
     {
       "address": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
@@ -229,7 +243,9 @@
         "L2_MESSAGE_RELAY_GAS_LIMIT": 2000000,
         "L2_TOKEN_RELAY_GAS_LIMIT": 250000
       },
-      "derivedName": "Scroll_Adapter"
+      "implementationNames": {
+        "0x2DA799c2223c6ffB595e578903AE6b95839160d8": "Scroll_Adapter"
+      }
     },
     {
       "name": "Boba_Adapter",
@@ -253,7 +269,9 @@
         "l2GasLimit": 2000000,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
       },
-      "derivedName": "Boba_Adapter"
+      "implementationNames": {
+        "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter"
+      }
     },
     {
       "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
@@ -274,7 +292,9 @@
         "$immutable": true,
         "owner": "0xB524735356985D2f267FA010D681f061DfF03715"
       },
-      "derivedName": "AcrossConfigStore"
+      "implementationNames": {
+        "0x3B03509645713718B78951126E0A6de6f10043f5": "AcrossConfigStore"
+      }
     },
     {
       "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
@@ -296,7 +316,9 @@
         "isOwner": false,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       },
-      "derivedName": "Finder"
+      "implementationNames": {
+        "0x40f941E48A552bF496B154Af6bf55725f18D77c3": "Finder"
+      }
     },
     {
       "name": "PolygonTokenBridger",
@@ -318,7 +340,9 @@
         "l2WrappedMatic": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
         "maticToken": "0x0000000000000000000000000000000000001010"
       },
-      "derivedName": "PolygonTokenBridger"
+      "implementationNames": {
+        "0x48d990AbDA20afa1fD1da713AbC041B60a922c65": "PolygonTokenBridger"
+      }
     },
     {
       "address": "0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
@@ -345,7 +369,9 @@
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
       },
-      "derivedName": "ProposerV2"
+      "implementationNames": {
+        "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2"
+      }
     },
     {
       "name": "Ethereum_Adapter",
@@ -363,7 +389,9 @@
       "sinceTimestamp": 1651577227,
       "sinceBlock": 14704381,
       "values": { "$immutable": true },
-      "derivedName": "Ethereum_Adapter"
+      "implementationNames": {
+        "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084": "Ethereum_Adapter"
+      }
     },
     {
       "name": "Ethereum_SpokePool",
@@ -448,7 +476,10 @@
         "withdrawalRecipient": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "Ethereum_SpokePool"
+      "implementationNames": {
+        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "ERC1967Proxy",
+        "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a": "Ethereum_SpokePool"
+      }
     },
     {
       "name": "ZkStack_CustomGasToken_Adapter",
@@ -481,7 +512,9 @@
         "USDC_SHARED_BRIDGE": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "ZkStack_CustomGasToken_Adapter"
+      "implementationNames": {
+        "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf": "ZkStack_CustomGasToken_Adapter"
+      }
     },
     {
       "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
@@ -520,7 +553,9 @@
         "RELAY_TOKENS_L2_GAS_LIMIT": 300000,
         "usdcToken": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Arbitrum_CustomGasToken_Adapter"
+      "implementationNames": {
+        "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Arbitrum_CustomGasToken_Adapter"
+      }
     },
     {
       "name": "GovernorV2",
@@ -544,7 +579,9 @@
         ],
         "numProposals": 209
       },
-      "derivedName": "GovernorV2"
+      "implementationNames": {
+        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
+      }
     },
     {
       "name": "LpTokenFactory",
@@ -557,7 +594,9 @@
       "sinceTimestamp": 1651576251,
       "sinceBlock": 14704307,
       "values": { "$immutable": true },
-      "derivedName": "LpTokenFactory"
+      "implementationNames": {
+        "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": "LpTokenFactory"
+      }
     },
     {
       "address": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
@@ -590,7 +629,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "OP_Adapter"
+      "implementationNames": {
+        "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": "OP_Adapter"
+      }
     },
     {
       "name": "Linea_Adapter",
@@ -614,7 +655,9 @@
         "L1_USDC_BRIDGE": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
         "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "Linea_Adapter"
+      "implementationNames": {
+        "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE": "Linea_Adapter"
+      }
     },
     {
       "name": "EmergencyProposalExecutor",
@@ -646,7 +689,10 @@
         "nonce": 819,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "Lisk_Adapter",
@@ -673,7 +719,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Lisk_Adapter"
+      "implementationNames": {
+        "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B": "Lisk_Adapter"
+      }
     },
     {
       "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
@@ -725,7 +773,9 @@
         "ZodiacModule_modules": [],
         "ZodiacModule_target": "0xB524735356985D2f267FA010D681f061DfF03715"
       },
-      "derivedName": "OptimisticGovernor"
+      "implementationNames": {
+        "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor"
+      }
     },
     {
       "name": "EmergencyProposer",
@@ -749,7 +799,9 @@
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
       },
-      "derivedName": "EmergencyProposer"
+      "implementationNames": {
+        "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer"
+      }
     },
     {
       "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
@@ -796,7 +848,9 @@
         "L2_REFUND_ADDRESS": "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
         "SHARED_BRIDGE": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
       },
-      "derivedName": "ZkStack_Adapter"
+      "implementationNames": {
+        "0xA374585E6062517Ee367ee5044946A6fBe17724f": "ZkStack_Adapter"
+      }
     },
     {
       "name": "WorldChain_Adapter",
@@ -824,7 +878,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "OP_Adapter"
+      "implementationNames": {
+        "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32": "OP_Adapter"
+      }
     },
     {
       "name": "Polygon_Adapter",
@@ -853,7 +909,9 @@
         "ROOT_CHAIN_MANAGER": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Polygon_Adapter"
+      "implementationNames": {
+        "0xb4AeF0178f5725392A26eE18684C2aB62adc912e": "Polygon_Adapter"
+      }
     },
     {
       "name": "HubPool Multisig",
@@ -886,7 +944,10 @@
         "nonce": 315,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xB524735356985D2f267FA010D681f061DfF03715": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "CoveredCallFinancialProductLibrary",
@@ -899,7 +960,9 @@
       "sinceTimestamp": 1618347170,
       "sinceBlock": 12234012,
       "values": { "$immutable": true },
-      "derivedName": "CoveredCallFinancialProductLibrary"
+      "implementationNames": {
+        "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58": "CoveredCallFinancialProductLibrary"
+      }
     },
     {
       "name": "HubPool",
@@ -989,7 +1052,9 @@
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "HubPool"
+      "implementationNames": {
+        "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool"
+      }
     },
     {
       "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
@@ -1026,7 +1091,9 @@
         "recipientCircleDomainId": 6,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Base_Adapter"
+      "implementationNames": {
+        "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c": "Base_Adapter"
+      }
     },
     {
       "name": "Optimism_Adapter",
@@ -1057,7 +1124,9 @@
         "SNX_OPTIMISM_BRIDGE": "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Optimism_Adapter"
+      "implementationNames": {
+        "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b": "Optimism_Adapter"
+      }
     },
     {
       "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
@@ -1090,7 +1159,9 @@
         "symbol": "ABT",
         "totalSupply": "28095402467539846062"
       },
-      "derivedName": "BondToken"
+      "implementationNames": {
+        "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken"
+      }
     },
     {
       "name": "UMAOptimisticOracle",
@@ -1109,7 +1180,9 @@
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "timerAddress": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "SkinnyOptimisticOracle"
+      "implementationNames": {
+        "0xeE3Afe347D5C74317041E2618C49534dAf887c24": "SkinnyOptimisticOracle"
+      }
     },
     {
       "address": "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4",
@@ -1141,7 +1214,9 @@
         "recipientCircleDomainId": 0,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Mode_Adapter"
+      "implementationNames": {
+        "0xf1B59868697f3925b72889ede818B9E7ba0316d0": "Mode_Adapter"
+      }
     },
     {
       "name": "Blast_Adapter",
@@ -1170,7 +1245,9 @@
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "Blast_Adapter"
+      "implementationNames": {
+        "0xF2bEf5E905AAE0295003ab14872F811E914EdD81": "Blast_Adapter"
+      }
     },
     {
       "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
@@ -1202,7 +1279,9 @@
         "recipientCircleDomainId": 10,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
-      "derivedName": "DoctorWho_Adapter"
+      "implementationNames": {
+        "0xFADcC43096756e1527306FD92982FEbBe3c629Fa": "DoctorWho_Adapter"
+      }
     },
     {
       "name": "OptimisticOracleV3",
@@ -1225,7 +1304,9 @@
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       },
-      "derivedName": "OptimisticOracleV3"
+      "implementationNames": {
+        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3"
+      }
     }
   ],
   "abis": {

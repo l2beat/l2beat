@@ -20,6 +20,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       avg: 10,
       max: 10,
       timestamp: START - 1 * UnixTime.HOUR,
+      numberOfRecords: 2,
     },
     {
       projectId: PROJECT_B,
@@ -28,6 +29,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       avg: 10,
       max: 10,
       timestamp: START - 2 * UnixTime.HOUR,
+      numberOfRecords: 3,
     },
   ] as const satisfies AggregatedLiveness2Record[]
 
@@ -48,6 +50,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           avg: 20,
           max: 20,
           timestamp: START - 1 * UnixTime.HOUR,
+          numberOfRecords: 4,
         },
         // to add
         {
@@ -57,6 +60,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           avg: 10,
           max: 10,
           timestamp: START - 4 * UnixTime.HOUR,
+          numberOfRecords: 5,
         },
       ]
 
@@ -64,18 +68,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted([
-        newRows[0]!,
-        {
-          projectId: PROJECT_B,
-          subtype: 'stateUpdates',
-          min: 10,
-          avg: 10,
-          max: 10,
-          timestamp: START - 2 * UnixTime.HOUR,
-        },
-        newRows[1]!,
-      ])
+      expect(results).toEqualUnsorted([newRows[0]!, DATA[1], newRows[1]!])
     })
 
     it('empty array', async () => {
@@ -108,6 +101,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           avg: 20,
           max: 30,
           timestamp: START,
+          numberOfRecords: 1,
         },
         {
           projectId: PROJECT_A,

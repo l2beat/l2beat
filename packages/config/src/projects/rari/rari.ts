@@ -1,21 +1,33 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER, RISK_VIEW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
+const proofsDisabled =
+  discovery.getContractValue<EthereumAddress>(
+    'OneStepProofEntry',
+    'proverHostIo',
+  ) === EthereumAddress('0x0000000000000000000000000000000000000000')
 
 export const rari: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  // NO_DA_ORACLE: TEMPORARY while the proof system is disabled (OSPHostIO = 0x0)
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'RARI Chain',
     slug: 'rari',
+    warning: proofsDisabled
+      ? 'The proof system and DA bridge are currently disabled.'
+      : undefined,
     description:
       'RARI Chain embeds royalties on the node level to guarantee royalty payments. A secure, low-cost, decentralized Ethereum L3 blockchain powered by Arbitrum.',
     links: {
@@ -29,6 +41,17 @@ export const rari: ScalingProject = orbitStackL3({
       socialMedia: ['https://twitter.com/RariChain'],
     },
   },
+  // TEMPORARY overwrite while the proof system is disabled (OSPHostIO = 0x0)
+  nonTemplateRiskView: {
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
+  },
+  proofSystemInactive: proofsDisabled, // TEMPORARY overwrite while the proof system is disabled (OSPHostIO = 0x0)
+  stateValidation: {
+    isUnderReview: true,
+    categories: [],
+  },
+  // END temp overwrites
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start  },
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
@@ -118,6 +141,13 @@ export const rari: ScalingProject = orbitStackL3({
       description:
         'RARI is the first chain to integrate Espresso TEE sequencer.',
       type: 'general',
+    },
+    {
+      title: 'RARI disables proof system',
+      url: 'https://arbiscan.io/address/0x01ad6e65e01928938448a1fcf5c93bf7bfe720e0#readContract#F5',
+      date: '2025-05-05T00:00:00.00Z',
+      description: 'The proof system and reference to Blobstream are disabled.',
+      type: 'incident',
     },
   ],
 })

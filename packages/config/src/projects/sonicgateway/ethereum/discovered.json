@@ -1,7 +1,7 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 22297572,
+  "blockNumber": 22431552,
   "configHash": "0xdffffa86646b9cde707aff63f5b7df9283f6f441de2082ddc1852baa322dd337",
   "entries": [
     {
@@ -123,7 +123,9 @@
           "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
         ]
       },
-      "derivedName": "ValidatorsRegistry"
+      "implementationNames": {
+        "0x72965045A6691E5A74299D1e878f303264D4D910": "ValidatorsRegistry"
+      }
     },
     {
       "name": "DirectExitAdministrator",
@@ -146,7 +148,9 @@
         "$immutable": true,
         "deposit": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
       },
-      "derivedName": "DirectExitAdministrator"
+      "implementationNames": {
+        "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329": "DirectExitAdministrator"
+      }
     },
     {
       "name": "SonicGatewayOpsMultisig",
@@ -194,7 +198,10 @@
         "nonce": 13,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1",
@@ -224,7 +231,9 @@
       "sinceTimestamp": 1734690407,
       "sinceBlock": 21443127,
       "values": { "$immutable": true },
-      "derivedName": "MPTProofVerifier"
+      "implementationNames": {
+        "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306": "MPTProofVerifier"
+      }
     },
     {
       "address": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
@@ -295,10 +304,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 32,
+        "nonce": 34,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "TokenDeposit",
@@ -352,7 +364,10 @@
         "stateOracle": { "severity": "HIGH" },
         "deadState": { "severity": "HIGH" }
       },
-      "derivedName": "TokenDeposit"
+      "implementationNames": {
+        "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": "ERC1967Proxy",
+        "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9": "TokenDeposit"
+      }
     },
     {
       "address": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
@@ -448,7 +463,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 20924666,
+        "lastBlockNum": 24985800,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -458,7 +473,10 @@
         "updateVerifier": "0x72965045A6691E5A74299D1e878f303264D4D910",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "UpdateManager"
+      "implementationNames": {
+        "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": "ERC1967Proxy",
+        "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b": "UpdateManager"
+      }
     },
     {
       "name": "StateOracle",
@@ -475,12 +493,14 @@
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 20924666,
-        "lastState": "0x05a41fd45cf5c9c0fb5da2b38f9894f4d8669ced14fb47731ed73e0a6e19163f",
-        "lastUpdateTime": 1744998407,
+        "lastBlockNum": 24985800,
+        "lastState": "0x2a788f25a88a36ab41e4b0dc719c9834a8d5dc85a1dd848be0de2ec293dd9920",
+        "lastUpdateTime": 1746614783,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
-      "derivedName": "StateOracle"
+      "implementationNames": {
+        "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f": "StateOracle"
+      }
     },
     {
       "address": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
@@ -538,6 +558,10 @@
           "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+          },
+          "TERMINATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           }
         },
         "acRegister": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
@@ -548,7 +572,10 @@
         "UNREGISTER_ROLE": "0x822120e1e3a621ffae2121fc52e9eb301eb26b031334bbf3018f0954c7360700",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "TokenPairs"
+      "implementationNames": {
+        "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": "ERC1967Proxy",
+        "0x68A4DdEDc285241440733719e43B1BCB795dD8c7": "TokenPairs"
+      }
     },
     {
       "address": "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB",

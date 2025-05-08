@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22417833,
+  "blockNumber": 22431133,
   "configHash": "0x6b113709a01b4c011c82f02891a984c98a08c2f4a42414976f0bbec9d41c0332",
   "entries": [
     {
@@ -60,8 +60,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 337,
-        "latestBlock": 1318080,
+        "latestAuthoritySetId": 338,
+        "latestBlock": 1325760,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -70,7 +70,10 @@
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
-      "derivedName": "SP1Vector"
+      "implementationNames": {
+        "0x02993cdC11213985b9B13224f3aF289F03bf298d": "ERC1967Proxy",
+        "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D": "SP1Vector"
+      }
     },
     {
       "name": "AvailBridgeV1",
@@ -100,7 +103,7 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+            "members": ["0x45828180bbE489350D621d002968A0585406d487"]
           },
           "PAUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -109,25 +112,28 @@
         },
         "avail": "0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmin": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
-        "defaultAdminAC": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
+        "defaultAdmin": "0x45828180bbE489350D621d002968A0585406d487",
+        "defaultAdminAC": ["0x45828180bbE489350D621d002968A0585406d487"],
         "defaultAdminDelay": 0,
         "defaultAdminDelayIncreaseWait": 432000,
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1407,
-        "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "messageId": 1408,
+        "owner": "0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
         "pendingDefaultAdmin": {
-          "newAdmin": "0x45828180bbE489350D621d002968A0585406d487",
-          "schedule": 1746442211
+          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "schedule": 0
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "vectorx": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
       },
-      "derivedName": "AvailBridgeV1",
+      "implementationNames": {
+        "0x054fd961708D8E2B9c10a63F6157c74458889F0a": "TransparentUpgradeableProxy",
+        "0x737539737b44493F65c17eAfE165197b6410d254": "AvailBridgeV1"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -168,7 +174,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
@@ -199,10 +208,12 @@
       "sinceBlock": 20272316,
       "values": {
         "$immutable": true,
-        "owner": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+        "owner": "0x45828180bbE489350D621d002968A0585406d487",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B": "ProxyAdmin"
+      }
     },
     {
       "name": "SP1VerifierGateway",
@@ -264,7 +275,9 @@
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
-      "derivedName": "SP1VerifierGateway"
+      "implementationNames": {
+        "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
+      }
     },
     {
       "name": "TimelockController",
@@ -277,6 +290,15 @@
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d.",
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+        },
+        {
+          "permission": "interact",
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+        },
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
@@ -322,7 +344,9 @@
         "Proposer": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0x45828180bbE489350D621d002968A0585406d487": "TimelockController"
+      }
     },
     {
       "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
@@ -353,7 +377,13 @@
         {
           "permission": "interact",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
+          "via": [
+            {
+              "address": "0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -393,14 +423,16 @@
         {
           "permission": "upgrade",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "via": [{ "address": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B" }]
+          "via": [
+            { "address": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B" },
+            {
+              "address": "0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
-        },
         {
           "permission": "act",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
@@ -427,10 +459,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
@@ -500,7 +535,10 @@
         "nonce": 10,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
@@ -524,7 +562,9 @@
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
         "VERSION": "v4.0.0-rc.3"
       },
-      "derivedName": "SP1Verifier"
+      "implementationNames": {
+        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
+      }
     },
     {
       "address": "0xE458b870F2F59a49915591282f1Bb688901767AD",
@@ -856,12 +896,12 @@
   },
   "usedTemplates": {
     "avail/AvailBridgeV1": "0x1e30044e2ab7a26fa8c43ab28fbb2c5afaf96522cd40309de731d20185455f9f",
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "global/TimelockController": "0xc5781953d228673a1223e3cdd7b2ff789b81c8df6095c511bfa2d486f013fa99",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
+    "global/TimelockController": "0x60e838d29700a6d061e59ca3368cac599be90c8893b98e10be902ab573c13e90",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "succinct/SP1Vector": "0xba71ec9709d89d352f7a245e5b72cf3434f4e06994cd62092c06382309a93fa3",
-    "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x34c8324d73a21cd5060d85a8de3b08f54f44d2431c6461031715b2d9a9c04e28"
+  "permissionsConfigHash": "0x945bc2bd3cec638e9caa5b8c0454330be58463c59deeca2191cd4f94943fbcb1"
 }

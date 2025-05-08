@@ -38,7 +38,9 @@
           "0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5C03468829A26981c410a7930bD4853622F0B2E5": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -74,7 +76,9 @@
           "0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -109,7 +113,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -145,7 +151,9 @@
           "0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -161,7 +169,9 @@
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
-      "derivedName": "ValidiumL1DAValidator",
+      "implementationNames": {
+        "0x907b30407249949521Bf0c89A43558dae200146A": "ValidiumL1DAValidator"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -461,7 +471,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0xc29d04A93F893700015138E3E334eB828dAC3cef": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -508,7 +524,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -547,7 +565,10 @@
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1USDCBridge",
+      "implementationNames": {
+        "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987": "TransparentUpgradeableProxy",
+        "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB": "L1USDCBridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {

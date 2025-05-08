@@ -15,6 +15,7 @@ describe(discoveryDiffToMarkdown.name, () => {
   const FOO_CONTRACT_DIFF: DiscoveryDiff = {
     name: 'foo',
     address: ADDRESS,
+    addressType: 'Contract',
     diff: [
       {
         key: 'values.baz',
@@ -28,6 +29,7 @@ describe(discoveryDiffToMarkdown.name, () => {
   const BAR_CONTRACT_DIFF: DiscoveryDiff = {
     name: 'bar',
     address: SECOND_ADDRESS,
+    addressType: 'Contract',
     description: 'The contract getting deleted',
     type: 'deleted',
   }
@@ -160,6 +162,7 @@ describe(contractDiffToMarkdown.name, () => {
       {
         name: 'foo',
         address: ADDRESS,
+        addressType: 'Contract',
         type: 'created',
       },
       undefined,
@@ -181,6 +184,7 @@ describe(contractDiffToMarkdown.name, () => {
       {
         name: 'foo',
         address: ADDRESS,
+        addressType: 'Contract',
         type: 'deleted',
       },
       undefined,
@@ -202,6 +206,7 @@ describe(contractDiffToMarkdown.name, () => {
       {
         name: 'foo',
         address: ADDRESS,
+        addressType: 'Contract',
         diff: [
           { key: 'values.bar', before: 'oldValue', after: 'newValue' },
           { key: 'values.baz', before: 'bad', after: 'good' },
@@ -233,6 +238,7 @@ describe(contractDiffToMarkdown.name, () => {
       {
         name: 'foo',
         address: ADDRESS,
+        addressType: 'Contract',
         diff: [
           { key: 'values.bar', before: 'oldValue', after: 'newValue' },
           { key: 'values.baz', before: 'bad', after: 'good' },
@@ -251,6 +257,7 @@ describe(contractDiffToMarkdown.name, () => {
     const result = contractDiffToMarkdown({
       name: 'foo',
       address: ADDRESS,
+      addressType: 'Contract',
       description: 'The foo contract',
       diff: [
         { key: 'values.bar', before: 'oldValue', after: 'newValue' },

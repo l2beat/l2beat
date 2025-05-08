@@ -22,7 +22,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
       },
-      "derivedName": "LoopringIOExchangeOwner"
+      "implementationNames": {
+        "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215": "LoopringIOExchangeOwner"
+      }
     },
     {
       "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
@@ -56,7 +58,9 @@
         "protocolFeeVault": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
         "totalStake": 0
       },
-      "derivedName": "LoopringV3"
+      "implementationNames": {
+        "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7": "LoopringV3"
+      }
     },
     {
       "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
@@ -78,7 +82,9 @@
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "BlockVerifier"
+      "implementationNames": {
+        "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2": "BlockVerifier"
+      }
     },
     {
       "name": "FeeVault",
@@ -105,7 +111,9 @@
         "required": 4,
         "transactionCount": 105
       },
-      "derivedName": "MultiSigWallet"
+      "implementationNames": {
+        "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "MultiSigWallet"
+      }
     },
     {
       "name": "ExchangeV3",
@@ -197,7 +205,9 @@
         },
         "version": "0.1.0"
       },
-      "derivedName": "ExchangeV3"
+      "implementationNames": {
+        "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7": "ExchangeV3"
+      }
     },
     {
       "name": "LoopringOwner",
@@ -236,7 +246,9 @@
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "DefaultDepositContract"
+      "implementationNames": {
+        "0xF13e21653AEB763595D5E4baA1dC115689Da49b9": "DefaultDepositContract"
+      }
     },
     {
       "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B",

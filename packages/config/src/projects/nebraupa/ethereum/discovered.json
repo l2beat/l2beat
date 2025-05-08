@@ -72,7 +72,10 @@
         "version": 10201,
         "worker": "0x7545b173780F07BF9EFA7e1561bb35B52907974D"
       },
-      "derivedName": "UpaVerifier"
+      "implementationNames": {
+        "0x3B946743DEB7B6C97F05B7a31B23562448047E3E": "ERC1967Proxy",
+        "0xB6cD7eD75c008d0033ED241872639a1D8a35020a": "UpaVerifier"
+      }
     },
     {
       "address": "0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7",
@@ -128,7 +131,10 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0xb463603469Bf31f189E3F6625baf8378880Df14e": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
     },
     {
       "address": "0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e",
@@ -159,7 +165,9 @@
       "sinceTimestamp": 1723652291,
       "sinceBlock": 20528013,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xE990F8e3505391d2b42C80683d403A8371Ee88B9": ""
+      }
     }
   ],
   "abis": {

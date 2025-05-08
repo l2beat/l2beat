@@ -342,7 +342,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         tokenValue('b', 'ethereum', UnixTime(130), 0, 0, 0, 0),
 
         // Token C with a single timestamp
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500),
       ])
     })
 
@@ -352,7 +352,19 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(result).toEqualUnsorted([
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
         tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+
+    it('returns latest non-zero record for each token of given project at or before timestamp', async () => {
+      const result = await repository.getLastNonZeroValue(
+        UnixTime(150),
+        'ethereum',
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
       ])
     })
   })

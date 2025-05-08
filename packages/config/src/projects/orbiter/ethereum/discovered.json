@@ -35,7 +35,9 @@
       "sinceTimestamp": 1649661119,
       "sinceBlock": 14563000,
       "values": { "$immutable": true },
-      "derivedName": "OBSource"
+      "implementationNames": {
+        "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc": "OBSource"
+      }
     }
   ],
   "abis": {
