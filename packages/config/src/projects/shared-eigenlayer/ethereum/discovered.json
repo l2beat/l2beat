@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 22438050,
-  "configHash": "0xa05fa60c42406ac2231803268173b52123b8b9616771acecaf36a4ca664d235f",
+  "blockNumber": 22438687,
+  "configHash": "0x0e48066ad5e3334bb9da307a2ca57ce167738bea2f0952b6976d6708d90cac97",
   "entries": [
     {
       "address": "0x00000000000000000000000000000000000E16E4",
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x08371f0000000000",
-        "get_deposit_root": "0xfe7fd87941081e3cd46d1b98ccb634f171ca4683a568a1ec2d578567ed83fb51"
+        "get_deposit_count": "0x81371f0000000000",
+        "get_deposit_root": "0xeb6529e57b575643065055dd9e8fe677c8b1942bcef0fc7fb122a89a7e223c6f"
       },
       "implementationNames": {
         "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -1180,7 +1180,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33564,
+        "numPods": 33566,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
