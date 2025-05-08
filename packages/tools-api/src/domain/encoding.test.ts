@@ -134,7 +134,7 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'bytes32',
       encoded: encoded,
-      decoded: { type: 'bytes', value: encoded },
+      decoded: { type: 'bytes', value: encoded, extra: '0x' },
     })
   })
 
@@ -145,7 +145,7 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'bytes4',
       encoded: encoded,
-      decoded: { type: 'bytes', value: `0xdeadbeef` },
+      decoded: { type: 'bytes', value: `0xdeadbeef`, extra: '0x' },
     })
   })
 
@@ -162,7 +162,23 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'bytes',
       encoded: e,
-      decoded: { type: 'bytes', value: bytes },
+      decoded: { type: 'bytes', value: bytes, extra: '0x' },
+    })
+  })
+
+  it('bytes extra', () => {
+    const bytes: `0x${string}` = `0x${'ab12'.repeat(20)}`
+    const e: `0x${string}` = `${encode('bytes', bytes)}${'deadbeef'.repeat(8)}`
+    const d = decodeType('bytes', e)
+    expect(d).toEqual({
+      name: '',
+      abi: 'bytes',
+      encoded: e,
+      decoded: {
+        type: 'bytes',
+        value: bytes,
+        extra: `0x${'deadbeef'.repeat(8)}`,
+      },
     })
   })
 
@@ -174,7 +190,7 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'string',
       encoded: e,
-      decoded: { type: 'string', value: s },
+      decoded: { type: 'string', value: s, extra: '0x' },
     })
   })
 
@@ -246,13 +262,13 @@ describe(decodeType.name, () => {
             name: '',
             abi: 'string',
             encoded: encode('string', 'foo'),
-            decoded: { type: 'string', value: 'foo' },
+            decoded: { type: 'string', value: 'foo', extra: '0x' },
           },
           {
             name: '',
             abi: 'string',
             encoded: encode('string', 'bar'),
-            decoded: { type: 'string', value: 'bar' },
+            decoded: { type: 'string', value: 'bar', extra: '0x' },
           },
         ],
       },
