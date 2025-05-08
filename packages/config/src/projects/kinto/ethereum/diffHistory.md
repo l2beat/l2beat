@@ -1,3 +1,115 @@
+Generated with discovered.json: 0xa522b084f7ba76fcd3876f696ff2fc4584032f86
+
+# Diff at Thu, 08 May 2025 08:28:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22137242
+- current block number: 22437620
+
+## Description
+
+Standard Orbit upgrade with minor changes.
+
+## Watched changes
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.0:
+-        "0x457c34030000c1767f1ef518c365b671181e9e701db9642be8572edc1c44068c"
++        "0xa1b21b35992f15b6195b22f1c21b8e944919e03edcdc8342a98fcee0ef3f44c0"
+      values.$implementation:
+-        "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"
++        "0x296339ED40ec80746b239b04dE943bb8619784b7"
+      values.$pastUpgrades.3:
++        ["2024-05-03T15:22:59.000Z","0x3ad996252ae2a17bb0e7b5ec38eee0d104fd097da479cb3911b34d925f1750d7",["0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]]
+      values.$pastUpgrades.2.2:
+-        "0x3ad996252ae2a17bb0e7b5ec38eee0d104fd097da479cb3911b34d925f1750d7"
++        "0xec98dd39612eb11b2d7e15fc9961c34aba0796fd078989942636728ebeb888e3"
+      values.$pastUpgrades.2.1:
+-        "2024-05-03T15:22:59.000Z"
++        ["0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]
+      values.$pastUpgrades.2.0:
+-        ["0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]
++        "2024-05-08T00:06:47.000Z"
+      values.$pastUpgrades.1.2:
+-        "0xec98dd39612eb11b2d7e15fc9961c34aba0796fd078989942636728ebeb888e3"
++        "2023-12-15T02:37:35.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]
++        "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8"
+      values.$pastUpgrades.1.0:
+-        "2024-05-08T00:06:47.000Z"
++        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+      values.$pastUpgrades.0.2:
+-        "2023-12-15T02:37:35.000Z"
++        "2025-05-06T15:50:47.000Z"
+      values.$pastUpgrades.0.1:
+-        "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8"
++        "0xddb2100d0cbc866a1716fa96353d277877650256d07b0291b60814276f866e28"
+      values.$pastUpgrades.0.0.0:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x296339ED40ec80746b239b04dE943bb8619784b7"
+      values.$upgradeCount:
+-        3
++        4
+      implementationNames.0xc235c5194f2404234fc7C99b4dd15289BB735Cf5:
+-        "Inbox"
+      implementationNames.0x296339ED40ec80746b239b04dE943bb8619784b7:
++        "Inbox"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x57411f5BA52531e8199066bC8EC650470A744883"
++        "0xa5E09FfA33dd011F5B68aAA55F513D6773579f78"
+      values.$pastUpgrades.2:
++        ["2024-06-27T16:39:47.000Z","0x9226b704344df97784d15fc6cdbcfef620f393011c803879e7ec2e8c875665b0",["0x57411f5BA52531e8199066bC8EC650470A744883"]]
+      values.$pastUpgrades.1.2:
+-        "0x9226b704344df97784d15fc6cdbcfef620f393011c803879e7ec2e8c875665b0"
++        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+      values.$pastUpgrades.1.1:
+-        "2024-06-27T16:39:47.000Z"
++        "2023-12-15T02:37:35.000Z"
+      values.$pastUpgrades.1.0:
+-        ["0x57411f5BA52531e8199066bC8EC650470A744883"]
++        "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8"
+      values.$pastUpgrades.0.2:
+-        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
++        "2025-05-06T15:50:47.000Z"
+      values.$pastUpgrades.0.1:
+-        "2023-12-15T02:37:35.000Z"
++        "0xddb2100d0cbc866a1716fa96353d277877650256d07b0291b60814276f866e28"
+      values.$pastUpgrades.0.0:
+-        "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8"
++        ["0xa5E09FfA33dd011F5B68aAA55F513D6773579f78"]
+      values.$upgradeCount:
+-        2
++        3
+      values.reader4844:
+-        "0x434345973Ebf8249398E1EeB03A62bE418B48a05"
++        "0x9098e513950bC43184d39F4E283ECa137A3AF247"
+      implementationNames.0x57411f5BA52531e8199066bC8EC650470A744883:
+-        "SequencerInbox"
+      implementationNames.0xa5E09FfA33dd011F5B68aAA55F513D6773579f78:
++        "SequencerInbox"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22137242 => .flat}/Inbox/Inbox.sol      | 91 +++++++++++++++++-----
+ .../SequencerInbox/SequencerInbox.sol              | 24 ++++--
+ 2 files changed, 90 insertions(+), 25 deletions(-)
+```
+
 Generated with discovered.json: 0xc1c912747104b78ae0727cd4f22df842019a872b
 
 # Diff at Fri, 02 May 2025 17:25:42 GMT:
