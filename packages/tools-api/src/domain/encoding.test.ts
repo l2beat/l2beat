@@ -274,6 +274,68 @@ describe(decodeType.name, () => {
       },
     })
   })
+
+  it('(uint256, string)[]', () => {
+    const e = encode('(uint256, string)[]', [
+      [1n, 'foo'],
+      [2n, 'bar'],
+    ])
+    const d = decodeType('(uint256, string)[]', e)
+    expect(d).toEqual({
+      name: '',
+      abi: '(uint256, string)[]',
+      encoded: e,
+      decoded: {
+        type: 'array',
+        value: [
+          {
+            name: '',
+            abi: '(uint256, string)',
+            encoded: encode('(uint256, string)', [1n, 'foo']),
+            decoded: {
+              type: 'array',
+              value: [
+                {
+                  name: '',
+                  abi: 'uint256',
+                  encoded: encode('uint256', 1n),
+                  decoded: { type: 'number', value: '1' },
+                },
+                {
+                  name: '',
+                  abi: 'string',
+                  encoded: encode('string', 'foo'),
+                  decoded: { type: 'string', value: 'foo', extra: '0x' },
+                },
+              ],
+            },
+          },
+          {
+            name: '',
+            abi: '(uint256, string)',
+            encoded: encode('(uint256, string)', [2n, 'bar']),
+            decoded: {
+              type: 'array',
+              value: [
+                {
+                  name: '',
+                  abi: 'uint256',
+                  encoded: encode('uint256', 2n),
+                  decoded: { type: 'number', value: '2' },
+                },
+                {
+                  name: '',
+                  abi: 'string',
+                  encoded: encode('string', 'bar'),
+                  decoded: { type: 'string', value: 'bar', extra: '0x' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    })
+  })
 })
 
 function encode(type: string, value: unknown): `0x${string}` {
