@@ -1,4 +1,116 @@
-Generated with discovered.json: 0x2465e3224113fb301789e0518f9517261520abfa
+Generated with discovered.json: 0x89e20b75ac604f7304e78a4e6c5c70e964d9954c
+
+# Diff at Thu, 08 May 2025 09:56:51 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ac8d52c849084548030762e31e48a2eb3c90bf3e block: 22425139
+- current block number: 22438050
+
+## Description
+
+- EigenPod, EigenPodManager: added support so that EigenLayer pods continue to verify Beacon-chain data post-Pectra
+- Why? Because Pectra adds enough new BeaconState fields (through new EIPs) to lift the Merkle tree height from 5 to 6, so the EigenPod upgrade makes the contracts fork-aware so they won't reject those longer paths for proofs coming in after Pectra.
+
+## Watched changes
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e"
++        "0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6396fbec37d6d3c9c0b56494c6373e983a77e0980eaf9ab4782333de488449e5"
++        "0xbe7ad5846796adf94452f7dc75108c6c396689c7f7be205733374d0ef6c126ca"
+      values.$implementation:
+-        "0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"
++        "0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"
+      values.$pastUpgrades.5:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"]]
+      values.$pastUpgrades.4.2:
+-        "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2"
++        "0x080396d23f4e4b23c8c5dc9491368b3c9ea0eaa96627b60d66259fe35322054e"
+      values.$pastUpgrades.4.1:
+-        ["0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"]
++        "2023-06-09T22:16:47.000Z"
+      values.$pastUpgrades.4.0:
+-        "2025-04-17T22:30:11.000Z"
++        ["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
+      values.$pastUpgrades.3.2:
+-        "0x080396d23f4e4b23c8c5dc9491368b3c9ea0eaa96627b60d66259fe35322054e"
++        "0xa21ccea07638809e5c429ef2b354259ff13aee47b3a5c0452143e2bd162a0968"
+      values.$pastUpgrades.3.1:
+-        "2023-06-09T22:16:47.000Z"
++        ["0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"]
+      values.$pastUpgrades.3.0:
+-        ["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
++        "2025-05-07T20:56:59.000Z"
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.3.0"
++        "1.4.1"
+      values.pectraForkTimestamp:
++        1746612311
+      values.proofTimestampSetter:
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      implementationNames.0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77:
+-        "EigenPodManager"
+      implementationNames.0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9:
++        "EigenPodManager"
+      template:
++        "eigenlayer/EigenPodManager"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22425139 => .flat}/EigenPod.sol         | 67 +++++++++++++++++++---
+ .../EigenPodManager/EigenPodManager.sol            | 51 +++++++++++++++-
+ 2 files changed, 110 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22425139 (main branch discovery), not current.
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      template:
+-        "eigenlayer/EigenPodManager"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
+```
+
+Generated with discovered.json: 0xe12882939583355eb9b7c8d9b916835d365d43d6
 
 # Diff at Tue, 06 May 2025 14:19:36 GMT:
 
