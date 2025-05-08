@@ -21,37 +21,44 @@ export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
 
 function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
   const common = { name: '', abi: type.type, encoded }
+  let elements: ParsedType[] | undefined
   if (type.tupleElements) {
+    elements = type.tupleElements
+  }
+  if (type.arrayElement) {
+    const length = parseInt(sliceBytes(encoded, 0, 32))
+    if (length > 1_000_000) {
+      throw new Error('Invalid encoding')
+    }
+    encoded = sliceBytes(encoded, 32)
+    elements = new Array(length).fill(type.arrayElement)
+  }
+  if (elements) {
     let offset = 0
     const staticData: `0x${string}`[] = []
     const dynamicOffsets: (number | undefined)[] = []
-    for (const element of type.tupleElements) {
+    for (const element of elements) {
       const end = offset + element.size
       const bytes = sliceBytes(encoded, offset * 32, (offset + 1) * 32)
       staticData.push(bytes)
       offset = end
       dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)
     }
-    const array = type.tupleElements.map((e, i) => {
+    offset *= 32
+    const array = elements.map((e, i) => {
+      if (e.dynamic) {
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        const start = dynamicOffsets[i]!
+        if (start !== offset) {
+          throw new Error('Invalid encoding')
+        }
+        const end = dynamicOffsets.find((x, j) => j > i && x !== undefined)
+        offset = end ?? -1
+        return decodeParsed(e, sliceBytes(encoded, start, end))
+      }
       // biome-ignore lint/style/noNonNullAssertion: It's there
       return decodeParsed(e, staticData[i]!)
     })
-    return { ...common, decoded: { type: 'array', value: array } }
-  }
-  if (type.arrayElement) {
-    const element = type.arrayElement
-    const length = parseInt(sliceBytes(encoded, 0, 32))
-    let offset = 1
-    const staticData: `0x${string}`[] = []
-    const dynamicOffsets: (number | undefined)[] = []
-    for (let i = 0; i < length; i++) {
-      const end = offset + element.size
-      const bytes = sliceBytes(encoded, offset * 32, (offset + 1) * 32)
-      staticData.push(bytes)
-      offset = end
-      dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)
-    }
-    const array = staticData.map((bytes) => decodeParsed(element, bytes))
     return { ...common, decoded: { type: 'array', value: array } }
   }
   if (type.type === 'bytes') {
@@ -103,10 +110,13 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     const bytes = sliceBytes(encoded, 0, size)
     return { ...common, decoded: { type: 'bytes', value: bytes, extra: '0x' } }
   }
-  throw new Error('Invalid type')
+  throw new Error(`Invalid type: ${type.type}`)
 }
 
 function decodeUint(type: string, encoded: `0x${string}`) {
+  if (encoded.length !== 66) {
+    throw new Error('Invalid encoding')
+  }
   const size = BigInt(type.slice('uint'.length))
   const max = 2n ** size - 1n
   const uint = BigInt(encoded)
@@ -117,6 +127,9 @@ function decodeUint(type: string, encoded: `0x${string}`) {
 }
 
 function decodeInt(type: string, encoded: `0x${string}`) {
+  if (encoded.length !== 66) {
+    throw new Error('Invalid encoding')
+  }
   const size = BigInt(type.slice('int'.length))
   const max = 2n ** (size - 1n) - 1n
   const min = -max - 1n
@@ -193,29 +206,6 @@ export interface ParsedType {
 }
 
 export function parseType(type: string): ParsedType {
-  if (type.startsWith('(')) {
-    const elements: string[] = []
-    let from = 1
-    let depth = 0
-    for (let i = 1; i < type.length - 1; i++) {
-      if (type[i] === '(') {
-        depth++
-      } else if (type[i] === ')') {
-        depth--
-      } else if (type[i] === ',' && depth === 0) {
-        elements.push(type.slice(from, i))
-        from = i + 1
-      }
-    }
-    elements.push(type.slice(from, type.length - 1))
-    const tupleElements = elements.map((x) => parseType(x.trim()))
-    const typeName = `(${tupleElements.map((x) => x.type).join(', ')})`
-    const dynamic = tupleElements.some((x) => x.dynamic)
-    const size = dynamic
-      ? 1
-      : tupleElements.reduce((size, e) => size + e.size, 0)
-    return { type: typeName, size, dynamic, tupleElements }
-  }
   if (type.endsWith(']')) {
     const openBracket = type.lastIndexOf('[')
     const elementType = parseType(type.slice(0, openBracket))
@@ -235,6 +225,30 @@ export function parseType(type: string): ParsedType {
       dynamic: elementType.dynamic,
       tupleElements: new Array(length).fill(elementType),
     }
+  }
+  if (type.startsWith('(')) {
+    const tupleEnd = type.lastIndexOf(')')
+    const elements: string[] = []
+    let from = 1
+    let depth = 0
+    for (let i = 1; i < tupleEnd; i++) {
+      if (type[i] === '(') {
+        depth++
+      } else if (type[i] === ')') {
+        depth--
+      } else if (type[i] === ',' && depth === 0) {
+        elements.push(type.slice(from, i))
+        from = i + 1
+      }
+    }
+    elements.push(type.slice(from, tupleEnd))
+    const tupleElements = elements.map((x) => parseType(x.trim()))
+    const typeName = `(${tupleElements.map((x) => x.type).join(', ')})`
+    const dynamic = tupleElements.some((x) => x.dynamic)
+    const size = dynamic
+      ? 1
+      : tupleElements.reduce((size, e) => size + e.size, 0)
+    return { type: typeName, size, dynamic, tupleElements }
   }
   if (type === 'uint') {
     type = 'uint256'
