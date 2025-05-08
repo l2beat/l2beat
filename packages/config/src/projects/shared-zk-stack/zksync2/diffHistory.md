@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x43a3ff23daf457122d501c922b4499f6c6df9507
+
+# Diff at Thu, 08 May 2025 09:50:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 59465384
+- current block number: 60094914
+
+## Description
+
+Config related.
+
+## Watched changes
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias_deprecated (0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 59465384 (main branch discovery), not current.
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias_deprecated (0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x0a6772033009be788ef753319cecfd2951adc5b2
 
 # Diff at Tue, 29 Apr 2025 09:41:07 GMT:
