@@ -1,3 +1,336 @@
+Generated with discovered.json: 0xe2cd390c717718d09e4002b2a6a41a26896b708b
+
+# Diff at Thu, 08 May 2025 09:30:42 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ac8d52c849084548030762e31e48a2eb3c90bf3e block: 22425139
+- current block number: 22437938
+
+## Description
+
+- EigenPod, EigenPodManager: added support so that EigenLayer pods continue to verify Beacon-chain data post-Pectra
+- Why? Because Pectra adds enough new BeaconState fields (through new EIPs) to lift the Merkle tree height from 5 to 6, so the EigenPod upgrade makes the contracts fork-aware so they won't reject those longer paths for proofs coming in after Pectra.
+
+## Watched changes
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e"
++        "0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      template:
+-        "eigenlayer/EigenPodManager"
+      sourceHashes.0:
+-        "0x6396fbec37d6d3c9c0b56494c6373e983a77e0980eaf9ab4782333de488449e5"
++        "0xbe7ad5846796adf94452f7dc75108c6c396689c7f7be205733374d0ef6c126ca"
+      values.$implementation:
+-        "0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"
++        "0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"
+      values.$pastUpgrades.5:
++        ["2025-04-17T22:30:11.000Z","0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",["0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"]]
+      values.$pastUpgrades.4.2:
+-        "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2"
++        "0x080396d23f4e4b23c8c5dc9491368b3c9ea0eaa96627b60d66259fe35322054e"
+      values.$pastUpgrades.4.1:
+-        ["0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"]
++        "2023-06-09T22:16:47.000Z"
+      values.$pastUpgrades.4.0:
+-        "2025-04-17T22:30:11.000Z"
++        ["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
+      values.$pastUpgrades.3.2:
+-        "0x080396d23f4e4b23c8c5dc9491368b3c9ea0eaa96627b60d66259fe35322054e"
++        "0xa21ccea07638809e5c429ef2b354259ff13aee47b3a5c0452143e2bd162a0968"
+      values.$pastUpgrades.3.1:
+-        "2023-06-09T22:16:47.000Z"
++        ["0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"]
+      values.$pastUpgrades.3.0:
+-        ["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
++        "2025-05-07T20:56:59.000Z"
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.3.0"
++        "1.4.1"
+      values.pectraForkTimestamp:
++        1746612311
+      values.proofTimestampSetter:
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/DepositContract.sol             | 160 +++++++++++++++++++++
+ .../{.flat@22425139 => .flat}/EigenPod.sol         |  67 ++++++++-
+ .../EigenPodManager/EigenPodManager.sol            |  51 ++++++-
+ 3 files changed, 270 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22425139 (main branch discovery), not current.
+
+```diff
+    contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      implementationNames:
+-        {"0x0EC17ef9c00F360DB28CA8008684a4796b11E456":"StrategyBase"}
+    }
+```
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      implementationNames:
+-        {"0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9":"UpgradeableBeacon"}
+    }
+```
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      implementationNames:
+-        {"0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563":"TokenHopper"}
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      implementationNames:
+-        {"0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF":"TransparentUpgradeableProxy","0xA396D855D70e1A1ec1A0199ADB9845096683B6A2":"AVSDirectory"}
+    }
+```
+
+```diff
+    contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) {
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+      implementationNames:
+-        {"0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5":"TransparentUpgradeableProxy","0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1":"PermissionController"}
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      implementationNames:
+-        {"0x369e6F597e22EaB55fFb173C6d9cD234BD699111":"GnosisSafeProxy","0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":"GnosisSafe"}
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      implementationNames:
+-        {"0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A":"TransparentUpgradeableProxy","0xA75112d1df37FA53a431525CD47A7d7faCEA7E73":"DelegationManager"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      implementationNames:
+-        {"0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9":"ProxyAdmin"}
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      implementationNames:
+-        {"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F":"SafeProxy","0x41675C099F32341bf84BFc5382aF534df5C7461a":"Safe"}
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      implementationNames:
+-        {"0x5050389572f2d220ad927CcbeA0D406831012390":"GnosisSafeProxy","0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":"GnosisSafe"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      implementationNames:
+-        {"0x5a2a4F2F3C18f09179B6703e63D9eDD165909073":"UpgradeableBeacon"}
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      implementationNames:
+-        {"0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647":"TransparentUpgradeableProxy","0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66":"StrategyFactory"}
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      implementationNames:
+-        {"0x738130BC8eADe1Bc65A9c056DEa636835896bc53":"TimelockController"}
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      implementationNames:
+-        {"0x7750d328b314EfFa365A0402CcfD489B80B0adda":"TransparentUpgradeableProxy","0xa505c0116aD65071F0130061F94745b7853220aB":"RewardsCoordinator"}
+    }
+```
+
+```diff
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1) {
+    +++ description: None
+      implementationNames:
+-        {"0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1":"SafeProxy","0x41675C099F32341bf84BFc5382aF534df5C7461a":"Safe"}
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      implementationNames:
+-        {"0x83E9115d334D248Ce39a6f36144aEaB5b3456e75":"TransparentUpgradeableProxy","0xF2b225815F70c9b327DC9db758A36c92A4279b17":"BackingEigen"}
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      implementationNames:
+-        {"0x858646372CC42E1A627fcE94aa7A7033e7CF075A":"TransparentUpgradeableProxy","0xba4b2b8A076851A3044882493C2e36503d50b925":"StrategyManager"}
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      implementationNames:
+-        {"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444":"ProxyAdmin"}
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      implementationNames:
+-        {"0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338":"TransparentUpgradeableProxy","0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77":"EigenPodManager"}
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      implementationNames:
+-        {"0x942eaF324971440384e4cA0ffA39fC3bb369D67d":"SafeProxy","0x41675C099F32341bf84BFc5382aF534df5C7461a":"Safe"}
+    }
+```
+
+```diff
+    contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+      implementationNames:
+-        {"0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39":"TransparentUpgradeableProxy","0x740058839A1668Af5700e5d7B062007275e77D25":"AllocationManager"}
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      implementationNames:
+-        {"0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE":"RewardAllStakersActionGenerator"}
+    }
+```
+
+```diff
+    contract EigenPod (0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e) {
+    +++ description: None
+      implementationNames:
+-        {"0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e":"EigenPod"}
+    }
+```
+
+```diff
+    contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+      implementationNames:
+-        {"0xB8765ed72235d279c3Fb53936E4606db0Ef12806":"PauserRegistry"}
+    }
+```
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      implementationNames:
+-        {"0xbb00DDa2832850a43840A3A86515E3Fe226865F2":"GnosisSafeProxy","0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":"GnosisSafe"}
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      implementationNames:
+-        {"0xBE1685C81aA44FF9FB319dD389addd9374383e90":"GnosisSafeProxy","0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":"GnosisSafe"}
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      implementationNames:
+-        {"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d":"TimelockController"}
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      implementationNames:
+-        {"0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83":"TransparentUpgradeableProxy","0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0":"Eigen"}
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      implementationNames:
+-        {"0xFEA47018D632A77bA579846c840d5706705Dc598":"GnosisSafeProxy","0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":"GnosisSafe"}
+    }
+```
+
 Generated with discovered.json: 0xe12882939583355eb9b7c8d9b916835d365d43d6
 
 # Diff at Tue, 06 May 2025 14:19:36 GMT:
