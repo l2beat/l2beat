@@ -11,6 +11,7 @@ import {
   modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
+import type { Analysis } from '@l2beat/discovery/dist/discovery/analysis/AddressAnalyzer'
 import {
   type AllProviderStats,
   ProviderMeasurement,
@@ -77,7 +78,12 @@ export class DiscoveryRunner {
     )
     combinePermissionsIntoDiscovery(discovery, permissionsOutput)
 
-    const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
+    // TODO: Should not be here - drop it and use implementation name once it's ready
+    // if somebody changes the name and decides to re-colorize
+    // then .flat folder will be incorrect
+    // Duplicated from saveDiscoveryResult.ts
+    const remappedResults = remapNames(result, discovery)
+    const flatSources = flattenDiscoveredSources(remappedResults, Logger.SILENT)
 
     return { discovery: withoutUndefinedKeys(discovery), flatSources }
   }
@@ -198,4 +204,30 @@ const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
+}
+
+function remapNames(
+  results: Analysis[],
+  discoveryOutput: DiscoveryOutput,
+): Analysis[] {
+  return results.map((entry) => {
+    if (entry.type === 'EOA') {
+      return entry
+    }
+
+    const matchingEntry = discoveryOutput.entries.find(
+      (e) => e.address === entry.address,
+    )
+
+    if (!matchingEntry) {
+      return entry
+    }
+
+    const newName = matchingEntry.name ?? entry.name
+
+    return {
+      ...entry,
+      name: newName,
+    }
+  })
 }

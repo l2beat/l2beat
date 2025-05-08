@@ -209,7 +209,7 @@ export class UpdateMonitor {
       runner,
       projectConfig,
     )
-    const { discovery, flatSources } = await runner.discoverWithRetry(
+    const { discovery } = await runner.discoverWithRetry(
       projectConfig,
       blockNumber,
       this.logger,
@@ -259,14 +259,6 @@ export class UpdateMonitor {
       discovery,
       configHash: hashJsonStable(projectConfig.structure),
     })
-
-    await this.db.flatSources.upsert({
-      projectName: projectConfig.name,
-      chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
-      blockNumber,
-      contentHash: hashJson(sortObjectByKeys(flatSources)),
-      flat: flatSources,
-    })
   }
 
   private logErrorsInDiscovery(
@@ -314,13 +306,21 @@ export class UpdateMonitor {
       )
     }
 
-    const result = await runner.discoverWithRetry(
+    const { discovery, flatSources } = await runner.discoverWithRetry(
       projectConfig,
       previousDiscovery.blockNumber,
       this.logger,
     )
 
-    return result.discovery
+    await this.db.flatSources.upsert({
+      projectName: projectConfig.name,
+      chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
+      blockNumber: previousDiscovery.blockNumber,
+      contentHash: hashJson(sortObjectByKeys(flatSources)),
+      flat: flatSources,
+    })
+
+    return discovery
   }
 
   private async handleDiff(
