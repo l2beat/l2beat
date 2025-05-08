@@ -280,6 +280,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
           projectId: 'mocked-project',
           subtype: 'batchSubmissions',
           timestamp: NOW - 3 * UnixTime.HOUR,
+          numberOfRecords: 2,
         },
       ])
     })
@@ -307,6 +308,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
         projectId: 'mocked-project',
         subtype: 'batchSubmissions',
         timestamp: NOW - 7 * UnixTime.HOUR,
+        numberOfRecords: 2,
       })
     })
 
@@ -350,6 +352,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
         projectId: 'mocked-project',
         subtype: 'batchSubmissions',
         timestamp: start,
+        numberOfRecords: 3,
       })
     })
 
@@ -385,6 +388,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
         projectId: 'mocked-project',
         subtype: 'batchSubmissions',
         timestamp: start,
+        numberOfRecords: 2,
       })
     })
 
