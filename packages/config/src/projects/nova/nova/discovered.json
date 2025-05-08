@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 82818646,
-  "configHash": "0xa511943faf139105da4d7a97de0ca54c1b18cc50e47a7070e06eb3405ddbc5bf",
+  "blockNumber": 83508934,
+  "configHash": "0x2090336bccc932ec81190807653edf31ab50a6cbd2061ddc11d5b9376a126221",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -419,7 +419,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2377,
+        "exitNum": 2378,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
@@ -559,7 +559,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 900,
+        "exitNum": 908,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
