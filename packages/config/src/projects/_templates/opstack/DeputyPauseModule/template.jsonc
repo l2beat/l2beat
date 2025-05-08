@@ -4,7 +4,10 @@
   "fields": {
     "deputy": {
       "permissions": [
-        { "type": "act", "condition": "restricted to the global pause function" }
+        {
+          "type": "act",
+          "condition": "restricted to the global pause function"
+        }
       ]
     }
   }
