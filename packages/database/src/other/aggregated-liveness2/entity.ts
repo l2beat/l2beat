@@ -9,6 +9,7 @@ export interface AggregatedLiveness2Record {
   min: number
   avg: number
   max: number
+  numberOfRecords: number
 }
 
 export function toRow(

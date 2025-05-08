@@ -7,4 +7,5 @@ export const selectAggregatedLiveness2 = [
   'min',
   'avg',
   'max',
+  'numberOfRecords',
 ] as const satisfies (keyof AggregatedLiveness2)[]
