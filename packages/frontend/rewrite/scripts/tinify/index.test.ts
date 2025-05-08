@@ -6,9 +6,7 @@ import { getAllStaticPngs } from './utils/getAllStaticPngs'
 import { hashPng } from './utils/hashPng'
 import { getTinifiyMetadata } from './utils/tinifyMetadata'
 
-// TODO: Uncomment this when we start using rewrite on production
-// eslint-disable-next-line mocha/no-skipped-tests
-describe.skip('tinify', () => {
+describe('tinify', () => {
   const pngs = getAllStaticPngs(path.join(process.cwd(), 'rewrite/static'))
 
   it('got every image tinified', () => {

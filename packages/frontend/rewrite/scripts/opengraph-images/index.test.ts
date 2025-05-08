@@ -3,9 +3,7 @@ import path from 'path'
 import { ps } from '~/server/projects'
 import { getOpengraphProjectTypes } from './projects/generateProjectOgImages'
 
-// TODO: Uncomment this when we start using rewrite on production
-// eslint-disable-next-line mocha/no-skipped-tests
-describe.skip('opengraph images', () => {
+describe('opengraph images', () => {
   it('should contain project page opengraph images for all projects', async () => {
     const projects = await ps.getProjects({
       optional: ['isScaling', 'isBridge', 'isZkCatalog', 'isDaLayer'],
