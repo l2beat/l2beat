@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 22437081,
+  "blockNumber": 22437740,
   "configHash": "0x1c384be3eb6908db12a08b09af1cf1322ff41dd38663d773e2fc16edbd56bc56",
   "entries": [
     {
@@ -186,11 +186,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0xBC66b4c39086844EcbEd7dd50047CeFA6520C694",
+        "anchorGame": "0xbF9e68fe6f7d6e6b2Ec5e34b38DBEFaB5700B456",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "getAnchorRoot": [
-          "0x2aba7d941b5d3342ff82f8192c679ae0a5605149ad8a5f26eb60b409cb42af8f",
-          135238682
+          "0xa370ba8e35b643d1d85cd1283a425a69dce97a3d3c28a1ecba187e8654301798",
+          135244172
         ],
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "respectedGameType": 0,
@@ -439,7 +439,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "13d 14h",
+        "timeSinceLastL2beatInteraction": "13d 15h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -529,7 +529,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292793035",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292793059",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1691,8 +1691,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 2653218,
-          "prevBlockNum": 22437079
+          "prevBoughtGas": 463628,
+          "prevBlockNum": 22437696
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1876,7 +1876,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 7966,
+        "gameCount": 7968,
         "gameImpls": [
           "0x89D68b1D63AAA0db4af1163e81f56B76934292F8",
           "0xa1E0baCde89d899B3f24eEF3D179cC335A24E777",

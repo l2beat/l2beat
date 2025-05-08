@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x47587faf87ac29005c9c05c8507a966f882ce3f7
+
+# Diff at Thu, 08 May 2025 09:04:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22380607
+- current block number: 22437733
+
+## Description
+
+OP stack DeputyPauser upgrade (see op mainnet for more info).
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0xE749aA49c3eDAF1DCb997eA3DAC23dff72bcb826"
++        "0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49"
+      values.gameImpls.3:
+-        "0xE17d670043c3cDd705a3223B3D89A228A1f07F0f"
++        "0x0000000000000000000000000000000000000000"
+      values.gameImpls.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0xAB91FB6cef84199145133f75cBD96B8a31F184ED"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0xE17d670043c3cDd705a3223B3D89A228A1f07F0f)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xE749aA49c3eDAF1DCb997eA3DAC23dff72bcb826)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xAB91FB6cef84199145133f75cBD96B8a31F184ED)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../base/ethereum/.flat/DeputyPauseModule.sol      | 1338 ++++++++++++++++++++
+ .../{.flat@22380607 => .flat}/FaultDisputeGame.sol |  263 +++-
+ .../PermissionedDisputeGame.sol                    |  265 +++-
+ 3 files changed, 1761 insertions(+), 105 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22380607 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (0xE17d670043c3cDd705a3223B3D89A228A1f07F0f) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xE749aA49c3eDAF1DCb997eA3DAC23dff72bcb826) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
 Generated with discovered.json: 0x5c490dc7a042f282a382586e3a4541855b8d1546
 
 # Diff at Wed, 30 Apr 2025 09:40:55 GMT:

@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x83a67f03de4ef56cc46b570db951377528070aba
+
+# Diff at Thu, 08 May 2025 08:50:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22346273
+- current block number: 22437746
+
+## Description
+
+OP stack DeputyPauser upgrade (see op mainnet for more info).
+
+## Watched changes
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+## Source code changes
+
+```diff
+.../soneium/ethereum/.flat/DeputyPauseModule.sol   | 1338 ++++++++++++++++++++
+ 1 file changed, 1338 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346273 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x3D56d47b9E7E34A46612BadC70377F74051E6b17) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
 Generated with discovered.json: 0x366ee0ffdf9fc9e7159fe282bf6425cfd7196e7d
 
 # Diff at Tue, 29 Apr 2025 08:19:12 GMT:

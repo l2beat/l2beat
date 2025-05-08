@@ -1382,5 +1382,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "permissionsConfigHash": "0xe957e09c2d0e4fd2c655feda62c3c9a3f3258bae9a44796048e4624ba35d08d6"
+  "permissionsConfigHash": "0x4b8f8d53bfaa84ecc93f039a0480538e84e779b3f26e246a5ded470465be2ae7"
 }
