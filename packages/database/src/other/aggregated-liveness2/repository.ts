@@ -44,13 +44,13 @@ export class AggregatedLiveness2Repository extends BaseRepository {
   }
 
   async getAggregatesByTimeRange(
-    range: [UnixTime, UnixTime],
+    range: [UnixTime | null, UnixTime],
   ): Promise<
     Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
   > {
     const [from, to] = range
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('AggregatedLiveness2')
       .select([
         'projectId',
@@ -63,10 +63,14 @@ export class AggregatedLiveness2Repository extends BaseRepository {
           `.as('avg'),
         (eb) => eb.fn.max('max').as('max'),
       ])
-      .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<=', UnixTime.toDate(to))
       .groupBy(['projectId', 'subtype'])
-      .execute()
+
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
 
     return rows.map((row) => ({
       ...row,

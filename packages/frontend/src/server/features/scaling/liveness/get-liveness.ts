@@ -62,10 +62,7 @@ async function getLivenessData() {
         targetTimestamp - 90 * UnixTime.DAY,
         targetTimestamp,
       ]),
-      db.aggregatedLiveness2.getAggregatesByTimeRange([
-        UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')), // minTimestamp for TrackedTxsIndexer
-        targetTimestamp,
-      ]),
+      db.aggregatedLiveness2.getAggregatesByTimeRange([null, targetTimestamp]),
     ])
   ).map((r) => groupBy(r, (r) => r.projectId))
 

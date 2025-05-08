@@ -147,7 +147,6 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
         START,
       ])
 
-      console.log(results)
       expect(results).toEqualUnsorted([
         {
           projectId: PROJECT_A,
@@ -169,6 +168,41 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           min: 10,
           avg: 10,
           max: 10,
+        },
+      ])
+    })
+
+    it('returns aggregates with null from', async () => {
+      await repository.deleteAll()
+      await repository.upsertMany([
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          min: 10,
+          avg: 20,
+          max: 30,
+          timestamp: START,
+          numberOfRecords: 1,
+        },
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          min: 20,
+          avg: 30,
+          max: 40,
+          timestamp: START - 1 * UnixTime.DAY,
+          numberOfRecords: 4,
+        },
+      ])
+      const results = await repository.getAggregatesByTimeRange([null, START])
+
+      expect(results).toEqualUnsorted([
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          min: 10,
+          avg: 28, // 1 * 20 + 4 * 30/ 1 + 4 = 32.5 but sql round it down
+          max: 40,
         },
       ])
     })
