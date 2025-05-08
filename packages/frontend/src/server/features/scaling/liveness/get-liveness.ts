@@ -146,9 +146,15 @@ async function getLivenessData() {
 }
 
 function mapAggregatedLivenessRecords(
-  records30Days: Omit<AggregatedLiveness2Record, 'timestamp'>[] | undefined,
-  records90Days: Omit<AggregatedLiveness2Record, 'timestamp'>[] | undefined,
-  recordsMax: Omit<AggregatedLiveness2Record, 'timestamp'>[] | undefined,
+  records30Days:
+    | Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
+  records90Days:
+    | Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
+  recordsMax:
+    | Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
   subtype: TrackedTxsConfigSubtype,
   project: TrackedTxsProject,
   configurations: IndexerConfigurationRecord[],
