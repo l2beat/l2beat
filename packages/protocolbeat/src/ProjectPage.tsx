@@ -50,7 +50,7 @@ const READONLY_PANELS: Record<
   values: ValuesPanel,
   nodes: NodesPanel,
   preview: PreviewPanel,
-  code: CodePanel
+  code: CodePanel,
 }
 
 function Panel(props: { kind: PanelId }) {
