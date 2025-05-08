@@ -75,19 +75,19 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     )
   })
 
+  app.get('/api/projects/:project/code/:address', (req, res) => {
+    const response = getCode(
+      paths,
+      configReader,
+      req.params.project,
+      req.params.address,
+    )
+    res.json(response)
+  })
+
   app.use(express.static(STATIC_ROOT))
 
   if (!readonly) {
-    app.get('/api/projects/:project/code/:address', (req, res) => {
-      const response = getCode(
-        paths,
-        configReader,
-        req.params.project,
-        req.params.address,
-      )
-      res.json(response)
-    })
-
     app.get('/api/projects/:project/codeSearch/:searchTerm', (req, res) => {
       const response = searchCode(
         paths,
