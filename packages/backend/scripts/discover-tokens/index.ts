@@ -6,7 +6,8 @@ import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
-import { chunk, groupBy } from 'lodash'
+import chunk from 'lodash/chunk'
+import groupBy from 'lodash/groupBy'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import {
   OUTPUT_PATH,

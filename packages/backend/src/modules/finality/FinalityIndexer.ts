@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Indexer } from '@l2beat/uif'
-import { mean } from 'lodash'
+import mean from 'lodash/mean'
 
 import type { Database, FinalityRecord } from '@l2beat/database'
 import {

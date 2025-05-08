@@ -7,7 +7,8 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { isEmpty, unionBy } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
+import unionBy from 'lodash/unionBy'
 import {
   CONTRACTS,
   DA_BRIDGES,

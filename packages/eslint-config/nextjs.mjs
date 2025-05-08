@@ -124,7 +124,7 @@ const config = tsEslint.config(
             },
             {
               name: 'lodash',
-              message: 'Use lodash/module',
+              message: 'Use lodash/{module}',
             },
             {
               name: 'node:assert',

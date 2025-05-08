@@ -11,7 +11,7 @@ import type {
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
 import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import type { ProjectTvsConfig } from '../../types'
 import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'

@@ -8,7 +8,7 @@ import {
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 import { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'

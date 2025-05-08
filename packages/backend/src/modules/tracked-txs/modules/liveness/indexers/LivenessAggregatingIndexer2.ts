@@ -5,7 +5,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
