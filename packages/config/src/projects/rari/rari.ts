@@ -25,7 +25,7 @@ export const rari: ScalingProject = orbitStackL3({
   display: {
     name: 'RARI Chain',
     slug: 'rari',
-    emergencyWarning: proofsDisabled
+    warning: proofsDisabled
       ? 'The proof system and DA bridge are currently disabled.'
       : undefined,
     description:
