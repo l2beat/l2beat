@@ -8,7 +8,6 @@ rm -rf rewrite/dist
 
 esbuild \
   rewrite/src/ssr/client.tsx \
-  --define:process.env.NODE_ENV=\"production\" \
   --bundle \
   --minify \
   --tsconfig=rewrite/tsconfig.json \
@@ -22,7 +21,6 @@ tsx ./rewrite/scripts/hashFiles.ts
 
 esbuild \
   rewrite/src/index.ts \
-  --define:process.env.NODE_ENV=\"production\" \
   --bundle \
   --platform=node \
   --packages=external \

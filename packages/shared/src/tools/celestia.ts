@@ -15,24 +15,26 @@ function isOpStackCelestiaCommitment(commitment: string) {
   return hasLengthMatch && hasPrefixMatch
 }
 
-/**
- * @see https://github.com/celestiaorg/optimism/blob/9931de7ebf78564062383d5d680458e750a0cb52/op-celestia/da.go#L10
- */
-function decodeCommitment(commitment: string) {
-  const byteDerivationVersion = commitment.slice(2, 4)
-  const heightHex = commitment.slice(4, 20)
-  const heightBuffer = Buffer.from(heightHex, 'hex')
-  const blockHeightDecimal = heightBuffer.readUInt32LE(0)
+type CelestiaCommitmentData = {
+  byteDerivationVersion: string
+  blockHeight: number
+  blobCommitment: string
+}
 
-  const blobCommitment = Buffer.from(commitment.slice(20), 'hex').toString(
-    'base64',
-  )
+// Handle both OP's ce and Arb's 63
+function decodeCommitment(commitment: string): CelestiaCommitmentData {
+  const hexBody = commitment.startsWith('0x') ? commitment.slice(2) : commitment
+  const byteDerivationVersion = hexBody.slice(0, 2)
 
-  return {
-    byteDerivationVersion,
-    blockHeight: blockHeightDecimal,
-    blobCommitment,
+  if (byteDerivationVersion === 'ce') {
+    return decodeCe(hexBody)
   }
+
+  if (byteDerivationVersion === '63') {
+    return decode63(hexBody)
+  }
+
+  throw new Error(`Unknown byteDerivationVersion: ${byteDerivationVersion}`)
 }
 
 function extractNamespacesFromLogs(logs: string[]) {
@@ -89,3 +91,50 @@ const MsgEventArray = z.array(
     ),
   }),
 )
+
+/**
+ * OP
+ * @see https://github.com/celestiaorg/optimism/blob/9931de7ebf78564062383d5d680458e750a0cb52/op-celestia/da.go#L10
+ */
+function decodeCe(hex: string): CelestiaCommitmentData {
+  const heightHex = hex.slice(2, 18)
+  const heightBuffer = Buffer.from(heightHex, 'hex')
+  const blockHeightDecimal = heightBuffer.readUInt32LE(0)
+
+  const blobCommitment = Buffer.from(hex.slice(18), 'hex').toString('base64')
+
+  return {
+    byteDerivationVersion: 'ce',
+    blockHeight: blockHeightDecimal,
+    blobCommitment,
+  }
+}
+
+// Arb
+function decode63(hex: string): CelestiaCommitmentData {
+  if (hex.length !== 178) {
+    throw new Error(
+      'Could not decode 63-derivation-version: Invalid commitment length.',
+    )
+  }
+
+  // Field sizes in hex chars:
+  // headerFlag: 1 byte (2 hex chars)
+  // blockHeight: 8 bytes (16 hex chars)
+  // startIndex: 8 bytes (16 hex chars)
+  // lengthInShares: 8 bytes (16 hex chars)
+  // txCommitment: 32 bytes (64 hex chars)
+  // dataRoot: 32 bytes (64 hex chars)
+  const blockHeightHex = hex.slice(2, 18)
+  const txCommitmentHex = hex.slice(50, 114)
+
+  // Decoding
+  const blockHeight = Number(BigInt('0x' + blockHeightHex).toString())
+  const blobCommitment = Buffer.from(txCommitmentHex, 'hex').toString('base64')
+
+  return {
+    byteDerivationVersion: '63',
+    blockHeight,
+    blobCommitment,
+  }
+}
