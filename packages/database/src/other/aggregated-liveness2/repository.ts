@@ -1,8 +1,8 @@
 import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLiveness2Record, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness2 } from './select'
-import { sql } from 'kysely'
 
 export class AggregatedLiveness2Repository extends BaseRepository {
   async upsertMany(records: AggregatedLiveness2Record[]): Promise<number> {
