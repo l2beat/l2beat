@@ -8,6 +8,9 @@
     "rewrite:build": "./rewrite/scripts/build.sh",
     "rewrite:start": "NODE_ENV=production NEXT_PUBLIC_REWRITE=true node ./rewrite/dist/server/index.js",
     "rewrite:copy-assets": "sh ./rewrite/scripts/copy-missing-assets.sh",
+    "rewrite:og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts",
+    "rewrite:tinify": "tsx rewrite/scripts/tinify",
+    "rewrite:new-project": "pnpm rewrite:copy-assets && pnpm rewrite:og-images && pnpm rewrite:tinify",
     "dev": "next dev --turbopack",
     "dev:no-turbo": "next dev",
     "dev:mock": "MOCK=true pnpm dev",
@@ -22,9 +25,7 @@
     "format:fix": "biome check --write .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "tinify-logos": "tsx scripts/logos/tinifyLogos.ts",
-    "rewrite:generate-og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts && pnpm rewrite:tinify",
-    "rewrite:tinify": "tsx rewrite/scripts/tinify"
+    "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
     "@l2beat/config": "workspace:*",
