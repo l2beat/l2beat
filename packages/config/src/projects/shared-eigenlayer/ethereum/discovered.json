@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 22437938,
+  "blockNumber": 22438050,
   "configHash": "0xa05fa60c42406ac2231803268173b52123b8b9616771acecaf36a4ca664d235f",
   "entries": [
     {
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x07371f0000000000",
-        "get_deposit_root": "0xdd39659fbea496dacf18d4796f32cf01a5e72df4c47a0d9246510878a1f80913"
+        "get_deposit_count": "0x08371f0000000000",
+        "get_deposit_root": "0xfe7fd87941081e3cd46d1b98ccb634f171ca4683a568a1ec2d578567ed83fb51"
       },
       "derivedName": "DepositContract"
     },
@@ -1081,6 +1081,7 @@
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "type": "Contract",
+      "template": "eigenlayer/EigenPodManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xbe7ad5846796adf94452f7dc75108c6c396689c7f7be205733374d0ef6c126ca"
@@ -3036,6 +3037,7 @@
     "eigenlayer/DelegationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EIGEN token": "0x47c3793e522d863027dd4d7d9ae9f79149767db55e073a2fb68ac71a6be7412b",
     "eigenlayer/EigenLayerPauserRegistry": "0x0ec68cbcfada757ce4d184b3ad2f6f8d08d51e01ea981090e78323d850557281",
+    "eigenlayer/EigenPodManager": "0xf1378651f0f74d64b9ef4ecb62fc6b0908c5fa61d0228aea84689e975859f4cf",
     "eigenlayer/PermissionController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RewardAllStakersActionGenerator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RewardsCoordinator": "0x6808f3647434cff5e6faad71aaaa768e5a2232d0d0bba9b3998cb36a0efe79d9",

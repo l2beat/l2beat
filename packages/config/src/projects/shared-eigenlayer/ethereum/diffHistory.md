@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe2cd390c717718d09e4002b2a6a41a26896b708b
+Generated with discovered.json: 0x4cf9f9c6955d00f6bba1ab349ee679d22eb35879
 
-# Diff at Thu, 08 May 2025 09:30:42 GMT:
+# Diff at Thu, 08 May 2025 09:52:24 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ac8d52c849084548030762e31e48a2eb3c90bf3e block: 22425139
-- current block number: 22437938
+- current block number: 22438050
 
 ## Description
 
@@ -25,8 +25,6 @@ Generated with discovered.json: 0xe2cd390c717718d09e4002b2a6a41a26896b708b
 ```diff
     contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
     +++ description: None
-      template:
--        "eigenlayer/EigenPodManager"
       sourceHashes.0:
 -        "0x6396fbec37d6d3c9c0b56494c6373e983a77e0980eaf9ab4782333de488449e5"
 +        "0xbe7ad5846796adf94452f7dc75108c6c396689c7f7be205733374d0ef6c126ca"
@@ -63,6 +61,8 @@ Generated with discovered.json: 0xe2cd390c717718d09e4002b2a6a41a26896b708b
 +        1746612311
       values.proofTimestampSetter:
 +        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      template:
++        "eigenlayer/EigenPodManager"
     }
 ```
 
@@ -74,12 +74,6 @@ Generated with discovered.json: 0xe2cd390c717718d09e4002b2a6a41a26896b708b
 
 ```diff
 +   Status: CREATED
-    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
-    +++ description: Ethereum Beacon Chain deposit contract.
-```
-
-```diff
-+   Status: CREATED
     contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3)
     +++ description: None
 ```
@@ -87,10 +81,9 @@ Generated with discovered.json: 0xe2cd390c717718d09e4002b2a6a41a26896b708b
 ## Source code changes
 
 ```diff
-.../ethereum/.flat/DepositContract.sol             | 160 +++++++++++++++++++++
- .../{.flat@22425139 => .flat}/EigenPod.sol         |  67 ++++++++-
- .../EigenPodManager/EigenPodManager.sol            |  51 ++++++-
- 3 files changed, 270 insertions(+), 8 deletions(-)
+.../{.flat@22425139 => .flat}/EigenPod.sol         | 67 +++++++++++++++++++---
+ .../EigenPodManager/EigenPodManager.sol            | 51 +++++++++++++++-
+ 2 files changed, 110 insertions(+), 8 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -246,6 +239,8 @@ discovery. Values are for block 22425139 (main branch discovery), not current.
 ```diff
     contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
     +++ description: None
+      template:
+-        "eigenlayer/EigenPodManager"
       implementationNames:
 -        {"0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338":"TransparentUpgradeableProxy","0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77":"EigenPodManager"}
     }
@@ -329,6 +324,12 @@ discovery. Values are for block 22425139 (main branch discovery), not current.
       implementationNames:
 -        {"0xFEA47018D632A77bA579846c840d5706705Dc598":"GnosisSafeProxy","0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":"GnosisSafe"}
     }
+```
+
+```diff
++   Status: CREATED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
 ```
 
 Generated with discovered.json: 0xe12882939583355eb9b7c8d9b916835d365d43d6
