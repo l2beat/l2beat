@@ -2,12 +2,9 @@ import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLiveness2Record, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness2 } from './select'
+import { sql } from 'kysely'
 
 export class AggregatedLiveness2Repository extends BaseRepository {
-  async upsert(record: AggregatedLiveness2Record): Promise<void> {
-    await this.upsertMany([record])
-  }
-
   async upsertMany(records: AggregatedLiveness2Record[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -48,7 +45,9 @@ export class AggregatedLiveness2Repository extends BaseRepository {
 
   async getAggregatesByTimeRange(
     range: [UnixTime, UnixTime],
-  ): Promise<Omit<AggregatedLiveness2Record, 'timestamp'>[]> {
+  ): Promise<
+    Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+  > {
     const [from, to] = range
 
     const rows = await this.db
@@ -57,7 +56,11 @@ export class AggregatedLiveness2Repository extends BaseRepository {
         'projectId',
         'subtype',
         (eb) => eb.fn.min('min').as('min'),
-        (eb) => eb.fn.avg('avg').as('avg'),
+        (eb) =>
+          sql<number>`
+            SUM(${eb.ref('avg')} * ${eb.ref('numberOfRecords')})
+            / SUM(${eb.ref('numberOfRecords')})
+          `.as('avg'),
         (eb) => eb.fn.max('max').as('max'),
       ])
       .where('timestamp', '>=', UnixTime.toDate(from))

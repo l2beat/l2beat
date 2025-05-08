@@ -4,6 +4,7 @@ import { describeDatabase } from '../../test/database'
 import { AggregatedLivenessRepository } from '../aggregated-liveness/repository'
 import type { AggregatedLiveness2Record } from './entity'
 import { AggregatedLiveness2Repository } from './repository'
+import { it } from 'mocha'
 
 describeDatabase(AggregatedLiveness2Repository.name, (db) => {
   const repository = db.aggregatedLiveness2
@@ -11,25 +12,73 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
-  const START = UnixTime.now()
-  const DATA = [
+  const START = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const DATA: AggregatedLiveness2Record[] = [
+    // project A - batchSubmissions
     {
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
       min: 10,
-      avg: 10,
-      max: 10,
-      timestamp: START - 1 * UnixTime.HOUR,
+      avg: 20,
+      max: 30,
+      timestamp: START,
+      numberOfRecords: 1,
+    },
+    {
+      projectId: PROJECT_A,
+      subtype: 'batchSubmissions',
+      min: 20,
+      avg: 30,
+      max: 40,
+      timestamp: START - 1 * UnixTime.DAY,
+      numberOfRecords: 4,
+    },
+    {
+      projectId: PROJECT_A,
+      subtype: 'batchSubmissions',
+      min: 30,
+      avg: 40,
+      max: 50,
+      timestamp: START - 2 * UnixTime.DAY,
+      numberOfRecords: 3,
+    },
+    {
+      projectId: PROJECT_A,
+      subtype: 'batchSubmissions',
+      min: 40,
+      avg: 50,
+      max: 60,
+      timestamp: START - 3 * UnixTime.DAY,
       numberOfRecords: 2,
     },
+    // project A - stateUpdates
+    {
+      projectId: PROJECT_A,
+      subtype: 'stateUpdates',
+      min: 30,
+      avg: 40,
+      max: 50,
+      timestamp: START - 1 * UnixTime.DAY,
+      numberOfRecords: 2,
+    },
+    {
+      projectId: PROJECT_A,
+      subtype: 'stateUpdates',
+      min: 40,
+      avg: 50,
+      max: 60,
+      timestamp: START - 2 * UnixTime.DAY,
+      numberOfRecords: 1,
+    },
+    // project B - stateUpdates
     {
       projectId: PROJECT_B,
       subtype: 'stateUpdates',
       min: 10,
       avg: 10,
       max: 10,
-      timestamp: START - 2 * UnixTime.HOUR,
-      numberOfRecords: 3,
+      timestamp: START - 2 * UnixTime.DAY,
+      numberOfRecords: 2,
     },
   ] as const satisfies AggregatedLiveness2Record[]
 
@@ -41,7 +90,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
 
   describe(AggregatedLiveness2Repository.prototype.upsertMany.name, () => {
     it('add new and update existing', async () => {
-      const newRows: AggregatedLiveness2Record[] = [
+      const newRows = [
         // to update
         {
           projectId: PROJECT_A,
@@ -49,7 +98,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           min: 20,
           avg: 20,
           max: 20,
-          timestamp: START - 1 * UnixTime.HOUR,
+          timestamp: START,
           numberOfRecords: 4,
         },
         // to add
@@ -59,16 +108,19 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           min: 10,
           avg: 10,
           max: 10,
-          timestamp: START - 4 * UnixTime.HOUR,
+          timestamp: START - 3 * UnixTime.DAY,
           numberOfRecords: 5,
         },
-      ]
+      ] as const satisfies AggregatedLiveness2Record[]
 
       await repository.upsertMany(newRows)
-
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted([newRows[0]!, DATA[1], newRows[1]!])
+      expect(results).toEqualUnsorted([
+        newRows[0],
+        ...DATA.slice(1),
+        newRows[1],
+      ])
     })
 
     it('empty array', async () => {
@@ -90,89 +142,26 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
 
   describe(AggregatedLiveness2Repository.prototype.getAggregatesByTimeRange
     .name, () => {
-    it('returns aggregates for a given time range, grouped by project and subtype', async () => {
-      await repository.deleteAll()
-      const NEW_DATA: AggregatedLiveness2Record[] = [
-        // project A - batchSubmissions
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 10,
-          avg: 20,
-          max: 30,
-          timestamp: START,
-          numberOfRecords: 1,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 20,
-          avg: 30,
-          max: 40,
-          timestamp: START - 1 * UnixTime.HOUR,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 30,
-          avg: 40,
-          max: 50,
-          timestamp: START - 2 * UnixTime.HOUR,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 40,
-          avg: 50,
-          max: 60,
-          timestamp: START - 3 * UnixTime.HOUR,
-        },
-        // project A - stateUpdates
-        {
-          projectId: PROJECT_A,
-          subtype: 'stateUpdates',
-          min: 30,
-          avg: 40,
-          max: 50,
-          timestamp: START - 1 * UnixTime.HOUR,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'stateUpdates',
-          min: 40,
-          avg: 50,
-          max: 60,
-          timestamp: START - 2 * UnixTime.HOUR,
-        },
-        // project B - stateUpdates
-        {
-          projectId: PROJECT_B,
-          subtype: 'stateUpdates',
-          min: 10,
-          avg: 10,
-          max: 10,
-          timestamp: START - 2 * UnixTime.HOUR,
-        },
-      ]
-      await repository.upsertMany(NEW_DATA)
+    it('returns aggregates with correctly calculated weighted averages for a given time range, grouped by project and subtype', async () => {
       const results = await repository.getAggregatesByTimeRange([
-        START - 2 * UnixTime.HOUR,
+        START - 2 * UnixTime.DAY,
         START,
       ])
 
+      console.log(results)
       expect(results).toEqualUnsorted([
         {
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
           min: 10,
-          avg: 30,
+          avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql round it down
           max: 50,
         },
         {
           projectId: PROJECT_A,
           subtype: 'stateUpdates',
           min: 30,
-          avg: 45,
+          avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql round it down
           max: 60,
         },
         {
