@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xfc01e23cbf9af045f81497fae8d3e1b968b36d21
+
+# Diff at Thu, 08 May 2025 09:49:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22337725
+- current block number: 22438012
+
+## Description
+
+Minor upgrade to SystemConfig and the VerifierV2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.0:
+-        "0x06f2d961bb4a244d73779f83003fd66fcda3cc297693cd348d8ac1aa8c29dc63"
++        "0x889638b8fe1fe5acdc9fc63605747e530d07ef7a0e81c151b0e3f546c24adef9"
+      values.$implementation:
+-        "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"
++        "0x795277B6aD8778E27aa70813157134cfC4a4D446"
+      values.$pastUpgrades.1:
++        ["2025-05-07T18:25:23.000Z","0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",["0x795277B6aD8778E27aa70813157134cfC4a4D446"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      implementationNames.0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de:
+-        "SystemConfig"
+      implementationNames.0x795277B6aD8778E27aa70813157134cfC4a4D446:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+      sourceHashes.0:
+-        "0xaf075d81d9fd983d155a21617c104cfab25f4ad9e8f039fd8a15c1220e3d6227"
++        "0x3d0ebf0f8aafb6672ca85a4e9b3f8c912466ace744a78b5749a0b763bdc7876b"
+      values.$implementation:
+-        "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a"
++        "0x89223192E728a830F09b32d93D51AaC88b6a466e"
+      values.$pastUpgrades.1:
++        ["2025-05-07T18:25:23.000Z","0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",["0x89223192E728a830F09b32d93D51AaC88b6a466e"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.digest:
+-        "0x1d544a5de23a23d1e94ae793352208593bfa28c3d76d455f09ea3f9c25c402b8"
++        "0x1adec13f00764ae27bbb7ba225b373bc80f120f4c4c0125619c4dd74b18ceb43"
+      implementationNames.0xD5B424AC36928E2da7dA9eCA9807938a56988F5a:
+-        "VerifierV2"
+      implementationNames.0x89223192E728a830F09b32d93D51AaC88b6a466e:
++        "VerifierV2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 67 +++++++++++++++++-----
+ .../VerifierV2/VerifierV2.sol                      | 10 ++--
+ 2 files changed, 59 insertions(+), 18 deletions(-)
+```
+
 Generated with discovered.json: 0x8a73ea6e8003d3fc90a43a72458e805def58c8e9
 
 # Diff at Tue, 29 Apr 2025 08:19:16 GMT:

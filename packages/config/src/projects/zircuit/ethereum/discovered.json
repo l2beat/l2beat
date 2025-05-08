@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 22337725,
-  "configHash": "0x73dc0026c5fa828c9ed8f2053364da1be02bbce727ab3cf5d2dd956f5234aa23",
+  "blockNumber": 22438012,
+  "configHash": "0x8c2e758150cadd665520d7e4b804e2205b771e277d8e848528f7686daead4854",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -64,8 +64,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 395077,
-          "prevBlockNum": 22336247,
+          "prevBoughtGas": 312784,
+          "prevBlockNum": 22433045,
           "prevTxCount": 1
         },
         "paused": false,
@@ -112,7 +112,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638484",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638602",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -198,7 +198,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x06f2d961bb4a244d73779f83003fd66fcda3cc297693cd348d8ac1aa8c29dc63"
+        "0x889638b8fe1fe5acdc9fc63605747e530d07ef7a0e81c151b0e3f546c24adef9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -207,15 +207,20 @@
       "sinceBlock": 20219924,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de",
+        "$implementation": "0x795277B6aD8778E27aa70813157134cfC4a4D446",
         "$pastUpgrades": [
           [
             "2024-07-02T16:11:47.000Z",
             "0x9cebd2cdbd71bf96668e003794de90cf09858ccebb8f93c41e3d7822df207505",
             ["0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"]
+          ],
+          [
+            "2025-05-07T18:25:23.000Z",
+            "0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",
+            ["0x795277B6aD8778E27aa70813157134cfC4a4D446"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
@@ -231,6 +236,8 @@
         "L2_OUTPUT_ORACLE_SLOT": "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815",
         "l2OutputOracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "minimumGasLimit": 7000000,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 0,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -268,7 +275,7 @@
       },
       "implementationNames": {
         "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff": "Proxy",
-        "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de": "SystemConfig"
+        "0x795277B6aD8778E27aa70813157134cfC4a4D446": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -620,10 +627,10 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 12769805,
-        "latestOutputIndex": 31852,
-        "nextBlockNumber": 12769806,
-        "nextOutputIndex": 31853,
+        "latestBlockNumber": 13377787,
+        "latestOutputIndex": 31962,
+        "nextBlockNumber": 13377788,
+        "nextOutputIndex": 31963,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -718,7 +725,7 @@
       "template": "opstack/zircuit/Verifier",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0xaf075d81d9fd983d155a21617c104cfab25f4ad9e8f039fd8a15c1220e3d6227"
+        "0x3d0ebf0f8aafb6672ca85a4e9b3f8c912466ace744a78b5749a0b763bdc7876b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.",
@@ -726,20 +733,25 @@
       "sinceBlock": 22013168,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a",
+        "$implementation": "0x89223192E728a830F09b32d93D51AaC88b6a466e",
         "$pastUpgrades": [
           [
             "2025-03-11T01:01:59.000Z",
             "0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",
             ["0xD5B424AC36928E2da7dA9eCA9807938a56988F5a"]
+          ],
+          [
+            "2025-05-07T18:25:23.000Z",
+            "0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",
+            ["0x89223192E728a830F09b32d93D51AaC88b6a466e"]
           ]
         ],
-        "$upgradeCount": 1,
-        "digest": "0x1d544a5de23a23d1e94ae793352208593bfa28c3d76d455f09ea3f9c25c402b8"
+        "$upgradeCount": 2,
+        "digest": "0x1adec13f00764ae27bbb7ba225b373bc80f120f4c4c0125619c4dd74b18ceb43"
       },
       "implementationNames": {
         "0xC25D093D3A3f58952252D2e763BEAF2559dc9737": "Proxy",
-        "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a": "VerifierV2"
+        "0x89223192E728a830F09b32d93D51AaC88b6a466e": "VerifierV2"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -847,7 +859,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1158,6 +1170,60 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x795277B6aD8778E27aa70813157134cfC4a4D446": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BATCH_INBOX_SLOT() view returns (bytes32)",
+      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
+      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
+      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
+      "function L2_OUTPUT_ORACLE_SLOT() view returns (bytes32)",
+      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
+      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
+      "function START_BLOCK_SLOT() view returns (bytes32)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batchInbox() view returns (address addr_)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function initialize(address _owner, tuple(uint32 basefeeScalar, uint32 blobbasefeeScalar, uint32 operatorFeeScalar, uint64 operatorFeeConstant, uint64 gasLimit) _gasConfig, bytes32 _batcherHash, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 maxTransactionLimit, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address l2OutputOracle, address optimismPortal, address optimismMintableERC20Factory) _addresses)",
+      "function l1CrossDomainMessenger() view returns (address addr_)",
+      "function l1ERC721Bridge() view returns (address addr_)",
+      "function l1StandardBridge() view returns (address addr_)",
+      "function l2OutputOracle() view returns (address addr_)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function optimismMintableERC20Factory() view returns (address addr_)",
+      "function optimismPortal() view returns (address addr_)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 maxTransactionLimit, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
+      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 maxTransactionLimit, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address addr_)",
+      "function version() view returns (string)"
+    ],
+    "0x89223192E728a830F09b32d93D51AaC88b6a466e": [
+      "function digest() view returns (bytes32)"
+    ],
     "0x912C7271a6A3622dfb8B218eb46a6122aB046C79": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error ErrorNotAdmin()",
@@ -1193,54 +1259,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function BATCH_INBOX_SLOT() view returns (bytes32)",
-      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
-      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
-      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
-      "function L2_OUTPUT_ORACLE_SLOT() view returns (bytes32)",
-      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
-      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
-      "function START_BLOCK_SLOT() view returns (bytes32)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function basefeeScalar() view returns (uint32)",
-      "function batchInbox() view returns (address addr_)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobbasefeeScalar() view returns (uint32)",
-      "function gasLimit() view returns (uint64)",
-      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 maxTransactionLimit, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address l2OutputOracle, address optimismPortal, address optimismMintableERC20Factory) _addresses)",
-      "function l1CrossDomainMessenger() view returns (address addr_)",
-      "function l1ERC721Bridge() view returns (address addr_)",
-      "function l1StandardBridge() view returns (address addr_)",
-      "function l2OutputOracle() view returns (address addr_)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function optimismMintableERC20Factory() view returns (address addr_)",
-      "function optimismPortal() view returns (address addr_)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 maxTransactionLimit, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 maxTransactionLimit, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function startBlock() view returns (uint256 startBlock_)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() view returns (string)"
     ],
     "0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e": [
       "function version() view returns (string)"
@@ -1353,9 +1371,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a": [
-      "function digest() view returns (bytes32)"
     ],
     "0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb": [
       "constructor()",
