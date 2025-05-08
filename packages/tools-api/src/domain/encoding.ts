@@ -8,42 +8,12 @@ export interface AbiValue {
 }
 
 export type AbiDecoded =
-  | AbiNumber
-  | AbiAddress
-  | AbiBool
-  | AbiBytes
-  | AbiString
-  | AbiArray
-
-export interface AbiNumber {
-  type: 'number'
-  value: string
-}
-
-export interface AbiAddress {
-  type: 'address'
-  value: `0x${string}`
-}
-
-export interface AbiBool {
-  type: 'bool'
-  value: boolean
-}
-
-export interface AbiBytes {
-  type: 'bytes'
-  value: `0x${string}`
-}
-
-export interface AbiString {
-  type: 'string'
-  value: string
-}
-
-export interface AbiArray {
-  type: 'array'
-  value: AbiValue[]
-}
+  | { type: 'number'; value: string }
+  | { type: 'address'; value: `0x${string}` }
+  | { type: 'bool'; value: boolean }
+  | { type: 'bytes'; value: `0x${string}`; extra: `0x${string}` }
+  | { type: 'string'; value: string; extra: `0x${string}` }
+  | { type: 'array'; value: AbiValue[] }
 
 export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
   return decodeParsed(parseType(type), encoded)
@@ -54,22 +24,14 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
   if (type.tupleElements) {
     let offset = 0
     const staticData: `0x${string}`[] = []
-    const dynamicOffsets: (bigint | undefined)[] = []
+    const dynamicOffsets: (number | undefined)[] = []
     for (const element of type.tupleElements) {
       const end = offset + element.size
-      // TODO: validate offset size
-      const bytes: `0x${string}` = `0x${encoded.slice(2 + offset * 64, 2 + end * 64)}`
+      const bytes = sliceBytes(encoded, offset * 32, (offset + 1) * 32)
       staticData.push(bytes)
       offset = end
-      if (element.dynamic) {
-        // TODO: validate offset size
-        const dynamicOffset = BigInt(bytes)
-        dynamicOffsets.push(dynamicOffset)
-      } else {
-        dynamicOffsets.push(undefined)
-      }
+      dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)
     }
-    dynamicOffsets.push(BigInt((encoded.length - 2) / 2))
     const array = type.tupleElements.map((e, i) => {
       // biome-ignore lint/style/noNonNullAssertion: It's there
       return decodeParsed(e, staticData[i]!)
@@ -78,38 +40,28 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
   }
   if (type.arrayElement) {
     const element = type.arrayElement
-    if (encoded.length < 66) {
-      throw new Error(`Invalid encoding, array too short`)
-    }
-    const length = Number(encoded.slice(0, 66))
+    const length = parseInt(sliceBytes(encoded, 0, 32))
     let offset = 1
     const staticData: `0x${string}`[] = []
-    const dynamicOffsets: (bigint | undefined)[] = []
+    const dynamicOffsets: (number | undefined)[] = []
     for (let i = 0; i < length; i++) {
       const end = offset + element.size
-      // TODO: validate offset size
-      const bytes: `0x${string}` = `0x${encoded.slice(2 + offset * 64, 2 + end * 64)}`
+      const bytes = sliceBytes(encoded, offset * 32, (offset + 1) * 32)
       staticData.push(bytes)
       offset = end
-      if (element.dynamic) {
-        // TODO: validate offset size
-        const dynamicOffset = BigInt(bytes)
-        dynamicOffsets.push(dynamicOffset)
-      } else {
-        dynamicOffsets.push(undefined)
-      }
+      dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)
     }
-    dynamicOffsets.push(BigInt((encoded.length - 2) / 2))
     const array = staticData.map((bytes) => decodeParsed(element, bytes))
     return { ...common, decoded: { type: 'array', value: array } }
   }
   if (type.type === 'bytes') {
-    const bytes = decodeBytes(type.type, encoded)
-    return { ...common, decoded: { type: 'bytes', value: bytes } }
+    const { bytes, extra } = decodeBytes(type.type, encoded)
+    return { ...common, decoded: { type: 'bytes', value: bytes, extra } }
   }
   if (type.type === 'string') {
-    const bytes = decodeBytes(type.type, encoded)
-    return { ...common, decoded: { type: 'string', value: hexToString(bytes) } }
+    const { bytes, extra } = decodeBytes(type.type, encoded)
+    const value = hexToString(bytes)
+    return { ...common, decoded: { type: 'string', value, extra } }
   }
   if (type.type.startsWith('uint')) {
     const uint = decodeUint(type.type, encoded)
@@ -128,29 +80,28 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     return { ...common, decoded: { type: 'number', value: int.toString() } }
   }
   if (type.type === 'address') {
-    const padding = encoded.slice(0, -40)
-    if (padding !== '0x000000000000000000000000') {
-      throw new Error('Invalid encoding, address too large')
+    const padding = sliceBytes(encoded, 0, 12)
+    if (!isZeroed(padding)) {
+      throw new Error('Invalid encoding')
     }
-    const address: `0x${string}` = `0x${encoded.slice(-40)}`
+    const address = sliceBytes(encoded, 12)
     return { ...common, decoded: { type: 'address', value: address } }
   }
   if (type.type === 'bool') {
     const uint = decodeUint('uint256', encoded)
     if (uint !== 0n && uint !== 1n) {
-      throw new Error('Invalid encoding, boolean too large')
+      throw new Error('Invalid encoding')
     }
-    const bool = uint === 1n
-    return { ...common, decoded: { type: 'bool', value: bool } }
+    return { ...common, decoded: { type: 'bool', value: uint === 1n } }
   }
   if (type.type.startsWith('bytes')) {
     const size = parseInt(type.type.slice('bytes'.length))
-    const suffix = encoded.slice(2 + size * 2)
-    if (!/^0*$/.test(suffix)) {
-      throw new Error(`Invalid encoding, ${type.type} too large`)
+    const suffix = sliceBytes(encoded, size)
+    if (!isZeroed(suffix)) {
+      throw new Error('Invalid encoding')
     }
-    const bytes = encoded.slice(0, 2 + size * 2) as `0x${string}`
-    return { ...common, decoded: { type: 'bytes', value: bytes } }
+    const bytes = sliceBytes(encoded, 0, size)
+    return { ...common, decoded: { type: 'bytes', value: bytes, extra: '0x' } }
   }
   throw new Error('Invalid type')
 }
@@ -177,21 +128,20 @@ function decodeInt(type: string, encoded: `0x${string}`) {
   return int
 }
 
-function decodeBytes(type: string, encoded: `0x${string}`): `0x${string}` {
+function decodeBytes(type: string, encoded: `0x${string}`) {
   if (encoded.length < 66) {
     throw new Error(`Invalid encoding, ${type} too short`)
   }
-  const length = BigInt(encoded.slice(0, 66))
-  const end = 66 + Number(length) * 2
-  const data = encoded.slice(66, end)
-  if (data.length !== Number(length) * 2) {
-    throw new Error(`Invalid encoding, ${type} too short`)
+  const length = parseInt(sliceBytes(encoded, 0, 32))
+  const bytesEnd = 32 + length
+  const alignmentEnd = alignTo32(bytesEnd)
+  const bytes = sliceBytes(encoded, 32, bytesEnd)
+  const padding = sliceBytes(encoded, bytesEnd, alignmentEnd)
+  const extra = sliceBytes(encoded, alignmentEnd)
+  if (!isZeroed(padding)) {
+    throw new Error('Invalid encoding')
   }
-  const padding = encoded.slice(end)
-  if (!/^0*$/.test(padding) || padding.length > 64) {
-    throw new Error(`Invalid encoding, ${type} too long`)
-  }
-  return `0x${data}`
+  return { bytes, extra }
 }
 
 function hexToString(bytes: `0x${string}`) {
@@ -202,6 +152,36 @@ function hexToString(bytes: `0x${string}`) {
     buffer[i] = byte
   }
   return new TextDecoder().decode(buffer)
+}
+
+function sliceBytes(
+  bytes: `0x${string}`,
+  from: number,
+  to?: number,
+): `0x${string}` {
+  const fromIndex = from * 2 + 2
+  const toIndex = to !== undefined ? to * 2 + 2 : bytes.length
+  if (
+    fromIndex < 0 ||
+    fromIndex > bytes.length ||
+    toIndex < 0 ||
+    toIndex > bytes.length ||
+    fromIndex > toIndex
+  ) {
+    throw new Error('Invalid slice range')
+  }
+  return `0x${bytes.slice(fromIndex, toIndex)}`
+}
+
+function isZeroed(bytes: `0x${string}`) {
+  return /^0x0*$/.test(bytes)
+}
+
+function alignTo32(length: number) {
+  if (length % 32 === 0) {
+    return length
+  }
+  return Math.floor(length / 32 + 1) * 32
 }
 
 export interface ParsedType {
@@ -248,7 +228,7 @@ export function parseType(type: string): ParsedType {
         arrayElement: elementType,
       }
     }
-    const length = Number(countString)
+    const length = parseInt(countString)
     return {
       type: `${elementType.type}[${length}]`,
       size: elementType.dynamic ? 1 : elementType.size * length,
@@ -262,7 +242,7 @@ export function parseType(type: string): ParsedType {
     type = 'int256'
   }
   return {
-    type: type,
+    type,
     size: 1,
     dynamic: type === 'bytes' || type === 'string',
   }
