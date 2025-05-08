@@ -1,6 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { type Dictionary, uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
@@ -87,7 +87,7 @@ export const getCachedTvsChartData = cache(
 )
 
 function getChartData(
-  values: Dictionary<Dictionary<ProjectValueRecord>>,
+  values: Record<string, Record<string, ProjectValueRecord>>,
   ethPrices: Record<number, number>,
 ) {
   const groupedValues = groupValuesByTimestamp(values)

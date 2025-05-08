@@ -6,7 +6,7 @@ import type {
   Table as TanstackTable,
 } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import { range } from 'lodash'
+import range from 'lodash/range'
 import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/highlighted-table-row-context'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'

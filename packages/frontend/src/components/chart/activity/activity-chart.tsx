@@ -2,7 +2,7 @@
 
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'

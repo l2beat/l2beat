@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { keyBy } from 'lodash'
+import keyBy from 'lodash/keyBy'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'

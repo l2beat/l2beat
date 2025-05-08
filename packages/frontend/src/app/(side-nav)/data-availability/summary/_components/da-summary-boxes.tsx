@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { partition, round } from 'lodash'
+import partition from 'lodash/partition'
+import round from 'lodash/round'
 import Link from 'next/link'
 import { Breakdown } from '~/components/breakdown/breakdown'
 import {

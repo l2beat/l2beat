@@ -1,5 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import { usePathname } from 'next/navigation'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'

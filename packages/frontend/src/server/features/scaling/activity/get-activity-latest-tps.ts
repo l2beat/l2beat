@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'

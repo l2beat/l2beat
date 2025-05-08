@@ -123,6 +123,10 @@ const config = tsEslint.config(
               message: 'Use assert from @l2beat/shared-pure',
             },
             {
+              name: 'lodash',
+              message: 'Use lodash/module',
+            },
+            {
               name: 'node:assert',
               message: 'Use assert from @l2beat/shared-pure',
             },

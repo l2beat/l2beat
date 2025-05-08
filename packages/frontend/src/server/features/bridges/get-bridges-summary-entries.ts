@@ -6,7 +6,7 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
