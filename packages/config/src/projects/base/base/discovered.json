@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "base",
   "blockNumber": 29605802,
-  "configHash": "0xf7b088a2147948005475ada64af0967c04ded92fa3b182a5391230069ddb3461",
+  "configHash": "0x565da78cd432ebcf22316116b1e2109434e3d4871644f1c548f3d643e10af5ed",
   "entries": [
     {
       "name": "FeeDisburser",

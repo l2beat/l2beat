@@ -2,7 +2,7 @@
   "name": "xchain",
   "chain": "ethereum",
   "blockNumber": 22397537,
-  "configHash": "0x4f569c300107535806e8811a707adec5b75200f9f741bb87368ba3bca92d450f",
+  "configHash": "0x59b1ae55ece8ac729acedfe6f5b44bb8945b62c5adc2ec9b34738485c56abd26",
   "entries": [
     {
       "name": "OneStepProverHostIo",

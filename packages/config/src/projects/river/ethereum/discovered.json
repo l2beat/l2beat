@@ -2,7 +2,7 @@
   "name": "river",
   "chain": "ethereum",
   "blockNumber": 21872580,
-  "configHash": "0xcfb5d3507a714aeb601ad56fd47561609533cdfa88ccd98fb2c2a7425780ebd9",
+  "configHash": "0xbec982d25b78a49586dfcf812c3e2b394ecee80b765ae3fa84e371c75e953549",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xeba8858857026db129e7d038978d3db4399f8e0a
+
+# Diff at Thu, 08 May 2025 10:03:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22243976
+- current block number: 22243976
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22243976 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x78075eA46A562c3201E61664645c0f0537a8DDd5) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
 Generated with discovered.json: 0x78d825d4a7e7c3fe48acfddc610aa027c65dd766
 
 # Diff at Tue, 29 Apr 2025 08:19:04 GMT:

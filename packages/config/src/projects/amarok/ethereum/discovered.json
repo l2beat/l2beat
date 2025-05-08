@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0xe8c5b70943938f235d07bd9c813f04cf0f0de2cdccc3f06059dd4fd3e54faef7",
+  "configHash": "0xe941eb785df790dada84bc63b47f12330920c085b252803dffad51dbc512245c",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
