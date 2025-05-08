@@ -32,6 +32,7 @@
     "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
     "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "workspace:*",
@@ -59,7 +60,8 @@
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
     "viem": "^2.8.14",
-    "zod": "^3.22.2"
+    "zod": "^3.22.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
@@ -78,6 +80,7 @@
     "@types/supertest": "^2.0.12",
     "cmd-ts": "^0.13.0",
     "supertest": "^6.2.3",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "@types/uuid": "^9.0.8"
   }
 }
