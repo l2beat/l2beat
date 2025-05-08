@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('pulseChain')
 
 const reqNumberOfSigs = discovery.getContractValue<number>(
   'BridgeValidators',
-  'requiredSignatures',
+  '$threshold',
 )
 
 const numOfValidators = discovery.getContractValue<number>(
@@ -79,15 +79,20 @@ export const pulseChain: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description:
-        'Transfers need to be signed offchain by a designed list of Validators.',
+      value: `Multisig (${discovery.getMultisigStats('BridgeValidators')})`,
+      description: `${discovery.getMultisigStats('BridgeValidators')} BridgeValidators Multisig. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
+      value: 'EOA',
+      secondLine: 'EOA',
+      description: `Critical contracts can be upgraded by an EOA.`,
+      sentiment: 'bad',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
       description:
-        'The code that secures the system can be changed arbitrarily and without notice.',
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
@@ -119,11 +124,8 @@ export const pulseChain: Bridge = {
     [discovery.chain]: {
       actors: [
         discovery.getPermissionDetails(
-          'Validators',
-          discovery.getPermissionedAccounts(
-            'BridgeValidators',
-            'validatorList',
-          ),
+          'BridgeValidators',
+          discovery.getPermissionedAccounts('BridgeValidators', '$members'),
           `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures are required.`,
         ),
         discovery.getPermissionDetails(

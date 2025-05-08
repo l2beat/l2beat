@@ -4,5 +4,11 @@
     "address": "0x805dc3546d99AfB35EfB261b907679b67A08256e",
     "chain": "arbitrum",
     "blockNumber": 322488866
+  },
+  "SequencerInbox_Espresso_Nitro_3_3_2": {
+    "hash": "0xf1a5a4430f78320a8b5b4d9025165b70183401a8085b8ebff664afc68b00ce92",
+    "address": "0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC",
+    "chain": "arbitrum",
+    "blockNumber": 333824645
   }
 }

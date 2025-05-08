@@ -35,7 +35,10 @@
         "nonce": 32,
         "VERSION": "1.1.1"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346": "Proxy",
+        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
     },
     {
       "address": "0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e",
@@ -100,7 +103,10 @@
         "nonce": 13,
         "VERSION": "1.1.1"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567": "Proxy",
+        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
     },
     {
       "address": "0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da",
@@ -136,7 +142,10 @@
         "nonce": 407,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x225d3822De44E58eE935440E0c0B829C4232086e": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027",
@@ -171,7 +180,10 @@
         "totalTokens": 184,
         "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
       },
-      "derivedName": "Governance"
+      "implementationNames": {
+        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": "Proxy",
+        "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8": "Governance"
+      }
     },
     {
       "name": "TokenGovernance",
@@ -192,7 +204,9 @@
         "tokenListers": ["0xE24f4870Ab85DE8E356C5fC56138587206c70d99"],
         "treasury": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
       },
-      "derivedName": "TokenGovernance"
+      "implementationNames": {
+        "0x35cc31f63deef017c38d51B038891bAE7d614e86": "TokenGovernance"
+      }
     },
     {
       "address": "0x37A71E0C1A5808343D893Db40e12A74e0A387908",
@@ -237,7 +251,9 @@
         "upgradeStatus": 0,
         "versionId": 11
       },
-      "derivedName": "UpgradeGatekeeper"
+      "implementationNames": {
+        "0x38A43F4330f24fe920F943409709fc9A6084C939": "UpgradeGatekeeper"
+      }
     },
     {
       "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
@@ -286,7 +302,10 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0
       },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D": "Proxy",
+        "0x6e95812C432F293b8045811F4B1758285EBDB206": "Verifier"
+      }
     },
     {
       "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
@@ -321,7 +340,9 @@
         "symbol": "ZKNFT",
         "totalSupply": 18764
       },
-      "derivedName": "ZkSyncNFTFactory"
+      "implementationNames": {
+        "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "ZkSyncNFTFactory"
+      }
     },
     {
       "address": "0x890Da36c3dD697CbB88E616668BEDaFA369f3793",
@@ -405,7 +426,11 @@
         "upgradeStartTimestamp": 0,
         "verifier": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
       },
-      "derivedName": "Proxy"
+      "implementationNames": {
+        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": "Proxy",
+        "0x8e972b354E6933275513C355Ee14D44A832aD2d9": "ZkSync",
+        "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD": "AdditionalZkSync"
+      }
     },
     {
       "name": "Proxy",
@@ -418,7 +443,9 @@
       "sinceTimestamp": 1557156465,
       "sinceBlock": 7708066,
       "values": { "$immutable": true },
-      "derivedName": "Proxy"
+      "implementationNames": {
+        "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6": "Proxy"
+      }
     },
     {
       "address": "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193",
@@ -475,7 +502,10 @@
         "nonce": 119,
         "VERSION": "1.1.1"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": "Proxy",
+        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
     },
     {
       "address": "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe",

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x7f3103d711ae6ddefe7a0dce96c1114b9ac568c2
+
+# Diff at Tue, 06 May 2025 09:28:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 22382816
+- current block number: 22423769
+
+## Description
+
+v27 upgrade for zksync era executed.
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.3:
++        {"_protocolVersion":115964116992,"_upgradeTimestamp":1746435600}
+    }
+```
+
 Generated with discovered.json: 0x63d08ed4115a5738396e2ddc41b1fa96771de4a8
 
 # Diff at Wed, 30 Apr 2025 15:49:24 GMT:

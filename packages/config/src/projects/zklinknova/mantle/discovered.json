@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 76775244,
+  "blockNumber": 79197162,
   "configHash": "0xd9ba90e82a18ef1d9148db794da8d347b673b79a3af2610ce734b421a3cfae2c",
   "entries": [
     {
@@ -59,7 +59,10 @@
         "nonce": 12,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
@@ -112,7 +115,10 @@
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
-      "derivedName": "L1ERC20Bridge"
+      "implementationNames": {
+        "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2": "TransparentUpgradeableProxy",
+        "0x7769C18828569692Dfb65affa0856533613ea458": "L1ERC20Bridge"
+      }
     },
     {
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -194,18 +200,21 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 50873,
+        "getTotalBatchesExecuted": 58797,
         "getTotalPriorityTxs": 880,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": true,
-        "totalBatchesExecuted": 50873,
+        "totalBatchesExecuted": 58797,
         "totalPriorityTxs": 880,
         "totalSyncedPriorityTxs": 880,
         "totalValidatorForwardFee": "1145994696585755653058",
         "totalValidatorForwardFeeWithdrawn": "1105664800685749588412",
         "txGasPrice": 140000000000000
       },
-      "derivedName": "ZkLink"
+      "implementationNames": {
+        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": "ERC1967Proxy",
+        "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821": "ZkLink"
+      }
     },
     {
       "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
@@ -252,7 +261,10 @@
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "ZKLINK": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
       },
-      "derivedName": "MantleL2Gateway"
+      "implementationNames": {
+        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
+        "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": "MantleL2Gateway"
+      }
     },
     {
       "name": "MantleProxyAdmin",
@@ -276,7 +288,9 @@
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82": "ProxyAdmin"
+      }
     },
     {
       "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -496,7 +510,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"

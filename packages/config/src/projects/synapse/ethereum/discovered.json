@@ -45,7 +45,9 @@
           "lpToken": "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F"
         }
       },
-      "derivedName": "SwapFlashLoan"
+      "implementationNames": {
+        "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": "SwapFlashLoan"
+      }
     },
     {
       "name": "LPToken",
@@ -64,7 +66,9 @@
         "owner": "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8",
         "symbol": "nUSD"
       },
-      "derivedName": "LPToken"
+      "implementationNames": {
+        "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F": "LPToken"
+      }
     },
     {
       "address": "0x230A1AC45690B9Ae1176389434610B9526d2f21b",
@@ -173,7 +177,10 @@
           "type": "PERMISSION"
         }
       },
-      "derivedName": "SynapseBridge"
+      "implementationNames": {
+        "0x2796317b0fF8538F253012862c06787Adfb8cEb6": "TransparentUpgradeableProxy",
+        "0x31fe393815822edacBd81C2262467402199EFD0D": "SynapseBridge"
+      }
     },
     {
       "name": "TimelockController",
@@ -210,7 +217,9 @@
         },
         "getMinDelay": 180
       },
-      "derivedName": "TimelockController"
+      "implementationNames": {
+        "0x647489df0673E17dB3163c47d5233EBB6F5cAc70": "TimelockController"
+      }
     },
     {
       "name": "L1BridgeZap",
@@ -231,7 +240,9 @@
         ],
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "L1BridgeZap"
+      "implementationNames": {
+        "0x6571d6be3d8460CF5F7d6711Cd9961860029D85F": "L1BridgeZap"
+      }
     },
     {
       "name": "Bridge Multisig",
@@ -262,7 +273,10 @@
         "nonce": 829,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -284,7 +298,9 @@
         "$immutable": true,
         "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2": "ProxyAdmin"
+      }
     },
     {
       "address": "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3",
@@ -325,7 +341,9 @@
         "NAME": "Allowance Module",
         "VERSION": "0.1.0"
       },
-      "derivedName": "AllowanceModule"
+      "implementationNames": {
+        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": "AllowanceModule"
+      }
     }
   ],
   "abis": {

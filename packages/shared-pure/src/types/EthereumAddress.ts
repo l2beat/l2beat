@@ -1,5 +1,6 @@
 import { validateAddress } from '@mradomski/tinyerc55'
-import { constants, utils } from 'ethers'
+
+const ALLOWED_CHARS = '0123456789abcdef'
 
 export type EthereumAddress = string & {
   _EthereumAddressBrand: string
@@ -13,8 +14,6 @@ export function EthereumAddress(value: string): EthereumAddress {
 
   return result.address as unknown as EthereumAddress
 }
-
-EthereumAddress.ZERO = EthereumAddress(constants.AddressZero)
 
 EthereumAddress.check = function check(value: string) {
   try {
@@ -48,7 +47,7 @@ EthereumAddress.inOrder = function inOrder(
 
 EthereumAddress.random = function random() {
   const digit = (): string | undefined =>
-    '0123456789abcdef'[Math.floor(Math.random() * 16)]
+    ALLOWED_CHARS[Math.floor(Math.random() * 16)]
   return EthereumAddress('0x' + Array.from({ length: 40 }).map(digit).join(''))
 }
 
@@ -57,5 +56,16 @@ EthereumAddress.unsafe = function unsafe(address: string) {
 }
 
 EthereumAddress.from = function from(value: string) {
-  return EthereumAddress(utils.hexZeroPad(value, 20))
+  const withoutPrefix = value.slice(2)
+
+  for (const char of withoutPrefix) {
+    if (!ALLOWED_CHARS.includes(char.toLowerCase())) {
+      throw new TypeError('Invalid EthereumAddress')
+    }
+  }
+
+  const padded = withoutPrefix.padStart(40, '0')
+  return EthereumAddress('0x' + padded)
 }
+
+EthereumAddress.ZERO = EthereumAddress.from('0x0')

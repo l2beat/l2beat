@@ -31,7 +31,9 @@
         "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
         "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "AnyswapV4Router"
+      "implementationNames": {
+        "0x6b7a87899490EcE95443e979cA9485CBE7E71522": "AnyswapV4Router"
+      }
     },
     {
       "name": "AnyswapV6Router",
@@ -51,7 +53,9 @@
         "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
         "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "AnyswapV6Router"
+      "implementationNames": {
+        "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": "AnyswapV6Router"
+      }
     }
   ],
   "abis": {

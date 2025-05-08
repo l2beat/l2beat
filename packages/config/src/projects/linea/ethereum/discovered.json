@@ -126,7 +126,10 @@
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
         "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
       },
-      "derivedName": "TokenBridge"
+      "implementationNames": {
+        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": "TransparentUpgradeableProxy",
+        "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": "TokenBridge"
+      }
     },
     {
       "address": "0x1111111111111111111111111111111111111111",
@@ -171,7 +174,9 @@
         "$immutable": true,
         "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
       },
-      "derivedName": "CallForwardingProxy"
+      "implementationNames": {
+        "0x3697bD0bC6C050135b8321F989a5316eACbF367D": "CallForwardingProxy"
+      }
     },
     {
       "name": "BridgedToken",
@@ -204,7 +209,9 @@
         "symbol": "",
         "totalSupply": 0
       },
-      "derivedName": "BridgedToken"
+      "implementationNames": {
+        "0x36f274C1C197F277EA3C57859729398FCc8a3763": "BridgedToken"
+      }
     },
     {
       "name": "PlonkVerifierMainnetFull",
@@ -219,7 +226,9 @@
       "sinceTimestamp": 1744893263,
       "sinceBlock": 22288746,
       "values": { "$immutable": true },
-      "derivedName": "PlonkVerifierMainnetFull"
+      "implementationNames": {
+        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": "PlonkVerifierMainnetFull"
+      }
     },
     {
       "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
@@ -364,7 +373,10 @@
         "nonce": 57,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
@@ -388,7 +400,9 @@
         "implementation": "0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
-      "derivedName": "UpgradeableBeacon"
+      "implementationNames": {
+        "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "UpgradeableBeacon"
+      }
     },
     {
       "address": "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
@@ -413,7 +427,9 @@
       "sinceTimestamp": 1721038943,
       "sinceBlock": 20311286,
       "values": { "$immutable": true },
-      "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
+      "implementationNames": {
+        "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": "PlonkVerifierForMultiTypeDataAggregation"
+      }
     },
     {
       "name": "LineaRollup",
@@ -641,7 +657,10 @@
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
         "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
       },
-      "derivedName": "LineaRollup"
+      "implementationNames": {
+        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "TransparentUpgradeableProxy",
+        "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": "LineaRollup"
+      }
     },
     {
       "name": "L1Timelock",
@@ -702,7 +721,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
       },
-      "derivedName": "TimeLock"
+      "implementationNames": {
+        "0xd6B95c960779c72B8C6752119849318E5d550574": "TimeLock"
+      }
     },
     {
       "name": "Roles",
@@ -783,7 +804,9 @@
         "ZodiacModule_modules": ["0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"],
         "ZodiacModule_target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
-      "derivedName": "Roles"
+      "implementationNames": {
+        "0xF24f1DC519d88246809B660eb56D94048575d083": "Roles"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -810,7 +833,9 @@
         "$immutable": true,
         "owner": "0xd6B95c960779c72B8C6752119849318E5d550574"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": "ProxyAdmin"
+      }
     }
   ],
   "abis": {
@@ -1264,15 +1289,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "global/Timelock": "0x2a557f1c66ae4b55d5b565ca43f14de3cffa034ccf145cec23f477a3730ecf2d",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
+    "global/Timelock": "0x2a5acc8f4981464126cb7f697f7a842f884c7eff8e410bcbd566233da0581e0e",
     "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/LineaRollup": "0xa8e1636adc0e8d43cb35610deb22d12e36cb300a775c6fece3a57296ef551145",
+    "linea/LineaRollup": "0x782d021eada7e58a52192161a527c7609cc7abfbbd38767d906d5df60f09c0cc",
     "linea/Roles": "0xa2464d6b0b8a583e2a25b7127ea401ba7f63faf48f95f5fb9838cebca0c98aba",
-    "linea/TokenBridge": "0xaa1287667ece38f474859679ed0569d43b19a19bbdb2a21a1a5701c5a15fe1cc",
+    "linea/TokenBridge": "0x05707735d4786722458aba31122e188b7dfd0b37c967ee490c7e71e962fd0813",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0xa7dfeb6fc78e5e2841238c4346cbbf089b50bead767a8b1820fb014ce51f27a4"

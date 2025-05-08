@@ -74,13 +74,19 @@ export const ronin: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description: `${operatorsString} operators.`,
+      value: 'Multisig (16/22)',
+      description: `16/22 Operators from the set. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
-      description: `Gateway Proxy can be upgraded by ${operatorsString} operators.`,
+      value: 'Multisig (16/22)',
+      description: `Gateway Proxy can be upgraded by 16/22 operators.`,
+      sentiment: 'bad',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
+      description:
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
     destinationToken: {

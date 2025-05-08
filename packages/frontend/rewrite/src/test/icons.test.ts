@@ -4,9 +4,7 @@ import { ProjectService } from '@l2beat/config'
 import { expect } from 'earl'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 
-// TODO: Uncomment this when we start using rewrite on production
-// eslint-disable-next-line mocha/no-skipped-tests
-describe.skip('icons', () => {
+describe('icons', () => {
   const ps = new ProjectService()
 
   describe('projects', () => {

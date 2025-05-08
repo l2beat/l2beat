@@ -39,7 +39,7 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
       safeHeight <= this.$.minHeight
         ? this.$.minHeight
         : UnixTime.toStartOf(safeHeight, 'day')
-    const endOfDay = UnixTime.toStartOf(from, 'day') + UnixTime.DAY - 1
+    const endOfDay = UnixTime.toStartOf(from, 'day') + UnixTime.DAY
 
     const to = parentSafeHeight > endOfDay ? endOfDay : parentSafeHeight
 
@@ -166,6 +166,9 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
       avg: stats.averageInSeconds,
       max: stats.maximumInSeconds,
       timestamp,
+      // We are saving the number of records to later correctly calculate the average for a given time range.
+      // This ensures we calculate the correct average from all records, not just from daily aggregations.
+      numberOfRecords: intervals.length,
     }
   }
 }

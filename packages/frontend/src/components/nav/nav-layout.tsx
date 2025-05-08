@@ -98,11 +98,6 @@ export function NavLayout({
           title: 'Summary',
           href: '/bridges/summary',
         },
-        {
-          title: 'Risk Analysis',
-          shortTitle: 'Risks',
-          href: '/bridges/risk',
-        },
       ],
       secondaryLinks: [
         {

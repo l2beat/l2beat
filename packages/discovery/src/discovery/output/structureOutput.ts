@@ -41,6 +41,7 @@ export function processAnalysis(
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
       .map((x): EntryParameters => {
         return withoutUndefinedKeys({
+          name: x.name,
           address: x.address,
           type: x.type,
           unverified: x.isVerified ? undefined : true,
@@ -60,7 +61,7 @@ export function processAnalysis(
             Object.keys(x.errors).length === 0
               ? undefined
               : sortByKeys(x.errors),
-          derivedName: x.derivedName,
+          implementationNames: x.implementationNames,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies EntryParameters)
       }),

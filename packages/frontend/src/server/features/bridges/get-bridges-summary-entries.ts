@@ -1,9 +1,11 @@
 import type {
   BridgeCategory,
   Project,
+  ProjectTechnologyChoice,
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
@@ -21,7 +23,13 @@ export async function getBridgesSummaryEntries() {
     get7dTvsBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvsInfo'],
+      select: [
+        'statuses',
+        'bridgeInfo',
+        'bridgeRisks',
+        'tvsInfo',
+        'bridgeTechnology',
+      ],
       where: ['isBridge'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -44,7 +52,14 @@ export interface BridgesSummaryEntry extends CommonBridgesEntry {
   type: BridgeCategory
   tvs: TvsData
   validatedBy: TableReadyValue
+  livenessFailure: TableReadyValue | undefined
+  sourceUpgradeability: TableReadyValue | undefined
   tvsOrder: number
+  otherConsiderations: ProjectTechnologyChoice[] | undefined
+  destination: {
+    value: string
+    description?: string
+  }
 }
 
 interface TvsData {
@@ -63,7 +78,9 @@ interface TvsData {
 }
 
 function getBridgesSummaryEntry(
-  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvsInfo'>,
+  project: Project<
+    'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvsInfo' | 'bridgeTechnology'
+  >,
   changes: ProjectChanges,
   bridgeTvs: ProjectSevenDayTvsBreakdown | undefined,
 ): BridgesSummaryEntry {
@@ -94,7 +111,25 @@ function getBridgesSummaryEntry(
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
       ]),
     },
+    destination: getDestination(project.bridgeInfo.destination),
     validatedBy: project.bridgeRisks.validatedBy,
+    livenessFailure: project.bridgeRisks.livenessFailure,
+    sourceUpgradeability: project.bridgeRisks.sourceUpgradeability,
+    otherConsiderations: project.bridgeTechnology.otherConsiderations,
     tvsOrder: bridgeTvs?.breakdown.total ?? -1,
+  }
+}
+
+function getDestination(destinations: string[]): {
+  value: string
+  description?: string
+} {
+  assert(destinations.length > 0, 'Invalid destination')
+  if (destinations.length === 1 && destinations[0]) {
+    return { value: destinations[0] }
+  }
+  return {
+    value: 'Various',
+    description: destinations.join(',\n'),
   }
 }

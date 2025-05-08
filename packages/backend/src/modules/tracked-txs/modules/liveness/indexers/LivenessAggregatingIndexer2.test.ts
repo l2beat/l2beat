@@ -72,8 +72,8 @@ describe(LivenessAggregatingIndexer2.name, () => {
 
       // 00:00:00 same day as safeHeight
       const expectedFrom = safeHeight
-      // 23:59:59 same day as safeHeight
-      const expectedTo = safeHeight + 1 * UnixTime.DAY - 1
+      // 00:00:00 next day as safeHeight
+      const expectedTo = safeHeight + 1 * UnixTime.DAY
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
         expectedFrom,
@@ -96,8 +96,8 @@ describe(LivenessAggregatingIndexer2.name, () => {
 
       // 00:00:00 same day as safeHeight
       const expectedFrom = UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY
-      // 23:59:59 same day as safeHeight
-      const expectedTo = expectedFrom + 1 * UnixTime.DAY - 1
+      // 00:00:00 next day as safeHeight
+      const expectedTo = expectedFrom + 1 * UnixTime.DAY
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
         expectedFrom,
@@ -120,7 +120,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
 
       // 00:00:00 of current day
       const expectedFrom = UnixTime.toStartOf(safeHeight, 'day')
-      // 23:59:59 of current day
+      // round hour, not rounded to end of day
       const expectedTo = parentSafeHeight
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
@@ -174,8 +174,8 @@ describe(LivenessAggregatingIndexer2.name, () => {
 
       // 12:00:00 of some day - we do not round it to start of day
       const expectedFrom = minHeight
-      // 23:59:59 of some day
-      const expectedTo = minHeight + 12 * UnixTime.HOUR - 1
+      // 00:00:00 of next day
+      const expectedTo = minHeight + 12 * UnixTime.HOUR
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
         expectedFrom,
@@ -280,6 +280,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
           projectId: 'mocked-project',
           subtype: 'batchSubmissions',
           timestamp: NOW - 3 * UnixTime.HOUR,
+          numberOfRecords: 2,
         },
       ])
     })
@@ -307,6 +308,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
         projectId: 'mocked-project',
         subtype: 'batchSubmissions',
         timestamp: NOW - 7 * UnixTime.HOUR,
+        numberOfRecords: 2,
       })
     })
 
@@ -350,6 +352,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
         projectId: 'mocked-project',
         subtype: 'batchSubmissions',
         timestamp: start,
+        numberOfRecords: 3,
       })
     })
 
@@ -385,6 +388,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
         projectId: 'mocked-project',
         subtype: 'batchSubmissions',
         timestamp: start,
+        numberOfRecords: 2,
       })
     })
 

@@ -29,7 +29,9 @@
         "MINIMUM_DELAY": 3888000,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Timelock"
+      "implementationNames": {
+        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d": "Timelock"
+      }
     },
     {
       "name": "Multisig2",
@@ -56,7 +58,9 @@
         "required": 4,
         "transactionCount": 8
       },
-      "derivedName": "MultiSigWallet"
+      "implementationNames": {
+        "0x2028834B2c0A36A918c10937EeA71BE4f932da52": "MultiSigWallet"
+      }
     },
     {
       "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
@@ -97,7 +101,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxyOwner": "0xf2991507952d9594E71A44A54fb19f3109D213A5"
       },
-      "derivedName": "DefaultDepositContract"
+      "implementationNames": {
+        "0x54D7aE423Edb07282645e740C046B9373970a168": "OwnedUpgradabilityProxy",
+        "0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973": "DefaultDepositContract"
+      }
     },
     {
       "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
@@ -129,7 +136,9 @@
         "required": 4,
         "transactionCount": 130
       },
-      "derivedName": "MultiSigWallet"
+      "implementationNames": {
+        "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "MultiSigWallet"
+      }
     },
     {
       "name": "LoopringV3",
@@ -153,7 +162,9 @@
         "protocolFeeVault": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
         "totalStake": 0
       },
-      "derivedName": "LoopringV3"
+      "implementationNames": {
+        "0x9385aCd9d78dFE854c543294770d0C94c2B07EDC": "LoopringV3"
+      }
     },
     {
       "name": "LoopringIOExchangeOwner",
@@ -173,7 +184,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x9C07A72177c5A05410cA338823e790876E79D73B"
       },
-      "derivedName": "LoopringIOExchangeOwner"
+      "implementationNames": {
+        "0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD": "LoopringIOExchangeOwner"
+      }
     },
     {
       "name": "ExchangeV3",
@@ -278,7 +291,10 @@
         },
         "version": "0.1.0"
       },
-      "derivedName": "ExchangeV3"
+      "implementationNames": {
+        "0x9C07A72177c5A05410cA338823e790876E79D73B": "OwnedUpgradabilityProxy",
+        "0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b": "ExchangeV3"
+      }
     },
     {
       "name": "LoopringOwner",
@@ -311,7 +327,9 @@
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "BlockVerifier"
+      "implementationNames": {
+        "0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6": "BlockVerifier"
+      }
     },
     {
       "address": "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
@@ -343,7 +361,9 @@
         "MINIMUM_DELAY": 3888000,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Timelock"
+      "implementationNames": {
+        "0xf2991507952d9594E71A44A54fb19f3109D213A5": "Timelock"
+      }
     },
     {
       "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B",

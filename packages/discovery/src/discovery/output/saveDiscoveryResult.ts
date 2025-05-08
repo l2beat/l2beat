@@ -207,8 +207,7 @@ function remapNames(
       return entry
     }
 
-    const newName =
-      matchingEntry.name ?? matchingEntry.derivedName ?? entry.name
+    const newName = matchingEntry.name ?? entry.name
 
     return {
       ...entry,

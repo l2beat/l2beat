@@ -46,12 +46,24 @@ export const gravity: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
+      value: 'Gravity Validator Set (2/3)',
       description:
-        'Transfers need to be approved by 2/3 of the validator set operating in Cosmos Gravity Bridge blockchain.',
+        '2/3 of the validator set operating the Gravity Bridge blockchain (Cosmos). ',
+      sentiment: 'warning',
+    },
+    sourceUpgradeability: {
+      value: 'Not upgradable',
+      secondLine: 'Not pausable',
+      description:
+        'The smart contract code on Ethereum that secures the system cannot change nor be paused.',
+      sentiment: 'good',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
+      description:
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   technology: {

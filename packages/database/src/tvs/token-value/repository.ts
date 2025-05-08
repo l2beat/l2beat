@@ -79,19 +79,26 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLastNonZeroValue(timestamp: UnixTime): Promise<TokenValueRecord[]> {
-    const subquery = this.db
+  async getLastNonZeroValue(
+    timestamp: UnixTime,
+    project?: string,
+  ): Promise<TokenValueRecord[]> {
+    let subquery = this.db
       .selectFrom('TokenValue')
       .select(['tokenId'])
       .select(this.db.fn.max('timestamp').as('maxTimestamp'))
       .where('value', '>', 0)
       .where('timestamp', '<=', UnixTime.toDate(timestamp))
-      .groupBy(['tokenId'])
-      .as('latest')
+
+    if (project) {
+      subquery = subquery.where('projectId', '=', project)
+    }
+
+    const latest = subquery.groupBy(['tokenId']).as('latest')
 
     const rows = await this.db
       .selectFrom('TokenValue')
-      .innerJoin(subquery, (join) =>
+      .innerJoin(latest, (join) =>
         join
           .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
           .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),

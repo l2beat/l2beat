@@ -90,8 +90,9 @@ export function flattenDiscoveredSources(
       }
     } catch (e) {
       assert(analyzedContract.type !== 'EOA', 'This should never happen')
-      const contractName = analyzedContract.derivedName ?? analyzedContract.name
-      logger.error(`Flattener error at ${contractName}:\n${stringifyError(e)}`)
+      logger.error(
+        `Flattener error at ${analyzedContract.name}:\n${stringifyError(e)}`,
+      )
     }
   }
 

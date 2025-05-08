@@ -42,7 +42,9 @@
         "proposals": [],
         "version": "1.0.0"
       },
-      "derivedName": "PreimageOracle"
+      "implementationNames": {
+        "0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4": "PreimageOracle"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -82,7 +84,10 @@
         "systemConfig": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.8.0"
       },
-      "derivedName": "OptimismPortal",
+      "implementationNames": {
+        "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e": "Proxy",
+        "0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98": "OptimismPortal"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -119,7 +124,10 @@
         "totalSupply": 0,
         "version": "1.0.0"
       },
-      "derivedName": "DelayedWETH"
+      "implementationNames": {
+        "0x465833609d9ff2Cb9A070b0d71b700F318C97293": "Proxy",
+        "0x9Dc689620a87803378b3304776dd5AE9070730A8": "DelayedWETH"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -166,7 +174,10 @@
         "systemConfig": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.4.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0x5b0e75a52862881b4077C865B244CC17cD2b531b": "ResolvedDelegateProxy",
+        "0x8bA829f040EB57668BDfb010472AEb0a16B2399C": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -185,7 +196,9 @@
         "$immutable": true,
         "owner": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0x66e58c9D0b42110E956F54aA850C0d629f4B56C5": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -216,7 +229,10 @@
         "systemConfig": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.2.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0x683ca289a8418Cb090E42929A73a263d7b81DfC2": "L1ChugSplashProxy",
+        "0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -299,7 +315,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA": "Proxy",
+        "0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -330,7 +349,10 @@
         "BRIDGE": "0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
         "version": "1.9.0"
       },
-      "derivedName": "OptimismMintableERC20Factory"
+      "implementationNames": {
+        "0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8": "Proxy",
+        "0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF": "OptimismMintableERC20Factory"
+      }
     },
     {
       "address": "0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
@@ -359,7 +381,9 @@
         "oracle": "0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4",
         "version": "1.0.1"
       },
-      "derivedName": "MIPS"
+      "implementationNames": {
+        "0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6": "MIPS"
+      }
     },
     {
       "address": "0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
@@ -452,7 +476,9 @@
         "isUpgrading": false,
         "owner": "0xf758e2272FCe1330d8a1De38D5128A47B4041752"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA": "ProxyAdmin"
+      }
     },
     {
       "name": "SuperchainConfig",
@@ -484,7 +510,10 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
-      "derivedName": "SuperchainConfig",
+      "implementationNames": {
+        "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8": "Proxy",
+        "0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E": "SuperchainConfig"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -554,7 +583,10 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
-      "derivedName": "L2OutputOracle",
+      "implementationNames": {
+        "0xb7850CFa577332EB839840e1411962AC3Dd2f183": "Proxy",
+        "0x503733C3d5AA487B88fA1FB475694da51744e4Cd": "L2OutputOracle"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -615,7 +647,9 @@
           "description": "Prestate tag for known prestates."
         }
       },
-      "derivedName": "PermissionedDisputeGame",
+      "implementationNames": {
+        "0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0": "PermissionedDisputeGame"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -655,6 +689,7 @@
       "address": "0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -787,7 +822,10 @@
         "disputeGameFactory": "0xF014d8028A7028352baD6226A4894Ae596e2846c",
         "version": "1.0.0"
       },
-      "derivedName": "AnchorStateRegistry"
+      "implementationNames": {
+        "0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F": "Proxy",
+        "0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5": "AnchorStateRegistry"
+      }
     },
     {
       "name": "DisputeGameFactory",
@@ -827,7 +865,10 @@
         "permissionedGamesTotal": 0,
         "version": "1.0.0"
       },
-      "derivedName": "DisputeGameFactory",
+      "implementationNames": {
+        "0xF014d8028A7028352baD6226A4894Ae596e2846c": "Proxy",
+        "0x5cd233B95e4799444567873902bf9f9f20D3F640": "DisputeGameFactory"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -862,7 +903,10 @@
         "superchainConfig": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
         "version": "2.1.0"
       },
-      "derivedName": "L1ERC721Bridge",
+      "implementationNames": {
+        "0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259": "Proxy",
+        "0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6": "L1ERC721Bridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -912,7 +956,10 @@
         "nonce": 19,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xf758e2272FCe1330d8a1De38D5128A47B4041752": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "FaultDisputeGame",
@@ -970,7 +1017,9 @@
           "description": "Prestate tag for known prestates."
         }
       },
-      "derivedName": "FaultDisputeGame",
+      "implementationNames": {
+        "0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2": "FaultDisputeGame"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1724,23 +1773,23 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
-    "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
-    "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
-    "opstack/FaultDisputeGame": "0x61bf7d125f568d16ff80d6f18b82e45ed1f03e44ac085a60f744ceaf255b89d4",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
-    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
-    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xff3412b591aadd54c3f92c562ceccf86d0f60369578b4d026fcef1d7a7687bb6",
-    "opstack/PermissionedDisputeGame": "0x709d9cdeb77ad9cd56b80cba43f92d64bef04a4976fa79e98bdb987cc6f00aa8",
-    "opstack/PreimageOracle": "0xdad9efe0df74ac3a11918603d36b0b60b59ea7690452f74d581d6712a2675d82",
-    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
+    "opstack/DelayedWETH": "0x23d6aedd9fd736bb10884dc1269bfaafb4403d524ea6ba91d0ef99fe7a1b643f",
+    "opstack/DisputeGameFactory": "0x67f69b090ef8ef37890cb4e7c28b9ee1844641f6c4eb75ff15cba998839606ed",
+    "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
+    "opstack/L2OutputOracle": "0xdc22201273b90a248801424705d5602a5e68d8c60a2eaa84ca3ce386f9b71942",
+    "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal": "0x6887b4bbf169bbbc6b50b3dcc2ceff2da0df7a824a84827301b57063bc0f1ba9",
+    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
+    "opstack/SuperchainConfigFake": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
   },
   "permissionsConfigHash": "0x3c61b9406fe45bbc06f600be6bdec9f8c84b0f0df1662d0874c34e69b98b5883"
 }

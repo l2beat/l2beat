@@ -45,7 +45,10 @@
         "owner": "0x491619874b866c3cDB7C8553877da223525ead01",
         "requiredAmountOfSignatures": 2
       },
-      "derivedName": "PolygonDataCommittee",
+      "implementationNames": {
+        "0x05652Ec92366F3C2255991a265c499E01Ba58e6a": "TransparentUpgradeableProxy",
+        "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": "PolygonDataCommittee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -74,7 +77,9 @@
         "$immutable": true,
         "owner": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x1e37EA18e9515db29b3E94A00eD31484A3130204": "ProxyAdmin"
+      }
     },
     {
       "name": "Validium",
@@ -145,7 +150,10 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
-      "derivedName": "PolygonValidiumEtrog",
+      "implementationNames": {
+        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "PolygonTransparentProxy",
+        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -161,7 +169,9 @@
       "sinceTimestamp": 1734710375,
       "sinceBlock": 21444781,
       "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier_13",
+      "implementationNames": {
+        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB": "FflonkVerifier_13"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -208,6 +218,7 @@
       "address": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -407,10 +418,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
-    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
-    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
+    "polygon-cdk/PolygonDataCommittee": "0xa2cd28aa0b94c4db5a20a0ca83c4a6212c40ef98308518c8cb16e762eb2b4e7f",
+    "polygon-cdk/PolygonZkEVM": "0x9975bbc516d977a470835e42b76f1c7fe70e39e6894f628432b4b5c5f9593834",
+    "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0xfd85127f2b1b5c72e3d45872535fc117c5fabefe583d1d75ddf7cf13f55b0f7a"
 }
