@@ -15,8 +15,6 @@ export function EthereumAddress(value: string): EthereumAddress {
   return result.address as unknown as EthereumAddress
 }
 
-EthereumAddress.ZERO = EthereumAddress.from('0x0')
-
 EthereumAddress.check = function check(value: string) {
   try {
     return EthereumAddress(value).toString() === value
@@ -69,3 +67,5 @@ EthereumAddress.from = function from(value: string) {
   const padded = withoutPrefix.padStart(40, '0')
   return EthereumAddress('0x' + padded)
 }
+
+EthereumAddress.ZERO = EthereumAddress.from('0x0')
