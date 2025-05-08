@@ -1,7 +1,6 @@
 import { AboutUsPage } from './about/AboutUsPage'
 import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
-import { BridgesRiskPage } from './bridges/risk/BridgesRiskPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityProjectPage } from './data-availability/project/DataAvailabilityProjectPage'
@@ -55,7 +54,6 @@ const pages = {
   ScalingProjectTvsBreakdownPage,
   // Bridges
   BridgesSummaryPage,
-  BridgesRiskPage,
   BridgesArchivedPage,
   BridgesProjectPage,
   // Data Availability

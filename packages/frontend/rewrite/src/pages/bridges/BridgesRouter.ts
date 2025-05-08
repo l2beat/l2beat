@@ -5,7 +5,6 @@ import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
 import { getBridgesArchivedData } from './archived/getBridgesArchivedData'
 import { getBridgesProjectData } from './project/getBridgesProjectData'
-import { getBridgesRiskData } from './risk/getBridgesRiskData'
 import { getBridgesSummaryData } from './summary/getBridgesSummaryData'
 
 export function BridgesRouter(
@@ -19,12 +18,6 @@ export function BridgesRouter(
 
   app.get('/bridges/summary', async (req, res) => {
     const data = await getBridgesSummaryData(manifest, req.originalUrl)
-    const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  })
-
-  app.get('/bridges/risk', async (req, res) => {
-    const data = await getBridgesRiskData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
