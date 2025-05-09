@@ -7,7 +7,7 @@
     "rewrite:dev": "./rewrite/scripts/dev.sh",
     "rewrite:build": "./rewrite/scripts/build.sh",
     "rewrite:start": "NODE_ENV=production REWRITE_DISABLE_CACHE=true NEXT_PUBLIC_REWRITE=true node ./rewrite/dist/server/index.js",
-    "rewrite:copy-assets": "sh ./rewrite/scripts/copy-missing-assets.sh",
+    "rewrite:copy-assets": "sh ./rewrite/scripts/copyMissingAssets.sh",
     "rewrite:og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts",
     "rewrite:tinify": "tsx rewrite/scripts/tinify",
     "rewrite:new-assets": "pnpm rewrite:copy-assets && pnpm rewrite:og-images && pnpm rewrite:tinify",
