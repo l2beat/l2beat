@@ -3,6 +3,8 @@ import type {
   CountedOperation,
   CountedTransaction,
 } from '@/types'
+import type { EVMTransaction } from '@l2beat/shared'
+import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   EIP712_TX_TYPE,
   EIP712_methods,
@@ -11,13 +13,11 @@ import {
   ERC20ROUTER_TRANSACTION_SELECTOR,
   ERC20ROUTER_methods,
   ERC4337_methods,
-  type EVMTransaction,
   MULTICALLV3_methods,
   MULTICALL_V3,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
-} from '@l2beat/shared'
-import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+} from '@l2beat/shared/uops'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcCounter } from './RpcCounter'
 

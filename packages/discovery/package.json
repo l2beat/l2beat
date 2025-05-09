@@ -7,6 +7,16 @@
   "bin": {
     "discovery": "./cli.js"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./frontend": {
+      "types": "./dist/index-fe.d.ts",
+      "default": "./dist/index-fe.js"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",

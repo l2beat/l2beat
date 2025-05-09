@@ -3279,6 +3279,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-MOZ",
+      "priceId": "mozaic",
+      "symbol": "MOZ",
+      "name": "Mozaic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30100/large/Main_Logo_1-200x200jpg.jpg?1696529024",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "mozaic",
+        "decimals": 18,
+        "sinceTimestamp": 1694131200,
+        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-MXC-1",
       "priceId": "mxc",
       "symbol": "MXC",
@@ -5288,6 +5307,25 @@
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
         "sinceTimestamp": 1623784100
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-VIRTUAL-1",
+      "priceId": "virtual-protocol",
+      "symbol": "VIRTUAL",
+      "name": "Virtual Protocol",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34057/large/LOGOMARK.png?1708356054",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1703721600
       },
       "category": "other",
       "source": "canonical",

@@ -18,12 +18,15 @@ import {
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
+  getChainConfigs,
   getDiscoveryPaths,
   modelPermissionsForIsolatedDiscovery,
 } from '@l2beat/discovery'
-import { getChainConfigs } from '@l2beat/discovery/dist/config/config.discovery'
-import { withoutUndefinedKeys } from '@l2beat/discovery/dist/discovery/output/toDiscoveryOutput'
-import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
+import {
+  assert,
+  formatAsciiBorder,
+  withoutUndefinedKeys,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'

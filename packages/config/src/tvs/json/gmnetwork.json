@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -18,7 +19,8 @@
             "chain": "ethereum",
             "escrowAddress": "0xd2726bde3D07645faf5aD7cCF15C94817B3556D6",
             "decimals": 18,
-            "sinceTimestamp": 1717656599
+            "sinceTimestamp": 1717656599,
+            "untilTimestamp": 1743948000
           },
           {
             "type": "balanceOfEscrow",
@@ -26,14 +28,14 @@
             "chain": "ethereum",
             "escrowAddress": "0x2321F7982Af3cBbA1Ab9D426ae7fe595E1CF427C",
             "decimals": 18,
-            "sinceTimestamp": 1717656623
+            "sinceTimestamp": 1717656623,
+            "untilTimestamp": 1743948000
           }
         ]
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     }
   ]
 }

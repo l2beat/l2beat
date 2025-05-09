@@ -13,13 +13,18 @@ export {
   getChainConfig,
   getChainShortName,
   isChainShortName,
+  getChainConfigs,
+  getChainFullName,
 } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
 } from './config/types'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
-export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
+export {
+  AddressAnalyzer,
+  type Analysis,
+} from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
@@ -66,12 +71,17 @@ export { NoCache } from './discovery/provider/NoCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
+  flatteningHash,
 } from './flatten/utils'
 export {
   type StructureContractConfig as ContractConfig,
   makeEntryStructureConfig,
 } from './discovery/config/structureUtils'
-export type { ExplorerConfig } from './utils/IEtherscanClient'
+export {
+  type ExplorerConfig,
+  type IEtherscanClient,
+  getExplorerClient,
+} from './utils/IEtherscanClient'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { AllProviders } from './discovery/provider/AllProviders'
@@ -80,7 +90,11 @@ export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
-export { ProviderStats } from './discovery/provider/Stats'
+export {
+  ProviderStats,
+  type AllProviderStats,
+  ProviderMeasurement,
+} from './discovery/provider/Stats'
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,
@@ -101,5 +115,4 @@ export {
 } from './discovery/config/getDiscoveryPaths'
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
-export { getChainConfigs } from './config/config.discovery'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'

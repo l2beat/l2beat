@@ -874,9 +874,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      nock:
-        specifier: ^13.5.5
-        version: 13.5.5
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -899,6 +896,9 @@ importers:
       '@types/node-fetch':
         specifier: ^2.6.2
         version: 2.6.11
+      nock:
+        specifier: ^13.5.5
+        version: 13.5.5
 
   packages/shared-pure:
     dependencies:

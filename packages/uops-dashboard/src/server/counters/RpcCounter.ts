@@ -6,6 +6,7 @@ import type {
   StatResults,
 } from '@/types'
 
+import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import {
   EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
@@ -27,8 +28,7 @@ import {
   isErc4337,
   isGnosisSafe,
   isMulticallv3,
-} from '@l2beat/shared'
-import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
+} from '@l2beat/shared/uops'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'

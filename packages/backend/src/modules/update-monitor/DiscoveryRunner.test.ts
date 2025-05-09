@@ -4,11 +4,10 @@ import {
   ConfigRegistry,
   type DiscoveryEngine,
   type IProvider,
+  ProviderStats,
   type TemplateService,
 } from '@l2beat/discovery'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { ProviderStats } from '@l2beat/discovery'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 describe(DiscoveryRunner.name, () => {
