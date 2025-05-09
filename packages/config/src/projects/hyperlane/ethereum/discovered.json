@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 22323047,
-  "configHash": "0xc2728949c5088561557e234490769a11d551c86e9e1f5d8aca8364549afc975e",
+  "configHash": "0x0d8b1b5daa9bc8ff77ef987da2887d9ea36b731d9a45de320730459cc3ebbb72",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",

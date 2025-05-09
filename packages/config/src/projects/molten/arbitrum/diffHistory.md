@@ -1,3 +1,173 @@
+Generated with discovered.json: 0xa2f2e98d658d56edb9b709a6efc64c66a259acee
+
+# Diff at Thu, 08 May 2025 08:45:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 333851541
+- current block number: 334476520
+
+## Description
+
+Upgrade to Celestia Nitro 3.2.1 with blobstream integration and unverified HostIo.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x0a64A865D06bcbB7840037bE481144101d266580)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
+      values.$implementation:
+-        "0x645341A2C76cD94324cBA658c19Acca2297b619C"
++        "0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607"
+      values.$pastUpgrades.3:
++        ["2024-11-13T04:34:48.000Z","0xa3cef71c7eacc17dedd4ff7a2c732cd42e982d2ca5c620fe8364225fce9760ab",["0x79177caeDf321963EFed06E562017181B2e8aDC7"]]
+      values.$pastUpgrades.2.2:
+-        ["0x79177caeDf321963EFed06E562017181B2e8aDC7"]
++        "0xcd0e8af41249440524c34f999e8033e63b5b2120088982cba91c32976a0a81d8"
+      values.$pastUpgrades.2.1:
+-        "2024-11-13T04:34:48.000Z"
++        "2025-05-07T20:20:59.000Z"
+      values.$pastUpgrades.2.0:
+-        "0xa3cef71c7eacc17dedd4ff7a2c732cd42e982d2ca5c620fe8364225fce9760ab"
++        ["0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607"]
+      values.$upgradeCount:
+-        3
++        4
+      values.sequencerVersion:
+-        "0x88"
++        "0x63"
+      values.CELESTIA_MESSAGE_HEADER_FLAG:
++        "0x63"
+      implementationNames.0x645341A2C76cD94324cBA658c19Acca2297b619C:
+-        "SequencerInbox"
+      implementationNames.0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607:
++        "SequencerInbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x123AC1bECf24be86Fe2426F32b8e65e39eE73071)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x16a287aAeA20b936103dd3C1Af970556A1a2B3F0)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      values.$implementation:
+-        "0xdec03E497222017550Fb83273d8FB4546eaDA625"
++        "0xbFfd05964F6d7AE4B55eB8A7086d88EEEcbF5f76"
+      values.$pastUpgrades.2:
++        ["2025-05-07T20:20:59.000Z","0xcd0e8af41249440524c34f999e8033e63b5b2120088982cba91c32976a0a81d8",["0xbFfd05964F6d7AE4B55eB8A7086d88EEEcbF5f76"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.0xdec03E497222017550Fb83273d8FB4546eaDA625:
+-        "ERC20Inbox"
+      implementationNames.0xbFfd05964F6d7AE4B55eB8A7086d88EEEcbF5f76:
++        "ERC20Inbox"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.$implementation:
+-        "0x84c179B5651A762a81A490BA03D27997A5922EC1"
++        "0x0686dc9F334F8C0f0a9646f48775aa002757AFFE"
+      values.$pastUpgrades.3:
++        ["2025-05-07T20:20:59.000Z","0xcd0e8af41249440524c34f999e8033e63b5b2120088982cba91c32976a0a81d8",["0x0686dc9F334F8C0f0a9646f48775aa002757AFFE"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.osp:
+-        "0x82f0eB3D277d4f67c3624b76ebD857e9dccE2b29"
++        "0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f"
+      implementationNames.0x84c179B5651A762a81A490BA03D27997A5922EC1:
+-        "ChallengeManager"
+      implementationNames.0x0686dc9F334F8C0f0a9646f48775aa002757AFFE:
++        "ChallengeManager"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x82f0eB3D277d4f67c3624b76ebD857e9dccE2b29)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xC180876F40Bd889f1AC598B0DBD9c3eA87040a03)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x59CDE86f1a538a7a2329269d3704CA302DF23736)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x7E67B50d510929610f840fb09707feA01b8E457B)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0xe3b13e7b160aE4b799A7B3F9877316e717706291)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../OneStepProverHostIo.sol => /dev/null           | 1860 --------------------
+ .../SequencerInbox/SequencerInbox.sol              |  117 +-
+ 2 files changed, 46 insertions(+), 1931 deletions(-)
+```
+
 Generated with discovered.json: 0x7bc0dbeb9cc21bd7e1a5894fa451bbe5ec818d34
 
 # Diff at Tue, 06 May 2025 12:56:28 GMT:

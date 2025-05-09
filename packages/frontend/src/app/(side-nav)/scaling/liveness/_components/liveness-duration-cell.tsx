@@ -1,5 +1,4 @@
 import { UnixTime, pluralize } from '@l2beat/shared-pure'
-import React from 'react'
 
 export function LivenessDurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds
@@ -7,18 +6,28 @@ export function LivenessDurationCell(props: { durationInSeconds: number }) {
   const hours = Math.floor(minutes / 60)
   const days = Math.floor(hours / 24)
 
+  const remainingMinutes = minutes - hours * 60
+  const remainingHours = hours - days * 24
+
   const durationText: string =
     days > 1
-      ? `${days} ${pluralize(days, 'day')}`
+      ? `${getDurationText(days, 'day')} ${getDurationText(remainingHours, 'hour')}`
       : hours > 0
-        ? `${hours} ${pluralize(hours, 'hour')}`
+        ? `${getDurationText(hours, 'hour')} ${getDurationText(remainingMinutes, 'minute')}`
         : minutes > 0
-          ? `${minutes} ${pluralize(minutes, 'minute')}`
-          : `${seconds} ${pluralize(seconds, 'second')}`
+          ? `${getDurationText(minutes, 'minute')}`
+          : `${getDurationText(seconds, 'second')}`
 
   const colorClassName = getDurationColorClassName(seconds)
 
   return <span className={colorClassName}>{durationText}</span>
+}
+
+function getDurationText(
+  amount: number,
+  unit: 'day' | 'hour' | 'minute' | 'second',
+) {
+  return amount > 0 ? `${amount} ${pluralize(amount, unit)}` : ''
 }
 
 function getDurationColorClassName(durationInSeconds: number) {

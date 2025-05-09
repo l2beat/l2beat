@@ -30,17 +30,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.13.1",
     "@l2beat/shared-pure": "workspace:*",
     "chalk": "^4.1.2",
     "dotenv": "^16.3.1",
-    "error-stack-parser": "^2.1.4",
-    "uuid": "^9.0.1"
+    "error-stack-parser": "^2.1.4"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@sinonjs/fake-timers": "^11.1.0",
-    "@types/sinonjs__fake-timers": "^8.1.2",
-    "@types/uuid": "^9.0.8"
+    "@types/sinonjs__fake-timers": "^8.1.2"
   }
 }

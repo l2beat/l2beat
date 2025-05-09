@@ -12,10 +12,7 @@ export const molten: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711843200), // 2024-03-31
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Molten Network',
     shortName: 'Molten',
@@ -37,6 +34,11 @@ export const molten: ScalingProject = orbitStackL3({
         'https://t.me/unidexfinance',
       ],
     },
+  },
+  isNodeAvailable: true,
+  celestiaDa: {
+    sinceBlock: 5305699,
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
   },
   associatedTokens: ['MOLTEN'],
   chainConfig: {

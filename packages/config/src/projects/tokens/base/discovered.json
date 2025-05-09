@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 29913123,
-  "configHash": "0x202ab1c75344bd9f6c732eadbf508a7969b7e160b97e75ecb8312cc54cdcb402",
+  "blockNumber": 29954366,
+  "configHash": "0x27a2b901054959d99743aa2d6fad647d7a56e04efe87e0502503778c1ebe4d01",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -301,7 +301,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 166,
+        "nonce": 168,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -459,7 +459,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3751462275237423,
+        "totalSupply": 3742848338957406,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -627,7 +627,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 545718,
+        "nextAvailableNonce": 546815,
         "owner": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
