@@ -8,7 +8,7 @@ import {
 import type { ProxyDetails } from '../types'
 
 import { utils } from 'ethers'
-import { zip } from 'lodash'
+import zip from 'lodash/zip'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'

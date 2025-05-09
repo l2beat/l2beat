@@ -1,5 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { floor } from 'lodash'
+import floor from 'lodash/floor'
 import {
   CONTRACTS,
   DA_LAYERS,

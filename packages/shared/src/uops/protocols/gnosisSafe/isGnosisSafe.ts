@@ -1,5 +1,5 @@
 import { assert, type Transaction } from '@l2beat/shared-pure'
-import { isArray } from 'lodash'
+import isArray from 'lodash/isArray'
 import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,

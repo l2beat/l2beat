@@ -1,7 +1,7 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import { capitalize } from 'lodash'
+import capitalize from 'lodash/capitalize'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'

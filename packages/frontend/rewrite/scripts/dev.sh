@@ -27,13 +27,15 @@ cleanup() {
 
 trap cleanup SIGINT SIGTERM
 
+rm -rf rewrite/dist
+
 # Start processes and capture their PIDs
 esbuild \
   rewrite/src/ssr/client.tsx \
   --bundle \
   --watch=forever \
   --tsconfig=rewrite/tsconfig.json \
-  --outfile=rewrite/static/index.js &
+  --outfile=rewrite/static/index.js < /dev/tty &
 pids+=($!)
 
 tailwindcss \
@@ -42,9 +44,22 @@ tailwindcss \
   --watch < /dev/tty &
 pids+=($!)
 
-NEXT_PUBLIC_REWRITE=true tsx \
-  --tsconfig ./rewrite/tsconfig.json \
-  --watch rewrite/src/index.ts &
+esbuild \
+  rewrite/src/index.ts \
+  --bundle \
+  --platform=node \
+  --packages=external \
+  --tsconfig=rewrite/tsconfig.json \
+  --jsx=automatic \
+  --watch=forever \
+  --outfile=rewrite/dist/server/index.js < /dev/tty &
+pids+=($!)
+
+while [ ! -f rewrite/dist/server/index.js ]; do
+  sleep 0.1
+done
+
+NEXT_PUBLIC_REWRITE=true node --watch rewrite/dist/server/index.js
 pids+=($!)
 
 echo "All processes started. Press Ctrl+C to exit."

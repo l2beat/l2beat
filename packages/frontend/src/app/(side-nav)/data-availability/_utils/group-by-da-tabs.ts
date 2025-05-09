@@ -1,4 +1,4 @@
-import { partition } from 'lodash'
+import partition from 'lodash/partition'
 import type { CommonDaEntry } from '~/server/features/data-availability/get-common-da-entry'
 
 export type TabbedDaEntries<T extends CommonDaEntry> = {

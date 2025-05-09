@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { groupBy, pick } from 'lodash'
+import groupBy from 'lodash/groupBy'
+import pick from 'lodash/pick'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'

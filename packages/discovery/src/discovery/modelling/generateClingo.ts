@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { StructureEntry } from '../output/types'

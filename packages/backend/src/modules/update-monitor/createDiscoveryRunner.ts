@@ -4,7 +4,6 @@ import {
   type DiscoveryCache as IDiscoveryCache,
   InMemoryCache,
   LeveledCache,
-  RedisCache,
   TemplateService,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
@@ -14,8 +13,9 @@ import type { Database } from '@l2beat/database'
 import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Peripherals } from '../../peripherals/Peripherals'
-import { DiscoveryCache } from './DiscoveryCache'
+import { DatabaseCache } from './DatabaseCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { RedisCache } from './RedisCache'
 
 export function createDiscoveryRunner(
   paths: DiscoveryPaths,
@@ -58,7 +58,7 @@ export function createDiscoveryRunner(
 
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {
   if (uri === 'postgres') {
-    return new DiscoveryCache(database)
+    return new DatabaseCache(database)
   } else if (uri.startsWith('redis')) {
     return new RedisCache(uri)
   } else {

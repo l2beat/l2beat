@@ -1,4 +1,4 @@
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import Image from 'next/image'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'

@@ -1,4 +1,4 @@
-import { partition } from 'lodash'
+import partition from 'lodash/partition'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import type { CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
