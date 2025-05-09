@@ -1,5 +1,4 @@
-import { flattenStartingFrom } from '@l2beat/discovery'
-import type { IEtherscanClient } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { type IEtherscanClient, flattenStartingFrom } from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 

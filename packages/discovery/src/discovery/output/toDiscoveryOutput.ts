@@ -5,6 +5,7 @@ import type {
   StructureOutput,
 } from './types'
 
+import { withoutUndefinedKeys } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -60,10 +61,6 @@ export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
   ) as T
-}
-
-export function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj)) as T
 }
 
 export function sortEntry(e: EntryParameters): EntryParameters {

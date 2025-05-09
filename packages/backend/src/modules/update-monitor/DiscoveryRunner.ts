@@ -15,7 +15,7 @@ import {
   modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
+import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
@@ -199,10 +199,6 @@ const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
   help: 'Average duration of methods in high level provider calls done during discovery',
   labelNames: ['chain', 'method'],
 })
-
-function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj)) as T
-}
 
 function remapNames(
   results: Analysis[],
