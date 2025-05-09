@@ -3,12 +3,12 @@ import { dirname } from 'path'
 import {
   AllProviders,
   type DiscoveryChainConfig,
+  type ExplorerConfig,
   type IProvider,
   SQLiteCache,
   getDiscoveryPaths,
   getMulticall3Config,
 } from '@l2beat/discovery'
-import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
 
 const UNKNOWN_CHAIN_NAME = 'UnknownChainName'

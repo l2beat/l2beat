@@ -1,8 +1,11 @@
-import { type Hash256, undefinedIfEmpty } from '@l2beat/shared-pure'
+import {
+  type Hash256,
+  undefinedIfEmpty,
+  withoutUndefinedKeys,
+} from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
-import { withoutUndefinedKeys } from './toDiscoveryOutput'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(

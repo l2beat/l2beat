@@ -1,11 +1,12 @@
 import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
-import type { ConfigReader, DiscoveryPaths } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery'
 import {
+  type ConfigReader,
+  type DiscoveryPaths,
+  get$Implementations,
   getChainFullName,
   getChainShortName,
-} from '@l2beat/discovery/dist/config/config.discovery'
+} from '@l2beat/discovery'
 import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
