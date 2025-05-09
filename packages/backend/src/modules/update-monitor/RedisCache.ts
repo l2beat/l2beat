@@ -1,5 +1,5 @@
+import type { DiscoveryCache } from '@l2beat/discovery'
 import { createClient } from 'redis'
-import type { DiscoveryCache } from './DiscoveryCache'
 
 export class RedisCache implements DiscoveryCache {
   private client: ReturnType<typeof createClient>
