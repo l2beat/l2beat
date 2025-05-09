@@ -172,18 +172,6 @@ model VerifierStatus {
 }
 
 model AggregatedLiveness {
-  projectId String   @db.VarChar(255)
-  subtype   String   @db.VarChar(255)
-  range     String   @db.VarChar(255)
-  min       Int
-  avg       Int
-  max       Int
-  updatedAt DateTime @db.Timestamp(6)
-
-  @@id([projectId, subtype, range])
-}
-
-model AggregatedLiveness2 {
   timestamp       DateTime @db.Timestamp(6)
   projectId       String   @db.VarChar(255)
   subtype         String   @db.VarChar(255)

@@ -1,13 +1,10 @@
-import type { ProjectId } from '@l2beat/shared-pure'
+import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLivenessRecord, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
 
 export class AggregatedLivenessRepository extends BaseRepository {
-  async upsert(record: AggregatedLivenessRecord): Promise<void> {
-    await this.upsertMany([record])
-  }
-
   async upsertMany(records: AggregatedLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -17,12 +14,14 @@ export class AggregatedLivenessRepository extends BaseRepository {
         .insertInto('AggregatedLiveness')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['projectId', 'subtype', 'range']).doUpdateSet((eb) => ({
-            min: eb.ref('excluded.min'),
-            avg: eb.ref('excluded.avg'),
-            max: eb.ref('excluded.max'),
-            updatedAt: eb.ref('excluded.updatedAt'),
-          })),
+          cb
+            .columns(['projectId', 'subtype', 'timestamp'])
+            .doUpdateSet((eb) => ({
+              min: eb.ref('excluded.min'),
+              avg: eb.ref('excluded.avg'),
+              max: eb.ref('excluded.max'),
+              numberOfRecords: eb.ref('excluded.numberOfRecords'),
+            })),
         )
         .execute()
     })
@@ -44,25 +43,39 @@ export class AggregatedLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectId(
-    projectId: ProjectId,
-  ): Promise<AggregatedLivenessRecord[]> {
-    const rows = await this.db
-      .selectFrom('AggregatedLiveness')
-      .select(selectAggregatedLiveness)
-      .where('projectId', '=', projectId)
-      .execute()
-    return rows.map(toRecord)
-  }
+  async getAggregatesByTimeRange(
+    range: [UnixTime | null, UnixTime],
+  ): Promise<
+    Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
+  > {
+    const [from, to] = range
 
-  async getByProjectIds(
-    projectIds: ProjectId[],
-  ): Promise<AggregatedLivenessRecord[]> {
-    const rows = await this.db
+    let query = this.db
       .selectFrom('AggregatedLiveness')
-      .select(selectAggregatedLiveness)
-      .where('projectId', 'in', projectIds)
-      .execute()
-    return rows.map(toRecord)
+      .select([
+        'projectId',
+        'subtype',
+        (eb) => eb.fn.min('min').as('min'),
+        (eb) =>
+          sql<number>`
+            SUM(${eb.ref('avg')} * ${eb.ref('numberOfRecords')})
+            / SUM(${eb.ref('numberOfRecords')})
+          `.as('avg'),
+        (eb) => eb.fn.max('max').as('max'),
+      ])
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .groupBy(['projectId', 'subtype'])
+
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      ...row,
+      subtype: row.subtype as TrackedTxsConfigSubtype,
+      avg: Number(row.avg),
+    }))
   }
 }
