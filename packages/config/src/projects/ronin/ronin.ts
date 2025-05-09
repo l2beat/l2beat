@@ -34,12 +34,12 @@ export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
-  isUnderReview: true,
+  archivedAt: UnixTime(1746798305),
   display: {
     name: 'Ronin V3',
     slug: 'ronin',
     warning:
-      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Stand by while we review the new integration with Chainlink CCIP.',
+      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Ronin is now using the Chainlink CCTP messaging protocol.',
     links: {
       websites: ['https://bridge.roninchain.com/'],
       apps: ['https://bridge.roninchain.com/'],
