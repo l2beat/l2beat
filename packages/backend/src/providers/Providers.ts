@@ -11,7 +11,9 @@ import {
   DaProvider,
   EthereumDaProvider,
   PriceProvider,
+  SlotTimestampProvider,
   StarknetTotalSupplyProvider,
+  SvmBlockProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -19,6 +21,7 @@ import type { Config } from '../config'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'
+import { SvmBlockProviders } from './SvmBlockProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
 
 export class Providers {
@@ -33,6 +36,8 @@ export class Providers {
   totalSupply: TotalSupplyProvider
   starknetTotalSupply: StarknetTotalSupplyProvider
   balance: BalanceProvider
+  svmBlock: SvmBlockProviders
+  slotTimestamp: SlotTimestampProvider
 
   constructor(
     readonly config: Config,
@@ -40,6 +45,7 @@ export class Providers {
   ) {
     this.clients = initClients(config, logger)
     this.block = new BlockProviders(this.clients.block)
+    this.svmBlock = new SvmBlockProviders(this.clients.svmBlock)
     this.circulatingSupply = new CirculatingSupplyProvider(
       new CoingeckoQueryService(
         this.clients.coingecko,
@@ -78,6 +84,13 @@ export class Providers {
         (c) => new BlockProvider(c.chain, [c]),
       ),
     })
+
+    this.slotTimestamp = new SlotTimestampProvider({
+      svmBlockProviders: this.clients.svmBlock.map(
+        (c) => new SvmBlockProvider(c.chain, [c]),
+      ),
+    })
+
     this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients, logger)
     this.starknetTotalSupply = new StarknetTotalSupplyProvider(
       this.clients.starknetClients,
