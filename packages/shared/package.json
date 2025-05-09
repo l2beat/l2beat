@@ -5,6 +5,17 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./frontend": {
+      "types": "./build/index-fe.d.ts",
+      "default": "./build/index-fe.js"
+    }
+  },
+
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build",

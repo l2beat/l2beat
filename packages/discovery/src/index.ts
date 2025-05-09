@@ -19,7 +19,10 @@ export type {
   DiscoveryModuleConfig,
 } from './config/types'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
-export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
+export {
+  AddressAnalyzer,
+  type Analysis,
+} from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
@@ -80,7 +83,11 @@ export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
-export { ProviderStats } from './discovery/provider/Stats'
+export {
+  ProviderStats,
+  type AllProviderStats,
+  ProviderMeasurement,
+} from './discovery/provider/Stats'
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,

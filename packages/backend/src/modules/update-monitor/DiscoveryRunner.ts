@@ -1,9 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  type AllProviderStats,
   type AllProviders,
+  type Analysis,
   type ConfigRegistry,
   type DiscoveryEngine,
   type DiscoveryOutput,
+  ProviderMeasurement,
+  type ProviderStats,
   type TemplateService,
   combinePermissionsIntoDiscovery,
   flattenDiscoveredSources,
@@ -11,12 +15,6 @@ import {
   modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import type { Analysis } from '@l2beat/discovery/dist/discovery/analysis/AddressAnalyzer'
-import {
-  type AllProviderStats,
-  ProviderMeasurement,
-  type ProviderStats,
-} from '@l2beat/discovery/dist/discovery/provider/Stats'
 import { assert } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'

@@ -1,8 +1,8 @@
 import type { Project } from '@l2beat/config'
 import type { IndexerConfigurationRecord } from '@l2beat/database'
-import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { createTrackedTxId } from '@l2beat/shared'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxConfigEntry } from '@l2beat/shared/frontend'
+import { createTrackedTxId } from '@l2beat/shared/frontend'
 import { getConfigurationsSyncedUntil } from './get-configurations-synced-until'
 
 export type TrackedTxsProject = {
