@@ -19,8 +19,14 @@ export const sp1vector: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
+  },
+  display: {
+    description: 'Avail ZK light client implementation.',
+    links: {},
+    badges: [],
   },
   proofVerification: {
     shortDescription: 'Avail ZK light client implementation.',

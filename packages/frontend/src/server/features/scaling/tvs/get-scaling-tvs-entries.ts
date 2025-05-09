@@ -14,7 +14,7 @@ export async function getScalingTvsEntries() {
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'tvlInfo', 'display'],
+      select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -44,7 +44,7 @@ export interface ScalingTvsEntry extends CommonScalingEntry {
 }
 
 function getScalingTvsEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'tvlInfo' | 'display'>,
+  project: Project<'scalingInfo' | 'statuses' | 'tvsInfo' | 'display'>,
   changes: ProjectChanges,
   data: ProjectSevenDayTvsBreakdown | undefined,
 ): ScalingTvsEntry | undefined {
@@ -52,8 +52,8 @@ function getScalingTvsEntry(
     ...getCommonScalingEntry({ project, changes }),
     tvs: {
       data,
-      associatedTokens: project.tvlInfo.associatedTokens,
-      warnings: project.tvlInfo.warnings,
+      associatedTokens: project.tvsInfo.associatedTokens,
+      warnings: project.tvsInfo.warnings,
     },
     tvsOrder: data?.breakdown.total ?? -1,
   }

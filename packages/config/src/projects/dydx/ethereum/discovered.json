@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0xca2bde9e210432f11239c26033092211b6a404c5008d0086ecac1d76c520357b",
+  "configHash": "0x3757ba2a1d95a6d5d479a9d2dcc95c542e7aa46ce796dcb62b15481c24c30177",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -18,13 +18,6 @@
         "0x5eb26cee90dca2178b42fc264fc447af3272c9c84f97decb89285baa230ed77b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getCurrentEpoch",
         "getEpochParameters",
@@ -89,7 +82,10 @@
         "UNPAUSER_ROLE": "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a",
         "WAITING_PERIOD": 604800
       },
-      "derivedName": "MerkleDistributorV1"
+      "implementationNames": {
+        "0x01d3348601968aB85b4bb028979006eac235a588": "InitializableAdminUpgradeabilityProxy",
+        "0xFE1d5439625a9524a80F66670733129E80E0C112": "MerkleDistributorV1"
+      }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -102,7 +98,9 @@
       "sinceTimestamp": 1612752384,
       "sinceBlock": 11813202,
       "values": { "$immutable": true },
-      "derivedName": "CpuFrilessVerifier"
+      "implementationNames": {
+        "0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73": "CpuFrilessVerifier"
+      }
     },
     {
       "name": "CpuOods",
@@ -115,7 +113,9 @@
       "sinceTimestamp": 1612752351,
       "sinceBlock": 11813198,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "implementationNames": {
+        "0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5": "CpuOods"
+      }
     },
     {
       "name": "MerkleStatementContract",
@@ -128,7 +128,9 @@
       "sinceTimestamp": 1612752351,
       "sinceBlock": 11813198,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MerkleStatementContract"
+      "implementationNames": {
+        "0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830": "MerkleStatementContract"
+      }
     },
     {
       "name": "ClaimsProxy",
@@ -147,7 +149,9 @@
         "REWARDS_TREASURY_VESTER": "0xb9431E19B29B952d9358025f680077C3Fd37292f",
         "SAFETY_MODULE": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
       },
-      "derivedName": "ClaimsProxy"
+      "implementationNames": {
+        "0x0fd829C3365A225FB9226e75c97c3A114bD3199e": "ClaimsProxy"
+      }
     },
     {
       "name": "PedersenHashPointsYColumn",
@@ -160,7 +164,9 @@
       "sinceTimestamp": 1612752276,
       "sinceBlock": 11813192,
       "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsYColumn"
+      "implementationNames": {
+        "0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92": "PedersenHashPointsYColumn"
+      }
     },
     {
       "name": "CairoBootloaderProgram",
@@ -401,7 +407,9 @@
           "2345108766317314046"
         ]
       },
-      "derivedName": "CairoBootloaderProgram"
+      "implementationNames": {
+        "0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D": "CairoBootloaderProgram"
+      }
     },
     {
       "name": "CpuConstraintPoly",
@@ -414,7 +422,9 @@
       "sinceTimestamp": 1612752229,
       "sinceBlock": 11813186,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "implementationNames": {
+        "0x1F5459AA7857291112A8172ae1328248948d9d13": "CpuConstraintPoly"
+      }
     },
     {
       "name": "TreasuryProxyAdmin",
@@ -436,7 +446,9 @@
         "$immutable": true,
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d": "ProxyAdmin"
+      }
     },
     {
       "name": "WrappedEthereumDydxToken",
@@ -464,7 +476,9 @@
         "symbol": "wethDYDX",
         "totalSupply": "546945056713322374333760466"
       },
-      "derivedName": "WrappedEthereumDydxToken"
+      "implementationNames": {
+        "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9": "WrappedEthereumDydxToken"
+      }
     },
     {
       "address": "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080",
@@ -499,7 +513,9 @@
           "0"
         ]
       },
-      "derivedName": "CpuFrilessVerifier"
+      "implementationNames": {
+        "0x4922f8750DFd040954b44F23980160342e308863": "CpuFrilessVerifier"
+      }
     },
     {
       "name": "EcdsaPointsXColumn",
@@ -512,7 +528,9 @@
       "sinceTimestamp": 1612752276,
       "sinceBlock": 11813192,
       "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsXColumn"
+      "implementationNames": {
+        "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5": "EcdsaPointsXColumn"
+      }
     },
     {
       "name": "LiquidityStaking",
@@ -523,13 +541,6 @@
         "0x0111ff9c30eb270b8df99390defd855542974eb8a6a6200212cee243a9ba9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "decimals",
         "DISTRIBUTION_END",
@@ -634,7 +645,10 @@
         "TOTAL_ALLOCATION": 10000,
         "totalSupply": 265767747322
       },
-      "derivedName": "LiquidityStakingV1"
+      "implementationNames": {
+        "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": "InitializableAdminUpgradeabilityProxy",
+        "0xBE607a58206180fef691bf1B5aE9670174284388": "LiquidityStakingV1"
+      }
     },
     {
       "name": "PerpetualEscapeVerifier",
@@ -651,7 +665,9 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
       },
-      "derivedName": "PerpetualEscapeVerifier"
+      "implementationNames": {
+        "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD": "PerpetualEscapeVerifier"
+      }
     },
     {
       "name": "TreasuryBridge",
@@ -662,13 +678,6 @@
         "0xa1f45598b0f289ead20121783ac8f948cb7005845b5646ab5b8918e8252d2644"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1627708861,
       "sinceBlock": 12931442,
       "values": {
@@ -688,7 +697,10 @@
         "REVISION": 1,
         "TREASURY_VESTER": "0xb9431E19B29B952d9358025f680077C3Fd37292f"
       },
-      "derivedName": "TreasuryBridge"
+      "implementationNames": {
+        "0x639192D54431F8c816368D3FB4107Bc168d0E871": "InitializableAdminUpgradeabilityProxy",
+        "0x8d0051943D4c72aF12D638c6b7253C71929A910A": "TreasuryBridge"
+      }
     },
     {
       "name": "ShortTimelockExecutor",
@@ -714,7 +726,9 @@
         "VOTE_DIFFERENTIAL": 50,
         "VOTING_DURATION": 26280
       },
-      "derivedName": "Executor"
+      "implementationNames": {
+        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "Executor"
+      }
     },
     {
       "name": "SafetyModule",
@@ -725,13 +739,6 @@
         "0x57553f9e7638b7b9c78914908fedcfd695b2973d1860afc5395c8328e8a55a1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
       "sinceTimestamp": 1627709015,
       "sinceBlock": 12931454,
@@ -816,7 +823,10 @@
         "symbol": "stkDYDX",
         "totalSupply": "1107991039572858348898853"
       },
-      "derivedName": "SafetyModuleV2"
+      "implementationNames": {
+        "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "InitializableAdminUpgradeabilityProxy",
+        "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A": "SafetyModuleV2"
+      }
     },
     {
       "name": "SafetyModuleProxyAdmin",
@@ -838,7 +848,9 @@
         "$immutable": true,
         "owner": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": "ProxyAdmin"
+      }
     },
     {
       "name": "MerkleDistributorProxyAdmin",
@@ -860,7 +872,9 @@
         "$immutable": true,
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": "ProxyAdmin"
+      }
     },
     {
       "name": "DydxGovernor",
@@ -905,7 +919,9 @@
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "VOTE_EMITTED_TYPEHASH": "0x4e031542a9553ed1c4e810c54674ab4b984243e335b246aa3de73663bf4c11ee"
       },
-      "derivedName": "DydxGovernor"
+      "implementationNames": {
+        "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor"
+      }
     },
     {
       "address": "0x8129b737912e17212C8693B781928f5D0303390a",
@@ -941,7 +957,9 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2020_1"
       },
-      "derivedName": "GpsStatementVerifier"
+      "implementationNames": {
+        "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3": "GpsStatementVerifier"
+      }
     },
     {
       "name": "Committee",
@@ -966,7 +984,9 @@
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 1
       },
-      "derivedName": "Committee"
+      "implementationNames": {
+        "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": "Committee"
+      }
     },
     {
       "name": "DydxToken",
@@ -999,7 +1019,9 @@
         "totalSupply": "1000000000000000000000000000",
         "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": 1631977200
       },
-      "derivedName": "DydxToken"
+      "implementationNames": {
+        "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken"
+      }
     },
     {
       "name": "ChainlinkAdapter",
@@ -1019,7 +1041,9 @@
         "ORACLE_CONTRACT": "0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd",
         "ORACLE_EXTERNAL_ADAPTER": "0xD26d233b5e444117d93CdbC676357b9C7Ff55906"
       },
-      "derivedName": "MD1ChainlinkAdapter"
+      "implementationNames": {
+        "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354": "MD1ChainlinkAdapter"
+      }
     },
     {
       "name": "PedersenHashPointsXColumn",
@@ -1032,7 +1056,9 @@
       "sinceTimestamp": 1612752231,
       "sinceBlock": 11813187,
       "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsXColumn"
+      "implementationNames": {
+        "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D": "PedersenHashPointsXColumn"
+      }
     },
     {
       "name": "PriorityExecutor",
@@ -1066,7 +1092,9 @@
         "VOTE_DIFFERENTIAL": 50,
         "VOTING_DURATION": 26280
       },
-      "derivedName": "PriorityExecutor"
+      "implementationNames": {
+        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor"
+      }
     },
     {
       "address": "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68",
@@ -1093,7 +1121,9 @@
         "$immutable": true,
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xAc5D8bCD13da463bea96c75f9085c4e40037F790": "ProxyAdmin"
+      }
     },
     {
       "name": "TreasuryVester",
@@ -1116,7 +1146,9 @@
         "vestingCliff": 1628002800,
         "vestingEnd": 1785769200
       },
-      "derivedName": "TreasuryVester"
+      "implementationNames": {
+        "0xb9431E19B29B952d9358025f680077C3Fd37292f": "TreasuryVester"
+      }
     },
     {
       "name": "GovernanceStrategyV2",
@@ -1134,7 +1166,9 @@
         "STAKED_DYDX_TOKEN": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
         "WRAPPED_ETHEREUM_DYDX_TOKEN": "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
       },
-      "derivedName": "GovernanceStrategyV2"
+      "implementationNames": {
+        "0xc2f5F3505910Da80F0592a3Cc023881C50b16505": "GovernanceStrategyV2"
+      }
     },
     {
       "name": "EcdsaPointsYColumn",
@@ -1147,7 +1181,9 @@
       "sinceTimestamp": 1612752276,
       "sinceBlock": 11813192,
       "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsYColumn"
+      "implementationNames": {
+        "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15": "EcdsaPointsYColumn"
+      }
     },
     {
       "name": "StarkPerpetual",
@@ -1162,18 +1198,6 @@
         "0x78eb03e490fcb196d0b884db041c442d39699b0f0434493a89834ad53949e95d"
       ],
       "proxyType": "StarkWare diamond",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
       "sinceTimestamp": 1613033682,
       "sinceBlock": 11834295,
@@ -1285,7 +1309,14 @@
         "VERIFIER_REMOVAL_DELAY": 3024000,
         "VERSION": "1.0.0"
       },
-      "derivedName": "Proxy"
+      "implementationNames": {
+        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "Proxy",
+        "0x2C0df87E073755139101b35c0A51e065291cc2d3": "StarkPerpetual",
+        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5": "AllVerifiers",
+        "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545": "PerpetualTokensAndRamping",
+        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0": "PerpetualState",
+        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3": "PerpetualForcedActions"
+      }
     },
     {
       "name": "MerklePauserExecutor",
@@ -1311,7 +1342,9 @@
         "VOTE_DIFFERENTIAL": 50,
         "VOTING_DURATION": 13140
       },
-      "derivedName": "Executor"
+      "implementationNames": {
+        "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": "Executor"
+      }
     },
     {
       "address": "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0",
@@ -1329,7 +1362,9 @@
       "sinceTimestamp": 1615417455,
       "sinceBlock": 12013692,
       "values": { "$immutable": true },
-      "derivedName": "CpuFrilessVerifier"
+      "implementationNames": {
+        "0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3": "CpuFrilessVerifier"
+      }
     },
     {
       "name": "LongTimelockExecutor",
@@ -1355,7 +1390,9 @@
         "VOTE_DIFFERENTIAL": 1000,
         "VOTING_DURATION": 65700
       },
-      "derivedName": "Executor"
+      "implementationNames": {
+        "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "Executor"
+      }
     },
     {
       "name": "MemoryPageFactRegistry",
@@ -1368,7 +1405,9 @@
       "sinceTimestamp": 1612752200,
       "sinceBlock": 11813182,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MemoryPageFactRegistry"
+      "implementationNames": {
+        "0xEfbCcE4659db72eC6897F46783303708cf9ACef8": "MemoryPageFactRegistry"
+      }
     },
     {
       "name": "FinalizableGpsFactAdapter",
@@ -1391,7 +1430,9 @@
         "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032",
         "programHashMapped": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
       },
-      "derivedName": "FinalizableGpsFactAdapter",
+      "implementationNames": {
+        "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": "FinalizableGpsFactAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1433,7 +1474,9 @@
       "sinceTimestamp": 1612752351,
       "sinceBlock": 11813198,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "FriStatementContract"
+      "implementationNames": {
+        "0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1": "FriStatementContract"
+      }
     },
     {
       "name": "StarkExRemoverGovernorV2",
@@ -1464,7 +1507,9 @@
         ],
         "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
       },
-      "derivedName": "StarkExRemoverGovernorV2"
+      "implementationNames": {
+        "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0": "StarkExRemoverGovernorV2"
+      }
     }
   ],
   "abis": {
@@ -2595,6 +2640,7 @@
     ]
   },
   "usedTemplates": {
-    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7"
-  }
+    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb"
+  },
+  "permissionsConfigHash": "0x45a2aca085b43457bf361f06c954a3417d60a280a59ca2685e6905265f878970"
 }

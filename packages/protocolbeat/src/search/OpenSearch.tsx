@@ -1,5 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDebounce } from '../common/useDebounce'
 import { IconSearch } from '../icons/IconSearch'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../panel-code/store'
@@ -8,6 +10,7 @@ import {
   getCodeSearchTerm,
 } from './CodeSearchResultEntry'
 import { ContractSearchResultEntry } from './ContractSearchResultEntry'
+import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
 import { searchQuery } from './implementation'
 import { useSearchStore } from './store'
 
@@ -18,6 +21,7 @@ interface OpenSearchProps {
 }
 
 export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
+  const navigate = useNavigate()
   const { ensurePanel } = useMultiViewStore()
   const { setSourceIndex, showRange } = useCodeStore()
   const {
@@ -49,9 +53,13 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
     }
   }, [selectedIndex])
 
+  const searchTermDebounced = useDebounce(searchTerm, (term: string) => {
+    return term.startsWith('%') ? 350 : 0
+  })
+
   const { isError, isPending, data } = useQuery({
-    queryKey: ['projects', project, searchTerm],
-    queryFn: () => searchQuery(project, searchTerm),
+    queryKey: ['search', project, searchTermDebounced],
+    queryFn: () => searchQuery(project, searchTermDebounced),
     placeholderData: keepPreviousData,
   })
 
@@ -71,7 +79,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
           <input
             ref={inputRef}
             type="text"
-            className="w-full bg-transparent outline-none"
+            className="w-full bg-transparent outline-none selection:bg-autumn-300 selection:text-coffee-900"
             placeholder="Search by name or address (or in code with % prefix)"
             autoFocus
             value={searchTerm}
@@ -127,6 +135,10 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
                     }
                   }
                   setOpen(false)
+                } else if (data.type === 'project') {
+                  const result = data.entries[selectedIndex]
+                  navigate(`/ui/p/${result}`)
+                  setOpen(false)
                 } else {
                   const result = data.entries[selectedIndex]
                   if (result !== undefined) {
@@ -149,6 +161,10 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
             <CodeSearchResultEntry
               select={select}
               entries={data.type === 'code' ? data.entries : []}
+            />
+          ) : searchTerm.startsWith('@') ? (
+            <ProjectSearchResultEntry
+              entries={data.type === 'project' ? data.entries : []}
             />
           ) : (
             <ContractSearchResultEntry

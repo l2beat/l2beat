@@ -1,5 +1,4 @@
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
-import './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -101,6 +100,11 @@ const nextConfig = {
       {
         source: '/zk-catalog/SP1Vector/:path*',
         destination: '/zk-catalog/sp1-vector/:path*',
+        permanent: true,
+      },
+      {
+        source: '/scaling/projects/ethernity/:path*',
+        destination: '/scaling/projects/epicchain/:path*',
         permanent: true,
       },
       // Legacy pathnames

@@ -1,8 +1,8 @@
 {
   "name": "avalanche",
   "chain": "ethereum",
-  "blockNumber": 21773615,
-  "configHash": "0xe67c1f1f7076a69f83e05433c61d7e21fe61e354d1edf23941333d21ccacb8a3",
+  "blockNumber": 22430762,
+  "configHash": "0xe3c637276e325fc72e799ce1543b6ee0821f646eff9fe1faf242a9cd3a64a034",
   "entries": [
     {
       "address": "0x8EB8a3b98659Cce290402893d0123abb75E3ab28",
@@ -11,5 +11,6 @@
     }
   ],
   "abis": {},
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x7bffca01cec526d3c9caede286c7fddb4aaa4b7ae9c2900a37bee6ec0b722d89"
 }

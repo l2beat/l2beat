@@ -45,6 +45,8 @@ assert(
   )}`,
 )
 
+const chainId = 324
+
 export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
   discovery,
@@ -78,7 +80,7 @@ export const zksync2: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {
     name: 'zksync2',
-    chainId: 324,
+    chainId,
     explorerUrl: 'https://era.zksync.network',
     sinceTimestamp: UnixTime(1676384520),
     multicallContracts: [
@@ -96,7 +98,7 @@ export const zksync2: ScalingProject = zkStackL2({
         url: 'https://mainnet.era.zksync.io',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api-era.zksync.network/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   associatedTokens: ['ZK'],
@@ -144,6 +146,7 @@ export const zksync2: ScalingProject = zkStackL2({
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
     }),
   ],
+  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -398,7 +401,7 @@ export const zksync2: ScalingProject = zkStackL2({
   milestones: [
     {
       title: 'ZK token minter key compromised',
-      url: 'https://x.com/zksync/status/1912165357642473488',
+      url: 'https://zksync.mirror.xyz/W5vPDZqEqf2NuwQ5x7SyFnIxqqpE1szAFD69iaaBFnI',
       date: '2025-04-13T00:00:00Z',
       description:
         '1/1 signer key of a ZK airdrop admin multisig is compromised. ZKsync deploys TransactionFilterer.',

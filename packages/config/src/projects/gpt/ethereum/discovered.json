@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21744154,
-  "configHash": "0x4993c8cd9b6e60f4e6be3d607d1d7da4adb0a25e5176e812a616bdb996efb68c",
+  "configHash": "0xbc5c48ad74d10300e72fcc3da0674e00a71001108861f6564cd718d26e86ede1",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -18,7 +18,9 @@
       "sinceTimestamp": 1711291211,
       "sinceBlock": 19505052,
       "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier",
+      "implementationNames": {
+        "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -75,19 +77,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [{ "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3" }]
-        }
-      ],
       "sinceTimestamp": 1718797871,
       "sinceBlock": 20125601,
       "values": {
@@ -105,19 +94,22 @@
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
-          [
-            "https://gpt-mainnet-da-1.eu-north-2.gateway.fm/",
-            "0x208C0bCD77F921209932081c27C543098838BF9e"
-          ],
-          [
-            "https://gpt-mainnet-da-2.eu-north-2.gateway.fm/",
-            "0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"
-          ]
+          {
+            "url": "https://gpt-mainnet-da-1.eu-north-2.gateway.fm/",
+            "addr": "0x208C0bCD77F921209932081c27C543098838BF9e"
+          },
+          {
+            "url": "https://gpt-mainnet-da-2.eu-north-2.gateway.fm/",
+            "addr": "0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"
+          }
         ],
         "owner": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
         "requiredAmountOfSignatures": 1
       },
-      "derivedName": "PolygonDataCommittee",
+      "implementationNames": {
+        "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8": "TransparentUpgradeableProxy",
+        "0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8": "PolygonDataCommittee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -141,12 +133,15 @@
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xada59D145126A746976F0F56477aafFEB3acc8e3": "ProxyAdmin"
+      }
     },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -172,25 +167,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x3451F208447c4D81346c10239eF92A1eB98b65C3",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1716807971,
       "sinceBlock": 19960801,
@@ -244,7 +220,10 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
-      "derivedName": "PolygonValidiumStorageMigration",
+      "implementationNames": {
+        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858": "PolygonTransparentProxy",
+        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": "PolygonValidiumStorageMigration"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
@@ -424,9 +403,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
-    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
-    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
-  }
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
+    "polygon-cdk/PolygonDataCommittee": "0xa2cd28aa0b94c4db5a20a0ca83c4a6212c40ef98308518c8cb16e762eb2b4e7f",
+    "polygon-cdk/PolygonZkEVM": "0x9975bbc516d977a470835e42b76f1c7fe70e39e6894f628432b4b5c5f9593834",
+    "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "permissionsConfigHash": "0x65ab5cc909dd5971361ccda43a6a81abbb8a16f82586fd626aeed90da419ba6e"
 }

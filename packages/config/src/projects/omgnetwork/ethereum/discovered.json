@@ -2,7 +2,7 @@
   "name": "omgnetwork",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0xd7035ad37e9059507550fcd4fc97520e20c0e7b90d88ec16920eb1cc0cf5ef17",
+  "configHash": "0xab84f24849463b31316d099244bb6bb8fde8f8875bf5e97cf1d0fd306edfeb85",
   "entries": [
     {
       "name": "Erc20Vault",
@@ -23,7 +23,9 @@
         "getEffectiveDepositVerifier": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
         "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968"
       },
-      "derivedName": "Erc20Vault"
+      "implementationNames": {
+        "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": "Erc20Vault"
+      }
     },
     {
       "name": "PlasmaFramework",
@@ -50,7 +52,9 @@
         "nextDepositBlock": 5281001,
         "version": "1.0.4+a69c763"
       },
-      "derivedName": "PlasmaFramework"
+      "implementationNames": {
+        "0x0D4C1222f5e839a911e2053860e45F18921D72ac": "PlasmaFramework"
+      }
     },
     {
       "address": "0x22405c1782913fb676bc74Ef54a60727B0e1026F",
@@ -82,7 +86,9 @@
         "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
         "safeGasStipend": 2300
       },
-      "derivedName": "EthVault"
+      "implementationNames": {
+        "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": "EthVault"
+      }
     },
     {
       "name": "PaymentExitGame",
@@ -105,7 +111,9 @@
         "startIFEBondSize": "37000000000000000",
         "startStandardExitBondSize": "14000000000000000"
       },
-      "derivedName": "PaymentExitGame"
+      "implementationNames": {
+        "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": "PaymentExitGame"
+      }
     },
     {
       "name": "ETHDepositVerifier",
@@ -116,7 +124,9 @@
       "sinceTimestamp": 1584424482,
       "sinceBlock": 9687268,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x649f37203c365DE759c8fc8CA35beBF5448F70Be": ""
+      }
     },
     {
       "name": "ERC20DepositVerifier",
@@ -127,7 +137,9 @@
       "sinceTimestamp": 1584424677,
       "sinceBlock": 9687281,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xD876aeb3a443FBC03B7349AAc115E9054563CD82": ""
+      }
     }
   ],
   "abis": {
@@ -256,5 +268,6 @@
       "event BondReturnFailed(address indexed receiver, uint256 amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x7b62fc3537fabbd2f6cc0799bf2b6b877e2f5587ef898a7ad96eb3aaab04e4c6"
 }

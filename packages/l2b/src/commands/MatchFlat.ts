@@ -1,9 +1,16 @@
 import { buildSimilarityHashmap, format } from '@l2beat/discovery'
 import { CliLogger } from '@l2beat/shared'
 import { command, number, option, positional, subcommands } from 'cmd-ts'
+import { getExplorer } from '../implementations/common/getExplorer'
 import { fetchAndFlatten } from '../implementations/flatten'
 import { matchFile, readAndHashFile } from '../implementations/matchFlat'
-import { explorerApiKey, explorerType, explorerUrl } from './args'
+import {
+  chainName,
+  explorerApiKey,
+  explorerChainId,
+  explorerType,
+  explorerUrl,
+} from './args'
 import { Directory, EthereumAddressValue, File } from './types'
 
 const minSimilarity = option({
@@ -53,20 +60,16 @@ const MatchFlatAddress = command({
     directory: positional({ type: Directory, displayName: 'flat-database' }),
     minSimilarity,
     maxResults,
+    chainName,
     explorerUrl,
-    type: explorerType,
-    apiKey: explorerApiKey,
+    explorerType,
+    explorerApiKey,
+    explorerChainId,
   },
   handler: async (args) => {
     const logger: CliLogger = new CliLogger()
-    const flat = await fetchAndFlatten(
-      args.address,
-      args.explorerUrl,
-      args.apiKey,
-      args.type,
-      logger,
-      false,
-    )
+    const client = getExplorer(args)
+    const flat = await fetchAndFlatten(args.address, client, logger, false)
 
     const content = format(flat)
     const baseFile = {
@@ -87,6 +90,8 @@ const MatchFlatAddress = command({
 
 export const MatchFlat = subcommands({
   name: 'match-flat',
+  description:
+    'Compute percentage similarity between a needle flat file and haystack.',
   cmds: Object.fromEntries(
     [MatchFlatFile, MatchFlatAddress].map((t) => [t.name, t]),
   ),

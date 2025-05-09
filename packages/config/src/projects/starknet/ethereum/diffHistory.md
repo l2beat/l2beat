@@ -1,4 +1,477 @@
-Generated with discovered.json: 0xc07ff2f61e4291befb77e270e73e168b320776f3
+Generated with discovered.json: 0xf2aca59d209ec7a3a3033b1ded974e0972eaf1e3
+
+# Diff at Wed, 07 May 2025 11:31:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22424695
+- current block number: 22431482
+
+## Description
+
+Moved 4 EOAs from Starkware security council minority multisig to Starkware security council.
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      values.$members.15:
++        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
++        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
++        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.10:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.9:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.8:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.7:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.5:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+      values.$members.4:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.3:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.multisigThreshold:
+-        "9 of 12 (75%)"
++        "9 of 16 (56%)"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      values.$members.15:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.10:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.9:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.8:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.7:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.6:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.5:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.multisigThreshold:
+-        "3 of 16 (19%)"
++        "3 of 12 (25%)"
+    }
+```
+
+Generated with discovered.json: 0xb6fe4d92b92cbc7ab643b545e41963cb152fdc08
+
+# Diff at Tue, 06 May 2025 12:35:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 22346393
+- current block number: 22424695
+
+## Description
+
+Security Council is added to the to critical bridge admin permissions (ETHBridge and STRKBridge).
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","delay":259200}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","delay":259200}
+      receivedPermissions.6:
++        {"permission":"governStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"disable the withdrawal limit."}
+      receivedPermissions.4:
++        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"disable the withdrawal limit."}
+      receivedPermissions.3:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."}
+      receivedPermissions.2:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"enable the withdrawal limit."}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.1.description:
++        "enable the withdrawal limit."
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.0.description:
++        "manage critical access control roles and the role that can upgrade the implementation."
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      receivedPermissions.2.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.2.delay:
++        259200
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","0xCA112018fEB729458b628AadC8f996f9deCbCa0c","0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.SECURITY_ADMIN.members.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      directlyReceivedPermissions.2.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      directlyReceivedPermissions.2.delay:
++        259200
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin.2:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.UPGRADE_GOVERNOR.members.2:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.SECURITY_ADMIN.members.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      values.$members.15:
++        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
++        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
++        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.10:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.9:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.8:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.7:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.5:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+      values.$members.4:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.3:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.multisigThreshold:
+-        "3 of 12 (25%)"
++        "3 of 16 (19%)"
+    }
+```
+
+Generated with discovered.json: 0x34414e5388b9d72d502550d7cacb712bfa16d60c
+
+# Diff at Tue, 29 Apr 2025 08:19:13 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22346393
+- current block number: 22346393
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346393 (main branch discovery), not current.
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation..","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}]
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}]
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}]
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}]
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]},{"permission":"governStarknet","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]},{"permission":"operateStarknet","to":"0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7","via":[]},{"permission":"operateStarknet","to":"0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B","via":[]},{"permission":"upgrade","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]},{"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}]
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]},{"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","delay":259200,"via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}]
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}]
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}]
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"interact","to":"0x0c5aE94f8939182F2D06097025324D1E537d5B60","description":"enroll new tokens or deactivate deposits into the escrow (for each token individually).","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}]
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x2aa5f7d4e0b61560f1718fa99124f2a72100e00e
+
+# Diff at Fri, 25 Apr 2025 13:39:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c29f37e6f9358f91b847d140615c705e0d4deb52 block: 22144824
+- current block number: 22346393
+
+## Description
+
+Added 8d delay to the DelayedExecutor and added it as STRK bridge admin.
+
+## Watched changes
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      receivedPermissions.1.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.1.delay:
++        259200
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      directlyReceivedPermissions.1.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      directlyReceivedPermissions.1.delay:
++        259200
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","delay":259200,"via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","0xCA112018fEB729458b628AadC8f996f9deCbCa0c"]
+      values.accessControl.UPGRADE_GOVERNOR.members.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+    }
+```
+
+Generated with discovered.json: 0x127cc98189d50193a7a6417b9b4f7f20bc6b7f3e
 
 # Diff at Thu, 10 Apr 2025 14:43:23 GMT:
 

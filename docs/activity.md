@@ -3,14 +3,14 @@
 ## Introduction
 
 Within L2BEAT💗 we have an [Activity](https://l2beat.com/scaling/activity) tab which tracks activity
-of scaling solutions. 'Activity' in this context refers to the amount of transactions that occur on
+of scaling solutions. 'Activity' in this context refers to the amount of user operations and transactions that occur on
 each chain. Configuring activity tracking for different projects is straightforward, especially for
 those that support eth_getBlock RPC methods. This configuration process is managed individually for
 each project through their respective .ts (TypeScript) files.
 
 ## Guide
 
-If you want to add starkex type project, go to the [next section](#starkex-type-project)
+If you want to add a StarkEx type of project, go to the [next section](#starkex-type-project)
 
 1. Find RPC endpoint for a project you want to add. Try to write directly to project to obtain a
    private node access. If you can't, you can use a public node or RPC provider e.g. QuickNode.
@@ -25,31 +25,25 @@ If you want to add starkex type project, go to the [next section](#starkex-type-
 If you get a response, you are good to go. If not, try to find another RPC. If you can't find another,
 you need to talk to devs to handle this case.
 
-3. Next step is to fill activity config in project config file. Add `config.transactionApi` property
+3. Next step is to fill a chain config in project config file. Add `chainConfig.apis` property
    and fill it:
 
    - `type` (required): set it as `'rpc'`
-   - `url` (optional): only set it if you want to use public RPC, if you are using private do not
+   - `url` (required): only set it if you want to use public RPC, if you are using private do not
      set it here, in next step I will show you where to put it
    - `callsPerMinute` (optional): in most of the cases 200 would be enough
-   - `timeout` (optional): timeout property for provider, you do not have to set it up in most cases
-   - `startBlock` (optional): if you want to start from specific block, set it here
-   - `assessCount` (optional): custom function to assess count of transactions in block
 
-4. (Only if you are using private RPC) - if you are using private RPC do not fill in the `url`
-   property in previous step. Instead, go to `config.production.ts` and `config.local.ts` in
-   `backend` folder to configure it. Add `activity.projects.<projectId>` property(projectId has to
-   match projectId in project config file) and fill it:
+The `chainConfig` also needs a `name` and `chainId`. If you're adding a Starknet-based project, have the `chainId` as `undefined`.
 
-```
-        <projectId>: {
-          type: 'rpc',
-          callsPerMinute: env.integer('ACTIVITY_<PROJECT_ID>_CALLS'),
-          url: env.string('ACTIVITY_<PROJECT_ID>_URL'),
-        },
-```
+4. Next, you have to add activity-specific config. Add `config.activityConfig` property and fill it:
 
-    After that, remember to add these variables to the Heroku config vars before merging them into the main branch
+    - `type`: set it as `'block'`, unless it's a StarkEx project
+    - `startBlock` (optional): if you want to start from specific block, set it here, in most cases it's block 1
+    - `assessCount` (optional): custom function to assess count of transactions in block - applies to projects that have some system transactions, like OP Stack or Orbit chains.
+  
+
+4. (Only if you are using private RPC) - if you are using private RPC, fill in the `url`
+   property with something like `https://replace.me`. After that, remember to add these variables to the Heroku config vars before merging them into the main branch. If you're an external contributor, contact the team.
 
 ### Starkex type project
 
@@ -59,11 +53,17 @@ you need to talk to devs to handle this case.
    you can go to the next step. If not, you need to talk to starkex devs to add support for your
    project.
 
-2. Next step is to fill activity config in project config file. Add `config.transactionApi` property
+2. In project config file add `chainConfig` property
    and fill it:
 
-   - `type` (required): set it as `'starkex'`
-   - `product` (required): set it for your project `product` property from swaggerhub
+   - `name` (required): set it as the project Id
+   - `chainId` (required): set it as `undefined`
+   - `apis` (required): set the `type` as `starkex` and the `product` as the product Id from the Swagger docs
+
+3. Next step is to fill activity config in project config file. Add `config.activityConfig` property
+   and fill it:
+
+   - `type` (required): set it as `'day'`
    - `sinceTimestamp` (required): from which timestamp you want to start fetching data
    - `resyncLastDays` (required): set it to 7
 

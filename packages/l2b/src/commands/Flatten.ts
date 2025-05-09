@@ -2,8 +2,15 @@ import { writeFileSync } from 'fs'
 import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { boolean, command, flag, option, positional, string } from 'cmd-ts'
+import { getExplorer } from '../implementations/common/getExplorer'
 import { fetchAndFlatten } from '../implementations/flatten'
-import { explorerApiKey, explorerType, explorerUrl } from './args'
+import {
+  chainName,
+  explorerApiKey,
+  explorerChainId,
+  explorerType,
+  explorerUrl,
+} from './args'
 import { EthereumAddressValue } from './types'
 
 export const Flatten = command({
@@ -13,9 +20,11 @@ export const Flatten = command({
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
+    chainName,
     explorerUrl,
-    type: explorerType,
-    apiKey: explorerApiKey,
+    explorerType,
+    explorerApiKey,
+    explorerChainId,
     output: option({
       type: string,
       long: 'output',
@@ -31,11 +40,10 @@ export const Flatten = command({
   },
   handler: async (args) => {
     const logger: CliLogger = new CliLogger()
+    const client = getExplorer(args)
     const flat = await fetchAndFlatten(
       args.address,
-      args.explorerUrl,
-      args.apiKey,
-      args.type,
+      client,
       logger,
       args.includeAll,
     )

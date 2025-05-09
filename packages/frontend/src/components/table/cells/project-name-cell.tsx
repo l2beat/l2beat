@@ -3,6 +3,7 @@
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/other-migration-tooltip'
@@ -123,20 +124,17 @@ function NameWithProjectInfoTooltip({
   return (
     <Tooltip>
       <TooltipTrigger>{projectName}</TooltipTrigger>
-      <TooltipContent className="flex max-w-[348px] flex-col gap-2 px-[14px]">
-        <span className="text-lg font-bold">What is {projectName}?</span>
-        <p className="text-wrap text-[13px]">{project.description}</p>
-        <div className="grid w-full grid-cols-6">
-          {project.badges?.map((badge, key) => (
-            <ProjectBadge
-              badge={badge}
-              disableInteraction
-              className="!h-auto place-items-center"
-              key={key}
-            />
-          ))}
-        </div>
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent className="flex flex-col gap-2">
+          <span className="heading-18">What is {projectName}?</span>
+          <p>{project.description}</p>
+          <div className="flex !max-w-screen-xs flex-row flex-wrap">
+            {project.badges?.map((badge, key) => (
+              <ProjectBadge key={key} badge={badge} className="!h-16" />
+            ))}
+          </div>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

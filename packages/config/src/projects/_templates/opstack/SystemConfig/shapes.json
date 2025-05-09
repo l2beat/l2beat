@@ -112,5 +112,23 @@
     "address": "0x760C48C62A85045A6B69f07F4a9f22868659CbCc",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "SystemConfig_v2_5_0": {
+    "hash": "0x921de6fc906d159fdcef862d2b9559063f5e7b9b7588fa5f33153360ddf296e7",
+    "address": "0x340f923E5c7cbB2171146f64169EC9d5a9FfE647",
+    "chain": "ethereum",
+    "blockNumber": 22346130
+  },
+  "SystemConfigCGT": {
+    "hash": "0xbc39dcaa99e0ac5d2815c68d4b71402fec659f68f2096d36220eda3402d6afdd",
+    "address": "0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D",
+    "chain": "ethereum",
+    "blockNumber": 22395854
+  },
+  "SystemConfig_v1_12_0_zircuit_2": {
+    "hash": "0x889638b8fe1fe5acdc9fc63605747e530d07ef7a0e81c151b0e3f546c24adef9",
+    "address": "0x795277B6aD8778E27aa70813157134cfC4a4D446",
+    "chain": "ethereum",
+    "blockNumber": 22438012
   }
 }

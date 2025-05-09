@@ -47,6 +47,8 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
+const chainId = 255
+
 export const kroma: ScalingProject = {
   type: 'layer2',
   id: ProjectId('kroma'),
@@ -108,14 +110,14 @@ export const kroma: ScalingProject = {
   },
   chainConfig: {
     name: 'kroma',
-    chainId: 255,
+    chainId,
     coingeckoPlatform: 'kroma',
     explorerUrl: 'https://kromascan.com',
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
     apis: [
       { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 1500 },
-      { type: 'etherscan', url: 'https://api.kromascan.com/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   config: {
@@ -247,44 +249,48 @@ export const kroma: ScalingProject = {
       rollupNodeLink: 'https://github.com/kroma-network/kroma',
     },
   ),
+  stateValidation: {
+    categories: [
+      {
+        title: 'Fraud proofs',
+        description:
+          'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. Once the single block of disagreement\
+    is found, the challenger is required to present a ZK proof of the fraud. This can be either a proof verified in a zkEVM verifier base on Scroll, or in a\
+    zkVM verifier built by Succinct SP1. If the proof is validated, the incorrect state output is deleted. The Security Council can always override the\
+    result of the challenge, it can also delete any L2 state root at any time. The protocol\
+    can fail under certain conditions.',
+        references: [
+          {
+            title:
+              'Colosseum.sol#L300 - Etherscan source code, createChallenge() function',
+            url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L374',
+          },
+          {
+            title:
+              'Colosseum.sol#L378 - Etherscan source code, bisect() function',
+            url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L452',
+          },
+          {
+            title:
+              'Colosseum.sol#L434 - Etherscan source code, proveFaultWithZkEvm() function',
+            url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L505',
+          },
+          {
+            title:
+              'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
+            url: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the cryptography is broken or implemented incorrectly.',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'Fraud Proofs ensure state correctness',
-      description:
-        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. Once the single block of disagreement\
-        is found, the challenger is required to present a ZK proof of the fraud. This can be either a proof verified in a zkEVM verifier base on Scroll, or in a\
-        zkVM verifier built by Succinct SP1. If the proof is validated, the incorrect state output is deleted. The Security Council can always override the\
-        result of the challenge, it can also delete any L2 state root at any time. The protocol\
-        can fail under certain conditions.',
-      references: [
-        {
-          title:
-            'Colosseum.sol#L300 - Etherscan source code, createChallenge() function',
-          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L374',
-        },
-        {
-          title:
-            'Colosseum.sol#L378 - Etherscan source code, bisect() function',
-          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L452',
-        },
-        {
-          title:
-            'Colosseum.sol#L434 - Etherscan source code, proveFaultWithZkEvm() function',
-          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L505',
-        },
-        {
-          title:
-            'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
-          url: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the cryptography is broken or implemented incorrectly.',
-        },
-      ],
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [

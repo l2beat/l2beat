@@ -9,6 +9,7 @@ import { BadgesSection } from '~/components/projects/sections/badges-section'
 import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
+import { EmergencyIcon } from '~/icons/emergency'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { ProjectScalingRosette } from './scaling-project-rosette'
@@ -25,7 +26,7 @@ export function ProjectScalingSummary({ project }: Props) {
       <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
-            <ProjectHeader title={project.name} slug={project.slug} />
+            <ProjectHeader project={project} />
             <div className="space-y-2">
               {project.archivedAt && <ArchivedBar />}
               {project.isUpcoming && <UpcomingBar />}
@@ -45,6 +46,14 @@ export function ProjectScalingSummary({ project }: Props) {
                 <WarningBar
                   text={project.header.redWarning}
                   color="red"
+                  className="w-full items-center justify-center p-2.5 text-xs md:text-base"
+                />
+              )}
+              {project.header.emergencyWarning && (
+                <WarningBar
+                  text={project.header.emergencyWarning}
+                  icon={EmergencyIcon}
+                  color="yellow"
                   className="w-full items-center justify-center p-2.5 text-xs md:text-base"
                 />
               )}

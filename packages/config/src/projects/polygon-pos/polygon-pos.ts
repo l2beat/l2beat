@@ -37,6 +37,8 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
   'validatorThreshold',
 )
 
+const chainId = 137
+
 export const polygonpos: ScalingProject = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
@@ -119,7 +121,7 @@ export const polygonpos: ScalingProject = {
   },
   chainConfig: {
     name: 'polygonpos',
-    chainId: 137,
+    chainId,
     explorerUrl: 'https://polygonscan.com',
     multicallContracts: [
       {
@@ -135,7 +137,7 @@ export const polygonpos: ScalingProject = {
         url: 'https://polygon.llamarpc.com',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.polygonscan.com/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://polygon.blockscout.com/api/v2' },
     ],
   },
@@ -159,32 +161,36 @@ export const polygonpos: ScalingProject = {
         RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
         ` In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of ${currentValidatorSetSize} members.`,
     },
-    proposerFailure: RISK_VIEW.PROPOSER_POLYGON_POS(
+    proposerFailure: RISK_VIEW.PROPOSER_POS(
       currentValidatorSetSize,
       currentValidatorSetCap,
     ),
   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description:
-        'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
-        },
-      ],
-    },
     // dataAvailability: {},
     //operator: {},
     //forceTransactions: {},

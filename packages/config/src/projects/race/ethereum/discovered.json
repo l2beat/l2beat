@@ -1,8 +1,8 @@
 {
   "name": "race",
   "chain": "ethereum",
-  "blockNumber": 21242938,
-  "configHash": "0xb1320b58c32f881ed5b6480227b97b8b0a3c28813e65bec808d6dd466079c099",
+  "blockNumber": 22346290,
+  "configHash": "0x99dd88bc9c5b4f61d386cd28fccf453d9136c4b559a7c2b79f975a8aa77bc7c8",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -20,18 +20,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x2E7B9465B25C081c07274A31DbD05C6146f67961",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1720427159,
       "sinceBlock": 20260590,
@@ -53,8 +41,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 21217222
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 22197455
         },
         "paused": false,
         "superchainConfig": "0xCB73B7348705a9F925643150Eb00350719380FF8",
@@ -62,7 +50,10 @@
         "systemConfig": "0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32",
         "version": "2.5.0"
       },
-      "derivedName": "OptimismPortal",
+      "implementationNames": {
+        "0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9": "Proxy",
+        "0xF3C933F69a43f5a967062448F62b736043b5dEf5": "OptimismPortal"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -76,13 +67,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "sinceTimestamp": 1720427231,
       "sinceBlock": 20260596,
       "values": {
@@ -104,7 +88,10 @@
         "superchainConfig": "0xCB73B7348705a9F925643150Eb00350719380FF8",
         "version": "2.1.0"
       },
-      "derivedName": "L1ERC721Bridge",
+      "implementationNames": {
+        "0x0f33D824d74180598311b3025095727BeA61f219": "Proxy",
+        "0x122cdded0fc84aD675B55f212e114A4B2e6879ee": "L1ERC721Bridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -118,13 +105,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "sinceTimestamp": 1720427219,
       "sinceBlock": 20260595,
       "values": {
@@ -142,7 +122,10 @@
         "BRIDGE": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
         "version": "1.9.0"
       },
-      "derivedName": "OptimismMintableERC20Factory"
+      "implementationNames": {
+        "0x1d1c4C89AD5FF486c3C67E3DD84A22CF05420711": "Proxy",
+        "0x6291F75ea1E525FF9bA50AE09a82BC23DE9b9850": "OptimismMintableERC20Factory"
+      }
     },
     {
       "address": "0x2d9e4b8573713f4DCF3865878E5c08974253B477",
@@ -194,7 +177,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x2E7B9465B25C081c07274A31DbD05C6146f67961": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "AddressManager",
@@ -206,21 +192,15 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "sinceTimestamp": 1720427027,
       "sinceBlock": 20260579,
       "values": {
         "$immutable": true,
         "owner": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -301,10 +281,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x601369492A8cdEBe66B58d16DDF58Bfa0A88b909",
@@ -322,14 +305,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "sinceTimestamp": 1720427195,
       "sinceBlock": 20260593,
       "values": {
@@ -346,7 +321,10 @@
         "superchainConfig": "0xCB73B7348705a9F925643150Eb00350719380FF8",
         "version": "2.1.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a": "L1ChugSplashProxy",
+        "0x4E40ee3E2f8ff7A915c23473D0C256ADc77fa03F": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -381,23 +359,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0x2E7B9465B25C081c07274A31DbD05C6146f67961",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x88D58BFbCD70c25409b67117fC1CDfeFDA113a78",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -424,10 +385,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 5923800,
-        "latestOutputIndex": 3290,
-        "nextBlockNumber": 5925600,
-        "nextOutputIndex": 3291,
+        "latestBlockNumber": 12578400,
+        "latestOutputIndex": 6987,
+        "nextBlockNumber": 12580200,
+        "nextOutputIndex": 6988,
         "proposer": "0x88D58BFbCD70c25409b67117fC1CDfeFDA113a78",
         "PROPOSER": "0x88D58BFbCD70c25409b67117fC1CDfeFDA113a78",
         "startingBlockNumber": 0,
@@ -444,7 +405,10 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
-      "derivedName": "L2OutputOracle",
+      "implementationNames": {
+        "0x8bF8442d49d52377d735a90F19657a29f29aA83c": "Proxy",
+        "0x22f3BB2c9E8540FD47B4Ab83F74E0E838e1756A2": "L2OutputOracle"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -516,7 +480,9 @@
         "isUpgrading": false,
         "owner": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191": "ProxyAdmin"
+      }
     },
     {
       "address": "0x9b5639D472D6764b70F5046Ac0B13438718398E0",
@@ -566,7 +532,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xcB02bacC44e8f2b71b6eD3706263E23581D70159",
@@ -584,18 +553,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x2E7B9465B25C081c07274A31DbD05C6146f67961",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "sinceTimestamp": 1720427075,
       "sinceBlock": 20260583,
       "values": {
@@ -615,7 +572,10 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
-      "derivedName": "SuperchainConfig",
+      "implementationNames": {
+        "0xCB73B7348705a9F925643150Eb00350719380FF8": "Proxy",
+        "0x13BC171e3014355969Fa022e33839653829697C2": "SuperchainConfig"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -625,54 +585,58 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
+        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0x8CDa8351236199AF7532baD53D683Ddd9B275d89",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
-          "via": [{ "address": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1720427183,
       "sinceBlock": 20260592,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
-        "$implementation": "0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2",
+        "$implementation": "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
         "$pastUpgrades": [
           [
             "2024-07-08T08:29:23.000Z",
             "0x3d2be3c5ca9e5dd726fde8d99662c3a271b676377d58e6784617cab843668e9c",
             ["0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2"]
+          ],
+          [
+            "2025-04-24T15:12:59.000Z",
+            "0x1219b34d44c22cc95607948fa43919e4015c77fb6ae8aeda540a4fbf11636242",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-04-24T15:12:59.000Z",
+            "0x1219b34d44c22cc95607948fa43919e4015c77fb6ae8aeda540a4fbf11636242",
+            ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
+        "basefeeScalar": 1101,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x8CDa8351236199AF7532baD53D683Ddd9B275d89",
         "batchInbox": "0xFF00000000000000000000000000000000006805",
+        "blobbasefeeScalar": 659851,
+        "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
+        "disputeGameFactory": "0x0000000000000000000000000000000000000000",
+        "eip1559Denominator": 0,
+        "eip1559Elasticity": 0,
         "gasLimit": 30000000,
+        "gasPayingToken": {
+          "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "decimals_": 18
+        },
+        "gasPayingTokenName": "Ether",
+        "gasPayingTokenSymbol": "ETH",
+        "isCustomGasToken": false,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
         "l1CrossDomainMessenger": "0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89",
         "l1ERC721Bridge": "0x0f33D824d74180598311b3025095727BeA61f219",
         "l1StandardBridge": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
-        "L2_OUTPUT_ORACLE_SLOT": "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815",
-        "l2OutputOracle": "0x8bF8442d49d52377d735a90F19657a29f29aA83c",
+        "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
@@ -699,7 +663,7 @@
         "startBlock": 20260607,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x9b5639D472D6764b70F5046Ac0B13438718398E0",
-        "version": "1.12.0",
+        "version": "2.3.0",
         "VERSION": 0
       },
       "fieldMeta": {
@@ -708,7 +672,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32": "Proxy",
+        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -737,7 +704,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619801",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619831",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -755,7 +722,10 @@
         "superchainConfig": "0xCB73B7348705a9F925643150Eb00350719380FF8",
         "version": "2.3.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89": "ResolvedDelegateProxy",
+        "0x01Dae1EFfB0D0469fC4a9695866D5cc75190e385": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -990,6 +960,57 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
+    "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": [
+      "constructor()",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BATCH_INBOX_SLOT() view returns (bytes32)",
+      "function DISPUTE_GAME_FACTORY_SLOT() view returns (bytes32)",
+      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
+      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
+      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
+      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
+      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
+      "function START_BLOCK_SLOT() view returns (bytes32)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batchInbox() view returns (address addr_)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function disputeGameFactory() view returns (address addr_)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function gasPayingToken() view returns (address addr_, uint8 decimals_)",
+      "function gasPayingTokenName() view returns (string name_)",
+      "function gasPayingTokenSymbol() view returns (string symbol_)",
+      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address disputeGameFactory, address optimismPortal, address optimismMintableERC20Factory, address gasPayingToken) _addresses)",
+      "function isCustomGasToken() view returns (bool)",
+      "function l1CrossDomainMessenger() view returns (address addr_)",
+      "function l1ERC721Bridge() view returns (address addr_)",
+      "function l1StandardBridge() view returns (address addr_)",
+      "function maximumGasLimit() pure returns (uint64)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function optimismMintableERC20Factory() view returns (address addr_)",
+      "function optimismPortal() view returns (address addr_)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address addr_)",
+      "function version() pure returns (string)"
+    ],
     "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9": [
       "constructor(address _singleton)"
     ],
@@ -1062,47 +1083,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2": [
-      "constructor()",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function BATCH_INBOX_SLOT() view returns (bytes32)",
-      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
-      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
-      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
-      "function L2_OUTPUT_ORACLE_SLOT() view returns (bytes32)",
-      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
-      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
-      "function START_BLOCK_SLOT() view returns (bytes32)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function batchInbox() view returns (address addr_)",
-      "function batcherHash() view returns (bytes32)",
-      "function gasLimit() view returns (uint64)",
-      "function initialize(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address l2OutputOracle, address optimismPortal, address optimismMintableERC20Factory) _addresses)",
-      "function l1CrossDomainMessenger() view returns (address addr_)",
-      "function l1ERC721Bridge() view returns (address addr_)",
-      "function l1StandardBridge() view returns (address addr_)",
-      "function l2OutputOracle() view returns (address addr_)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function optimismMintableERC20Factory() view returns (address addr_)",
-      "function optimismPortal() view returns (address addr_)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function startBlock() view returns (uint256 startBlock_)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() view returns (string)"
-    ],
     "0xF3C933F69a43f5a967062448F62b736043b5dEf5": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -1135,16 +1115,17 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
-    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
-    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
-    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
-    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
-    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
+    "opstack/L2OutputOracle": "0xdc22201273b90a248801424705d5602a5e68d8c60a2eaa84ca3ce386f9b71942",
+    "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal": "0x6887b4bbf169bbbc6b50b3dcc2ceff2da0df7a824a84827301b57063bc0f1ba9",
+    "opstack/SuperchainConfigFake": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
+  },
+  "permissionsConfigHash": "0xc04ffbca10955c4a958488780f732b6475ce256204f120dbf5ef6f2a61965a4b"
 }

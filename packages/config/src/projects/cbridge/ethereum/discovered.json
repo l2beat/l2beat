@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0xb9817ee794c7a7a392995f32ec79776173edfd22215474ffb08bcd494c586899",
+  "configHash": "0xa66711553f43bfd31d314df0fefd58688c7807b3c8a34c25102eec0dc741e6b7",
   "entries": [
     {
       "name": "PeggedTokenBridge",
@@ -22,7 +22,9 @@
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       },
-      "derivedName": "PeggedTokenBridge"
+      "implementationNames": {
+        "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB": "PeggedTokenBridge"
+      }
     },
     {
       "name": "SentinelAdmin",
@@ -49,13 +51,6 @@
         "0x985f30f6f1cec4239d77034618e116e07dae859f0ded01ba80f897dadb7101f3"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1649432556,
       "sinceBlock": 14546010,
       "values": {
@@ -85,7 +80,10 @@
         "preExecuteMessageGasUsage": 0,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       },
-      "derivedName": "MessageBus"
+      "implementationNames": {
+        "0x4066D196A423b2b3B8B054f4F40efB47a74E200C": "OptimizedTransparentUpgradeableProxy",
+        "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8": "MessageBus"
+      }
     },
     {
       "address": "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
@@ -112,7 +110,9 @@
         "$immutable": true,
         "owner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f": "ProxyAdmin"
+      }
     },
     {
       "name": "PeggedTokenBridgeV2",
@@ -132,7 +132,9 @@
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       },
-      "derivedName": "PeggedTokenBridgeV2"
+      "implementationNames": {
+        "0x52E4f244f380f8fA51816c8a10A63105dd4De084": "PeggedTokenBridgeV2"
+      }
     },
     {
       "name": "Liquidity Network",
@@ -172,7 +174,9 @@
         "ssHash": "0x2873508ac0686ac90ca233a0e1279190271073db2b081aea5ce736f7ed8ae6b2",
         "triggerTime": 1736781066
       },
-      "derivedName": "Bridge"
+      "implementationNames": {
+        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Bridge"
+      }
     },
     {
       "name": "MessageBusOwner",
@@ -200,7 +204,9 @@
         "MIN_ACTIVE_PERIOD": 3600,
         "THRESHOLD_DECIMAL": 100
       },
-      "derivedName": "MessageBusOwner"
+      "implementationNames": {
+        "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": "MessageBusOwner"
+      }
     },
     {
       "name": "OriginalTokenVaultV2",
@@ -221,7 +227,9 @@
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       },
-      "derivedName": "OriginalTokenVaultV2"
+      "implementationNames": {
+        "0x7510792A3B1969F9307F3845CE88e39578f2bAE1": "OriginalTokenVaultV2"
+      }
     },
     {
       "address": "0x83039377ddD862821d92d416b2DDB9EFb5BA9000",
@@ -254,7 +262,9 @@
         "$immutable": true,
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x8E339115b295DeD49880eA62C1F06d1dbec3496b": "ProxyAdmin"
+      }
     },
     {
       "address": "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
@@ -275,7 +285,9 @@
         "$immutable": true,
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       },
-      "derivedName": "TransferAgent"
+      "implementationNames": {
+        "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": "TransferAgent"
+      }
     },
     {
       "address": "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
@@ -313,7 +325,9 @@
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       },
-      "derivedName": "OriginalTokenVault"
+      "implementationNames": {
+        "0xB37D31b2A74029B5951a2778F959282E2D518595": "OriginalTokenVault"
+      }
     },
     {
       "address": "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
@@ -340,13 +354,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-          "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
-        }
-      ],
       "sinceTimestamp": 1691384579,
       "sinceBlock": 17860848,
       "values": {
@@ -400,7 +407,10 @@
           "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)"
         }
       },
-      "derivedName": "Sentinel"
+      "implementationNames": {
+        "0xF140024969F6c76494a78518D9a99c8776B55f70": "OptimizedTransparentUpgradeableProxy",
+        "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896": "Sentinel"
+      }
     },
     {
       "name": "SimpleGovernance",
@@ -444,7 +454,9 @@
         "nextProposalId": 93,
         "THRESHOLD_DECIMAL": 100
       },
-      "derivedName": "SimpleGovernance"
+      "implementationNames": {
+        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": "SimpleGovernance"
+      }
     }
   ],
   "abis": {
@@ -976,6 +988,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb"
-  }
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148"
+  },
+  "permissionsConfigHash": "0xe37452469982e707cd693f7c5e37ac023574e202f90df5c8b903f4ad05386223"
 }

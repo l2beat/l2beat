@@ -2,7 +2,7 @@
   "name": "polygon-pos",
   "chain": "ethereum",
   "blockNumber": 22265851,
-  "configHash": "0xfba16c0dc612bd5c19fc3ce01e440d7b94b79b080635916cded3f12527052c9b",
+  "configHash": "0x7ebf4291642ef1fd8093bf03b1b61e3a48aa6019d1ee89f2c93cf58dfeb4883d",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -14,13 +14,6 @@
         "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598437004,
       "sinceBlock": 10735475,
       "values": {
@@ -68,7 +61,10 @@
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
       },
-      "derivedName": "ERC1155Predicate"
+      "implementationNames": {
+        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": "ERC1155PredicateProxy",
+        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d": "ERC1155Predicate"
+      }
     },
     {
       "address": "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
@@ -91,7 +87,9 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08"
       },
-      "derivedName": "CustomPredicate"
+      "implementationNames": {
+        "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate"
+      }
     },
     {
       "address": "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
@@ -118,7 +116,9 @@
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
       },
-      "derivedName": "ERC20EscrowPredicate"
+      "implementationNames": {
+        "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4": "ERC20EscrowPredicate"
+      }
     },
     {
       "name": "StateSender",
@@ -150,17 +150,22 @@
           "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
         ]
       },
-      "derivedName": "StateSender"
+      "implementationNames": {
+        "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "WithdrawManager",
       "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
       "type": "Contract",
+      "template": "polygonposbridge/WithdrawManager",
       "sourceHashes": [
         "0x05029129ea02d46e1d659b46c83ec5822b7d15f5d332a3dd100436ebeabb01b4",
         "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
       ],
       "proxyType": "EIP897 proxy",
+      "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.",
       "sinceTimestamp": 1590850831,
       "sinceBlock": 10167782,
       "values": {
@@ -175,7 +180,11 @@
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2
       },
-      "derivedName": "WithdrawManager"
+      "implementationNames": {
+        "0x2A88696e0fFA76bAA1338F2C74497cC013495922": "WithdrawManagerProxy",
+        "0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168": "WithdrawManager"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "MintableERC1155Predicate",
@@ -186,13 +195,6 @@
         "0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613107769,
       "sinceBlock": 11839898,
       "values": {
@@ -240,7 +242,10 @@
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
       },
-      "derivedName": "MintableERC1155Predicate"
+      "implementationNames": {
+        "0x2d641867411650cd05dB93B59964536b1ED5b1B7": "MintableERC1155PredicateProxy",
+        "0xFD47E7d657b07B071C3362bBCe908a70895EE747": "MintableERC1155Predicate"
+      }
     },
     {
       "address": "0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
@@ -273,7 +278,9 @@
         "getWithdrawManagerAddress": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
         "governance": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
       },
-      "derivedName": "Registry"
+      "implementationNames": {
+        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71": "Registry"
+      }
     },
     {
       "name": "ERC721PredicateBurnOnly",
@@ -286,7 +293,9 @@
       "sinceTimestamp": 1724593763,
       "sinceBlock": 20606009,
       "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" },
-      "derivedName": "ERC721PredicateBurnOnly"
+      "implementationNames": {
+        "0x36C2503d53C6948331144b85D1e74a3B96731d1b": "ERC721PredicateBurnOnly"
+      }
     },
     {
       "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
@@ -304,14 +313,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "description": "can update the root chain it references.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1590850640,
       "sinceBlock": 10167767,
       "values": {
@@ -329,7 +330,10 @@
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
       },
-      "derivedName": "DepositManager"
+      "implementationNames": {
+        "0x401F6c983eA34274ec46f84D70b31C151321188b": "DepositManagerProxy",
+        "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc": "DepositManager"
+      }
     },
     {
       "name": "ERC20Predicate",
@@ -341,13 +345,6 @@
         "0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436664,
       "sinceBlock": 10735445,
       "values": {
@@ -394,7 +391,10 @@
         "TOKEN_TYPE": "0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
       },
-      "derivedName": "ERC20Predicate"
+      "implementationNames": {
+        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20PredicateProxy",
+        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB": "ERC20Predicate"
+      }
     },
     {
       "address": "0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
@@ -416,12 +416,15 @@
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
       },
-      "derivedName": "PolygonERC20MintBurnPredicate"
+      "implementationNames": {
+        "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5": "PolygonERC20MintBurnPredicate"
+      }
     },
     {
       "name": "StakingNFT",
       "address": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
       "type": "Contract",
+      "template": "polygonposbridge/StakingNFT",
       "sourceHashes": [
         "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
       ],
@@ -450,7 +453,9 @@
         "tokenURI": ["", "", "", ""],
         "totalSupply": 127
       },
-      "derivedName": "StakingNFT"
+      "implementationNames": {
+        "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT"
+      }
     },
     {
       "name": "RootChainInitialImplementation",
@@ -474,7 +479,9 @@
         "owner": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
         "VOTE_TYPE": 2
       },
-      "derivedName": "RootChain"
+      "implementationNames": {
+        "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": "RootChain"
+      }
     },
     {
       "name": "StakeManager",
@@ -485,13 +492,6 @@
         "0x5b260eb8b498c90359fa555e522f2fdd615857ea55e37c785de7da84915bfa7d"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -613,7 +613,10 @@
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
       },
-      "derivedName": "StakeManager"
+      "implementationNames": {
+        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManagerProxy",
+        "0x3AD88467E40399dc6Ae10427f8B0842348d9076c": "StakeManager"
+      }
     },
     {
       "name": "ERC20PredicateBurnOnly",
@@ -626,7 +629,9 @@
       "sinceTimestamp": 1724593763,
       "sinceBlock": 20606009,
       "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" },
-      "derivedName": "ERC20PredicateBurnOnly"
+      "implementationNames": {
+        "0x626fb210bf50e201ED62cA2705c16DE2a53DC966": "ERC20PredicateBurnOnly"
+      }
     },
     {
       "address": "0x62a8029CDAf8576e337b86187B82474EFcE712d8",
@@ -642,13 +647,6 @@
         "0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1616774452,
       "sinceBlock": 12115587,
       "values": {
@@ -672,7 +670,10 @@
         "proxyType": 2,
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
       },
-      "derivedName": "EventsHub"
+      "implementationNames": {
+        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b": "EventsHubProxy",
+        "0x0672777617CAA1E778083a4f74eBC997262C9EdD": "EventsHub"
+      }
     },
     {
       "name": "Governance",
@@ -695,7 +696,11 @@
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2
       },
-      "derivedName": "Governance"
+      "implementationNames": {
+        "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48": "GovernanceProxy",
+        "0x98165b71cdDea047C0A49413350C40571195fd07": "Governance"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ValidatorShare",
@@ -731,7 +736,9 @@
         "withdrawPool": 0,
         "withdrawShares": 0
       },
-      "derivedName": "ValidatorShare"
+      "implementationNames": {
+        "0x7e94d6cAbb20114b22a088d828772645f68CC67B": "ValidatorShare"
+      }
     },
     {
       "address": "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
@@ -753,13 +760,6 @@
         "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598437971,
       "sinceBlock": 10735538,
       "values": {
@@ -811,7 +811,10 @@
         "TOKEN_TYPE": "0xa234e09165f88967a714e2a476288e4c6d88b4b69fe7c300a03190b858990bfc",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
       },
-      "derivedName": "EtherPredicate"
+      "implementationNames": {
+        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30": "EtherPredicateProxy",
+        "0xeB185ED8f664D105903EF434E5becd214a8AC874": "EtherPredicate"
+      }
     },
     {
       "name": "RootChain",
@@ -824,14 +827,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "description": "can delete arbitrary checkpoints.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
@@ -859,7 +854,11 @@
         "proxyType": 2,
         "VOTE_TYPE": 2
       },
-      "derivedName": "RootChain"
+      "implementationNames": {
+        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChainProxy",
+        "0x536c55cFe4892E581806e10b38dFE8083551bd03": "RootChain"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
@@ -881,13 +880,6 @@
         "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436896,
       "sinceBlock": 10735465,
       "values": {
@@ -957,7 +949,10 @@
         "TRANSFER_WITH_METADATA_EVENT_SIG": "0xf94915c6d1fd521cee85359239227480c7e8776d7caf1fc3bacad5c269b66a14",
         "WITHDRAW_BATCH_EVENT_SIG": "0xf871896b17e9cb7a64941c62c188a4f5c621b86800e3d15452ece01ce56073df"
       },
-      "derivedName": "MintableERC721Predicate"
+      "implementationNames": {
+        "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7": "MintableERC721PredicateProxy",
+        "0xba31389292f7EdfC7b60B937b97014b4C354689b": "MintableERC721Predicate"
+      }
     },
     {
       "name": "MintableERC20Predicate",
@@ -968,13 +963,6 @@
         "0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613100777,
       "sinceBlock": 11839404,
       "values": {
@@ -1011,7 +999,10 @@
         "TOKEN_TYPE": "0x5ffef61af1560b9aefc0e42aaa0f9464854ab113ab7b8bfab271be94cdb1d053",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
       },
-      "derivedName": "MintableERC20Predicate"
+      "implementationNames": {
+        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": "MintableERC20PredicateProxy",
+        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae": "MintableERC20Predicate"
+      }
     },
     {
       "name": "RootChainManager",
@@ -1024,13 +1015,6 @@
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436547,
       "sinceBlock": 10735437,
       "values": {
@@ -1128,7 +1112,10 @@
         "proxyType": 2,
         "stateSenderAddress": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
       },
-      "derivedName": "RootChainManager"
+      "implementationNames": {
+        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManagerProxy",
+        "0x639f13D5f30B47c792b6851238c05D0b623C77DE": "RootChainManager"
+      }
     },
     {
       "address": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
@@ -1152,7 +1139,9 @@
         "symbol": "WETH",
         "totalSupply": "104824536332009474889"
       },
-      "derivedName": "MaticWETH"
+      "implementationNames": {
+        "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
+      }
     },
     {
       "name": "StakingInfo",
@@ -1176,7 +1165,9 @@
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
       },
-      "derivedName": "StakingInfo"
+      "implementationNames": {
+        "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo"
+      }
     },
     {
       "name": "MerklePatriciaProof",
@@ -1189,7 +1180,9 @@
       "sinceTimestamp": 1598436340,
       "sinceBlock": 10735421,
       "values": { "$immutable": true },
-      "derivedName": "MerklePatriciaProof"
+      "implementationNames": {
+        "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa": "MerklePatriciaProof"
+      }
     },
     {
       "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
@@ -1212,7 +1205,9 @@
       "sinceTimestamp": 1593189596,
       "sinceBlock": 10342570,
       "values": { "$immutable": true },
-      "derivedName": "ValidatorShareFactory"
+      "implementationNames": {
+        "0xc4FA447A0e77Eff9717b09C057B40570813bb642": "ValidatorShareFactory"
+      }
     },
     {
       "name": "Timelock",
@@ -1302,7 +1297,9 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
-      "derivedName": "Timelock"
+      "implementationNames": {
+        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock"
+      }
     },
     {
       "address": "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
@@ -1318,7 +1315,9 @@
       "sinceTimestamp": 1590839660,
       "sinceBlock": 10166989,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861": ""
+      }
     },
     {
       "name": "ChainExitERC1155Predicate",
@@ -1329,13 +1328,6 @@
         "0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1630304491,
       "sinceBlock": 13125225,
       "values": {
@@ -1357,7 +1349,10 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0x316d3b16328ca1dbcc5aeb9caf982584129f3ad000dc7219dd7dd6727f72fe93"
       },
-      "derivedName": "ChainExitERC1155Predicate"
+      "implementationNames": {
+        "0xDB2382413bCb9c2F1B6b62B52238558266361D68": "ChainExitERC1155PredicateProxy",
+        "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f": "ChainExitERC1155Predicate"
+      }
     },
     {
       "name": "ExitNFT",
@@ -1372,7 +1367,9 @@
       "sinceTimestamp": 1590850785,
       "sinceBlock": 10167778,
       "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
-      "derivedName": "ExitNFT"
+      "implementationNames": {
+        "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT"
+      }
     },
     {
       "name": "ERC721Predicate",
@@ -1383,13 +1380,6 @@
         "0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"
       ],
       "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1598436766,
       "sinceBlock": 10735454,
       "values": {
@@ -1442,7 +1432,10 @@
         "TOKEN_TYPE": "0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
       },
-      "derivedName": "ERC721Predicate"
+      "implementationNames": {
+        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": "ERC721PredicateProxy",
+        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072": "ERC721Predicate"
+      }
     },
     {
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -1499,7 +1492,9 @@
         "validatorThreshold": 0,
         "WITHDRAWAL_DELAY": 0
       },
-      "derivedName": "StakeManagerExtension"
+      "implementationNames": {
+        "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension"
+      }
     },
     {
       "address": "0xf748a187303940856A367D57Dc45D1ac4A597305",
@@ -1547,7 +1542,10 @@
         "nonce": 218,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     }
   ],
   "abis": {
@@ -2708,6 +2706,9 @@
     "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
-    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
-  }
+    "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
+    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
+    "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "permissionsConfigHash": "0xefff9569e0e0e983031a205e00531e80e4b72d65db2da60f41dd3ab7cd808a95"
 }

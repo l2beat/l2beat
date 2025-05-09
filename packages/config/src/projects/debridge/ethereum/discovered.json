@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "blockNumber": 19531527,
-  "configHash": "0x80d0f4e865ec26f81ea1c609d2fa2d992ef9a3d555f57e63945415922f52b2f6",
+  "configHash": "0xa40775ce54bb1985f01ed315b5fd10453da1c4cd7bfc9c82fe526b90d767190e",
   "entries": [
     {
       "address": "0x1c0720B124e7251e881a0fbCfe259d085C59f205",
@@ -28,13 +28,6 @@
         "0xcd8bce7612cc46b4eb6dae7d913880fdd47ee8fcd03d90bd5d99fe145638685c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1637595390,
       "sinceBlock": 13665321,
@@ -97,7 +90,10 @@
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wethGate": "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59"
       },
-      "derivedName": "DeBridgeGate"
+      "implementationNames": {
+        "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": "TransparentUpgradeableProxy",
+        "0x797161BCC625155D2302251404ccB93c2632658e": "DeBridgeGate"
+      }
     },
     {
       "address": "0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
@@ -158,7 +154,10 @@
         "nonce": 47,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x6f572a24c5C009fC8C844Fab5352edf79F132FBD",
@@ -174,13 +173,6 @@
         "0x90a8fe0eeb8f61a691fd579cb10499f4fd9167497e9aeab3b1ce4f6427fabc96"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637613802,
       "sinceBlock": 13666681,
       "values": {
@@ -201,7 +193,10 @@
         "tokenImplementation": "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
         "version": 110
       },
-      "derivedName": "DeBridgeTokenDeployer"
+      "implementationNames": {
+        "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": "TransparentUpgradeableProxy",
+        "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491": "DeBridgeTokenDeployer"
+      }
     },
     {
       "address": "0x83f81E7f9E284AAFFEDED797008663595f7342bF",
@@ -227,13 +222,6 @@
         "0xd67e23441d8b22dcf363c048ad14a86a4de64b242cb242fd7ef0fa11da2cb6ff"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637625277,
       "sinceBlock": 13667557,
       "values": {
@@ -278,7 +266,10 @@
         "submissionNativeSender": "0x",
         "version": 423
       },
-      "derivedName": "CallProxy"
+      "implementationNames": {
+        "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824": "TransparentUpgradeableProxy",
+        "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": "CallProxy"
+      }
     },
     {
       "name": "SignatureVerifier",
@@ -289,13 +280,6 @@
         "0xbda27aaf69ce4f365f73f0436a7e06bffede3a693579569ec42ae41718b94c75"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"],
       "sinceTimestamp": 1637621914,
       "sinceBlock": 13667289,
@@ -339,7 +323,10 @@
         "submissionsInBlock": 1,
         "version": 201
       },
-      "derivedName": "SignatureVerifier"
+      "implementationNames": {
+        "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": "TransparentUpgradeableProxy",
+        "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": "SignatureVerifier"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -370,7 +357,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xa0D6062Be29710c666aE850395Ac1A2AeCd14885": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5",
@@ -391,13 +381,6 @@
         "0xc18d3818f9e809ced3dcce60fbe4287220ce2fced4f6c66711de5e704738bb9a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637651844,
       "sinceBlock": 13669463,
       "values": {
@@ -423,7 +406,10 @@
         "treasury": "0xa0D6062Be29710c666aE850395Ac1A2AeCd14885",
         "version": 400
       },
-      "derivedName": "SimpleFeeProxy"
+      "implementationNames": {
+        "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636": "TransparentUpgradeableProxy",
+        "0x37a52ddb753c924f8C914de65ef00b5210Caa83C": "SimpleFeeProxy"
+      }
     },
     {
       "address": "0xC351f905d810Cb33c54fE771e1bE4ec5A5048c2D",
@@ -453,7 +439,9 @@
         "symbol": "symbol",
         "totalSupply": 0
       },
-      "derivedName": "DeBridgeToken"
+      "implementationNames": {
+        "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B": "DeBridgeToken"
+      }
     },
     {
       "address": "0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C",
@@ -506,7 +494,9 @@
         "$immutable": true,
         "owner": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe": "ProxyAdmin"
+      }
     },
     {
       "address": "0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7",
@@ -940,5 +930,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x1aaef14f22755c97aae2965ae1d0b08dc0347931f7e3f3e9e9a7fe1237978153"
 }

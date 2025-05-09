@@ -5,6 +5,7 @@ import {
   type EntryParameters,
   type TemplateService,
   getChainShortName,
+  getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
 } from '@l2beat/discovery'
@@ -18,9 +19,9 @@ import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import type {
-  AddressFieldValue,
   ApiAbiEntry,
   ApiAddressEntry,
+  ApiAddressReference,
   ApiAddressType,
   ApiProjectChain,
   ApiProjectContract,
@@ -66,8 +67,8 @@ export function getProject(
   )
 
   const response: ApiProjectResponse = { entries: [] }
+  const meta = getMeta(data.map((x) => x.discovery))
   for (const { chain, config, discovery } of data) {
-    const meta = getMeta([discovery])
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
@@ -89,6 +90,8 @@ export function getProject(
           templateService.loadContractTemplateColor(entry.template),
         )
 
+        const template = getTemplate(templateService, entry)
+
         return contractFromDiscovery(
           chain,
           meta,
@@ -96,6 +99,7 @@ export function getProject(
           contractConfig,
           contractColorConfig,
           discovery.abis,
+          template,
         )
       })
       .sort(orderAddressEntries)
@@ -115,15 +119,17 @@ export function getProject(
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
         .filter((x) => x.address !== EthereumAddress.ZERO)
-        .map(
-          (x): ApiAddressEntry => ({
+        .map((x): ApiAddressEntry => {
+          const roles = getRoles(x)
+          return {
             name: x.name || undefined,
-            type: 'EOA',
+            type: roles.length > 0 ? 'EOAPermissioned' : 'EOA',
+            roles: roles,
             description: x.description,
             referencedBy: [],
             address: toAddress(chain, x.address),
-          }),
-        )
+          }
+        })
         .sort(orderAddressEntries),
       blockNumber: discovery.blockNumber,
     } satisfies ApiProjectChain
@@ -131,6 +137,38 @@ export function getProject(
   }
   populateReferencedBy(response.entries)
   return response
+}
+
+function getRoles(entry: EntryParameters): string[] {
+  const roles = entry.receivedPermissions?.map((p) => p.permission)
+  const notRoles = ['member', 'act', 'interact']
+
+  return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
+}
+
+function getTemplate(
+  templateService: TemplateService,
+  contract: EntryParameters,
+): ApiProjectContract['template'] {
+  if (!contract.template) {
+    return
+  }
+
+  const shape = getShapeFromOutputEntry(templateService, contract)
+
+  if (!shape) {
+    return {
+      id: contract.template,
+    }
+  }
+
+  return {
+    id: contract.template,
+    shape: {
+      name: shape.name,
+      hasCriteria: shape.criteria !== undefined,
+    },
+  }
 }
 
 function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
@@ -153,6 +191,7 @@ function contractFromDiscovery(
   contractConfig: ContractConfig,
   contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
+  template: ApiProjectContract['template'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -170,7 +209,7 @@ function contractFromDiscovery(
     .map(
       ([name, value]): Field => ({
         name,
-        value: fixAddresses(parseFieldValue(value, meta), chain),
+        value: parseFieldValue(value, meta, chain),
         ...getFieldInfo(name),
       }),
     )
@@ -189,7 +228,9 @@ function contractFromDiscovery(
   return {
     name: getContractName(contract),
     type: getContractType(contract),
-    template: contract.template,
+    roles: getRoles(contract),
+    template: template,
+    proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
     address: toAddress(chain, contract.address),
@@ -199,6 +240,7 @@ function contractFromDiscovery(
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     sources: [],
+    implementationNames: contract.implementationNames,
   }
 }
 
@@ -219,56 +261,41 @@ function abiEntry(entry: string): ApiAbiEntry {
   }
 }
 
-function fixAddresses(value: FieldValue, chain: string): FieldValue {
-  if (value.type === 'object') {
-    return {
-      type: 'object',
-      value: Object.fromEntries(
-        Object.entries(value.value).map(([key, value]) => [
-          key,
-          fixAddresses(value, chain),
-        ]),
-      ),
-    }
-  } else if (value.type === 'array') {
-    return {
-      type: 'array',
-      values: value.values.map((value) => fixAddresses(value, chain)),
-    }
-  } else if (value.type === 'address') {
-    return {
-      ...value,
-      address: toAddress(chain, value.address),
-    }
-  }
-  return value
-}
-
 function populateReferencedBy(chains: ApiProjectChain[]) {
-  const referencedBy = new Map<string, AddressFieldValue[]>()
+  const referencedBy = new Map<string, ApiAddressReference[]>()
   for (const chain of chains) {
     for (const contract of [
       ...chain.initialContracts,
       ...chain.discoveredContracts,
     ]) {
-      const field: AddressFieldValue = {
-        type: 'address',
-        name: contract.name,
-        address: contract.address,
-        addressType: contract.type,
-      }
-      const relatives = getAddresses(
-        contract.fields.map((x) => x.value),
-      ).filter((x, i, a) => a.indexOf(x) === i)
-      for (const relative of relatives) {
-        if (relative === contract.address) {
-          continue
-        }
-        const refs = referencedBy.get(relative)
-        if (refs) {
-          refs.push(field)
-        } else {
-          referencedBy.set(relative, [field])
+      for (const field of contract.fields) {
+        const addresses = getAddresses([field.value])
+        for (const address of addresses) {
+          if (address === contract.address) {
+            continue
+          }
+
+          const ref: ApiAddressReference = {
+            type: 'address',
+            name: contract.name,
+            address: contract.address,
+            addressType: contract.type,
+            fieldNames: [field.name],
+          }
+
+          const existingRef = referencedBy
+            .get(address)
+            ?.find((r) => r.address === contract.address)
+
+          if (existingRef) {
+            if (!existingRef.fieldNames.includes(field.name)) {
+              existingRef.fieldNames.push(field.name)
+            }
+          } else {
+            const refs = referencedBy.get(address) || []
+            refs.push(ref)
+            referencedBy.set(address, refs)
+          }
         }
       }
     }
@@ -293,7 +320,7 @@ function getAddresses(values: FieldValue[]) {
     } else if (value.type === 'array') {
       addresses.push(...getAddresses(value.values))
     } else if (value.type === 'object') {
-      addresses.push(...getAddresses(Object.values(value.value)))
+      addresses.push(...getAddresses(value.values.map(([_, value]) => value)))
     }
   }
   return addresses

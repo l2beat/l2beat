@@ -1,5 +1,5 @@
 import type { DaEconomicSecurity } from '@l2beat/config'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 

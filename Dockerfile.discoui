@@ -32,7 +32,7 @@ WORKDIR /src
 
 # Install turbo in builder stage
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
-    
+
 # Copy package files first for better caching
 COPY --from=pruner /src/out/json/ .
 COPY --from=pruner /src/pnpm-lock.yaml .
@@ -46,6 +46,10 @@ COPY --from=pruner /src/.discovery.json .
 
 # Build application
 RUN pnpm build
+
+WORKDIR packages/l2b/
+RUN node cli.js fetch-flat-sources -q -y
+WORKDIR ../..
 
 # ---------------------------
 FROM node:22-slim AS release

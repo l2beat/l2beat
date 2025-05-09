@@ -1,8 +1,7 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import type { ProjectId, ProjectValueType } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Dictionary } from 'lodash'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -31,7 +30,7 @@ export async function getTvsValuesForProjects(
 
   const valuesByProject = groupBy(valueRecords, (v) => v.project)
 
-  const result: Dictionary<Dictionary<ProjectValueRecord>> = {}
+  const result: Record<string, Record<string, ProjectValueRecord>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
     const valuesByTimestamp: Record<string, ProjectValueRecord> = {}
     for (const value of projectValues) {

@@ -112,6 +112,107 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "morph-pumpBTC",
+      "priceId": "pumpbtc",
+      "symbol": "pumpBTC",
+      "name": "pumpBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+        "chain": "morph",
+        "decimals": 8,
+        "sinceTimestamp": 1733048016
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "pumpbtc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+              "chain": "morph",
+              "decimals": 8,
+              "sinceTimestamp": 1733048016
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x803DcE4D3f4Ae2e17AF6C51343040dEe320C149D",
+              "chain": "morph",
+              "decimals": 8,
+              "escrowAddress": "0x4413Ca15dA17db82826caEE058C083f573c1f16C",
+              "sinceTimestamp": 1736468531
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "morph-sUSDa",
+      "priceId": "susda",
+      "symbol": "sUSDa",
+      "name": "USDa saving token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51821/large/USDA.png?1732035172",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2840F9d9f96321435Ab0f977E7FDBf32EA8b304f",
+        "chain": "morph",
+        "decimals": 18,
+        "sinceTimestamp": 1740290229
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "morph-sUSDe-1",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "morph",
+        "decimals": 18,
+        "sinceTimestamp": 1734390796
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "morph-USDa",
+      "priceId": "usda-2",
+      "symbol": "USDa",
+      "name": "USDa",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51599/large/SUSDA.png?1731604761",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xff12470a969Dd362EB6595FFB44C82c959Fe9ACc",
+        "chain": "morph",
+        "decimals": 18,
+        "sinceTimestamp": 1740290202
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "morph-USDC-2",
       "priceId": "usd-coin",

@@ -57,22 +57,6 @@ model AggregatedL2Cost {
   @@index([timestamp])
 }
 
-model Amount {
-  timestamp       DateTime @db.Timestamp(6)
-  amount          Decimal  @db.Decimal(80, 0)
-  configurationId String   @db.Char(12)
-
-  @@id([configurationId, timestamp])
-}
-
-model BlockTimestamp {
-  chain       String   @db.VarChar(255)
-  timestamp   DateTime @db.Timestamp(6)
-  blockNumber Int
-
-  @@id([chain, timestamp])
-}
-
 model DataAvailability {
   timestamp DateTime @db.Timestamp(6)
   daLayer   String   @db.VarChar(255)
@@ -144,20 +128,6 @@ model Liveness {
   @@id([configurationId, txHash])
 }
 
-model Price {
-  timestamp       DateTime @db.Timestamp(6)
-  priceUsd        Float    @db.Real
-  configurationId String   @db.Char(12)
-
-  @@id([configurationId, timestamp])
-}
-
-model TvlCleaner {
-  repositoryName        String    @id @db.VarChar(255)
-  hourlyCleanedUntil    DateTime? @db.Timestamp(6)
-  sixHourlyCleanedUntil DateTime? @db.Timestamp(6)
-}
-
 model UpdateMonitor {
   projectName       String    @db.VarChar(255)
   blockNumber       Int
@@ -192,28 +162,6 @@ model UpdateMessage {
   @@id([projectName, chain, blockNumber])
 }
 
-model Value {
-  timestamp                   DateTime @db.Timestamp(6)
-  projectId                   String   @db.VarChar(255)
-  dataSource                  String   @db.VarChar(255)
-  external                    BigInt?
-  externalAssociated          BigInt   @default(0)
-  externalForTotal            BigInt?
-  externalAssociatedForTotal  BigInt   @default(0)
-  canonical                   BigInt?
-  canonicalAssociated         BigInt   @default(0)
-  canonicalForTotal           BigInt?
-  canonicalAssociatedForTotal BigInt   @default(0)
-  native                      BigInt?
-  nativeAssociated            BigInt   @default(0)
-  nativeForTotal              BigInt?
-  nativeAssociatedForTotal    BigInt   @default(0)
-  ether                       BigInt   @default(0)
-  stablecoin                  BigInt   @default(0)
-
-  @@id([projectId, timestamp, dataSource])
-}
-
 model VerifierStatus {
   address     String   @db.VarChar(255)
   chainId     Int
@@ -233,6 +181,18 @@ model AggregatedLiveness {
   updatedAt DateTime @db.Timestamp(6)
 
   @@id([projectId, subtype, range])
+}
+
+model AggregatedLiveness2 {
+  timestamp       DateTime @db.Timestamp(6)
+  projectId       String   @db.VarChar(255)
+  subtype         String   @db.VarChar(255)
+  min             Int
+  avg             Int
+  max             Int
+  numberOfRecords Int
+
+  @@id([timestamp, projectId, subtype])
 }
 
 model Anomaly {

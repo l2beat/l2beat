@@ -1,8 +1,9 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
-import type { Dictionary } from 'lodash'
-import { groupBy, partition, round } from 'lodash'
+import groupBy from 'lodash/groupBy'
+import partition from 'lodash/partition'
+import round from 'lodash/round'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -52,7 +53,7 @@ const getCachedDaThroughputTableData = cache(
       groupedProjectValues,
     )
 
-    const getData = (values: Dictionary<DataAvailabilityRecord[]>) => {
+    const getData = (values: Record<string, DataAvailabilityRecord[]>) => {
       return Object.fromEntries(
         daLayers
           .map((daLayer) => {
@@ -187,14 +188,14 @@ function getMaxThroughputPerSecond(
   latestThroughput: DaLayerThroughput,
 ) {
   const isEthereum = daLayerId === ProjectId.ETHEREUM
-  const size = isEthereum ? latestThroughput.target! : latestThroughput.size
+  const size = isEthereum ? latestThroughput.target : latestThroughput.size
   assert(size, 'Project does not have throughput data configured')
   return size / latestThroughput.frequency
 }
 
 function sumByTimestamp(
   daLayer: string,
-  groupedProjectValues: Dictionary<DataAvailabilityRecord[]>,
+  groupedProjectValues: Record<string, DataAvailabilityRecord[]>,
 ): DataAvailabilityRecord[] {
   const projectValues = groupedProjectValues[daLayer] ?? []
   const timestampedValues = groupBy(projectValues, 'timestamp')

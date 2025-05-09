@@ -11,7 +11,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -83,6 +82,8 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
   'minDelay',
 )
 
+const chainId = 810180
+
 export const zklinknova: ScalingProject = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
@@ -118,11 +119,11 @@ export const zklinknova: ScalingProject = {
   },
   chainConfig: {
     name: 'zklinknova',
-    chainId: 810180,
+    chainId,
     explorerUrl: 'https://explorer.zklink.io',
     sinceTimestamp: UnixTime(1709273393),
     apis: [
-      { type: 'etherscan', url: 'https://explorer-api.zklink.io/api' },
+      { type: 'etherscan', chainId },
       { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 1500 },
     ],
   },
@@ -404,7 +405,6 @@ export const zklinknova: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,

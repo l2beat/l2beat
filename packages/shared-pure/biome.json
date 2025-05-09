@@ -17,6 +17,7 @@
               "dns": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
               "domain": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
               "events": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "ethers": "Do not use node dependencies inside this package as it can be used in frontend code which increases bundle size. Use @l2beat/shared instead.",
               "freelist": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
               "fs": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
               "http": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",

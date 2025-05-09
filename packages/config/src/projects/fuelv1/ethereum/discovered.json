@@ -2,7 +2,7 @@
   "name": "fuelv1",
   "chain": "ethereum",
   "blockNumber": 21594621,
-  "configHash": "0xbbc88815e23fb539689c14e9ed25c324e1d51370574ad69dda3455702f69e5e5",
+  "configHash": "0x5215d9c99aaa0ef7e1f2beb581025d0a7dcd09a70cfa84ebcb8d79f92b9af92f",
   "entries": [
     {
       "name": "Fuel",
@@ -15,7 +15,9 @@
       "sinceTimestamp": 1612414780,
       "sinceBlock": 11787727,
       "values": { "$immutable": true },
-      "derivedName": "",
+      "implementationNames": {
+        "0x6880f6Fd960D1581C2730a451A22EED1081cfD72": ""
+      },
       "references": [
         {
           "text": "Source Code",
@@ -25,5 +27,6 @@
     }
   ],
   "abis": {},
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xdc035bb26f2e94c5c345da8e3a923285e2a2eb44a7766ae2c00a8485b2759887"
 }

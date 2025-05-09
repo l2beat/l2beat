@@ -1,6 +1,6 @@
 'use client'
 import { UnixTime } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'

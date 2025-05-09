@@ -1,3 +1,340 @@
+Generated with discovered.json: 0x8fb6bd77def2bce4e1a64221a4584b2b177855ae
+
+# Diff at Tue, 06 May 2025 15:56:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e14d6ca6cfb9c51927744033947048a6b7efb278 block: 331086890
+- current block number: 333894848
+
+## Description
+
+SC member elections have concluded.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.8:
+-        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
++        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.7:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.6:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.5:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.4:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.2:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.getSecondCohort.4:
+-        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
++        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.getSecondCohort.3:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.getSecondCohort.2:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.1:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.updateNonce:
+-        12
++        13
+    }
+```
+
+Generated with discovered.json: 0x71c0fc49fd6a584890abfb77d53ac9733390af7b
+
+# Diff at Tue, 06 May 2025 10:57:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 331086890
+- current block number: 331086890
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331086890 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xeed621ab829e178730af08232cb0938c21c4567f
+
+# Diff at Tue, 29 Apr 2025 09:36:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 331086890
+- current block number: 331086890
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331086890 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}]
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","delay":691200,"description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","delay":691200,"description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C) {
+    +++ description: Token governance contract for the Security Council member elections.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}]
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}]
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) {
+    +++ description: Token governance contract for the Security Council member removals.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0) {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","description":"manage all access control roles.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"interact","to":"0x467923B9AE90BDB36BA88eCA11604D45F13b712C","description":"schedule a proposal to replace a Security Council member cohort.","via":[]},{"permission":"interact","to":"0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad","description":"schedule a proposal to remove a Security Council member.","via":[]},{"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to add a new member to the Security Council.","via":[]},{"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to remove a Security Council member.","via":[]},{"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to replace a Security Council member.","via":[]},{"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to rotate a Security Council member (same member, new address).","via":[]},{"permission":"interact","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","description":"manage all access control roles.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]},{"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}]
+    }
+```
+
+Generated with discovered.json: 0x847d08d9927e10af1d53d5c76eea0ce82f1d7e73
+
+# Diff at Mon, 28 Apr 2025 11:54:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@640aad31846aa48203969768d234f58dfd9896e5 block: 329029286
+- current block number: 331086890
+
+## Description
+
+config related (due to canActIndependently fix we merged).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 329029286 (main branch discovery), not current.
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.7:
+-        {"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.6.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.5.to:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.5.delay:
+-        691200
+      issuedPermissions.5.description:
+-        "manage all access control roles and change the minimum delay."
+      issuedPermissions.5.via.1:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.5.via.0.address:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.4.to:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.4.description:
+-        "propose transactions."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.4.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.4.delay:
++        691200
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}
+      directlyReceivedPermissions.0.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.0.delay:
+-        691200
+      directlyReceivedPermissions.0.description:
++        "propose transactions."
+    }
+```
+
+Generated with discovered.json: 0x651e65c40fdb19782c59666767006705c59ca8c8
+
+# Diff at Tue, 22 Apr 2025 12:26:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@60b07eece04f1a17d258d39ff1adffbef4174f23 block: 316974509
+- current block number: 329029286
+
+## Description
+
+signer changes in a MS designated the nominee vetter for SC elections.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) {
+    +++ description: None
+      values.$members.5:
+-        "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
+      values.$members.4:
+-        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
++        "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
+      values.$members.3:
+-        "0xa98290a7A282d8249544D35b288E160A5580D57E"
++        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
+      values.$members.2:
+-        "0x25032D068633cfbe52c134EBdD965b2C2B4C2710"
++        "0xa98290a7A282d8249544D35b288E160A5580D57E"
+      values.$members.1:
+-        "0x0adc7D8eB4C01219858a579C9539780CD9575035"
++        "0x25032D068633cfbe52c134EBdD965b2C2B4C2710"
+      values.$members.0:
+-        "0xC3514C143Df27eB29AC4c56c59A260713B841BDd"
++        "0x0adc7D8eB4C01219858a579C9539780CD9575035"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x823619ec8bd720017887d3c7717c07e43b75469f
 
 # Diff at Thu, 10 Apr 2025 14:43:46 GMT:

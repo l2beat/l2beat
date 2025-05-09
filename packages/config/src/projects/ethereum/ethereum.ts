@@ -3,6 +3,8 @@ import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import type { BaseProject } from '../../types'
 
+const chainId = 1
+
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
   new Date('2019-11-14T00:00:00Z'),
@@ -20,6 +22,7 @@ export const ethereum: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
   },
@@ -135,6 +138,13 @@ This method allows ZK rollups to prove that the data used in their validity proo
         frequency: 12, // 12 seconds
         sinceTimestamp: 1710288000, // 2024-03-13
       },
+      {
+        // EIP-7691: Prague / Electra hard-fork – increased blob limits
+        size: 1_179_648, // 1.125 MiB (max 9 blobs × 128 KiB)
+        target: 786_432, // 0.75 MiB (target 6 blobs × 128 KiB)
+        frequency: 12, // unchanged: 12 s slot time
+        sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
+      },
     ],
     finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
@@ -178,7 +188,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
   },
   chainConfig: {
     name: 'ethereum',
-    chainId: 1,
+    chainId,
     explorerUrl: 'https://etherscan.io',
     coingeckoPlatform: 'ethereum',
     sinceTimestamp: MIN_TIMESTAMP_FOR_TVL,
@@ -203,10 +213,20 @@ This method allows ZK rollups to prove that the data used in their validity proo
       },
     ],
     apis: [
-      { type: 'etherscan', url: 'https://api.etherscan.io/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://eth.blockscout.com/api/v2' },
       { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
     ],
   },
+  milestones: [
+    {
+      title: 'Blob throughput increase',
+      url: 'https://eips.ethereum.org/EIPS/eip-7691',
+      date: '2025-05-07T10:00:00Z',
+      description:
+        'Pectra hardfork increases blob limits: target from 3 to 6 blobs and max from 6 to 9 blobs.',
+      type: 'general',
+    },
+  ],
   activityConfig: { type: 'block', startBlock: 8929324 },
 }

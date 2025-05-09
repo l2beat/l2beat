@@ -1,4 +1,144 @@
-Generated with discovered.json: 0x5511c2140bf30f285008479b4bb1d4a18cef4a81
+Generated with discovered.json: 0x122b1d9add5d3ac5d7f7b0b68f7c03105bdcce0c
+
+# Diff at Tue, 06 May 2025 15:41:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 21944318
+- current block number: 22425618
+
+## Description
+
+Modified liquidity parameter deficitOffset for native and USDC pools.
+
+## Watched changes
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      values.deficitOffset:
+-        "36000000000000000000000"
++        "1440000000000000000000"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      values.deficitOffset:
+-        100000000000000
++        4000000000000
+    }
+```
+
+Generated with discovered.json: 0x07e446b60a527c388cbf1396e458eb1a8acf4ee0
+
+# Diff at Tue, 06 May 2025 13:32:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@09b97f14e3365304f798b0b4fc6971d693d1eb2f block: 21944318
+- current block number: 21944318
+
+## Description
+
+ethereum
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract PriceFeed (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      name:
+-        ""
++        "PriceFeed"
+    }
+```
+
+Generated with discovered.json: 0x859b864b5e9a5312f0ec7d967bc3a005a129adae
+
+# Diff at Tue, 29 Apr 2025 08:19:29 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21944318
+- current block number: 21944318
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","via":[]}]
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x91b0d1beba6c6ba221938ff57aae761bf5b6f436
+
+# Diff at Thu, 24 Apr 2025 10:31:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21944318
+- current block number: 21944318
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      values.getReceiveLibrary:
+-        ["0xc02Ab410f0734EFa3F14628780e6e695156024C2",true]
++        {"lib":"0xc02Ab410f0734EFa3F14628780e6e695156024C2","isDefault":true}
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
++++ description: The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])
+      values.getExecutorConfig:
+-        [10000,"0x173272739Bd7Aa6e4e214714048a9fE699453059"]
++        {"maxMessageSize":10000,"executor":"0x173272739Bd7Aa6e4e214714048a9fE699453059"}
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
++++ description: The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.getUlnConfig:
+-        [20,2,0,0,["0x8FafAE7Dd957044088b3d0F67359C327c6200d18","0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],[]]
++        {"confirmations":20,"requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["0x8FafAE7Dd957044088b3d0F67359C327c6200d18","0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}
+    }
+```
+
+Generated with discovered.json: 0xe2d60e7879c6c8fa6b8d158e0a3b15c1c0a49821
 
 # Diff at Fri, 14 Mar 2025 12:28:48 GMT:
 

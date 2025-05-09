@@ -126,7 +126,6 @@ const mockContract = (
     ...EMPTY_ANALYZED_CONTRACT,
     address,
     name: `NameOf${address.toString()}`,
-    derivedName: undefined,
     isVerified: true,
     values: { a: 1 },
     errors: errors ?? {},

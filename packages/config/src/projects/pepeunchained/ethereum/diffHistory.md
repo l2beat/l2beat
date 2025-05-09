@@ -1,4 +1,208 @@
-Generated with discovered.json: 0x48bb6bd892af6cac6614ffa9223694098bcf28fc
+Generated with discovered.json: 0x8364d97f09dbc7bc00cd89f43f269c890b1ddc3f
+
+# Diff at Thu, 08 May 2025 08:50:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22244001
+- current block number: 22437741
+
+## Description
+
+superchain guardian connected, but not full superchain gov.
+
+OP stack DeputyPauser upgrade (see op mainnet for more info).
+
+## Watched changes
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.2:
++        {"permission":"guard","from":"0x11654D67e0360A82e5Badd272Ced336B80972135"}
+      receivedPermissions.1.from:
+-        "0x11654D67e0360A82e5Badd272Ced336B80972135"
++        "0x384e3AE4D5efC9471201039b555EAe496b2A7240"
+      receivedPermissions.0.from:
+-        "0x384e3AE4D5efC9471201039b555EAe496b2A7240"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.0.via:
++        [{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+## Source code changes
+
+```diff
+...0xC3BcdF5cb9AEA2cc4938C9D1AA866CF0BA6B19b5.sol} |    0
+ ...-0xdE1FCfB0851916CA5101820A69b13a4E276bd81F.sol |  152 +++
+ .../ethereum/.flat/DeputyGuardianModule.sol        |  156 +++
+ .../ethereum/.flat/DeputyPauseModule.sol           | 1338 ++++++++++++++++++++
+ .../ethereum/.flat/LivenessModule.sol              |  258 ++++
+ .../.flat/OpFoundationUpgradeSafe/GnosisSafe.sol   |  953 ++++++++++++++
+ .../OpFoundationUpgradeSafe/GnosisSafeProxy.p.sol  |   35 +
+ .../Optimism Guardian Multisig/GnosisSafe.sol      |  953 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../.flat/Optimism Security Council/GnosisSafe.sol |  953 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../Proxy.p.sol                                    |    0
+ .../SuperchainConfig.sol                           |    0
+ .../Proxy.p.sol                                    |  200 +++
+ .../SuperchainConfig.sol                           |  477 +++++++
+ .../ethereum/.flat/SuperchainProxyAdmin.sol        |  298 +++++
+ .../.flat/SuperchainProxyAdminOwner/GnosisSafe.sol |  953 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 18 files changed, 6831 insertions(+)
+```
+
+Generated with discovered.json: 0xb90df94d2efca2ffe0e9b3c7dddd173ac6cf9e76
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22244001
+- current block number: 22244001
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22244001 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x11654D67e0360A82e5Badd272Ced336B80972135) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34Ef4B527DB3F4AcfAE7Fdc7Db0f9981F48Cd23F) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x384e3AE4D5efC9471201039b555EAe496b2A7240) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x3D831FD51f80398488a2452b9Ba44eDe104e8789) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x9dd8e00Ff731FBf3dd3559578BeB518a41b16Cfe) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]},{"permission":"propose","to":"0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xC3BcdF5cb9AEA2cc4938C9D1AA866CF0BA6B19b5) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"set and change address mappings.","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xF41E72f55d9bE849ecCe3b7AEe2A07Ccdadb655d) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x5c89b56bead2f99d41721f1D15442Fe813879587","via":[]},{"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}]
+    }
+```
+
+Generated with discovered.json: 0xa1f850efa1c8afa86d1d1fff5b5fc9a62be49e35
 
 # Diff at Fri, 11 Apr 2025 06:47:53 GMT:
 

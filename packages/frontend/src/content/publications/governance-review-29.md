@@ -32,7 +32,7 @@ Alexsotodigital, inspired by GFX Lab’s ‘[Accelerated Decentralization Propos
 
 SuperchainEco, following the approval of their Mission Request, [announced the beginning of the Super Contributor Cohort 0](https://gov.optimism.io/t/announcing-super-contributor-cohort-0/8959). The cohort will teach new and existing Optimism Collective members the insights and skills needed to become elite Collective contributors. The first cohort (Cohort 0) consists of the Optimism Contributor Essentials MOOC, Weekly Contributor Meetings, a series of onchain exercises, and a Contributor Meetup in Bangkok.
 
-For all the details, read their [blog post](https://www.superchain.eco/insights/cohort0).
+For all the details, read their [blog post](https://www.superchain.eco/insights/announcing-super-contributor-cohort-0 ).
 
 
 ### **Retro Funding 6: Application Review Process**

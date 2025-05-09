@@ -38,7 +38,8 @@
     "CUSTOM_GAS_TOKEN_FUNDER",
     "BRIDGE_HUB",
     "L2_REFUND_ADDRESS",
-    "SHARED_BRIDGE"
+    "SHARED_BRIDGE",
+    "USDC_SHARED_BRIDGE"
   ],
   "ignoreMethods": ["getL1CallValue"],
   "ignoreInWatchMode": [

@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22281621,
-  "configHash": "0xfef2e4896aa06594d2f7f8814f31b3a9cdd6e8fc8701f0525b33773b1eacd593",
+  "blockNumber": 22437978,
+  "configHash": "0x1ae9b6d7d3421c2b2d93c40ef6367efc6ef88c7d48440d6dae7db429b91d4f79",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -29,7 +29,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x015318c16AE443a20DE0A776dB06a59F0D279057": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -66,23 +69,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1GenesisUpgrade",
-      "address": "0x107e92E7360e595d8129B522ABD458361f32f66C",
-      "type": "Contract",
-      "template": "shared-zk-stack/v26/L1GenesisUpgrade",
-      "sourceHashes": [
-        "0x50ee4004563b12b9636ff48384e6053aa1e8505ff7d5c63166b342d4eb69f6aa"
-      ],
-      "proxyType": "immutable",
-      "description": "Diamond implementation code to initialize new ZK chains. Used to set their chainID.",
-      "ignoreInWatchMode": ["sharedTree"],
-      "sinceTimestamp": 1741097639,
-      "sinceBlock": 21974049,
-      "values": { "$immutable": true },
-      "derivedName": "L1GenesisUpgrade",
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
       "name": "GnosisSafe",
       "address": "0x13f07d9BF17615f6a17F272fe1A913168C275A66",
       "type": "Contract",
@@ -107,7 +93,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x13f07d9BF17615f6a17F272fe1A913168C275A66": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -145,7 +134,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -170,7 +162,9 @@
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": "ProxyAdmin"
+      }
     },
     {
       "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9",
@@ -217,7 +211,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -251,7 +248,8 @@
         "upgradeTimestamps": [
           { "_protocolVersion": 103079215106, "_upgradeTimestamp": 1722521507 },
           { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1736517600 },
-          { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1741773600 }
+          { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1741773600 },
+          { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1746435600 }
         ]
       },
       "fieldMeta": {
@@ -259,7 +257,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0x2cf3bD6a9056b39999F3883955E183F655345063": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -279,37 +279,15 @@
       "template": "shared-zk-stack/v26/BridgeHub",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xe79288af01ff8940265966caffdc9ea0ef18822166fd7f704488419737716623"
+        "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
-          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1717520639,
       "sinceBlock": 20019828,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0xb720523EC3c615b069453bF4B0584CEbF034706f",
+        "$implementation": "0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87",
         "$pastUpgrades": [
           [
             "2024-06-04T17:03:59.000Z",
@@ -330,9 +308,14 @@
             "2025-03-31T08:00:47.000Z",
             "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
             ["0xb720523EC3c615b069453bF4B0584CEbF034706f"]
+          ],
+          [
+            "2025-04-28T12:33:11.000Z",
+            "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",
+            ["0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "assetRouter": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
         "chainsCreated": [
@@ -405,11 +388,16 @@
             "chainId": 375,
             "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0x6ec9117dCFBe2E8Dd747c9D45034E2DF9C7d2da0"
+          },
+          {
+            "chainId": 51888,
+            "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0x21bFaD8F0f781F367ACCb5276199B0c0E819CbD9"
           }
         ],
         "getAllZKChainChainIDs": [
           324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217,
-          2904, 375
+          2904, 375, 51888
         ],
         "getAllZKChains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -425,7 +413,8 @@
           "0xc29d04A93F893700015138E3E334eB828dAC3cef",
           "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
           "0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "0x270bF3978FeA60719Dd25A400EbE6969bF451493"
+          "0x270bF3978FeA60719Dd25A400EbE6969bF451493",
+          "0xD231E2fD0DeC5993fCeae3E504930631876e8C63"
         ],
         "L1_CHAIN_ID": 1,
         "l1CtmDeployer": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
@@ -451,7 +440,10 @@
           "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."
         }
       },
-      "derivedName": "Bridgehub",
+      "implementationNames": {
+        "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "TransparentUpgradeableProxy",
+        "0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87": "Bridgehub"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -494,10 +486,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -528,10 +523,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -582,7 +580,10 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -656,10 +657,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 189,
+        "nonce": 196,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -686,7 +690,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -719,7 +726,10 @@
         "nonce": 5,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -752,7 +762,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -766,16 +779,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1739109035,
       "sinceBlock": 21809367,
@@ -791,14 +794,17 @@
         ],
         "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "chainCount": 15,
-        "getAggregatedRoot": "0x5054187811209ac55f16381dbcbbfb219fd033e43b680f7649de648ba69daaa6",
+        "chainCount": 16,
+        "getAggregatedRoot": "0xd893aacecf7a4ed2d1aa0c30c3b52d12388abecacbaa7b6e63a5a7f00178f1cf",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "sharedTree": { "_height": 4, "_leafNumber": 15 }
+        "sharedTree": { "_height": 4, "_leafNumber": 16 }
       },
-      "derivedName": "MessageRoot",
+      "implementationNames": {
+        "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": "TransparentUpgradeableProxy",
+        "0x19347Fb8eD3E8e35eb4a01c8B18Bd330194Cf0ad": "MessageRoot"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -861,7 +867,9 @@
         "PROTOCOL_UPGRADE_HANDLER": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "derivedName": "Guardians",
+      "implementationNames": {
+        "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "Guardians"
+      },
       "references": [
         {
           "text": "Guardians - ZK Nation docs",
@@ -881,16 +889,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1739109203,
       "sinceBlock": 21809380,
@@ -910,11 +908,19 @@
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "CTMDeploymentTracker",
+      "implementationNames": {
+        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860": "TransparentUpgradeableProxy",
+        "0x1E405E5cdF127Dc98Eb490AB0e97345f892Ff7E1": "CTMDeploymentTracker"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -996,7 +1002,9 @@
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
         }
       },
-      "derivedName": "SecurityCouncil",
+      "implementationNames": {
+        "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410": "SecurityCouncil"
+      },
       "references": [
         {
           "text": "Security Council members - ZK Nation docs",
@@ -1049,10 +1057,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 11 (9%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x69462a81ba94D64c404575f1899a464F123497A2": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1080,7 +1091,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1116,7 +1130,9 @@
       "sinceTimestamp": 1739108915,
       "sinceBlock": 21809357,
       "values": { "$immutable": true },
-      "derivedName": "RollupL1DAValidator",
+      "implementationNames": {
+        "0x72213dfe8CA61B0A782970dCFebFb877778f9119": "RollupL1DAValidator"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1141,10 +1157,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1190,10 +1209,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1203,33 +1225,28 @@
       "template": "shared-zk-stack/v26/L1AssetRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1912c5e1125a20bfd6b933a66a437e3d04e2404549b86b88ceadb233eff05477"
+        "0xba83b7c168ffa78d2e714cfb804ca1cd4f33807f6e9b2abb2820457d6d2bf77a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1739109071,
       "sinceBlock": 21809370,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E",
+        "$implementation": "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315",
         "$pastUpgrades": [
           [
             "2025-02-09T13:51:11.000Z",
             "0x2c945c00f7a9f08b1a0bc749a08d76ca4cd5ee6f8890011ab43898e9fa1fcdf2",
             ["0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E"]
+          ],
+          [
+            "2025-04-28T12:33:11.000Z",
+            "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",
+            ["0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "ERA_CHAIN_ID": 324,
         "ETH_TOKEN_ASSET_ID": "0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609",
@@ -1242,7 +1259,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1AssetRouter",
+      "implementationNames": {
+        "0x8829AD80E425C646DAB305381ff105169FeEcE56": "TransparentUpgradeableProxy",
+        "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315": "L1AssetRouter"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1284,7 +1304,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1317,10 +1340,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 7 (14%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1394,10 +1420,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1448,7 +1477,10 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "L1NativeTokenVault",
@@ -1457,33 +1489,28 @@
       "template": "shared-zk-stack/v26/L1NativeTokenVault",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xcd61d013f1b30811a4dab3d32b43daa9f826ed31663857c1e349c7986cdf2497"
+        "0xb5c84cdd8085d4ad38124e19b8be87360c9401f9621534284de4ed5fa69c3b63"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1739109131,
       "sinceBlock": 21809375,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x40B1060a114380f40faC6869c5B383f47e61530c",
+        "$implementation": "0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947",
         "$pastUpgrades": [
           [
             "2025-02-09T13:52:11.000Z",
             "0x50619c1506e8e93cc28017847b5690b6a0784bc2b08c1dbb8555b71525b72351",
             ["0x40B1060a114380f40faC6869c5B383f47e61530c"]
+          ],
+          [
+            "2025-04-28T12:33:11.000Z",
+            "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",
+            ["0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "ASSET_ROUTER": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
         "BASE_TOKEN_ASSET_ID": "0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609",
         "bridgedTokenBeacon": "0xb3618AbcbA795588C43eA602dD0Cd6E952A85a6A",
@@ -1494,7 +1521,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "WETH_TOKEN": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "L1NativeTokenVault",
+      "implementationNames": {
+        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6": "TransparentUpgradeableProxy",
+        "0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947": "L1NativeTokenVault"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1542,7 +1572,9 @@
         "$immutable": true,
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": "ProxyAdmin"
+      }
     },
     {
       "address": "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392",
@@ -1556,37 +1588,15 @@
       "template": "shared-zk-stack/v26/ChainTypeManager",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37"
+        "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
-          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
+      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,27,0.",
       "sinceTimestamp": 1717520663,
       "sinceBlock": 20019830,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb",
+        "$implementation": "0x6D598c77AF57Bfa17201483400615c61819dD45A",
         "$pastUpgrades": [
           [
             "2024-06-04T17:04:23.000Z",
@@ -1607,22 +1617,31 @@
             "2025-03-31T08:00:47.000Z",
             "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
             ["0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"]
+          ],
+          [
+            "2025-04-28T12:33:11.000Z",
+            "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",
+            ["0x6D598c77AF57Bfa17201483400615c61819dD45A"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getSemverProtocolVersion": [0, 26, 0],
-        "initialCutHash": "0x1f2fc821f3af8fc4dae46f80a28e8b582ace20e83a979acacf6ecbd0e9b4fcea",
-        "initialForceDeploymentHash": "0x5d46606048f0821e6ce823fd9cc257b47818b44dffed0bc21489e23ab242d0e1",
-        "l1GenesisUpgrade": "0x107e92E7360e595d8129B522ABD458361f32f66C",
+        "getSemverProtocolVersion": [0, 27, 0],
+        "initialCutHash": "0xd20b12f6c5152e7197db37e19b177d22a369c32230fbbc2bfeec5b39788afd8c",
+        "initialForceDeploymentHash": "0x48dac090fa2f13afa11b2ea3f456fb424cef704d997bd137575a5fe9c5c3241a",
+        "l1GenesisUpgrade": "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C",
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "protocolVersion": 111669149696,
-        "storedBatchZero": "0x30624ae13932bc83804b007160a60b2394893f6097d5f7062de441172adc4749",
+        "protocolVersion": 115964116992,
+        "serverNotifierAddress": "0x0000000000000000000000000000000000000000",
+        "storedBatchZero": "0xe3199bb31e1acf8a1667692d8536edcce799c58cfebe85e3e0adeb0ae788b291",
         "validatorTimelock": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       },
-      "derivedName": "ChainTypeManager",
+      "implementationNames": {
+        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": "TransparentUpgradeableProxy",
+        "0x6D598c77AF57Bfa17201483400615c61819dD45A": "ChainTypeManager"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1652,10 +1671,32 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "L1GenesisUpgrade",
+      "address": "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C",
+      "type": "Contract",
+      "template": "shared-zk-stack/v26/L1GenesisUpgrade",
+      "sourceHashes": [
+        "0xb026196cfab337e1604a0cb6f378b0598841b3bf3e05d8d82403801eff55a3b6"
+      ],
+      "proxyType": "immutable",
+      "description": "Diamond implementation code to initialize new ZK chains. Used to set their chainID.",
+      "ignoreInWatchMode": ["sharedTree"],
+      "sinceTimestamp": 1743440243,
+      "sinceBlock": 22168232,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C": "L1GenesisUpgrade"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1703,7 +1744,10 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1728,31 +1772,15 @@
       "template": "shared-zk-stack/v26/L1Nullifier",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1d68adefefffd4b896740e985d1d7d39abbface4239c0fb54cbda7892ce8c99d"
+        "0x56a8f9e2feec75535d897e8159a8cdf1546d81df34f77964c66bc908820e8687"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "pause, unpause and set critical escrow address references.",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
       "sinceTimestamp": 1717521479,
       "sinceBlock": 20019898,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A",
+        "$implementation": "0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518",
         "$pastUpgrades": [
           [
             "2024-06-04T17:17:59.000Z",
@@ -1773,9 +1801,14 @@
             "2025-03-31T08:00:47.000Z",
             "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
             ["0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"]
+          ],
+          [
+            "2025-04-28T12:33:11.000Z",
+            "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",
+            ["0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "l1AssetRouter": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
         "l1NativeTokenVault": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
@@ -1784,7 +1817,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1Nullifier",
+      "implementationNames": {
+        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": "TransparentUpgradeableProxy",
+        "0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518": "L1Nullifier"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1813,34 +1849,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "start (queue) upgrades.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
-          "description": "extend the legal veto period, approve a protocol upgrade.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1918,7 +1926,10 @@
         },
         "emergencyUpgradesExecuted": { "severity": "HIGH" }
       },
-      "derivedName": "ProtocolUpgradeHandler",
+      "implementationNames": {
+        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": "TransparentUpgradeableProxy",
+        "0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A": "ProtocolUpgradeHandler"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1931,14 +1942,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        }
-      ],
       "sinceTimestamp": 1739108879,
       "sinceBlock": 21809354,
       "values": {
@@ -1947,6 +1950,11 @@
           {
             "l1DAValidator": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
             "l2DAValidator": "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
+            "status": true
+          },
+          {
+            "l1DAValidator": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+            "l2DAValidator": "0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281",
             "status": true
           }
         ],
@@ -1957,7 +1965,9 @@
         "daPairs": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" }
       },
-      "derivedName": "RollupDAManager",
+      "implementationNames": {
+        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45": "RollupDAManager"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1975,26 +1985,6 @@
       ],
       "proxyType": "immutable",
       "description": "A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
-          "description": "one of its 3/3 signers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
-          "description": "one of its 3/3 signers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c",
-          "description": "one of its 3/3 signers.",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2109,7 +2099,9 @@
         "SECURITY_COUNCIL": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       },
-      "derivedName": "EmergencyUpgradeBoard",
+      "implementationNames": {
+        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6": "EmergencyUpgradeBoard"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -2154,10 +2146,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -2222,47 +2217,6 @@
       "function updateSecurityCouncil(address _newSecurityCouncil)",
       "function upgradeState(bytes32 _id) view returns (uint8)",
       "function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)"
-    ],
-    "0x107e92E7360e595d8129B522ABD458361f32f66C": [
-      "error AddressHasNoCode(address)",
-      "error DelegateCallFailed(bytes returnData)",
-      "error FacetExists(bytes4 selector, address)",
-      "error InvalidTxType(uint256 txType)",
-      "error InvalidUpgradeTxn(uint8)",
-      "error L2UpgradeNonceNotEqualToNewProtocolVersion(uint256 nonce, uint256 protocolVersion)",
-      "error LengthIsNotDivisibleBy32(uint256 length)",
-      "error MalformedBytecode(uint8)",
-      "error NoFunctionsForDiamondCut()",
-      "error NonEmptyCalldata()",
-      "error PatchCantSetUpgradeTxn()",
-      "error PatchUpgradeCantSetBootloader()",
-      "error PatchUpgradeCantSetDefaultAccount()",
-      "error PreviousUpgradeBatchNotCleared()",
-      "error PreviousUpgradeNotFinalized(bytes32 txHash)",
-      "error ProtocolMajorVersionNotZero()",
-      "error ProtocolVersionDeltaTooLarge(uint256 _proposedDelta, uint256 _maxDelta)",
-      "error ProtocolVersionTooSmall()",
-      "error PubdataGreaterThanLimit(uint256 limit, uint256 length)",
-      "error RemoveFunctionFacetAddressNotZero(address facet)",
-      "error RemoveFunctionFacetAddressZero()",
-      "error ReplaceFunctionFacetAddressZero()",
-      "error SelectorsMustAllHaveSameFreezability()",
-      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
-      "error TooManyFactoryDeps()",
-      "error TooMuchGas()",
-      "error TxnBodyGasLimitNotEnoughGas()",
-      "error UndefinedDiamondCutAction()",
-      "error ValidateTxnNotEnoughGas()",
-      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)",
-      "event GenesisUpgrade(address indexed _zkChain, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) _l2Transaction, uint256 indexed _protocolVersion, bytes[] _factoryDeps)",
-      "event NewL2BootloaderBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
-      "event NewL2DefaultAccountBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
-      "event NewProtocolVersion(uint256 indexed previousProtocolVersion, uint256 indexed newProtocolVersion)",
-      "event NewVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "event NewVerifierParams(tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) oldVerifierParams, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) newVerifierParams)",
-      "event UpgradeComplete(uint256 indexed newProtocolVersion, bytes32 indexed l2UpgradeTxHash, tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) upgrade)",
-      "function genesisUpgrade(address _l1GenesisUpgrade, uint256 _chainId, uint256 _protocolVersion, address _l1CtmDeployerAddress, bytes _fixedForceDeploymentsData, bytes[] _factoryDeps) returns (bytes32)",
-      "function upgrade(tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) _proposedUpgrade) returns (bytes32)"
     ],
     "0x13f07d9BF17615f6a17F272fe1A913168C275A66": [
       "constructor(address _singleton)"
@@ -2332,78 +2286,6 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E": [
-      "constructor(address _l1WethAddress, address _bridgehub, address _l1Nullifier, uint256 _eraChainId, address _eraDiamondProxy)",
-      "error AddressAlreadyUsed(address addr)",
-      "error AssetHandlerDoesNotExist(bytes32 assetId)",
-      "error AssetIdNotSupported(bytes32 assetId)",
-      "error IncorrectTokenAddressFromNTV(bytes32 assetId, address tokenAddress)",
-      "error InvalidNTVBurnData()",
-      "error LegacyBridgeUsesNonNativeToken()",
-      "error LegacyEncodingUsedForNonL1Token()",
-      "error NativeTokenVaultAlreadySet()",
-      "error NonEmptyMsgValue()",
-      "error NotInitializedReentrancyGuard()",
-      "error Reentrancy()",
-      "error SlotOccupied()",
-      "error TokenNotSupported(address token)",
-      "error TokensWithFeesNotSupported()",
-      "error Unauthorized(address caller)",
-      "error UnsupportedEncodingVersion()",
-      "error ZeroAddress()",
-      "event AssetDeploymentTrackerRegistered(bytes32 indexed assetId, bytes32 indexed additionalData, address assetDeploymentTracker)",
-      "event AssetDeploymentTrackerSet(bytes32 indexed assetId, address indexed assetDeploymentTracker, bytes32 indexed additionalData)",
-      "event AssetHandlerRegistered(bytes32 indexed assetId, address indexed _assetHandlerAddress)",
-      "event BridgehubDepositBaseTokenInitiated(uint256 indexed chainId, address indexed from, bytes32 assetId, uint256 amount)",
-      "event BridgehubDepositFinalized(uint256 indexed chainId, bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash)",
-      "event BridgehubDepositInitiated(uint256 indexed chainId, bytes32 indexed txDataHash, address indexed from, bytes32 assetId, bytes bridgeMintCalldata)",
-      "event BridgehubMintData(bytes bridgeMintData)",
-      "event BridgehubWithdrawalInitiated(uint256 chainId, address indexed sender, bytes32 indexed assetId, bytes32 assetDataHash)",
-      "event ClaimedFailedDepositAssetRouter(uint256 indexed chainId, bytes32 indexed assetId, bytes assetData)",
-      "event DepositFinalizedAssetRouter(uint256 indexed chainId, bytes32 indexed assetId, bytes assetData)",
-      "event Initialized(uint8 version)",
-      "event LegacyDepositInitiated(uint256 indexed chainId, bytes32 indexed l2DepositTxHash, address indexed from, address to, address l1Token, uint256 amount)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function BRIDGE_HUB() view returns (address)",
-      "function ERA_CHAIN_ID() view returns (uint256)",
-      "function ETH_TOKEN_ASSET_ID() view returns (bytes32)",
-      "function L1_CHAIN_ID() view returns (uint256)",
-      "function L1_NULLIFIER() view returns (address)",
-      "function L1_WETH_TOKEN() view returns (address)",
-      "function acceptOwnership()",
-      "function assetDeploymentTracker(bytes32 assetId) view returns (address assetDeploymentTracker)",
-      "function assetHandlerAddress(bytes32 assetId) view returns (address assetHandlerAddress)",
-      "function bridgeRecoverFailedTransfer(uint256 _chainId, address _depositSender, bytes32 _assetId, bytes _assetData)",
-      "function bridgeRecoverFailedTransfer(uint256 _chainId, address _depositSender, bytes32 _assetId, bytes _assetData, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function bridgehubConfirmL2Transaction(uint256 _chainId, bytes32 _txDataHash, bytes32 _txHash)",
-      "function bridgehubDeposit(uint256 _chainId, address _originalCaller, uint256 _value, bytes _data) payable returns (tuple(bytes32 magicValue, address l2Contract, bytes l2Calldata, bytes[] factoryDeps, bytes32 txDataHash) request)",
-      "function bridgehubDepositBaseToken(uint256 _chainId, bytes32 _assetId, address _originalCaller, uint256 _amount) payable",
-      "function claimFailedDeposit(uint256 _chainId, address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function depositLegacyErc20Bridge(address _originalCaller, address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 txHash)",
-      "function finalizeDeposit(uint256 _chainId, bytes32 _assetId, bytes _transferData) payable",
-      "function finalizeWithdrawal(uint256 _chainId, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function getDepositCalldata(address _sender, bytes32 _assetId, bytes _assetData) view returns (bytes)",
-      "function initialize(address _owner)",
-      "function isWithdrawalFinalized(uint256 _chainId, uint256 _l2BatchNumber, uint256 _l2MessageIndex) view returns (bool)",
-      "function l2BridgeAddress(uint256 _chainId) view returns (address)",
-      "function legacyBridge() view returns (address)",
-      "function nativeTokenVault() view returns (address)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function setAssetDeploymentTracker(bytes32 _assetRegistrationData, address _assetDeploymentTracker)",
-      "function setAssetHandlerAddressThisChain(bytes32 _assetRegistrationData, address _assetHandlerAddress)",
-      "function setL1Erc20Bridge(address _legacyBridge)",
-      "function setNativeTokenVault(address _nativeTokenVault)",
-      "function transferFundsToNTV(bytes32 _assetId, uint256 _amount, address _originalCaller) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()"
-    ],
     "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": [
       "constructor(address _singleton)"
     ],
@@ -2441,73 +2323,70 @@
     "0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F": [
       "constructor(address _singleton)"
     ],
-    "0x40B1060a114380f40faC6869c5B383f47e61530c": [
-      "constructor(address _l1WethAddress, address _l1AssetRouter, address _l1Nullifier)",
-      "error AddressMismatch(address expected, address supplied)",
-      "error AmountMustBeGreaterThanZero()",
-      "error AssetIdAlreadyRegistered()",
-      "error AssetIdMismatch(bytes32 expected, bytes32 supplied)",
-      "error BurningNativeWETHNotSupported()",
-      "error ClaimFailedDepositFailed()",
-      "error DeployingBridgedTokenForNativeToken()",
-      "error EmptyDeposit()",
-      "error EmptyToken()",
-      "error InsufficientChainBalance()",
+    "0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518": [
+      "constructor(address _bridgehub, uint256 _eraChainId, address _eraDiamondProxy)",
+      "error AddressAlreadySet(address addr)",
+      "error DepositDoesNotExist()",
+      "error DepositExists()",
+      "error EthTransferFailed()",
+      "error IncorrectTokenAddressFromNTV(bytes32 assetId, address tokenAddress)",
       "error InvalidNTVBurnData()",
-      "error NoFundsTransferred()",
-      "error NonEmptyMsgValue()",
-      "error OriginChainIdNotFound()",
-      "error TokenNotSupported(address token)",
-      "error TokensWithFeesNotSupported()",
+      "error InvalidProof()",
+      "error InvalidSelector(bytes4 func)",
+      "error L2WithdrawalMessageWrongLength(uint256 messageLen)",
+      "error LegacyBridgeNotSet()",
+      "error LegacyMethodForNonL1Token()",
+      "error NativeTokenVaultAlreadySet()",
+      "error NotInitializedReentrancyGuard()",
+      "error Reentrancy()",
+      "error SharedBridgeValueNotSet(uint8)",
+      "error SlotOccupied()",
+      "error TokenNotLegacy()",
       "error Unauthorized(address caller)",
       "error UnsupportedEncodingVersion()",
-      "error ValueMismatch(uint256 expected, uint256 actual)",
-      "error WithdrawFailed()",
-      "error WrongAmountTransferred(uint256 balance, uint256 nullifierChainBalance)",
-      "error WrongCounterpart()",
+      "error WithdrawalAlreadyFinalized()",
+      "error WrongL2Sender(address providedL2Sender)",
+      "error WrongMsgLength(uint256 expected, uint256 length)",
       "error ZeroAddress()",
-      "error ZeroAmountToTransfer()",
-      "event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)",
-      "event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)",
-      "event BridgedTokenBeaconUpdated(address bridgedTokenBeacon, bytes32 bridgedTokenProxyBytecodeHash)",
+      "event BridgehubDepositFinalized(uint256 indexed chainId, bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash)",
       "event Initialized(uint8 version)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
-      "event TokenBeaconUpdated(address indexed l2TokenBeacon)",
       "event Unpaused(address account)",
-      "function ASSET_ROUTER() view returns (address)",
-      "function BASE_TOKEN_ASSET_ID() view returns (bytes32)",
-      "function L1_CHAIN_ID() view returns (uint256)",
-      "function L1_NULLIFIER() view returns (address)",
-      "function WETH_TOKEN() view returns (address)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function __DEPRECATED_admin() view returns (address)",
+      "function __DEPRECATED_chainBalance(uint256 chainId, address l1Token) view returns (uint256 balance)",
+      "function __DEPRECATED_l2BridgeAddress(uint256 chainId) view returns (address l2Bridge)",
+      "function __DEPRECATED_pendingAdmin() view returns (address)",
       "function acceptOwnership()",
-      "function assetId(address tokenAddress) view returns (bytes32 assetId)",
-      "function bridgeBurn(uint256 _chainId, uint256 _l2MsgValue, bytes32 _assetId, address _originalCaller, bytes _data) payable returns (bytes _bridgeMintData)",
-      "function bridgeCheckCounterpartAddress(uint256, bytes32, address, address _assetHandlerAddressOnCounterpart) view",
-      "function bridgeMint(uint256 _chainId, bytes32 _assetId, bytes _data) payable",
-      "function bridgeRecoverFailedTransfer(uint256 _chainId, bytes32 _assetId, address _depositSender, bytes _data) payable",
-      "function bridgedTokenBeacon() view returns (address)",
-      "function calculateCreate2TokenAddress(uint256 _originChainId, address _nonNativeToken) view returns (address)",
-      "function chainBalance(uint256 chainId, bytes32 assetId) view returns (uint256 balance)",
-      "function ensureTokenIsRegistered(address _nativeToken)",
-      "function getERC20Getters(address _token, uint256 _originChainId) view returns (bytes)",
-      "function initialize(address _owner, address _bridgedTokenBeacon)",
-      "function originChainId(bytes32 assetId) view returns (uint256 originChainId)",
+      "function bridgeRecoverFailedTransfer(uint256 _chainId, address _depositSender, bytes32 _assetId, bytes _assetData, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function bridgehubConfirmL2TransactionForwarded(uint256 _chainId, bytes32 _txDataHash, bytes32 _txHash)",
+      "function chainBalance(uint256 _chainId, address _token) view returns (uint256)",
+      "function claimFailedDeposit(uint256 _chainId, address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function claimFailedDepositLegacyErc20Bridge(address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function depositHappened(uint256 chainId, bytes32 l2DepositTxHash) view returns (bytes32 depositDataHash)",
+      "function encodeTxDataHash(bytes1 _encodingVersion, address _originalCaller, bytes32 _assetId, bytes _transferData) view returns (bytes32 txDataHash)",
+      "function finalizeDeposit(tuple(uint256 chainId, uint256 l2BatchNumber, uint256 l2MessageIndex, address l2Sender, uint16 l2TxNumberInBatch, bytes message, bytes32[] merkleProof) _finalizeWithdrawalParams)",
+      "function finalizeWithdrawal(uint256 _chainId, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(address _owner, uint256 _eraPostDiamondUpgradeFirstBatch, uint256 _eraPostLegacyBridgeUpgradeFirstBatch, uint256 _eraLegacyBridgeLastDepositBatch, uint256 _eraLegacyBridgeLastDepositTxNumber)",
+      "function isWithdrawalFinalized(uint256 chainId, uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function l1AssetRouter() view returns (address)",
+      "function l1NativeTokenVault() view returns (address)",
+      "function l2BridgeAddress(uint256 _chainId) view returns (address)",
+      "function legacyBridge() view returns (address)",
+      "function nullifyChainBalanceByNTV(uint256 _chainId, address _token)",
       "function owner() view returns (address)",
       "function pause()",
       "function paused() view returns (bool)",
       "function pendingOwner() view returns (address)",
-      "function registerEthToken()",
-      "function registerToken(address _nativeToken)",
       "function renounceOwnership()",
-      "function tokenAddress(bytes32 assetId) view returns (address tokenAddress)",
-      "function tokenDataOriginChainId(bytes _erc20Data) view returns (uint256 tokenOriginChainId)",
-      "function transferFundsFromSharedBridge(address _token)",
+      "function setL1AssetRouter(address _l1AssetRouter)",
+      "function setL1Erc20Bridge(address _legacyBridge)",
+      "function setL1NativeTokenVault(address _l1NativeTokenVault)",
       "function transferOwnership(address newOwner)",
-      "function tryRegisterTokenFromBurnData(bytes _burnData, bytes32 _expectedAssetId)",
-      "function unpause()",
-      "function updateChainBalancesFromSharedBridge(address _token, uint256 _targetChainId)"
+      "function transferTokenToNTV(address _token)",
+      "function unpause()"
     ],
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": [
       "constructor(address _singleton)"
@@ -2589,6 +2468,82 @@
     "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": [
       "constructor(address _singleton)"
     ],
+    "0x6D598c77AF57Bfa17201483400615c61819dD45A": [
+      "constructor(address _bridgehub)",
+      "error AdminZero()",
+      "error ChainAlreadyLive()",
+      "error GenesisBatchCommitmentZero()",
+      "error GenesisBatchHashZero()",
+      "error GenesisIndexStorageZero()",
+      "error GenesisUpgradeZero()",
+      "error HashMismatch(bytes32 expected, bytes32 actual)",
+      "error InitialForceDeploymentMismatch(bytes32 forceDeploymentHash, bytes32 initialForceDeploymentHash)",
+      "error MigrationsNotPaused()",
+      "error OutdatedProtocolVersion(uint256 protocolVersion, uint256 currentProtocolVersion)",
+      "error SlotOccupied()",
+      "error Unauthorized(address caller)",
+      "error ZeroAddress()",
+      "event GenesisUpgrade(address indexed _zkChain, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) _l2Transaction, uint256 indexed _protocolVersion)",
+      "event Initialized(uint8 version)",
+      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
+      "event NewChainCreationParams(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, bytes32 newInitialCutHash, bytes32 forceDeploymentHash)",
+      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
+      "event NewProtocolVersion(uint256 indexed oldProtocolVersion, uint256 indexed newProtocolVersion)",
+      "event NewServerNotifier(address indexed oldServerNotifier, address indexed newServerNotifier)",
+      "event NewUpgradeCutData(uint256 indexed protocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCutData)",
+      "event NewUpgradeCutHash(uint256 indexed protocolVersion, bytes32 indexed upgradeCutHash)",
+      "event NewValidatorTimelock(address indexed oldValidatorTimelock, address indexed newValidatorTimelock)",
+      "event NewZKChain(uint256 indexed _chainId, address indexed _zkChainContract)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateProtocolVersionDeadline(uint256 indexed protocolVersion, uint256 deadline)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function acceptAdmin()",
+      "function acceptOwnership()",
+      "function admin() view returns (address)",
+      "function changeFeeParams(uint256 _chainId, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
+      "function createNewChain(uint256 _chainId, bytes32 _baseTokenAssetId, address _admin, bytes _initData, bytes[] _factoryDeps) returns (address zkChainAddress)",
+      "function executeUpgrade(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function forwardedBridgeBurn(uint256 _chainId, bytes _data) view returns (bytes ctmForwardedBridgeMintData)",
+      "function forwardedBridgeMint(uint256 _chainId, bytes _ctmData) returns (address chainAddress)",
+      "function forwardedBridgeRecoverFailedTransfer(uint256, bytes32, address, bytes)",
+      "function freezeChain(uint256 _chainId)",
+      "function getChainAdmin(uint256 _chainId) view returns (address)",
+      "function getHyperchain(uint256 _chainId) view returns (address)",
+      "function getProtocolVersion(uint256 _chainId) view returns (uint256)",
+      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
+      "function getZKChain(uint256 _chainId) view returns (address)",
+      "function getZKChainLegacy(uint256 _chainId) view returns (address chainAddress)",
+      "function initialCutHash() view returns (bytes32)",
+      "function initialForceDeploymentHash() view returns (bytes32)",
+      "function initialize(tuple(address owner, address validatorTimelock, tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut, bytes forceDeploymentsData) chainCreationParams, uint256 protocolVersion, address serverNotifier) _initializeData)",
+      "function l1GenesisUpgrade() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolVersion() view returns (uint256)",
+      "function protocolVersionDeadline(uint256 _protocolVersion) view returns (uint256)",
+      "function protocolVersionIsActive(uint256 _protocolVersion) view returns (bool)",
+      "function renounceOwnership()",
+      "function revertBatches(uint256 _chainId, uint256 _newLastBatch)",
+      "function serverNotifierAddress() view returns (address)",
+      "function setChainCreationParams(tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut, bytes forceDeploymentsData) _chainCreationParams)",
+      "function setNewVersionUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion, uint256 _oldProtocolVersionDeadline, uint256 _newProtocolVersion)",
+      "function setPendingAdmin(address _newPendingAdmin)",
+      "function setPorterAvailability(uint256 _chainId, bool _zkPorterIsAvailable)",
+      "function setPriorityTxMaxGasLimit(uint256 _chainId, uint256 _maxGasLimit)",
+      "function setProtocolVersionDeadline(uint256 _protocolVersion, uint256 _timestamp)",
+      "function setServerNotifier(address _serverNotifier)",
+      "function setTokenMultiplier(uint256 _chainId, uint128 _nominator, uint128 _denominator)",
+      "function setUpgradeDiamondCut(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion)",
+      "function setValidator(uint256 _chainId, address _validator, bool _active)",
+      "function setValidatorTimelock(address _validatorTimelock)",
+      "function storedBatchZero() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function unfreezeChain(uint256 _chainId)",
+      "function upgradeChainFromVersion(uint256 _chainId, uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function upgradeCutHash(uint256 protocolVersion) view returns (bytes32 cutHash)",
+      "function validatorTimelock() view returns (address)"
+    ],
     "0x72213dfe8CA61B0A782970dCFebFb877778f9119": [
       "error BlobCommitmentNotPublished()",
       "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
@@ -2629,80 +2584,154 @@
     "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803": [
       "constructor(address _singleton)"
     ],
-    "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb": [
-      "constructor(address _bridgehub)",
-      "error AdminZero()",
-      "error ChainAlreadyLive()",
-      "error GenesisBatchCommitmentZero()",
-      "error GenesisBatchHashZero()",
-      "error GenesisIndexStorageZero()",
-      "error GenesisUpgradeZero()",
-      "error HashMismatch(bytes32 expected, bytes32 actual)",
-      "error InitialForceDeploymentMismatch(bytes32 forceDeploymentHash, bytes32 initialForceDeploymentHash)",
-      "error MigrationsNotPaused()",
-      "error OutdatedProtocolVersion(uint256 protocolVersion, uint256 currentProtocolVersion)",
+    "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": [
+      "constructor(address _singleton)"
+    ],
+    "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": [
+      "constructor(address _singleton)"
+    ],
+    "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": [
+      "constructor(address _singleton)"
+    ],
+    "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C": [
+      "error AddressHasNoCode(address)",
+      "error DelegateCallFailed(bytes returnData)",
+      "error FacetExists(bytes4 selector, address)",
+      "error InvalidTxType(uint256 txType)",
+      "error InvalidUpgradeTxn(uint8)",
+      "error L2UpgradeNonceNotEqualToNewProtocolVersion(uint256 nonce, uint256 protocolVersion)",
+      "error LengthIsNotDivisibleBy32(uint256 length)",
+      "error MalformedBytecode(uint8)",
+      "error NoFunctionsForDiamondCut()",
+      "error NonEmptyCalldata()",
+      "error PatchCantSetUpgradeTxn()",
+      "error PatchUpgradeCantSetBootloader()",
+      "error PatchUpgradeCantSetDefaultAccount()",
+      "error PatchUpgradeCantSetEvmEmulator()",
+      "error PreviousUpgradeBatchNotCleared()",
+      "error PreviousUpgradeNotFinalized(bytes32 txHash)",
+      "error ProtocolMajorVersionNotZero()",
+      "error ProtocolVersionDeltaTooLarge(uint256 _proposedDelta, uint256 _maxDelta)",
+      "error ProtocolVersionTooSmall()",
+      "error PubdataGreaterThanLimit(uint256 limit, uint256 length)",
+      "error RemoveFunctionFacetAddressNotZero(address facet)",
+      "error RemoveFunctionFacetAddressZero()",
+      "error ReplaceFunctionFacetAddressZero()",
+      "error SelectorsMustAllHaveSameFreezability()",
+      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
+      "error TooManyFactoryDeps()",
+      "error TooMuchGas()",
+      "error TxnBodyGasLimitNotEnoughGas()",
+      "error UndefinedDiamondCutAction()",
+      "error ValidateTxnNotEnoughGas()",
+      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)",
+      "event GenesisUpgrade(address indexed _zkChain, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) _l2Transaction, uint256 indexed _protocolVersion, bytes[] _factoryDeps)",
+      "event NewL2BootloaderBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
+      "event NewL2DefaultAccountBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
+      "event NewL2EvmEmulatorBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
+      "event NewProtocolVersion(uint256 indexed previousProtocolVersion, uint256 indexed newProtocolVersion)",
+      "event NewVerifier(address indexed oldVerifier, address indexed newVerifier)",
+      "event NewVerifierParams(tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) oldVerifierParams, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) newVerifierParams)",
+      "event UpgradeComplete(uint256 indexed newProtocolVersion, bytes32 indexed l2UpgradeTxHash, tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes32 bootloaderHash, bytes32 defaultAccountHash, bytes32 evmEmulatorHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) upgrade)",
+      "function genesisUpgrade(address _l1GenesisUpgrade, uint256 _chainId, uint256 _protocolVersion, address _l1CtmDeployerAddress, bytes _fixedForceDeploymentsData, bytes[] _factoryDeps) returns (bytes32)",
+      "function upgrade(tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes32 bootloaderHash, bytes32 defaultAccountHash, bytes32 evmEmulatorHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) _proposedUpgrade) returns (bytes32)"
+    ],
+    "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315": [
+      "constructor(address _l1WethAddress, address _bridgehub, address _l1Nullifier, uint256 _eraChainId, address _eraDiamondProxy)",
+      "error AddressAlreadySet(address addr)",
+      "error AssetHandlerDoesNotExist(bytes32 assetId)",
+      "error AssetIdNotSupported(bytes32 assetId)",
+      "error IncorrectTokenAddressFromNTV(bytes32 assetId, address tokenAddress)",
+      "error InvalidNTVBurnData()",
+      "error LegacyBridgeUsesNonNativeToken()",
+      "error LegacyEncodingUsedForNonL1Token()",
+      "error NativeTokenVaultAlreadySet()",
+      "error NonEmptyMsgValue()",
+      "error NotInitializedReentrancyGuard()",
+      "error Reentrancy()",
       "error SlotOccupied()",
+      "error TokenNotSupported(address token)",
+      "error TokensWithFeesNotSupported()",
       "error Unauthorized(address caller)",
+      "error UnsupportedEncodingVersion()",
       "error ZeroAddress()",
-      "event GenesisUpgrade(address indexed _zkChain, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) _l2Transaction, uint256 indexed _protocolVersion)",
+      "event AssetDeploymentTrackerRegistered(bytes32 indexed assetId, bytes32 indexed additionalData, address assetDeploymentTracker)",
+      "event AssetDeploymentTrackerSet(bytes32 indexed assetId, address indexed assetDeploymentTracker, bytes32 indexed additionalData)",
+      "event AssetHandlerRegistered(bytes32 indexed assetId, address indexed _assetHandlerAddress)",
+      "event BridgehubDepositBaseTokenInitiated(uint256 indexed chainId, address indexed from, bytes32 assetId, uint256 amount)",
+      "event BridgehubDepositFinalized(uint256 indexed chainId, bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash)",
+      "event BridgehubDepositInitiated(uint256 indexed chainId, bytes32 indexed txDataHash, address indexed from, bytes32 assetId, bytes bridgeMintCalldata)",
+      "event BridgehubMintData(bytes bridgeMintData)",
+      "event BridgehubWithdrawalInitiated(uint256 chainId, address indexed sender, bytes32 indexed assetId, bytes32 assetDataHash)",
+      "event ClaimedFailedDepositAssetRouter(uint256 indexed chainId, bytes32 indexed assetId, bytes assetData)",
+      "event DepositFinalizedAssetRouter(uint256 indexed chainId, bytes32 indexed assetId, bytes assetData)",
       "event Initialized(uint8 version)",
-      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
-      "event NewChainCreationParams(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, bytes32 newInitialCutHash, bytes32 forceDeploymentHash)",
-      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
-      "event NewProtocolVersion(uint256 indexed oldProtocolVersion, uint256 indexed newProtocolVersion)",
-      "event NewUpgradeCutData(uint256 indexed protocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCutData)",
-      "event NewUpgradeCutHash(uint256 indexed protocolVersion, bytes32 indexed upgradeCutHash)",
-      "event NewValidatorTimelock(address indexed oldValidatorTimelock, address indexed newValidatorTimelock)",
-      "event NewZKChain(uint256 indexed _chainId, address indexed _zkChainContract)",
+      "event LegacyDepositInitiated(uint256 indexed chainId, bytes32 indexed l2DepositTxHash, address indexed from, address to, address l1Token, uint256 amount)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateProtocolVersionDeadline(uint256 indexed protocolVersion, uint256 deadline)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
       "function BRIDGE_HUB() view returns (address)",
-      "function acceptAdmin()",
+      "function ERA_CHAIN_ID() view returns (uint256)",
+      "function ETH_TOKEN_ASSET_ID() view returns (bytes32)",
+      "function L1_CHAIN_ID() view returns (uint256)",
+      "function L1_NULLIFIER() view returns (address)",
+      "function L1_WETH_TOKEN() view returns (address)",
       "function acceptOwnership()",
-      "function admin() view returns (address)",
-      "function changeFeeParams(uint256 _chainId, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
-      "function createNewChain(uint256 _chainId, bytes32 _baseTokenAssetId, address _admin, bytes _initData, bytes[] _factoryDeps) returns (address zkChainAddress)",
-      "function executeUpgrade(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "function forwardedBridgeBurn(uint256 _chainId, bytes _data) view returns (bytes ctmForwardedBridgeMintData)",
-      "function forwardedBridgeMint(uint256 _chainId, bytes _ctmData) returns (address chainAddress)",
-      "function forwardedBridgeRecoverFailedTransfer(uint256, bytes32, address, bytes)",
-      "function freezeChain(uint256 _chainId)",
-      "function getChainAdmin(uint256 _chainId) view returns (address)",
-      "function getHyperchain(uint256 _chainId) view returns (address)",
-      "function getProtocolVersion(uint256 _chainId) view returns (uint256)",
-      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
-      "function getZKChain(uint256 _chainId) view returns (address)",
-      "function getZKChainLegacy(uint256 _chainId) view returns (address chainAddress)",
-      "function initialCutHash() view returns (bytes32)",
-      "function initialForceDeploymentHash() view returns (bytes32)",
-      "function initialize(tuple(address owner, address validatorTimelock, tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut, bytes forceDeploymentsData) chainCreationParams, uint256 protocolVersion) _initializeData)",
-      "function l1GenesisUpgrade() view returns (address)",
+      "function assetDeploymentTracker(bytes32 assetId) view returns (address assetDeploymentTracker)",
+      "function assetHandlerAddress(bytes32 assetId) view returns (address assetHandlerAddress)",
+      "function bridgeRecoverFailedTransfer(uint256 _chainId, address _depositSender, bytes32 _assetId, bytes _assetData)",
+      "function bridgeRecoverFailedTransfer(uint256 _chainId, address _depositSender, bytes32 _assetId, bytes _assetData, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function bridgehubConfirmL2Transaction(uint256 _chainId, bytes32 _txDataHash, bytes32 _txHash)",
+      "function bridgehubDeposit(uint256 _chainId, address _originalCaller, uint256 _value, bytes _data) payable returns (tuple(bytes32 magicValue, address l2Contract, bytes l2Calldata, bytes[] factoryDeps, bytes32 txDataHash) request)",
+      "function bridgehubDepositBaseToken(uint256 _chainId, bytes32 _assetId, address _originalCaller, uint256 _amount) payable",
+      "function claimFailedDeposit(uint256 _chainId, address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function depositLegacyErc20Bridge(address _originalCaller, address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 txHash)",
+      "function finalizeDeposit(uint256 _chainId, bytes32 _assetId, bytes _transferData) payable",
+      "function finalizeWithdrawal(uint256 _chainId, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function getDepositCalldata(address _sender, bytes32 _assetId, bytes _assetData) view returns (bytes)",
+      "function initialize(address _owner)",
+      "function isWithdrawalFinalized(uint256 _chainId, uint256 _l2BatchNumber, uint256 _l2MessageIndex) view returns (bool)",
+      "function l2BridgeAddress(uint256 _chainId) view returns (address)",
+      "function legacyBridge() view returns (address)",
+      "function nativeTokenVault() view returns (address)",
       "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
       "function pendingOwner() view returns (address)",
-      "function protocolVersion() view returns (uint256)",
-      "function protocolVersionDeadline(uint256 _protocolVersion) view returns (uint256)",
-      "function protocolVersionIsActive(uint256 _protocolVersion) view returns (bool)",
       "function renounceOwnership()",
-      "function revertBatches(uint256 _chainId, uint256 _newLastBatch)",
-      "function setChainCreationParams(tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut, bytes forceDeploymentsData) _chainCreationParams)",
-      "function setNewVersionUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion, uint256 _oldProtocolVersionDeadline, uint256 _newProtocolVersion)",
-      "function setPendingAdmin(address _newPendingAdmin)",
-      "function setPorterAvailability(uint256 _chainId, bool _zkPorterIsAvailable)",
-      "function setPriorityTxMaxGasLimit(uint256 _chainId, uint256 _maxGasLimit)",
-      "function setProtocolVersionDeadline(uint256 _protocolVersion, uint256 _timestamp)",
-      "function setTokenMultiplier(uint256 _chainId, uint128 _nominator, uint128 _denominator)",
-      "function setUpgradeDiamondCut(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion)",
-      "function setValidator(uint256 _chainId, address _validator, bool _active)",
-      "function setValidatorTimelock(address _validatorTimelock)",
-      "function storedBatchZero() view returns (bytes32)",
+      "function setAssetDeploymentTracker(bytes32 _assetRegistrationData, address _assetDeploymentTracker)",
+      "function setAssetHandlerAddressThisChain(bytes32 _assetRegistrationData, address _assetHandlerAddress)",
+      "function setL1Erc20Bridge(address _legacyBridge)",
+      "function setNativeTokenVault(address _nativeTokenVault)",
+      "function transferFundsToNTV(bytes32 _assetId, uint256 _amount, address _originalCaller) returns (bool)",
       "function transferOwnership(address newOwner)",
-      "function unfreezeChain(uint256 _chainId)",
-      "function upgradeChainFromVersion(uint256 _chainId, uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "function upgradeCutHash(uint256 protocolVersion) view returns (bytes32 cutHash)",
-      "function validatorTimelock() view returns (address)"
+      "function unpause()"
     ],
-    "0xb720523EC3c615b069453bF4B0584CEbF034706f": [
+    "0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87": [
       "constructor(uint256 _l1ChainId, address _owner, uint256 _maxNumberOfZKChains)",
       "error AlreadyCurrentSL(uint256 blockChainId)",
       "error AssetHandlerNotRegistered(bytes32 assetId)",
@@ -2820,38 +2849,6 @@
       "function unpauseMigration()",
       "function whitelistedSettlementLayers(uint256 chainId) view returns (bool isWhitelistedSettlementLayer)"
     ],
-    "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": [
-      "constructor(address _singleton)"
-    ],
-    "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": [
-      "constructor(address _singleton)"
-    ],
-    "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": [
-      "constructor(address _singleton)"
-    ],
     "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": [
       "constructor(address _singleton)"
     ],
@@ -2910,69 +2907,73 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A": [
-      "constructor(address _bridgehub, uint256 _eraChainId, address _eraDiamondProxy)",
-      "error AddressAlreadySet(address addr)",
-      "error DepositDoesNotExist()",
-      "error DepositExists()",
-      "error EthTransferFailed()",
-      "error IncorrectTokenAddressFromNTV(bytes32 assetId, address tokenAddress)",
+    "0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947": [
+      "constructor(address _l1WethAddress, address _l1AssetRouter, address _l1Nullifier)",
+      "error AddressMismatch(address expected, address supplied)",
+      "error AmountMustBeGreaterThanZero()",
+      "error AssetIdAlreadyRegistered()",
+      "error AssetIdMismatch(bytes32 expected, bytes32 supplied)",
+      "error BurningNativeWETHNotSupported()",
+      "error ClaimFailedDepositFailed()",
+      "error DeployingBridgedTokenForNativeToken()",
+      "error EmptyDeposit()",
+      "error EmptyToken()",
+      "error InsufficientChainBalance()",
       "error InvalidNTVBurnData()",
-      "error InvalidProof()",
-      "error InvalidSelector(bytes4 func)",
-      "error L2WithdrawalMessageWrongLength(uint256 messageLen)",
-      "error LegacyBridgeNotSet()",
-      "error LegacyMethodForNonL1Token()",
-      "error NativeTokenVaultAlreadySet()",
-      "error NotInitializedReentrancyGuard()",
-      "error Reentrancy()",
-      "error SharedBridgeValueNotSet(uint8)",
-      "error SlotOccupied()",
+      "error NoFundsTransferred()",
+      "error NonEmptyMsgValue()",
+      "error OriginChainIdNotFound()",
+      "error TokenNotSupported(address token)",
+      "error TokensWithFeesNotSupported()",
       "error Unauthorized(address caller)",
       "error UnsupportedEncodingVersion()",
-      "error WithdrawalAlreadyFinalized()",
-      "error WrongL2Sender(address providedL2Sender)",
-      "error WrongMsgLength(uint256 expected, uint256 length)",
+      "error ValueMismatch(uint256 expected, uint256 actual)",
+      "error WithdrawFailed()",
+      "error WrongAmountTransferred(uint256 balance, uint256 nullifierChainBalance)",
+      "error WrongCounterpart()",
       "error ZeroAddress()",
-      "event BridgehubDepositFinalized(uint256 indexed chainId, bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash)",
+      "error ZeroAmountToTransfer()",
+      "event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)",
+      "event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)",
+      "event BridgedTokenBeaconUpdated(address bridgedTokenBeacon, bytes32 bridgedTokenProxyBytecodeHash)",
       "event Initialized(uint8 version)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
+      "event TokenBeaconUpdated(address indexed l2TokenBeacon)",
       "event Unpaused(address account)",
-      "function BRIDGE_HUB() view returns (address)",
-      "function __DEPRECATED_admin() view returns (address)",
-      "function __DEPRECATED_chainBalance(uint256 chainId, address l1Token) view returns (uint256 balance)",
-      "function __DEPRECATED_l2BridgeAddress(uint256 chainId) view returns (address l2Bridge)",
-      "function __DEPRECATED_pendingAdmin() view returns (address)",
+      "function ASSET_ROUTER() view returns (address)",
+      "function BASE_TOKEN_ASSET_ID() view returns (bytes32)",
+      "function L1_CHAIN_ID() view returns (uint256)",
+      "function L1_NULLIFIER() view returns (address)",
+      "function WETH_TOKEN() view returns (address)",
       "function acceptOwnership()",
-      "function bridgeRecoverFailedTransfer(uint256 _chainId, address _depositSender, bytes32 _assetId, bytes _assetData, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function bridgehubConfirmL2TransactionForwarded(uint256 _chainId, bytes32 _txDataHash, bytes32 _txHash)",
-      "function chainBalance(uint256 _chainId, address _token) view returns (uint256)",
-      "function claimFailedDeposit(uint256 _chainId, address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function claimFailedDepositLegacyErc20Bridge(address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function depositHappened(uint256 chainId, bytes32 l2DepositTxHash) view returns (bytes32 depositDataHash)",
-      "function encodeTxDataHash(bytes1 _encodingVersion, address _originalCaller, bytes32 _assetId, bytes _transferData) view returns (bytes32 txDataHash)",
-      "function finalizeDeposit(tuple(uint256 chainId, uint256 l2BatchNumber, uint256 l2MessageIndex, address l2Sender, uint16 l2TxNumberInBatch, bytes message, bytes32[] merkleProof) _finalizeWithdrawalParams)",
-      "function finalizeWithdrawal(uint256 _chainId, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function initialize(address _owner, uint256 _eraPostDiamondUpgradeFirstBatch, uint256 _eraPostLegacyBridgeUpgradeFirstBatch, uint256 _eraLegacyBridgeLastDepositBatch, uint256 _eraLegacyBridgeLastDepositTxNumber)",
-      "function isWithdrawalFinalized(uint256 chainId, uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
-      "function l1AssetRouter() view returns (address)",
-      "function l1NativeTokenVault() view returns (address)",
-      "function l2BridgeAddress(uint256 _chainId) view returns (address)",
-      "function legacyBridge() view returns (address)",
-      "function nullifyChainBalanceByNTV(uint256 _chainId, address _token)",
+      "function assetId(address tokenAddress) view returns (bytes32 assetId)",
+      "function bridgeBurn(uint256 _chainId, uint256 _l2MsgValue, bytes32 _assetId, address _originalCaller, bytes _data) payable returns (bytes _bridgeMintData)",
+      "function bridgeCheckCounterpartAddress(uint256, bytes32, address, address _assetHandlerAddressOnCounterpart) view",
+      "function bridgeMint(uint256 _chainId, bytes32 _assetId, bytes _data) payable",
+      "function bridgeRecoverFailedTransfer(uint256 _chainId, bytes32 _assetId, address _depositSender, bytes _data) payable",
+      "function bridgedTokenBeacon() view returns (address)",
+      "function calculateCreate2TokenAddress(uint256 _originChainId, address _nonNativeToken) view returns (address)",
+      "function chainBalance(uint256 chainId, bytes32 assetId) view returns (uint256 balance)",
+      "function ensureTokenIsRegistered(address _nativeToken) returns (bytes32 tokenAssetId)",
+      "function getERC20Getters(address _token, uint256 _originChainId) view returns (bytes)",
+      "function initialize(address _owner, address _bridgedTokenBeacon)",
+      "function originChainId(bytes32 assetId) view returns (uint256 originChainId)",
       "function owner() view returns (address)",
       "function pause()",
       "function paused() view returns (bool)",
       "function pendingOwner() view returns (address)",
+      "function registerEthToken()",
+      "function registerToken(address _nativeToken)",
       "function renounceOwnership()",
-      "function setL1AssetRouter(address _l1AssetRouter)",
-      "function setL1Erc20Bridge(address _legacyBridge)",
-      "function setL1NativeTokenVault(address _l1NativeTokenVault)",
+      "function tokenAddress(bytes32 assetId) view returns (address tokenAddress)",
+      "function tokenDataOriginChainId(bytes _erc20Data) view returns (uint256 tokenOriginChainId)",
+      "function transferFundsFromSharedBridge(address _token)",
       "function transferOwnership(address newOwner)",
-      "function transferTokenToNTV(address _token)",
-      "function unpause()"
+      "function tryRegisterTokenFromBurnData(bytes _burnData, bytes32 _expectedAssetId)",
+      "function unpause()",
+      "function updateChainBalancesFromSharedBridge(address _token, uint256 _targetChainId)"
     ],
     "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
@@ -3016,7 +3017,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
     "shared-zk-stack/EmergencyUpgradeBoard": "0xf0529192bd3663a9f0d22f9d6221b3b70a7b5bf83f48481fdf672ede9d755121",
@@ -3033,5 +3034,6 @@
     "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x845f5c52bb56cdad184c9075a1d06fe4283a7dd9197c0e9dccc748bb3f80ae85",
     "shared-zk-stack/v26/RollupDAManager": "0x1f13223d5cafcdf085f21bbe6e4a988bc53d13fce1257c48f223e38ac6a11eb9",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x3e6e4286503b069af3ae831757971db9232c54f7b918b92a3848a19ac8ee8401"
 }

@@ -1,4 +1,214 @@
-Generated with discovered.json: 0x2496ea749c86ef9b1f9eec6c51f21a81c7eb0467
+Generated with discovered.json: 0xd29c6f9d0d365505b02f25c44099b378b78a90db
+
+# Diff at Tue, 06 May 2025 10:57:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 15457819
+- current block number: 15457819
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15457819 (main branch discovery), not current.
+
+```diff
+    EOA UnichainProxyAdminOwner_L2Alias (0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x1727c1efc0647747d286ce6eb19a3ea479e54bfc
+
+# Diff at Fri, 02 May 2025 17:25:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 9916035
+- current block number: 15457819
+
+## Description
+
+config related: templatized the L1Splitter contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9916035 (main branch discovery), not current.
+
+```diff
+    contract L1Splitter (0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+      template:
++        "unichain/L1Splitter"
+      description:
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
+    }
+```
+
+```diff
+    contract L1Splitter (0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd).
+      template:
++        "unichain/L1Splitter"
+      description:
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd)."
+    }
+```
+
+Generated with discovered.json: 0x7c9926b96fa9e45c9df91b2a11e1357d1078cf35
+
+# Diff at Tue, 29 Apr 2025 08:19:30 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 9916035
+- current block number: 9916035
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9916035 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7E6c183F538abb8572F5cd17109C617b994d6944","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+Generated with discovered.json: 0xaa84a95ac4433a397aa99d60054e28819e473186
 
 # Diff at Tue, 04 Mar 2025 10:42:45 GMT:
 

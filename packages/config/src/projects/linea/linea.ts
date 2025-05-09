@@ -15,10 +15,9 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  NEW_CRYPTOGRAPHY,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  STATE_CORRECTNESS,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -78,6 +77,8 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
   periodInSeconds,
 )} time window.`
 
+const chainId = 59144
+
 export const linea: ScalingProject = {
   type: 'layer2',
   id: ProjectId('linea'),
@@ -98,8 +99,8 @@ export const linea: ScalingProject = {
       documentation: ['https://docs.linea.build/'],
       explorers: [
         'https://lineascan.build/',
+        'https://lineaplorer.build/',
         'https://explorer.linea.build/',
-        'https://linea.l2scan.co/',
       ],
       repositories: [
         'https://github.com/Consensys?q=linea&type=all&language=&sort=stargazers',
@@ -347,7 +348,7 @@ export const linea: ScalingProject = {
   },
   chainConfig: {
     name: 'linea',
-    chainId: 59144,
+    chainId,
     explorerUrl: 'https://lineascan.build',
     sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
     gasTokens: ['ETH'],
@@ -362,7 +363,7 @@ export const linea: ScalingProject = {
     coingeckoPlatform: 'linea',
     apis: [
       { type: 'rpc', url: 'https://linea-mainnet.infura.io/v3' },
-      { type: 'etherscan', url: 'https://api.lineascan.build/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
     ],
   },
@@ -396,38 +397,37 @@ export const linea: ScalingProject = {
         ' Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to propose state with valid proofs.',
     },
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: false,
-    },
-    stage1: {
-      principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: {
-        satisfied: false,
-        message: 'Security Council members are not publicly known.',
-        mode: 'replace',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: {
+          satisfied: false,
+          message: 'Security Council members are not publicly known.',
+          mode: 'replace',
+        },
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
       },
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
+    {
+      rollupNodeLink: 'https://github.com/Consensys/linea-besu',
     },
-  }),
+  ),
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    },
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
@@ -488,6 +488,16 @@ export const linea: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'The node software ([Linea Besu](https://github.com/Consensys/linea-besu-package)) and a guide to reconstruct the state from L1 is available [here](https://docs.linea.build/get-started/how-to/state-recovery). Other node implementations like Nethermind, Geth or Erigon can sync too, but state derivation from L1 and Linea-specific features [are unsupported](https://docs.linea.build/get-started/how-to/run-a-node).',
+    compressionScheme:
+      'Linea uses a [bespoke lossless compression scheme](https://github.com/Consensys/linea-monorepo/blob/main/docs/architecture-description.md#blob-compressor) based on LZSS (deflate-like). It is available as a [dedicated library](https://github.com/Consensys/compress) and a [zk-decompression circuit](https://github.com/Consensys/gnark/tree/master/std/compress) in Gnark.',
+    genesisState:
+      'Is available via the official Linea docs for Linea Besu (preloaded), [Besu](https://docs.linea.build/get-started/how-to/run-a-node/besu#step-2-download-the-genesis-file-and-besu-configuration-file), [Erigon](https://docs.linea.build/get-started/how-to/run-a-node/erigon#step-2-download-the-genesis-file), [Nethermind](https://docs.linea.build/get-started/how-to/run-a-node/nethermind), [Geth](https://docs.linea.build/get-started/how-to/run-a-node/geth#step-2-download-the-genesis-file).',
+    dataFormat:
+      'Linea groups L2 blocks [into batches](https://lineascan.build/batches) which are then posted to L1 for proving. Each batch (whether sent as a blob or compressed calldata) contains L2 blocks. Blocks in turn include the [transactions with unnecessary data stripped](https://community.linea.build/t/proposal-state-reconstruction-from-l1-blobs/8038#p-22077-block-data-sent-to-l1-in-the-compressed-blob-2). More info on [the compression, packing and blob structure](https://github.com/Consensys/linea-monorepo/blob/main/docs/architecture-description.md#blob-compressor).',
+  },
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -511,6 +521,7 @@ export const linea: ScalingProject = {
         description:
           'Given that the circuit is not public, the generation of the verification keys is not public either.',
       },
+      STATE_VALIDATION.VALIDITY_PROOFS,
     ],
     proofVerification: {
       shortDescription: 'Linea is a universal ZK-EVM rollup on Ethereum.',
@@ -543,6 +554,24 @@ export const linea: ScalingProject = {
           verified: 'no',
           contractAddress: EthereumAddress(
             '0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main circuit',
+              proofSystem: '?',
+              mainArithmetization: '?',
+              mainPCS: '?',
+            },
+          ],
+        },
+        {
+          name: 'LineaVerifier (ProofType 4)',
+          description:
+            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [

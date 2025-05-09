@@ -7,6 +7,16 @@
   "bin": {
     "discovery": "./cli.js"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./frontend": {
+      "types": "./dist/index-fe.d.ts",
+      "default": "./dist/index-fe.js"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
@@ -26,7 +36,7 @@
     "@mradomski/fast-solidity-parser": "0.1.1",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",
-    "clingo-wasm": "0.1.1",
+    "clingo-wasm": "0.3.2",
     "cmd-ts": "^0.13.0",
     "deep-diff": "^1.0.2",
     "ethers": "^5.7.2",
@@ -37,7 +47,6 @@
     "node-fetch": "^2.6.7",
     "ohm-js": "^17.1.0",
     "prettier": "^3.0.3",
-    "redis": "^4.7.0",
     "rimraf": "^5.0.0",
     "sqlite3": "5.1.7",
     "zod": "^3.22.2"

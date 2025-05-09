@@ -245,8 +245,38 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "arbitrum-APE-1",
+      "priceId": "apecoin",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
+            "chain": "arbitrum",
+            "decimals": 18,
+            "sinceTimestamp": 1724876200
+          },
+          {
+            "type": "const",
+            "value": "1000000000000000000000000000",
+            "decimals": 18,
+            "sinceTimestamp": 1724876200
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-APE-2",
       "priceId": "apecoin",
       "symbol": "APE",
       "name": "ApeCoin",
@@ -3249,25 +3279,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MOZ",
-      "priceId": "mozaic",
-      "symbol": "MOZ",
-      "name": "Mozaic Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/30100/large/Main_Logo_1-200x200jpg.jpg?1696529024",
-      "amount": {
-        "type": "circulatingSupply",
-        "apiId": "mozaic",
-        "decimals": 18,
-        "sinceTimestamp": 1694131200,
-        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
-        "chain": "arbitrum"
-      },
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-MXC-1",
       "priceId": "mxc",
       "symbol": "MXC",
@@ -4658,7 +4669,7 @@
         "decimals": 18,
         "sinceTimestamp": 1710892800
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },
@@ -5205,6 +5216,24 @@
       },
       "category": "stablecoin",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-USR",
+      "priceId": "resolv-usr",
+      "symbol": "USR",
+      "name": "Resolv USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2492D0006411Af6C8bbb1c8afc1B0197350a79e9",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1732183134
+      },
+      "category": "stablecoin",
+      "source": "external",
       "isAssociated": false
     },
     {

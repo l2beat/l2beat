@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x2322cdf00cda7c3b2d83c1f26048eddf6ca14f3b
+Generated with discovered.json: 0x3b8ecfcc46801217ef723cd85f8f4e02e30faa62
+
+# Diff at Tue, 29 Apr 2025 08:19:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21778467
+- current block number: 21778467
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21778467 (main branch discovery), not current.
+
+```diff
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3","via":[]}]
+    }
+```
+
+```diff
+    contract Hermez (0xA68D85dF56E733A06443306A095646317B5Fa633) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xf2662c36505e6141e09d837f1c75e3cebf023bcc
 
 # Diff at Tue, 04 Mar 2025 10:39:14 GMT:
 

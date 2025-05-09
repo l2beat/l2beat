@@ -9,7 +9,7 @@
         "method": "function delay() view returns (uint256)",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": ["format", "FormatSeconds"]
     },
     "admin": {
       "permissions": [{ "type": "act", "delay": "{{delay}}" }]

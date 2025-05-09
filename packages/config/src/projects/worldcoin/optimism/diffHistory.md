@@ -1,4 +1,64 @@
-Generated with discovered.json: 0x09689f582c4ea2a586f6861f48690489d5f1140e
+Generated with discovered.json: 0xddce030f68ffa9f28dd4380a9e1671a9e806e643
+
+# Diff at Tue, 06 May 2025 10:57:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 133912814
+- current block number: 133912814
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133912814 (main branch discovery), not current.
+
+```diff
+    EOA  (0x96d55BD9c8C4706FED243c1e15825FF7854920fA) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x1ac9881130158424f217c3fc5b06d541b2220e0b
+
+# Diff at Tue, 29 Apr 2025 08:19:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 133912814
+- current block number: 133912814
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133912814 (main branch discovery), not current.
+
+```diff
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77","via":[]}]
+    }
+```
+
+```diff
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x96d55BD9c8C4706FED243c1e15825FF7854920fA","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x165997887c4474d9cfa708d12bff2f7ac635e166
 
 # Diff at Mon, 31 Mar 2025 12:33:36 GMT:
 

@@ -1,4 +1,4 @@
-import { isArray } from 'lodash'
+import isArray from 'lodash/isArray'
 import type { Metadata } from 'next'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Markdown } from '~/components/markdown/markdown'
@@ -22,7 +22,7 @@ export interface FaqItemWithId extends FaqItem {
   id: string
 }
 
-export default async function Page() {
+export default function Page() {
   const faqItemsWithId: FaqItemWithId[] = faqItems.map((item) => ({
     ...item,
     id: questionToId(item.question),

@@ -1,0 +1,20 @@
+{
+  "BridgeValidators": {
+    "hash": "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7",
+    "address": "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
+    "chain": "ethereum",
+    "blockNumber": 22338375
+  },
+  "BridgeValidators_DAI.sol": {
+    "hash": "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398",
+    "address": "0x6943A218d58135793F1FE619414eD476C37ad65a",
+    "chain": "ethereum",
+    "blockNumber": 22337861
+  },
+  "BridgeValidators_pulsechain": {
+    "hash": "0x5568dae309b68b3870831f43f7a6eb3459ab46bee27f0f282f5b9a0b2f2ed720",
+    "address": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+    "chain": "ethereum",
+    "blockNumber": 17968825
+  }
+}

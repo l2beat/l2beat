@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "blockNumber": 21322840,
-  "configHash": "0x451604252cc9c79bf3a73f7897837dda116e4554cb799756c0da3216f3e1939f",
+  "configHash": "0x3b8256d02c3873479b35e64d76d913d6acc62111960b50841d95195ab828d10c",
   "entries": [
     {
       "address": "0x095D2918B03b2e86D68551DCF11302121fb626c9",
@@ -35,7 +35,9 @@
       "sinceTimestamp": 1649661119,
       "sinceBlock": 14563000,
       "values": { "$immutable": true },
-      "derivedName": "OBSource"
+      "implementationNames": {
+        "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc": "OBSource"
+      }
     }
   ],
   "abis": {
@@ -44,5 +46,6 @@
       "function transferERC20(address _token, address _to, uint256 _amount, bytes _ext)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x244ef68ea0aae917d98a86cc20e952e6d47fdc84db6cc8de707d3612251d653c"
 }

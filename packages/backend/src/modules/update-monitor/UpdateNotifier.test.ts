@@ -55,6 +55,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -64,6 +65,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [{ key: 'A', before: '1', after: '2' }],
         },
       ]
@@ -143,6 +145,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -152,6 +155,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [
             {
               key: 'A',
@@ -243,6 +247,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -252,6 +257,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [
             { key: 'A', before: 'A'.repeat(1000), after: 'B'.repeat(1000) },
           ],
@@ -336,6 +342,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const project = 'project-a'
@@ -345,6 +352,7 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
+          addressType: 'Contract',
           diff: [{ key: 'errors', after: 'Execution reverted' }],
         },
       ]
@@ -405,6 +413,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const reminders = {
@@ -502,6 +511,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const reminders = {
@@ -552,6 +562,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        [],
       )
 
       const reminders = {}
@@ -561,6 +572,40 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+    })
+
+    it('includes disabled chains in daily reminder', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
+        insert: async () => 0,
+        findLatestId: async () => undefined,
+      })
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+      const disabledChains = ['optimism', 'arbitrum']
+      const updateNotifier = new UpdateNotifier(
+        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        discordClient,
+        chainConverter,
+        Logger.SILENT,
+        updateMessagesService,
+        disabledChains,
+      )
+
+      const reminders = {}
+      const timestamp =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
+
+      await updateNotifier.sendDailyReminder(reminders, timestamp)
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
+      const message = discordClient.sendMessage.calls[0]?.args[0] as string
+      expect(message).toInclude(
+        ':warning: Disabled chains: `optimism`, `arbitrum`',
+      )
     })
   })
 })

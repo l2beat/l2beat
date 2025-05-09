@@ -90,38 +90,40 @@ export const eclipse: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description: `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
-      references: [
-        {
-          title:
-            'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
-          url: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
-        },
-        {
-          title:
-            'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
-          url: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
-        },
-        {
-          title:
-            'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
-          url: 'https://etherscan.io/address/0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978#code',
-        },
-      ],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'the bridge operators decide not to mint tokens after observing a deposit.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'the Treasury owner decides to transfer the funds locked on L1.',
-        },
-      ],
-    },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description: `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
+        references: [
+          {
+            title:
+              'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
+            url: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
+          },
+          {
+            title:
+              'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
+            url: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
+          },
+          {
+            title:
+              'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
+            url: 'https://etherscan.io/address/0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978#code',
+          },
+        ],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'the bridge operators decide not to mint tokens after observing a deposit.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the Treasury owner decides to transfer the funds locked on L1.',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: {

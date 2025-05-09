@@ -1,20 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  type AllProviderStats,
   type AllProviders,
+  type Analysis,
   type ConfigRegistry,
   type DiscoveryEngine,
   type DiscoveryOutput,
-  type TemplateService,
-  flattenDiscoveredSources,
-  toRawDiscoveryOutput,
-} from '@l2beat/discovery'
-import {
-  type AllProviderStats,
   ProviderMeasurement,
   type ProviderStats,
-} from '@l2beat/discovery/dist/discovery/provider/Stats'
+  type TemplateService,
+  combinePermissionsIntoDiscovery,
+  flattenDiscoveredSources,
+  getDiscoveryPaths,
+  modelPermissionsForIsolatedDiscovery,
+  toRawDiscoveryOutput,
+} from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
-import { isError } from 'lodash'
+import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
@@ -62,9 +64,26 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
-    const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
 
-    return { discovery, flatSources }
+    // This is a temporary solution to model project in isolation
+    // until we refactor Update Monitor to support cross-chain discovery
+    const discoveryPaths = getDiscoveryPaths()
+    const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
+      discovery,
+      config.permission,
+      this.templateService,
+      discoveryPaths,
+    )
+    combinePermissionsIntoDiscovery(discovery, permissionsOutput)
+
+    // TODO: Should not be here - drop it and use implementation name once it's ready
+    // if somebody changes the name and decides to re-colorize
+    // then .flat folder will be incorrect
+    // Duplicated from saveDiscoveryResult.ts
+    const remappedResults = remapNames(result, discovery)
+    const flatSources = flattenDiscoveredSources(remappedResults, Logger.SILENT)
+
+    return { discovery: withoutUndefinedKeys(discovery), flatSources }
   }
 
   async discoverWithRetry(
@@ -180,3 +199,33 @@ const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
   help: 'Average duration of methods in high level provider calls done during discovery',
   labelNames: ['chain', 'method'],
 })
+
+function withoutUndefinedKeys<T extends object>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T
+}
+
+function remapNames(
+  results: Analysis[],
+  discoveryOutput: DiscoveryOutput,
+): Analysis[] {
+  return results.map((entry) => {
+    if (entry.type === 'EOA') {
+      return entry
+    }
+
+    const matchingEntry = discoveryOutput.entries.find(
+      (e) => e.address === entry.address,
+    )
+
+    if (!matchingEntry) {
+      return entry
+    }
+
+    const newName = matchingEntry.name ?? entry.name
+
+    return {
+      ...entry,
+      name: newName,
+    }
+  })
+}

@@ -5,7 +5,7 @@ import type {
   StructureOutput,
 } from './types'
 
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { colorize } from '../colorize/colorize'
@@ -75,9 +75,9 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     template: e.template,
     sourceHashes: e.sourceHashes,
     proxyType: e.proxyType,
-    displayName: e.displayName,
     description: e.description,
-    issuedPermissions: e.issuedPermissions,
+    controlsMajorityOfUpgradePermissions:
+      e.controlsMajorityOfUpgradePermissions,
     receivedPermissions: e.receivedPermissions,
     directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,
@@ -86,7 +86,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     values: e.values,
     errors: e.errors,
     fieldMeta: e.fieldMeta,
-    derivedName: e.derivedName,
+    implementationNames: e.implementationNames,
     usedTypes: e.usedTypes,
     references: e.references,
     category: e.category,

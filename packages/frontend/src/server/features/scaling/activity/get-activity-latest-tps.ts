@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
+import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -11,45 +12,53 @@ export async function getActivityLatestUops(projects: Project[]) {
   if (env.MOCK) {
     return getMockActivityLatestUopsData(projects)
   }
-  return getActivityLatestUopsData(projects)
+  return getCachedActivityLatestUopsData(projects)
 }
 
 export type ActivityLatestUopsData = Awaited<
-  ReturnType<typeof getActivityLatestUopsData>
+  ReturnType<typeof getCachedActivityLatestUopsData>
 >
-async function getActivityLatestUopsData(projects: Project[]) {
-  const db = getDb()
-  // Range here is 1y because we want to match the range of the
-  // activity chart on summary page to show relevant data
-  const range = getFullySyncedActivityRange('1y')
-  const records = await db.activity.getByProjectsAndTimeRange(
-    projects.map((p) => p.id),
-    range,
-  )
 
-  const grouped = groupBy(records, (r) => r.projectId)
+export const getCachedActivityLatestUopsData = cache(
+  async (projects: Project[]) => {
+    const db = getDb()
+    // Range here is 1y because we want to match the range of the
+    // activity chart on summary page to show relevant data
+    const range = getFullySyncedActivityRange('1y')
+    const records = await db.activity.getByProjectsAndTimeRange(
+      projects.map((p) => p.id),
+      range,
+    )
 
-  return Object.fromEntries(
-    Object.entries(grouped)
-      .map(([projectId, records]) => {
-        const lastRecord = records.at(-1)
-        if (!lastRecord) {
-          return undefined
-        }
-        const pastDayUops = getLastDayUops(records)
-        const previousDayUops = getLastDayUops(records, 1)
-        return [
-          projectId,
-          {
-            pastDayUops,
-            change: calculatePercentageChange(pastDayUops, previousDayUops),
-            syncedUntil: lastRecord.timestamp,
-          },
-        ] as const
-      })
-      .filter(notUndefined),
-  )
-}
+    const grouped = groupBy(records, (r) => r.projectId)
+
+    return Object.fromEntries(
+      Object.entries(grouped)
+        .map(([projectId, records]) => {
+          const lastRecord = records.at(-1)
+          if (!lastRecord) {
+            return undefined
+          }
+          const pastDayUops = getLastDayUops(records)
+          const previousDayUops = getLastDayUops(records, 1)
+          return [
+            projectId,
+            {
+              pastDayUops,
+              change: calculatePercentageChange(pastDayUops, previousDayUops),
+              syncedUntil: lastRecord.timestamp,
+            },
+          ] as const
+        })
+        .filter(notUndefined),
+    )
+  },
+  ['activity-latest-uops'],
+  {
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
+  },
+)
 
 function getMockActivityLatestUopsData(
   projects: Project[],

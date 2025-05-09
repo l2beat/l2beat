@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { keyBy } from 'lodash'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import keyBy from 'lodash/keyBy'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -32,7 +32,12 @@ const getCachedBlobsData = cache(
     const ethereumRecord = records.find(
       (record) => record.projectId === ProjectId.ETHEREUM,
     )
-    assert(ethereumRecord, 'Ethereum record not found')
+    if (!ethereumRecord) {
+      return {
+        totalData: 0,
+        blobsShare: 0,
+      }
+    }
 
     const recordsByProjectId = keyBy(records, (e) => e.projectId)
 

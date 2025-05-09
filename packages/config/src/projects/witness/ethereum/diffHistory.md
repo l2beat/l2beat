@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x099945eb4b96e7020c00c860c0956e9d16872ad6
+Generated with discovered.json: 0xb47cc083ddd8c0cb5e7cc356e2746629dfabc4bb
+
+# Diff at Tue, 06 May 2025 10:56:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    EOA  (0xb8605297399baEb6628C9E8F5D3E52A056492cfe) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x6e5f24d2e11ed2d83d3d057eefd84b34d6741204
+
+# Diff at Tue, 29 Apr 2025 08:19:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x353800524721e11B453f73f523dD8840c215a213","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"manage the members of the data availability committee and the threshold for valid commitments.","via":[]},{"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"}]}]
+    }
+```
+
+Generated with discovered.json: 0xe55fc5e613096cc5fec9b0993aefd5463dfb161a
+
+# Diff at Thu, 24 Apr 2025 10:31:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://witnesschain-da-2.eu-north-2.gateway.fm/","0xef5F06e5C0493601829DacFA23f2fe30303b0166"]
++        {"url":"https://witnesschain-da-2.eu-north-2.gateway.fm/","addr":"0xef5F06e5C0493601829DacFA23f2fe30303b0166"}
+      values.members.0:
+-        ["https://witnesschain-da-1.eu-north-2.gateway.fm/","0xcc543F5a2052eDf584216093A0547c4Acd84B80b"]
++        {"url":"https://witnesschain-da-1.eu-north-2.gateway.fm/","addr":"0xcc543F5a2052eDf584216093A0547c4Acd84B80b"}
+    }
+```
+
+Generated with discovered.json: 0xb759955217c52ccc0c2b35f015714a2c86a4d427
 
 # Diff at Thu, 10 Apr 2025 14:43:32 GMT:
 

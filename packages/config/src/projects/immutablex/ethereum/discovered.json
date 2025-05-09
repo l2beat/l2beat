@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21995398,
-  "configHash": "0x75390fb8ca9f429f5d16aeece333673eeac81f2d6f6b3eba88dd93da91688447",
+  "configHash": "0x3ffea10df21f34c12f6146fe43ffcafd4171c87b71ecb15b934685a468728d18",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -40,7 +40,9 @@
           "description": "Includes DAC members and threshold."
         }
       },
-      "derivedName": "Committee",
+      "implementationNames": {
+        "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": "Committee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -90,7 +92,9 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
-      "derivedName": "OrderRegistry"
+      "implementationNames": {
+        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
+      }
     },
     {
       "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
@@ -114,42 +118,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xeDb0219557ba13816f1dEb7fA54688362B05A5aE",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
-          "delay": 1209600,
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -317,7 +285,16 @@
           "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
         }
       },
-      "derivedName": "Proxy",
+      "implementationNames": {
+        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": "Proxy",
+        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
+        "0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
+        "0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
+        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
+        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
+        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
+        "0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -340,7 +317,9 @@
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
         "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
       },
-      "derivedName": "GpsFactRegistryAdapter",
+      "implementationNames": {
+        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -450,7 +429,10 @@
         "nonce": 34,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xD2C37fC6fD89563187f3679304975655e448D192": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0xdb6c271060571A96A62E3947E373395C89f765Ba",
@@ -856,9 +838,10 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
-    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
-    "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
-    "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
-  }
+    "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
+    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "starkex/StarkExchange": "0xfb69f71d65a0752a2088fe51c43f8d06488cc2a465e19b649b9e317de103ab09"
+  },
+  "permissionsConfigHash": "0x5df8d312b786d577e718d33b96c1e33e2be2869aa30af1248ec68df7604c59cf"
 }

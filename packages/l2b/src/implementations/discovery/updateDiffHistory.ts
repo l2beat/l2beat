@@ -12,13 +12,17 @@ import {
   ConfigReader,
   type DiscoveryDiff,
   type DiscoveryOutput,
+  TemplateService,
+  combinePermissionsIntoDiscovery,
   diffDiscovery,
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
   getDiscoveryPaths,
+  modelPermissionsForIsolatedDiscovery,
 } from '@l2beat/discovery'
 import { getChainConfigs } from '@l2beat/discovery/dist/config/config.discovery'
+import { withoutUndefinedKeys } from '@l2beat/discovery/dist/discovery/output/toDiscoveryOutput'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
@@ -28,14 +32,33 @@ const FIRST_SECTION_PREFIX = '# Diff at'
 
 export async function updateDiffHistory(
   projectName: string,
+  description?: string,
+  overwriteCache: boolean = false,
+) {
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
+  const chains = configReader.readAllChainsForProject(projectName)
+  for (const chain of chains) {
+    await updateDiffHistoryForChain(
+      configReader,
+      projectName,
+      chain,
+      description,
+      overwriteCache,
+    )
+  }
+}
+
+export async function updateDiffHistoryForChain(
+  configReader: ConfigReader,
+  projectName: string,
   chain: string,
   description?: string,
   overwriteCache: boolean = false,
 ) {
   // Get discovered.json from main branch and compare to current
-  console.log(`Project: ${projectName}`)
+  console.log(`Updating diffHistory for: ${projectName} on ${chain}`)
   const paths = getDiscoveryPaths()
-  const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder =
     '.' +
@@ -136,7 +159,8 @@ export async function updateDiffHistory(
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {
   const ignoredFields = [
-    'derivedName', // we don't want changes to derivedName to trigger diff
+    'derivedName',
+    'implementationNames', // we don't want changes to derivedName or implementationNames to trigger diff
   ]
   for (const diff of diffs) {
     diff.diff = diff.diff?.filter(
@@ -203,7 +227,12 @@ async function performDiscoveryOnPreviousBlock(
     `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
     'utf-8',
   )
-  const prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
+  let prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
+
+  // This is a temporary solution to model project in isolation
+  // until we refactor diffHistory to support cross-chain discovery
+  await modelAndInjectPermissions(prevDiscovery, projectName, chain)
+  prevDiscovery = withoutUndefinedKeys(prevDiscovery)
 
   // Remove discovered@... file, we don't need it
   await rimraf(
@@ -436,4 +465,21 @@ function findDescription(
   }
 
   return followingLines.slice(0, lastIndex).join('\n')
+}
+
+async function modelAndInjectPermissions(
+  prevDiscovery: DiscoveryOutput,
+  projectName: string,
+  chain: string,
+) {
+  const discoveryPaths = getDiscoveryPaths()
+  const configReader = new ConfigReader(discoveryPaths.discovery)
+  const templateService = new TemplateService(discoveryPaths.discovery)
+  const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
+    prevDiscovery,
+    configReader.readConfig(projectName, chain).permission,
+    templateService,
+    discoveryPaths,
+  )
+  combinePermissionsIntoDiscovery(prevDiscovery, permissionsOutput)
 }

@@ -2,13 +2,14 @@
   "name": "layer2financezk",
   "chain": "ethereum",
   "blockNumber": 19825376,
-  "configHash": "0x8cbce2f38aa31a637311c668bf90332d0e4d7e76571d3debf082c9e289ad404e",
+  "configHash": "0x888cd3892774c7a21271924ed356c1a79316530520a4eb27045281493bbeaab6",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
       "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -51,7 +52,9 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
-      "derivedName": "OrderRegistry"
+      "implementationNames": {
+        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
+      }
     },
     {
       "name": "StrategyCompound",
@@ -71,7 +74,9 @@
         "uniswap": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "StrategyCompound"
+      "implementationNames": {
+        "0x5b000954F70B0410685193B0afd3074B744B5C97": "StrategyCompound"
+      }
     },
     {
       "name": "GpsFactRegistryAdapter",
@@ -93,7 +98,9 @@
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
         "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
       },
-      "derivedName": "GpsFactRegistryAdapter",
+      "implementationNames": {
+        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -141,46 +148,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -292,7 +259,16 @@
           "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
         }
       },
-      "derivedName": "Proxy",
+      "implementationNames": {
+        "0x82123571C8a5e0910280C066bc634c4945FFcbC8": "Proxy",
+        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
+        "0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
+        "0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
+        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
+        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
+        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
+        "0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -325,7 +301,9 @@
         "symbol": "COMP",
         "totalSupply": "10000000000000000000000000"
       },
-      "derivedName": "Comp"
+      "implementationNames": {
+        "0xc00e94Cb662C3520282E6f5717214004A7f26888": "Comp"
+      }
     },
     {
       "address": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
@@ -370,7 +348,9 @@
         "PRICE_DECIMALS": "1000000000000000000",
         "SLIPPAGE_DENOMINATOR": 10000
       },
-      "derivedName": "Broker"
+      "implementationNames": {
+        "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": "Broker"
+      }
     },
     {
       "name": "Committee",
@@ -381,7 +361,9 @@
       "sinceTimestamp": 1650870230,
       "sinceBlock": 14652355,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9": ""
+      }
     }
   ],
   "abis": {
@@ -772,8 +754,9 @@
     ]
   },
   "usedTemplates": {
-    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
-    "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
-    "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
-  }
+    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "starkex/StarkExchange": "0xfb69f71d65a0752a2088fe51c43f8d06488cc2a465e19b649b9e317de103ab09"
+  },
+  "permissionsConfigHash": "0x370c41f28beb0e15dddf1b1a31eced59c0ddcd2b1791c778f4c4532252bff58c"
 }

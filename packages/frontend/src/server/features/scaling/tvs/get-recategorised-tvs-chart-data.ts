@@ -1,7 +1,8 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Dictionary } from 'lodash'
-import { groupBy, pick, uniq } from 'lodash'
+import groupBy from 'lodash/groupBy'
+import pick from 'lodash/pick'
+import uniq from 'lodash/uniq'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
@@ -89,9 +90,12 @@ export const getCachedRecategorisedTvsChartData = cache(
 )
 
 function getChartData(
-  rollupsValues: Dictionary<Dictionary<ProjectValueRecord>>,
-  validiumAndOptimiumsValues: Dictionary<Dictionary<ProjectValueRecord>>,
-  othersValues: Dictionary<Dictionary<ProjectValueRecord>>,
+  rollupsValues: Record<string, Record<string, ProjectValueRecord>>,
+  validiumAndOptimiumsValues: Record<
+    string,
+    Record<string, ProjectValueRecord>
+  >,
+  othersValues: Record<string, Record<string, ProjectValueRecord>>,
 ) {
   const rollupTimestampValues = groupValuesByTimestamp(rollupsValues)
   const validiumAndOptimiumsTimestampValues = groupValuesByTimestamp(

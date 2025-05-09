@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
+        }
+      ]
+    },
+    "HASHI_IS_MANDATORY": {
+      "description": "If true, Hashi validation is mandatory",
+      "severity": "HIGH"
+    },
+    "targetAddress": {
+      "description": "Address of the target contract on GnosisChain",
+      "severity": "HIGH",
+      "edit": ["format", "GnosisAddress"]
+    },
+    "adapters": {
+      "description": "Array of the adapters on GnosisChain",
+      "severity": "HIGH",
+      "edit": ["map", ["format", "GnosisAddress"]]
+    },
+    "reporters": {
+      "description": "Array of the reports on GnosisChain",
+      "severity": "HIGH",
+      "edit": ["map", ["format", "GnosisAddress"]]
+    },
+    "threshold": {
+      "description": "Threshold of the adapters on GnosisChain",
+      "severity": "HIGH"
+    },
+    "AdaptersFromStorage": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x21aa67cae9293b939ada82eb9133293e592da66aa847a5596523bd6d2bf2529b",
+        "returnType": "address"
+      }
+    }
+  }
+}

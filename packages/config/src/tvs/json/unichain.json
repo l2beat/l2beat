@@ -42,6 +42,25 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-DENT",
+      "priceId": "dent",
+      "symbol": "DENT",
+      "name": "DENT",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1152/large/gLCEA2G.png?1696502243",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3597bfD533a99c9aa083587B074434E61Eb0A258",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 8,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-ENS",
       "priceId": "ethereum-name-service",
       "symbol": "ENS",
@@ -112,6 +131,24 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-kBTC",
+      "priceId": "kraken-wrapped-btc",
+      "symbol": "kBTC",
+      "name": "Kraken Wrapped Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+        "chain": "unichain",
+        "decimals": 8,
+        "sinceTimestamp": 1745509030
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",
@@ -127,6 +164,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-pzETH-1",
+      "priceId": "renzo-restaked-lst",
+      "symbol": "pzETH",
+      "name": "Renzo Restaked LST",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
+        "chain": "unichain",
+        "decimals": 18,
+        "sinceTimestamp": 1738851439
+      },
+      "category": "ether",
+      "source": "external",
       "isAssociated": false
     },
     {

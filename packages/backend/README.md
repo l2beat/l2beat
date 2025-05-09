@@ -76,20 +76,20 @@ Below are some examples of possible configurations:
 # enable all features
 FEATURES=*
 
-# enable everything except tvl
-FEATURES=*,!tvl
+# enable everything except tvs
+FEATURES=*,!tvs
 
-# enable only tvl
-FEATURES=tvl
+# enable only tvs
+FEATURES=tvs
 
-# enable tvl and activity
-FEATURES=tvl,activity
+# enable tvs and activity
+FEATURES=tvs,activity
 
-# enable tvl, but not for arbitrum
-FEATURES=tvl,!tvl.arbitrum
+# enable tvs, but not for arbitrum
+FEATURES=tvs,!tvs.arbitrum
 
-# enable tvl, but only for ethereum
-FEATURES=tvl,!tvl.*,tvl.ethereum
+# enable tvs, but only for ethereum
+FEATURES=tvs,!tvs.*,tvs.ethereum
 ```
 
 ### Common env variables
@@ -97,29 +97,30 @@ FEATURES=tvl,!tvl.*,tvl.ethereum
 - `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
   https://www.coingecko.com/en/api/pricing
 
+- `ETHERSCAN_API_URL` - Etherscan API url
+- `ETHERSCAN_API_KEY` - Etherscan API key
+  Blockscout doesn't need it.
+
 - `<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
 - `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
   60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
-- `<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan.
-  Blockscout doesn't need it.
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:
 
 ```
 ETHEREUM_RPC_URL=https://example.provider/ethereum
-ETHEREUM_RPC_URL_FOR_TVL=https://another.rpc/mainnet
 ```
 
-### `tvl` feature
+### `tvs` feature
 
-The tvl feature is configured via the following environment variables:
+The tvs feature is configured via the following environment variables:
 
 **Feature flags:**
 
-- `tvl` - enables tvl feature
-- `tvl.[project_id]` - enables tvl for project with given project_id
+- `tvs` - enables tvs feature
+- `tvs.[project_id]` - enables tvs for project with given project_id
 
 ### `tracked-txs` feature
 
@@ -177,15 +178,6 @@ The updateMonitor feature is configured via the following environment variables:
 
 - `updateMonitor` - enables the update monitor
 
-### `tvlCleaner` feature
-
-The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the
-sixHourly data 93 days to the past and hourly data 10 days to the past.
-
-**Feature flags:**
-
-- `tvlCleaner` - enables the cleaner
-
 ### `cache` feature
 
 The cache feature is running functions every 10 minutes that would be run on endpoint invoke.
@@ -193,7 +185,7 @@ The cache feature is running functions every 10 minutes that would be run on end
 **Feature flags:**
 
 - `cache.liveness` - enables the cache for the liveness endpoint
-- `cache.tvl` - enables the cache for the tvl endpoint
+- `cache.tvs` - enables the cache for the tvs endpoint
 
 ### Logging
 
@@ -231,4 +223,4 @@ The `/status` endpoints were created to see the current state of our backend.
 - `/activity/status`
 - `/status/discovery`
 - `/status/tracked-txs`
-- `/status/tvl`
+- `/status/tvs`

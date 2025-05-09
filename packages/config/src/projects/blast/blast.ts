@@ -8,6 +8,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('blast')
+const chainId = 81457
 
 export const blast: ScalingProject = opStackL2({
   addedAt: UnixTime(1700555008), // 2023-11-21T08:23:28Z
@@ -22,11 +23,15 @@ export const blast: ScalingProject = opStackL2({
       websites: ['https://blast.io/en'],
       apps: ['https://blast.io/en/bridge'],
       documentation: ['https://docs.blast.io/about-blast'],
-      explorers: ['https://blastscan.io', 'https://blastexplorer.io'],
+      explorers: [
+        'https://blastscan.io',
+        'https://blastplorer.info/',
+        'https://blastexplorer.io',
+      ],
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
-    tvlWarning: {
+    tvsWarning: {
       value: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
@@ -74,7 +79,7 @@ export const blast: ScalingProject = opStackL2({
   chainConfig: {
     name: 'blast',
     coingeckoPlatform: 'blast',
-    chainId: 81457,
+    chainId,
     explorerUrl: 'https://blastscan.io',
     sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
     multicallContracts: [
@@ -87,7 +92,7 @@ export const blast: ScalingProject = opStackL2({
     ],
     apis: [
       { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 1500 },
-      { type: 'etherscan', url: 'https://api.blastscan.io/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   finality: {

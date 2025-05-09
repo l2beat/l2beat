@@ -2,7 +2,7 @@
   "name": "honeypot",
   "chain": "ethereum",
   "blockNumber": 20641250,
-  "configHash": "0x82036a64d1d075dc1de8899f08cc49fb8795c9fba540660dc7791f4fb4f9eb50",
+  "configHash": "0x4eec9927ab6a74dd23ef9c2d94ee8bc51e2eb458ffb56e41bce2cd3be1358d32",
   "entries": [
     {
       "name": "Honeypot",
@@ -20,7 +20,9 @@
         "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
         "owner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "CartesiDApp"
+      "implementationNames": {
+        "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": "CartesiDApp"
+      }
     },
     {
       "name": "History",
@@ -36,7 +38,9 @@
         "$immutable": true,
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
       },
-      "derivedName": "History"
+      "implementationNames": {
+        "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": "History"
+      }
     },
     {
       "name": "InputBox",
@@ -49,7 +53,9 @@
       "sinceTimestamp": 1690464923,
       "sinceBlock": 17784733,
       "values": { "$immutable": true },
-      "derivedName": "InputBox"
+      "implementationNames": {
+        "0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox"
+      }
     },
     {
       "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
@@ -70,7 +76,9 @@
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
       },
-      "derivedName": "ERC20Portal"
+      "implementationNames": {
+        "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal"
+      }
     },
     {
       "name": "Authority",
@@ -87,7 +95,9 @@
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
         "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
       },
-      "derivedName": "Authority"
+      "implementationNames": {
+        "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": "Authority"
+      }
     }
   ],
   "abis": {
@@ -162,5 +172,6 @@
       "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x78c4730fce43e3a66b70856d6e30c2598939cdc91456d03f771c59922e0e126c"
 }

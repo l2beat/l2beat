@@ -14,7 +14,6 @@ import { debridge } from '../projects/debridge/debridge'
 import { everclearbridge } from '../projects/everclearbridge/everclearbridge'
 import { fraxferry } from '../projects/fraxferry/fraxferry'
 import { gravity } from '../projects/gravity/gravity'
-import { harmony } from '../projects/harmony/harmony'
 import { hop } from '../projects/hop/hop'
 import { hyperlane } from '../projects/hyperlane/hyperlane'
 import { hyphen } from '../projects/hyphen/hyphen'
@@ -46,7 +45,6 @@ import { synapse } from '../projects/synapse/synapse'
 import { train } from '../projects/train/train'
 import { transporter } from '../projects/transporter/transporter'
 import { wormholeV1 } from '../projects/wormholeV1/wormholeV1'
-import { xdai } from '../projects/xdai/xdai'
 
 export const bridges: Bridge[] = [
   acrossV3,
@@ -62,7 +60,6 @@ export const bridges: Bridge[] = [
   davos,
   everclearbridge,
   gravity,
-  harmony,
   hyperlane,
   chainport,
   hop,
@@ -95,6 +92,5 @@ export const bridges: Bridge[] = [
   transporter,
   portal,
   wormholeV1,
-  xdai,
   symbiosis,
 ]

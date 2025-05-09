@@ -1,26 +1,6 @@
 import { type Project } from '@l2beat/config'
-import { compact } from 'lodash'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import compact from 'lodash/compact'
 import { makeTechnologyChoice } from './make-technology-section'
-
-export function getScalingTechnologySection(
-  project: Project<'statuses' | 'scalingTechnology'>,
-) {
-  const items = compact([
-    project.scalingTechnology.stateCorrectness &&
-      makeTechnologyChoice(
-        'state-correctness',
-        project.scalingTechnology.stateCorrectness,
-      ),
-    project.scalingTechnology.newCryptography &&
-      makeTechnologyChoice(
-        'new-cryptography',
-        project.scalingTechnology.newCryptography,
-      ),
-  ])
-
-  return getTechnologySectionProps(project, items)
-}
 
 export function getBridgeTechnologySection(
   project: Project<'statuses' | 'bridgeTechnology'>,

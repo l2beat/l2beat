@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 17565279,
-  "configHash": "0xfc9b702eee3cb85db8c2a105e877e07bea88864331ba63ffca13b72f37381382",
+  "configHash": "0x8221ecd3fc7d97dbaba7c590da0c59501f011bcfc083a8e56bd0d121328f6fee",
   "entries": [
     {
       "name": "LineaOwner",
@@ -44,7 +44,10 @@
         "nonce": 22,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -92,7 +95,9 @@
         "validator": "0x4732015b3B1712A4FC5C059195300D12d529bb77",
         "zkSyncContract": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
       },
-      "derivedName": "ValidatorTimelock"
+      "implementationNames": {
+        "0x509ff56c152315EdeE91A2e0f059195519507e01": "ValidatorTimelock"
+      }
     },
     {
       "address": "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
@@ -323,7 +328,13 @@
           "0x509ff56c152315EdeE91A2e0f059195519507e01"
         ]
       },
-      "derivedName": "DiamondProxy"
+      "implementationNames": {
+        "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": "DiamondProxy",
+        "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f": "AdminFacet",
+        "0xF3d053C29666D653Fa8629190579844BffE9FB92": "GettersFacet",
+        "0x495220D99B432b0de3e1F1fe206AA0E26A051C63": "MailboxFacet",
+        "0x9f2E11F287733c4EF5B9A6ED923b780c28062727": "ExecutorFacet"
+      }
     },
     {
       "name": "L1ERC20Bridge",
@@ -334,13 +345,6 @@
         "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709218113,
       "sinceBlock": 2590048,
       "values": {
@@ -363,7 +367,10 @@
         "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
-      "derivedName": "L1ERC20Bridge"
+      "implementationNames": {
+        "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": "TransparentUpgradeableProxy",
+        "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": "L1ERC20Bridge"
+      }
     },
     {
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -380,13 +387,6 @@
         "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709279545,
       "sinceBlock": 2605406,
       "values": {
@@ -410,7 +410,10 @@
         "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "ZKLINK": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
       },
-      "derivedName": "LineaL2Gateway"
+      "implementationNames": {
+        "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": "ERC1967Proxy",
+        "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "LineaL2Gateway"
+      }
     },
     {
       "name": "Verifier",
@@ -426,7 +429,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f"
       },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0x902C3806A84f4e855a8746e92d7F1C9a51400458": "Verifier"
+      }
     },
     {
       "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
@@ -471,7 +476,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Governance"
+      "implementationNames": {
+        "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec": "Governance"
+      }
     },
     {
       "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -763,5 +770,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

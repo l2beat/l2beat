@@ -1,15 +1,30 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 
+const chainId = 100
+
 export const gnosis: BaseProject = {
   id: ProjectId('gnosis'),
   slug: 'gnosis',
   name: 'Gnosis Chain',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
+  display: {
+    description:
+      "Gnosis Chain is a community-owned EVM-based network operated by a diverse set of validators around the world. It is one of Ethereum's first sidechains.",
+    links: {},
+    badges: [],
+  },
   chainConfig: {
     name: 'gnosis',
-    chainId: 100,
+    chainId,
     explorerUrl: 'https://gnosisscan.io',
     multicallContracts: [
       {
@@ -22,7 +37,7 @@ export const gnosis: BaseProject = {
     apis: [
       {
         type: 'etherscan',
-        url: 'https://api.gnosisscan.io/api',
+        chainId,
         contractCreationUnsupported: true,
       },
     ],

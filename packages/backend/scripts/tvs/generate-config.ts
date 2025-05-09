@@ -13,11 +13,18 @@ import {
   type TvsToken,
 } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type LegacyToken,
+  ProjectId,
+  type TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   boolean,
   command,
   flag,
+  option,
   optional,
   positional,
   run,
@@ -25,8 +32,14 @@ import {
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
-import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
-import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
+import {
+  getTokenSyncRange,
+  isInTokenSyncRange,
+} from '../../src/modules/tvs/tools/getTokenSyncRange'
+import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
+import { mapLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/mapLegacyConfig'
+import { setTokenSyncRange } from '../../src/modules/tvs/tools/setTokenSyncRange'
+import type { TokenValue } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -39,6 +52,12 @@ const args = {
     long: 'include-zero-amounts',
     short: 'iza',
     description: 'Include zero amounts in the config',
+  }),
+  exclude: option({
+    type: optional(string),
+    long: 'exclude',
+    short: 'e',
+    description: 'Exclude projects from TVS calculation',
   }),
 }
 
@@ -54,15 +73,29 @@ const cmd = command({
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-    let projects: Project<'tvlConfig', 'chainConfig' | 'isBridge'>[] | undefined
+    let projects:
+      | Project<'escrows' | 'tvsInfo', 'chainConfig' | 'isBridge'>[]
+      | undefined
 
     const start = Date.now()
 
+    const tokens = await ps.getTokens()
+
     if (!args.project) {
-      projects = await ps.getProjects({
-        select: ['tvlConfig'],
-        optional: ['chainConfig', 'isBridge'],
-      })
+      if (args.exclude) {
+        logger.info(`Excluding projects: ${args.exclude}`)
+      }
+
+      const excludedProjects = args.exclude
+        ? args.exclude.split(',').map((p) => ProjectId(p.trim()))
+        : []
+
+      projects = (
+        await ps.getProjects({
+          select: ['escrows', 'tvsInfo'],
+          optional: ['chainConfig', 'isBridge'],
+        })
+      ).filter((project) => !excludedProjects.includes(project.id))
 
       if (!projects) {
         logger.error('No TVS projects found')
@@ -71,7 +104,7 @@ const cmd = command({
     } else {
       const project = await ps.getProject({
         id: ProjectId(args.project),
-        select: ['tvlConfig'],
+        select: ['escrows', 'tvsInfo'],
         optional: ['chainConfig', 'isBridge'],
       })
 
@@ -94,6 +127,7 @@ const cmd = command({
       projects.map(async (project) => {
         return await generateConfigForProject(
           project,
+          tokens,
           chains,
           logger,
           localStorage,
@@ -102,6 +136,10 @@ const cmd = command({
     )
 
     logger.info('Executing TVS to exclude zero-valued tokens')
+    const lastNonZeroValues = await localExecutor.getLastNonZeroValues(
+      timestamp,
+      args.project ?? undefined,
+    )
     const tvs = await localExecutor.getTvs(
       regeneratedProjects.map((p) => ({
         ...p,
@@ -113,41 +151,33 @@ const cmd = command({
       false,
     )
 
-    for (const project of regeneratedProjects) {
+    for (const regenerated of regeneratedProjects) {
       let newConfig: TvsToken[] = []
-      const filePath = `./../config/src/tvs/json/${project.projectId.replace('=', '').replace(';', '')}.json`
+      const filePath = `./../config/src/tvs/json/${regenerated.projectId.replace('=', '').replace(';', '')}.json`
+      const current = readFromFile(filePath)
 
-      if (project.tokens.length > 0) {
-        const tvsForProject = tvs.get(project.projectId)
+      if (regenerated.tokens.length > 0) {
+        const tvsForProject = tvs.get(regenerated.projectId)
         assert(tvsForProject)
 
-        const projectConfig = projects.find((p) => p.id === project.projectId)
-        assert(projectConfig, `${project.projectId} config not found`)
-
-        newConfig = tvsForProject
-          .filter((token) => token.value !== 0 || args.includeZeroAmounts)
-          .map((token) => token.tokenId)
-          .sort((a, b) => a.localeCompare(b))
-          .map((tokenId) => {
-            const tokenConfig = project.tokens.find((t) => t.id === tokenId)
-            assert(tokenConfig, `${tokenId} config not found`)
-            return tokenConfig
-          })
+        newConfig = updateConfigWithTvs(
+          current,
+          regenerated.tokens,
+          tvsForProject,
+          lastNonZeroValues,
+          args.includeZeroAmounts,
+          logger,
+        ).sort((a, b) => a.id.localeCompare(b.id))
       } else {
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath)
         }
       }
 
-      const currentConfig = readFromFile(filePath)
-      const mergedTokens = mergeWithExistingConfig(
-        newConfig,
-        currentConfig,
-        logger,
-      )
+      const mergedTokens = mergeWithExistingConfig(newConfig, current, logger)
 
       if (mergedTokens.length > 0) {
-        writeToFile(filePath, project.projectId, mergedTokens)
+        writeToFile(filePath, regenerated.projectId, mergedTokens)
       }
     }
 
@@ -160,7 +190,8 @@ const cmd = command({
 run(cmd, process.argv.slice(2))
 
 async function generateConfigForProject(
-  project: Project<'tvlConfig', 'chainConfig'>,
+  project: Project<'escrows' | 'tvsInfo', 'chainConfig'>,
+  tokens: LegacyToken[],
   chains: Map<string, ChainConfig>,
   logger: Logger,
   localStorage: LocalStorage,
@@ -182,7 +213,72 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, chains, logger, localStorage, rpc)
+  const legacyConfig = getLegacyConfig(project, tokens)
+  return mapLegacyConfig(
+    project,
+    legacyConfig,
+    chains,
+    logger,
+    localStorage,
+    rpc,
+  )
+}
+
+function updateConfigWithTvs(
+  current: TvsToken[],
+  regenerated: TvsToken[],
+  tvs: TokenValue[],
+  lastNonZeroValues: TokenValue[],
+  includeZeroAmounts: boolean,
+  logger: Logger,
+) {
+  const updatedTokens: TvsToken[] = []
+
+  for (const token of tvs) {
+    const tokenConfig = regenerated.find((t) => t.id === token.tokenId)
+    assert(tokenConfig, `${token.tokenId} config not found`)
+
+    // if non-zero value return config without any changes
+    if (token.value !== 0 || includeZeroAmounts) {
+      updatedTokens.push(tokenConfig)
+      continue
+    }
+
+    const lastNonZeroValue = lastNonZeroValues.find(
+      (t) => t.tokenId === token.tokenId,
+    )
+
+    // if last non-zero value is not found, skip the token
+    if (!lastNonZeroValue) {
+      continue
+    }
+
+    // if it was never tracked before and has zero value, skip the token
+    const currentToken = current.find((t) => t.id === token.tokenId)
+    if (!currentToken) {
+      continue
+    }
+
+    // if the token was tracked before, but has zero value, set the untilTimestamp to the last non-zero value
+    const currentUntilTimestamp = getTokenSyncRange(currentToken).untilTimestamp
+
+    if (
+      !currentUntilTimestamp ||
+      currentUntilTimestamp > lastNonZeroValue.timestamp
+    ) {
+      logger.warn(
+        `Token ${token.tokenId} has zero value, setting untilTimestamp to: ${lastNonZeroValue.timestamp}`,
+      )
+    }
+
+    setTokenSyncRange(tokenConfig, {
+      untilTimestamp: lastNonZeroValue.timestamp,
+    })
+
+    updatedTokens.push(tokenConfig)
+  }
+
+  return updatedTokens
 }
 
 function initLogger(env: Env) {

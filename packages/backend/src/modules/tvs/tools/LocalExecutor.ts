@@ -1,5 +1,5 @@
-import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
-import type { ChainConfig, ProjectService } from '@l2beat/config'
+import { type Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { ChainBasicApi, ChainConfig, ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import {
   BalanceProvider,
@@ -13,11 +13,18 @@ import {
   MulticallV3Client,
   PriceProvider,
   RpcClient,
+  StarknetClient,
+  StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { ValueService } from '../services/ValueService'
-import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
+import {
+  type AmountConfig,
+  type ProjectTvsConfig,
+  type TokenValue,
+  isOnchainAmountConfig,
+} from '../types'
 import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import type { LocalStorage } from './LocalStorage'
@@ -63,13 +70,26 @@ export class LocalExecutor {
     return result
   }
 
+  async getLastNonZeroValues(
+    timestamp: number,
+    projectId: string | undefined,
+  ): Promise<TokenValue[]> {
+    if (!this.dbStorage) {
+      return []
+    }
+    this.logger.info(
+      `Fetching last non-zero values from DB for timestamp ${timestamp}`,
+    )
+    return await this.dbStorage.getLastNonZeroValues(timestamp, projectId)
+  }
+
   private async initDataFormulaExecutor(
     amounts: AmountConfig[],
     logger: Logger,
   ) {
     const http = new HttpClient()
     const coingeckoQueryService = this.initCoingecko(http)
-    const { rpcs, blockProviders, blockTimestampProvider } =
+    const { rpcs, starknetClients, blockProviders, blockTimestampProvider } =
       await this.initChains(http, amounts)
 
     const priceProvider = new PriceProvider(coingeckoQueryService)
@@ -78,6 +98,10 @@ export class LocalExecutor {
     )
 
     const totalSupplyProvider = new TotalSupplyProvider(rpcs, logger)
+    const starknetTotalSupplyProvider = new StarknetTotalSupplyProvider(
+      starknetClients,
+      logger,
+    )
     const balanceProvider = new BalanceProvider(rpcs, logger)
 
     return new DataFormulaExecutor(
@@ -88,6 +112,7 @@ export class LocalExecutor {
       blockProviders,
       blockTimestampProvider,
       totalSupplyProvider,
+      starknetTotalSupplyProvider,
       balanceProvider,
       this.logger,
     )
@@ -111,7 +136,7 @@ export class LocalExecutor {
     const chainProjects = new Set<string>()
 
     for (const amount of amounts) {
-      if (amount.type === 'balanceOfEscrow' || amount.type === 'totalSupply') {
+      if (isOnchainAmountConfig(amount)) {
         chainProjects.add(amount.chain)
       }
     }
@@ -130,59 +155,34 @@ export class LocalExecutor {
     }
 
     const rpcs: RpcClient[] = []
+    const starknetClients: StarknetClient[] = []
     const blockProviders = new Map<string, BlockProvider>()
     const indexerClients: BlockIndexerClient[] = []
 
     for (const chainConfig of chainConfigs) {
-      const rpcApi = chainConfig.apis.find((api) => api.type === 'rpc')
-      const url = this.env.string(
-        `${chainConfig.name.toUpperCase()}_RPC_URL`,
-        rpcApi?.url,
-      )
-      const callsPerMinute = this.env.integer(
-        `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi?.callsPerMinute ?? 120,
-      )
+      let blockClient: StarknetClient | RpcClient
 
-      const rpc = new RpcClient({
-        url,
-        http,
-        logger: this.logger,
-        retryStrategy: 'RELIABLE',
-        sourceName: chainConfig.name,
-        callsPerMinute: callsPerMinute,
-      })
-
-      const multicallV3 = chainConfig.multicallContracts?.find(
-        (contract) => contract.version === '3',
+      const starknetApi = chainConfig.apis.find(
+        (api) => api.type === 'starknet',
       )
+      if (starknetApi) {
+        blockClient = this.createForStarknet(http, chainConfig, starknetApi)
+        starknetClients.push(blockClient)
+      } else {
+        const rpcApi = chainConfig.apis.find((api) => api.type === 'rpc')
+        blockClient = this.createForRpc(http, chainConfig, rpcApi)
+        rpcs.push(blockClient)
+      }
 
-      const multicallClient = multicallV3
-        ? new MulticallV3Client(
-            multicallV3.address,
-            multicallV3.sinceBlock,
-            150,
-          )
-        : undefined
-
-      rpcs.push(
-        new RpcClient({
-          url,
-          http,
-          logger: this.logger,
-          retryStrategy: 'RELIABLE',
-          sourceName: chainConfig.name,
-          callsPerMinute: callsPerMinute,
-          multicallClient,
-        }),
-      )
       blockProviders.set(
         chainConfig.name,
-        new BlockProvider(chainConfig.name, [rpc]),
+        new BlockProvider(chainConfig.name, [blockClient]),
       )
+
       const etherscanApi = chainConfig.apis.find(
         (api) => api.type === 'etherscan',
       )
+
       if (etherscanApi) {
         indexerClients.push(
           new BlockIndexerClient(
@@ -190,11 +190,10 @@ export class LocalExecutor {
             new RateLimiter({ callsPerMinute: 120 }),
             {
               type: etherscanApi.type,
-              url: etherscanApi.url,
-              apiKey: this.env.string(
-                Env.key(chainConfig.name, 'ETHERSCAN_API_KEY'),
-              ),
+              url: this.env.string('ETHERSCAN_API_URL'),
+              apiKey: this.env.string('ETHERSCAN_API_KEY'),
               chain: chainConfig.name,
+              chainId: etherscanApi.chainId,
             },
           ),
         )
@@ -222,7 +221,62 @@ export class LocalExecutor {
       indexerClients,
       blockProviders: Array.from(blockProviders.values()),
     })
-    return { rpcs, blockProviders, blockTimestampProvider }
+
+    return { rpcs, starknetClients, blockProviders, blockTimestampProvider }
+  }
+
+  private createForStarknet(
+    http: HttpClient,
+    chainConfig: ChainConfig,
+    starknetApi: ChainBasicApi<'starknet'>,
+  ) {
+    return new StarknetClient({
+      url: this.env.string(
+        `${chainConfig.name.toUpperCase()}__RPC_URL`,
+        starknetApi.url,
+      ),
+      http,
+      logger: this.logger,
+      retryStrategy: 'RELIABLE',
+      sourceName: chainConfig.name,
+      callsPerMinute: this.env.integer(
+        `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+        starknetApi?.callsPerMinute ?? 120,
+      ),
+    })
+  }
+
+  private createForRpc(
+    http: HttpClient,
+    chainConfig: ChainConfig,
+    rpcApi?: ChainBasicApi<'rpc'>,
+  ) {
+    const url = this.env.string(
+      `${chainConfig.name.toUpperCase()}_RPC_URL`,
+      rpcApi?.url,
+    )
+    const callsPerMinute = this.env.integer(
+      `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+      rpcApi?.callsPerMinute ?? 120,
+    )
+
+    const multicallV3 = chainConfig.multicallContracts?.find(
+      (contract) => contract.version === '3',
+    )
+
+    const multicallClient = multicallV3
+      ? new MulticallV3Client(multicallV3.address, multicallV3.sinceBlock, 150)
+      : undefined
+
+    return new RpcClient({
+      url,
+      http,
+      logger: this.logger,
+      retryStrategy: 'RELIABLE',
+      sourceName: chainConfig.name,
+      callsPerMinute: callsPerMinute,
+      multicallClient,
+    })
   }
 
   private createDbStorage(env: Env, logger: Logger): DBStorage | undefined {

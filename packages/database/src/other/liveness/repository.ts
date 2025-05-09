@@ -64,6 +64,51 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getRecordsInRangeWithLatestBefore(
+    configurationIds: string[],
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<LivenessRecord[]> {
+    if (configurationIds.length === 0) return []
+
+    assert(from < to, 'From must be less than to')
+
+    // Get latest record before 'from' for each configuration
+    const subquery = this.db
+      .selectFrom('Liveness')
+      .select(['configurationId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '<', UnixTime.toDate(from))
+      .groupBy(['configurationId'])
+      .as('latest')
+
+    const latestBeforeFromRows = await this.db
+      .selectFrom('Liveness')
+      .innerJoin(subquery, (join) =>
+        join
+          .onRef('Liveness.configurationId', '=', 'latest.configurationId')
+          .onRef('Liveness.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .where('Liveness.configurationId', 'in', configurationIds)
+      .selectAll('Liveness')
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    // Get records within the time range
+    const withinRangeRows = await this.db
+      .selectFrom('Liveness')
+      .select(selectLiveness)
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .distinctOn(['timestamp', 'configurationId'])
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return [...withinRangeRows, ...latestBeforeFromRows].map(toRecord)
+  }
+
   async insertMany(records: LivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 

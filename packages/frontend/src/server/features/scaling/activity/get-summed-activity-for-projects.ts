@@ -4,7 +4,7 @@ import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-r
 
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import type { TimeRange } from '~/utils/range/range'
 
 export async function getSummedActivityForProjects(

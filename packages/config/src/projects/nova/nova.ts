@@ -96,6 +96,8 @@ const isPostBoLD = discovery.getContractValue<boolean>(
   'isPostBoLD',
 )
 
+const chainId = 42170
+
 export const nova: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1660003200), // 2022-08-09T00:00:00Z
   additionalBadges: [
@@ -146,7 +148,7 @@ export const nova: ScalingProject = orbitStackL2({
   },
   chainConfig: {
     name: 'nova',
-    chainId: 42170,
+    chainId,
     explorerUrl: 'https://nova.arbiscan.io',
     sinceTimestamp: UnixTime(1656122488),
     multicallContracts: [
@@ -164,7 +166,7 @@ export const nova: ScalingProject = orbitStackL2({
         url: 'https://nova.arbitrum.io/rpc',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api-nova.arbiscan.io/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   upgradesAndGovernance: getNitroGovernance(

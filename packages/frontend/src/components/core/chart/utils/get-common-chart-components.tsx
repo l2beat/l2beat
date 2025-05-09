@@ -1,5 +1,5 @@
-import { scaleSymlog } from 'd3-scale'
 import { CartesianGrid, XAxis, YAxis, type YAxisProps } from 'recharts'
+import type { ScaleType } from 'recharts/types/util/types'
 import { getXAxisProps } from './get-x-axis-props'
 export interface CommonChartComponentsProps<
   T extends {
@@ -33,7 +33,11 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       mirror
       tickCount={3}
       dy={-10}
-      {...(scale === 'log' ? { scale: scaleSymlog() } : {})}
+      // It requires a type cast to avoid type error
+      // I have checked their code and although symlog is not correct by the type definition,
+      // it is supported cuz they are getting actual scale function from d3-scale by using this string as a key
+      // https://github.com/recharts/recharts/blob/master/src/util/ChartUtils.ts#L772
+      {...(scale === 'log' ? { scale: 'symlog' as ScaleType } : {})}
       {...rest}
     />,
     <XAxis key={'x-axis'} {...getXAxisProps(data)} />,

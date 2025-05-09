@@ -32,14 +32,17 @@
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "Optimism Security Council",
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "Optimism Guardian Multisig",
+    "0x352f1defB49718e7Ea411687E850aA8d6299F7aC": "Optimism EOA 1",
 
     "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "Arbitrum Multisig 1",
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "Arbitrum Multisig 2",
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "Arbitrum Security Council",
 
-    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Multisig 1",
-    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 2",
-    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Multisig 3",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 1",
+    "0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110": "Base Multisig 2",
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Coordinator Multisig",
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Governance Multisig",
+    "0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": "Base Security Council",
 
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZK Foundation Multisig",
@@ -86,7 +89,7 @@
 
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "Paradex Multisig",
 
-    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "AbstractChainAdminMultisig",
+    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "Abstract Multisig",
 
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
 
@@ -150,6 +153,16 @@
 
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "Succinct Multisig 1",
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "Succinct Multisig 2",
+
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerOperationsMultisig2",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
+    "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": "EigenLayerRewardsInitiatorMultisig",
+    "0x002721B4790d97dC140a049936aA710152Ba92D5": "EigenDAOperationsMultisig",
+    "0x942eaF324971440384e4cA0ffA39fC3bb369D67d": "EigenLayerBeigenOwningMultisig",
+    "0x5050389572f2d220ad927CcbeA0D406831012390": "EigenLayerPauserMultisig",
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
+    "0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "EigenLayerTokenMultisig",
     // eoa names (mostly for SCs)
     // arbitrum SC
     "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
@@ -177,7 +190,21 @@
     "0x944eB0a2829A859959586b10D54229278534a696": "MamoriLabs3",
     "0x2bfDA59220413DEd39dD0E443620b5277EcE6348": "Ankr",
     "0x58028fFbc25aE2e12b96276bDB125955F41D41f3": "Hypernative2",
-    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn2"
+    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn2",
+    // gnosis bridge validators
+    "0x587C0d02B40822f15f05301d87c16f6a08AaDDde": "CoW Protocol EOA 1",
+    "0x674c97db4ce6cac04a124d745979f3e4cba0e9f0": "CoW Protocol EOA 2",
+    "0x90776017057b84bc47D7e7383b65C463C80a6cdd": "Gateway EOA 1",
+    "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6": "Gateway EOA 2",
+    "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506": "Giveth EOA 1",
+    "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d": "Giveth EOA 2",
+    "0xfA98B60E02A61B6590f073cAD56e68326652d094": "Karpatkey EOA",
+    "0x97630e2ae609d4104abda91f3066c556403182dd": "Gnosis DAO EOA 1",
+    "0xbdc141c8d2343f33f40cb9edd601ccf460cd0dde": "Gnosis DAO EOA 2",
+    "0x4d1c96b9a49c4469a0b720a22b74b034eddfe051": "Protofire EOA 1",
+    "0x459a3bd49f1ff109bc90b76125533699aaaaf9a6": "Protofire EOA 2",
+    "0x1312e98995bbcc30fc63db3cef807e20cdd33dca": "Safe EOA 1",
+    "0x258667E543C913264388B33328337257aF208a8f": "Safe EOA 2"
   },
   "types": {
     "Undecimal2": {
@@ -194,35 +221,35 @@
     },
     "ZkSyncAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "zksync2" }
+      "arg": { "prefix": "zksync" }
     },
     "EthereumAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "ethereum" }
+      "arg": { "prefix": "eth" }
     },
     "ArbitrumAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "arbitrum" }
+      "arg": { "prefix": "arb1" }
     },
     "NovaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "nova" }
+      "arg": { "prefix": "arb-nova" }
     },
     "OptimismAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "optimism" }
+      "arg": { "prefix": "oeth" }
     },
     "PolygonAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "polygonpos" }
+      "arg": { "prefix": "matic" }
     },
     "BSCAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "bsc" }
+      "arg": { "prefix": "bnb" }
     },
     "AvalancheAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "avalanche" }
+      "arg": { "prefix": "avax" }
     },
     "CeloAddress": {
       "typeCaster": "ChainPrefix",
@@ -238,19 +265,19 @@
     },
     "PolygonZKEVMAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "polygonzkevm" }
+      "arg": { "prefix": "zkevm" }
     },
     "GnosisAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "gnosis" }
+      "arg": { "prefix": "gno" }
     },
     "SepoliaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "sepolia" }
+      "arg": { "prefix": "sep" }
     },
     "ScrollAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "scroll" }
+      "arg": { "prefix": "scr" }
     },
     "MantleAddress": {
       "typeCaster": "ChainPrefix",
@@ -258,11 +285,11 @@
     },
     "MetisAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "metis" }
+      "arg": { "prefix": "metis-andromeda" }
     },
     "BobanetworkAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "bobanetwork" }
+      "arg": { "prefix": "boba" }
     },
     "ModeAddress": {
       "typeCaster": "ChainPrefix",
@@ -274,11 +301,11 @@
     },
     "MantapacificAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "mantapacific" }
+      "arg": { "prefix": "manta" }
     },
     "BlastAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "blast" }
+      "arg": { "prefix": "blastmainnet" }
     },
     "ArbOsWasmModuleRoot": {
       "typeCaster": "Mapping",
@@ -304,13 +331,15 @@
         "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
         "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
         "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
-        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
+        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
+        "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
       }
     },
     "OpStackAbsolutePrestate": {
       "typeCaster": "Mapping",
       "arg": {
         // source: https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml
+        "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
         "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
         "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
         "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",

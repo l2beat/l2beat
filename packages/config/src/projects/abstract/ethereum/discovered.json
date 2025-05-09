@@ -1,8 +1,8 @@
 {
   "name": "abstract",
   "chain": "ethereum",
-  "blockNumber": 22243944,
-  "configHash": "0x3b42793c1d539fc41f464a6917a091af53540e60421b4414d2e3e1b7ab95a57b",
+  "blockNumber": 22367139,
+  "configHash": "0xedb8775e3eb75be5aafa4e3cb29e9fb49e5ab4c2d170041307cd656512a0b382",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -31,10 +31,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -81,26 +84,6 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "via": [{ "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -278,28 +261,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 17844,
+        "getFirstUnprocessedPriorityTx": 18872,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 23,
-        "getPriorityTreeRoot": "0x8eb54e4b142678eb0b547622bca315bd25cdc56eedd1e58944a9da657600198f",
+        "getPriorityQueueSize": 5,
+        "getPriorityTreeRoot": "0x32b5e86371026fc7cf2b7b2a221f75668266221827f33bff77c284e33949cc50",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 9943,
-        "getTotalBatchesExecuted": 9923,
-        "getTotalBatchesVerified": 9934,
-        "getTotalBlocksCommitted": 9943,
-        "getTotalBlocksExecuted": 9923,
-        "getTotalBlocksVerified": 9934,
-        "getTotalPriorityTxs": 17867,
+        "getTotalBatchesCommitted": 15196,
+        "getTotalBatchesExecuted": 15182,
+        "getTotalBatchesVerified": 15190,
+        "getTotalBlocksCommitted": 15196,
+        "getTotalBlocksExecuted": 15182,
+        "getTotalBlocksVerified": 15190,
+        "getTotalPriorityTxs": 18877,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -345,7 +328,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -388,13 +377,11 @@
         "nonce": 2,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x325407EEC948b97429068AF0cd8A8D95F06315a4": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0x45CC620803974f13a0f1A11517685581FF098000",
@@ -447,10 +434,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x57533344e91d29f927AAEBee364A33633Bd205Ab": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -469,16 +459,22 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": ["0xbB943Cf3c5b90f2eD04F53658CCA49286601e808"],
+        "$members": [
+          "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
+          "0xbB943Cf3c5b90f2eD04F53658CCA49286601e808"
+        ],
         "$threshold": 1,
         "domainSeparator": "0x311babe4bd563e5f43fb0eb372f00ab961cb56ed2184f54248c26fab440c3269",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x58536761C97F5037931b56efeE922471add0eEe8": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -491,18 +487,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x11805594be0229EF08429D775AF0c55f7c4535dE",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x54aB716D465be3D5EEca64E63ac0048D7a81659a",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -526,7 +510,9 @@
           "0x11805594be0229EF08429D775AF0c55f7c4535dE"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -559,11 +545,14 @@
         "nonce": 0,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe",
+      "implementationNames": {
+        "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "AbstractChainAdminMultisig",
+      "name": "Abstract Multisig",
       "address": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -600,26 +589,20 @@
           "0x1CdfBDED92D46261837827607e674110Ca5a0575",
           "0x325407EEC948b97429068AF0cd8A8D95F06315a4",
           "0x77D1124E9061d238430Df3F4311111BDf69a4CFA",
-          "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892",
-          "0xe7ea5B62F939611D11C0Ce7606B001207870C704",
-          "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE",
-          "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0",
-          "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74"
+          "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892"
         ],
         "$threshold": 4,
         "domainSeparator": "0x601992af611ef8a8fceda6a206c8c3ca2aefc6d3b38faea7968180c999ae8c79",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 10,
+        "multisigThreshold": "4 of 8 (50%)",
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
-    },
-    {
-      "address": "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "implementationNames": {
+        "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "ValidatorTimelock",
@@ -631,18 +614,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x11805594be0229EF08429D775AF0c55f7c4535dE",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x54aB716D465be3D5EEca64E63ac0048D7a81659a",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -666,7 +637,9 @@
           "0x54aB716D465be3D5EEca64E63ac0048D7a81659a"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -702,16 +675,13 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "0xa925fac7B26C2959b5d55173B21CAc5729372459",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -741,16 +711,13 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xE57e5D24660d83bf8A40Ca2269d31D4A2F4F3C47",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xe7ea5B62F939611D11C0Ce7606B001207870C704",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1173,8 +1140,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
-    "shared-zk-stack/v26/Diamond": "0x748a53ab23ca7de7668b62f01a1e436cda12fe5b08cf1bd1bfcde11f6dba8ffe",
-    "shared-zk-stack/ValidatorTimelock": "0xb0a9eee97036385e26460c74be8e8196ad5c4872d104d7ecd6d3a00bd59ac2f8",
+    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
+    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0xcbd8a7939863f7c7e3184eade70ed83b1f5db7609fac0b003484365b2a01f195"
 }

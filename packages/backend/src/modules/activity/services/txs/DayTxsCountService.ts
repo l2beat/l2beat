@@ -1,6 +1,6 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { range } from 'lodash'
+import range from 'lodash/range'
 import type { DayProvider } from '../../../../providers/DayProviders'
 
 export class DayTxsCountService {

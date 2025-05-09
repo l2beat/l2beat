@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x560c47c29703da8816cbff8cded5a909f3ee595a
+Generated with discovered.json: 0x4e4244f8982700dd7ff3ef205e2089be74bc0f08
+
+# Diff at Tue, 06 May 2025 10:56:50 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    EOA  (0xb8605297399baEb6628C9E8F5D3E52A056492cfe) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xa8582bd17572955f4f2dcaefa3c44c695e28e7ca
+
+# Diff at Tue, 29 Apr 2025 08:19:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"manage the members of the data availability committee and the threshold for valid commitments.","via":[]},{"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}]}]
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x3451F208447c4D81346c10239eF92A1eB98b65C3","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x52aaa9f17bfc9b1df8324e3a29dcef4668a1ca37
+
+# Diff at Thu, 24 Apr 2025 10:30:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      values.members.1:
+-        ["https://gpt-mainnet-da-2.eu-north-2.gateway.fm/","0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"]
++        {"url":"https://gpt-mainnet-da-2.eu-north-2.gateway.fm/","addr":"0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527"}
+      values.members.0:
+-        ["https://gpt-mainnet-da-1.eu-north-2.gateway.fm/","0x208C0bCD77F921209932081c27C543098838BF9e"]
++        {"url":"https://gpt-mainnet-da-1.eu-north-2.gateway.fm/","addr":"0x208C0bCD77F921209932081c27C543098838BF9e"}
+    }
+```
+
+Generated with discovered.json: 0xd9a61cc06242ff7816742beee45953e8da45cd47
 
 # Diff at Thu, 10 Apr 2025 14:42:31 GMT:
 

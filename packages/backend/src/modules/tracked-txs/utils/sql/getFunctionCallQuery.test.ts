@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { range } from 'lodash'
+import range from 'lodash/range'
 
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 

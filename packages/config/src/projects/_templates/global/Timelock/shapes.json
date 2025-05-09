@@ -10,5 +10,11 @@
     "address": "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "Timelock.sol": {
+    "hash": "0xce6b84e712754e5a1e084026449891970a1f58fbd532d364ff46e123cb80f082",
+    "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
+    "chain": "base",
+    "blockNumber": 29215620
   }
 }

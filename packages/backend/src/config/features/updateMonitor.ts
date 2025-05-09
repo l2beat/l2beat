@@ -17,6 +17,14 @@ export function getUpdateMonitorConfig(
 ): UpdateMonitorConfig {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
+
+  const allChains = configReader.readAllChains()
+  const enabledChains = allChains.filter((chain) =>
+    flags.isEnabled('updateMonitor', chain),
+  )
+  const disabledChains = allChains.filter(
+    (chain) => !flags.isEnabled('updateMonitor', chain),
+  )
   return {
     configReader,
     paths,
@@ -24,10 +32,10 @@ export function getUpdateMonitorConfig(
       ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
       : undefined,
     discord: getDiscordConfig(env, isLocal),
-    chains: configReader
-      .readAllChains()
-      .filter((chain) => flags.isEnabled('updateMonitor', chain))
-      .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
+    chains: enabledChains.map((chain) =>
+      getChainDiscoveryConfig(env, chain, chains),
+    ),
+    disabledChains,
     cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
     cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     updateMessagesRetentionPeriodDays: env.integer(
@@ -122,11 +130,10 @@ function getChainDiscoveryConfig(
           }
         : {
             type: explorerApi.type,
-            url: explorerApi.url,
-            apiKey: env.string([
-              `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-              `${ENV_NAME}_ETHERSCAN_API_KEY`,
-            ]),
+            url: env.string('ETHERSCAN_API_URL'),
+            apiKey: env.string('ETHERSCAN_API_KEY'),
+            // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
+            chainId: chainConfig.chainId!,
             unsupported: {
               getContractCreation: explorerApi.contractCreationUnsupported,
             },

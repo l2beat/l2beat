@@ -1,15 +1,29 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 
+const chainId = 56
+
 export const bsc: BaseProject = {
   id: ProjectId('bsc'),
   slug: 'bsc',
   name: 'Binance Smart Chain',
   shortName: 'BSC',
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
+  display: {
+    description: 'EVM-compatible Layer 1.',
+    links: {},
+    badges: [],
+  },
   chainConfig: {
     name: 'bsc',
-    chainId: 56,
+    chainId,
     explorerUrl: 'https://bscscan.com',
     multicallContracts: [
       {
@@ -19,6 +33,6 @@ export const bsc: BaseProject = {
         version: '3',
       },
     ],
-    apis: [{ type: 'etherscan', url: 'https://api.bscscan.com/api' }],
+    apis: [{ type: 'etherscan', chainId }],
   },
 }

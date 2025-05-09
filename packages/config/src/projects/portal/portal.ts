@@ -7,10 +7,10 @@ import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('portal')
 
-const guardians = discovery.getContractValue<[string[], number]>(
-  'WormholeCore',
-  'guardianSet',
-)[0]
+const guardians = discovery.getContractValue<{
+  keys: string[]
+  expirationTime: number
+}>('WormholeCore', 'guardianSet').keys
 
 export const portal: Bridge = {
   type: 'bridge',

@@ -168,7 +168,7 @@ function TokenItem({ token }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
       <Image
-        src={token.iconUrl ?? '/images/token-placeholder.png'}
+        src={token.iconUrl}
         alt={token.name}
         width={18}
         height={18}

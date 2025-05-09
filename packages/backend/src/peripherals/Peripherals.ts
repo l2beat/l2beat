@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import type { Database } from '@l2beat/database'
 export interface ClientClass<T, O> {

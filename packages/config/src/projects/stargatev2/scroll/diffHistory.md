@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x477181f742162cde79ea7f2268a2b12b4827bfd6
+Generated with discovered.json: 0x6e3ec9ab1941aa79665f7b5d3dff41d24bbc1f4a
+
+# Diff at Tue, 06 May 2025 15:41:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 13418769
+- current block number: 15243619
+
+## Description
+
+Modified liquidity parameter deficitOffset for native and USDC pools.
+
+## Watched changes
+
+```diff
+    contract StargatePoolNative (0xC2b638Cb5042c1B3c5d5C969361fB50569840583) {
+    +++ description: None
+      values.deficitOffset:
+-        "7000000000000000000000"
++        "280000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x353a211ec57bff3b3b404b8ba45fd8a1a8df5c02
 
 # Diff at Tue, 04 Mar 2025 10:42:44 GMT:
 

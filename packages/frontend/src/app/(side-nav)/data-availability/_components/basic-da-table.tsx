@@ -6,7 +6,7 @@ import type {
   Table as TanstackTable,
 } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import { range } from 'lodash'
+import range from 'lodash/range'
 import type { CSSProperties } from 'react'
 import React from 'react'
 import { getBasicTableGroupParams } from '~/components/table/basic-table'
@@ -78,7 +78,8 @@ export function BasicDaTable<T extends BasicEntry>({
   assert(maxDepth <= 1, 'Only 1 level of headers is supported')
 
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
-  const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
+  const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
+  assert(actualHeader, 'Actual header is required')
 
   const columnLength =
     actualHeader.headers.length +

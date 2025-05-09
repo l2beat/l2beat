@@ -6,13 +6,13 @@ import { EthereumAddressValue, HttpUrl } from './types'
 
 export const TVL = command({
   name: 'tvl',
-  description: 'Approximates the TVL of an account',
+  description: 'Approximates the TVL of an account.',
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
     rpcUrl: positional({ type: HttpUrl, displayName: 'rpcUrl' }),
     breakdownByToken: flag({
-      description: 'Show breakdown of TVL by token',
+      description: 'Show breakdown of TVL by token.',
       long: 'breakdown',
       short: 'b',
       defaultValue: () => false,

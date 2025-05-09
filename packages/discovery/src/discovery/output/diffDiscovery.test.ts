@@ -118,6 +118,7 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
+        addressType: 'Contract',
         description: undefined,
         diff: [
           {
@@ -133,12 +134,14 @@ describe(diffDiscovery.name, () => {
       {
         name: 'B',
         address: ADDRESS_B,
+        addressType: 'Contract',
         description: undefined,
         type: 'deleted',
       },
       {
         name: 'C',
         address: ADDRESS_C,
+        addressType: 'Contract',
         description: undefined,
         type: 'created',
       },
@@ -165,6 +168,7 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
+        addressType: 'Contract',
         description: 'hello world',
         type: 'deleted',
       },
@@ -191,6 +195,7 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
+        addressType: 'Contract',
         description: 'hello world',
         type: 'created',
       },
@@ -227,6 +232,7 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
+        addressType: 'Contract',
         diff: [
           {
             after: '"hello sailor"',

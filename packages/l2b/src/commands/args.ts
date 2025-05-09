@@ -1,4 +1,4 @@
-import { oneOf, option, optional, string } from 'cmd-ts'
+import { number, oneOf, option, optional, string } from 'cmd-ts'
 import { ExistingPath, HttpUrl } from './types'
 
 export const discoveryPath = option({
@@ -14,19 +14,33 @@ export const rpcUrl = option({
   short: 'u',
 })
 
+export const chainName = option({
+  type: optional(string),
+  description: 'Chain whose configurations to use for explorer access',
+  long: 'explorer-chain-name',
+  short: 'c',
+})
+
 export const explorerUrl = option({
   type: HttpUrl,
   long: 'explorer-url',
   short: 'u',
-  defaultValue: () => 'https://api.etherscan.io/api',
+  defaultValue: () => 'https://api.etherscan.io/v2/api',
   defaultValueIsSerializable: true,
 })
 
 export const explorerType = option({
-  type: oneOf(['etherscan', 'blockscout']),
+  type: oneOf(['etherscan', 'blockscout'] as const),
   long: 'etherscan-type',
   short: 't',
-  defaultValue: () => 'etherscan',
+  defaultValue: () => 'etherscan' as const,
+})
+
+export const explorerChainId = option({
+  type: optional(number),
+  long: 'explorer-chain-id',
+  short: 'i',
+  defaultValue: () => 1,
 })
 
 export const explorerApiKey = option({

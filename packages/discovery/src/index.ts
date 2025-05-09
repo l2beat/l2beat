@@ -1,14 +1,28 @@
 export { discover } from './cli/discoverCommand'
+export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
-export { modelPermissions } from './discovery/modelling/modelPermissions'
+export {
+  modelPermissions,
+  modelPermissionsForIsolatedDiscovery,
+  generateClingoForProject,
+  generatePermissionConfigHash,
+} from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
-export { getChainConfig, getChainShortName } from './config/config.discovery'
+export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery'
+export {
+  getChainConfig,
+  getChainShortName,
+  isChainShortName,
+} from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
 } from './config/types'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
-export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
+export {
+  AddressAnalyzer,
+  type Analysis,
+} from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
@@ -50,7 +64,6 @@ export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export { type DiscoveryCache } from './discovery/provider/DiscoveryCache'
 export { InMemoryCache } from './discovery/provider/InMemoryCache'
 export { LeveledCache } from './discovery/provider/LeveledCache'
-export { RedisCache } from './discovery/provider/RedisCache'
 export { SQLiteCache } from './discovery/provider/SQLiteCache'
 export { NoCache } from './discovery/provider/NoCache'
 export {
@@ -70,13 +83,16 @@ export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
-export { ProviderStats } from './discovery/provider/Stats'
+export {
+  ProviderStats,
+  type AllProviderStats,
+  ProviderMeasurement,
+} from './discovery/provider/Stats'
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,
   type ClingoValue,
-  parseExportedFacts,
-} from './discovery/modelling/factTypes'
+} from './discovery/modelling/clingoparser'
 export type {
   DiscoveryOutput,
   EntryParameters,
@@ -93,3 +109,4 @@ export {
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
 export { getChainConfigs } from './config/config.discovery'
+export { getShapeFromOutputEntry } from './discovery/analysis/findShape'

@@ -1,7 +1,7 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
-import { command, option, optional } from 'cmd-ts'
+import { boolean, command, flag, option, optional } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import {
   fetchFlatSources,
@@ -27,11 +27,24 @@ export const FetchFlatSources = command({
       short: 'o',
       env: 'L2B_FLAT_SOURCES_OUTPUT_PATH',
     }),
+    confirmed: flag({
+      type: boolean,
+      long: 'yes',
+      short: 'y',
+      description: 'accept the refresh, do not prompt the user.',
+    }),
+    quiet: flag({
+      type: boolean,
+      long: 'quiet',
+      short: 'q',
+      description: 'do not print anything on the terminal',
+    }),
   },
   handler: async (args) => {
     const paths = getDiscoveryPaths()
-    const logger = new CliLogger()
+    const logger = new CliLogger(args.quiet)
     if (
+      !args.confirmed &&
       paths.discovery !== undefined &&
       !keyInYN(
         `${chalk.red(

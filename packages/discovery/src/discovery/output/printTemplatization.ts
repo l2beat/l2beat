@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { partition } from 'lodash'
+import partition from 'lodash/partition'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { getShapeFromAnalyzedContract } from '../analysis/findShape'
@@ -51,14 +51,13 @@ export function printTemplatization(
 
       const nestedLines = []
       if (matchedShape !== undefined) {
-        const [shapeFileName, { chain, blockNumber, hash, address }] =
-          matchedShape
+        const { name, shape } = matchedShape
 
         nestedLines.push(
           ...[
-            shapeFileName,
-            `${chain} @ ${blockNumber} (${address})`,
-            `hash: ${hash}`,
+            name,
+            `${shape.chain} @ ${shape.blockNumber} (${shape.address})`,
+            `hash: ${shape.hash}`,
           ],
         )
       }

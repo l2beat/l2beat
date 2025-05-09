@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { assert } from '@l2beat/shared-pure'
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
 import { layer2s } from './layer2s'
@@ -114,7 +114,9 @@ describe('layer3s', () => {
       for (const layer3 of layer3s) {
         if (!layer3.stateValidation) continue
 
-        expect(layer3.stateValidation?.description.endsWith('.')).toEqual(true)
+        if (layer3.stateValidation.description) {
+          expect(layer3.stateValidation.description.endsWith('.')).toEqual(true)
+        }
         layer3.stateValidation?.categories.forEach((category) => {
           expect(category.description.endsWith('.')).toEqual(true)
         })

@@ -4,29 +4,26 @@
   "name": "scroll",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
-    "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
-    "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
-    "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-    "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
-    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
-    "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
-    "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4", // batch bridge
+    "0xa13BAF47339d63B743e7Da8741db5456DAc1E556", // ScrollChain
+    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B", // L1USDCGateway
+    "0xb2b10a289A229415a124EFDeF310C10cb004B6ff", // L1CustomERC20Gateway
+    "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6", // L1ERC1155Gateway
+    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE", // L1WETHGateway
+    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B", // L1ERC721Gateway
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504", // wstETHescrowLido
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a", // custom pufETH escrow
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515" // custom DAI escrow
   ],
   "names": {
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
-    "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": "L1MessageQueue",
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "L1ScrollMessenger",
-    "0x987e300fDfb06093859358522a79098848C33852": "OLD_L2GasPriceOracle",
+    "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "L1MessageQueueV2",
     "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "ScrollChain",
     "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier",
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
-    "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": "TimelockSlow",
+    "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": "TimelockSCSlow",
     "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockFast",
-    "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockSC",
+    "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockSCEmergency",
     "0x826714adD4dDA2b8750794A467C892c0Cd49216b": "TimelockEmergency",
     "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "L2TokenFactoryFallback",
     "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "L2TokenImplementationFallback",
@@ -38,7 +35,6 @@
     "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": "L1ERC1155Gateway",
     "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "L1ERC721Gateway",
     "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L1WETHGateway",
-    "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": "Whitelist",
     "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": "L2ERC1155GatewayFallback",
     "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "L2StandardERC20GatewayFallback",
     "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": "L2WETHGatewayFallback",
@@ -55,6 +51,9 @@
     "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "PlonkVerifierV2", // Darwin
     "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": "ZkEvmVerifierV2-1",
     "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "PlonkVerifierV2-1", // DarwinV2
+    "0xf5bABa891e6De03540ecfb1917B8F07112A45a83": "ZkEvmVerifierPostEuclid",
+    "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "PlonkVerifierPostEuclid",
+    "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": "PlonkVerifierPostEuclid-2",
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow"
@@ -71,244 +70,139 @@
     },
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": {
       // pufETHEscrow
-      "ignoreRelatives": ["owner", "$admin", "counterpart"]
+      "ignoreRelatives": ["owner", "$admin", "counterpart"],
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "ScrollAddress"]
+        }
+      }
     },
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
       // DaiEscrow
-      "ignoreRelatives": ["counterpart"]
+      "ignoreRelatives": ["counterpart"],
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "ScrollAddress"]
+        }
+      },
+      "category": "bridge-external"
     },
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": {
       // wstETHescrowLido
       "ignoreMethods": ["l1Token", "l2Token"],
-      "ignoreRelatives": ["owner", "$admin"]
-    },
-    "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": {
-      // L1MessageQueue
-      "ignoreMethods": [
-        "estimateCrossDomainMessageFee",
-        "getCrossDomainMessage",
-        "isMessageDropped",
-        "isMessageSkipped",
-        "messageQueue"
-      ],
-      "ignoreInWatchMode": [
-        "nextCrossDomainMessageIndex",
-        "pendingQueueIndex",
-        "l2BaseFee",
-        "nextUnfinalizedQueueIndex"
-      ]
-    },
-    "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": {
-      // L1ScrollMessenger
-      "ignoreMethods": ["prevReplayIndex"]
-    },
-    "0x987e300fDfb06093859358522a79098848C33852": {
-      // OLD_L2GasPriceOracle
-      "ignoreMethods": ["estimateCrossDomainMessageFee"],
-      "ignoreInWatchMode": ["l2BaseFee"]
-    },
-    "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": {
-      // ScrollChain
-      "ignoreMethods": [
-        "committedBatches",
-        "finalizedStateRoots",
-        "isBatchFinalized",
-        "withdrawRoots"
-      ],
-      "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
+      "ignoreRelatives": ["owner", "$admin"],
       "fields": {
-        "sequencers": {
-          "handler": {
-            "type": "event",
-            "select": "account",
-            "add": {
-              "event": "UpdateSequencer",
-              "where": ["=", "#status", true]
-            },
-            "remove": {
-              "event": "UpdateSequencer",
-              "where": ["!=", "#status", true]
-            }
-          }
-        },
-        "provers": {
-          "handler": {
-            "type": "event",
-            "select": "account",
-            "add": {
-              "event": "UpdateProver",
-              "where": ["=", "#status", true]
-            },
-            "remove": {
-              "event": "UpdateProver",
-              "where": ["!=", "#status", true]
-            }
-          }
-        },
-        "revertedBatches": {
-          "handler": {
-            "type": "event",
-            "select": "batchIndex",
-            "add": { "event": "RevertBatch" }
-          }
+        "counterpart": {
+          "edit": ["format", "ScrollAddress"]
         }
+      },
+      "category": "bridge-external"
+    },
+    "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828": {
+      "description": "Contract used to verify zk proofs given the aggregate proof and the public input hash."
+    },
+    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": {
+      // feeVault
+      "category": "spam"
+    },
+    // SC Members not needed in actors
+    "0xC3eA7C657884BB380B66D79C36aDCb5658b01896": {
+      "category": "spam"
+    },
+    "0x0f50874f227621Dea72482004639a9fFe440A4dA": {
+      "category": "spam"
+    },
+    "0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d": {
+      "category": "spam"
+    },
+    "0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a": {
+      "category": "spam"
+    },
+    "0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4": {
+      "category": "spam"
+    },
+    "0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": {
+      "category": "spam"
+    },
+    "0x30315233090F675520eef5CBd7A6cf7d185af443": {
+      "category": "spam"
+    },
+    "0x9479ABfebefEea3c846163012a472b44F305b3d7": {
+      "category": "spam"
+    },
+    "0x383C148ba96956F985F6141B2D119add1C34e3B7": {
+      "category": "spam"
+    },
+    "0x69C2eD64171bF5737c2B78bdF722e68a032B2825": {
+      "category": "spam"
+    },
+    "0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": {
+      "category": "spam"
+    },
+    "0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": {
+      "category": "spam"
+    },
+    "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": {
+      "manualSourcePaths": {
+        "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.3.0/bundle/verifier.bin"
       }
     },
-    "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": {
-      // MultipleVersionRollupVerifier
-      "description": "Used to update the verifier and keep track of current and old versions.",
-      "ignoreMethods": ["getVerifier"],
-      "fields": {
-        "verifierVersions": {
-          "handler": {
-            "type": "event",
-            "select": "version",
-            "add": { "event": "UpdateVerifier" }
-          }
-        },
-        "latestVerifier": {
-          "handler": {
-            "type": "array",
-            "maxLength": 20,
-            "indices": "{{ verifierVersions }}"
-          },
-          "returnType": "((uint64 startBatchIndex, address verifier)[])"
-        },
-        "legacyVerifiersLength": {
-          "handler": {
-            "type": "array",
-            "maxLength": 20,
-            "indices": "{{ verifierVersions }}"
-          }
-        }
-      }
-    },
-    "0x798576400F7D662961BA15C6b3F3d813447a26a6": {
-      // ScrollOwner
-      "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "scrollAccessControl",
-            "roleNames": {
-              "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
-              "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
-              "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
-              "0x0bc16a0ae95f4e5b799d8e99b60c3f58a85a250a4113bda01d7aa9161915bb51": "emergency-nodelay",
-              "0x25cde7d55aec2382cb151a266953ae458755f20dbd760809260e51683955fe9e": "ops-fast",
-              "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
-              "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
-            }
-          }
-        }
-      }
-    },
-    "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": {
-      // TimelockSlow
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": {
-      // TimelockFast
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {
-      // TimelockSC
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0x826714adD4dDA2b8750794A467C892c0Cd49216b": {
-      // TimelockEmergency
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": {
-      // L1USDCGateway
-      "ignoreMethods": ["l1USDC"],
-      "ignoreInWatchMode": ["totalBridgedUSDC"]
-    },
-    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": {
-      // L1WETHGateway
-      "ignoreMethods": ["WETH"]
-    },
-    "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": {
-      // Whitelist
-      "fields": {
-        "whitelisted": {
-          "handler": {
-            "type": "event",
-            "select": "_account",
-            "add": {
-              "event": "WhitelistStatusChanged",
-              "where": ["=", "#_status", true]
-            },
-            "remove": {
-              "event": "WhitelistStatusChanged",
-              "where": ["!=", "#_status", true]
-            }
-          }
-        }
-      }
-    },
-    "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": {
-      // EnforcedTxGateway
-      "fields": {
-        "paused": {
-          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
-          "severity": "HIGH"
-        }
-      }
-    },
+    /* ---- Do not show old verifiers ---- */
     "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
       // PlonkVerifierV0
+      "category": "spam",
       "manualSourcePaths": {
         "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
       }
     },
     "0x2293cd12e8564e8219d314b075867c2f66ac6941": {
       // PlonkVerifierV1
+      "category": "spam",
       "manualSourcePaths": {
         "0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
       }
     },
     "0x03a72B00D036C479105fF98A1953b15d9c510110": {
+      "category": "spam",
       // PlonkVerifierV1-1
       "manualSourcePaths": {
         "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
       }
     },
     "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": {
+      "category": "spam",
       // PlonkVerifierV2
       "manualSourcePaths": {
         "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
       }
     },
     "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
+      "category": "spam",
       // PlonkVerifierV2-1
       "manualSourcePaths": {
         "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
       }
+    },
+    "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": {
+      "category": "spam"
+    },
+    "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": {
+      "category": "spam"
+    },
+    "0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": {
+      "category": "spam"
+    },
+    "0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": {
+      "category": "spam"
+    },
+    "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": {
+      "category": "spam"
+    },
+    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": {
+      "category": "spam"
+    },
+    "0x63FB51C55d9605a75F8872C80De260a00fACfaA2": {
+      "category": "spam"
     }
   }
 }

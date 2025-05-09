@@ -244,7 +244,7 @@ function setMinimumAssertionPeriod(
 
 ### `setOwner` function
 
-This function allows the proxy admin to update the the admin itself.
+This function allows the proxy admin to update the admin itself.
 
 ```solidity
 function setOwner(

@@ -1,6 +1,8 @@
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
+import type { BlipSexp } from '../../blip/type'
+import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
 
 export type RawPermissionConfiguration = z.infer<
@@ -25,6 +27,7 @@ export const RolePermissionEntries = [
   'validateZkStack',
   'validateBridge',
   'validateBridge2',
+  'validateBridge3',
   'relay',
   'aggregatePolygon',
   'operateStarknet',
@@ -54,12 +57,23 @@ export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type StructureContractField = z.infer<typeof StructureContractField>
-export const StructureContractField = z.object({
-  handler: z.optional(UserHandlerDefinition),
-  template: z.string().optional(),
-  returnType: z.string().optional(),
-  permissions: z.array(RawPermissionConfiguration).optional(),
-})
+export const StructureContractField = z
+  .object({
+    handler: z.optional(UserHandlerDefinition),
+    template: z.string().optional(),
+    permissions: z.array(RawPermissionConfiguration).optional(),
+    copy: z.string().optional(),
+    edit: z
+      .unknown()
+      .refine(validateBlip)
+      .transform((v): BlipSexp => v as BlipSexp)
+      .optional(),
+  })
+  .refine((data) => data.handler === undefined || data.copy === undefined, {
+    message:
+      'handler and copy cannot both be defined at the same time. They are mutually exclusive.',
+    path: ['handler', 'copy'],
+  })
 
 export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
 export const DiscoveryCustomType = z
@@ -95,7 +109,6 @@ export const StructureContract = z.object({
   canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
   proxyType: z.optional(ManualProxyType),
-  displayName: z.string().optional(),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.array(z.string()).default([]),
   ignoreRelatives: z.array(z.string()).default([]),

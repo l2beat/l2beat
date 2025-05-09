@@ -31,7 +31,7 @@ export function removeArraySuffix(path: string): string {
   return path
 }
 
-export function isIntNumeric(str: string): boolean {
+function isIntNumeric(str: string): boolean {
   const ZERO = '0'.charCodeAt(0)
   const NINE = '9'.charCodeAt(0)
 

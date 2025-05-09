@@ -66,6 +66,8 @@ const typescriptConfigs = tsEslint.config(
           },
         },
       ],
+
+      '@typescript-eslint/no-non-null-assertion': 'error',
     },
   },
 )
@@ -121,12 +123,24 @@ const config = tsEslint.config(
               message: 'Use assert from @l2beat/shared-pure',
             },
             {
+              name: 'lodash',
+              message: 'Use lodash/{module}',
+            },
+            {
               name: 'node:assert',
               message: 'Use assert from @l2beat/shared-pure',
             },
             {
               name: 'next/router',
               message: 'Use router from next/navigation',
+            },
+            {
+              name: '@l2beat/shared',
+              message: 'Use @l2beat/shared/frontend',
+            },
+            {
+              name: '@l2beat/discovery',
+              message: 'Use @l2beat/discovery/frontend',
             },
           ],
         },

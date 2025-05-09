@@ -1,10 +1,9 @@
 'use client'
 
-import { assert } from '@l2beat/shared-pure'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import { useMemo } from 'react'
-import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
+import { Bar, BarChart } from 'recharts'
 
 import {
   ChartContainer,
@@ -101,14 +100,14 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="text-secondary">
+      <div className="label-value-14-medium text-secondary">
         {formatTimestamp(label, { longMonthName: true })}
       </div>
       <HorizontalSeparator className="my-1" />
-      <div>
+      <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
 
           return (
             <div
@@ -120,9 +119,11 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="text-secondary">{configEntry.label}</span>
+                <span className="label-value-14-medium">
+                  {configEntry.label}
+                </span>
               </div>
-              <span className="font-medium tabular-nums text-primary">
+              <span className="label-value-15-medium tabular-nums text-primary">
                 {entry.value?.toFixed(2)}%
               </span>
             </div>

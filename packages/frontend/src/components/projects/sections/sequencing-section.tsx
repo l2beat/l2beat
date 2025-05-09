@@ -1,7 +1,6 @@
 import type { ReferenceLink } from '@l2beat/config'
 import { DiagramImage } from '~/components/diagram-image'
-import type { DiagramType } from '~/utils/project/get-diagram-params'
-import { getDiagramParams } from '~/utils/project/get-diagram-params'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'
@@ -11,10 +10,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface SequencingSectionProps extends ProjectSectionProps {
   name: string
-  diagram?: {
-    type: DiagramType
-    slug: string
-  }
+  diagram?: DiagramParams
   content: string
   mdClassName?: string
   risks?: TechnologyRisk[]
@@ -30,17 +26,13 @@ export function SequencingSection({
   references,
   ...projectSectionProps
 }: SequencingSectionProps) {
-  const diagramParams = diagram
-    ? getDiagramParams(diagram.type, diagram.slug)
-    : undefined
-
   return (
     <ProjectSection {...projectSectionProps}>
-      {diagramParams ? (
+      {diagram ? (
         <figure className="mb-8 mt-4 text-center">
-          <DiagramImage diagram={diagramParams} />
+          <DiagramImage diagram={diagram} />
           <figcaption className="text-xs text-secondary">
-            {diagramParams.caption}
+            {diagram.caption}
           </figcaption>
         </figure>
       ) : null}

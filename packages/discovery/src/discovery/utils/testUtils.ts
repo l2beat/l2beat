@@ -7,7 +7,6 @@ export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   name: '',
   deploymentTimestamp: 0,
   deploymentBlockNumber: 0,
-  derivedName: undefined,
   isVerified: false,
   proxyType: '',
   implementations: [],
@@ -18,7 +17,6 @@ export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   extendedTemplate: undefined,
   ignoreInWatchMode: undefined,
   relatives: {},
-  selfMeta: undefined,
   usedTypes: [],
 }
 
@@ -26,7 +24,6 @@ export const EMPTY_ANALYZED_EOA: AnalyzedEOA = {
   type: 'EOA',
   address: EthereumAddress.ZERO,
   name: undefined,
-  derivedName: undefined,
   isVerified: false,
   proxyType: 'EOA',
   implementations: [],
@@ -37,6 +34,5 @@ export const EMPTY_ANALYZED_EOA: AnalyzedEOA = {
   extendedTemplate: undefined,
   ignoreInWatchMode: undefined,
   relatives: {},
-  selfMeta: undefined,
   usedTypes: [],
 }

@@ -2,7 +2,7 @@
   "name": "gravity",
   "chain": "ethereum",
   "blockNumber": 17065004,
-  "configHash": "0x5ace23277c140234f7d7faa49d2009a36fdd64a7c47dc1efde4d3ea0e5c3ca66",
+  "configHash": "0xf33893498cb503da470f1e07cb9bac626d3b5e9606c5a3349cb44626089be840",
   "entries": [
     {
       "name": "Gravity",
@@ -27,7 +27,9 @@
         "state_lastValsetCheckpoint": "0x1c0c3fcf1daf0414ee98c705c0b3678017a37d39c2511b3175c71da08b811433",
         "state_lastValsetNonce": 1022
       },
-      "derivedName": "Gravity"
+      "implementationNames": {
+        "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": "Gravity"
+      }
     }
   ],
   "abis": {
@@ -69,5 +71,6 @@
       "function updateValset(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _newValset, tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa04ec24b64e25b5baf3052ee0047a0ae753d6306bced17dcfb2ca840ca0412e2"
 }

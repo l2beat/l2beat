@@ -31,6 +31,7 @@ interface Project {
   title: string
   isUnderReview?: boolean
   slug: string
+  icon: string
 }
 interface ProjectNavigationProps {
   project: Project
@@ -79,7 +80,7 @@ export function DesktopProjectNavigation({
               <Image
                 width={32}
                 height={32}
-                src={`/icons/${project.slug}.png`}
+                src={project.icon}
                 alt={`${project.title} logo`}
               />
             )}

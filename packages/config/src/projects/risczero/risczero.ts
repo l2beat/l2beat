@@ -19,8 +19,14 @@ export const risczero: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    emergencyWarning: undefined,
     isUnderReview: false,
     isUnverified: false,
+  },
+  display: {
+    description: 'ZK verifier for RISC-V programs.',
+    links: {},
+    badges: [],
   },
   proofVerification: {
     shortDescription: 'ZK verifier for RISC-V programs.',

@@ -71,7 +71,7 @@ interface EnvironmentVariables {
 const ENV: EnvironmentVariables = {
   rpcUrl: process.env.ETHEREUM_RPC_URL,
   coinGeckoApiKey: process.env.COINGECKO_API_KEY,
-  etherscanApiKey: process.env.ETHEREUM_ETHERSCAN_API_KEY,
+  etherscanApiKey: process.env.ETHERSCAN_API_KEY,
 }
 
 // Validate required environment variables
@@ -874,7 +874,6 @@ function generateCopyPasta(
       `\n\n// === tokens.jsonc additions (Potential New Tokens > $${CONFIG.newTokens.minUsdValueThreshold} TVL) ===`,
       `// Add these to the "ethereum" array in your tokens.jsonc file:`,
     )
-    // biome-ignore lint/style/useForOf: Need index for comma logic
     for (let i = 0; i < sortedNewTokens.length; i++) {
       const token = sortedNewTokens[i]
       // Use JSON.stringify for proper escaping if symbols contain special chars

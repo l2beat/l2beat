@@ -4,8 +4,6 @@ import {
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
-  type Token,
-  type TokenBridgedUsing,
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
@@ -76,6 +74,7 @@ export interface BaseProject {
   colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
+  escrows?: ProjectEscrow[]
 
   // bridge data
   bridgeInfo?: ProjectBridgeInfo
@@ -98,8 +97,7 @@ export interface BaseProject {
   proofVerification?: ProjectProofVerification
 
   // feature configs
-  tvlInfo?: ProjectTvlInfo
-  tvlConfig?: ProjectTvlConfig
+  tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
   activityConfig?: ProjectActivityConfig
   livenessInfo?: ProjectLivenessInfo
@@ -136,6 +134,7 @@ export interface ProjectColors {
 export interface ProjectStatuses {
   yellowWarning: string | undefined
   redWarning: string | undefined
+  emergencyWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
   // countdowns
@@ -255,16 +254,17 @@ export type ChainApiConfig =
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
-  | ChainExplorerApi<'etherscan'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
-  | ChainStarkexApi
+  | StarkexApi
+  | EtherscanApi
 
 export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
+  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
 }
 
 export interface ChainExplorerApi<T extends string> {
@@ -273,9 +273,15 @@ export interface ChainExplorerApi<T extends string> {
   contractCreationUnsupported?: boolean
 }
 
-export interface ChainStarkexApi {
+export interface StarkexApi {
   type: 'starkex'
   product: string[]
+}
+
+export interface EtherscanApi {
+  type: 'etherscan'
+  chainId: number
+  contractCreationUnsupported?: boolean
 }
 
 // #endregion
@@ -297,6 +303,7 @@ export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
+  livenessFailure?: TableReadyValue
 }
 
 export interface ProjectBridgeTechnology {
@@ -307,6 +314,9 @@ export interface ProjectBridgeTechnology {
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
   detailedDescription?: string
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 // #endregion
 
@@ -482,8 +492,6 @@ export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
   architectureImage?: string
-  stateCorrectness?: ProjectTechnologyChoice
-  newCryptography?: ProjectTechnologyChoice
   dataAvailability?: ProjectTechnologyChoice
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice
@@ -509,7 +517,7 @@ export interface ProjectScalingStateDerivation {
 }
 
 export interface ProjectScalingStateValidation {
-  description: string
+  description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
@@ -521,14 +529,19 @@ export interface ProjectScalingStateValidationCategory {
     | 'Prover Architecture'
     | 'Verification Keys Generation'
     | 'Proven Program'
+    | 'Validity proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
     | 'Pessimistic Proofs'
+    | 'Fraud proofs'
+    // Other
+    | 'No state validation'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
+  isIncomplete?: boolean
 }
 // #endregion
 
@@ -716,29 +729,9 @@ export interface RequiredTool {
 // #endregion
 
 // #region feature configs
-export interface ProjectTvlInfo {
+export interface ProjectTvsInfo {
   associatedTokens: string[]
   warnings: WarningWithSentiment[]
-}
-
-/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlConfig {
-  escrows: ProjectTvlEscrow[]
-  tokens: Token[]
-  associatedTokens: string[]
-}
-
-/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlEscrow {
-  address: EthereumAddress
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-  tokens: (Token & { isPreminted: boolean })[]
-  chain: string
-  includeInTotal?: boolean
-  source?: ProjectEscrowSource
-  bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: SharedEscrow
 }
 
 export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
@@ -778,6 +771,8 @@ export interface BlockActivityConfig {
   type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
+  // how many blocks to fetch in single indexer tick
+  batchSize?: number
 }
 
 export type AdjustCount =
@@ -1104,6 +1099,18 @@ export const TotalSupplyAmountFormulaSchema = z.object({
   decimals: z.number(),
 })
 
+export type StarknetTotalSupplyAmountFormula = z.infer<
+  typeof StarknetTotalSupplyAmountFormulaSchema
+>
+export const StarknetTotalSupplyAmountFormulaSchema = z.object({
+  type: z.literal('starknetTotalSupply'),
+  chain: z.string(),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  address: z.string(),
+  decimals: z.number(),
+})
+
 export type CirculatingSupplyAmountFormula = z.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
@@ -1132,11 +1139,27 @@ export const AmountFormulaSchema = z.union([
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
+  StarknetTotalSupplyAmountFormulaSchema,
 ])
 
 export type Formula = CalculationFormula | ValueFormula | AmountFormula
 export function isAmountFormula(formula: Formula): boolean {
   return formula.type !== 'calculation' && formula.type !== 'value'
+}
+
+export type OnchainAmountFormula =
+  | BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | StarknetTotalSupplyAmountFormula
+
+export function isOnchainAmountFormula(
+  formula: Formula,
+): formula is OnchainAmountFormula {
+  return (
+    formula.type === 'totalSupply' ||
+    formula.type === 'balanceOfEscrow' ||
+    formula.type === 'starknetTotalSupply'
+  )
 }
 
 // token deployed to single chain

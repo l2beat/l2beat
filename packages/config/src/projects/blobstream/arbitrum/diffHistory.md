@@ -1,4 +1,86 @@
-Generated with discovered.json: 0x32a6251d31442485b80ce968fa78805b4cb8da8d
+Generated with discovered.json: 0x46fee3c70ef7573717141a26c178f12d925187c7
+
+# Diff at Tue, 29 Apr 2025 08:19:22 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 325165450
+- current block number: 325165450
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 325165450 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]}]
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","via":[]},{"permission":"interact","to":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","description":"can freeze the bridge contract and update the list of authorized relayers.","via":[]},{"permission":"interact","to":"0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","via":[]},{"permission":"upgrade","to":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xe93f72ab077b2506409e8108b7aab9bc807ca636
+
+# Diff at Thu, 24 Apr 2025 10:31:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@564f772ef796772c9952d7432df8286347a08d9e block: 325165450
+- current block number: 325165450
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 325165450 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.oldVerifier:
+-        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++        {"verifier":"0xc350F063C13a3Ca21331610fe159E697a5c9c2FB","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
+      values.oldVerifier2:
+-        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",true]
++        {"verifier":"0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01.
+      values.oldVerifier3:
+-        ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",true]
++        {"prover":"0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3","frozen":true}
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08.
+      values.oldVerifier4:
+-        ["0x1764C29FBd94865198588f10FC75D4f6636d158d",true]
++        {"verifier":"0x1764C29FBd94865198588f10FC75D4f6636d158d","frozen":true}
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5:
+-        ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",true]
++        {"prover":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","frozen":true}
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier:
+-        ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",false]
++        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+    }
+```
+
+Generated with discovered.json: 0x972c90107f90203545ac85a02599c4abef87a64a
 
 # Diff at Fri, 11 Apr 2025 06:41:35 GMT:
 
