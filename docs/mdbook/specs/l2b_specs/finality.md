@@ -12,6 +12,8 @@
   - [OP stack (with fraud proofs)](#op-stack-with-fraud-proofs)
     - [Why this approach?](#why-this-approach-1)
     - [Example](#example-1)
+- [Scroll](#scroll)
+    - [How to calculate the time to withdrawal](#how-to-calculate-the-time-to-withdrawal)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -281,3 +283,57 @@ Let's take [this withdrawal](https://optimistic.etherscan.io/tx/0x762b6734f4aaf7
 ```
 
 i.e. 7 days, 58 mins and 12 seconds have passed between the withdrawal being initiated and the time when it was ready to be executed on L1.
+
+## Scroll
+
+Scroll uses a ZK-rollup architecture with an asynchronous message bridge between L2 and L1.  
+Withdrawals (and every other L2→L1 message) follow the life-cycle illustrated by
+the events below:
+
+```solidity
+// Emitted on L2 when a message is queued
+event AppendMessage(uint256 index, bytes32 messageHash);
+// 0x5300000000000000000000000000000000000000  (Scroll: L2 Message Queue)
+
+// Emitted on L1 when a message is executed
+event RelayedMessage(bytes32 indexed messageHash);
+// 0x6774bcbd5cECEf1336B5300Fb5186a12DDD8B367  (Scroll: L1 Scroll Messenger Proxy)
+
+// Emitted on L1 when a batch proof is verified and the batch becomes final
+event FinalizeBatch(
+    uint256 indexed batchIndex,
+    bytes32  indexed batchHash,
+    bytes32  stateRoot,
+    bytes32  withdrawRoot
+);
+```
+
+#### How to calculate the time to withdrawal
+
+1. **Track initiation on L2**  
+   Listen for `AppendMessage` on the L2 Message Queue, store `messageHash`
+   together with the L2 block timestamp in which the event was emitted.
+
+2. **Track execution on L1**  
+   Listen for `RelayedMessage` on the L1 Scroll Messenger.  
+   When a matching `messageHash` is found, fetch the transaction data.
+   The calldata calls `relayMessageWithProof(...)`; decode it and read the
+   `_proof.batchIndex` field.
+
+3. **Find the first-available timestamp**  
+   With the extracted `batchIndex`, search the `ScrollChain` contract for the
+   corresponding `FinalizeBatch` event.  
+   The timestamp of the transaction that emitted this event represents the
+   moment the batch became *final* and every withdrawal in it could have been
+   executed.
+
+4. **Compute the intervals**
+
+   • **Earliest withdrawal time**  
+     `FinalizeBatch.timestamp − AppendMessage.timestamp`  
+     (how long users wait until the withdrawal *can* be executed)
+
+   • **Actual withdrawal time** (optional)  
+     `RelayedMessage.timestamp − AppendMessage.timestamp`  
+     (includes any additional delay introduced by the relayer)
+
