@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import { toUpper } from 'lodash'
+import toUpper from 'lodash/toUpper'
 import type { FieldDiff } from './diffContracts'
 import type { DiscoveryDiff } from './diffDiscovery'
 

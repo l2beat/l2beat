@@ -1,5 +1,5 @@
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
-import { range } from 'lodash'
+import range from 'lodash/range'
 
 interface Options {
   addTarget?: boolean

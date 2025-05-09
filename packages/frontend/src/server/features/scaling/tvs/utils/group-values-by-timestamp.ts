@@ -1,8 +1,7 @@
 import type { ProjectValueRecord } from '@l2beat/database'
-import type { Dictionary } from 'lodash'
 
 export function groupValuesByTimestamp(
-  values: Dictionary<Dictionary<ProjectValueRecord>>,
+  values: Record<string, Record<string, ProjectValueRecord>>,
 ) {
   const timestampValues: Record<string, ProjectValueRecord[]> = {}
   for (const projectValues of Object.values(values)) {

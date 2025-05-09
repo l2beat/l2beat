@@ -18,7 +18,7 @@ import {
   type ProviderStats,
 } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
-import { isError } from 'lodash'
+import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {

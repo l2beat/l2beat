@@ -3,7 +3,7 @@ import * as z from 'zod'
 
 import { isDeepStrictEqual } from 'util'
 import { type providers, utils } from 'ethers'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import { executeBlip } from '../../../blip/executeBlip'
 import type { BlipSexp } from '../../../blip/type'
 import { validateBlip } from '../../../blip/validateBlip'
