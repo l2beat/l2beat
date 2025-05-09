@@ -20,15 +20,15 @@ import { calculateStats } from '../utils/calculateStats'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
-export interface LivenessAggregatingIndexer2Deps
+export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   projects: TrackedTxProject[]
 }
 
-export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
-  constructor(private readonly $: LivenessAggregatingIndexer2Deps) {
-    super({ ...$, name: 'liveness_aggregating2' })
+export class LivenessAggregatingIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: LivenessAggregatingIndexerDeps) {
+    super({ ...$, name: 'liveness_aggregating' })
   }
 
   override async update(

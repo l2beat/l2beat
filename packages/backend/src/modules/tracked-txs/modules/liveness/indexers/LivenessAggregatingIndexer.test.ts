@@ -11,7 +11,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
-import { LivenessAggregatingIndexer2 } from './LivenessAggregatingIndexer2'
+import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 
 const NOW = UnixTime.now()
 
@@ -57,8 +57,8 @@ const MOCK_LIVENESS: LivenessRecord[] = [
   }),
 ]
 
-describe(LivenessAggregatingIndexer2.name, () => {
-  describe(LivenessAggregatingIndexer2.prototype.update.name, () => {
+describe(LivenessAggregatingIndexer.name, () => {
+  describe(LivenessAggregatingIndexer.prototype.update.name, () => {
     it('use correct time range when backfilling, on midnight', async () => {
       const indexer = createIndexer({ tag: 'update-backfill-midnight' })
       const mockGenerateLiveness = mockFn().resolvesTo([])
@@ -222,7 +222,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
     })
   })
 
-  describe(LivenessAggregatingIndexer2.prototype.invalidate.name, () => {
+  describe(LivenessAggregatingIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeigh and not delete data', async () => {
       const livenessRepositoryMock = mockObject<Database['liveness']>({
         deleteAll: mockFn().resolvesTo(1),
@@ -243,7 +243,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
     })
   })
 
-  describe(LivenessAggregatingIndexer2.prototype.generateLiveness.name, () => {
+  describe(LivenessAggregatingIndexer.prototype.generateLiveness.name, () => {
     it('should generate aggregated liveness', async () => {
       const mockLivenessRepository = mockObject<Database['liveness']>({
         getRecordsInRangeWithLatestBefore: mockFn().resolvesTo(MOCK_LIVENESS),
@@ -286,7 +286,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
     })
   })
 
-  describe(LivenessAggregatingIndexer2.prototype.aggregateRecords.name, () => {
+  describe(LivenessAggregatingIndexer.prototype.aggregateRecords.name, () => {
     it('should aggregate records', async () => {
       const indexer = createIndexer({ tag: 'aggregate-records' })
 
@@ -418,7 +418,7 @@ function createIndexer(options: {
   indexerService?: IndexerService
   minHeight?: number
 }) {
-  return new LivenessAggregatingIndexer2({
+  return new LivenessAggregatingIndexer({
     tags: { tag: options.tag },
     indexerService: options.indexerService ?? mockObject<IndexerService>(),
     logger: Logger.SILENT,
