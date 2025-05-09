@@ -11,12 +11,12 @@ import {
   modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import type { Analysis } from '@l2beat/discovery/dist/discovery/analysis/AddressAnalyzer'
+import type { Analysis } from '@l2beat/discovery'
 import {
   type AllProviderStats,
   ProviderMeasurement,
   type ProviderStats,
-} from '@l2beat/discovery/dist/discovery/provider/Stats'
+} from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import { isError } from 'lodash'
 import { Gauge } from 'prom-client'
