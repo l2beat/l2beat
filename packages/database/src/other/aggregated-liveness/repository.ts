@@ -4,7 +4,7 @@ import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLivenessRecord, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
 
-export class AggregatedLiveness2Repository extends BaseRepository {
+export class AggregatedLivenessRepository extends BaseRepository {
   async upsertMany(records: AggregatedLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 

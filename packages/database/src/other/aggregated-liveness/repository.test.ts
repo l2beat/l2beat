@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import type { AggregatedLivenessRecord } from './entity'
-import { AggregatedLiveness2Repository } from './repository'
+import { AggregatedLivenessRepository } from './repository'
 
-describeDatabase(AggregatedLiveness2Repository.name, (db) => {
-  const repository = db.aggregatedLiveness2
+describeDatabase(AggregatedLivenessRepository.name, (db) => {
+  const repository = db.aggregatedLiveness
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -86,7 +86,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     await repository.upsertMany(DATA)
   })
 
-  describe(AggregatedLiveness2Repository.prototype.upsertMany.name, () => {
+  describe(AggregatedLivenessRepository.prototype.upsertMany.name, () => {
     it('add new and update existing', async () => {
       const newRows = [
         // to update
@@ -126,7 +126,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     })
   })
 
-  describe(AggregatedLiveness2Repository.prototype.getAll.name, () => {
+  describe(AggregatedLivenessRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
@@ -138,7 +138,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     })
   })
 
-  describe(AggregatedLiveness2Repository.prototype.getAggregatesByTimeRange
+  describe(AggregatedLivenessRepository.prototype.getAggregatesByTimeRange
     .name, () => {
     it('returns aggregates with correctly calculated weighted averages for a given time range, grouped by project and subtype', async () => {
       const results = await repository.getAggregatesByTimeRange([
@@ -207,7 +207,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     })
   })
 
-  describe(AggregatedLiveness2Repository.prototype.deleteAll.name, () => {
+  describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
 

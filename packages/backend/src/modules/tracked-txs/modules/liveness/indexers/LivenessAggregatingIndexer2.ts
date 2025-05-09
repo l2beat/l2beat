@@ -1,5 +1,5 @@
 import type { Database } from '@l2beat/database'
-import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import {
   ProjectId,
   type TrackedTxsConfigSubtype,
@@ -45,7 +45,7 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
 
     const updatedLivenessRecords = await this.generateLiveness(from, to)
 
-    await this.$.db.aggregatedLiveness2.upsertMany(updatedLivenessRecords)
+    await this.$.db.aggregatedLiveness.upsertMany(updatedLivenessRecords)
     return to
   }
 

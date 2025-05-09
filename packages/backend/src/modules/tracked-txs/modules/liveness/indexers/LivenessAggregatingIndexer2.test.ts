@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, LivenessRecord } from '@l2beat/database'
-import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import {
   ProjectId,
@@ -186,7 +186,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
 
     it('should save data to db', async () => {
       const mockAggregatedLivenessRepository = mockObject<
-        Database['aggregatedLiveness2']
+        Database['aggregatedLiveness']
       >({
         upsertMany: mockFn().resolvesTo(1),
       })
@@ -414,7 +414,7 @@ describe(LivenessAggregatingIndexer2.name, () => {
 function createIndexer(options: {
   tag: string
   livenessRepository?: Database['liveness']
-  aggregatedLivenessRepository?: Database['aggregatedLiveness2']
+  aggregatedLivenessRepository?: Database['aggregatedLiveness']
   indexerService?: IndexerService
   minHeight?: number
 }) {
@@ -427,9 +427,9 @@ function createIndexer(options: {
     db: mockObject<Database>({
       liveness:
         options.livenessRepository ?? mockObject<Database['liveness']>(),
-      aggregatedLiveness2:
+      aggregatedLiveness:
         options.aggregatedLivenessRepository ??
-        mockObject<Database['aggregatedLiveness2']>({
+        mockObject<Database['aggregatedLiveness']>({
           upsertMany: mockFn().resolvesTo(1),
         }),
     }),
