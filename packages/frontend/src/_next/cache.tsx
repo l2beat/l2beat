@@ -1,3 +1,5 @@
+import { env } from '~/env'
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Callback = (...args: any[]) => Promise<any>
 
@@ -8,6 +10,9 @@ export function unstable_cache<T extends Callback>(
   keyParts?: string[],
   __?: unknown,
 ): T {
+  if (env.REWRITE_DISABLE_CACHE) {
+    return cb
+  }
   return ((...args: Parameters<T>) => {
     const key = JSON.stringify(`${keyParts?.join(':')}:${JSON.stringify(args)}`)
 

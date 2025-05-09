@@ -20,6 +20,7 @@
         "NEXT_RUNTIME",
         "PORT",
         "REWRITE",
+        "REWRITE_DISABLE_CACHE",
         "SENTRY_AUTH_TOKEN",
         "SKIP_ENV_VALIDATION",
         "TINIFY_API_KEY",
