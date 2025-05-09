@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'fs'
+import { existsSync, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import {
   type ConfigReader,
@@ -25,6 +25,15 @@ export function getCode(
     project,
     address,
   )
+
+  const allFilesExist = codePaths.every(({ path }) => existsSync(path))
+
+  if (!allFilesExist) {
+    return {
+      entryName,
+      sources: [],
+    }
+  }
 
   return {
     entryName,
@@ -64,9 +73,14 @@ export function getAllCode(
         project,
         fullAddress,
       )
+
+      const availableCodePaths = codePaths.filter(({ path }) =>
+        existsSync(path),
+      )
+
       result[fullAddress] = {
         entryName,
-        sources: codePaths
+        sources: availableCodePaths
           .map(({ name: fileName, path }) => ({
             name: fileName,
             code: readFileSync(path, 'utf-8'),
