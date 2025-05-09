@@ -1,5 +1,5 @@
 import type { Database } from '@l2beat/database'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 import {
   ProjectId,
   type TrackedTxsConfigSubtype,
@@ -58,8 +58,8 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
   async generateLiveness(
     from: UnixTime,
     to: UnixTime,
-  ): Promise<AggregatedLiveness2Record[]> {
-    const aggregatedRecords: (AggregatedLiveness2Record | undefined)[] = []
+  ): Promise<AggregatedLivenessRecord[]> {
+    const aggregatedRecords: (AggregatedLivenessRecord | undefined)[] = []
 
     const configurations = await this.$.indexerService.getSavedConfigurations(
       'tracked_txs_indexer',
@@ -143,7 +143,7 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
     subtype: TrackedTxsConfigSubtype,
     livenessRecords: LivenessRecordWithConfig[],
     timestamp: UnixTime,
-  ): AggregatedLiveness2Record | undefined {
+  ): AggregatedLivenessRecord | undefined {
     // here we have few records before timestamp as we take one for each configuration
     // so here we need to filter out all and leave only the latest before timestamp
     const timeRangeStartIndex = livenessRecords.findIndex(

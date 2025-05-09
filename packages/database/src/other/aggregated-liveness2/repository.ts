@@ -1,17 +1,17 @@
 import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
-import { type AggregatedLiveness2Record, toRecord, toRow } from './entity'
-import { selectAggregatedLiveness2 } from './select'
+import { type AggregatedLivenessRecord, toRecord, toRow } from './entity'
+import { selectAggregatedLiveness } from './select'
 
 export class AggregatedLiveness2Repository extends BaseRepository {
-  async upsertMany(records: AggregatedLiveness2Record[]): Promise<number> {
+  async upsertMany(records: AggregatedLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('AggregatedLiveness2')
+        .insertInto('AggregatedLiveness')
         .values(batch)
         .onConflict((cb) =>
           cb
@@ -30,15 +30,15 @@ export class AggregatedLiveness2Repository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('AggregatedLiveness2')
+      .deleteFrom('AggregatedLiveness')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
-  async getAll(): Promise<AggregatedLiveness2Record[]> {
+  async getAll(): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('AggregatedLiveness2')
-      .select(selectAggregatedLiveness2)
+      .selectFrom('AggregatedLiveness')
+      .select(selectAggregatedLiveness)
       .execute()
     return rows.map(toRecord)
   }
@@ -46,12 +46,12 @@ export class AggregatedLiveness2Repository extends BaseRepository {
   async getAggregatesByTimeRange(
     range: [UnixTime | null, UnixTime],
   ): Promise<
-    Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
   > {
     const [from, to] = range
 
     let query = this.db
-      .selectFrom('AggregatedLiveness2')
+      .selectFrom('AggregatedLiveness')
       .select([
         'projectId',
         'subtype',

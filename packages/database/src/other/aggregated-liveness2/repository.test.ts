@@ -1,8 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { AggregatedLivenessRepository } from '../aggregated-liveness/repository'
-import type { AggregatedLiveness2Record } from './entity'
+import type { AggregatedLivenessRecord } from './entity'
 import { AggregatedLiveness2Repository } from './repository'
 
 describeDatabase(AggregatedLiveness2Repository.name, (db) => {
@@ -12,7 +11,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
   const PROJECT_B = ProjectId('project-b')
 
   const START = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const DATA: AggregatedLiveness2Record[] = [
+  const DATA: AggregatedLivenessRecord[] = [
     // project A - batchSubmissions
     {
       projectId: PROJECT_A,
@@ -79,7 +78,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       timestamp: START - 2 * UnixTime.DAY,
       numberOfRecords: 2,
     },
-  ] as const satisfies AggregatedLiveness2Record[]
+  ] as const satisfies AggregatedLivenessRecord[]
 
   beforeEach(async function () {
     this.timeout(10000)
@@ -110,7 +109,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           timestamp: START - 3 * UnixTime.DAY,
           numberOfRecords: 5,
         },
-      ] as const satisfies AggregatedLiveness2Record[]
+      ] as const satisfies AggregatedLivenessRecord[]
 
       await repository.upsertMany(newRows)
       const results = await repository.getAll()
@@ -208,7 +207,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     })
   })
 
-  describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
+  describe(AggregatedLiveness2Repository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
 

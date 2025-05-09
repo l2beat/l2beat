@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, LivenessRecord } from '@l2beat/database'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import {
   ProjectId,
@@ -194,14 +194,14 @@ describe(LivenessAggregatingIndexer2.name, () => {
         tag: 'update-save-to-db',
         aggregatedLivenessRepository: mockAggregatedLivenessRepository,
       })
-      const mockAggregatedLiveness: AggregatedLiveness2Record[] = [
-        mockObject<AggregatedLiveness2Record>({
+      const mockAggregatedLiveness: AggregatedLivenessRecord[] = [
+        mockObject<AggregatedLivenessRecord>({
           min: 10,
           avg: 20,
           max: 30,
           timestamp: NOW,
         }),
-        mockObject<AggregatedLiveness2Record>({
+        mockObject<AggregatedLivenessRecord>({
           min: 20,
           avg: 30,
           max: 40,

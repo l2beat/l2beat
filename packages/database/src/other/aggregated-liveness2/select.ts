@@ -1,6 +1,6 @@
-import type { AggregatedLiveness2 } from '../../kysely/generated/types'
+import type { AggregatedLiveness } from '../../kysely/generated/types'
 
-export const selectAggregatedLiveness2 = [
+export const selectAggregatedLiveness = [
   'timestamp',
   'projectId',
   'subtype',
@@ -8,4 +8,4 @@ export const selectAggregatedLiveness2 = [
   'avg',
   'max',
   'numberOfRecords',
-] as const satisfies (keyof AggregatedLiveness2)[]
+] as const satisfies (keyof AggregatedLiveness)[]
