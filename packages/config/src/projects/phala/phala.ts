@@ -144,18 +144,6 @@ export const phala: ScalingProject = {
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
           sinceTimestamp: UnixTime(1734388655),
-        },
-      },
-      {
-        uses: [
-          { type: 'liveness', subtype: 'batchSubmissions' },
-          { type: 'l2costs', subtype: 'batchSubmissions' },
-        ],
-        query: {
-          formula: 'transfer',
-          from: sequencerAddress,
-          to: sequencerInbox,
-          sinceTimestamp: UnixTime(1734388655),
           untilTimestamp: UnixTime(1746606971),
         },
       },
