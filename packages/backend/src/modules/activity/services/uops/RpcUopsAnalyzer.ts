@@ -1,3 +1,4 @@
+import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import {
   EIP712_methods,
   ERC20ROUTER_methods,
@@ -11,8 +12,7 @@ import {
   isErc4337,
   isGnosisSafe,
   isMulticallv3,
-} from '@l2beat/shared'
-import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
+} from '@l2beat/shared/uops'
 import isArray from 'lodash/isArray'
 import sum from 'lodash/sum'
 import type { UopsAnalyzer } from './types'
