@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x56abde3df0f324e57d99b3857374b0b30e20a7d8
+
+# Diff at Fri, 09 May 2025 11:17:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b9a3516de49f42efd9d26f04918d74a8d92c6204 block: 29954366
+- current block number: 30000033
+
+## Description
+
+Config related
+
+## Watched changes
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 29954366 (main branch discovery), not current.
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0xbf1c451828d56226072770fb89846bb5ceda8951
 
 # Diff at Thu, 08 May 2025 09:54:54 GMT:
