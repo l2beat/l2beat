@@ -2,7 +2,7 @@ import type { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discover
 
 import type { Database } from '@l2beat/database'
 
-export class DiscoveryCache implements DiscoveryCacheInterface {
+export class DatabaseCache implements DiscoveryCacheInterface {
   constructor(private readonly db: Database) {}
 
   async get(key: string): Promise<string | undefined> {
