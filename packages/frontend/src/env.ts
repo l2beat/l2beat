@@ -41,6 +41,7 @@ const SERVER_CONFIG = {
   VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
+  REWRITE_DISABLE_CACHE: coerceBoolean.default('false'),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -92,6 +93,7 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
+    REWRITE_DISABLE_CACHE: process.env.REWRITE_DISABLE_CACHE,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
