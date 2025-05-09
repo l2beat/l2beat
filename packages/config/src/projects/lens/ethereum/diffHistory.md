@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xeb5f737fbe1bb575b19595a6b1d471ae9f805322
+
+# Diff at Fri, 09 May 2025 11:15:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b9a3516de49f42efd9d26f04918d74a8d92c6204 block: 22223308
+- current block number: 22445483
+
+## Description
+
+New Lens owner MS.
+
+## Watched changes
+
+```diff
+    contract LensZkEvmAdmin (0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) {
+    +++ description: None
+      values.owner:
+-        "0xca2938BdD6Bcf5860f7176fA092b0ac9510f09A3"
++        "0x4968A0E4b025eD7d095753E54058377969b41abC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Lens Multisig (0x4968A0E4b025eD7d095753E54058377969b41abC)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../lens/ethereum/.flat/Lens Multisig/Safe.sol     | 1088 ++++++++++++++++++++
+ .../ethereum/.flat/Lens Multisig/SafeProxy.p.sol   |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xf7abe7973875970361b76f33c7d230372f91933c
 
 # Diff at Tue, 29 Apr 2025 08:19:17 GMT:
