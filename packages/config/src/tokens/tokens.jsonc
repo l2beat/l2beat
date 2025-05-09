@@ -6675,6 +6675,12 @@
   ],
   "superseed": [
     {
+      "symbol": "SUPR",
+      "address": "0x6EA1fFcbD7F5D210dB07D9E773862B0512fA219B",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "USDC",
       "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
       "category": "stablecoin",
