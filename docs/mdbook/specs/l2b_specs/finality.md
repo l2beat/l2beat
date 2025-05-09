@@ -12,8 +12,8 @@
   - [OP stack (with fraud proofs)](#op-stack-with-fraud-proofs)
     - [Why this approach?](#why-this-approach-1)
     - [Example](#example-1)
-- [Scroll](#scroll)
-    - [How to calculate the time to withdrawal](#how-to-calculate-the-time-to-withdrawal)
+  - [Scroll](#scroll)
+    - [Time to withdrawal calculation](#time-to-withdrawal-calculation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -284,7 +284,7 @@ Let's take [this withdrawal](https://optimistic.etherscan.io/tx/0x762b6734f4aaf7
 
 i.e. 7 days, 58 mins and 12 seconds have passed between the withdrawal being initiated and the time when it was ready to be executed on L1.
 
-## Scroll
+### Scroll
 
 Scroll uses a ZK-rollup architecture with an asynchronous message bridge between L2 and L1.  
 Withdrawals (and every other L2→L1 message) follow the life-cycle illustrated by
@@ -308,7 +308,7 @@ event FinalizeBatch(
 );
 ```
 
-#### How to calculate the time to withdrawal
+#### Time to withdrawal calculation
 
 1. **Track initiation on L2**  
    Listen for `AppendMessage` on the L2 Message Queue, store `messageHash`
