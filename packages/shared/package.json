@@ -7,12 +7,12 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "default": "./build/index.js",
-      "types": "./build/index.d.ts"
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
     },
     "./frontend": {
-      "default": "./build/index-fe.js",
-      "types": "./build/index-fe.d.ts"
+      "types": "./build/index-fe.d.ts",
+      "default": "./build/index-fe.js"
     }
   },
 

@@ -9,12 +9,12 @@
   },
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./frontend": {
-      "default": "./dist/index-fe.js",
-      "types": "./dist/index-fe.d.ts"
+      "types": "./dist/index-fe.d.ts",
+      "default": "./dist/index-fe.js"
     }
   },
   "scripts": {
