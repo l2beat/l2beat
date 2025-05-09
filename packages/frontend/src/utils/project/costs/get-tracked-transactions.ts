@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import type { TrackedTxCostsConfig } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxCostsConfig } from '@l2beat/shared/frontend'
 
 export type TrackedTransactionsByType = {
   batchSubmissions: TrackedTransaction[] | undefined
