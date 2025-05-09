@@ -384,6 +384,39 @@
     },
     {
       "mode": "auto",
+      "id": "omni-cDAI",
+      "priceId": "cdai",
+      "symbol": "cDAI",
+      "name": "Compound Dai",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9281/large/cDAI.png?1696509390",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+            "chain": "ethereum",
+            "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+            "decimals": 8,
+            "sinceTimestamp": 1596501090
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+            "chain": "ethereum",
+            "escrowAddress": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+            "decimals": 8,
+            "sinceTimestamp": 1574471013
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-CEL",
       "priceId": "celsius-degree-token",
       "symbol": "CEL",
@@ -523,12 +556,26 @@
       "name": "Dai Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-        "decimals": 18,
-        "sinceTimestamp": 1596501090
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+            "decimals": 18,
+            "sinceTimestamp": 1596501090
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+            "decimals": 18,
+            "sinceTimestamp": 1574121600
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -1606,12 +1653,26 @@
       "name": "Savings Dai",
       "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "chain": "ethereum",
-        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-        "decimals": 18,
-        "sinceTimestamp": 1696982400
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+            "chain": "ethereum",
+            "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+            "decimals": 18,
+            "sinceTimestamp": 1696982400
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+            "chain": "ethereum",
+            "escrowAddress": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+            "decimals": 18,
+            "sinceTimestamp": 1696982400
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",
