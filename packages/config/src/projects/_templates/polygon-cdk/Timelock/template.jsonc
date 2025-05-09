@@ -22,12 +22,12 @@
           "type": "interact",
           "delay": "{{getMinDelay}}",
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay"
+          "condition": "(no delay if in emergency state)"
         },
         {
           "type": "act",
           "delay": "{{getMinDelay}}",
-          "condition": "there is no emergency state, in which case there would be no delay"
+          "condition": "(no delay if in emergency state)"
         }
       ]
     },

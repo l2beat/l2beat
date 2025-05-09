@@ -11,7 +11,7 @@
         {
           "type": "interact",
           "description": "act as an override that pauses the SuperchainConfigLocal.",
-          "condition": "the (global) {{superchainConfig}} is paused."
+          "condition": "if the (global) {{superchainConfig}} is paused."
         }
       ]
     }
