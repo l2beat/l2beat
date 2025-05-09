@@ -43,19 +43,20 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
 }
 
 const READONLY_PANELS: Record<
-  Exclude<PanelId, 'terminal' | 'code'>,
+  Exclude<PanelId, 'terminal'>,
   () => JSX.Element
 > = {
   list: ListPanel,
   values: ValuesPanel,
   nodes: NodesPanel,
   preview: PreviewPanel,
+  code: CodePanel,
 }
 
 function Panel(props: { kind: PanelId }) {
   const Component = isReadOnly
     ? props.kind in READONLY_PANELS
-      ? READONLY_PANELS[props.kind as Exclude<PanelId, 'terminal' | 'code'>]
+      ? READONLY_PANELS[props.kind as Exclude<PanelId, 'terminal'>]
       : ListPanel
     : PANELS[props.kind]
   return <Component />

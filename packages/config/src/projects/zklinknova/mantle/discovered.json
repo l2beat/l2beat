@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 79197162,
-  "configHash": "0xd9ba90e82a18ef1d9148db794da8d347b673b79a3af2610ce734b421a3cfae2c",
+  "blockNumber": 79284086,
+  "configHash": "0x925ebcec61032ba2d3ff876c16020d68d17c45516cb95a1fe639d649fa658a8a",
   "entries": [
     {
       "name": "MantleOwner",

@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 22297586,
-  "configHash": "0xdf72d94d426ff9ca7c0b18bd1d4c366e00b753998a9fe2fc093912ca791448d4",
+  "configHash": "0x5ada28ae8c5d3385178e8bfde666a1d8d704ed1e3b0c153b94fcb099e8a22fe0",
   "entries": [
     {
       "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",

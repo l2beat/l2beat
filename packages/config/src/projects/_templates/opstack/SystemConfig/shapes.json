@@ -124,5 +124,11 @@
     "address": "0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D",
     "chain": "ethereum",
     "blockNumber": 22395854
+  },
+  "SystemConfig_v1_12_0_zircuit_2": {
+    "hash": "0x889638b8fe1fe5acdc9fc63605747e530d07ef7a0e81c151b0e3f546c24adef9",
+    "address": "0x795277B6aD8778E27aa70813157134cfC4a4D446",
+    "chain": "ethereum",
+    "blockNumber": 22438012
   }
 }

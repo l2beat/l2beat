@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22397530,
-  "configHash": "0x86a4e3781b6f3b508960beecd860ad07815fb04fda4fec0c157ce004514bca87",
+  "blockNumber": 22437961,
+  "configHash": "0xc6bd1557718c613e7ddae4bb901df4b92ef2dd43faaa642799a484147a433d01",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -178,7 +178,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -220,7 +220,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x252e9d0f362a44fa51fb05244965a86afa0b91eaa6a06b3aee55ead971f371a6",
+        "getRoot": "0x3a6a6c4024d6975c5835242a48308905e4a8775b274bb21fc3c39e695fd4cc7b",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -436,15 +436,15 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xf29f6880761b6ced5b866740405613e4d864fc0e09e3c01f3a60b34cd1c8f141",
+        "getRollupExitRoot": "0x6f0c80968a1fe7370088f8db837b78b860b073c941755d2f213ffabfdfd1af72",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1746204683,
+        "lastAggregationTimestamp": 1746696335,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
-        "rollupCount": 19,
+        "rollupCount": 20,
         "rollupsDataV2": [
           {
             "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -616,6 +616,15 @@
             "rollupTypeID": 10,
             "rollupVerifierType": 1,
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          },
+          {
+            "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+            "chainID": 747474,
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupTypeID": 10,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
         "rollupTypeCount": 10,
@@ -701,8 +710,8 @@
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
-        "totalSequencedBatches": 720393,
-        "totalVerifiedBatches": 719821,
+        "totalSequencedBatches": 724890,
+        "totalVerifiedBatches": 724297,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -767,8 +776,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 57870,
-        "getRoot": "0xbd90f05a830d59bcd5388e9696933e7ec2b9c4c5813c8625bda679ff22ee7e38",
+        "depositCount": 58040,
+        "getRoot": "0x7c8f53b31aba082b58fd85808339eb64dcaaf0aba3d233cdc5ecd32ce6d52b8a",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -856,7 +865,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 15457819,
-  "configHash": "0x99373713f9416963b4b3a566822d63924904a3ef76a977af16065f3338435c54",
+  "configHash": "0x00920e75ab0425cd6c4c4e5274f52202d06b321ee4cf4733438cf65e47fe8e09",
   "entries": [
     {
       "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
@@ -1382,5 +1382,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "permissionsConfigHash": "0xe957e09c2d0e4fd2c655feda62c3c9a3f3258bae9a44796048e4624ba35d08d6"
+  "permissionsConfigHash": "0x4b8f8d53bfaa84ecc93f039a0480538e84e779b3f26e246a5ded470465be2ae7"
 }

@@ -23,12 +23,22 @@ export class CliLogger {
     ? process.stdout.getWindowSize()[0]
     : 80
 
+  constructor(private readonly quiet: boolean = false) {}
+
   logLine(input: string) {
+    if (this.quiet) {
+      return
+    }
+
     this.logs.push(input + '\n')
     this.redraw()
   }
 
   updateStatus(id: StatusLineHandle | string, content: string) {
+    if (this.quiet) {
+      return
+    }
+
     this.statusLines.set(id, content + '\n')
     this.redraw()
   }

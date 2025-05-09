@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xeb32fe88da88f5182074cc408e6581de9e4a0b5d
+
+# Diff at Thu, 08 May 2025 09:52:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 26809248
+- current block number: 29954282
+
+## Description
+
+celestia
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x5e0c4055ad935eb6917671aec0746bc30dd94a83
 
 # Diff at Tue, 29 Apr 2025 08:19:23 GMT:

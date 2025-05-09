@@ -2,7 +2,7 @@
   "name": "edgeless",
   "chain": "ethereum",
   "blockNumber": 22231350,
-  "configHash": "0x7ef51e5ed0bc966f2b150ec3b21baf1b7764abbdae04c9ddfb05fcdf619c29b9",
+  "configHash": "0xdfacb4cae228be3f56b4009516adb3354e3ed84e27c5e3154965f005614e856b",
   "entries": [
     {
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",

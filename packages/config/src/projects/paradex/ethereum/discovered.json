@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 22397521,
-  "configHash": "0x4764d7be7613098282c221984e487129fe8367953d7269ddc0de45eb41e6aec8",
+  "configHash": "0x5bc13835c71750fca2490a0bf5ee3a3092cb5fb17601436fe36e505b51660bf1",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

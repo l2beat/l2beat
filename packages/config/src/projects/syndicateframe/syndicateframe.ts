@@ -13,7 +13,10 @@ export const syndicateframe: ScalingProject = opStackL3({
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Syndicate Frame Chain',
     shortName: 'Frame Chain',

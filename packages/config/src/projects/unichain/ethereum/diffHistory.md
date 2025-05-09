@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xa6836a6dcb85469a1d008f44ca48d2211524d5fb
+
+# Diff at Thu, 08 May 2025 10:05:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22397542
+- current block number: 22437749
+
+## Description
+
+OP stack DeputyPauser upgrade (see op mainnet for more info).
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x2F12d621a16e2d3285929C9996f478508951dFe4) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x56ebb9eaE4f33ceaED3672446E3812D77F8a8A2c"
++        "0x57a3B42698DC1e4Fb905c9ab970154e178296991"
+      values.gameImpls.3:
+-        "0x67d59AC1166bA17612BE0Edf275187E38Cbf9B99"
++        "0x0000000000000000000000000000000000000000"
+      values.gameImpls.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x485272c0703020e1354328A1aBa3ca767997BEd3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x56ebb9eaE4f33ceaED3672446E3812D77F8a8A2c)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x67d59AC1166bA17612BE0Edf275187E38Cbf9B99)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x485272c0703020e1354328A1aBa3ca767997BEd3)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x57a3B42698DC1e4Fb905c9ab970154e178296991)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../unichain/ethereum/.flat/DeputyPauseModule.sol  | 1338 ++++++++++++++++++++
+ 1 file changed, 1338 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397542 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (0x56ebb9eaE4f33ceaED3672446E3812D77F8a8A2c) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0x67d59AC1166bA17612BE0Edf275187E38Cbf9B99) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6:
++        "v1.6.0 (cannon64)"
+    }
+```
+
 Generated with discovered.json: 0x4f7c8e61e7c39bb792d22395311f41690ae2060a
 
 # Diff at Tue, 29 Apr 2025 08:19:29 GMT:

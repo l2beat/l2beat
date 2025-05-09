@@ -15,6 +15,7 @@ export async function fetchFlatSources(
   const httpClient = new HttpClient()
   const response = await httpClient.fetchRaw(`${backendUrl}${ENDPOINT}`, {
     compress: true,
+    timeout: 0,
   })
 
   const progress = new ResponseProgress(response)

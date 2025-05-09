@@ -2,7 +2,7 @@
   "name": "ebichain",
   "chain": "ethereum",
   "blockNumber": 22046061,
-  "configHash": "0x23320156508f90997e61ee2bad7badf0eaaa9a89dcde0176f85122831692a2de",
+  "configHash": "0x1a7b5bd50eb8469364e3ea444099a5c8cb54d428c8e581f709a2ea9814222d06",
   "entries": [
     {
       "name": "SequencerInbox",

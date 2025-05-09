@@ -52,5 +52,11 @@
     "address": "0xD2ed924DC094abBE7ea47D872C2a8625A803c2c8",
     "chain": "arbitrum",
     "blockNumber": 322488866
+  },
+  "Inbox_kinto": {
+    "hash": "0xa1b21b35992f15b6195b22f1c21b8e944919e03edcdc8342a98fcee0ef3f44c0",
+    "address": "0x296339ED40ec80746b239b04dE943bb8619784b7",
+    "chain": "ethereum",
+    "blockNumber": 22437620
   }
 }

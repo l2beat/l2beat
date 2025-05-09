@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x09bbd976785a80b1e28933b3515ca233b2b56126
+
+# Diff at Thu, 08 May 2025 08:49:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22194733
+- current block number: 22437738
+
+## Description
+
+OP stack DeputyPauser upgrade (see op mainnet for more info).
+
+## Watched changes
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+## Source code changes
+
+```diff
+.../metal/ethereum/.flat/DeputyPauseModule.sol     | 1338 ++++++++++++++++++++
+ 1 file changed, 1338 insertions(+)
+```
+
 Generated with discovered.json: 0x34d80cd4d33fae4d22df402c3be5ac9a2814e35f
 
 # Diff at Tue, 29 Apr 2025 08:19:06 GMT:
