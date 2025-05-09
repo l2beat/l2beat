@@ -1,17 +1,10 @@
-import {
-  type ProjectId,
-  type TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLiveness2Record, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness2 } from './select'
 
 export class AggregatedLiveness2Repository extends BaseRepository {
-  async upsert(record: AggregatedLiveness2Record): Promise<void> {
-    await this.upsertMany([record])
-  }
-
   async upsertMany(records: AggregatedLiveness2Record[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -50,33 +43,39 @@ export class AggregatedLiveness2Repository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectIds(
-    projectIds: ProjectId[],
-  ): Promise<AggregatedLiveness2Record[]> {
-    if (projectIds.length === 0) return []
-    const rows = await this.db
-      .selectFrom('AggregatedLiveness2')
-      .select(selectAggregatedLiveness2)
-      .where('projectId', 'in', projectIds)
-      .execute()
-    return rows.map(toRecord)
-  }
-
-  async getByProjectIdSubtypeAndRange(
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
-    range: [UnixTime, UnixTime],
-  ): Promise<AggregatedLiveness2Record[]> {
+  async getAggregatesByTimeRange(
+    range: [UnixTime | null, UnixTime],
+  ): Promise<
+    Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+  > {
     const [from, to] = range
-    const rows = await this.db
+
+    let query = this.db
       .selectFrom('AggregatedLiveness2')
-      .select(selectAggregatedLiveness2)
-      .where('projectId', '=', projectId)
-      .where('subtype', '=', subtype)
-      .where('timestamp', '>=', UnixTime.toDate(from))
+      .select([
+        'projectId',
+        'subtype',
+        (eb) => eb.fn.min('min').as('min'),
+        (eb) =>
+          sql<number>`
+            SUM(${eb.ref('avg')} * ${eb.ref('numberOfRecords')})
+            / SUM(${eb.ref('numberOfRecords')})
+          `.as('avg'),
+        (eb) => eb.fn.max('max').as('max'),
+      ])
       .where('timestamp', '<=', UnixTime.toDate(to))
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
+      .groupBy(['projectId', 'subtype'])
+
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      ...row,
+      subtype: row.subtype as TrackedTxsConfigSubtype,
+      avg: Number(row.avg),
+    }))
   }
 }
