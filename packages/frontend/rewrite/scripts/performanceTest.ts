@@ -1,6 +1,7 @@
 import { writeFileSync } from 'fs'
 
 const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
+// const BASE_URL = 'http://localhost:3000'
 const pages = [
   '/scaling/summary',
   '/scaling/risk',
@@ -18,6 +19,13 @@ const pages = [
   '/data-availability/risk',
   '/data-availability/throughput',
   '/zk-catalog',
+  '/about-us',
+  '/donate',
+  '/glossary',
+  '/faq',
+  '/governance',
+  '/governance/publications',
+  '/governance/publications/governance-review-50',
 ]
 
 const projectPages = {
@@ -65,8 +73,9 @@ const results: {
       size: string
     }
   >
-  projects: {
-    [key in keyof typeof projectPages]: {
+  projects: Record<
+    string,
+    {
       minDuration: {
         value: string
         page: string
@@ -86,7 +95,7 @@ const results: {
       }
       avgSize: string
     }
-  }
+  >
 } = {
   mainPages: {},
   projects: {},
@@ -137,7 +146,7 @@ async function main() {
     const avgSize =
       typeResult.reduce((sum, curr) => sum + curr.bytes, 0) / typeResult.length
 
-    results.projects[type as keyof typeof projectPages] = {
+    results.projects[type] = {
       minDuration: {
         value: formatDuration(minDuration.duration),
         page: minDuration.page,
