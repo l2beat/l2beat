@@ -85,7 +85,7 @@ export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
 export {
-  type ProviderStats,
+  ProviderStats,
   type AllProviderStats,
   ProviderMeasurement,
 } from './discovery/provider/Stats'
