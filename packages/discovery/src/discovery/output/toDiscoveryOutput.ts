@@ -5,7 +5,7 @@ import type {
   StructureOutput,
 } from './types'
 
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { colorize } from '../colorize/colorize'

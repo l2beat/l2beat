@@ -1,5 +1,5 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { zip } from 'lodash'
+import zip from 'lodash/zip'
 
 import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'

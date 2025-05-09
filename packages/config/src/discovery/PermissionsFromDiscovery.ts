@@ -9,7 +9,8 @@ import {
   formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { groupBy, sum } from 'lodash'
+import groupBy from 'lodash/groupBy'
+import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {

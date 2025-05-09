@@ -13,7 +13,8 @@ import {
   isMulticallv3,
 } from '@l2beat/shared'
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
-import { isArray, sum } from 'lodash'
+import isArray from 'lodash/isArray'
+import sum from 'lodash/sum'
 import type { UopsAnalyzer } from './types'
 
 export class RpcUopsAnalyzer implements UopsAnalyzer {

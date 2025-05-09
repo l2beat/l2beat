@@ -5,7 +5,7 @@ import {
   UnixTime,
   slidingWindow,
 } from '@l2beat/shared-pure'
-import { chunk } from 'lodash'
+import chunk from 'lodash/chunk'
 
 import type { Database } from '@l2beat/database'
 import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'

@@ -1,4 +1,4 @@
-import { sum } from 'lodash'
+import sum from 'lodash/sum'
 
 export class RunningStatistics {
   private count = 0

@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
 import { getTrackedTxsProjects } from '../../utils/get-tracked-txs-projects'
 import type { LatestCostsResponse } from './types'

@@ -2,7 +2,7 @@
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import Image from 'next/image'
 import { useMemo, useRef, useState } from 'react'
 import {

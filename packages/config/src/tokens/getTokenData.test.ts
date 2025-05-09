@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { assert, ChainId } from '@l2beat/shared-pure'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { chains } from '../processing/chains'
 import type { GeneratedToken } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'

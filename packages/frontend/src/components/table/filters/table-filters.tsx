@@ -1,4 +1,4 @@
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import { cn } from '~/utils/cn'
 import type { FilterableEntry, FilterableValueId } from './filterable-value'
 import { TableFilter } from './table-filter'

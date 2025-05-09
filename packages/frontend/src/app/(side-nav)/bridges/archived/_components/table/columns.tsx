@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'

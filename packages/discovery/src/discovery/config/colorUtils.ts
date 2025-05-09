@@ -1,5 +1,5 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import { type ColorConfig, ColorContract } from './ColorConfig'
 
 export type ColorContractOverrides = ColorContract & {

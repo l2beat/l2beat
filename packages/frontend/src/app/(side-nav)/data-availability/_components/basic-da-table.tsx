@@ -6,7 +6,7 @@ import type {
   Table as TanstackTable,
 } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import { range } from 'lodash'
+import range from 'lodash/range'
 import type { CSSProperties } from 'react'
 import React from 'react'
 import { getBasicTableGroupParams } from '~/components/table/basic-table'
