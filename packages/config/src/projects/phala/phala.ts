@@ -146,6 +146,47 @@ export const phala: ScalingProject = {
           sinceTimestamp: UnixTime(1734388655),
         },
       },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: sequencerAddress,
+          to: sequencerInbox,
+          sinceTimestamp: UnixTime(1734388655),
+          untilTimestamp: UnixTime(1746606971),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: l2OutputOracle.address,
+          selector: '0x59c3e00a', // non-optimistic mode
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+          sinceTimestamp: UnixTime(1746606971),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: l2OutputOracle.address,
+          selector: '0x9aaab648', // optimistic mode
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
+          sinceTimestamp: UnixTime(1746606971),
+        },
+      },
     ],
   },
   dataAvailability: {
