@@ -11,6 +11,7 @@
     "rewrite:og-images": "tsx --tsconfig=rewrite/tsconfig.json rewrite/scripts/opengraph-images/index.ts",
     "rewrite:tinify": "tsx rewrite/scripts/tinify",
     "rewrite:new-assets": "pnpm rewrite:copy-assets && pnpm rewrite:og-images && pnpm rewrite:tinify",
+    "benchmark": "node -r esbuild-register rewrite/scripts/benchmark.ts",
     "dev": "next dev --turbopack",
     "dev:no-turbo": "next dev",
     "dev:mock": "MOCK=true pnpm dev",
