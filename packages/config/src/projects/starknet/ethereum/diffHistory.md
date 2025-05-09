@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x7adee4e54e197d1cbd8865a493957168cf4b0115
+
+# Diff at Fri, 09 May 2025 11:13:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b9a3516de49f42efd9d26f04918d74a8d92c6204 block: 22431482
+- current block number: 22445542
+
+## Description
+
+MS member changes, permissions in bridge revoked.
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      values.$members.15:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.10:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.9:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.8:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.7:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.6:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.5:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.multisigThreshold:
+-        "9 of 16 (56%)"
++        "9 of 12 (75%)"
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_ADMIN.members.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_ADMIN.members.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      values.$members.10:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
+    }
+```
+
 Generated with discovered.json: 0xf2aca59d209ec7a3a3033b1ded974e0972eaf1e3
 
 # Diff at Wed, 07 May 2025 11:31:26 GMT:
