@@ -23,6 +23,8 @@ import {
   formatPermissionDescription,
   isMultisigLike,
 } from './utils'
+import { chain } from 'lodash'
+import { permission } from 'process'
 
 export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
@@ -57,6 +59,54 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ) {
+    const totalViaDelay = (p: ReceivedPermission) =>
+      (p.delay ?? 0) + sum((p.via ?? []).map((v) => v.delay ?? 0))
+
+    const grouped = chain(contractOrEoa.receivedPermissions ?? [])
+      .filter((p) => p.permission === 'upgrade')
+      .groupBy((p) => p.from)
+      .mapValues((permissions) => ({
+        from: permissions[0].from,
+        permissionsByDelay: groupBy(permissions, (p) => totalViaDelay(p)),
+      }))
+      .values()
+      .groupBy((permission) =>
+        Object.keys(permission.permissionsByDelay).sort().join('►'),
+      )
+      .value()
+    console.dir(grouped, { depth: null })
+
+    const formatVia = (via: ResolvedPermissionPath[]) =>
+      `- acting via ${via.map((p) => this.projectDiscovery.formatViaPath(p)).join(', ')}`
+    // TODO: don't forget to show p.delay in addition to p.via
+
+    const verbatim = Object.entries(grouped)
+      .map(([delays, permissionsByDelay]) =>
+        [
+          '* Can upgrade with' + delays,
+          ...Object.values(permissionsByDelay).map(
+            (p) =>
+              '  * ' +
+              this.projectDiscovery.getContract(p.from).name +
+              Object.values(p.permissionsByDelay)
+                .map((permissions) =>
+                  permissions.map((p) => formatVia(p.via ?? [])).join(' - or - '),
+                )
+                .join('\n'),
+          ),
+        ].join('\n'),
+      )
+      .join('\n')
+    console.log(verbatim)
+
+    // return grouped.map((group) => `${[
+    //   formatPermissionDescription(description),
+    //   formatPermissionCondition(condition),
+    //   delay === '' ? '' : formatPermissionDelay(Number(delay)),
+    // ]
+    //   .filter((s) => s !== '')
+    //   .join(' ')
+    //   .trim()}.`
     return [
       ...(includeDirectPermissions
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
