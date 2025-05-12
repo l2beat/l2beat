@@ -1,3 +1,580 @@
+Generated with discovered.json: 0x0ea558f9625f8ec6317e3b218c522c700c885180
+
+# Diff at Mon, 12 May 2025 07:25:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4a373705dbec82410d264d404f2ff330f41666ef block: 22445542
+- current block number: 22465335
+
+## Description
+
+current permissions setup:
+
+main contract, ETHBridge, STRBridge have 2 proxyUpgraders each:
+1) Security Council
+2) 8d delayed SW Multisig
+
+SHARP has 0 delay MS upgrades
+
+SC minority: 
+1) Operator in main contract
+2) SECURITY_ADMIN: can remove withdrawal limit in ETH and STRKbridges and revoke/grant the SECURITY_AGENT role (can activate withdraw limit)
+
+the SECURITY_AGENT role is held by a SW Multisig and can enable the withdrawal limit.
+
+## Watched changes
+
+```diff
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.55:
+-        {"permission":"upgrade","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+      receivedPermissions.54:
+-        {"permission":"upgrade","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"}
+      receivedPermissions.53:
+-        {"permission":"upgrade","from":"0x0c5aE94f8939182F2D06097025324D1E537d5B60"}
+      receivedPermissions.52:
+-        {"permission":"upgrade","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","delay":259200}
+      receivedPermissions.51:
+-        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"disable the withdrawal limit."}
+      receivedPermissions.50:
+-        {"permission":"interact","from":"0x0c5aE94f8939182F2D06097025324D1E537d5B60","description":"enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."}
+      receivedPermissions.49:
+-        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"disable the withdrawal limit."}
+      receivedPermissions.48:
+-        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"disable the withdrawal limit."}
+      receivedPermissions.47.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.46.from:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.45.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.45.delay:
+-        259200
+      receivedPermissions.44.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.43.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.42.from:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.42.description:
+-        "manage critical access control roles and the role that can upgrade the implementation.."
++        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+      receivedPermissions.41.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.40.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.39.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.39.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.39.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.38.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+      receivedPermissions.37.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.37.delay:
++        259200
+      receivedPermissions.36.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.36.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.36.description:
+-        "enable the withdrawal limit."
+      receivedPermissions.36.delay:
++        259200
+      receivedPermissions.35.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.35.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.35.delay:
+-        259200
+      receivedPermissions.35.description:
++        "disable the withdrawal limit."
+      receivedPermissions.34.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+      receivedPermissions.34.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation.."
+      receivedPermissions.33.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.33.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.32.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.32.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "disable the withdrawal limit."
+      receivedPermissions.31.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.31.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "disable the withdrawal limit."
+      receivedPermissions.30.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.30.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.30.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.29.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.29.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.29.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.28.from:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.28.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.27.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.27.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.27.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.27.delay:
++        259200
+      receivedPermissions.26.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.26.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.26.delay:
+-        259200
+      receivedPermissions.26.description:
++        "enable the withdrawal limit."
+      receivedPermissions.25.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.25.description:
+-        "disable the withdrawal limit."
++        "enable the withdrawal limit."
+      receivedPermissions.24.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.24.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.24.delay:
+-        259200
+      receivedPermissions.24.description:
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.23.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.23.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.23.delay:
+-        259200
+      receivedPermissions.23.description:
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.22.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.22.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.21.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.21.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.20.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.20.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.19.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.19.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.18.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.18.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "disable the withdrawal limit."
+      receivedPermissions.17.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.17.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.17.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.17.delay:
++        259200
+      receivedPermissions.16.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.16.description:
+-        "disable the withdrawal limit."
++        "enable the withdrawal limit."
+      receivedPermissions.15.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.15.description:
+-        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.14.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.14.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.13.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.13.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.12.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.11.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.11.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.10.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.10.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.9.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.9.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.8.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.8.description:
+-        "disable the withdrawal limit and manage the security agent role which can enable it."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.7.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.6.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.5.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.4.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.4.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.3.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.3.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.2.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.2.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.1.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.1.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+    }
+```
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      values.$members.10:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
+      receivedPermissions.8.delay:
+-        259200
+      receivedPermissions.7.delay:
+-        259200
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.2.delay:
+-        259200
+      receivedPermissions.1.delay:
+-        259200
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin.2:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.$pastUpgrades.7:
++        ["2024-02-12T11:55:59.000Z","0x1f56cc90fd40bcc00a27f94c989e93cb414a884e2fe971323426f40d58c71306",["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]]
+      values.$pastUpgrades.6.2:
+-        "0x1f56cc90fd40bcc00a27f94c989e93cb414a884e2fe971323426f40d58c71306"
++        "0xf0fc6787173f9e4ee964487191601bf84e443f30192c896849df7fd12dfa1a95"
+      values.$pastUpgrades.6.1:
+-        "2024-02-12T11:55:59.000Z"
++        "2025-05-11T12:49:59.000Z"
+      values.$upgradeCount:
+-        7
++        8
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.getUpgradeActivationDelay:
+-        259200
++        0
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.StarkWareProxy_upgradeDelay:
+-        259200
++        0
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.2.delay:
+-        259200
+      directlyReceivedPermissions.1.delay:
+-        259200
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin.2:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.$pastUpgrades.7:
++        ["2024-02-12T15:17:11.000Z","0x7c5561efa149f2be36fac917f47b0b107218b43de1eac56ceb97d008257bd850",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]
+      values.$pastUpgrades.6.2:
+-        "0x7c5561efa149f2be36fac917f47b0b107218b43de1eac56ceb97d008257bd850"
++        "0x42056631084f574f2ed5f49bef3d1aabab22008266ac97afea3e5f42649bd7c3"
+      values.$pastUpgrades.6.1:
+-        "2024-02-12T15:17:11.000Z"
++        "2024-01-14T13:34:23.000Z"
+      values.$pastUpgrades.6.0.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"
+      values.$pastUpgrades.5.2:
+-        "0x42056631084f574f2ed5f49bef3d1aabab22008266ac97afea3e5f42649bd7c3"
++        "0xf0fc6787173f9e4ee964487191601bf84e443f30192c896849df7fd12dfa1a95"
+      values.$pastUpgrades.5.1:
+-        "2024-01-14T13:34:23.000Z"
++        "2025-05-11T12:49:59.000Z"
+      values.$pastUpgrades.5.0.0:
+-        "0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"
++        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$upgradeCount:
+-        7
++        8
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.UPGRADE_GOVERNOR.members.2:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.UPGRADE_GOVERNOR.members.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.getUpgradeActivationDelay:
+-        259200
++        0
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.secAgentAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.StarkWareProxy_upgradeDelay:
+-        259200
++        0
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22445542 (main branch discovery), not current.
+
+```diff
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.20.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.20.description:
+-        "disable the withdrawal limit."
++        "enable the withdrawal limit."
+      receivedPermissions.19.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.18.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.18.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.17.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.17.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "disable the withdrawal limit."
+      receivedPermissions.16.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.15.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.15.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.14.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.14.description:
+-        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.13.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.12.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.11.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.11.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.10.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.9.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.8.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.8.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit and manage the security agent role which can enable it."
+    }
+```
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      receivedPermissions.5.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.4.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.4.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.3.description:
+-        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "disable the withdrawal limit and manage the security agent role which can enable it."
+    }
+```
+
 Generated with discovered.json: 0x7adee4e54e197d1cbd8865a493957168cf4b0115
 
 # Diff at Fri, 09 May 2025 11:13:46 GMT:

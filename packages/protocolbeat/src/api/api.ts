@@ -1,3 +1,4 @@
+import { withoutUndefinedKeys } from '../common/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
@@ -42,8 +43,15 @@ export async function getCode(
 export async function searchCode(
   project: string,
   searchTerm: string,
+  address?: string,
 ): Promise<ApiCodeSearchResponse> {
-  const res = await fetch(`/api/projects/${project}/codeSearch/${searchTerm}`)
+  const query = new URLSearchParams(
+    withoutUndefinedKeys({ searchTerm, address }) as Record<string, string>,
+  )
+
+  const url = `/api/projects/${project}/codeSearch?${query.toString()}`
+  const res = await fetch(url)
+
   if (!res.ok) {
     throw new Error(res.statusText)
   }

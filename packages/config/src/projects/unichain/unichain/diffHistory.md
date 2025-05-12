@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x193dc9696404c58cb037938eaf0bc309d3bd80cf
+
+# Diff at Mon, 12 May 2025 08:22:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4a373705dbec82410d264d404f2ff330f41666ef block: 15457819
+- current block number: 16289384
+
+## Description
+
+Isthmus L2 contract upgrades, mainly focusing on support for the new operator fee (standard contracts).
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x6e5bd465cdf07c7fc7de194833be336109be5aceaeb509643962096c772ec26a"
++        "0x926a45849c8c68704718056d544ac26d7683a6b44a90a9590dda1a9bdd495962"
+      values.$implementation:
+-        "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f"
++        "0x93e57A196454CB919193fa9946f14943cf733845"
+      values.version:
+-        "1.3.1-beta.1"
++        "1.4.0"
+      values.isIsthmus:
++        true
+      implementationNames.0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f:
+-        "GasPriceOracle"
+      implementationNames.0x93e57A196454CB919193fa9946f14943cf733845:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0x936b7b7eb2a88a64e3eceaf897abfa2dc6e48b4c75eba2da34ff927b98413b6b"
++        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
+      values.$implementation:
+-        "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015"
++        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
+      values.version:
+-        "1.5.1-beta.1"
++        "1.6.0"
+      implementationNames.0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015:
+-        "L1Block"
+      implementationNames.0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
++        "L1Block"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol              |  516 ++++++-
+ .../{.flat@15457819 => .flat}/L1Block/L1Block.sol  | 1423 +-------------------
+ 2 files changed, 554 insertions(+), 1385 deletions(-)
+```
+
 Generated with discovered.json: 0x48a0e02b40afb360568475621ff4ab7a84b867a0
 
 # Diff at Tue, 06 May 2025 10:57:10 GMT:

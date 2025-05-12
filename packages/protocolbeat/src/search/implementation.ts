@@ -48,13 +48,23 @@ async function serachContractQuery(
 async function searchCodeQuery(
   project: string,
   searchTerm: string,
+  selectedAddress: string | undefined,
 ): Promise<SearchResults> {
   const codeSearchTerm = getCodeSearchTerm(searchTerm)
-  if (codeSearchTerm.length === 0) {
+  if (codeSearchTerm.content.length === 0) {
     return { type: 'code', entryCount: 0, entries: [] }
   }
 
-  const searchResult = await searchCode(project, codeSearchTerm)
+  const address =
+    codeSearchTerm.onSelectedAddress && selectedAddress !== undefined
+      ? selectedAddress
+      : undefined
+
+  const searchResult = await searchCode(
+    project,
+    codeSearchTerm.content,
+    address,
+  )
   const entryCount = searchResult.matches
     .map((m) => m.codeLocation.length)
     .reduce((a, v) => a + v, 0)
@@ -83,9 +93,10 @@ async function searchProjectQuery(searchTerm: string): Promise<SearchResults> {
 export async function searchQuery(
   project: string,
   searchTerm: string,
+  selectedAddress: string | undefined,
 ): Promise<SearchResults> {
   if (searchTerm.startsWith('%')) {
-    return await searchCodeQuery(project, searchTerm)
+    return await searchCodeQuery(project, searchTerm, selectedAddress)
   } else if (searchTerm.startsWith('@')) {
     return await searchProjectQuery(searchTerm)
   } else {
