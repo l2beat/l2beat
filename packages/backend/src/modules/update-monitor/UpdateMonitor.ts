@@ -251,7 +251,7 @@ export class UpdateMonitor {
       runner.chain,
       timestamp,
     )
-    await this.handleUpdateDiff(diff, sanitizedDiscovery)
+    await this.handleUpdateDiff(projectConfig.name, diff, sanitizedDiscovery)
 
     await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,
@@ -360,6 +360,7 @@ export class UpdateMonitor {
   }
 
   private async handleUpdateDiff(
+    projectName: string,
     diff: DiscoveryDiff[],
     sanitizedDiscovery: DiscoveryOutput,
   ) {
@@ -404,6 +405,7 @@ export class UpdateMonitor {
 
     for (const implementationChange of implementationChanges) {
       updateDiffs.push({
+        projectName,
         type: 'implementationChange',
         address: implementationChange.address,
       })
@@ -411,14 +413,16 @@ export class UpdateMonitor {
 
     for (const fieldHighSeverityChange of fieldHighSeverityChanges) {
       updateDiffs.push({
-        type: 'fieldHighSeverityChange',
+        projectName,
+        type: 'highSeverityFieldChange',
         address: fieldHighSeverityChange.address,
       })
     }
 
     for (const upgradeChange of upgradeChanges) {
       updateDiffs.push({
-        type: 'upgradeChange',
+        projectName,
+        type: 'ultimateUpgraderChange',
         address: upgradeChange.address,
       })
     }

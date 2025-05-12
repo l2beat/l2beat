@@ -262,8 +262,9 @@ model ProjectValue {
 }
 
 model UpdateDiff {
-  address String @db.VarChar(255)
-  type    String @db.VarChar(255)
+  projectName String @db.VarChar(255)
+  address     String @db.VarChar(255)
+  type        String @db.VarChar(255)
 
-  @@unique([address])
+  @@unique([projectName, address, type])
 }
