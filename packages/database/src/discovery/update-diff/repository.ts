@@ -1,12 +1,12 @@
 import { BaseRepository } from '../../BaseRepository'
-import { type ImplementationChangeRecord, toRecord, toRow } from './entity'
+import { type UpdateDiffRecord, toRecord, toRow } from './entity'
 
-export class ImplementationChangeRepository extends BaseRepository {
-  async insertMany(records: ImplementationChangeRecord[]): Promise<number> {
+export class UpdateDiffRepository extends BaseRepository {
+  async insertMany(records: UpdateDiffRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     await this.db
-      .insertInto('ImplementationChange')
+      .insertInto('UpdateDiff')
       .values(records.map(toRow))
       .execute()
 
@@ -15,7 +15,7 @@ export class ImplementationChangeRepository extends BaseRepository {
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('ImplementationChange')
+      .selectFrom('UpdateDiff')
       .selectAll()
       .execute()
     return rows.map(toRecord)
@@ -23,7 +23,7 @@ export class ImplementationChangeRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('ImplementationChange')
+      .deleteFrom('UpdateDiff')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
