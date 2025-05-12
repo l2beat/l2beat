@@ -150,6 +150,9 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => undefined,
         upsert: async () => undefined,
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
       const timestamp = 0
 
       const updateMonitor = new UpdateMonitor(
@@ -159,6 +162,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
@@ -809,6 +813,9 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
         },
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
 
       const updateMonitor = new UpdateMonitor(
         runners,
@@ -817,6 +824,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
@@ -872,6 +880,10 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
+
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
@@ -879,6 +891,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
@@ -921,6 +934,9 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
 
       const updateMonitor = new UpdateMonitor(
         [],
@@ -929,6 +945,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
