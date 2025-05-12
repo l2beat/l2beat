@@ -293,15 +293,11 @@ export class TemplateService {
   }
 
   async ensureTemplateExists(templateId: string) {
-    const templatePath = join(
-      this.rootPath,
-      TEMPLATES_PATH,
-      templateId,
-      'template.jsonc',
-    )
+    const templateDirPath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const templatePath = join(templateDirPath, 'template.jsonc')
 
     if (!existsSync(templatePath)) {
-      mkdirSync(templatePath, { recursive: true })
+      mkdirSync(templateDirPath, { recursive: true })
 
       const numOfBackwardsSlashes = templateId.split('/').length - 1
       const schemaProperty = `../../../../../${'../'.repeat(numOfBackwardsSlashes)}discovery/schemas/contract.v2.schema.json`
