@@ -45,6 +45,7 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
+import { getLivenessSection } from '~/utils/project/liveness/get-liveness-section'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
@@ -326,6 +327,19 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         trackedTransactions,
+      },
+    })
+  }
+
+  const livenessSection = getLivenessSection(project)
+  if (livenessSection) {
+    sections.push({
+      type: 'LivenessSection',
+      props: {
+        id: 'liveness',
+        title: 'Liveness',
+        projectId: project.id,
+        configuredSubtypes: livenessSection,
       },
     })
   }

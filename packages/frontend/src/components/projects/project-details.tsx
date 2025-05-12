@@ -23,6 +23,7 @@ import { ThroughputSection } from './sections/throughput/throughput-section'
 import { TvsSection } from './sections/tvs-section'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
+import { LivenessSection } from './sections/liveness-section'
 
 export interface ProjectDetailsProps {
   nested?: boolean
@@ -68,6 +69,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'CostsSection':
             return (
               <CostsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'LivenessSection':
+            return (
+              <LivenessSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

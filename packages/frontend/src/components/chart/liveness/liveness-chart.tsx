@@ -1,0 +1,185 @@
+'use client'
+
+import partition from 'lodash/partition'
+import compact from 'lodash/compact'
+import type { TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
+import type { ChartMeta } from '~/components/core/chart/chart'
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipWrapper,
+} from '~/components/core/chart/chart'
+import {
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { formatTimestamp } from '~/utils/dates'
+
+export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+
+interface LivenessChartDataPoint {
+  timestamp: number
+  range: (number | null)[]
+  avg: number | null
+}
+
+interface Props {
+  data: LivenessChartDataPoint[] | undefined
+  isLoading: boolean
+  className?: string
+}
+
+export function LivenessChart({ data, isLoading, className }: Props) {
+  const chartMeta = {
+    range: {
+      label: 'Min&max submission interval',
+      color: 'hsl(var(--chart-pink-fill-gradient))',
+      indicatorType: {
+        shape: 'line',
+      },
+    },
+    avg: {
+      label: 'Average interval',
+      color: '#EF43B4',
+      indicatorType: {
+        shape: 'line',
+      },
+    },
+  } satisfies ChartMeta
+
+  return (
+    <ChartContainer
+      data={data}
+      className={className}
+      meta={chartMeta}
+      isLoading={isLoading}
+    >
+      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+        <ChartLegend content={<ChartLegendContent />} />
+        <Area
+          dataKey="avg"
+          isAnimationActive={false}
+          strokeWidth={2}
+          legendType="none"
+          stroke="#CCD0DA"
+          fill="none"
+          connectNulls
+          strokeDasharray="5 5"
+        />
+        <Area
+          dataKey="range"
+          isAnimationActive={false}
+          stroke="#CCD0DA"
+          legendType="none"
+          connectNulls
+          strokeWidth={2}
+          fill="none"
+        />
+
+        {getStrokeOverFillAreaComponents({
+          data: compact([
+            {
+              dataKey: 'range',
+              stroke: 'url(#strokeRange)',
+              fill: 'hsl(var(--chart-pink-fill-gradient))',
+              fillOpacity: 0.4,
+            },
+          ]),
+        })}
+        <Area
+          dataKey="avg"
+          isAnimationActive={false}
+          strokeWidth={2}
+          stroke="#EF43B4"
+          fill="none"
+          strokeDasharray="5 5"
+        />
+        {getCommonChartComponents({
+          data,
+          isLoading,
+          yAxis: {
+            tick: {
+              width: 100,
+            },
+            tickFormatter: (value: number) => formatDuration(value),
+            scale: 'lin',
+            domain: ['dataMin', 'dataMax'],
+          },
+        })}
+        <ChartTooltip content={<LivenessCustomTooltip />} />
+        <defs>
+          <PinkFillGradientDef id="fillRange" />
+          <PinkStrokeGradientDef id="strokeRange" />
+        </defs>
+      </AreaChart>
+    </ChartContainer>
+  )
+}
+
+export function LivenessCustomTooltip({
+  active,
+  payload,
+  label: timestamp,
+}: TooltipProps<number, string>) {
+  if (!active || !payload || typeof timestamp !== 'number') return null
+  const filteredPayload = payload.filter(
+    (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
+  )
+  const [[range], [avg]] = partition(filteredPayload, (p) => p.name === 'range')
+
+  if (!range?.value || !avg?.value) return null
+
+  const [min, max] = range.value as unknown as [number, number]
+
+  return (
+    <ChartTooltipWrapper>
+      <div className="flex w-40 flex-col">
+        <div className="label-value-14-medium mb-1 whitespace-nowrap text-secondary">
+          {formatTimestamp(timestamp, {
+            longMonthName: true,
+          })}
+        </div>
+        <HorizontalSeparator className="mt-1.5" />
+        <div className="mt-2 flex flex-col gap-2">
+          <Stat name="Minimum" seconds={min} />
+          <Stat name="Average" seconds={avg.value} />
+          <Stat name="Maximum" seconds={max} />
+        </div>
+      </div>
+    </ChartTooltipWrapper>
+  )
+}
+
+function Stat({ name, seconds }: { name: string; seconds: number }) {
+  return (
+    <div className="flex items-center justify-between">
+      <span className="label-value-14-medium">{name}</span>
+      <span className="heading-16">{formatDuration(seconds)}</span>
+    </div>
+  )
+}
+
+function formatDuration(durationInSeconds: number) {
+  const seconds = durationInSeconds
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  const remainingSeconds = seconds - minutes * 60
+  const remainingMinutes = minutes - hours * 60
+  const remainingHours = hours - days * 24
+
+  return days > 1
+    ? `${days}d ${remainingHours > 0 ? `${remainingHours}h` : ''}`
+    : hours > 0
+      ? `${hours}h ${remainingMinutes > 0 ? `${remainingMinutes}min` : ''}`
+      : minutes > 0
+        ? `${minutes}min ${remainingSeconds > 0 ? `${remainingSeconds}s` : ''}`
+        : `${seconds}s`
+}
