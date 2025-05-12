@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xfabe08a5363555a460c77ba32e9dfd42e053b132
+
+# Diff at Mon, 12 May 2025 12:13:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 21716626
+- current block number: 22466462
+
+## Description
+
+Minor upgrade to the main MorphRollup contract: formatting changes for batch commits, proveState() is now permissioned (onlyActiveStaker).
+
+New verifier deployed, code-identical to the old one (SP1) but new programVkey.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.1:
++        {"startBatchIndex":0,"verifier":"0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"}
+      values.latestVerifier.0.startBatchIndex:
+-        0
++        20230
+      values.latestVerifier.0.verifier:
+-        "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"
++        "0x4006FDA79493FEE14dA42BfA34575aAA79bcf953"
+      values.legacyVerifiersLength.1:
++        0
+      values.verifierVersions.1:
++        2
+    }
+```
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
+      sourceHashes.0:
+-        "0xdbd7245a43b9bfda69e999525405cc2d3a44e2a5d60c8fcbc75bb2d4987837be"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      values.$implementation:
+-        "0x43190DfD1F572Cb56B1942B44482d1774151D77A"
++        "0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec"
+      values.$pastUpgrades.5:
++        ["2025-01-13T07:31:59.000Z","0x809b1d9bba9fd8f61c038603ddf7a6f0a079db83a4a6d341cf23d2af5764a9be",["0x43190DfD1F572Cb56B1942B44482d1774151D77A"]]
+      values.$pastUpgrades.4.2:
+-        ["0x43190DfD1F572Cb56B1942B44482d1774151D77A"]
++        "2024-10-19T09:51:35.000Z"
+      values.$pastUpgrades.4.1:
+-        "2025-01-13T07:31:59.000Z"
++        ["0xcffdDbcb5B9EA2ee45ABA121e0849ADc87c38326"]
+      values.$pastUpgrades.4.0:
+-        "0x809b1d9bba9fd8f61c038603ddf7a6f0a079db83a4a6d341cf23d2af5764a9be"
++        "0xeb4cc4248a0b3f459f4d7ab5877114fd4f55fd073c78347df548a9f03013068e"
+      values.$pastUpgrades.3.2:
+-        "2024-10-19T09:51:35.000Z"
++        "2024-10-19T03:11:47.000Z"
+      values.$pastUpgrades.3.1.0:
+-        "0xcffdDbcb5B9EA2ee45ABA121e0849ADc87c38326"
++        "0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"
+      values.$pastUpgrades.3.0:
+-        "0xeb4cc4248a0b3f459f4d7ab5877114fd4f55fd073c78347df548a9f03013068e"
++        "0xfb3bc602abb088d5d94e6869d56417de3c16a3966e5c6abfa4d157dfbcc36cba"
+      values.$pastUpgrades.2.2:
+-        "2024-10-19T03:11:47.000Z"
++        ["0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"]
+      values.$pastUpgrades.2.1:
+-        ["0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"]
++        "2024-11-28T03:51:59.000Z"
+      values.$pastUpgrades.2.0:
+-        "0xfb3bc602abb088d5d94e6869d56417de3c16a3966e5c6abfa4d157dfbcc36cba"
++        "0xa452e20183f6860f105cb398bccc9d75dd3758444b956061b3031d1f0a33c424"
+      values.$pastUpgrades.1.2:
+-        ["0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"]
++        "2025-05-12T07:11:23.000Z"
+      values.$pastUpgrades.1.1:
+-        "2024-11-28T03:51:59.000Z"
++        "0x1cd98e49b0d0c30a39c97683c374f5d3541d1ed02b14272a7113709fe01700d7"
+      values.$pastUpgrades.1.0:
+-        "0xa452e20183f6860f105cb398bccc9d75dd3758444b956061b3031d1f0a33c424"
++        ["0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec"]
+      values.$upgradeCount:
+-        5
++        6
+      values.LAYER_2_CHAIN_ID:
+-        2818
++        1
+      implementationNames.0x43190DfD1F572Cb56B1942B44482d1774151D77A:
+-        "Rollup"
+      implementationNames.0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec:
++        "Rollup"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0x4006FDA79493FEE14dA42BfA34575aAA79bcf953)
+    +++ description: Current SP1 verifier using Blobs for DA.
+```
+
+## Source code changes
+
+```diff
+.../MorphRollup/Rollup.sol                         |  230 ++--
+ ...0x4006FDA79493FEE14dA42BfA34575aAA79bcf953.sol} |    0
+ ...-0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154.sol | 1409 ++++++++++++++++++++
+ 3 files changed, 1485 insertions(+), 154 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154) {
+    +++ description: SP1 verifier using Blobs for DA (being deprecated).
+      description:
+-        "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
++        "SP1 verifier using Blobs for DA (being deprecated)."
+    }
+```
+
 Generated with discovered.json: 0xd0349a38ec68c6ca38ae57dd697707463d641e6e
 
 # Diff at Tue, 29 Apr 2025 08:19:07 GMT:
