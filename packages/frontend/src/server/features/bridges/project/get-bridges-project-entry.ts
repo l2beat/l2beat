@@ -248,7 +248,6 @@ export async function getBridgesProjectEntry(
 
   const permissionsSection = getPermissionsSection(
     {
-      type: 'bridge',
       id: project.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
@@ -268,7 +267,6 @@ export async function getBridgesProjectEntry(
 
   const contractsSection = getContractsSection(
     {
-      type: 'bridge',
       id: project.id,
       slug: project.slug,
       isVerified: !project.statuses.isUnverified,

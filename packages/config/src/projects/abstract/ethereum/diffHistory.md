@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xc71a501d48f53213c790a3384e7b43fa16bf7ecd
+
+# Diff at Mon, 12 May 2025 09:21:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 22367139
+- current block number: 22466280
+
+## Description
+
+Abtract sub-MS member changes.
+
+## Watched changes
+
+```diff
+    contract Safe (0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB) {
+    +++ description: None
+      values.$members.3:
++        "0x3846c3A30E62075Fa916216b35EF04B8F53931f6"
+      values.$members.2:
+-        "0x3846c3A30E62075Fa916216b35EF04B8F53931f6"
++        "0x277D26a45Add5775F21256159F089769892CEa5B"
+      values.$threshold:
+-        1
++        2
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract Safe (0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892) {
+    +++ description: None
+      values.$members.1:
++        "0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5"
+      values.multisigThreshold:
+-        "1 of 1 (100%)"
++        "1 of 2 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x48f0bb29b3e1b19d5a722d7cf4d8f7bb626c0461
 
 # Diff at Tue, 29 Apr 2025 08:19:17 GMT:
