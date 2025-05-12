@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x683712ab992990886f883804c6f44f1f423c950b
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 22425142
+- current block number: 22425142
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22425142 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      fieldMeta.ejectionCooldown.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      fieldMeta.BLOCK_STALE_MEASURE.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.quorumAdversaryThresholdPercentages.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.quorumConfirmationThresholdPercentages.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.batchConfirmers.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xe01ece34ed2b91a3e89bf4cbb1d3c2337256b809
 
 # Diff at Tue, 06 May 2025 14:18:59 GMT:

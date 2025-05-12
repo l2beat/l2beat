@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x46be50508393585317767e7d0271d86cdff150eb
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 21084957
+- current block number: 21084957
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: Contract managing Yield Providers for ETH.
+      fieldMeta.insuranceFeeBips.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      fieldMeta.insuranceFeeBips.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0x44b3252516c869f9eb946e0a1958cde506bc6d7b
 
 # Diff at Tue, 29 Apr 2025 08:19:00 GMT:
