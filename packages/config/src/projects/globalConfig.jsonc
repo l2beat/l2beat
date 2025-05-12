@@ -28,6 +28,7 @@
   "names": {
     // suggest tracking EOAs here and contracts in the chain-specific configs
     // eoa names (mostly for SCs)
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress", // aztec operator (private key is public)
     "0x352f1defB49718e7Ea411687E850aA8d6299F7aC": "Optimism EOA 1", // deputypauser
     // arbitrum SC
     "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
