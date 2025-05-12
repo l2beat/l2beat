@@ -1,0 +1,19 @@
+{
+  "description": "Verifier contract for blocks proven by Guardian minority.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    },
+    "guardians": {
+      "handler": {
+        "type": "array",
+        "method": "guardians"
+      }
+    }
+  }
+} 

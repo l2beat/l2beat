@@ -1,0 +1,19 @@
+{
+  "description": "Verifier contract for Guardian proven blocks.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    },
+    "guardians": {
+      "handler": {
+        "type": "array",
+        "method": "guardians"
+      }
+    }
+  }
+} 

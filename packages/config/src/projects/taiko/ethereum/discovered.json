@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22297586,
-  "configHash": "0x5ada28ae8c5d3385178e8bfde666a1d8d704ed1e3b0c153b94fcb099e8a22fe0",
+  "blockNumber": 22468221,
+  "configHash": "0xba80bc4b0160ceecc5b9649029b4829dbdae01b5767b14426012db83a8b3ce83",
   "entries": [
     {
       "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
@@ -18,21 +18,25 @@
       "name": "PEMCertChainLib",
       "address": "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
       "type": "Contract",
+      "template": "taiko/PEMCertChainLib",
       "sourceHashes": [
         "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
       ],
       "proxyType": "immutable",
+      "description": "Library for managing PEM certificate chains.",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": { "$immutable": true },
       "implementationNames": {
         "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169": "PEMCertChainLib"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "TaikoL1Contract",
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
       "type": "Contract",
+      "template": "taiko/TaikoL1Contract",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4"
@@ -206,35 +210,35 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 1087119,
-          "blockHash_": "0x0e91b6a2f4e94b6af99252b21072f2cc4f8a72c36f3f3a5748704c9fa0378a52",
-          "stateRoot_": "0x8ec882680df6ec30e4827249366fab91df71b1dc6ac19cea04571441d6f764b4",
-          "verifiedAt_": 1744985243
+          "blockId_": 1144879,
+          "blockHash_": "0x68f83a8b915904988b6084a94033b3585a5e71f626bc707eaf30f6db8f2b830d",
+          "stateRoot_": "0xb6e60b898b8d8d5bd18c703daeb23892554a01a0d2d6ceec95564b6d2bce0b29",
+          "verifiedAt_": 1747048775
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1087124,
-          "blockHash_": "0xdb0bbeb669224dc6a5b424890b84c04de9cff06cf9f63909a1d2c5e42de174a9",
+          "blockId_": 1144886,
+          "blockHash_": "0x767ea43989c53e85c8fb44aa123e65399491151c0a86171a09dcf3b21b10507a",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1744968251
+          "verifiedAt_": 1747048787
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1087119,
-            "lastSynecdAt": 1744999643
+            "lastSyncedBlockId": 1144879,
+            "lastSynecdAt": 1747063835
           },
           {
-            "numBlocks": 1087825,
-            "lastVerifiedBlockId": 1087124,
+            "numBlocks": 1145164,
+            "lastVerifiedBlockId": 1144886,
             "provingPaused": false,
-            "lastProposedIn": 22297583,
+            "lastProposedIn": 22468218,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 22297583,
+        "lastProposedIn": 22468218,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -256,14 +260,14 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1087119,
-            "lastSynecdAt": 1744999643
+            "lastSyncedBlockId": 1144879,
+            "lastSynecdAt": 1747063835
           },
           "slotB": {
-            "numBlocks": 1087825,
-            "lastVerifiedBlockId": 1087124,
+            "numBlocks": 1145164,
+            "lastVerifiedBlockId": 1144886,
             "provingPaused": false,
-            "lastProposedIn": 22297583,
+            "lastProposedIn": 22468218,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -287,7 +291,8 @@
       "implementationNames": {
         "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "ERC1967Proxy",
         "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca": "MainnetTaikoL1"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
@@ -303,11 +308,13 @@
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "type": "Contract",
+      "template": "taiko/TaikoToken",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x5da570fbffd5ab663ce8983496a9ded290ed853a950b4052ac93b35217babac8"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1714033799,
       "sinceBlock": 19731197,
@@ -343,7 +350,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1744999847,
+        "clock": 1747065311,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -386,10 +393,12 @@
       "name": "MainnetProverSet",
       "address": "0x280eAbfd252f017B78e15b69580F249F45FB55Fa",
       "type": "Contract",
+      "template": "taiko/DAOFallbackProposer",
       "sourceHashes": [
         "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
       ],
       "proxyType": "immutable",
+      "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
       "sinceTimestamp": 1739426099,
       "sinceBlock": 21835609,
       "values": {
@@ -417,10 +426,12 @@
       "name": "MainnetTierRouter",
       "address": "0x44d307a9ec47aA55a7a30849d065686753C86Db6",
       "type": "Contract",
+      "template": "taiko/MainnetTierRouter",
       "sourceHashes": [
         "0x05e2fb8e861c4bf4f0175158cc5526c23b8fb0fcec2a6a5a7d12b7a6d891ba2e"
       ],
       "proxyType": "immutable",
+      "description": "Contract managing and routing the multi-tier proof system.",
       "sinceTimestamp": 1740364319,
       "sinceBlock": 21913221,
       "values": {
@@ -451,14 +462,6 @@
           "provingWindow": 120,
           "maxBlocksToVerifyPerProof": 0
         },
-        "TIER_OPTIMISTIC": {
-          "verifierName": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "validityBond": "50000000000000000000",
-          "contestBond": "328125000000000000000",
-          "cooldownWindow": 1440,
-          "provingWindow": 60,
-          "maxBlocksToVerifyPerProof": 0
-        },
         "tier_provider": "0x44d307a9ec47aA55a7a30849d065686753C86Db6",
         "TIER_RISC0": {
           "verifierName": "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000",
@@ -474,14 +477,6 @@
           "contestBond": "656250000000000000000",
           "cooldownWindow": 240,
           "provingWindow": 300,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "TIER_SGX_ZKVM": {
-          "verifierName": "0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000",
-          "validityBond": "150000000000000000000",
-          "contestBond": "984375000000000000000",
-          "cooldownWindow": 240,
-          "provingWindow": 420,
           "maxBlocksToVerifyPerProof": 0
         },
         "TIER_SP1": {
@@ -508,41 +503,41 @@
         },
         "TIER_GUARDIAN": {
           "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_OPTIMISTIC": {
-          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_SGX_ZKVM": {
-          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
         }
       },
       "implementationNames": {
         "0x44d307a9ec47aA55a7a30849d065686753C86Db6": "MainnetTierRouter"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SigVerifyLib",
       "address": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9",
       "type": "Contract",
+      "template": "taiko/SigVerifyLib",
       "sourceHashes": [
         "0x5bf803a773ed2c117313ea970df3b38542eab3522714f18be2b65a75062e0ebf"
       ],
       "proxyType": "immutable",
+      "description": "Library for verifying signatures.",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": { "$immutable": true },
       "implementationNames": {
         "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": "SigVerifyLib"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "RiscZeroGroth16Verifier",
       "address": "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98",
       "type": "Contract",
+      "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
         "0x22a4c48ce03a19c9b31c30608fd0808cfe2c85b5c722e1173aafd22872fd1881"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for ZK-proven batches.",
       "sinceTimestamp": 1744858739,
       "sinceBlock": 22285883,
       "values": {
@@ -561,11 +556,13 @@
       "name": "Risc0Verifier",
       "address": "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc",
       "type": "Contract",
+      "template": "taiko/Risc0Verifier",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x3bb4317c77a14f8dabc9d24fa5867bfa8af8e388e54bdd58da2b8f43f2914c2b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Verifier contract for Risc0 proven blocks.",
       "sinceTimestamp": 1730879519,
       "sinceBlock": 21127238,
       "values": {
@@ -596,6 +593,7 @@
       "name": "GuardianMinorityProver",
       "address": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
       "type": "Contract",
+      "template": "taiko/GuardianMinorityProver",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x489b7169b5c7aa13cbb8928934057ad78b37ce9b52651656bf8bda7759533f68"
@@ -677,11 +675,13 @@
       "name": "L1RollupAddressManager",
       "address": "0x579f40D0BE111b823962043702cabe6Aaa290780",
       "type": "Contract",
+      "template": "taiko/L1RollupAddressManager",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x9dede6e55b7b0db6226ea3cead125c4750d147ad96cef774a61e51e8e9ce6d36"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.",
       "sinceTimestamp": 1714550615,
       "sinceBlock": 19773964,
       "values": {
@@ -757,17 +757,20 @@
       "implementationNames": {
         "0x579f40D0BE111b823962043702cabe6Aaa290780": "ERC1967Proxy",
         "0x0079a79E5d8DDA67029051d505E5A11DE279B36D": "MainnetRollupAddressManager"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SP1Verifier",
       "address": "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452",
       "type": "Contract",
+      "template": "taiko/SP1Verifier",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x5350c31937c3194b7ab11b26251fcec0e2a3ba88b516d5c851b9f6bfe7e76935"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Verifier contract for ZK-proven batches.",
       "sinceTimestamp": 1731046547,
       "sinceBlock": 21141069,
       "values": {
@@ -825,6 +828,7 @@
       "name": "DAOFallbackProposer",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
       "type": "Contract",
+      "template": "taiko/DAOFallbackProposer",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
@@ -923,11 +927,13 @@
       "name": "AutomataDcapV3Attestation",
       "address": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
       "type": "Contract",
+      "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract managing SGX attestation certificates.",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": {
@@ -980,11 +986,13 @@
       "name": "SharedERC20Vault",
       "address": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
       "type": "Contract",
+      "template": "taiko/SharedERC20Vault",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x0112b81e89b367f8ffeb6b571bd245b1be7a1279474ffa11591f8374a2c8b14f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Shared vault for Taiko chains for bridged ERC20 tokens.",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -1047,7 +1055,8 @@
       "implementationNames": {
         "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": "ERC1967Proxy",
         "0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63": "MainnetERC20Vault"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Taiko Multisig",
@@ -1134,7 +1143,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 73,
+        "nonce": 77,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1146,11 +1155,13 @@
       "name": "SignalService",
       "address": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
       "type": "Contract",
+      "template": "taiko/SignalService",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0xf99b7d5f650d3734e945c5040d8e4776dfdc97ff745666e084c1d471b7973f38"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -1201,12 +1212,14 @@
       "implementationNames": {
         "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "ERC1967Proxy",
         "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3": "MainnetSignalService"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SgxVerifier",
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
       "type": "Contract",
+      "template": "taiko/SgxVerifier",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x076c7d823685a1a394ad6ec677d2d7707207efa9e8e482f479c2cdfd92008904"
@@ -1258,7 +1271,7 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "lastUnpausedAt": 0,
-        "nextInstanceId": 181,
+        "nextInstanceId": 189,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1283,11 +1296,13 @@
       "name": "TaikoBridge",
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
       "type": "Contract",
+      "template": "taiko/TaikoBridge",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x118c20a34164db28141d7fa6496d1fcf9e139354ed77c4e1c3f33e5eaac65977"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Shared bridge for Taiko chains for bridged ETH.",
       "ignoreInWatchMode": ["nextMessageId"],
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
@@ -1363,7 +1378,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 36991,
+        "nextMessageId": 37118,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1389,6 +1404,7 @@
       "name": "GuardianProver",
       "address": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
       "type": "Contract",
+      "template": "taiko/GuardianProver",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x489b7169b5c7aa13cbb8928934057ad78b37ce9b52651656bf8bda7759533f68"
@@ -1470,11 +1486,13 @@
       "name": "L1SharedAddressManager",
       "address": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
       "type": "Contract",
+      "template": "taiko/L1SharedAddressManager",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x61eadd250e6fee2eea7d778ca5fdb6e04b0fa09044c65eba836b397f585e5535"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This contract manages the shared addresses for Taiko rollups.",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -2499,7 +2517,25 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "taiko/AutomataDcapV3Attestation": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/DAOFallbackProposer": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/GuardianMinorityProver": "0xa73c7b151f8a16255fef5715d0d51ffc4031e5dc0655368b7d73e6a810d39875",
+    "taiko/GuardianProver": "0xa73c7b151f8a16255fef5715d0d51ffc4031e5dc0655368b7d73e6a810d39875",
+    "taiko/L1RollupAddressManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/L1SharedAddressManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/MainnetTierRouter": "0xede752b89fb3b0fcfd0481d111f1acf572b37f080a698d8ca76f43805da5c3df",
+    "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/Risc0Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/SgxVerifier": "0x074d01beddfed30c67aad286abd2029875802d6ac3acd14bb077ef98ffed4f17",
+    "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/SignalService": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/SP1Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
+    "taiko/TaikoL1Contract": "0x86735ce2f1bc05e37466e66f7cb4684ac5ee64e3e0f4cfac4209152dfc90b72e",
+    "taiko/TaikoToken": "0x1995b6ff08e9d6507add238bda6de7508f15484c51b465775c8044a2f429baeb"
   },
   "permissionsConfigHash": "0x7d49bb5ffcbeb3a0e5100c983c1b9dabadc70b24d0a5b1cf81d6faef0099d38e"
 }
