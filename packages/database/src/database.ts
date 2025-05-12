@@ -5,6 +5,7 @@ import { DataAvailabilityRepository } from './da-beat/data-availability/reposito
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
 import { FlatSourcesRepository } from './discovery/flat-sources/repository'
+import { UpdateDiffRepository } from './discovery/update-diff/repository'
 import { UpdateMessageRepository } from './discovery/update-message/repository'
 import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
 import { UpdateNotifierRepository } from './discovery/update-notifier/repository'
@@ -24,7 +25,6 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
-import { UpdateDiffRepository } from './discovery/update-diff/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
