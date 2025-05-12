@@ -109,16 +109,16 @@ function Display({
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
-        <p className="flex items-center">
-          <p className="flex items-center gap-1 font-bold">
+        <div className="flex items-center">
+          <div className="flex items-center gap-1 font-bold">
             <AddressIcon type={selected.type} />
             {selected.name ?? 'Unknown'}
             {selected.type === 'Unverified' && (
               <span className="text-aux-red"> (Unverified)</span>
             )}
-          </p>
+          </div>
           {copy}
-        </p>
+        </div>
         <WithHeadline headline="Address">
           <AddressDisplay
             simplified
