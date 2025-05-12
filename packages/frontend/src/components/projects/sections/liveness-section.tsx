@@ -1,8 +1,8 @@
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { ProjectLivenessChart } from '~/components/chart/liveness/project-liveness-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { ProjectLivenessChart } from '~/components/chart/liveness/project-liveness-chart'
-import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string

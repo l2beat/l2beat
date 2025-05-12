@@ -1,15 +1,15 @@
 'use client'
 
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { LivenessChartSubtypeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-subtype-controls'
+import { LivenessChartTimeRangeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-time-range-controls'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
+import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
-import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
-import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { LivenessChart } from './liveness-chart'
-import { LivenessChartTimeRangeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-time-range-controls'
-import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { LivenessChartSubtypeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-subtype-controls'
 
 interface Props {
   projectId: string

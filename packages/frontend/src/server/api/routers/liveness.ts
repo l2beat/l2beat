@@ -1,8 +1,8 @@
-import { procedure, router } from '../trpc'
 import {
-  getProjectLivenessChart,
   ProjectLivenessChartParams,
+  getProjectLivenessChart,
 } from '~/server/features/scaling/liveness/get-project-liveness-chart'
+import { procedure, router } from '../trpc'
 
 export const livenessRouter = router({
   projectChart: procedure

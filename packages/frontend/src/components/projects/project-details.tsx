@@ -8,6 +8,7 @@ import { DetailedDescriptionSection } from './sections/detailed-description-sect
 import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
 import { GroupSection } from './sections/group-section'
 import { L3RiskAnalysisSection } from './sections/l3-risk-analysis-section'
+import { LivenessSection } from './sections/liveness-section'
 import { MarkdownSection } from './sections/markdown-section'
 import { MilestonesAndIncidentsSection } from './sections/milestones-and-incidents-section'
 import { PermissionsSection } from './sections/permissions/permissions-section'
@@ -23,7 +24,6 @@ import { ThroughputSection } from './sections/throughput/throughput-section'
 import { TvsSection } from './sections/tvs-section'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
-import { LivenessSection } from './sections/liveness-section'
 
 export interface ProjectDetailsProps {
   nested?: boolean

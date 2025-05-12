@@ -25,6 +25,7 @@ import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transa
 import { getBadgeWithParamsAndLink } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getLivenessSection } from '~/utils/project/liveness/get-liveness-section'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
@@ -45,7 +46,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-import { getLivenessSection } from '~/utils/project/liveness/get-liveness-section'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
