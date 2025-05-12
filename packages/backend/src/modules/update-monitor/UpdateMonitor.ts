@@ -373,7 +373,7 @@ const errorCount = new Gauge({
 })
 
 function countSeverities(diffs: DiscoveryDiff[]) {
-  const result = { low: 0, medium: 0, high: 0, unknown: 0 }
+  const result = { low: 0, high: 0, unknown: 0 }
 
   for (const diff of diffs) {
     if (diff.diff === undefined) {
@@ -400,9 +400,6 @@ function countSeverities(diffs: DiscoveryDiff[]) {
       switch (severity) {
         case 'LOW':
           result.low++
-          break
-        case 'MEDIUM':
-          result.medium++
           break
         case 'HIGH':
           result.high++
