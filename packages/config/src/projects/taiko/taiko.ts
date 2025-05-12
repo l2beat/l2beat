@@ -21,10 +21,6 @@ import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('taiko')
 
-const upgradesTaikoMultisig = {
-  upgradableBy: [{ name: 'Taiko Multisig', delay: 'no' }],
-}
-
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
 const TIER_SGX = discovery.getContractValue<{
@@ -426,36 +422,36 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
   },
   contracts: {
     addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts()
+      [discovery.chain]: discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-      [discovery.chain]: discovery.getDiscoveredPermissions(),
-      // actors: [
-      //   discovery.getMultisigPermission(
-      //     'Taiko Multisig',
-      //     'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
-      //   ),
-      //   discovery.getPermissionDetails(
-      //     'GuardianProvers',
-      //     discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
-      //     `Guardians can prove blocks on the highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
-      //   ),
-      //   discovery.getPermissionDetails(
-      //     'GuardianMinorityProver',
-      //     discovery.getPermissionedAccounts(
-      //       'GuardianMinorityProver',
-      //       'guardians',
-      //     ),
-      //     `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
-      //   ),
-      //   discovery.getPermissionDetails(
-      //     'SequencerBlockOne',
-      //     discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
-      //     'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
-      //   ),
-      // ],
+    [discovery.chain]: discovery.getDiscoveredPermissions(),
+    // actors: [
+    //   discovery.getMultisigPermission(
+    //     'Taiko Multisig',
+    //     'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
+    //   ),
+    //   discovery.getPermissionDetails(
+    //     'GuardianProvers',
+    //     discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
+    //     `Guardians can prove blocks on the highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
+    //   ),
+    //   discovery.getPermissionDetails(
+    //     'GuardianMinorityProver',
+    //     discovery.getPermissionedAccounts(
+    //       'GuardianMinorityProver',
+    //       'guardians',
+    //     ),
+    //     `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
+    //   ),
+    //   discovery.getPermissionDetails(
+    //     'SequencerBlockOne',
+    //     discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
+    //     'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
+    //   ),
+    // ],
   },
   milestones: [
     {

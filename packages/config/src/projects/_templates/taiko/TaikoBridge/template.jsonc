@@ -1,9 +1,6 @@
 {
   "description": "Shared bridge for Taiko chains for bridged ETH.",
-  "ignoreMethods": [
-    "getMessageMinGasLimit",
-    "context"
-  ],
+  "ignoreMethods": ["getMessageMinGasLimit", "context"],
   "ignoreInWatchMode": ["nextMessageId"],
   "fields": {
     "proxiableUUID": {
@@ -15,4 +12,4 @@
       }
     }
   }
-} 
+}
