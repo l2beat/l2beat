@@ -46,6 +46,7 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
+import { getLiveness } from '../liveness/get-liveness'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
@@ -222,7 +223,7 @@ export async function getScalingProjectEntry(
         })
       : undefined,
   ])
-  const [tvsChartData, activityChartData, costsChartData, tokens] =
+  const [tvsChartData, activityChartData, costsChartData, tokens, liveness] =
     await Promise.all([
       api.tvs.chart({
         range: '1y',
@@ -240,6 +241,7 @@ export async function getScalingProjectEntry(
           })
         : undefined,
       getTokensForProject(project),
+      getLiveness(),
     ])
 
   const sections: ProjectDetailsSection[] = []
@@ -331,7 +333,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const livenessSection = getLivenessSection(project)
+  const livenessSection = getLivenessSection(project, liveness[project.id])
   if (livenessSection) {
     sections.push({
       type: 'LivenessSection',
@@ -339,7 +341,7 @@ export async function getScalingProjectEntry(
         id: 'liveness',
         title: 'Liveness',
         projectId: project.id,
-        configuredSubtypes: livenessSection,
+        ...livenessSection,
       },
     })
   }

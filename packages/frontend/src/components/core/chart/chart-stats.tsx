@@ -7,11 +7,17 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
 
 interface Props {
   children: React.ReactNode
+  className?: string
 }
 
-export function ChartStats({ children }: Props) {
+export function ChartStats({ children, className }: Props) {
   return (
-    <div className="grid rounded-lg bg-surface-secondary p-4 md:grid-cols-2 md:gap-4 md:p-6 lg:grid-cols-4">
+    <div
+      className={cn(
+        'grid rounded-lg bg-surface-secondary p-4 md:grid-cols-2 md:gap-4 md:p-6 lg:grid-cols-4',
+        className,
+      )}
+    >
       {children}
     </div>
   )
