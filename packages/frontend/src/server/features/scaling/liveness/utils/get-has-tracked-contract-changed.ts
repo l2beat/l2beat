@@ -5,8 +5,7 @@ export function getHasTrackedContractChanged(
   project: Project<'trackedTxsConfig'>,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): boolean {
-  const addressesChanged =
-    projectChangeReport?.ethereum?.implementationContaining
+  const addressesChanged = projectChangeReport?.ethereum?.implementationChange
   if (!addressesChanged || addressesChanged.length === 0) return false
 
   return project.trackedTxsConfig.some((config) => {

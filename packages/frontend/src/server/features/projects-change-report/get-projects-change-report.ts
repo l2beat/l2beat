@@ -37,7 +37,7 @@ async function getProjectsChangeReportWithFns() {
         impactfulChange:
           this.hasImplementationChanged(projectId) ||
           this.hasHighSeverityFieldChanged(projectId) ||
-          this.hasUpgradeChange(projectId),
+          this.hasUltimateUpgraderChanged(projectId),
       }
     },
     hasImplementationChanged: function (projectId: string) {
@@ -46,19 +46,20 @@ async function getProjectsChangeReportWithFns() {
         return false
       }
       return Object.values(chainChanges).some(
-        (c) => c.implementationContaining.length > 0,
+        (c) => c.implementationChange.length > 0,
       )
     },
     hasHighSeverityFieldChanged: function (projectId: string) {
       const ethereumChanges = this.projects[projectId]?.ethereum
       return (
-        !!ethereumChanges &&
-        ethereumChanges.fieldHighSeverityContaining.length > 0
+        !!ethereumChanges && ethereumChanges.highSeverityFieldChange.length > 0
       )
     },
-    hasUpgradeChange: function (projectId: string) {
+    hasUltimateUpgraderChanged: function (projectId: string) {
       const ethereumChanges = this.projects[projectId]?.ethereum
-      return !!ethereumChanges && ethereumChanges.upgradeChanges.length > 0
+      return (
+        !!ethereumChanges && ethereumChanges.ultimateUpgraderChange.length > 0
+      )
     },
   }
 }
@@ -66,9 +67,9 @@ async function getProjectsChangeReportWithFns() {
 type ProjectChangeReport = Record<
   string,
   {
-    implementationContaining: EthereumAddress[]
-    fieldHighSeverityContaining: EthereumAddress[]
-    upgradeChanges: EthereumAddress[]
+    implementationChange: EthereumAddress[]
+    highSeverityFieldChange: EthereumAddress[]
+    ultimateUpgraderChange: EthereumAddress[]
   }
 >
 
@@ -167,9 +168,9 @@ const getCachedProjectsChangeReport = cache(
 
         result[project] ??= {}
         result[project][onDiskChain] ??= {
-          implementationContaining: [],
-          fieldHighSeverityContaining: [],
-          upgradeChanges: [],
+          implementationChange: [],
+          highSeverityFieldChange: [],
+          ultimateUpgraderChange: [],
         }
 
         for (const implementationChange of implementationChanges) {
@@ -178,7 +179,7 @@ const getCachedProjectsChangeReport = cache(
           )
           assert(diffedContract, 'diffedContract is undefined')
 
-          result[project][onDiskChain].implementationContaining.push(
+          result[project][onDiskChain].implementationChange.push(
             implementationChange.address,
           )
         }
@@ -188,13 +189,13 @@ const getCachedProjectsChangeReport = cache(
             (f) => f.severity === 'HIGH',
           )
           if (!fieldDiffs) continue
-          result[project][onDiskChain].fieldHighSeverityContaining.push(
+          result[project][onDiskChain].highSeverityFieldChange.push(
             fieldHighSeverityChange.address,
           )
         }
 
         for (const upgradeChange of upgradeChanges) {
-          result[project][onDiskChain].upgradeChanges.push(
+          result[project][onDiskChain].ultimateUpgraderChange.push(
             upgradeChange.address,
           )
         }
@@ -214,7 +215,7 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
     }),
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
-    hasUpgradeChange: () => false,
+    hasUltimateUpgraderChanged: () => false,
   }
 }
 

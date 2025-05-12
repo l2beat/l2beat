@@ -185,9 +185,9 @@ function makeTechnologyContract(
 
   const changes = Object.values(projectChangeReport ?? {}).flat()
   const impactfulChangeAddresses = changes.flatMap((c) =>
-    c.implementationContaining
-      .concat(c.fieldHighSeverityContaining)
-      .concat(c.upgradeChanges),
+    c.implementationChange
+      .concat(c.highSeverityFieldChange)
+      .concat(c.ultimateUpgraderChange),
   )
 
   const impactfulChange = impactfulChangeAddresses.some((changedAddress) =>
