@@ -7,7 +7,6 @@ import type {
 import {
   type EthereumAddress,
   formatSeconds,
-  notUndefined,
 } from '@l2beat/shared-pure'
 // biome-ignore lint: chain() can't be imported individually as lodash/chain
 import { chain } from 'lodash'
@@ -77,7 +76,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           .map((d) => formatPermissionDelay(Number(d)))
           .join(' or ')
         return [
-          `* Can upgrade **${delaysString}**`,
+          `Can upgrade **${delaysString}**`,
           ...Object.values(permissionsByDelay).map((p) => {
             const name = this.projectDiscovery.getContract(p.from).name
             const vias = Object.values(p.permissionsByDelay).map((p) =>
@@ -87,7 +86,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           }),
         ].join('\n')
       })
-      .join('\n')
       .value()
   }
 
@@ -116,28 +114,28 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           })
           .join('\n')
           .value()
-        return `* Can interact with ${name}\n${permissionsString}`
+        return `Can interact with ${name}\n${permissionsString}`
       })
-      .join('\n')
       .value()
   }
 
   describePermissions(
     contractOrEoa: EntryParameters,
-    includeDirectPermissions: boolean = true,
+    _includeDirectPermissions: boolean = true,
   ) {
     console.log(`> ${contractOrEoa.name} (${contractOrEoa.type})`)
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     console.log(upgrade)
     const interact = this.describeInteractPermissions(contractOrEoa)
     console.log(interact)
+    return [...upgrade, ...interact].filter((s) => s !== '')
 
-    return [
-      ...(includeDirectPermissions
-        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-        : []),
-      ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
-    ].filter(notUndefined)
+    // return [
+    //   ...(includeDirectPermissions
+    //     ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+    //     : []),
+    //   ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+    // ].filter(notUndefined)
   }
 
   describeDirectlyReceivedPermissions(
@@ -289,10 +287,13 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   formatMultiplePermissionsVia(permissions: ReceivedPermission[]) {
     const sumTotalDelays = sum(permissions.map((p) => totalPermissionDelay(p)))
     const sumAllVias = sum(permissions.map((p) => p.via?.length ?? 0))
-    if (sumTotalDelays === 0 || sumAllVias === 0) {
+    if (sumTotalDelays === 0 && sumAllVias === 0) {
       return ''
     }
-    return permissions.map((p) => this.formatPermissionVia(p)).join(' - or ')
+    const result = permissions
+      .map((p) => this.formatPermissionVia(p))
+      .join(' - or ')
+    return `[via: ${result}]`
   }
 
   formatPermissionVia(receivedPermission: ReceivedPermission) {
