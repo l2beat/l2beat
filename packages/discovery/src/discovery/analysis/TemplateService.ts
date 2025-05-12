@@ -309,10 +309,7 @@ export class TemplateService {
         $schema: schemaProperty,
       }
 
-      writeFileSync(
-        join(templatePath, 'template.jsonc'),
-        await toPrettyJson(json),
-      )
+      writeFileSync(templatePath, await toPrettyJson(json))
 
       return true
     }
