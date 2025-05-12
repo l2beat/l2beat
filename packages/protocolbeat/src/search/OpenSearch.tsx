@@ -132,7 +132,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
                       setSourceIndex(entry.address, codeLocation.index)
                       showRange({
                         startOffset: codeLocation.offset,
-                        length: getCodeSearchTerm(searchTerm).length,
+                        length: getCodeSearchTerm(searchTerm).content.length,
                       })
                     }
                   }
