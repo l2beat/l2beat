@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { type ButtonHTMLAttributes, type SVGProps, useState } from 'react'
 import { createShape, listTemplates } from '../api/api'
@@ -45,10 +45,15 @@ function TemplateDialogBody({
   const [step, setStep] = useState<'specify-template' | 'finalize-creation'>(
     'specify-template',
   )
-  const [selected, setSelected] = useState<string | undefined>(undefined)
-  const [selectionMode, setSelectionMode] = useState<'existing' | 'new'>(
-    'existing',
-  )
+  const [templateId, setTemplateId] = useState<string | undefined>(undefined)
+  const [templateValidationMessage, setTemplateValidationMessage] = useState<
+    string | undefined
+  >(undefined)
+  const [fileName, setFileName] = useState<string | undefined>(undefined)
+  const [fileNameValidationMessage, setFileNameValidationMessage] = useState<
+    string | undefined
+  >(undefined)
+
   const {
     data: templates,
     isLoading,
@@ -58,88 +63,77 @@ function TemplateDialogBody({
     queryFn: () => listTemplates(),
   })
 
+  const mutation = useMutation({
+    mutationFn: () => {
+      if (!templateId || !fileName) {
+        throw new Error('Template ID and file name are required')
+      }
+      return createShape(project, chain, address, templateId, fileName)
+    },
+  })
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 data-[state=open]:bg-coffee-900/60" />
       <Dialog.Content className="-translate-x-1/2 -translate-y-1/2 overflow-x-none fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-[25px] shadow-[var(--shadow-6)] focus:outline-none">
         <Dialog.Title className="mb-3 font-medium text-lg">
-          Available templates
+          Add new shape
         </Dialog.Title>
 
         {isLoading && <div>Loading...</div>}
         {isError && <div>Error loading templates</div>}
-        {selected && (
-          <div>
-            <span>{selected}</span>
-          </div>
-        )}
         {templates && step === 'specify-template' && (
           <>
-            <div className="mb-4 flex flex-col">
-              <label className="flex cursor-pointer items-center gap-2">
-                <input
-                  type="radio"
-                  name="templateMode"
-                  checked={selectionMode === 'existing'}
-                  onChange={() => setSelectionMode('existing')}
-                  className="accent-coffee-300"
-                />
-                <span>Use existing template</span>
-              </label>
-              <label className="flex cursor-pointer items-center gap-2">
-                <input
-                  type="radio"
-                  name="templateMode"
-                  checked={selectionMode === 'new'}
-                  onChange={() => setSelectionMode('new')}
-                  className="accent-coffee-300"
-                />
-                <span>Create new template</span>
-              </label>
-            </div>
-
-            {selectionMode === 'existing' && (
-              <SelectPredefinedTemplate
-                templates={templates}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )}
-            {selectionMode === 'new' && (
-              <div>
-                <span>New template</span>
-              </div>
-            )}
+            <SelectPredefinedTemplate
+              templates={templates}
+              templateId={templateId}
+              setTemplateId={setTemplateId}
+              templateValidationMessage={templateValidationMessage}
+              fileName={fileName}
+              setFileName={setFileName}
+              fileNameValidationMessage={fileNameValidationMessage}
+            />
           </>
         )}
-        {step === 'finalize-creation' && (
-          <div className="flex flex-col gap-2">
-            <span>Finalize creation</span>
-            <div className="flex flex-col gap-2">
-              <span>Address</span>
-              <span>{address}</span>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span>Project</span>
-              <span>{project}</span>
-            </div>
-          </div>
+        {step === 'finalize-creation' && templateId && fileName && (
+          <FinalizeTemplate
+            templateId={templateId}
+            fileName={fileName}
+            address={address}
+            chain={chain}
+          />
         )}
 
-        <div className="mt-5 flex justify-end">
-          <DialogButton
-            disabled={!selected}
-            onClick={() => setStep('finalize-creation')}
-          >
-            Next
-          </DialogButton>
-          {selected && (
-            <DialogButton
-              disabled={!selected}
-              onClick={() => createShape(project, chain, address, selected)}
-            >
-              Finalize
+        <div className="mt-5 flex justify-end gap-1">
+          {step === 'finalize-creation' && (
+            <DialogButton onClick={() => setStep('specify-template')}>
+              Back
             </DialogButton>
+          )}
+          {step === 'specify-template' && (
+            <DialogButton
+              disabled={!templateId || !fileName}
+              onClick={() => setStep('finalize-creation')}
+            >
+              Next
+            </DialogButton>
+          )}
+          {step === 'finalize-creation' && templateId && fileName && (
+            <DialogButton
+              disabled={!templateId || !fileName}
+              onClick={() => mutation.mutate()}
+            >
+              Create shape
+            </DialogButton>
+          )}
+        </div>
+        <div className="flex text-xs">
+          {mutation.isPending && <div>Creating shape...</div>}
+          {mutation.isError && (
+            <div>Error creating shape, {mutation.error.message}</div>
+          )}
+          {mutation.isSuccess && (
+            <div>Shape created or updated successfully</div>
           )}
         </div>
         <Dialog.Close asChild>
@@ -190,26 +184,96 @@ function DialogButton({
 
 function SelectPredefinedTemplate({
   templates,
-  selected,
-  setSelected,
+  templateId,
+  setTemplateId,
+  templateValidationMessage,
+  fileName,
+  setFileName,
+  fileNameValidationMessage,
 }: {
   templates: Record<string, string[]>
-  selected: string | undefined
-  setSelected: (selected: string) => void
+  templateId: string | undefined
+  setTemplateId: (templateId: string) => void
+  templateValidationMessage: string | undefined
+  fileName: string | undefined
+  setFileName: (fileName: string) => void
+  fileNameValidationMessage: string | undefined
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <h3 className="text-sm">Select existing template</h3>
+      <div className="flex flex-col gap-0.5">
+        <label className="text-xs">Template ID</label>
+        <input
+          value={templateId}
+          onChange={(e) => setTemplateId(e.target.value)}
+          type="text"
+          className="border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm"
+        />
+        {templateValidationMessage && (
+          <span className="text-red-500">{templateValidationMessage}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-0.5">
+        <label className="text-xs">Filename</label>
+        <input
+          type="text"
+          value={fileName}
+          onChange={(e) => setFileName(e.target.value)}
+          className="border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm"
+        />
+        {fileNameValidationMessage && (
+          <span className="text-red-500">{fileNameValidationMessage}</span>
+        )}
+      </div>
+      <h3 className="text-sm">Available templates</h3>
+
       <div className="flex max-h-[40vh] flex-col overflow-y-auto border border-1 p-1 text-sm leading-tight">
-        {Object.entries(templates).map(([name, templates]) => (
-          <Folder
-            key={name}
-            name={name}
-            entries={templates}
-            selected={selected}
-            setSelected={setSelected}
-          />
-        ))}
+        {templates && Object.keys(templates).length > 0 ? (
+          Object.entries(templates).map(([name, templates]) => (
+            <Folder
+              key={name}
+              name={name}
+              entries={templates}
+              selected={templateId}
+              setSelected={setTemplateId}
+            />
+          ))
+        ) : (
+          <div className="text-center text-coffee-400">No templates found</div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function FinalizeTemplate({
+  templateId,
+  fileName,
+  address,
+  chain,
+}: {
+  templateId: string
+  fileName: string
+  address: string
+  chain: string
+}) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-col leading-tight">
+        <span className="text-coffee-400 text-sm">Template ID</span>
+        <span>{templateId}</span>
+      </div>
+      <div className="flex flex-col leading-tight">
+        <span className="text-coffee-400 text-sm">Filename</span>
+        <span>{fileName}</span>
+      </div>
+      <div className="flex flex-col leading-tight">
+        <span className="text-coffee-400 text-sm">Address</span>
+        <span>{address}</span>
+      </div>
+      <div className="flex flex-col leading-tight">
+        <span className="text-coffee-400 text-sm">Chain</span>
+        <span>{chain}</span>
       </div>
     </div>
   )
@@ -226,11 +290,14 @@ function Folder({
   selected: string | undefined
   setSelected: (selected: string) => void
 }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   if (entries.length === 0) {
     return (
-      <div className="flex cursor-default gap-1">
+      <div
+        className="flex cursor-pointer gap-1 hover:text-coffee-400 hover:underline"
+        onClick={() => setSelected(name)}
+      >
         <IconContract className="size-2" />
         <span>{name}</span>
       </div>
@@ -239,12 +306,14 @@ function Folder({
 
   return (
     <div className="flex flex-col">
-      <div
-        className="group flex cursor-pointer items-center gap-1"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <IconFolderOpened /> : <IconFolder />}
-        <span className="group-hover:text-coffee-400 group-hover:underline">
+      <div className="group flex cursor-pointer items-center gap-1">
+        <div onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <IconFolderOpened /> : <IconFolder />}
+        </div>
+        <span
+          className="group-hover:text-coffee-400 group-hover:underline"
+          onClick={() => setSelected(name)}
+        >
           {name}
         </span>
       </div>

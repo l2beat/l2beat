@@ -9,6 +9,7 @@ const createTemplateSchema = z.object({
   address: z.string(),
   project: z.string(),
   templateId: z.string(),
+  fileName: z.string(),
 })
 
 export function attachTemplateRouter(
@@ -18,24 +19,23 @@ export function attachTemplateRouter(
 ) {
   app.get('/api/templates', (_req, res) => {
     const directories = listDirectories(templateService)
-    console.dir({ directories }, { depth: null })
     res.json(directories)
   })
 
   app.post('/api/templates/create-shape', async (req, res) => {
-    const { project, chain, address, templateId } = createTemplateSchema.parse(
-      req.body,
-    )
+    const { project, chain, address, templateId, fileName } =
+      createTemplateSchema.parse(req.body)
 
-    await createShape(
+    const result = await createShape(
       templateService,
       configReader,
       project,
       address,
-      templateId,
       chain,
+      templateId,
+      fileName,
     )
 
-    res.json({ success: true })
+    res.json(result)
   })
 }

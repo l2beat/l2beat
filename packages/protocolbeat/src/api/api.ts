@@ -101,10 +101,9 @@ export async function createShape(
   chain: string,
   address: string,
   templateId: string,
+  fileName: string,
 ) {
-  const body = { project, chain, address, templateId }
-
-  console.log(body)
+  const body = { project, chain, address, templateId, fileName }
 
   const res = await fetch('/api/templates/create-shape', {
     method: 'POST',
