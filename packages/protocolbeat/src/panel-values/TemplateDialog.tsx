@@ -5,6 +5,8 @@ import {
   type ButtonHTMLAttributes,
   type InputHTMLAttributes,
   type SVGProps,
+  createContext,
+  useContext,
   useState,
 } from 'react'
 import { createShape, listTemplates } from '../api/api'
@@ -25,6 +27,15 @@ interface TemplateFormData {
   fileName: string
 }
 
+interface DialogContextType {
+  step: DialogStep
+  setStep: (step: DialogStep) => void
+  formData: TemplateFormData
+  setFormData: React.Dispatch<React.SetStateAction<TemplateFormData>>
+}
+
+const DialogContext = createContext<DialogContextType | null>(null)
+
 export const TemplateDialog = {
   Root: TemplateDialogRoot,
   Trigger: TemplateDialogTrigger,
@@ -32,7 +43,30 @@ export const TemplateDialog = {
 }
 
 function TemplateDialogRoot({ children }: { children: React.ReactNode }) {
-  return <Dialog.Root>{children}</Dialog.Root>
+  const [step, setStep] = useState<DialogStep>('specify-template')
+  const [formData, setFormData] = useState<TemplateFormData>({
+    templateId: '',
+    fileName: '',
+  })
+
+  return (
+    <DialogContext.Provider value={{ step, setStep, formData, setFormData }}>
+      <Dialog.Root
+        onOpenChange={(open) => {
+          if (!open) {
+            // Reset state when dialog is closed
+            setStep('specify-template')
+            setFormData({
+              templateId: '',
+              fileName: '',
+            })
+          }
+        }}
+      >
+        {children}
+      </Dialog.Root>
+    </DialogContext.Provider>
+  )
 }
 
 function TemplateDialogTrigger({
@@ -52,11 +86,10 @@ function TemplateDialogTrigger({
 }
 
 function TemplateDialogBody({ address, project, chain }: TemplateDialogProps) {
-  const [step, setStep] = useState<DialogStep>('specify-template')
-  const [formData, setFormData] = useState<TemplateFormData>({
-    templateId: '',
-    fileName: '',
-  })
+  const context = useContext(DialogContext)
+  if (!context)
+    throw new Error('TemplateDialogBody must be used within TemplateDialogRoot')
+  const { step, setStep, formData, setFormData } = context
 
   const {
     data: templates,
@@ -90,8 +123,8 @@ function TemplateDialogBody({ address, project, chain }: TemplateDialogProps) {
 
   return (
     <Dialog.Portal>
-      <Dialog.Overlay className="fixed inset-0 data-[state=open]:bg-coffee-900/60" />
-      <Dialog.Content className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-[var(--shadow-6)] focus:outline-none">
+      <Dialog.Overlay className="fixed inset-0 z-20 data-[state=open]:bg-coffee-900/60" />
+      <Dialog.Content className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-[25] max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-[var(--shadow-6)] focus:outline-none">
         <Dialog.Title className="mb-1 font-medium text-lg">
           Add new shape
         </Dialog.Title>
@@ -163,7 +196,7 @@ function DialogActions({
   mutation,
 }: DialogActionsProps) {
   return (
-    <div className="mt-6 space-y-2">
+    <div className="mt-4 space-y-2">
       <div className="flex justify-end gap-2">
         {step === 'finalize-creation' && (
           <DialogButton onClick={onBack}>Back</DialogButton>
@@ -174,7 +207,11 @@ function DialogActions({
           </DialogButton>
         )}
         {step === 'finalize-creation' && (
-          <DialogButton disabled={!isFormValid} onClick={onCreate}>
+          <DialogButton
+            disabled={!isFormValid}
+            onClick={onCreate}
+            className="bg-coffee-400"
+          >
             Create shape
           </DialogButton>
         )}
@@ -336,14 +373,13 @@ function Folder({
 
   return (
     <div className="mb-2 flex flex-col">
-      <div
-        className="group flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <IconFolderOpened /> : <IconFolder />}
+      <div className="group flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20">
+        <div onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <IconFolderOpened /> : <IconFolder />}
+        </div>
         <span
           className={clsx(
-            'text-sm group-hover:text-coffee-300',
+            'w-full text-sm group-hover:text-coffee-300',
             selected === name && 'text-coffee-300',
           )}
           onClick={() => setSelected(name)}
@@ -359,7 +395,7 @@ function Folder({
               <span
                 key={key}
                 className={clsx(
-                  'cursor-pointer pl-5 text-xs hover:bg-coffee-400/20 hover:text-coffee-300',
+                  'w-full cursor-pointer pl-5 text-xs hover:bg-coffee-400/20 hover:text-coffee-300',
                   selected === key && 'text-coffee-300',
                 )}
                 onClick={() => setSelected(key)}
@@ -381,7 +417,10 @@ function DialogButton({
   return (
     <button
       {...props}
-      className="border border-coffee-400 px-4 py-2 font-medium text-sm transition-colors hover:bg-coffee-500 disabled:opacity-50 disabled:hover:bg-transparent"
+      className={clsx(
+        'border border-coffee-400 px-4 py-1 font-medium text-sm transition-colors hover:bg-coffee-500 disabled:opacity-50 disabled:hover:bg-transparent',
+        props.className,
+      )}
     >
       {children}
     </button>
