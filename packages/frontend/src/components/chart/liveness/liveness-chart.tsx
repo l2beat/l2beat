@@ -1,7 +1,6 @@
 'use client'
 
 import partition from 'lodash/partition'
-import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -83,14 +82,14 @@ export function LivenessChart({ data, isLoading, className }: Props) {
         />
 
         {getStrokeOverFillAreaComponents({
-          data: compact([
+          data: [
             {
               dataKey: 'range',
               stroke: 'url(#strokeRange)',
               fill: 'hsl(var(--chart-pink-fill-gradient))',
               fillOpacity: 0.4,
             },
-          ]),
+          ],
         })}
         <Area
           dataKey="avg"
@@ -176,10 +175,14 @@ function formatDuration(durationInSeconds: number) {
   const remainingHours = hours - days * 24
 
   return days > 1
-    ? `${days}d ${remainingHours > 0 ? `${remainingHours}h` : ''}`
+    ? `${days}d ${getDurationText(remainingHours, 'h')} ${getDurationText(remainingMinutes, 'm')}`
     : hours > 0
-      ? `${hours}h ${remainingMinutes > 0 ? `${remainingMinutes}min` : ''}`
+      ? `${hours}h ${getDurationText(remainingMinutes, 'm')} ${getDurationText(remainingSeconds, 's')}`
       : minutes > 0
-        ? `${minutes}min ${remainingSeconds > 0 ? `${remainingSeconds}s` : ''}`
+        ? `${minutes}min ${getDurationText(remainingSeconds, 's')}`
         : `${seconds}s`
+}
+
+function getDurationText(amount: number, unit: 'd' | 'h' | 'm' | 's') {
+  return amount > 0 ? `${amount}${unit}` : ''
 }
