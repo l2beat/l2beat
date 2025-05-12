@@ -16,7 +16,6 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -59,6 +58,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
+        {/* Empty areas */}
         <Area
           dataKey="avg"
           isAnimationActive={false}
@@ -78,17 +78,15 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           strokeWidth={2}
           fill="none"
         />
-
-        {getStrokeOverFillAreaComponents({
-          data: [
-            {
-              dataKey: 'range',
-              stroke: 'url(#strokeRange)',
-              fill: 'hsl(var(--chart-pink-fill-gradient))',
-              fillOpacity: 0.4,
-            },
-          ],
-        })}
+        {/* Actual valid values */}
+        <Area
+          dataKey="range"
+          isAnimationActive={false}
+          stroke="url(#strokeRange)"
+          strokeWidth={2}
+          fill="hsl(var(--chart-pink-fill-gradient))"
+          fillOpacity={0.4}
+        />
         <Area
           dataKey="avg"
           isAnimationActive={false}
