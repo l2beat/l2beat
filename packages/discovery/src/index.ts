@@ -13,6 +13,8 @@ export {
   getChainConfig,
   getChainShortName,
   isChainShortName,
+  getChainConfigs,
+  getChainFullName,
 } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
@@ -69,12 +71,17 @@ export { NoCache } from './discovery/provider/NoCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
+  flatteningHash,
 } from './flatten/utils'
 export {
   type StructureContractConfig as ContractConfig,
   makeEntryStructureConfig,
 } from './discovery/config/structureUtils'
-export type { ExplorerConfig } from './utils/IEtherscanClient'
+export {
+  type ExplorerConfig,
+  type IEtherscanClient,
+  getExplorerClient,
+} from './utils/IEtherscanClient'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { AllProviders } from './discovery/provider/AllProviders'
@@ -108,5 +115,4 @@ export {
 } from './discovery/config/getDiscoveryPaths'
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
-export { getChainConfigs } from './config/config.discovery'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'

@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x59fd74e4a4dc51e3c208a3164504437795cf2525
+
+# Diff at Fri, 09 May 2025 10:09:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c3a1d49c07f4092914d62c65181e5fec18a88318 block: 22437961
+- current block number: 22437961
+
+## Description
+
+Config related: Move IFs to the editable string for condition configs (yeet IFs from the automatic resolver).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437961 (main branch discovery), not current.
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.7.via.1.address:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      receivedPermissions.7.via.1.delay:
+-        259200
+      receivedPermissions.7.via.1.condition:
+-        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.7.via.0.address:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.7.via.0.delay:
++        259200
+      receivedPermissions.7.via.0.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.6.via.1.address:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      receivedPermissions.6.via.1.delay:
+-        259200
+      receivedPermissions.6.via.1.condition:
+-        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.6.via.0.address:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.6.via.0.delay:
++        259200
+      receivedPermissions.6.via.0.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.5.via:
+-        [{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]
+      receivedPermissions.5.delay:
++        259200
+      receivedPermissions.5.description:
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.5.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.4.from:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      receivedPermissions.4.delay:
+-        259200
+      receivedPermissions.4.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+      receivedPermissions.4.condition:
+-        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.3.from:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.3.description:
+-        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.3.delay:
++        259200
+      receivedPermissions.3.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.3.via:
++        [{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.2.from:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      receivedPermissions.2.delay:
+-        259200
+      receivedPermissions.2.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      receivedPermissions.2.condition:
+-        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.2.via.0.condition:
+-        "there is no emergency state, in which case there would be no delay"
++        "(no delay if in emergency state)"
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      receivedPermissions.1.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      receivedPermissions.1.via.1:
++        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+      receivedPermissions.1.via.0.condition:
+-        "there is no emergency state, in which case there would be no delay"
++        "(no delay if in emergency state)"
+      directlyReceivedPermissions.0.condition:
+-        "there is no emergency state, in which case there would be no delay"
++        "(no delay if in emergency state)"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      directlyReceivedPermissions.3.condition:
+-        "there is no emergency state, in which case there would be no delay"
++        "(no delay if in emergency state)"
+      directlyReceivedPermissions.1.condition:
+-        "there is no emergency state, in which case there would be no delay"
++        "(no delay if in emergency state)"
+    }
+```
+
 Generated with discovered.json: 0x3790834c91c575a8c2dfbc1d46dbc77183da6676
 
 # Diff at Thu, 08 May 2025 09:34:56 GMT:

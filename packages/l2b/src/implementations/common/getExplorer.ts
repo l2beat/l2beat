@@ -3,7 +3,7 @@ import {
   type ExplorerConfig,
   type IEtherscanClient,
   getExplorerClient,
-} from '@l2beat/discovery/dist/utils/IEtherscanClient'
+} from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 

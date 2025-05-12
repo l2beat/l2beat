@@ -6,7 +6,7 @@
       "permissions": [
         {
           "type": "act",
-          "condition": "restricted to the global pause function"
+          "condition": "though restricted to the global pause function"
         }
       ]
     }

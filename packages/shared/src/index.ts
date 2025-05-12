@@ -1,5 +1,4 @@
 export * from './services'
 export * from './tools'
-export * from './uops'
 export * from './clients'
 export * from './providers'

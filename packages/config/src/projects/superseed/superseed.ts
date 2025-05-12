@@ -37,11 +37,12 @@ export const superseed: ScalingProject = opStackL2({
       ],
     },
   },
+  associatedTokens: ['SUPR'],
   isNodeAvailable: 'UnderReview',
   chainConfig: {
     name: 'superseed',
+    coingeckoPlatform: 'superseed',
     chainId: 5330,
-    // coingeckoPlatform: 'none',
     sinceTimestamp: genesisTimestamp,
     apis: [
       {

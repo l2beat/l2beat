@@ -6,12 +6,5 @@
   "initialAddresses": [
     "0x235000876bd58336C802B3546Fc0250f285fCc79", // Inbox
     "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80" // L1OrbitERC20Gateway
-  ],
-  "overrides": {
-    // override while unverified
-    "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8": {
-      "displayName": "OneStepProverHostIo",
-      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
-    }
-  }
+  ]
 }

@@ -278,7 +278,25 @@
     },
     {
       "mode": "auto",
-      "id": "unichain-WBTC",
+      "id": "unichain-WBTC-1",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+        "chain": "unichain",
+        "decimals": 8,
+        "sinceTimestamp": 1738952865
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-WBTC-2",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",

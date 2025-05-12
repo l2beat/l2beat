@@ -48,7 +48,9 @@ export function CodePanel() {
             name: selectedAddress
               ? toShortenedAddress(selectedAddress)
               : 'Loading',
-            code: codeResponse.isPending ? '// Loading' : '// No code',
+            code: codeResponse.isPending
+              ? '// Loading'
+              : '// No code found - either the contract is not verified or the code is not available',
           },
         ]
       : response
@@ -84,6 +86,7 @@ function CodeView({ code, range }: { code: string; range: Range | undefined }) {
   const { editor, setEditor, showRange } = useCodeStore()
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
+  const fullScreen = useMultiViewStore((state) => state.fullScreen)
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -108,7 +111,7 @@ function CodeView({ code, range }: { code: string; range: Range | undefined }) {
 
   useEffect(() => {
     editor?.resize()
-  }, [editor, panels, pickedUp])
+  }, [editor, panels, pickedUp, fullScreen])
 
   useEffect(() => {
     if (range !== undefined) {

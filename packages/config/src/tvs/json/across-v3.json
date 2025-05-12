@@ -1743,6 +1743,47 @@
     },
     {
       "mode": "auto",
+      "id": "across-v3-WLD",
+      "priceId": "worldcoin-wld",
+      "symbol": "WLD",
+      "name": "Worldcoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+            "chain": "ethereum",
+            "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+            "decimals": 18,
+            "sinceTimestamp": 1690156800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+            "chain": "ethereum",
+            "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+            "decimals": 18,
+            "sinceTimestamp": 1690156800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+            "chain": "ethereum",
+            "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+            "decimals": 18,
+            "sinceTimestamp": 1690156800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "across-v3-ZK",
       "priceId": "zksync",
       "symbol": "ZK",
