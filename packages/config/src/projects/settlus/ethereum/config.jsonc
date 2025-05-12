@@ -2,7 +2,7 @@
   "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "settlus",
-  "import": ["../../globalConfig.jsonc"],
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0xFc1D560eB01443e31B0EB56620703E80e42A7E4e"],
   "overrides": {
     "0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76": {

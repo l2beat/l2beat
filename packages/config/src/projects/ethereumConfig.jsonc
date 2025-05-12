@@ -1,13 +1,150 @@
 {
   "import": ["globalConfig.jsonc"],
   "names": {
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
+    // mapping contracts in this chain-specific config instead of the global config (EOAs though are multichain in EVM)
     "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": "Avail Multisig 1",
     "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": "Avail Multisig 2",
     "0x02993cdC11213985b9B13224f3aF289F03bf298d": "Vector",
 
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig",
-    "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "Hashi Multisig"
+    "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "Hashi Multisig",
+
+    "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "Alchemy Multisig 1",
+
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "Optimism Security Council",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "Optimism Guardian Multisig",
+
+    "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "Arbitrum Multisig 1",
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "Arbitrum Multisig 2",
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "Arbitrum Security Council",
+
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 1",
+    "0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110": "Base Multisig 2",
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Coordinator Multisig",
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Governance Multisig",
+    "0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": "Base Security Council",
+
+    "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
+    "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZK Foundation Multisig",
+
+    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "Starkware Multisig 1",
+    "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "Starkware Multisig 2",
+    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "Starkware Multisig 3",
+    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "Starkware Multisig 4",
+    "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "Starkware SCMinority Multisig",
+    "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "Starkware Security Council",
+    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARP Multisig",
+
+    "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05": "BlastMultisig 1",
+    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BlastMultisig 2",
+
+    "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "Linea Multisig",
+
+    "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "Bob Multisig 1",
+    "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "Bob Multisig 2",
+
+    "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "Scroll Multisig 1",
+    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "Scroll Multisig 2",
+    "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",
+    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
+    "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council",
+
+    "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "Zircuit Multisig 1",
+    "0x2c0B27F7C8F083B539557a0bA787041BF22DB276": "Zircuit Multisig 2",
+
+    "0x309Fe2536d01867018D120b40e4676723C53A14C": "Mode Multisig",
+
+    "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "Taiko Multisig",
+
+    "0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1": "Unichain Multisig 2",
+    "0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC": "Unichain Multisig 1",
+
+    "0x509182eC226b3B71D36A3255A80EF0b1A9D43033": "Soneium Multisig",
+
+    "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45": "Lisk Multisig",
+
+    "0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E": "Swell Multisig",
+
+    "0x32da601374b38154f05904B16F44A1911Aa6f314": "Fuel Security Council",
+
+    "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "Paradex Multisig",
+
+    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "Abstract Multisig",
+
+    "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
+
+    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto Security Council",
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "Kinto Multisig",
+    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "Turnkey Multisig",
+
+    "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "Morph Multisig 2",
+    "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "Morph Multisig 1",
+
+    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "Zora Multisig 1",
+    "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "Zora Multisig 2",
+
+    "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "Boba Multisig",
+
+    "0x441F31C4cdf772558D4EA31f3114de59aE145E7c": "Hashkey Multisig 1",
+    "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A": "Hashkey Multisig 2",
+    "0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3": "Hashkey Multisig 3",
+
+    "0xe57E217d8ed498992452791622711B866403E950": "Kroma Multisig",
+
+    "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9": "Zeronetwork Multisig",
+
+    "0xb2B01DeCb6cd36E7396b78D3744482627F22C525": "Facet Multisig",
+
+    "0xfB04A190dC7D91E86109433858A48E0B98EF1450": "DeBank Multisig",
+
+    "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c": "Swan Network Multisig",
+
+    "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C": "Optopia Multisig",
+
+    "0xa00d50A40B1635D293c87BA36503bD2504b5D818": "TermStructure Multisig 1",
+    "0x23bCad9BFB1378cd45b32525B835F037b673f529": "TermStructure Multisig 2",
+    "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165": "TermStructure Multisig 3",
+    "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca": "TermStructure Multisig 4",
+
+    "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea": "Race Multisig 1",
+    "0x2E7B9465B25C081c07274A31DbD05C6146f67961": "Race Multisig 2",
+    "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9": "Race Multisig 3",
+
+    "0xB68361AAac2Bc8a4b8BFe36B8C6d0B429b5930ea": "EthernityMultisig",
+
+    "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
+
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "Conduit Multisig 1",
+    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "Conduit Multisig 2",
+    "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "Conduit Multisig 3",
+
+    "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
+
+    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "Gelato Multisig",
+
+    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig 1",
+    "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "Caldera Multisig 2",
+    "0x2bf43034b9559643e986A2fE3cE015a18247b904": "Caldera Multisig 3",
+
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "Lido Dao Agent",
+
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress",
+
+    "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "Succinct Multisig 1",
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
+
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerOperationsMultisig2",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
+    "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": "EigenLayerRewardsInitiatorMultisig",
+    "0x002721B4790d97dC140a049936aA710152Ba92D5": "EigenDAOperationsMultisig",
+    "0x942eaF324971440384e4cA0ffA39fC3bb369D67d": "EigenLayerBeigenOwningMultisig",
+    "0x5050389572f2d220ad927CcbeA0D406831012390": "EigenLayerPauserMultisig",
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
+    "0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "EigenLayerTokenMultisig"
   },
   "types": {
     "StarknetProgramHash": {
