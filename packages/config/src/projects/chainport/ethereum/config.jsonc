@@ -26,7 +26,7 @@
       "fields": {
         "proposalCount": {
           "description": "The amount of proposals ever created. Goes up by 1 for each proposal.",
-          "severity": "MEDIUM"
+          "severity": "LOW"
         }
       }
     },

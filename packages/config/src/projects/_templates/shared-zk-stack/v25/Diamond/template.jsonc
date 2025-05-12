@@ -59,7 +59,7 @@
     },
     "getProtocolVersion": {
       "description": "Protocol version, increments with each protocol upgrade.",
-      "severity": "MEDIUM"
+      "severity": "LOW"
     },
     "getVerifierParams": {
       "description": "Verifier parameters used for proving batches.",

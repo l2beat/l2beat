@@ -9,7 +9,7 @@
     },
     "getHopperConfiguration": {
       "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds.",
-      "severity": "MEDIUM"
+      "severity": "LOW"
     }
   }
 }
