@@ -6,6 +6,11 @@ TODO
 
 ## The `proposeBlockV2` function
 
+<figure>
+    <img src="../../static/assets/taiko_sequencing.svg" alt="Taiko sequencing">
+    <figcaption>Structures and checks involved when sequencing a block.</figcaption>
+</figure>
+
 This function is the main entry point to sequence blocks on Taiko Alethia, and it allows to sequence a single block. The function is defined as follows:
 
 ```solidity
@@ -51,7 +56,7 @@ function getConfig() public pure override returns (TaikoData.Config memory) {
 }
 ```
 
-The function makes use of a `Local` structure to get around stack too deep issues. The contract saves the latest state in the `state` variable, which is a `State` structure defined as follows:
+The function makes use of a `Local` structure to get around stack too deep issues. The contract stores the latest state in the `state` variable, which is a `State` structure defined as follows:
 
 ```solidity
 struct State {
@@ -173,3 +178,7 @@ struct BlockMetadataV2 {
 ```
 
 It is recommended to check the diagram above to understand how it is constructed. A `BlockV2` structure is also populated to be then saved in the `blocks` mapping under the `numBlock % blockRingBufferSize` key. It's important to note that the `BlockV2`'s `proposedIn` for a block has a different meaning than the `BlockMetadataV2`'s `proposedIn`, as the former represents its `anchorBlockId`, and the latter represents the time when it is actually proposed. Then the `numBlocks` is incremented, and the `lastProposedIn` is set to the current block number. Finally, the `debitBond` function is called to collect the liveness bond, which is slashed if the proposed block doesn't get timely proven. The token used is the `_bondToken`, and the amount is the `livenessBond` value.
+
+If the `maxBlocksToVerify` value is not set to zero, and the `meta_`'s `id` plus `maxBlocksToVerify >> 2` is divisible by `maxBlocksToVerify >> 1`, then the `verifyBlock` function is called (e.g. if `maxBlocksToVerify` is 16, then blocks 4, 12, 20, 28, etc. will call this function). The `verifyBlock` function is discussed in the [proof system](proof_system.md) page.
+
+
