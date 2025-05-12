@@ -1,6 +1,7 @@
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
+  ApiListTemplatesResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
@@ -84,4 +85,35 @@ export function executeMatchFlat(
     against,
   })
   return new EventSource(`/api/terminal/match-flat?${params}`)
+}
+
+export async function listTemplates(): Promise<ApiListTemplatesResponse> {
+  const res = await fetch('/api/templates')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiListTemplatesResponse
+}
+
+export async function createShape(
+  project: string,
+  chain: string,
+  address: string,
+  templateId: string,
+) {
+  const body = { project, chain, address, templateId }
+
+  console.log(body)
+
+  const res = await fetch('/api/templates/create-shape', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
 }

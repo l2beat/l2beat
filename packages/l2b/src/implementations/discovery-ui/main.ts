@@ -13,6 +13,7 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
+import { attachTemplateRouter } from './template-rpc/router'
 
 const safeStringSchema = z
   .string()
@@ -118,6 +119,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const response = getCode(paths, configReader, project, address)
     res.json(response)
   })
+
+  attachTemplateRouter(app, templateService, configReader)
 
   app.use(express.static(STATIC_ROOT))
 

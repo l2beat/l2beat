@@ -16,6 +16,7 @@ import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
+import { TemplateDialog } from './TemplateDialog'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -95,6 +96,10 @@ function Display({
   chain: string
   blockNumber: number
 }) {
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
   const address = getAddressToCopy(selected)
 
   const copy = address && canCopy(selected) && !isReadOnly && (
@@ -117,7 +122,22 @@ function Display({
               <span className="text-aux-red"> (Unverified)</span>
             )}
           </div>
-          {copy}
+          <div className="hidden">{copy}</div>
+          <TemplateDialog.Root>
+            <TemplateDialog.Trigger
+              disabled={false}
+              className="relative ml-2 cursor-pointer overflow-hidden bg-coffee-400 px-3 py-1 font-medium text-sm text-white transition-all duration-300 before:absolute before:inset-0 before:animate-[disco_2s_linear_infinite] before:bg-gradient-to-r before:from-aux-pink before:via-aux-purple before:to-aux-blue before:opacity-0 after:absolute after:inset-0 after:animate-[disco_2s_linear_infinite_1s] after:bg-gradient-to-r after:from-aux-yellow after:via-aux-green after:to-aux-red after:opacity-0 hover:shadow-lg hover:after:animate-[disco_1s_linear_infinite_0.5s] hover:after:opacity-100 hover:before:animate-[disco_1s_linear_infinite] hover:before:opacity-100"
+            >
+              <div>
+                <span className="relative z-10">Add shape</span>
+              </div>
+            </TemplateDialog.Trigger>
+            <TemplateDialog.Body
+              address={selected.address}
+              project={project}
+              chain={chain}
+            />
+          </TemplateDialog.Root>
         </div>
         <WithHeadline headline="Address">
           <AddressDisplay

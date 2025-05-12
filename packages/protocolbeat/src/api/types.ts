@@ -46,6 +46,8 @@ export interface ApiProjectChain {
   blockNumber: number
 }
 
+export type ApiListTemplatesResponse = Record<string, string[]>
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'
