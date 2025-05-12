@@ -11,7 +11,6 @@ import type { ContractUtils } from './get-contract-utils'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
-  type: 'layer2' | 'layer3' | 'bridge'
   id: ProjectId
   permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   isUnderReview: boolean
