@@ -48,6 +48,15 @@ export interface ApiProjectChain {
 
 export type ApiListTemplatesResponse = Record<string, string[]>
 
+export type ApiCreateShapeResponse =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      error: string
+    }
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'

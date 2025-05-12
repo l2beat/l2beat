@@ -26,16 +26,33 @@ export function attachTemplateRouter(
     const { project, chain, address, templateId, fileName } =
       createTemplateSchema.parse(req.body)
 
-    const result = await createShape(
-      templateService,
-      configReader,
-      project,
-      address,
-      chain,
-      templateId,
-      fileName,
+    const result = await wrapError(async () =>
+      createShape(
+        templateService,
+        configReader,
+        project,
+        address,
+        chain,
+        templateId,
+        fileName,
+      ),
     )
 
-    res.json(result)
+    res.status(result.success ? 201 : 500).json(result)
   })
+}
+
+async function wrapError<T>(fn: () => Promise<T>) {
+  try {
+    return {
+      success: true,
+      value: await fn(),
+    } as const
+  } catch (e) {
+    console.error(e)
+    return {
+      success: false,
+      error: e instanceof Error ? e.message : 'Unknown error',
+    } as const
+  }
 }

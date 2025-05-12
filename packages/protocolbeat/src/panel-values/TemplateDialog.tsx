@@ -66,7 +66,7 @@ function TemplateDialogBody({
   const mutation = useMutation({
     mutationFn: () => {
       if (!templateId || !fileName) {
-        throw new Error('Template ID and file name are required')
+        return Promise.resolve()
       }
       return createShape(project, chain, address, templateId, fileName)
     },

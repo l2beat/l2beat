@@ -32,29 +32,12 @@ export async function createShape(
     templateService.reload()
   }
 
-  return wrapError(async () => {
-    await templateService.addToShape(
-      templateId,
-      chain,
-      rawAddress,
-      fileName,
-      discovery.blockNumber,
-      source,
-    )
-  })
-}
-
-async function wrapError<T>(fn: () => Promise<T>) {
-  try {
-    return {
-      success: true,
-      value: await fn(),
-    } as const
-  } catch (e) {
-    console.error(e)
-    return {
-      success: false,
-      error: e,
-    } as const
-  }
+  return templateService.addToShape(
+    templateId,
+    chain,
+    rawAddress,
+    fileName,
+    discovery.blockNumber,
+    source,
+  )
 }

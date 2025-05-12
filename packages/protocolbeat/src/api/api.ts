@@ -1,6 +1,7 @@
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
+  ApiCreateShapeResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
@@ -112,7 +113,10 @@ export async function createShape(
       'Content-Type': 'application/json',
     },
   })
-  if (!res.ok) {
-    throw new Error(res.statusText)
+
+  const data: ApiCreateShapeResponse = await res.json()
+
+  if (!data.success) {
+    throw new Error(data.error)
   }
 }
