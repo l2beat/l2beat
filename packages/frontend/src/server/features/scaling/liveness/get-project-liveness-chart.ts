@@ -51,6 +51,12 @@ export const getCachedProjectLivenessChartData = cache(
         adjustedRange,
       )
 
+    if (entries.length === 0) {
+      return {
+        data: [],
+      }
+    }
+
     const groupedByDay = new Map<number, AggregatedLiveness2Record>(
       entries.map((e) => [e.timestamp, e]),
     )
