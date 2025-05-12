@@ -38,7 +38,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
   const chartMeta = {
     range: {
       label: 'Min&max submission interval',
-      color: 'hsl(var(--chart-pink-fill-gradient))',
+      color: 'hsl(var(--chart-pink))',
       indicatorType: {
         shape: 'line',
       },
@@ -46,9 +46,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
     avg: {
       label: 'Average interval',
       color: '#EF43B4',
-      indicatorType: {
-        shape: 'line',
-      },
+      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
 
