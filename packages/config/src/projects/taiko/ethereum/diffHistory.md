@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x78a2ca3f1dc77ac6b3ae2753e60e78a84666e6aa
+Generated with discovered.json: 0xc8f22e4544879faccb7b4da31a0828832341db80
 
-# Diff at Mon, 12 May 2025 15:57:47 GMT:
+# Diff at Mon, 12 May 2025 16:38:13 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e7801928b60345a3e550e0f818e51329f969ff6f block: 22297586
-- current block number: 22468232
+- current block number: 22468433
 
 ## Description
 
@@ -115,6 +115,8 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
     +++ description: Verifier contract for blocks proven by Guardian minority.
       template:
 +        "taiko/GuardianMinorityProver"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"Minority guardians can prove blocks on the second highest tier."}]
     }
 ```
 
@@ -205,6 +207,8 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
     +++ description: Verifier contract for Guardian proven blocks.
       template:
 +        "taiko/GuardianProver"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"Guardians, acting as a multisig, can prove blocks on the highest tier."},{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"as the chain watchdog, it can pause proving of blocks."}]
     }
 ```
 

@@ -98,7 +98,13 @@
               "0x636861696e5f7761746368646f67000000000000000000000000000000000000",
               "false"
             ] // bytes32("chain_watchdog");
-          }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "as the chain watchdog, it can pause proving of blocks."
+            }
+          ]
         },
         "erc1155_vault": {
           "handler": {
@@ -238,7 +244,13 @@
               "0x746965725f677561726469616e00000000000000000000000000000000000000",
               "false"
             ] // bytes32("tier_guardian")
-          }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Guardians, acting as a multisig, can prove blocks on the highest tier."
+            }
+          ]
         },
         "verifier_TIER_GUARDIAN_MINORITY": {
           "handler": {
@@ -248,7 +260,13 @@
               "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
               "false"
             ] // bytes32("tier_guardian_minority")
-          }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Minority guardians can prove blocks on the second highest tier."
+            }
+          ]
         },
         "verifier_TIER_OPTIMISTIC": {
           "handler": {

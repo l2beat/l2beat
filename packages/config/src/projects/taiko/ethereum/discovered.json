@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22468232,
+  "blockNumber": 22468433,
   "configHash": "0xba80bc4b0160ceecc5b9649029b4829dbdae01b5767b14426012db83a8b3ce83",
   "entries": [
     {
@@ -210,14 +210,14 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 1144895,
-          "blockHash_": "0x7db43ae117066af6e6442de42109a23df728a4268c87be25de96889eed12b720",
-          "stateRoot_": "0xe7f312eeff112ed459aa8a0878258bc5d78b48942b29efed4cf465f765c4c912",
-          "verifiedAt_": 1747049447
+          "blockId_": 1144911,
+          "blockHash_": "0x5eaf639a5b0a9891091bfb1e94db19ef4960e8cedca6a9350113ec94b277794b",
+          "stateRoot_": "0xc6684a8ddfab5b5dbf7d81de4381b48fc1d03781492319b590e90cfcdaf52212",
+          "verifiedAt_": 1747050131
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1144902,
-          "blockHash_": "0x7fc400f8b93bf3c716d88da2500e64881f9f3c99e65b9911950d9267430a7b8d",
+          "blockId_": 1144916,
+          "blockHash_": "0xd2a5dbd1cd6c6f1b645bf3b784e887cd9eb2d0b32ce0bed13e5366aca961d8e1",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "verifiedAt_": 1747050899
         },
@@ -225,20 +225,20 @@
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1144895,
-            "lastSynecdAt": 1747065323
+            "lastSyncedBlockId": 1144911,
+            "lastSynecdAt": 1747065755
           },
           {
-            "numBlocks": 1145167,
-            "lastVerifiedBlockId": 1144902,
+            "numBlocks": 1145203,
+            "lastVerifiedBlockId": 1144916,
             "provingPaused": false,
-            "lastProposedIn": 22468230,
+            "lastProposedIn": 22468429,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 22468230,
+        "lastProposedIn": 22468429,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -260,14 +260,14 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1144895,
-            "lastSynecdAt": 1747065323
+            "lastSyncedBlockId": 1144911,
+            "lastSynecdAt": 1747065755
           },
           "slotB": {
-            "numBlocks": 1145167,
-            "lastVerifiedBlockId": 1144902,
+            "numBlocks": 1145203,
+            "lastVerifiedBlockId": 1144916,
             "provingPaused": false,
-            "lastProposedIn": 22468230,
+            "lastProposedIn": 22468429,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -350,7 +350,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1747065455,
+        "clock": 1747067879,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -600,6 +600,13 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for blocks proven by Guardian minority.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "description": "Minority guardians can prove blocks on the second highest tier."
+        }
+      ],
       "sinceTimestamp": 1714550627,
       "sinceBlock": 19773965,
       "values": {
@@ -1411,6 +1418,18 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifier contract for Guardian proven blocks.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "description": "as the chain watchdog, it can pause proving of blocks."
+        },
+        {
+          "permission": "interact",
+          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "description": "Guardians, acting as a multisig, can prove blocks on the highest tier."
+        }
+      ],
       "sinceTimestamp": 1714550627,
       "sinceBlock": 19773965,
       "values": {
@@ -2534,8 +2553,8 @@
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
-    "taiko/TaikoL1Contract": "0x86735ce2f1bc05e37466e66f7cb4684ac5ee64e3e0f4cfac4209152dfc90b72e",
+    "taiko/TaikoL1Contract": "0xde92674e572f8b04073a30bc53199dda0763ff7a0967fdaf5ee9070a173b16e4",
     "taiko/TaikoToken": "0x1995b6ff08e9d6507add238bda6de7508f15484c51b465775c8044a2f429baeb"
   },
-  "permissionsConfigHash": "0x7d49bb5ffcbeb3a0e5100c983c1b9dabadc70b24d0a5b1cf81d6faef0099d38e"
+  "permissionsConfigHash": "0x9277e7aa5f3c0747fc8f77bee4cd9023a4fa33de3a2b794017714ee903b9431d"
 }

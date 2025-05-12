@@ -451,14 +451,6 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
       //     `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
       //   ),
       //   discovery.getPermissionDetails(
-      //     'ChainWatchdog',
-      //     discovery.getPermissionedAccounts(
-      //       'TaikoL1Contract',
-      //       'chain_watchdog',
-      //     ),
-      //     'The chain watchdog role can pause proving of blocks.',
-      //   ),
-      //   discovery.getPermissionDetails(
       //     'SequencerBlockOne',
       //     discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
       //     'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
