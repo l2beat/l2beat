@@ -38,14 +38,14 @@ export function LivenessChart({ data, isLoading, className }: Props) {
   const chartMeta = {
     range: {
       label: 'Min&max submission interval',
-      color: 'hsl(var(--chart-pink))',
+      color: 'hsl(var(--chart-pink-stroke-gradient-1))',
       indicatorType: {
         shape: 'line',
       },
     },
     avg: {
       label: 'Average interval',
-      color: '#EF43B4',
+      color: 'hsl(var(--chart-pink))',
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
@@ -64,7 +64,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           isAnimationActive={false}
           strokeWidth={2}
           legendType="none"
-          stroke="#CCD0DA"
+          stroke="hsl(var(--divider))"
           fill="none"
           connectNulls
           strokeDasharray="5 5"
@@ -72,7 +72,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
         <Area
           dataKey="range"
           isAnimationActive={false}
-          stroke="#CCD0DA"
+          stroke="hsl(var(--divider))"
           legendType="none"
           connectNulls
           strokeWidth={2}
@@ -93,7 +93,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           dataKey="avg"
           isAnimationActive={false}
           strokeWidth={2}
-          stroke="#EF43B4"
+          stroke="hsl(var(--chart-pink))"
           fill="none"
           strokeDasharray="5 5"
         />
@@ -106,7 +106,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
             },
             tickFormatter: (value: number) => formatDuration(value),
             scale: 'lin',
-            domain: ['dataMin', 'dataMax'],
+            domain: ([dataMin, dataMax]) => [dataMin, dataMax],
           },
         })}
         <ChartTooltip content={<LivenessCustomTooltip />} />
