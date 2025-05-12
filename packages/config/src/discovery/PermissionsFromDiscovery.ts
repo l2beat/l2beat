@@ -9,6 +9,8 @@ import {
   formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
+// biome-ignore lint: chain() can't be imported individually as lodash/chain
+import { chain } from 'lodash'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
@@ -24,8 +26,6 @@ import {
   isMultisigLike,
   trimTrailingDots,
 } from './utils'
-// biome-ignore lint: chain() can't be imported individually as lodash/chain
-import { chain } from 'lodash'
 
 export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
@@ -77,7 +77,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           .map((d) => formatPermissionDelay(Number(d)))
           .join(' or ')
         return [
-          '* Can upgrade ' + delaysString,
+          `* Can upgrade **${delaysString}**`,
           ...Object.values(permissionsByDelay).map((p) => {
             const name = this.projectDiscovery.getContract(p.from).name
             const vias = Object.values(p.permissionsByDelay).map((p) =>
@@ -108,7 +108,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
             )
             if (sumTotalDelays > 0) {
               result.push(
-                `${permissions.map((p) => formatPermissionDelay(totalPermissionDelay(p))).join(' or ')}`,
+                `**${permissions.map((p) => formatPermissionDelay(totalPermissionDelay(p))).join(' or ')}**`,
               )
             }
             result.push(this.formatMultiplePermissionsVia(permissions))
@@ -308,7 +308,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     } else {
       result.push('- acting directly')
     }
-    // top level delay and condition
+    // if via is empty, there still may be a direct delay or condition:
     if (receivedPermission.delay) {
       result.push(formatPermissionDelay(receivedPermission.delay))
     }
