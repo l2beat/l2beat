@@ -1,4 +1,3 @@
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -13,6 +12,7 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { LivenessChartTimeRange } from './utils/chart-range'
 import { getFullySyncedLivenessRange } from './utils/get-fully-synced-liveness-range'
+import type { AggregatedLivenessRecord } from '@l2beat/database'
 
 export type ProjectLivenessChartParams = z.infer<
   typeof ProjectLivenessChartParams
@@ -45,7 +45,7 @@ export const getCachedProjectLivenessChartData = cache(
     const db = getDb()
     const adjustedRange = getFullySyncedLivenessRange(range)
     const entries =
-      await db.aggregatedLiveness2.getByProjectAndSubtypeInTimeRange(
+      await db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
         ProjectId(projectId),
         subtype,
         adjustedRange,
@@ -57,7 +57,7 @@ export const getCachedProjectLivenessChartData = cache(
       }
     }
 
-    const groupedByDay = new Map<number, AggregatedLiveness2Record>(
+    const groupedByDay = new Map<number, AggregatedLivenessRecord>(
       entries.map((e) => [e.timestamp, e]),
     )
 
