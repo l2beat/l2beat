@@ -1,7 +1,12 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { type ButtonHTMLAttributes, type SVGProps, useState } from 'react'
+import {
+  type ButtonHTMLAttributes,
+  type InputHTMLAttributes,
+  type SVGProps,
+  useState,
+} from 'react'
 import { createShape, listTemplates } from '../api/api'
 import { IconContract } from '../icons/IconContract'
 import { IconFolder } from '../icons/IconFolder'
@@ -203,9 +208,11 @@ function SelectPredefinedTemplate({
     <div className="flex flex-col gap-1">
       <div className="flex flex-col gap-0.5">
         <label className="text-xs">Template ID</label>
-        <input
+        <IsolatedInput
           value={templateId}
-          onChange={(e) => setTemplateId(e.target.value)}
+          onChange={(e) => {
+            setTemplateId(e.target.value)
+          }}
           type="text"
           className="border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm"
         />
@@ -215,10 +222,12 @@ function SelectPredefinedTemplate({
       </div>
       <div className="flex flex-col gap-0.5">
         <label className="text-xs">Filename</label>
-        <input
+        <IsolatedInput
           type="text"
           value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
+          onChange={(e) => {
+            setFileName(e.target.value)
+          }}
           className="border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm"
         />
         {fileNameValidationMessage && (
@@ -337,5 +346,17 @@ function Folder({
         </div>
       )}
     </div>
+  )
+}
+
+function IsolatedInput(props: InputHTMLAttributes<HTMLInputElement>) {
+  return (
+    <input
+      onKeyUp={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+      {...props}
+    />
   )
 }
