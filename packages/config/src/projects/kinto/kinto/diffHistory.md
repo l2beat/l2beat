@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xebf08d5f871947391118dd4b6cf829d826de867d
+
+# Diff at Mon, 12 May 2025 13:18:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 850146
+- current block number: 850146
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 850146 (main branch discovery), not current.
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      fieldMeta.KYC_PROVIDERs.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x85ab2089a51c02b1e8d6ede5299ee2d6a93c70ce
 
 # Diff at Mon, 05 May 2025 15:56:36 GMT:

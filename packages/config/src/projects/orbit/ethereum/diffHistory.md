@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xce6acf1965b34373d53f4b95e9f3d53763da8adf
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 20792032
+- current block number: 20792032
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      fieldMeta.policyAdmin.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xd26a093a0afaf66fa0a7f9be2ce2e80f0c9488b6
 
 # Diff at Tue, 29 Apr 2025 08:19:08 GMT:

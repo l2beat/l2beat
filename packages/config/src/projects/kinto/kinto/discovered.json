@@ -3112,7 +3112,7 @@
           "description": "addresses confirmed sanctioned by the GOVERNANCE_ROLE."
         },
         "UPGRADERs": { "severity": "HIGH" },
-        "KYC_PROVIDERs": { "severity": "MEDIUM" },
+        "KYC_PROVIDERs": { "severity": "HIGH" },
         "GOVERNANCErs": { "severity": "HIGH" },
         "DEFAULT_ADMINs": { "severity": "HIGH" }
       },

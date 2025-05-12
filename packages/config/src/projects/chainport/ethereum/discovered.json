@@ -243,7 +243,7 @@
       },
       "fieldMeta": {
         "proposalCount": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "The amount of proposals ever created. Goes up by 1 for each proposal."
         }
       },

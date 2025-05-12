@@ -724,7 +724,7 @@
           "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
         },
         "rollupsDataV2": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"
         },
         "rollupTypes": {

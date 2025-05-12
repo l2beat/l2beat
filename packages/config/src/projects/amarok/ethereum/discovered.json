@@ -491,7 +491,7 @@
           "description": "Hash of all connectors' addresses. Changes when a connector is added or removed."
         },
         "watcherManager": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
           "type": "PERMISSION"
         }
