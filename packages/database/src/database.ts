@@ -24,6 +24,7 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import { UpdateDiffRepository } from './discovery/update-diff/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
@@ -45,6 +46,7 @@ export function createDatabase(config?: PoolConfig) {
 
     // #region Discovery
     discoveryCache: new DiscoveryCacheRepository(db),
+    updateDiff: new UpdateDiffRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
