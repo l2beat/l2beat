@@ -72,6 +72,7 @@ export class UpdateMonitor {
       chainsCount: this.discoveryRunners.length,
     })
 
+    await this.db.updateDiff.deleteAll()
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
@@ -390,8 +391,6 @@ export class UpdateMonitor {
         return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
       }),
     )
-
-    await this.db.updateDiff.deleteAll()
 
     if (
       implementationChanges.length === 0 &&
