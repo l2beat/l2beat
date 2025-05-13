@@ -1,4 +1,3 @@
-import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type UpdateDiffRecord, toRecord, toRow } from './entity'
 
@@ -10,7 +9,7 @@ export class UpdateDiffRepository extends BaseRepository {
       .insertInto('UpdateDiff')
       .values(records.map(toRow))
       .onConflict((cb) =>
-        cb.columns(['address', 'projectName', 'chainId', 'type']).doNothing(),
+        cb.columns(['address', 'projectName', 'chain', 'type']).doNothing(),
       )
       .execute()
 
@@ -22,11 +21,11 @@ export class UpdateDiffRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteByProjectAndChain(projectName: string, chainId: ChainId) {
+  async deleteByProjectAndChain(projectName: string, chain: string) {
     await this.db
       .deleteFrom('UpdateDiff')
       .where('projectName', '=', projectName)
-      .where('chainId', '=', chainId)
+      .where('chain', '=', chain)
       .execute()
   }
 

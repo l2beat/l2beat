@@ -2,11 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
 import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import type { DiscoveryDiff, DiscoveryOutput } from '@l2beat/discovery'
-import {
-  type ChainConverter,
-  ChainId,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import type { ChainConverter, UnixTime } from '@l2beat/shared-pure'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 
 export class UpdateDiffer {
@@ -25,10 +21,7 @@ export class UpdateDiffer {
     latestDiscovery: DiscoveryOutput,
     timestamp: UnixTime,
   ) {
-    await this.deleteOldRecords(
-      projectName,
-      ChainId(this.chainConverter.toChainId(chain)),
-    )
+    await this.deleteOldRecords(projectName, chain)
     const previousDiscovery = this.getPreviousDiscovery({
       name: projectName,
       chain,
@@ -118,7 +111,7 @@ export class UpdateDiffer {
         projectName,
         type: 'implementationChange',
         address: implementationChange.address,
-        chainId: ChainId(this.chainConverter.toChainId(chain)),
+        chain,
         timestamp,
       })
     }
@@ -128,7 +121,7 @@ export class UpdateDiffer {
         projectName,
         type: 'highSeverityFieldChange',
         address: fieldHighSeverityChange.address,
-        chainId: ChainId(this.chainConverter.toChainId(chain)),
+        chain,
         timestamp,
       })
     }
@@ -138,7 +131,7 @@ export class UpdateDiffer {
         projectName,
         type: 'ultimateUpgraderChange',
         address: upgradeChange.address,
-        chainId: ChainId(this.chainConverter.toChainId(chain)),
+        chain,
         timestamp,
       })
     }
@@ -146,9 +139,9 @@ export class UpdateDiffer {
     return updateDiffs
   }
 
-  async deleteOldRecords(projectName: string, chainId: ChainId) {
+  async deleteOldRecords(projectName: string, chain: string) {
     this.logger.info('Deleting all update diffs')
-    await this.db.updateDiff.deleteByProjectAndChain(projectName, chainId)
+    await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
   }
 
   getPreviousDiscovery({
