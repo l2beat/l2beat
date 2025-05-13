@@ -2,7 +2,7 @@
 
 ## High-level flow
 
-TODO
+Blocks can be sequenced by everyone unless a `preconfTaskManager` is set. Every block references a `anchorBlockId`, which indicates the latest L1 state that the L2 block is based on. The `anchorBlockId` cannot be more than `maxAnchorHeightOffset` blocks behind the current block, and should be greater or equal the parent's one. Each block's `parentMetaHash` must match the `metaHash` of the parent block. Every time a block is sequenced, a liveness bond is taken from the proposer, which is slashed if the block is not proven in time.
 
 ## The `proposeBlockV2` function
 
