@@ -24,6 +24,7 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
@@ -59,6 +60,7 @@ export function createDatabase(config?: PoolConfig) {
     // #region Other
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     aggregatedLiveness: new AggregatedLivenessRepository(db),
+    aggregatedLiveness2: new AggregatedLiveness2Repository(db),
     anomalies: new AnomaliesRepository(db),
     finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),
