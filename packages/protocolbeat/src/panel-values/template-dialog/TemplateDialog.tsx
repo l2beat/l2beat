@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
 import { DialogActions } from './DialogActions'
-import { DialogInput } from './DialogInput'
 import { TemplateFolder } from './TemplateFolder'
 import {
   DialogContext,
@@ -184,7 +183,7 @@ function SpecifyTemplate({
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-1">
         <label className="font-medium text-xs">Template ID</label>
-        <DialogInput
+        <Dialog.Input
           value={formData.templateId}
           onChange={(e) => onFormChange('templateId', e.target.value)}
           type="text"
@@ -193,7 +192,7 @@ function SpecifyTemplate({
 
       <div className="flex flex-col gap-1">
         <label className="font-medium text-xs">Filename</label>
-        <DialogInput
+        <Dialog.Input
           type="text"
           value={formData.fileName}
           onChange={(e) => onFormChange('fileName', e.target.value)}
@@ -202,7 +201,7 @@ function SpecifyTemplate({
 
       <div className="flex flex-col gap-1">
         <h3 className="font-medium text-sm">Available templates</h3>
-        <DialogInput
+        <Dialog.Input
           type="text"
           placeholder="Search templates..."
           value={searchQuery}

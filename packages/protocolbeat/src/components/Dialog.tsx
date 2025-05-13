@@ -1,6 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
-import type { ButtonHTMLAttributes, SVGProps } from 'react'
+import type { ButtonHTMLAttributes, InputHTMLAttributes, SVGProps } from 'react'
 
 export const Dialog = {
   Root: DialogRoot,
@@ -10,6 +10,7 @@ export const Dialog = {
   Body: DialogBody,
   Button: DialogButton,
   Close: DialogClose,
+  Input: DialogInput,
 }
 
 function DialogRoot({ children, ...props }: RadixDialog.DialogProps) {
@@ -109,4 +110,19 @@ function XIcon(props?: SVGProps<SVGSVGElement>) {
 
 function DialogClose({ children, ...props }: RadixDialog.DialogCloseProps) {
   return <RadixDialog.Close {...props}>{children}</RadixDialog.Close>
+}
+
+function DialogInput(props: InputHTMLAttributes<HTMLInputElement>) {
+  return (
+    <input
+      onKeyUp={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+      className={clsx(
+        'border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none',
+      )}
+      {...props}
+    />
+  )
 }
