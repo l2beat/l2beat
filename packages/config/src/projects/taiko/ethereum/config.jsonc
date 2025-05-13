@@ -27,5 +27,10 @@
     "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "TaikoToken",
     "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
   },
-  "overrides": {}
+  "overrides": {
+    "0x280eAbfd252f017B78e15b69580F249F45FB55Fa": {
+      "description": "Implementation contract for DAOFallbackProposer",
+      "category": "spam"
+    }
+  }
 }

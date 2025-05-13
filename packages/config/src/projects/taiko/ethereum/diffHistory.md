@@ -1,30 +1,26 @@
-Generated with discovered.json: 0x704a4e88e9987372e583a909d331c27d456dd645
+Generated with discovered.json: 0xdb410ca6d3809b187d837aae327eaa4e16e193f9
 
-# Diff at Tue, 13 May 2025 13:49:09 GMT:
+# Diff at Tue, 13 May 2025 14:37:43 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e7801928b60345a3e550e0f818e51329f969ff6f block: 22297586
-- current block number: 22474703
+- current block number: 22474945
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+TAIKO token contract refactor and introduces an explicit list of non-voting accounts, the Foundation (TAIKO_FOUNDATION_TREASURY) and DAO contracts (TAIKO_DAO_CONTROLLER), for which token weight do not count. Sets up the DAO with a separate executor contract (TAIKO_DAO_CONTROLLER) helper that the DAO owns.
 
 ## Watched changes
 
 ```diff
     contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
-    +++ description: None
-      template:
--        "taiko/TaikoToken"
+    +++ description: Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.
       sourceHashes.1:
 -        "0x5da570fbffd5ab663ce8983496a9ded290ed853a950b4052ac93b35217babac8"
 +        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
       sourceHashes.0:
 -        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
 +        "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f"
-      description:
--        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
       values.$implementation:
 -        "0xcfe803378D79d1180EbF030455040EA6513869dF"
 +        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
@@ -62,32 +58,35 @@ Provide description of changes. This section will be preserved.
 +        6
       values.addressManager:
 -        "0x0000000000000000000000000000000000000000"
-      values.clock:
--        1744999847
-+        1747144139
+      values.getPastTotalSupply:
+-        [0,0,0,0,0]
       values.impl:
 -        "0xcfe803378D79d1180EbF030455040EA6513869dF"
 +        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
       values.lastUnpausedAt:
 -        0
-      values.proxiableUUID:
--        "EXPECT_REVERT"
       values.getNonVotingAccounts:
 +        ["0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da","0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"]
-      values.getPastTotalSupply:
-+        []
+      values.proxiableUUID:
++        "EXPECT_REVERT"
       values.resolver:
 +        "0x0000000000000000000000000000000000000000"
       values.TAIKO_DAO_CONTROLLER:
 +        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
       values.TAIKO_FOUNDATION_TREASURY:
 +        "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
+      errors:
+-        {"getPastTotalSupply":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
       implementationNames.0xcfe803378D79d1180EbF030455040EA6513869dF:
 -        "TaikoToken"
       implementationNames.0x87C752b0F70cAa237Edd7571B0845470A37DE040:
 +        "TaikoToken"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
+      template:
++        "taiko/TaikoToken"
+      description:
++        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -110,20 +109,20 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261)
-    +++ description: None
+    +++ description: The entry point to the DAO Aragon-based governance framework.
 ```
 
 ```diff
 +   Status: CREATED
     contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3)
-    +++ description: None
+    +++ description: Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum.
 ```
 
 ## Source code changes
@@ -131,8 +130,8 @@ Provide description of changes. This section will be preserved.
 ```diff
 .../src/projects/taiko/ethereum/.flat/DAO/DAO.sol  | 1895 ++++++++++++++++++++
  .../taiko/ethereum/.flat/DAO/ERC1967Proxy.p.sol    |  594 ++++++
- .../taiko/ethereum/.flat/GnosisSafe/GnosisSafe.sol |  953 ++++++++++
- .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |   35 +
+ .../GnosisSafe.sol                                 |  953 ++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
  .../.flat/TaikoDAOController/ERC1967Proxy.p.sol    |  594 ++++++
  .../TaikoDAOController/TaikoDAOController.sol      | 1393 ++++++++++++++
  .../TaikoToken/TaikoToken.sol                      |  433 ++---
@@ -169,21 +168,25 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 
 ```diff
     contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
-    +++ description: Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.
-      template:
-+        "taiko/TaikoToken"
-      description:
-+        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
+    +++ description: None
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.getPastTotalSupply:
++        [0,0,0,0,0]
+      errors:
++        {"getPastTotalSupply":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
 ```diff
     contract MainnetProverSet (0x280eAbfd252f017B78e15b69580F249F45FB55Fa) {
-    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
       template:
 +        "taiko/DAOFallbackProposer"
       description:
-+        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities."
++        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -242,24 +245,6 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 ```diff
     contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
     +++ description: Verifier contract for blocks proven by Guardian minority.
-      values.guardians.7:
--        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
-      values.guardians.6:
--        "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
-      values.guardians.5:
--        "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
-      values.guardians.4:
--        "0xC384B679c028787166b9B3725aC14A60da205861"
-+        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
-      values.guardians.3:
--        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
-+        "0xC384B679c028787166b9B3725aC14A60da205861"
-      values.guardians.2:
--        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
-+        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
-      values.guardians.1:
--        "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200"
-+        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
       values.$members:
 +        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
 +++ description: Current guardian minority threshold. Number of guardians required to prove a block.
@@ -268,8 +253,6 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 +        1
       template:
 +        "taiko/GuardianMinorityProver"
-      errors:
-+        {"guardians":"Processing error occurred."}
       fieldMeta:
 +        {"$threshold":{"severity":"HIGH","description":"Current guardian minority threshold. Number of guardians required to prove a block."}}
       receivedPermissions:
@@ -301,9 +284,14 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 
 ```diff
     contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
-    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+      description:
+-        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities."
++        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities."
       template:
 +        "taiko/DAOFallbackProposer"
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -362,24 +350,6 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 ```diff
     contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
     +++ description: Verifier contract for Guardian proven blocks.
-      values.guardians.7:
--        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
-      values.guardians.6:
--        "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
-      values.guardians.5:
--        "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
-      values.guardians.4:
--        "0xC384B679c028787166b9B3725aC14A60da205861"
-+        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
-      values.guardians.3:
--        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
-+        "0xC384B679c028787166b9B3725aC14A60da205861"
-      values.guardians.2:
--        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
-+        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
-      values.guardians.1:
--        "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200"
-+        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
       values.$members:
 +        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
 +++ description: Current guardian threshold. Number of guardians required to prove a block.
@@ -388,8 +358,6 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 +        6
       template:
 +        "taiko/GuardianProver"
-      errors:
-+        {"guardians":"Processing error occurred."}
       fieldMeta:
 +        {"$threshold":{"severity":"HIGH","description":"Current guardian threshold. Number of guardians required to prove a block."}}
       receivedPermissions:

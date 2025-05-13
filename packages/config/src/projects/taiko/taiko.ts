@@ -428,37 +428,13 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
   },
   permissions: {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
-    // actors: [
-    //   discovery.getMultisigPermission(
-    //     'Taiko Multisig',
-    //     'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
-    //   ),
-    //   discovery.getPermissionDetails(
-    //     'GuardianProvers',
-    //     discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
-    //     `Guardians can prove blocks on the highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
-    //   ),
-    //   discovery.getPermissionDetails(
-    //     'GuardianMinorityProver',
-    //     discovery.getPermissionedAccounts(
-    //       'GuardianMinorityProver',
-    //       'guardians',
-    //     ),
-    //     `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
-    //   ),
-    //   discovery.getPermissionDetails(
-    //     'SequencerBlockOne',
-    //     discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
-    //     'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
-    //   ),
-    // ],
   },
   milestones: [
     {
-      title: 'TKO Token Airdrop',
+      title: 'TAIKO Token Airdrop',
       url: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
       date: '2024-06-05T00:00:00.00Z',
-      description: 'TKO token launches.',
+      description: 'TAIKO token launches.',
       type: 'general',
     },
     {

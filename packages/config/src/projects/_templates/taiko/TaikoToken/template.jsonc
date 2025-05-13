@@ -11,5 +11,6 @@
         "expectRevert": true
       }
     }
-  }
+  },
+  "category": "core"
 }

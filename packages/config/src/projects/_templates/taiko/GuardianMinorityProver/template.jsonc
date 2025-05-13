@@ -9,6 +9,12 @@
         "expectRevert": true
       }
     },
+    "guardians": {
+      "handler": {
+        "type": "array",
+        "method": "guardians"
+      }
+    },
     "$members": {
       "handler": {
         "type": "array",

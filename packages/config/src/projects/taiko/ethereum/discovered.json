@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22474703,
-  "configHash": "0xba80bc4b0160ceecc5b9649029b4829dbdae01b5767b14426012db83a8b3ce83",
+  "blockNumber": 22474945,
+  "configHash": "0xddf472a2152a6f6bc1436e83c20e99ff1bd268c1c9efe5c10a56973048a6be67",
   "entries": [
     {
       "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
@@ -229,16 +229,16 @@
             "lastSynecdAt": 1747138571
           },
           {
-            "numBlocks": 1147124,
+            "numBlocks": 1147172,
             "lastVerifiedBlockId": 1146603,
             "provingPaused": false,
-            "lastProposedIn": 22474703,
+            "lastProposedIn": 22474944,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 22474703,
+        "lastProposedIn": 22474944,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -264,10 +264,10 @@
             "lastSynecdAt": 1747138571
           },
           "slotB": {
-            "numBlocks": 1147124,
+            "numBlocks": 1147172,
             "lastVerifiedBlockId": 1146603,
             "provingPaused": false,
-            "lastProposedIn": 22474703,
+            "lastProposedIn": 22474944,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -308,11 +308,14 @@
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "type": "Contract",
+      "template": "taiko/TaikoToken",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1714033799,
       "sinceBlock": 19731197,
       "values": {
@@ -351,7 +354,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "clock": 1747144139,
+        "clock": 1747147055,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -368,24 +371,24 @@
           "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
           "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
         ],
-        "getPastTotalSupply": [],
         "impl": "0x87C752b0F70cAa237Edd7571B0845470A37DE040",
         "inNonReentrant": false,
         "name": "Taiko Token",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT",
         "resolver": "0x0000000000000000000000000000000000000000",
         "symbol": "TAIKO",
         "TAIKO_DAO_CONTROLLER": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
         "TAIKO_FOUNDATION_TREASURY": "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
         "totalSupply": "1000000000000000000000000000"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "ERC1967Proxy",
         "0x87C752b0F70cAa237Edd7571B0845470A37DE040": "TaikoToken"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
@@ -411,7 +414,7 @@
         "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
       ],
       "proxyType": "immutable",
-      "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
+      "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.",
       "sinceTimestamp": 1739426099,
       "sinceBlock": 21835609,
       "values": {
@@ -428,10 +431,11 @@
       },
       "implementationNames": {
         "0x280eAbfd252f017B78e15b69580F249F45FB55Fa": "MainnetProverSet"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Taiko Foundation Treasury Multisig",
       "address": "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -716,7 +720,10 @@
           "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
           "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
           "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
-          "0xC384B679c028787166b9B3725aC14A60da205861"
+          "0xC384B679c028787166b9B3725aC14A60da205861",
+          "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
+          "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
+          "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
         ],
         "impl": "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47",
         "inNonReentrant": false,
@@ -730,7 +737,6 @@
         "proxiableUUID": "EXPECT_REVERT",
         "version": 1
       },
-      "errors": { "guardians": "Processing error occurred." },
       "fieldMeta": {
         "$threshold": {
           "severity": "HIGH",
@@ -905,7 +911,7 @@
         "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
+      "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.",
       "sinceTimestamp": 1716217559,
       "sinceBlock": 19911920,
       "values": {
@@ -982,7 +988,8 @@
       "implementationNames": {
         "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "ERC1967Proxy",
         "0x280eAbfd252f017B78e15b69580F249F45FB55Fa": "MainnetProverSet"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87",
@@ -1227,11 +1234,13 @@
       "name": "DAO",
       "address": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
       "type": "Contract",
+      "template": "taiko/DAO",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x0567fe67ea1d2872edb3f9420706c18e62259987f7e28a61ab4bdf9c44348e57"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The entry point to the DAO Aragon-based governance framework.",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1255,6 +1264,7 @@
         "EXECUTE_PERMISSION_ID": "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
         "getTrustedForwarder": "0x0000000000000000000000000000000000000000",
         "protocolVersion": [1, 3, 0],
+        "proxiableUUID": "EXPECT_REVERT",
         "REGISTER_STANDARD_CALLBACK_PERMISSION_ID": "0xfaf505be9907aa6951c2ebe5b0312f4980e14f21912ed355372103cc8bd683bc",
         "ROOT_PERMISSION_ID": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
         "SET_METADATA_PERMISSION_ID": "0x4707e94b25cfce1a7c363508fbb838c35864388ad77284b248282b9746982b9b",
@@ -1263,11 +1273,11 @@
         "signatureValidator": "0x0000000000000000000000000000000000000000",
         "UPGRADE_DAO_PERMISSION_ID": "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "0x9CDf589C941ee81D75F34d3755671d614f7cf261": "ERC1967Proxy",
         "0x52Af16664155608b845BE18aa29620EbF6eA2D3a": "DAO"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "SignalService",
@@ -1601,7 +1611,10 @@
           "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
           "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
           "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
-          "0xC384B679c028787166b9B3725aC14A60da205861"
+          "0xC384B679c028787166b9B3725aC14A60da205861",
+          "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
+          "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
+          "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
         ],
         "impl": "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47",
         "inNonReentrant": false,
@@ -1615,7 +1628,6 @@
         "proxiableUUID": "EXPECT_REVERT",
         "version": 1
       },
-      "errors": { "guardians": "Processing error occurred." },
       "fieldMeta": {
         "$threshold": {
           "severity": "HIGH",
@@ -1694,11 +1706,13 @@
       "name": "TaikoDAOController",
       "address": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
       "type": "Contract",
+      "template": "taiko/TaikoDAOController",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x2031bc459fbe34f9e0c0bbb1b59039b00ed92ea44002b5be98688d952fb1e4e9"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum.",
       "sinceTimestamp": 1746942803,
       "sinceBlock": 22458143,
       "values": {
@@ -1717,13 +1731,14 @@
         "owner": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT",
         "resolver": "0x0000000000000000000000000000000000000000"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3": "ERC1967Proxy",
         "0xd1934807041B168f383870A0d8F565aDe2DF9D7D": "TaikoDAOController"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "abis": {
@@ -2820,9 +2835,10 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/AutomataDcapV3Attestation": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DAOFallbackProposer": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/GuardianMinorityProver": "0x9eb821a897ef0c98e3f37317330ecc63079bf9f271af774e586d797245071617",
-    "taiko/GuardianProver": "0x9eb821a897ef0c98e3f37317330ecc63079bf9f271af774e586d797245071617",
+    "taiko/GuardianMinorityProver": "0x00bd7d23f4eab2bf9563332dfa85a45693474c02a2893a7aa062b326870d9d80",
+    "taiko/GuardianProver": "0x00bd7d23f4eab2bf9563332dfa85a45693474c02a2893a7aa062b326870d9d80",
     "taiko/L1RollupAddressManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/L1SharedAddressManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/MainnetTierRouter": "0xede752b89fb3b0fcfd0481d111f1acf572b37f080a698d8ca76f43805da5c3df",
@@ -2835,7 +2851,9 @@
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
-    "taiko/TaikoL1Contract": "0xde92674e572f8b04073a30bc53199dda0763ff7a0967fdaf5ee9070a173b16e4"
+    "taiko/TaikoDAOController": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/TaikoL1Contract": "0xde92674e572f8b04073a30bc53199dda0763ff7a0967fdaf5ee9070a173b16e4",
+    "taiko/TaikoToken": "0x1995b6ff08e9d6507add238bda6de7508f15484c51b465775c8044a2f429baeb"
   },
-  "permissionsConfigHash": "0x923243152833ddb4389d93434af198b21fa3c0be6461ec4311d856cc33d8e374"
+  "permissionsConfigHash": "0xe400f3bee159c9b3009e20434661d6339df4782b0dd52578cedbbfe5909a41bd"
 }
