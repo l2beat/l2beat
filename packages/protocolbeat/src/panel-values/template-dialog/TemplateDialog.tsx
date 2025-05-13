@@ -125,7 +125,7 @@ function TemplateDialogBody({
         )}
 
         {step === 'finalize-creation' && (
-          <FinalizeTemplate
+          <TemplateSummary
             formData={formData}
             address={address}
             chain={chain}
@@ -244,7 +244,7 @@ function SelectPredefinedTemplate({
   )
 }
 
-function FinalizeTemplate({
+function TemplateSummary({
   formData,
   address,
   chain,
