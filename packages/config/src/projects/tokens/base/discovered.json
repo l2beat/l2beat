@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 29519230,
-  "configHash": "0xdb15d4348bdcddbd52ddaa36531d996bb8754018e30d418cf6c3124861e97ca3",
+  "blockNumber": 30000033,
+  "configHash": "0x27a2b901054959d99743aa2d6fad647d7a56e04efe87e0502503778c1ebe4d01",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -50,7 +50,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "rescuer": "0x1cF9a51D9bFee6C582653A3dcA3c4Db34faA31a7"
       },
-      "derivedName": "TokenMessenger"
+      "implementationNames": {
+        "0x1682Ae6375C4E4A97e4B583BC394c861A46D8962": "TokenMessenger"
+      }
     },
     {
       "address": "0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
@@ -92,7 +94,9 @@
         "getMinterManager": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
         "owner": "0xb5bff84d169a72e76e94eC950da51Bac90b60284"
       },
-      "derivedName": "MasterMinter"
+      "implementationNames": {
+        "0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1": "MasterMinter"
+      }
     },
     {
       "address": "0x24253f1CA7540CfCb3DdDa890d3b94434786E379",
@@ -115,13 +119,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x88acF681fb9a1DFcE5ac83391991895C54CF24cc",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1739223627,
       "sinceBlock": 26217140,
       "values": {
@@ -147,7 +144,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "rescuer": "0x2f86c55c0557788c8b1AbC2685f14ED6be68F3A5"
       },
-      "derivedName": "TokenMessengerV2"
+      "implementationNames": {
+        "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": "AdminUpgradableProxy",
+        "0x555E272506C06e7E559d57418563742AFE363ec8": "TokenMessengerV2"
+      }
     },
     {
       "address": "0x2f86c55c0557788c8b1AbC2685f14ED6be68F3A5",
@@ -301,10 +301,13 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 158,
+        "nonce": 171,
         "VERSION": "1.4.1"
       },
-      "derivedName": "SafeL2"
+      "implementationNames": {
+        "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971": "SafeProxy",
+        "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "address": "0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF",
@@ -362,13 +365,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["nextAvailableNonce"],
       "sinceTimestamp": 1739223595,
       "sinceBlock": 26217124,
@@ -403,7 +399,10 @@
         "signatureThreshold": 2,
         "version": 1
       },
-      "derivedName": "MessageTransmitterV2"
+      "implementationNames": {
+        "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": "AdminUpgradableProxy",
+        "0x7Db629f6Acc20Be49a0A7565c21CC178E9Ac21e3": "MessageTransmitterV2"
+      }
     },
     {
       "name": "USDC",
@@ -415,37 +414,6 @@
         "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1",
-          "description": "manage minter addresses.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x3ABd6f64A422225E61E435baE41db12096106df7",
-          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x4d15e70518A20Fc8828b5C3853f32e35238d0b77",
-          "description": "blacklist addresses, freezing any interactions with the USDC token for them.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD3571B3bc51CECFf49194AD67aFFFC648d5e07b4",
-          "description": "pause the USDC token (no transfers, mints, burns).",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1692383789,
       "sinceBlock": 2797221,
@@ -491,7 +459,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3732478831116775,
+        "totalSupply": 3748968857132008,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -500,7 +468,10 @@
           "description": "All minters, ignoring their 'allowed amount'"
         }
       },
-      "derivedName": "FiatTokenV2_2"
+      "implementationNames": {
+        "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": "FiatTokenProxy",
+        "0x2Ce6311ddAE708829bc0784C967b7d77D19FD779": "FiatTokenV2_2"
+      }
     },
     {
       "address": "0x880AD1D79c50f9FA0050CDdAd139E52e06B9C725",
@@ -598,7 +569,10 @@
         "nonce": 45,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x92A19381444A001d62cE67BaFF066fA1111d7202": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x9c563B7B08C5506C4aae279E1f66658D5f9fD7B8",
@@ -653,7 +627,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 536529,
+        "nextAvailableNonce": 548181,
         "owner": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -662,7 +636,9 @@
         "signatureThreshold": 2,
         "version": 0
       },
-      "derivedName": "MessageTransmitter"
+      "implementationNames": {
+        "0xAD09780d193884d503182aD4588450C416D6F9D4": "MessageTransmitter"
+      }
     },
     {
       "address": "0xaD72249C80699ABc2eAeD5c66B0300F8631Fca96",
@@ -744,9 +720,12 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "17609285493769022188519"
+        "totalSupply": "15879267724555126756958"
       },
-      "derivedName": "BridgedWOETH"
+      "implementationNames": {
+        "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
+        "0xF66886e242e20cAb2496AF1d411eBcFb73440270": "BridgedWOETH"
+      }
     },
     {
       "address": "0xDB03303F417A5eF98680FECde60c1e0701F3b6f3",
@@ -785,7 +764,9 @@
         "rescuer": "0x468f6f91D1264B1ab4ddD517c2F3770AE85021d8",
         "tokenController": "0x67745b6Dcc3B4a1d52ce28119A5d59884E681228"
       },
-      "derivedName": "TokenMinter"
+      "implementationNames": {
+        "0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6": "TokenMinter"
+      }
     },
     {
       "name": "L1Timelock",
@@ -797,56 +778,6 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 2d.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971",
-          "delay": 172800,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "delay": 172800,
-          "description": "manage all access control roles and change the minimum delay.",
-          "via": [
-            {
-              "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x92A19381444A001d62cE67BaFF066fA1111d7202",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -899,7 +830,9 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xf817cb3092179083c48c014688D98B72fB61464f"]
       },
-      "derivedName": "Timelock"
+      "implementationNames": {
+        "0xf817cb3092179083c48c014688D98B72fB61464f": "Timelock"
+      }
     },
     {
       "address": "0xF91f1865F1570953A99cc9Bc037b9aF6f4Fd9A9C",
@@ -928,7 +861,9 @@
         "rescuer": "0x158bc73B1f7a246939644c6Fc77d1e2Ef4F9e9a1",
         "tokenController": "0xA9946e4dCfE522482A317f21feF7b2AFa5051B98"
       },
-      "derivedName": "TokenMinterV2"
+      "implementationNames": {
+        "0xfd78EE919681417d192449715b2594ab58f5D002": "TokenMinterV2"
+      }
     },
     {
       "address": "0xfE9Ffb577ad5B21c01f81c283075647085dD97f8",
@@ -1511,13 +1446,14 @@
     ]
   },
   "usedTemplates": {
-    "global/Timelock": "0x2a557f1c66ae4b55d5b565ca43f14de3cffa034ccf145cec23f477a3730ecf2d",
+    "global/Timelock": "0x2a5acc8f4981464126cb7f697f7a842f884c7eff8e410bcbd566233da0581e0e",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/MessageTransmitter": "0xa08ec2ee361f024f79836400aba320fcc928f9e5c224c65eb670f8ec23548cd6",
     "tokens/circle/TokenMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "tokens/circle/USDC": "0x677cbce8e4dde23c97d0340fb407bbf95e3b483987e7e82ed9eec94026dcaa38",
+    "tokens/circle/USDC": "0x46f93a9b087ef1d0bd774ffd53dacd0d336c4e406daf36e52eb187140bcffe70",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
-  }
+  },
+  "permissionsConfigHash": "0x1b434e256fd8167b345318254a5b94abb30b06bf0f93fd5650a4a2dd910697fe"
 }

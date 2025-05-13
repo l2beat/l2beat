@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x4fa917b9f65edfc9aff8c68be2082097bb8d622d
+Generated with discovered.json: 0x313cdc205b553f9bf4a336e77361251f77ae1788
+
+# Diff at Mon, 12 May 2025 13:48:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e7801928b60345a3e550e0f818e51329f969ff6f block: 20675914
+- current block number: 20675914
+
+## Description
+
+remove medium severity
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675914 (main branch discovery), not current.
+
+```diff
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A) {
+    +++ description: None
+      fieldMeta.lockProxyIndexMap.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xbeceed5539acd44bf19c2c34ed8aeb0f58a167dd
 
 # Diff at Tue, 04 Mar 2025 10:39:38 GMT:
 

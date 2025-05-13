@@ -55,6 +55,25 @@
     },
     {
       "mode": "auto",
+      "id": "superseed-SUPR",
+      "priceId": "superseed",
+      "symbol": "SUPR",
+      "name": "Superseed",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55519/large/Small.png?1746469855",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "superseed",
+        "decimals": 18,
+        "sinceTimestamp": 1746403200,
+        "address": "0x6EA1fFcbD7F5D210dB07D9E773862B0512fA219B",
+        "chain": "superseed"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "superseed-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",

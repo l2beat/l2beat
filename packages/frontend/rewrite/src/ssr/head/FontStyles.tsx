@@ -32,6 +32,7 @@ export function FontStyles({
             href={manifest.getUrl(source.path)}
             as="font"
             type="font/woff2"
+            crossOrigin="anonymous"
           />
         )),
       )}

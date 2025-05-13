@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint",
+    "previewRedeem",
+    "previewWithdraw"
+  ],
+  "ignoreInWatchMode": [
+    "lastRewardAmount",
+    "lastSync",
+    "pricePerShare",
+    "rewardsCycleEnd",
+    "totalAssets",
+    "totalSupply"
+  ]
+}

@@ -2,7 +2,7 @@
   "name": "connext",
   "chain": "ethereum",
   "blockNumber": 21285557,
-  "configHash": "0x31ff652d88fa926afa44ae8ea6b57cc50540f81d4cffc863f3051bb4dfe98d97",
+  "configHash": "0x18f5c11db8d0a4c6db2b4cc65ddca44c28a0dffac007c44350512f58e97a3379",
   "entries": [
     {
       "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
@@ -36,7 +36,9 @@
         "renounced": false,
         "routerOwnershipTimestamp": 0
       },
-      "derivedName": "TransactionManager"
+      "implementationNames": {
+        "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": "TransactionManager"
+      }
     },
     {
       "name": "FulfillInterpreter",
@@ -52,7 +54,9 @@
         "$immutable": true,
         "getTransactionManager": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"
       },
-      "derivedName": "FulfillInterpreter"
+      "implementationNames": {
+        "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a": "FulfillInterpreter"
+      }
     }
   ],
   "abis": {
@@ -116,5 +120,6 @@
       "function getTransactionManager() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xa8fb333760f388754817d51b347b3f2490368a69f361d4f07bfde8e87522f74c"
 }

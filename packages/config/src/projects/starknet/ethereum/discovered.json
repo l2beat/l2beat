@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 22346393,
-  "configHash": "0x65ed4a037797261e324947dc34fac5b09a91d3008df91bf58b51272c2ee67b94",
+  "blockNumber": 22465335,
+  "configHash": "0xdc5bd8c0d39a283f9a1efa6f0a449fbd5441e6e97c7afcb1b9b5b5bacb2cf504",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -63,21 +63,6 @@
         },
         {
           "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
           "description": "disable the withdrawal limit."
         },
@@ -104,21 +89,6 @@
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
@@ -245,22 +215,12 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "delay": 259200
-        },
-        {
-          "permission": "upgrade",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
           "delay": 259200
         },
         {
           "permission": "upgrade",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "delay": 259200
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "delay": 259200
         },
         {
@@ -307,10 +267,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "LORDSBridge",
@@ -330,16 +293,13 @@
         "l2Bridge": "3518527153270494256475755541726550738597926965391766941271488561627919771187",
         "starknet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
       },
-      "derivedName": "LordsL1Bridge",
+      "implementationNames": {
+        "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LordsL1Bridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x030ceEE5D4CBc304287234720B11E00f47695755",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -363,7 +323,19 @@
           "0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
         ]
       },
-      "derivedName": "L1Escrow"
+      "implementationNames": {
+        "0x0437465dfb5B79726e35F08559B0cBea55bb585C": "L1Escrow"
+      }
+    },
+    {
+      "address": "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "StarkgateManager",
@@ -376,25 +348,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -485,7 +438,10 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarkgateManager",
+      "implementationNames": {
+        "0x0c5aE94f8939182F2D06097025324D1E537d5B60": "Proxy",
+        "0x64608BDF1867110f622391196989bF4cE37BBb33": "StarkgateManager"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -504,19 +460,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation..",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1707322595,
       "sinceBlock": 19177447,
       "values": {
@@ -558,7 +501,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
-      "derivedName": "StarkgateRegistry",
+      "implementationNames": {
+        "0x1268cc171c54F2000402DfF20E93E60DF4c96812": "Proxy",
+        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC": "StarkgateRegistry"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -577,8 +523,46 @@
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
         },
         {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "disable the withdrawal limit and manage the security agent role which can enable it."
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+        },
+        {
           "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -588,28 +572,31 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
+          "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
+          "0x2914767E232FD7708ab06bA60dB16c36C555751d",
           "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
-          "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+          "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
           "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
           "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
           "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
-          "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
-          "0x81C1B22c67731D3f0Bac506102Fe998361565874",
-          "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
-          "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
-          "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+          "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
         ],
         "$threshold": 9,
         "domainSeparator": "0x57c92b54a26f77d6d8a90326482dd0afa6ca56b256379816d5018bb22e629ac4",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 7,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
@@ -627,32 +614,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1657137600,
       "sinceBlock": 15090980,
       "values": {
@@ -780,7 +741,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -802,6 +766,11 @@
     },
     {
       "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2914767E232FD7708ab06bA60dB16c36C555751d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -838,6 +807,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
       "type": "EOA",
       "proxyType": "EOA"
@@ -853,31 +827,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1692689267,
       "sinceBlock": 17968760,
       "values": {
@@ -979,7 +928,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -998,11 +950,6 @@
         }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
@@ -1038,7 +985,10 @@
         "nonce": 2,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
@@ -1047,11 +997,6 @@
     },
     {
       "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1078,6 +1023,16 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
           "via": [
             {
@@ -1089,7 +1044,6 @@
         {
           "permission": "upgrade",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "delay": 259200,
           "via": [
             {
               "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
@@ -1124,10 +1078,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 28,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5",
@@ -1161,7 +1118,9 @@
           "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
-      "derivedName": "L1DAIBridge",
+      "implementationNames": {
+        "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DAIBridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1180,36 +1139,13 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1647857148,
       "sinceBlock": 14429055,
       "values": {
-        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$admin": [
+          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+        ],
         "$immutable": false,
         "$implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "$pastUpgrades": [
@@ -1247,9 +1183,14 @@
             "2024-04-21T14:18:35.000Z",
             "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
             ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
+          ],
+          [
+            "2025-05-11T12:49:59.000Z",
+            "0xf0fc6787173f9e4ee964487191601bf84e443f30192c896849df7fd12dfa1a95",
+            ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1257,7 +1198,7 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+            "members": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
@@ -1269,7 +1210,7 @@
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+            "members": ["0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"]
           },
           "SECURITY_AGENT": {
             "adminRole": "SECURITY_ADMIN",
@@ -1281,8 +1222,8 @@
         "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 259200,
-        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
         "identify": "StarkWare_StarknetEthBridge_2.0_4",
         "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "isFrozen": false,
@@ -1294,9 +1235,9 @@
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
-        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "StarkWareProxy_upgradeDelay": 259200,
+        "secAdminAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "secAgentAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
@@ -1328,7 +1269,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
-      "derivedName": "StarknetEthBridge",
+      "implementationNames": {
+        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "Proxy",
+        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95": "StarknetEthBridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1359,32 +1303,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1657137615,
       "sinceBlock": 15090981,
       "values": {
@@ -1512,7 +1430,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1543,32 +1464,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1685452751,
       "sinceBlock": 17371995,
       "values": {
@@ -1676,7 +1571,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1697,11 +1595,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Starknet",
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "type": "Contract",
@@ -1712,48 +1605,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
-          "via": []
-        },
-        {
-          "permission": "governStarknet",
-          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        }
-      ],
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -1834,7 +1685,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1670219,
+        "l1ToL2MessageNonce": 1670739,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1858,9 +1709,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2785487556821208834607829184260586493745756849201663550600926429216547747342",
-        "stateBlockNumber": 1344804,
-        "stateRoot": "714931898301122029139816843785263593462040318518034668293855043447018195712",
+        "stateBlockHash": "2188423224628065720313508982157794031503918852317434789391092932543840599413",
+        "stateBlockNumber": 1392605,
+        "stateRoot": "2555659148022449892596160632546928486264473601397171783145720778408625959536",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1879,7 +1730,10 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Starknet",
+      "implementationNames": {
+        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Proxy",
+        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04": "Starknet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1928,12 +1782,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+        },
+        {
+          "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
         },
         {
           "permission": "upgrade",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "delay": 259200
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
         }
       ],
       "sinceTimestamp": 1739989031,
@@ -1945,7 +1802,9 @@
         "executionExpiration": 4838400,
         "owner": "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
       },
-      "derivedName": "DelayedExecutor",
+      "implementationNames": {
+        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c": "DelayedExecutor"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1959,49 +1818,12 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
-          "delay": 259200,
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        }
-      ],
       "sinceTimestamp": 1704905879,
       "sinceBlock": 18977888,
       "values": {
         "$admin": [
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
         ],
         "$immutable": false,
         "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
@@ -2040,9 +1862,14 @@
             "2025-02-09T12:58:23.000Z",
             "0xccb802ed2caee6856e9141983a642a0d4881cd64a209436d3fdeb4776c841175",
             ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ],
+          [
+            "2025-05-11T12:49:59.000Z",
+            "0xf0fc6787173f9e4ee964487191601bf84e443f30192c896849df7fd12dfa1a95",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -2050,7 +1877,7 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+            "members": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
@@ -2059,13 +1886,13 @@
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": [
-              "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-              "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+              "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
             ]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+            "members": ["0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"]
           },
           "SECURITY_AGENT": {
             "adminRole": "SECURITY_ADMIN",
@@ -2079,8 +1906,8 @@
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getEnableWindowDuration": 1209600,
-        "getUpgradeActivationDelay": 259200,
-        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
@@ -2092,9 +1919,9 @@
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
-        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "StarkWareProxy_upgradeDelay": 259200,
+        "secAdminAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "secAgentAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
@@ -2126,7 +1953,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2162,32 +1992,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1685880791,
       "sinceBlock": 17407168,
       "values": {
@@ -2293,7 +2097,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2329,31 +2136,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1692689279,
       "sinceBlock": 17968761,
       "values": {
@@ -2455,7 +2237,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2486,31 +2271,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1692689255,
       "sinceBlock": 17968759,
       "values": {
@@ -2612,7 +2372,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2633,11 +2396,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "LUSDBridge",
       "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
       "type": "Contract",
@@ -2648,31 +2406,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1688046071,
       "sinceBlock": 17585317,
       "values": {
@@ -2773,7 +2506,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2804,37 +2540,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually).",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1707322643,
       "sinceBlock": 19177451,
       "values": {
@@ -2966,7 +2671,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
-      "derivedName": "StarknetTokenBridge",
+      "implementationNames": {
+        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "Proxy",
+        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
+      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -2980,32 +2688,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
       "values": {
@@ -3133,7 +2815,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -3155,6 +2840,11 @@
     },
     {
       "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3181,28 +2871,31 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x2914767E232FD7708ab06bA60dB16c36C555751d",
+          "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
+          "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
           "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
-          "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+          "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
           "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
           "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
           "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
-          "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
-          "0x81C1B22c67731D3f0Bac506102Fe998361565874",
-          "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
-          "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
-          "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+          "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
         ],
         "$threshold": 3,
         "domainSeparator": "0xe85d553f958271e75f38effa1ab215f496d978b6ecb4e90080d0beaf23037529",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 3,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "UNIBridge",
@@ -3215,31 +2908,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1698061847,
       "sinceBlock": 18412782,
       "values": {
@@ -3341,7 +3009,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": "Proxy",
+        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -4466,13 +4137,14 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "maker/L1Escrow": "0xb42f4a4e99cd96e0fdced856d5700812b16948444eb8bf9b0d9f41c6faec9de4",
     "starknet/DelayedExecutor": "0xd487cb8f4fc40dae5f302c2e60f6841921dafce3fde8b3461e75549ced30f87f",
-    "starknet/L1EscrowDAI": "0x11860373e3ee0b340522a4db6b06453800bfca89646791df878b7e935c5dc6d8",
+    "starknet/L1EscrowDAI": "0x3e7ec24586a5b0460c26ec640c00e29df45f1d5f47ef6701a13cb7f6056bc6c1",
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x74cd8ae86590963abb3809a0f4f1dc2d5c6600a8c54d63bdcb9d727e4735d45b",
     "starknet/StarkgateRegistry": "0xf97ce3e8949e1a09811b01712acc2c09b944bad3bb8505e4b5f817c75a11c3ae",
-    "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
+    "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
     "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183",
-    "starknet/StarknetEthBridge": "0xbc8ae085a45e96134776ef38c00c9c7ebcd5b7b7c0818c0bfd287e1d11bb0597",
+    "starknet/StarknetEthBridge": "0xdfe788cfed69e5ad82659da201e114820f81ba6f4b2cb9046cc49c6ccb2133b4",
     "starknet/StarknetMultiBridge": "0x61321009feca9bb05ddf52331ab3017dfcf7a1f09b3b248cc6bb1fe910cedb07"
-  }
+  },
+  "permissionsConfigHash": "0x58437f4c35d8af4e9a1498ea2976c03f92eab55789b4894a4e77a2564be26638"
 }

@@ -8,7 +8,7 @@ import {
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 import { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
@@ -27,7 +27,6 @@ export interface DailyReminderChainEntry {
   chainName: string
   severityCounts: {
     low: number
-    medium: number
     high: number
     unknown: number
   }
@@ -205,25 +204,23 @@ export class UpdateNotifier {
 function formatRemindersAsTable(
   reminders: Record<string, DailyReminderChainEntry[]>,
 ): string {
-  const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
+  const headers = ['Project', 'Chain', 'High', 'Low', '???']
 
   const flat = flattenReminders(reminders)
   const sorted = flat.sort((a, b) => {
     const {
       low: aLow,
-      medium: aMedium,
       high: aHigh,
       unknown: aUnknown,
     } = a.chainEntry.severityCounts
     const {
       low: bLow,
-      medium: bMedium,
       high: bHigh,
       unknown: bUnknown,
     } = b.chainEntry.severityCounts
 
-    const aSum = aHigh * 1e9 + aMedium * 1e6 + aLow * 1e3 + aUnknown
-    const bSum = bHigh * 1e9 + bMedium * 1e6 + bLow * 1e3 + bUnknown
+    const aSum = aHigh * 1e6 + aLow * 1e3 + aUnknown
+    const bSum = bHigh * 1e6 + bLow * 1e3 + bUnknown
 
     return bSum - aSum
   })
@@ -234,7 +231,6 @@ function formatRemindersAsTable(
       projectName,
       chainName,
       s.high === 0 ? '' : s.high.toString(),
-      s.medium === 0 ? '' : s.medium.toString(),
       s.low === 0 ? '' : s.low.toString(),
       s.unknown === 0 ? '' : s.unknown.toString(),
     ]

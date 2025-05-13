@@ -5,6 +5,7 @@ import { useDebounce } from '../common/useDebounce'
 import { IconSearch } from '../icons/IconSearch'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../panel-code/store'
+import { usePanelStore } from '../store/store'
 import {
   CodeSearchResultEntry,
   getCodeSearchTerm,
@@ -24,6 +25,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const navigate = useNavigate()
   const { ensurePanel } = useMultiViewStore()
   const { setSourceIndex, showRange } = useCodeStore()
+  const selectedAddress = usePanelStore((state) => state.selected)
   const {
     setOpen,
     searchTerm,
@@ -58,8 +60,8 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   })
 
   const { isError, isPending, data } = useQuery({
-    queryKey: ['search', project, searchTermDebounced],
-    queryFn: () => searchQuery(project, searchTermDebounced),
+    queryKey: ['search', project, selectedAddress, searchTermDebounced],
+    queryFn: () => searchQuery(project, searchTermDebounced, selectedAddress),
     placeholderData: keepPreviousData,
   })
 
@@ -79,7 +81,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
           <input
             ref={inputRef}
             type="text"
-            className="w-full bg-transparent outline-none"
+            className="w-full bg-transparent outline-none selection:bg-autumn-300 selection:text-coffee-900"
             placeholder="Search by name or address (or in code with % prefix)"
             autoFocus
             value={searchTerm}
@@ -130,7 +132,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
                       setSourceIndex(entry.address, codeLocation.index)
                       showRange({
                         startOffset: codeLocation.offset,
-                        length: getCodeSearchTerm(searchTerm).length,
+                        length: getCodeSearchTerm(searchTerm).content.length,
                       })
                     }
                   }

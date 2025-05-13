@@ -3,7 +3,7 @@ import {
   type ContractValue,
   type EntryParameters,
   diffDiscovery,
-} from '@l2beat/discovery'
+} from '@l2beat/discovery/frontend'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
@@ -139,7 +139,7 @@ const getCachedProjectsChangeReport = cache(
 
         const upgradeChanges = discoveryDiffs.filter((discoveryDiff) =>
           discoveryDiff.diff?.some((f) => {
-            if (!f.key.startsWith('issuedPermissions')) {
+            if (!f.key.startsWith('receivedPermissions')) {
               return false
             }
 
@@ -153,7 +153,7 @@ const getCachedProjectsChangeReport = cache(
               (e) => e.address === discoveryDiff.address,
             )
 
-            return entry?.issuedPermissions?.[index]?.permission === 'upgrade'
+            return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
           }),
         )
 

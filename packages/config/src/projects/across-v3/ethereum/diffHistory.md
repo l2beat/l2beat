@@ -1,3 +1,91 @@
+Generated with discovered.json: 0xfc797ebe64af145b771a746c4334eff6db524485
+
+# Diff at Fri, 02 May 2025 17:23:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22337715
+- current block number: 22397496
+
+## Description
+
+ZkStack_CustomGasToken_Adapter upgraded to use native CCTP if enabled.
+
+New Universal_Adapter added with CCTP support, currently not used.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkStack_CustomGasToken_Adapter (0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.232:
+-        "0x63AC22131eD457aeCbD63e6c4C7eeC7BBC74fF1F"
++        "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
+      values.Adapters.56:
++        "0x22001f37B586792F25Ef9d19d99537C6446e0833"
+      values.CrossChainContracts.56:
++        "0x4e8E101924eDE233C13e2D8622DC8aED2872d505"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HubPoolStore (0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (0x22001f37B586792F25Ef9d19d99537C6446e0833)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_CustomGasToken_Adapter (0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/HubPoolStore.sol      |  72 +++
+ .../across-v3/ethereum/.flat/Universal_Adapter.sol | 597 +++++++++++++++++++++
+ .../ZkStack_CustomGasToken_Adapter.sol             | 214 +++++++-
+ 3 files changed, 865 insertions(+), 18 deletions(-)
+```
+
+Generated with discovered.json: 0x7f3357bc67f9b24314960dee3b35bbaedcd7e9a4
+
+# Diff at Tue, 29 Apr 2025 08:18:58 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337715
+- current block number: 22337715
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337715 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc186fA914353c44b2E33eBE05f21846F1048bEda","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xd2b98cee46be677a29fb7fba20754a4948f35323
 
 # Diff at Thu, 24 Apr 2025 08:36:05 GMT:

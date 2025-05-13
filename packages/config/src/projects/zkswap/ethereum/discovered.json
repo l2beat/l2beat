@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 20311131,
-  "configHash": "0x034ae6206cc6d5e8659185ff724f82c1ddd9242390cdf8346df1e49e16c978c9",
+  "configHash": "0xb1e5b9b35649d76e0589e2578f63f91cc090edd551d9ba2b7afc0f2233b55301",
   "entries": [
     {
       "name": "Governance",
@@ -13,13 +13,6 @@
         "0xdefeaa4f5c4b5e82fe2f743a1c06665f15c301ff4d76a526669ac3fb869d5869"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -33,7 +26,10 @@
         "totalTokens": 39,
         "validators": ["0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
       },
-      "derivedName": "Governance"
+      "implementationNames": {
+        "0x02ecef526f806f06357659fFD14834fe82Ef4B04": "Proxy",
+        "0x9d3fdf9b4782753d12f6262bf22B6322608962b8": "Governance"
+      }
     },
     {
       "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
@@ -46,13 +42,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -63,7 +52,10 @@
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x27C229937745d697d28FC7853d1bFEA7331Edf56": "Proxy",
+        "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F": ""
+      }
     },
     {
       "name": "ZkSyncCommitBlock",
@@ -92,7 +84,9 @@
         "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
         "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "ZkSyncCommitBlock"
+      "implementationNames": {
+        "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": "ZkSyncCommitBlock"
+      }
     },
     {
       "name": "PairManager",
@@ -100,13 +94,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -117,7 +104,10 @@
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": "Proxy",
+        "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8": ""
+      }
     },
     {
       "name": "UpgradeGatekeeper",
@@ -166,7 +156,9 @@
         "upgradeStatus": 0,
         "versionId": 0
       },
-      "derivedName": "UpgradeGatekeeper"
+      "implementationNames": {
+        "0x714B2D10210f2A3a7AA614F949259C87613689aB": "UpgradeGatekeeper"
+      }
     },
     {
       "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
@@ -182,7 +174,9 @@
       "sinceTimestamp": 1613135171,
       "sinceBlock": 11841961,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5": ""
+      }
     },
     {
       "name": "ZkSync",
@@ -193,13 +187,6 @@
         "0x86daad8532338dd22b2ad525c7955746dab5c88fca7bbd2e1a7fc07f47b2c5e3"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "numberOfPendingWithdrawals",
@@ -235,7 +222,10 @@
         "zkSyncCommitBlockAddress": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
         "zkSyncExitAddress": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5"
       },
-      "derivedName": "ZkSync"
+      "implementationNames": {
+        "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": "Proxy",
+        "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": "ZkSync"
+      }
     },
     {
       "name": "VerifierExit",
@@ -243,13 +233,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
@@ -260,7 +243,10 @@
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x961369d347EF7A6896BDD39cBE2B89e3911f521f": "Proxy",
+        "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534": ""
+      }
     }
   ],
   "abis": {
@@ -494,5 +480,6 @@
       "function validators(address) view returns (bool)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x496241bff67a5d5f518b3cd578d76c17281ab595d757dcd1f902bf549c8891b6"
 }

@@ -5,7 +5,8 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { uniq, uniqBy } from 'lodash'
+import uniq from 'lodash/uniq'
+import uniqBy from 'lodash/uniqBy'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import { bridges } from '../processing/bridges'
 import { layer2s } from '../processing/layer2s'

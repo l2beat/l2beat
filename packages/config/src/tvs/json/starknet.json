@@ -60,6 +60,24 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "starknet-EUTBL",
+      "priceId": "eutbl",
+      "symbol": "EUTBL",
+      "name": "Spiko EU T-Bills Money Market Fund",
+      "iconUrl": "https://assets.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x04f5e0de717daa6aa8de63b1bf2e8d7823ec5b21a88461b1519d9dbc956fb7f2",
+        "chain": "starknet",
+        "decimals": 5,
+        "sinceTimestamp": 1732633074
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "starknet-FXS",
       "priceId": "frax-share",
@@ -247,6 +265,24 @@
       },
       "category": "stablecoin",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-USTBL",
+      "priceId": "spiko-us-t-bills-money-market-fund",
+      "symbol": "USTBL",
+      "name": "Spiko US T-Bills Money Market Fund",
+      "iconUrl": "https://assets.coingecko.com/coins/images/39666/large/USTB.png?1723541269",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x020ff2f6021ada9eDBCeAf31B96f9F67b746662a6e6B2bC9d30c0d3e290a71f6",
+        "chain": "starknet",
+        "decimals": 5,
+        "sinceTimestamp": 1732632828
+      },
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {

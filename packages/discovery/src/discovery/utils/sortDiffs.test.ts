@@ -8,7 +8,7 @@ const DIFFS: FieldDiff[] = [
   { key: 'values.key5', severity: 'LOW' },
   { key: 'values.key4' },
   { key: 'values.key3', severity: 'LOW' },
-  { key: 'values.key2', severity: 'MEDIUM' },
+  { key: 'values.key2', severity: 'LOW' },
   { key: 'values.key1', severity: 'HIGH' },
 ]
 
@@ -16,9 +16,9 @@ describe(sortBySeverity.name, () => {
   it('sorts diffs by severity', () => {
     expect(justTheKeys(sortBySeverity(DIFFS))).toEqual([
       { key: 'values.key1' },
-      { key: 'values.key2' },
       { key: 'values.key5' },
       { key: 'values.key3' },
+      { key: 'values.key2' },
       { key: 'values.key6' },
       { key: 'values.key4' },
     ])

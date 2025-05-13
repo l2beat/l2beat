@@ -1,5 +1,5 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import { ConfigReader } from './ConfigReader'
 import { type StructureConfig, StructureContract } from './StructureConfig'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
@@ -21,7 +21,6 @@ export function buildSharedModuleIndex(
 }
 
 export type StructureContractOverrides = StructureContract & {
-  name?: string // TODO(radomski): This is required?
   address: EthereumAddress
 }
 
@@ -36,15 +35,13 @@ export function makeEntryStructureConfig(
   const override =
     config.overrides?.[address.toString()] ?? StructureContract.parse({})
 
-  const overrides = { name: undefined, address, ...override }
+  const overrides = { address, ...override }
 
   const result = {
     ...overrides,
     types: merge({}, config.types ?? {}, overrides.types),
     pushValues: function (values: StructureContract) {
       const newState = {
-        // root names > display names
-        name: this.name ?? values.displayName ?? this.displayName,
         address: this.address,
         ...StructureContract.parse(merge({}, values, this)),
       }

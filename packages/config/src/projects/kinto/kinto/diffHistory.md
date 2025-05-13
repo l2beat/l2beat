@@ -1,3 +1,145 @@
+Generated with discovered.json: 0xebf08d5f871947391118dd4b6cf829d826de867d
+
+# Diff at Mon, 12 May 2025 13:18:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 850146
+- current block number: 850146
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 850146 (main branch discovery), not current.
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      fieldMeta.KYC_PROVIDERs.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x85ab2089a51c02b1e8d6ede5299ee2d6a93c70ce
+
+# Diff at Mon, 05 May 2025 15:56:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 845013
+- current block number: 850146
+
+## Description
+
+Config related: templatize 3 contracts and tighten discodriven permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 845013 (main branch discovery), not current.
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      template:
++        "kinto/KintoAppRegistry"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      description:
+-        "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
++        "OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
+      fieldMeta.RoleAdminChanged.severity:
++        "HIGH"
+      fieldMeta.RoleGrantDelayChanged.severity:
++        "HIGH"
+      fieldMeta.TargetAdminDelayUpdated.severity:
++        "HIGH"
+      fieldMeta.TargetFunctionRoleUpdated.severity:
++        "HIGH"
+      fieldMeta.AdditionalRoleLabels.severity:
++        "HIGH"
+      fieldMeta.RolesGranted.severity:
++        "HIGH"
+      template:
++        "kinto/AccessManager"
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      template:
++        "kinto/KintoID"
+    }
+```
+
+Generated with discovered.json: 0xa1e826e1b1cced3b291cba940fd154066ed8f591
+
+# Diff at Tue, 29 Apr 2025 09:37:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 845013
+- current block number: 845013
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 845013 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.","via":[]}]
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","via":[]}]
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","via":[]}]
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","description":"confirm sanctions, making them permanent without providing an exit window.","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":1036800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"approve smart wallet recoveries for any KintoWallet.","via":[]}]
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x6E31039abF8d248aBed57E307C9E1b7530c269E4","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]},{"permission":"interact","to":"0xb539019776eF803E89EC062Ad54cA24D1Fdb008a","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xb5c6094116ea6f8338da407d47fd003faf141d93
 
 # Diff at Mon, 28 Apr 2025 11:56:16 GMT:

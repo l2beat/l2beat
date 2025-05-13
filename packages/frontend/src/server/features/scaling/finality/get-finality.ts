@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { keyBy, mapValues } from 'lodash'
+import keyBy from 'lodash/keyBy'
+import mapValues from 'lodash/mapValues'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { FinalityData, FinalityDataPoint } from './schema'

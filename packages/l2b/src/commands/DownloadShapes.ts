@@ -4,23 +4,23 @@ import { join } from 'path'
 import {
   TemplateService,
   flattenStartingFrom,
+  flatteningHash,
   getChainConfig,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { flatteningHash } from '@l2beat/discovery/dist/flatten/utils'
-import { getExplorerClient } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { getExplorerClient } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
 import { rimraf } from 'rimraf'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
-  description: 'Download all Solidity files for shapes defined in a template',
+  description: 'Download all Solidity files for shapes defined in a template.',
   args: {
     template: positional({
       type: string,
       displayName: 'template',
-      description: 'name of the template to download shapes for',
+      description: 'name of the template to download shapes for.',
     }),
   },
   handler: async (args) => {

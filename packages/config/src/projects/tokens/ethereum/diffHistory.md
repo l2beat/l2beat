@@ -1,3 +1,243 @@
+Generated with discovered.json: 0x1a53d6febc96f1e64fa8fe08771fe49a7a33b9b9
+
+# Diff at Fri, 09 May 2025 11:17:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b9a3516de49f42efd9d26f04918d74a8d92c6204 block: 22438060
+- current block number: 22445558
+
+## Description
+
+MS member changes.
+
+## Watched changes
+
+```diff
+    contract Safe (0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      values.$members.15:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.10:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
+      values.$members.9:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.8:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.7:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.6:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.5:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.multisigThreshold:
+-        "7 of 16 (44%)"
++        "7 of 12 (58%)"
+    }
+```
+
+Generated with discovered.json: 0xfe6d5223ce5306e75372318dfc9144348c8695d2
+
+# Diff at Wed, 07 May 2025 11:00:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22424710
+- current block number: 22431247
+
+## Description
+
+Increased the number of minter multisig members from 12 to 16, threshold stayed unchanged.
+
+## Watched changes
+
+```diff
+    contract Safe (0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      values.$members.15:
++        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
+      values.$members.14:
++        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.13:
++        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
+      values.$members.12:
++        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+      values.$members.11:
+-        "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7"
++        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
+      values.$members.10:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.9:
+-        "0x81C1B22c67731D3f0Bac506102Fe998361565874"
++        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.8:
+-        "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
++        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.7:
+-        "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0"
++        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.5:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+      values.$members.4:
+-        "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
++        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.3:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.multisigThreshold:
+-        "7 of 12 (58%)"
++        "7 of 16 (44%)"
+    }
+```
+
+Generated with discovered.json: 0x1019dedf2391a3023ca4e7717df51ade1c896aec
+
+# Diff at Tue, 06 May 2025 12:38:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@797a9ec756b28fc8b608c3143fbee4e577108cbc block: 22123688
+- current block number: 22424710
+
+## Description
+
+Bumped consensus version. This is the consensus/oracle used for validator exits because exits are currently not triggerable from L1 (will be solved with pectra).
+
+## Watched changes
+
+```diff
+    contract ValidatorsExitBusOracle (0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      values.getConsensusVersion:
+-        2
++        3
+    }
+```
+
+```diff
+    contract AccountingOracle (0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      values.getConsensusVersion:
+-        2
++        3
+    }
+```
+
+Generated with discovered.json: 0x859feba5b2c382d43e277dd545561080e425a40e
+
+# Diff at Tue, 29 Apr 2025 08:19:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22123688
+- current block number: 22123688
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123688 (main branch discovery), not current.
+
+```diff
+    contract ValidatorsExitBusOracle (0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract CSAccounting (0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract AccountingOracle (0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract WithdrawalQueueERC721 (0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract WithdrawalVault (0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x2e59A20f205bB85a89C53f1936454680651E618e","via":[]}]
+    }
+```
+
+```diff
+    contract LidoLocator (0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract MintManager (0xCa14076A3cec95448BaD179cc19B351A4204B88B) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x909d0CB383Ecc77e44daE5d0146cF476f611f62b","via":[]}]
+    }
+```
+
+```diff
+    contract CSFeeDistributor (0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract CSModule (0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
+```diff
+    contract StakingRouter (0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x3017778cb63cabe14a9edede5cbf874232512f36
 
 # Diff at Tue, 25 Mar 2025 11:42:40 GMT:

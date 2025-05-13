@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x846117088cbcbe4599a5f0f1e4a225e3fd73929d
+
+# Diff at Tue, 06 May 2025 10:56:53 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 21981354
+- current block number: 21981354
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981354 (main branch discovery), not current.
+
+```diff
+    EOA  (0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x143a9188fb51370d4c85178573b57ff82032982f
+
+# Diff at Tue, 29 Apr 2025 08:19:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21981354
+- current block number: 21981354
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981354 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245","via":[]},{"permission":"interact","to":"0x86ED881374a81efcc1Aa9f82cA9740B40F0FCbfe","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245","description":"manage the token admin role.","via":[]},{"permission":"operateStarkEx","to":"0xe997ece81cb8A686206ea6042886B594Ecf6DdED","via":[]},{"permission":"upgrade","to":"0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245","delay":1209600,"via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x494bc0a94b8906373cb144cb9df782d1215cb7ad
 
 # Diff at Thu, 27 Mar 2025 11:14:41 GMT:

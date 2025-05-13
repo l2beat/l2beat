@@ -1,5 +1,5 @@
 import { assert, type Transaction } from '@l2beat/shared-pure'
-import { isArray } from 'lodash'
+import isArray from 'lodash/isArray'
 import { ERC20ROUTER_TRANSACTION_SELECTOR } from './const'
 
 export function isErc20Router(tx: Transaction): boolean {

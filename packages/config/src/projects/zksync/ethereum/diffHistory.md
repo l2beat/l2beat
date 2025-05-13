@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xed8e5b2c4763910889126be3eb65a6744a83c321
+
+# Diff at Tue, 29 Apr 2025 08:19:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22081893
+- current block number: 22081893
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081893 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x1a8826af057809ef6ebdcc850e6f97f499399f36
 
 # Diff at Wed, 19 Mar 2025 15:45:23 GMT:

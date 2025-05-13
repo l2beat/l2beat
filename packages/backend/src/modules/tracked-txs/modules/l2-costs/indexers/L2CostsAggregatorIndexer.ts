@@ -11,7 +11,7 @@ import {
   UnixTime,
   clampRangeToDay,
 } from '@l2beat/shared-pure'
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,

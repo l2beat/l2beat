@@ -54,7 +54,7 @@ export type PermissionConfiguration = RawPermissionConfiguration & {
 }
 
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
 
 export type StructureContractField = z.infer<typeof StructureContractField>
 export const StructureContractField = z
@@ -109,7 +109,6 @@ export const StructureContract = z.object({
   canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
   proxyType: z.optional(ManualProxyType),
-  displayName: z.string().optional(),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.array(z.string()).default([]),
   ignoreRelatives: z.array(z.string()).default([]),

@@ -1,5 +1,6 @@
 import { notUndefined } from '@l2beat/shared-pure'
-import { uniq, uniqBy } from 'lodash'
+import uniq from 'lodash/uniq'
+import uniqBy from 'lodash/uniqBy'
 import {
   Command,
   CommandDialog,

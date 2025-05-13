@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xfeb214fd9473624f4ec0f77090c322a1c409dba9
+
+# Diff at Tue, 06 May 2025 10:56:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 20089055
+- current block number: 20089055
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    EOA  (0x59278F587D4cFcDCbbc08019060be7231c37ddc2) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x0bd5c5b60bf21e72410d837b843931c97f7f89f8
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20089055
+- current block number: 20089055
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x59278F587D4cFcDCbbc08019060be7231c37ddc2","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x01464473ab99ac0c83c64f16af5f3e837440bdd1
 
 # Diff at Thu, 24 Apr 2025 10:30:40 GMT:

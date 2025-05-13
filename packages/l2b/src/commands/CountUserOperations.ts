@@ -3,7 +3,7 @@ import { countUserOperations } from '../implementations/count-user-operations/co
 
 export const CountUserOperations = command({
   name: 'count-user-operations',
-  description: 'Count user operations present in calldata',
+  description: 'Count user operations present in calldata.',
   version: '1.0.0',
   args: {
     calldata: positional({ type: string, displayName: 'calldata' }),

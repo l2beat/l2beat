@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'

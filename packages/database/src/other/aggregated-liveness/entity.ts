@@ -2,16 +2,14 @@ import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { AggregatedLiveness } from '../../kysely/generated/types'
 
-export type AggregatedLivenessRange = '30D' | '90D' | 'MAX'
-
 export interface AggregatedLivenessRecord {
+  timestamp: UnixTime
   projectId: string
   subtype: TrackedTxsConfigSubtype
-  range: AggregatedLivenessRange
   min: number
   avg: number
   max: number
-  updatedAt: UnixTime
+  numberOfRecords: number
 }
 
 export function toRow(
@@ -19,7 +17,7 @@ export function toRow(
 ): Insertable<AggregatedLiveness> {
   return {
     ...record,
-    updatedAt: UnixTime.toDate(record.updatedAt),
+    timestamp: UnixTime.toDate(record.timestamp),
   }
 }
 
@@ -29,7 +27,6 @@ export function toRecord(
   return {
     ...row,
     subtype: row.subtype as TrackedTxsConfigSubtype,
-    range: row.range as AggregatedLivenessRange,
-    updatedAt: UnixTime.fromDate(row.updatedAt),
+    timestamp: UnixTime.fromDate(row.timestamp),
   }
 }

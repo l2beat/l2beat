@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 21937191,
-  "configHash": "0x479e7fbbd35a41efec035cc06e19e0a738d9963b10f1b8c942e284a6180d048d",
+  "configHash": "0x70df96350063ad6acdaaa213e3fe2d83ab7880589941f13cdcf220cbc8201a46",
   "entries": [
     {
       "name": "HomeUpgradeBeacon",
@@ -15,7 +15,9 @@
       "sinceTimestamp": 1637961283,
       "sinceBlock": 13692067,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0x101a39eA1143cb252fc8093847399046fc35Db89": "UpgradeBeacon"
+      }
     },
     {
       "name": "ReplicaBeaconProxy",
@@ -26,13 +28,6 @@
         "0x3fa6a34a243dd0723157d70d7d21fc377ce2b0f38dea55d089556c264972063f"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1637962173,
       "sinceBlock": 13692126,
@@ -65,7 +60,10 @@
         "updater": "0x703643995262c92ab013E3CCA810BdcB9239d45a",
         "VERSION": 0
       },
-      "derivedName": "Replica"
+      "implementationNames": {
+        "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785": "UpgradeBeaconProxy",
+        "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F": "Replica"
+      }
     },
     {
       "name": "RecoveryManager",
@@ -100,7 +98,10 @@
         "nonce": 2,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "GovernanceUpgradeBeacon",
@@ -113,7 +114,9 @@
       "sinceTimestamp": 1637961347,
       "sinceBlock": 13692072,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": "UpgradeBeacon"
+      }
     },
     {
       "name": "UpgradeBeaconController",
@@ -147,7 +150,9 @@
         "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
       },
-      "derivedName": "UpgradeBeaconController"
+      "implementationNames": {
+        "0x4F50a7081792063693F46A6402390b9647562457": "UpgradeBeaconController"
+      }
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -158,13 +163,6 @@
         "0x5bd24b5259f733f1cb0c93cd38718fd109ef8701385499565ac77523dac5dfd7"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637963549,
       "sinceBlock": 13692228,
       "values": {
@@ -185,7 +183,10 @@
         "VERSION": 0,
         "xAppConnectionManager": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
       },
-      "derivedName": "BridgeRouter"
+      "implementationNames": {
+        "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892": "UpgradeBeaconProxy",
+        "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738": "BridgeRouter"
+      }
     },
     {
       "address": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0",
@@ -227,7 +228,9 @@
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "updater": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
       },
-      "derivedName": "UpdaterManager"
+      "implementationNames": {
+        "0x81B97dfBB743c343983e9bE7B863dB636DbD7373": "UpdaterManager"
+      }
     },
     {
       "name": "XAppConnectionManager",
@@ -246,7 +249,9 @@
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "watchers": ["0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"]
       },
-      "derivedName": "XAppConnectionManager"
+      "implementationNames": {
+        "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD": "XAppConnectionManager"
+      }
     },
     {
       "address": "0xa725898D6F73C512f803B564A89DFbd96cF298EC",
@@ -264,7 +269,9 @@
       "sinceTimestamp": 1637962173,
       "sinceBlock": 13692126,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0xA734EDE8229970776e1B68085D579b6b6E97dAd4": "UpgradeBeacon"
+      }
     },
     {
       "name": "HomeBeaconProxy",
@@ -275,13 +282,6 @@
         "0xd4e593cba02e81da0882f30e09e38c2015c6f635b3911e27d19b579b1b92eba5"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "committedRoot",
         "count",
@@ -324,7 +324,10 @@
         "updaterManager": "0x81B97dfBB743c343983e9bE7B863dB636DbD7373",
         "VERSION": 0
       },
-      "derivedName": "Home"
+      "implementationNames": {
+        "0xa73a3a74C7044B5411bD61E1990618A1400DA379": "UpgradeBeaconProxy",
+        "0xfc6E146384b5c65f372d5b20537F3e8727aD3723": "Home"
+      }
     },
     {
       "name": "BridgeUpgradeBeacon",
@@ -337,7 +340,9 @@
       "sinceTimestamp": 1637963549,
       "sinceBlock": 13692228,
       "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "implementationNames": {
+        "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE": "UpgradeBeacon"
+      }
     },
     {
       "name": "GovernanceRouterBeaconProxy",
@@ -348,13 +353,6 @@
         "0xfe51330f918cf664ca579984982dbeeab54d9a2461dcd1938ff2d46b9c77b306"
       ],
       "proxyType": "Optics Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4F50a7081792063693F46A6402390b9647562457",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637961347,
       "sinceBlock": 13692072,
       "values": {
@@ -381,7 +379,10 @@
         "VERSION": 0,
         "xAppConnectionManager": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
       },
-      "derivedName": "GovernanceRouter"
+      "implementationNames": {
+        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94": "UpgradeBeaconProxy",
+        "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835": "GovernanceRouter"
+      }
     },
     {
       "address": "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e",
@@ -656,5 +657,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x1efe2e52f7bc799f7b010ca9b94d315ab5efa0e172a1ec17436fe0c345dc7e5a"
 }

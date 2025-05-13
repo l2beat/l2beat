@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Defines and stores pauser and unpauser roles for EigenDA contracts.",
+  "fields": {
+    "pausers": {
+      "handler": {
+        "type": "event",
+        "select": "pauser",
+        "add": {
+          "event": "PauserStatusChanged",
+          "where": ["=", "#canPause", true]
+        },
+        "remove": {
+          "event": "PauserStatusChanged",
+          "where": ["!=", "#canPause", true]
+        }
+      },
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}

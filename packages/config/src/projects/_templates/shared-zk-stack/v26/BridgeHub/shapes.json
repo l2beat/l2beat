@@ -4,5 +4,11 @@
     "address": "0xb720523EC3c615b069453bF4B0584CEbF034706f",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "BridgeHub_v27": {
+    "hash": "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb",
+    "address": "0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87",
+    "chain": "ethereum",
+    "blockNumber": 22374168
   }
 }

@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xff96e20743e7eb5644c2cd6d2e3dfbcff84c0297
+
+# Diff at Tue, 06 May 2025 13:14:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b140e89b6bfa22af8e947558a345fd3f6e6cc810 block: 21723791
+- current block number: 21723791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723791 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x391bc4ff23b320306e0943718b46ec3a52d56e70
+
+# Diff at Tue, 29 Apr 2025 08:18:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21723791
+- current block number: 21723791
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723791 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","via":[]}]
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x75936a2650e3803fcf7946bcd9ce20946cb1d10f
 
 # Diff at Tue, 04 Mar 2025 10:38:56 GMT:

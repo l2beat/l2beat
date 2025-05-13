@@ -1,3 +1,404 @@
+Generated with discovered.json: 0x683712ab992990886f883804c6f44f1f423c950b
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 22425142
+- current block number: 22425142
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22425142 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      fieldMeta.ejectionCooldown.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      fieldMeta.BLOCK_STALE_MEASURE.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.quorumAdversaryThresholdPercentages.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.quorumConfirmationThresholdPercentages.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.batchConfirmers.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xe01ece34ed2b91a3e89bf4cbb1d3c2337256b809
+
+# Diff at Tue, 06 May 2025 14:18:59 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@30ca054bbefa91d57a0e71a49c313444ab339496 block: 22208508
+- current block number: 22425142
+
+## Description
+
+New EigenDAOperationsMultisig as owner of core contracts. EigenDA has not upgraded to the allocation manager and its operators set yet, still uses AVS registry.
+
+## Watched changes
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      values.owner:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0x002721B4790d97dC140a049936aA710152Ba92D5"
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      values.ejectors.1:
++        "0x8642473a123FE33b0aaE90bD8604eA1029417236"
+      values.owner:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0x002721B4790d97dC140a049936aA710152Ba92D5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0x002721B4790d97dC140a049936aA710152Ba92D5"
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D"},{"permission":"upgrade","from":"0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"},{"permission":"upgrade","from":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"},{"permission":"upgrade","from":"0x130d8EA0052B45554e4C99079B84df292149Bd5E"},{"permission":"upgrade","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"},{"permission":"upgrade","from":"0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D"},{"permission":"upgrade","from":"0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"},{"permission":"upgrade","from":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"},{"permission":"upgrade","from":"0x130d8EA0052B45554e4C99079B84df292149Bd5E"},{"permission":"upgrade","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"},{"permission":"upgrade","from":"0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"}]
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      values.owner:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0x002721B4790d97dC140a049936aA710152Ba92D5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAOperationsMultisig (0x002721B4790d97dC140a049936aA710152Ba92D5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/EigenDAOperationsMultisig/Safe.sol       | 1088 ++++++++++++++++++++
+ .../EigenDAOperationsMultisig/SafeProxy.p.sol      |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208508 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      template:
+-        "eigenlayer/PauserRegistry"
++        "eigenlayer/EigenDAPauserRegistry"
+      description:
+-        "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager."
++        "Defines and stores pauser and unpauser roles for EigenDA contracts."
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge"}]
+      receivedPermissions:
++        [{"permission":"interact","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerProtocolCouncil (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D"},{"permission":"upgrade","from":"0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"},{"permission":"upgrade","from":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"},{"permission":"upgrade","from":"0x130d8EA0052B45554e4C99079B84df292149Bd5E"},{"permission":"upgrade","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"},{"permission":"upgrade","from":"0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D"},{"permission":"upgrade","from":"0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"},{"permission":"upgrade","from":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"},{"permission":"upgrade","from":"0x130d8EA0052B45554e4C99079B84df292149Bd5E"},{"permission":"upgrade","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"},{"permission":"upgrade","from":"0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      template:
++        "eigenlayer/IndexRegistry"
+      description:
++        "A registry contract that keeps track of an ordered list of operators for each quorum."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
+-   Status: DELETED
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract EIGEN Token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x0b75298d35c1f03996e9da699866e6ff2d2ab796
+
+# Diff at Tue, 29 Apr 2025 08:19:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22208508
+- current block number: 22208508
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208508 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can add and remove strategies","via":[]},{"permission":"interact","to":"0xe0550117Cb066D3b330eBd764B0d75D3BA378734","description":"can approve the replacement of churned operators from a quorum","via":[]},{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8","description":"can eject DA operators from a quorum.","via":[]},{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A","description":"can create rewards submissions.","via":[]},{"permission":"interact","to":"0x2E158da11961426E2A1Cc9e79f40244486b6845C","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0x454Ef2f69f91527856E06659f92a66f464C1ca4e","description":"can confirm batches to the DA bridge.","via":[]},{"permission":"interact","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","description":"can pause the DA bridge","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0x4a3CD82B73821d075799680AcDff3e884B726777","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0x57af860e3a1C16641CDDDa92898266D2df7Dfa71","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","description":"can confirm batches to the DA bridge.","via":[]},{"permission":"interact","to":"0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","description":"can confirm batches to the DA bridge.","via":[]},{"permission":"interact","to":"0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can pause the DA bridge","via":[{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can pause the DA bridge","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","via":[]},{"permission":"interact","to":"0xEFca484E497a9de170Da32abfa11650957dD2a95","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","description":"can pause the DA bridge","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","description":"executes scheduled operations after the delay","via":[]},{"permission":"interact","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can cancel scheduled operations","via":[]}]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
+```diff
+    contract EIGEN Token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]},{"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}]}]
+    }
+```
+
 Generated with discovered.json: 0xd1d35f2cd13a220b0671424f099f5a61502806e8
 
 # Diff at Thu, 24 Apr 2025 10:30:01 GMT:

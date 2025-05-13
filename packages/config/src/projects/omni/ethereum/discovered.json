@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22337861,
-  "configHash": "0xc4c264f9efbcf2c3f234f5c3edabbe17ecee25fc24c4cd7367bc57dce800de54",
+  "configHash": "0xacf56a58ec054179f7fe5ce439a4369d09fd0be8235513865c13021aa189f0ac",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -50,7 +50,9 @@
         "SOURCE_CHAIN_ID": 100,
         "YAHO": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
       },
-      "derivedName": "Yaru"
+      "implementationNames": {
+        "0x30f64a297cc66a873FB603d1e89D5891962C25ba": "Yaru"
+      }
     },
     {
       "address": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
@@ -167,7 +169,10 @@
         "nonce": 86,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "Protofire EOA 2",
@@ -190,24 +195,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
       "sinceTimestamp": 1539028166,
       "sinceBlock": 6478422,
@@ -292,7 +279,10 @@
         "version": 9,
         "versionRecipient": "1.0.1"
       },
-      "derivedName": "XDaiForeignBridge",
+      "implementationNames": {
+        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": "EternalStorageProxy",
+        "0xb54042F5bA4B048fEa54aaE70abbbe41AC716299": "XDaiForeignBridge"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -324,7 +314,10 @@
         "nonce": 20,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe",
+      "implementationNames": {
+        "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -337,24 +330,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change external validation logic refered to by this contract (e.g. Hashi).",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        },
-        {
-          "permission": "validateBridge3",
-          "to": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1579258532,
       "sinceBlock": 9298324,
       "values": {
@@ -418,7 +393,10 @@
         "validatorContract": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
         "version": 6
       },
-      "derivedName": "ForeignAMB",
+      "implementationNames": {
+        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "EternalStorageProxy",
+        "0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316": "ForeignAMB"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -495,7 +473,10 @@
         "nonce": 5,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "CoW Protocol EOA 2",
@@ -524,7 +505,9 @@
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "tokenImage": "0x7c24d0061b484B267F286aa2DCe891220Db254b3"
       },
-      "derivedName": "TokenFactory"
+      "implementationNames": {
+        "0x71d5ba4e37de72415F685490B684538Aae8f0424": "TokenFactory"
+      }
     },
     {
       "name": "LayerZeroAdapter",
@@ -544,7 +527,9 @@
         "owner": "0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
         "PROVIDER": "layer-zero"
       },
-      "derivedName": "LayerZeroAdapter"
+      "implementationNames": {
+        "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": "LayerZeroAdapter"
+      }
     },
     {
       "name": "PermittableToken",
@@ -571,7 +556,9 @@
         "totalSupply": 0,
         "version": "1"
       },
-      "derivedName": "PermittableToken"
+      "implementationNames": {
+        "0x7c24d0061b484B267F286aa2DCe891220Db254b3": "PermittableToken"
+      }
     },
     {
       "address": "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
@@ -593,19 +580,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Token bridge implementation and escrow for ERC-20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change all critical configurations like yield farming for escrowed funds and limits.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1596501090,
       "sinceBlock": 10590093,
       "values": {
@@ -656,7 +630,10 @@
         "upgradeabilityOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "version": 6
       },
-      "derivedName": "ForeignOmnibridge",
+      "implementationNames": {
+        "0x88ad09518695c6c3712AC10a214bE5109a655671": "EternalStorageProxy",
+        "0x8eB3b7D8498a6716904577b2579e1c313d48E347": "ForeignOmnibridge"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -676,19 +653,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1726023347,
       "sinceBlock": 20724523,
       "values": {
@@ -741,7 +705,10 @@
           "description": "Threshold of the adapters on GnosisChain"
         }
       },
-      "derivedName": "HashiManager",
+      "implementationNames": {
+        "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": "EternalStorageProxy",
+        "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d": "HashiManager"
+      },
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
     },
     {
@@ -761,19 +728,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1738140599,
       "sinceBlock": 21729100,
       "values": {
@@ -826,7 +780,10 @@
           "description": "Threshold of the adapters on GnosisChain"
         }
       },
-      "derivedName": "HashiManager",
+      "implementationNames": {
+        "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": "EternalStorageProxy",
+        "0x716623daF27f2aFA8D6051A4Eda08E12107a2c83": "HashiManager"
+      },
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
     },
     {
@@ -850,7 +807,9 @@
       "sinceTimestamp": 1720770791,
       "sinceBlock": 20289052,
       "values": { "$immutable": true },
-      "derivedName": "Hashi"
+      "implementationNames": {
+        "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
+      }
     },
     {
       "address": "0xB1dD1828794075f7521365163A93DE9e68e3c49f",
@@ -885,7 +844,9 @@
       "sinceTimestamp": 1720772543,
       "sinceBlock": 20289197,
       "values": { "$immutable": true },
-      "derivedName": "Yaho"
+      "implementationNames": {
+        "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": "Yaho"
+      }
     },
     {
       "name": "Gnosis DAO EOA 2",
@@ -935,19 +896,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change the threshold and manage signers.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
@@ -1002,7 +950,10 @@
           "description": "Array of the signers in the validator multisig"
         }
       },
-      "derivedName": "BridgeValidators"
+      "implementationNames": {
+        "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "EternalStorageProxy",
+        "0x6943A218d58135793F1FE619414eD476C37ad65a": "BridgeValidators"
+      }
     },
     {
       "address": "0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
@@ -1020,19 +971,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "description": "change the threshold and manage signers.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
@@ -1081,7 +1019,10 @@
           "description": "Array of the signers in the validator multisig"
         }
       },
-      "derivedName": "BridgeValidators"
+      "implementationNames": {
+        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "EternalStorageProxy",
+        "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218": "BridgeValidators"
+      }
     },
     {
       "address": "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
@@ -1710,5 +1651,6 @@
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
 }

@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x65da6aeb6296d4c848a88d7e38995241be343371
+
+# Diff at Thu, 08 May 2025 10:05:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22418260
+- current block number: 22438006
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      values.$members.5:
+-        "0xb67ac19693fB89880Ca5873f6a890E865b259c26"
+      values.$members.4:
+-        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
++        "0xb67ac19693fB89880Ca5873f6a890E865b259c26"
+      values.$members.3:
+-        "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A"
++        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "4 of 5 (80%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0x6df0c7e4731464de15fe1e1f2fe6894c5ea70823
+
+# Diff at Mon, 05 May 2025 14:54:32 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@277ef8f5adf45205d5b920c1ebfc0f7db8d19aff block: 22208595
+- current block number: 22418260
+
+## Description
+
+Added a known 4/6 multisig as the second member of another known 1/2 multisig.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A) {
+    +++ description: None
+      values.$members.1:
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.multisigThreshold:
+-        "1 of 1 (100%)"
++        "1 of 2 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xb7e671e8630b0eb8b974b8f85599fca8f6599843
+
+# Diff at Tue, 29 Apr 2025 08:19:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22208595
+- current block number: 22208595
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208595 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x754c15aad56c5926a59d08f345d95ddf87a65851
 
 # Diff at Sun, 06 Apr 2025 08:11:53 GMT:

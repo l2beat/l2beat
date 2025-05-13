@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0x282328487c1b79183a427a2f6f19f162bc92fe3229658b42136c1da4221c8648",
+  "configHash": "0x0119da6d9cc4ec4a30203e9cb57b6087644eb91d19b1ad96ba90270bd0bce287",
   "entries": [
     {
       "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
@@ -37,7 +37,9 @@
         "$immutable": true,
         "owner": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x13a4cC0750296bB72Eb0006febec306551A4f472": "ProxyAdmin"
+      }
     },
     {
       "address": "0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685",
@@ -53,13 +55,6 @@
         "0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1647128990,
       "sinceBlock": 14375018,
       "values": {
@@ -100,7 +95,10 @@
         "paused": false,
         "tokenManager": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168"
       },
-      "derivedName": "LiquidityPool"
+      "implementationNames": {
+        "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b": "TransparentUpgradeableProxy",
+        "0x4906b8E690EB1E09Fec924422452d1105D59d042": "LiquidityPool"
+      }
     },
     {
       "address": "0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0",
@@ -132,7 +130,9 @@
         ],
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6"
       },
-      "derivedName": "ExecutorManager"
+      "implementationNames": {
+        "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399": "ExecutorManager"
+      }
     },
     {
       "address": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
@@ -148,13 +148,6 @@
         "0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1652360689,
       "sinceBlock": 14761234,
       "values": {
@@ -171,7 +164,10 @@
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
       },
-      "derivedName": "TokenManager"
+      "implementationNames": {
+        "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168": "TransparentUpgradeableProxy",
+        "0x79E559AC5b499A5676e28f0074e29763F6c2A27e": "TokenManager"
+      }
     },
     {
       "name": "LiquidityProviders",
@@ -182,13 +178,6 @@
         "0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1647128942,
       "sinceBlock": 14375014,
       "values": {
@@ -216,7 +205,10 @@
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
       },
-      "derivedName": "LiquidityProviders"
+      "implementationNames": {
+        "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": "TransparentUpgradeableProxy",
+        "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103": "LiquidityProviders"
+      }
     },
     {
       "address": "0xEEFD474e80B6CAEA43F212D964409c473684E3fe",
@@ -435,5 +427,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x33534205e6127c0ceec5a4ab23e9cd2ecee63863dbc3a4d6688abf6ee1b9ddbb"
 }

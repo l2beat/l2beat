@@ -1,3 +1,242 @@
+Generated with discovered.json: 0xecb8567f2686fc854f8f9d33dc925054052fcb47
+
+# Diff at Mon, 12 May 2025 08:14:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4a373705dbec82410d264d404f2ff330f41666ef block: 8196210
+- current block number: 13539010
+
+## Description
+
+Isthmus L2 contract upgrades, mainly focusing on support for the new operator fee (standard contracts).
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x6e5bd465cdf07c7fc7de194833be336109be5aceaeb509643962096c772ec26a"
++        "0xa6ae4f0695335983b644f1524c759f3178ee95c406e1e905b8cbccf5763af43a"
+      values.$implementation:
+-        "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f"
++        "0x93e57A196454CB919193fa9946f14943cf733845"
+      values.$pastUpgrades.0:
++        ["2025-05-09T16:00:01.000Z","0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",["0x93e57A196454CB919193fa9946f14943cf733845"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.3.1-beta.1"
++        "1.4.0"
+      values.isIsthmus:
++        true
+      implementationNames.0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f:
+-        "GasPriceOracle"
+      implementationNames.0x93e57A196454CB919193fa9946f14943cf733845:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0x936b7b7eb2a88a64e3eceaf897abfa2dc6e48b4c75eba2da34ff927b98413b6b"
++        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d"
+      sourceHashes.0:
+-        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d"
++        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
+      values.$implementation:
+-        "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015"
++        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
+      values.$pastUpgrades.0:
++        ["2025-05-09T16:00:01.000Z","0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",["0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.5.1-beta.1"
++        "1.6.0"
+      implementationNames.0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015:
+-        "L1Block"
+      implementationNames.0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
++        "L1Block"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol              |  511 ++++++-
+ .../{.flat@8196210 => .flat}/L1Block/L1Block.sol   | 1423 +-------------------
+ 2 files changed, 552 insertions(+), 1382 deletions(-)
+```
+
+Generated with discovered.json: 0xb262b25aef696506e629da385b193c8362af0a27
+
+# Diff at Tue, 06 May 2025 10:57:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 8196210
+- current block number: 8196210
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8196210 (main branch discovery), not current.
+
+```diff
+    EOA SuperchainProxyAdminOwner_L2Alias (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x0feb6cad2b097def9e79878b14e572fcd1b50b59
+
+# Diff at Tue, 29 Apr 2025 08:19:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 8196210
+- current block number: 8196210
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8196210 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+    }
+```
+
 Generated with discovered.json: 0x076e12ff6e1bb5945cf304fde925ed29dd28bebb
 
 # Diff at Tue, 11 Mar 2025 12:03:49 GMT:

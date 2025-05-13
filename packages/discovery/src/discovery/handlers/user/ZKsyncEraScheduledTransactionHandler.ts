@@ -2,7 +2,7 @@ import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { uniqBy } from 'lodash'
+import uniqBy from 'lodash/uniqBy'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'

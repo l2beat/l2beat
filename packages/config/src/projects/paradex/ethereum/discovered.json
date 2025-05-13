@@ -1,8 +1,8 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22337719,
-  "configHash": "0x968531bb76ec6bc00476672f98f1e86d3c87830b73538f2ea6818014d6788261",
+  "blockNumber": 22467133,
+  "configHash": "0x5bc13835c71750fca2490a0bf5ee3a3092cb5fb17601436fe36e505b51660bf1",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -51,15 +51,13 @@
         "nonce": 13,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -85,6 +83,11 @@
     },
     {
       "address": "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x94d5dc7c96Eb6176783787669571970C7ba43e01",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -120,31 +123,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
       "values": {
@@ -256,7 +234,10 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
-      "derivedName": "StarknetERC20Bridge",
+      "implementationNames": {
+        "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": "Proxy",
+        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": "StarknetERC20Bridge"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -287,23 +268,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -351,7 +315,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 8737,
+        "l1ToL2MessageNonce": 9833,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -368,9 +332,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1133088009328429489004006409885485098394571197569509381161242988136571613134",
-        "stateBlockNumber": 620225,
-        "stateRoot": "908818025637838095681079431712384272515555895228483688980483225509360789582",
+        "stateBlockHash": "1241311775468790317015444480476151833389907516225651482949579737690958020496",
+        "stateBlockNumber": 670025,
+        "stateRoot": "2717280229132263018143469149437863112081054091594054019939819305034432175923",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -389,7 +353,10 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Starknet",
+      "implementationNames": {
+        "0xF338cad020D506e8e3d9B4854986E0EcE6C23640": "Proxy",
+        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04": "Starknet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -422,7 +389,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
+      "address": "0xfF206f46453A9dd8e1664532788f4987c15B937d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -464,21 +431,24 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0xfF206f46453A9dd8e1664532788f4987c15B937d",
           "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
-          "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
+          "0x94d5dc7c96Eb6176783787669571970C7ba43e01",
           "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
-          "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
-          "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6"
+          "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
         ],
         "$threshold": 3,
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 10,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0xFF57A3bB6465501c993acF8f3b29125a862661C0": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     }
   ],
   "abis": {
@@ -782,7 +752,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "starknet/Starknet": "0xb16bbeaec681e64302207efdad1b1a38236e744a71f4298bfb7d301ec5b8599a",
+    "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
     "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183"
-  }
+  },
+  "permissionsConfigHash": "0x62b1961a53d26f2eabc0dc2109cabfd474c6078e5711f29cc7fed1015bf90377"
 }

@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xf44aa4e2e10b689c74d032718fcae256185cd924
+
+# Diff at Fri, 02 May 2025 17:25:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22281661
+- current block number: 22397509
+
+## Description
+
+New feeAdapter contract which now acts as an entrypoint instead of the Spoke for  registering intents (on Ethereum).
+
+## Watched changes
+
+```diff
+    contract EverclearSpokeV4 (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      name:
+-        "EverclearSpokeV3"
++        "EverclearSpokeV4"
+      values.$implementation:
+-        "0xca6E4c424Fe12F989b6FEA2D9473515bE9b412b2"
++        "0xd18C19169e7C87e7d84f27AD412a56C5D743D560"
+      values.$pastUpgrades.3:
++        ["2025-04-29T11:43:35.000Z","0x268194204aceb79917b36ea1388c32aea7467aafe8592a320d52fcc09985b6a6",["0xd18C19169e7C87e7d84f27AD412a56C5D743D560"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.feeAdapter:
++        "0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75"
+      derivedName:
+-        "EverclearSpokeV3"
++        "EverclearSpokeV4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeeAdapter (0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XERC20Module (0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../EverclearSpokeV4/EverclearSpokeV4.sol}         |  167 +-
+ .../everclearbridge/ethereum/.flat/FeeAdapter.sol  | 1890 ++++++++++++++++++++
+ .../ethereum/.flat/XERC20Module.sol                |  175 ++
+ 3 files changed, 2166 insertions(+), 66 deletions(-)
+```
+
+Generated with discovered.json: 0x0d3d8007f5abdd983a3be58631411488ef44a335
+
+# Diff at Tue, 29 Apr 2025 08:19:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22281661
+- current block number: 22281661
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281661 (main branch discovery), not current.
+
+```diff
+    contract  (0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6","via":[]}]
+    }
+```
+
+```diff
+    contract EverclearSpokeV3 (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x907ab14d5461be8097a4c36670a5e8aeb92f0419
 
 # Diff at Wed, 16 Apr 2025 12:49:25 GMT:

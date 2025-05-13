@@ -1,3 +1,271 @@
+Generated with discovered.json: 0xa0742371a733e253855a49fdce68a86fd796db39
+
+# Diff at Wed, 07 May 2025 10:16:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@370d0c8c1e8a1a622701270cc075f9413ad76ecd block: 22423561
+- current block number: 22431133
+
+## Description
+
+Updated owner of ProxyAdmin and 4/7 Avail multisig to the TimelockController.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      values.owner:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.6.via.1:
++        {"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+      receivedPermissions.6.via.0.address:
+-        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.6.via.0.delay:
++        86400
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+    }
+```
+
+Generated with discovered.json: 0xd87bac7b9ea3ad62608d63633846ad55e909d162
+
+# Diff at Tue, 06 May 2025 08:46:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76bab41abbae565c3c67522863645fa6d26e7444 block: 22417833
+- current block number: 22423561
+
+## Description
+
+Finalized the transfer of admin and owner roles to a 1d timelock controller.
+
+## Watched changes
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.defaultAdmin:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.defaultAdminAC.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.owner:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x0000000000000000000000000000000000000000"
+      values.pendingDefaultAdmin.schedule:
+-        1746442211
++        0
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."}
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.8.description:
++        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+      receivedPermissions.8.via:
++        [{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]
+      receivedPermissions.7.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.7.via:
+-        [{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.6.description:
+-        "manage all access control roles."
+      receivedPermissions.6.via.0.address:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+      receivedPermissions.6.via.0.delay:
+-        86400
+      receivedPermissions.5.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.5.description:
+-        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
++        "manage all access control roles."
+      receivedPermissions.5.via:
++        [{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]
+    }
+```
+
+Generated with discovered.json: 0x82c8f962f3732fed1f41bdfffa07c044c93b6371
+
+# Diff at Mon, 05 May 2025 14:37:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@277ef8f5adf45205d5b920c1ebfc0f7db8d19aff block: 22336710
+- current block number: 22417833
+
+## Description
+
+The Avail bridge default admin is scheduled to be changed to a timelock smart contract.
+
+## Watched changes
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      values.pendingDefaultAdmin.schedule:
+-        0
++        1746442211
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"0x45828180bbE489350D621d002968A0585406d487","description":"manage all access control roles.","via":[{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"0x054fd961708D8E2B9c10a63F6157c74458889F0a","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."}
+      receivedPermissions.4:
++        {"permission":"interact","from":"0x45828180bbE489350D621d002968A0585406d487","description":"manage all access control roles."}
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.3.description:
++        "execute transactions that are ready."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.2.via:
+-        [{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]
+      receivedPermissions.2.description:
++        "can freeze the Vector contract and update the list of authorized relayers."
+      receivedPermissions.1.from:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.1.description:
+-        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
++        "propose transactions."
+      receivedPermissions.0.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.0.description:
+-        "can freeze the Vector contract and update the list of authorized relayers."
++        "cancel queued transactions."
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+      directlyReceivedPermissions.0.from:
+-        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      directlyReceivedPermissions.0.delay:
++        86400
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+## Source code changes
+
+```diff
+.../vector/ethereum/.flat/TimelockController.sol   | 1011 ++++++++++++++++++++
+ 1 file changed, 1011 insertions(+)
+```
+
+Generated with discovered.json: 0x32ca68770b5d0acb9ebc1bfde30d37e23d12f7dc
+
+# Diff at Tue, 29 Apr 2025 08:19:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22336710
+- current block number: 22336710
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22336710 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","description":"can freeze the Vector contract and update the list of authorized relayers.","via":[]},{"permission":"interact","to":"0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474","description":"can call commitHeaderRange() to commit block ranges to the Vector contract.","via":[]},{"permission":"upgrade","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[]}]
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930","description":"pause the bridge.","via":[]},{"permission":"interact","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","description":"manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.","via":[]},{"permission":"upgrade","to":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[{"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}]}]
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x4f19e1c1a1b47fe77d64dbfe805e57c7762bc60d
 
 # Diff at Thu, 24 Apr 2025 10:31:15 GMT:

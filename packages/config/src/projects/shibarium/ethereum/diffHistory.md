@@ -1,3 +1,151 @@
+Generated with discovered.json: 0xb21aef4c8629679fb59a1433c65ed0ce6259f6cb
+
+# Diff at Tue, 06 May 2025 10:56:56 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 22337733
+- current block number: 22337733
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337733 (main branch discovery), not current.
+
+```diff
+    EOA  (0x80Cc222EA02F4334F67e9E55E7412fed62599004) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x3f85bd4a1efe34151c12907fa962c743e13bd8cc
+
+# Diff at Tue, 29 Apr 2025 08:19:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337733
+- current block number: 22337733
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337733 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0057bed57066F61c64DACB395B38c6E1792e03B8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract RootChainManager (0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82) {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract EventsHub (0x12185669Dac70749f717247971E0B8819b2e472e) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract StakeManagerExtension (0x17174796E0eF24330aed565c87Ba5e85431DE19e) {
+    +++ description: Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","description":"can update the validator registry address used to check whitelist inclusion.","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorRegistry (0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6) {
+    +++ description: Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","description":"can update the whitelist of validators","via":[]}]
+    }
+```
+
+```diff
+    contract StakeManager (0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","description":"can replace all validators.","via":[]},{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract DepositManager (0x885fcE983b6a01633f764325B8c3c5D31032C995) {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","description":"can update the root chain it references.","via":[]}]
+    }
+```
+
+```diff
+    contract SlashingManager (0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce) {
+    +++ description: Contract that allows the consensus supermajority to slash validators.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","description":"can update how much of the slashed funds go to the proposer and reporter.","via":[]}]
+    }
+```
+
+```diff
+    contract ERC721Predicate (0x98C831cFB18852f7deB3E3a970e907475b49730f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract EtherPredicate (0xc3897302aB4B42931cB4857050Fa60f53B775870) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}]
+    }
+```
+
+```diff
+    contract RootChain (0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","description":"can delete arbitrary checkpoints.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x4001f17ec85b943d1a0c2cf5f8df5214763ca204
 
 # Diff at Tue, 22 Apr 2025 14:34:57 GMT:

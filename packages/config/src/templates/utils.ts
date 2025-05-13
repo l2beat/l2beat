@@ -1,6 +1,6 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { unionBy } from 'lodash'
+import unionBy from 'lodash/unionBy'
 import { get$Implementations } from '../discovery/extractors'
 import type {
   Badge,

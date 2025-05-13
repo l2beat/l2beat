@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0xd1de18cc7679c3f4941cb1cb7b901aba5be1197b29d2ed28905b186ac9168fa4",
+  "configHash": "0xa650fc8e336f9d8bb2ebd8fa624e709578481ea952eb8ff154faf4cf639183ce",
   "entries": [
     {
       "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -23,13 +23,6 @@
         "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1661972207,
       "sinceBlock": 15448318,
       "values": {
@@ -54,7 +47,10 @@
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "AxelarGasService"
+      "implementationNames": {
+        "0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasServiceProxy",
+        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": "AxelarGasService"
+      }
     },
     {
       "address": "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821",
@@ -135,12 +131,16 @@
         "mintLimiter": "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68",
         "tokenDeployer": "0xb28478319B64f8D47e19A120209A211D902F8b8f"
       },
-      "derivedName": "AxelarGateway"
+      "implementationNames": {
+        "0x4F4495243837681061C4743b74B3eEdf548D56A5": "AxelarGatewayProxyMultisig",
+        "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098": "AxelarGateway"
+      }
     },
     {
       "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -163,7 +163,9 @@
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "Operators"
+      "implementationNames": {
+        "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": "Operators"
+      }
     },
     {
       "address": "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC",
@@ -181,7 +183,9 @@
       "sinceTimestamp": 1697785883,
       "sinceBlock": 18389965,
       "values": { "$immutable": true },
-      "derivedName": "TokenDeployer"
+      "implementationNames": {
+        "0xb28478319B64f8D47e19A120209A211D902F8b8f": "TokenDeployer"
+      }
     },
     {
       "name": "Multisig",
@@ -207,7 +211,9 @@
         "signers": 3,
         "signerThreshold": 3
       },
-      "derivedName": "Multisig"
+      "implementationNames": {
+        "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68": "Multisig"
+      }
     },
     {
       "name": "AxelarAuthWeighted",
@@ -226,7 +232,9 @@
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "AxelarAuthWeighted"
+      "implementationNames": {
+        "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0": "AxelarAuthWeighted"
+      }
     },
     {
       "address": "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f",
@@ -252,7 +260,9 @@
         "governanceChainHash": "0x9d38b77bdc2e9ef511420f947b5e8145291232b74f3f3a9e327433ff8f5acb66",
         "minimumTimeLockDelay": 604800
       },
-      "derivedName": "InterchainGovernance"
+      "implementationNames": {
+        "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66": "InterchainGovernance"
+      }
     }
   ],
   "abis": {
@@ -533,5 +543,6 @@
       "function withdraw(address recipient, uint256 amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x9885a89bcfbc6bfd9147dbf57dcfe1dda21a891efecdefd6f9e2daa30423963d"
 }

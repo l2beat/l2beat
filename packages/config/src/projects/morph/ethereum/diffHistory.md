@@ -1,3 +1,212 @@
+Generated with discovered.json: 0xfabe08a5363555a460c77ba32e9dfd42e053b132
+
+# Diff at Mon, 12 May 2025 12:13:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 21716626
+- current block number: 22466462
+
+## Description
+
+Minor upgrade to the main MorphRollup contract: formatting changes for batch commits, proveState() is now permissioned (onlyActiveStaker).
+
+New verifier deployed, code-identical to the old one (SP1) but new programVkey.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.1:
++        {"startBatchIndex":0,"verifier":"0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"}
+      values.latestVerifier.0.startBatchIndex:
+-        0
++        20230
+      values.latestVerifier.0.verifier:
+-        "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"
++        "0x4006FDA79493FEE14dA42BfA34575aAA79bcf953"
+      values.legacyVerifiersLength.1:
++        0
+      values.verifierVersions.1:
++        2
+    }
+```
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
+      sourceHashes.0:
+-        "0xdbd7245a43b9bfda69e999525405cc2d3a44e2a5d60c8fcbc75bb2d4987837be"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      values.$implementation:
+-        "0x43190DfD1F572Cb56B1942B44482d1774151D77A"
++        "0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec"
+      values.$pastUpgrades.5:
++        ["2025-01-13T07:31:59.000Z","0x809b1d9bba9fd8f61c038603ddf7a6f0a079db83a4a6d341cf23d2af5764a9be",["0x43190DfD1F572Cb56B1942B44482d1774151D77A"]]
+      values.$pastUpgrades.4.2:
+-        ["0x43190DfD1F572Cb56B1942B44482d1774151D77A"]
++        "2024-10-19T09:51:35.000Z"
+      values.$pastUpgrades.4.1:
+-        "2025-01-13T07:31:59.000Z"
++        ["0xcffdDbcb5B9EA2ee45ABA121e0849ADc87c38326"]
+      values.$pastUpgrades.4.0:
+-        "0x809b1d9bba9fd8f61c038603ddf7a6f0a079db83a4a6d341cf23d2af5764a9be"
++        "0xeb4cc4248a0b3f459f4d7ab5877114fd4f55fd073c78347df548a9f03013068e"
+      values.$pastUpgrades.3.2:
+-        "2024-10-19T09:51:35.000Z"
++        "2024-10-19T03:11:47.000Z"
+      values.$pastUpgrades.3.1.0:
+-        "0xcffdDbcb5B9EA2ee45ABA121e0849ADc87c38326"
++        "0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"
+      values.$pastUpgrades.3.0:
+-        "0xeb4cc4248a0b3f459f4d7ab5877114fd4f55fd073c78347df548a9f03013068e"
++        "0xfb3bc602abb088d5d94e6869d56417de3c16a3966e5c6abfa4d157dfbcc36cba"
+      values.$pastUpgrades.2.2:
+-        "2024-10-19T03:11:47.000Z"
++        ["0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"]
+      values.$pastUpgrades.2.1:
+-        ["0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"]
++        "2024-11-28T03:51:59.000Z"
+      values.$pastUpgrades.2.0:
+-        "0xfb3bc602abb088d5d94e6869d56417de3c16a3966e5c6abfa4d157dfbcc36cba"
++        "0xa452e20183f6860f105cb398bccc9d75dd3758444b956061b3031d1f0a33c424"
+      values.$pastUpgrades.1.2:
+-        ["0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"]
++        "2025-05-12T07:11:23.000Z"
+      values.$pastUpgrades.1.1:
+-        "2024-11-28T03:51:59.000Z"
++        "0x1cd98e49b0d0c30a39c97683c374f5d3541d1ed02b14272a7113709fe01700d7"
+      values.$pastUpgrades.1.0:
+-        "0xa452e20183f6860f105cb398bccc9d75dd3758444b956061b3031d1f0a33c424"
++        ["0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec"]
+      values.$upgradeCount:
+-        5
++        6
+      values.LAYER_2_CHAIN_ID:
+-        2818
++        1
+      implementationNames.0x43190DfD1F572Cb56B1942B44482d1774151D77A:
+-        "Rollup"
+      implementationNames.0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec:
++        "Rollup"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0x4006FDA79493FEE14dA42BfA34575aAA79bcf953)
+    +++ description: Current SP1 verifier using Blobs for DA.
+```
+
+## Source code changes
+
+```diff
+.../MorphRollup/Rollup.sol                         |  230 ++--
+ ...0x4006FDA79493FEE14dA42BfA34575aAA79bcf953.sol} |    0
+ ...-0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154.sol | 1409 ++++++++++++++++++++
+ 3 files changed, 1485 insertions(+), 154 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154) {
+    +++ description: SP1 verifier using Blobs for DA (being deprecated).
+      description:
+-        "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
++        "SP1 verifier using Blobs for DA (being deprecated)."
+    }
+```
+
+Generated with discovered.json: 0xd0349a38ec68c6ca38ae57dd697707463d641e6e
+
+# Diff at Tue, 29 Apr 2025 08:19:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21716626
+- current block number: 21716626
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      issuedPermissions:
+-        [{"permission":"sequence","to":"0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"sequence","to":"0x61F2945d4bc9E40B66a6376d1094a50438f613e2","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"sequence","to":"0x6aB0E960911b50f6d14f249782ac12EC3E7584A0","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"sequence","to":"0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"sequence","to":"0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"sequence","to":"0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"sequence","to":"0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23","description":"Actors allowed to commit transaction batches and propose state roots","via":[]},{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x0092bC49078f130D27e70dBeee441E227280B97D","via":[]},{"permission":"challenge","to":"0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA","via":[]},{"permission":"challenge","to":"0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6","via":[]},{"permission":"challenge","to":"0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0","via":[]},{"permission":"challenge","to":"0x323a78C1c910b282dE98a557d735628A02E00983","via":[]},{"permission":"challenge","to":"0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C","via":[]},{"permission":"challenge","to":"0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e","via":[]},{"permission":"challenge","to":"0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db","via":[]},{"permission":"challenge","to":"0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854","via":[]},{"permission":"challenge","to":"0x71C10870dC38E54d987C22e96aB32b46cc08564F","via":[]},{"permission":"challenge","to":"0x74204e3801E9394848AbDBAd6f378d0b11e9a091","via":[]},{"permission":"challenge","to":"0x77B29534738E3F0F297d36635d7884965C7c8cE1","via":[]},{"permission":"challenge","to":"0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd","via":[]},{"permission":"challenge","to":"0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb","via":[]},{"permission":"challenge","to":"0x95417708f67f4a5dF1A447efe40c6C74e38Ab832","via":[]},{"permission":"challenge","to":"0x95C373754C66feF1Eb2dbb6934aF821C551D9738","via":[]},{"permission":"challenge","to":"0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b","via":[]},{"permission":"challenge","to":"0xb4A20D473e8C378aE742a8017DD67756a358eAB6","via":[]},{"permission":"challenge","to":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[]},{"permission":"challenge","to":"0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab","via":[]},{"permission":"challenge","to":"0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C","via":[]},{"permission":"challenge","to":"0xC412B4e6399F694CfF21D038d225373Fd6596811","via":[]},{"permission":"challenge","to":"0xC4db900F76293042349448D1Ba30F71518325Bb3","via":[]},{"permission":"challenge","to":"0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8","via":[]},{"permission":"challenge","to":"0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0","via":[]},{"permission":"challenge","to":"0xd11f9c4F5d9b1feC2d14581d3674066442B68772","via":[]},{"permission":"challenge","to":"0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272","via":[]},{"permission":"challenge","to":"0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe","via":[]},{"permission":"challenge","to":"0xF2FF0509520fAf35B511074466A509e00d73C307","via":[]},{"permission":"challenge","to":"0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9","via":[]},{"permission":"challenge","to":"0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd","via":[]},{"permission":"interact","to":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","description":"can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers","via":[]},{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","description":"can pause and unpause","via":[]},{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}]
+    }
+```
+
 Generated with discovered.json: 0x7e6bb9aa37be53467f4995afc7b331e8bc063eed
 
 # Diff at Tue, 18 Mar 2025 08:13:16 GMT:

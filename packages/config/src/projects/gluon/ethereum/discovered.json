@@ -2,7 +2,7 @@
   "name": "gluon",
   "chain": "ethereum",
   "blockNumber": 21686363,
-  "configHash": "0xaf391a7c723faf455d4476b6a26115918850f8a30197af13e02574486ecdec5d",
+  "configHash": "0x82573d6293c2b5592b1f5ca09b572df202e528fc14fef6ebc74f2a7e53e2b8ed",
   "entries": [
     {
       "name": "SpotData",
@@ -23,7 +23,9 @@
         "nonce": 797,
         "submissionBlock": 19622320
       },
-      "derivedName": "SpotData"
+      "implementationNames": {
+        "0x0d283D685F0A741C463846176e4c8EFF90D3F9EC": "SpotData"
+      }
     },
     {
       "name": "RegistryData",
@@ -41,7 +43,9 @@
         "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 0
       },
-      "derivedName": "RegistryData"
+      "implementationNames": {
+        "0x0fC25C7931679B838209c484d49Df0Cb9E633C41": "RegistryData"
+      }
     },
     {
       "name": "SpotLogic",
@@ -75,7 +79,9 @@
         "upgradeOperator": "0x0000000000000000000000000000000000000000",
         "visibilityDelay": 1
       },
-      "derivedName": "SpotLogic"
+      "implementationNames": {
+        "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": "SpotLogic"
+      }
     },
     {
       "name": "RegistryLogic",
@@ -98,7 +104,9 @@
         "state": 1,
         "upgradeOperator": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "RegistryLogic"
+      "implementationNames": {
+        "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C": "RegistryLogic"
+      }
     },
     {
       "address": "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
@@ -125,7 +133,9 @@
         "nonce": 529,
         "submissionBlock": 19643823
       },
-      "derivedName": "DerivativesData"
+      "implementationNames": {
+        "0x563052914Fd973a2305763269A106a7B0B6D50Cc": "DerivativesData"
+      }
     },
     {
       "address": "0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
@@ -155,7 +165,9 @@
         "totalAppsCount": 4,
         "version": "1.1.0"
       },
-      "derivedName": "Gluon"
+      "implementationNames": {
+        "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB": "Gluon"
+      }
     },
     {
       "name": "ApiKeyRegistry",
@@ -176,7 +188,9 @@
         "isOn": true,
         "version": "0.41.0"
       },
-      "derivedName": "ApiKeyRegistry"
+      "implementationNames": {
+        "0x7B70aCD346892736f9f6c7F4f196B07400a50Da0": "ApiKeyRegistry"
+      }
     },
     {
       "name": "StakeLogic",
@@ -218,7 +232,9 @@
         ],
         "upgradeOperator": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "StakeLogic"
+      "implementationNames": {
+        "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4": "StakeLogic"
+      }
     },
     {
       "name": "StakeData",
@@ -236,7 +252,9 @@
         "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 1
       },
-      "derivedName": "StakeData"
+      "implementationNames": {
+        "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77": "StakeData"
+      }
     },
     {
       "address": "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa",
@@ -268,7 +286,9 @@
         "tokens": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"],
         "version": "2.0.2"
       },
-      "derivedName": "LegacyTokensExtension"
+      "implementationNames": {
+        "0xDA88EfA53c85Afa30564bb651A2E76b99a232082": "LegacyTokensExtension"
+      }
     },
     {
       "address": "0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
@@ -309,7 +329,9 @@
         "upgradeOperator": "0x0000000000000000000000000000000000000000",
         "visibilityDelay": 1
       },
-      "derivedName": "DerivativesLogic"
+      "implementationNames": {
+        "0xDfBFe895e07e5115773Cb9631CB2148114589caC": "DerivativesLogic"
+      }
     }
   ],
   "abis": {
@@ -675,5 +697,6 @@
       "function visibilityDelay() view returns (uint8)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xcc888bb287dda25b54618c0487812629191769d4c92f8d7cecdcd8d591245c10"
 }

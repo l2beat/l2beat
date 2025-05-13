@@ -56,7 +56,7 @@ In some tests rpc calls to ethereum network are performed through Alchemy. In or
 | ImmutableX                        | https://medium.com/@immutablex                           |
 | Layer2.Finance, Layer2.Finance-zk | https://blog.celer.network/                              |
 | Loopring                          | https://medium.com/loopring-protocol                     |
-| Metis                             | https://medium.com/@MetisDAO                             |
+| Metis                             | https://metisl2.medium.com/                             |
 | myria                             | https://medium.com/@myriagames                           |
 | OMGNetwork                        | -                                                        |
 | Optimism                          | https://optimism.mirror.xyz/                             |

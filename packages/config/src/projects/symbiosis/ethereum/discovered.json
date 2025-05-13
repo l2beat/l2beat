@@ -2,7 +2,7 @@
   "name": "symbiosis",
   "chain": "ethereum",
   "blockNumber": 22022451,
-  "configHash": "0xfab10bb50a0ab41c71e1d2c8d4fd3e6626ed5eb026956553308f75dedcfd9833",
+  "configHash": "0xdc1af9b92e67d1e4055df6b07b581761d1d44ad4fa05727073fec8ad36e41a0e",
   "entries": [
     {
       "address": "0x0ee552336134B6f8F0a72927b6124f8A81865928",
@@ -33,7 +33,9 @@
         "$immutable": true,
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": "ProxyAdmin"
+      }
     },
     {
       "address": "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
@@ -65,7 +67,9 @@
         "$immutable": true,
         "owner": "0x0ee552336134B6f8F0a72927b6124f8A81865928"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": "ProxyAdmin"
+      }
     },
     {
       "name": "Multisig",
@@ -98,7 +102,10 @@
         "nonce": 57,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "BridgeV2",
@@ -109,13 +116,6 @@
         "0xbd76088c97afed7c4594c70e7bca2da6186fb16ab28e0f1f3f2521d3a62e67b8"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"],
       "sinceTimestamp": 1668406727,
       "sinceBlock": 15966436,
@@ -137,7 +137,10 @@
         "oldMPC": "0xE2eC0D84eD285576a5e9ca60052Bb787bfADE9d7",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       },
-      "derivedName": "BridgeV2"
+      "implementationNames": {
+        "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E": "TransparentUpgradeableProxy",
+        "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365": "BridgeV2"
+      }
     },
     {
       "address": "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9",
@@ -158,13 +161,6 @@
         "0x8c47d485b7d202eb666ef592012502f811cc91f1337393dbfd3411b67dea3580"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["requestCount"],
       "sinceTimestamp": 1668406751,
       "sinceBlock": 15966438,
@@ -217,7 +213,10 @@
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "Portal"
+      "implementationNames": {
+        "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": "TransparentUpgradeableProxy",
+        "0x755a967298c96d50216C6ED8D68869747B4f6878": "Portal"
+      }
     },
     {
       "name": "Bridge",
@@ -225,13 +224,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1643968081,
       "sinceBlock": 14138783,
       "values": {
@@ -266,7 +258,10 @@
         ],
         "$upgradeCount": 5
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": "TransparentUpgradeableProxy",
+        "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662": ""
+      }
     },
     {
       "address": "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e",
@@ -287,7 +282,9 @@
         "$immutable": true,
         "metaRouterGateway": "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
       },
-      "derivedName": "MetaRouter"
+      "implementationNames": {
+        "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F": "MetaRouter"
+      }
     },
     {
       "name": "MetaRouterGateway",
@@ -303,7 +300,9 @@
         "$immutable": true,
         "metaRouter": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
       },
-      "derivedName": "MetaRouterGateway"
+      "implementationNames": {
+        "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd": "MetaRouterGateway"
+      }
     }
   ],
   "abis": {
@@ -503,5 +502,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0x36a4cce24279ea26e780e2787b9f491a42c1c04332c255fe00cbd4cb416d6dfe"
 }

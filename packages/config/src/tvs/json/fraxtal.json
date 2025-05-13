@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "fraxtal-1INCH",
+      "priceId": "1inch",
+      "symbol": "1INCH",
+      "name": "1INCH Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x111111111117dC0aa78b770fA6A738034120C302",
+        "chain": "ethereum",
+        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+        "decimals": 18,
+        "sinceTimestamp": 1706811599
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "fraxtal-BAL",
       "priceId": "balancer",
       "symbol": "BAL",
@@ -442,7 +461,7 @@
         "decimals": 18,
         "sinceTimestamp": 1710892800
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },

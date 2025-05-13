@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 22231693,
-  "configHash": "0x1cdc19c34ad10a59b171a78414c4a52a2d2343e5fc6b26670d2b3b159f90efae",
+  "configHash": "0xe843658df029ebf2d6b317a7aa517be3b3abe784945f375c31ef6b795cc2b281",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -15,29 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "issuedPermissions": [
-        {
-          "permission": "challenge",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "change the finalization period (challenge period).",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "to": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -95,7 +72,10 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
-      "derivedName": "L2OutputOracle",
+      "implementationNames": {
+        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448": "Proxy",
+        "0x240d0038d87b5A27e4Fb7FB0c27F9b45D89b2C4F": "L2OutputOracle"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -109,24 +89,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "ignoreInWatchMode": ["scalar", "overhead", "getSequencerPubkeyInfos"],
       "sinceTimestamp": 1735877315,
       "sinceBlock": 21541468,
@@ -215,7 +177,10 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
+      "implementationNames": {
+        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": "Proxy",
+        "0x2B0634e5b534BA765e24640281b4eB636d446dF3": "SystemConfig"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -229,24 +194,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-          "description": "freeze specific withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1735877303,
       "sinceBlock": 21541467,
@@ -285,7 +232,10 @@
         "MIN_BRIDGE_VALUE": { "description": "Minimum deposit value." },
         "frozenWithdrawals": { "description": "Lists all frozen withdrawals." }
       },
-      "derivedName": "OptimismPortal",
+      "implementationNames": {
+        "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07": "Proxy",
+        "0x24331B68bea70c2b086BC883EEEA551BAF80C2BA": "OptimismPortal"
+      },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -321,13 +271,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877363,
       "sinceBlock": 21541472,
       "values": {
@@ -349,7 +292,10 @@
         "superchainConfig": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
         "version": "2.1.1+beta.1"
       },
-      "derivedName": "L1ERC721Bridge",
+      "implementationNames": {
+        "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2": "Proxy",
+        "0x5ef275bed4d7d3eD69BAc22a0dEf8947f8cA1b4B": "L1ERC721Bridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -421,7 +367,9 @@
         "isUpgrading": false,
         "owner": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d": "ProxyAdmin"
+      }
     },
     {
       "address": "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B",
@@ -438,21 +386,15 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877171,
       "sinceBlock": 21541456,
       "values": {
         "$immutable": true,
         "owner": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
       },
-      "derivedName": "AddressManager",
+      "implementationNames": {
+        "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd": "AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -511,7 +453,10 @@
         "systemConfig": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.4.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0xbB138cE37870443d5b2B02a36619D3478738E0f6": "ResolvedDelegateProxy",
+        "0x6846B4E0b9992E154fE7d315667B1e385445C503": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -525,18 +470,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "issuedPermissions": [
-        {
-          "permission": "guard",
-          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877231,
       "sinceBlock": 21541461,
       "values": {
@@ -561,7 +494,10 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
-      "derivedName": "SuperchainConfig",
+      "implementationNames": {
+        "0xD02631b334FfDCD5674217e57fe524c44B341DD4": "Proxy",
+        "0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be": "SuperchainConfig"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -658,7 +594,10 @@
         "nonce": 28,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -671,14 +610,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
-        }
-      ],
       "sinceTimestamp": 1735877327,
       "sinceBlock": 21541469,
       "values": {
@@ -697,7 +628,10 @@
         "systemConfig": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.2.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9": "L1ChugSplashProxy",
+        "0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1093,15 +1027,16 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
-    "opstack/L1StandardBridge_soon": "0x545407107f1c6d9179f00d8c26dff0bef837cbcd0e5306290dc2da9f245c200f",
-    "opstack/L2OutputOracle_soon": "0x79f80bfef9f855843b0eee957f5a07f63964c178d1d7b3eb7da201768126db59",
-    "opstack/OptimismPortal_soon": "0x507812100f0bd906b170b3a3aada83e2bcdb3b7ab4ef917a52e227dcdd9d42d9",
-    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
-    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
-  }
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
+    "opstack/L1StandardBridge_soon": "0x6f4e114997205ded6c815764933e40b2b536f3650ca4159cebd9ef122e27dbee",
+    "opstack/L2OutputOracle_soon": "0x643351b48a492820c30225c6a2cbdfe2248152b9e46def1187ab4bc9c7b8cf8b",
+    "opstack/OptimismPortal_soon": "0x61690adc287e2e53c381b7cb4f5da83b8cb959a44ea5fb6e1a5a02a58ee72de7",
+    "opstack/SuperchainConfigFake": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
+    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
+  },
+  "permissionsConfigHash": "0x6c66b39c6296813956e6634e8ca4f164dd10c3a875ca7d9d6bc3051a5c72a28e"
 }

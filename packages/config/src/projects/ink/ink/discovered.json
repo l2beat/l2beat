@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ink",
-  "blockNumber": 8196210,
+  "blockNumber": 13539010,
   "configHash": "0x8c1006a3a14cb6056850248a97298c2cf14800052833868ce9898e693f3fb058",
   "entries": [
     {
@@ -15,13 +15,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -32,7 +25,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620824",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620869",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -45,7 +38,10 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.1.1-beta.1"
       },
-      "derivedName": "L2CrossDomainMessenger"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000007": "Proxy",
+        "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
+      }
     },
     {
       "name": "GasPriceOracle",
@@ -54,38 +50,41 @@
       "template": "opstack/Layer2/GasPriceOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x6e5bd465cdf07c7fc7de194833be336109be5aceaeb509643962096c772ec26a"
+        "0xa6ae4f0695335983b644f1524c759f3178ee95c406e1e905b8cbccf5763af43a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Provides the current gas price for L2 transactions.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$implementation": "0x93e57A196454CB919193fa9946f14943cf733845",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",
+            ["0x93e57A196454CB919193fa9946f14943cf733845"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 1550258919,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 608315528,
-        "version": "1.3.1-beta.1"
+        "isIsthmus": true,
+        "l1BaseFee": 5657903600,
+        "version": "1.4.0"
       },
-      "derivedName": "GasPriceOracle"
+      "implementationNames": {
+        "0x420000000000000000000000000000000000000F": "Proxy",
+        "0x93e57A196454CB919193fa9946f14943cf733845": "GasPriceOracle"
+      }
     },
     {
       "name": "L2StandardBridge",
@@ -98,13 +97,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -120,7 +112,10 @@
         "paused": false,
         "version": "1.11.1-beta.1"
       },
-      "derivedName": "L2StandardBridge"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000010": "Proxy",
+        "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
+      }
     },
     {
       "name": "SequencerFeeVault",
@@ -133,13 +128,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -156,7 +144,10 @@
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
       },
-      "derivedName": "SequencerFeeVault"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000011": "Proxy",
+        "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": "SequencerFeeVault"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -169,13 +160,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -187,7 +171,10 @@
         "BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.10.1-beta.2"
       },
-      "derivedName": "OptimismMintableERC20Factory"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000012": "Proxy",
+        "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "L1BlockNumber",
@@ -200,13 +187,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns the latest L1 block number.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -216,7 +196,10 @@
         "$upgradeCount": 0,
         "version": "1.1.1-beta.1"
       },
-      "derivedName": "L1BlockNumber"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000013": "Proxy",
+        "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": "L1BlockNumber"
+      }
     },
     {
       "name": "L2ERC721Bridge",
@@ -229,13 +212,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -250,7 +226,10 @@
         "paused": false,
         "version": "1.7.1-beta.2"
       },
-      "derivedName": "L2ERC721Bridge"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000014": "Proxy",
+        "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014": "L2ERC721Bridge"
+      }
     },
     {
       "name": "L1Block",
@@ -259,36 +238,37 @@
       "template": "opstack/Layer2/L1Block",
       "sourceHashes": [
         "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d",
-        "0x936b7b7eb2a88a64e3eceaf897abfa2dc6e48b4c75eba2da34ff927b98413b6b"
+        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "basefee",
         "hash",
         "number",
         "timestamp",
         "sequenceNumber",
-        "blobBaseFee"
+        "blobBaseFee",
+        "operatorFeeConstant",
+        "operatorFeeScalar"
       ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "basefee": 608315528,
+        "$implementation": "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
+            ["0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "basefee": 5657903600,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 1550258919,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -297,16 +277,21 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xedac88464ef9cbf3472b017b5c9731863949a57f7747d91670275ad62f3ff32c",
+        "hash": "0xafcd93d17a61dcdaa1ef390c4792d2702bac8b199f93c545f19f12da67b7df7f",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22023498,
-        "sequenceNumber": 2,
-        "timestamp": 1741694555,
-        "version": "1.5.1-beta.1"
+        "number": 22465926,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 0,
+        "sequenceNumber": 5,
+        "timestamp": 1747037351,
+        "version": "1.6.0"
       },
-      "derivedName": "L1Block"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000015": "Proxy",
+        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": "L1Block"
+      }
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -319,13 +304,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -336,7 +314,10 @@
         "MESSAGE_VERSION": 1,
         "version": "1.1.1-beta.1"
       },
-      "derivedName": "L2ToL1MessagePasser"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000016": "Proxy",
+        "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
+      }
     },
     {
       "name": "OptimismMintableERC721Factory",
@@ -349,13 +330,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -367,7 +341,10 @@
         "REMOTE_CHAIN_ID": 1,
         "version": "1.4.1-beta.1"
       },
-      "derivedName": "OptimismMintableERC721Factory"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000017": "Proxy",
+        "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017": "OptimismMintableERC721Factory"
+      }
     },
     {
       "name": "L2ProxyAdmin",
@@ -380,13 +357,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Administration contract for other contract proxies.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -460,7 +430,10 @@
         "isUpgrading": false,
         "owner": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000018": "Proxy",
+        "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
+      }
     },
     {
       "name": "BaseFeeVault",
@@ -473,13 +446,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -495,7 +461,10 @@
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
       },
-      "derivedName": "BaseFeeVault"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000019": "Proxy",
+        "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": "BaseFeeVault"
+      }
     },
     {
       "name": "BaseFeeVault",
@@ -508,13 +477,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -530,7 +492,10 @@
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
       },
-      "derivedName": "BaseFeeVault"
+      "implementationNames": {
+        "0x420000000000000000000000000000000000001A": "Proxy",
+        "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": "BaseFeeVault"
+      }
     },
     {
       "name": "SchemaRegistry",
@@ -543,13 +508,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -559,7 +517,10 @@
         "$upgradeCount": 0,
         "version": "1.3.1-beta.1"
       },
-      "derivedName": "SchemaRegistry"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000020": "Proxy",
+        "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020": "SchemaRegistry"
+      }
     },
     {
       "name": "EAS",
@@ -572,13 +533,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
       "values": {
@@ -593,7 +547,10 @@
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
         "version": "1.4.1-beta.1"
       },
-      "derivedName": "EAS"
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000021": "Proxy",
+        "0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021": "EAS"
+      }
     },
     {
       "address": "0x661235a238B11191211fa95D4Dd9E423d521E0Be",
@@ -610,6 +567,7 @@
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -866,6 +824,29 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x93e57A196454CB919193fa9946f14943cf733845": [
+      "function DECIMALS() view returns (uint256)",
+      "function baseFee() view returns (uint256)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function decimals() pure returns (uint256)",
+      "function gasPrice() view returns (uint256)",
+      "function getL1Fee(bytes _data) view returns (uint256)",
+      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
+      "function getL1GasUsed(bytes _data) view returns (uint256)",
+      "function getOperatorFee(uint256 _gasUsed) view returns (uint256)",
+      "function isEcotone() view returns (bool)",
+      "function isFjord() view returns (bool)",
+      "function isIsthmus() view returns (bool)",
+      "function l1BaseFee() view returns (uint256)",
+      "function overhead() view returns (uint256)",
+      "function scalar() view returns (uint256)",
+      "function setEcotone()",
+      "function setFjord()",
+      "function setIsthmus()",
+      "function version() view returns (string)"
+    ],
     "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
@@ -894,26 +875,6 @@
       "function successfulMessages(bytes32) view returns (bool)",
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
-    ],
-    "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f": [
-      "function DECIMALS() view returns (uint256)",
-      "function baseFee() view returns (uint256)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function decimals() pure returns (uint256)",
-      "function gasPrice() view returns (uint256)",
-      "function getL1Fee(bytes _data) view returns (uint256)",
-      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
-      "function getL1GasUsed(bytes _data) view returns (uint256)",
-      "function isEcotone() view returns (bool)",
-      "function isFjord() view returns (bool)",
-      "function l1BaseFee() view returns (uint256)",
-      "function overhead() view returns (uint256)",
-      "function scalar() view returns (uint256)",
-      "function setEcotone()",
-      "function setFjord()",
-      "function version() view returns (string)"
     ],
     "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
       "constructor()",
@@ -990,30 +951,6 @@
       "function otherBridge() view returns (address)",
       "function paused() view returns (bool)",
       "function version() view returns (string)"
-    ],
-    "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015": [
-      "error NotDepositor()",
-      "event GasPayingTokenSet(address indexed token, uint8 indexed decimals, bytes32 name, bytes32 symbol)",
-      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function basefee() view returns (uint256)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function gasPayingToken() view returns (address addr_, uint8 decimals_)",
-      "function gasPayingTokenName() view returns (string name_)",
-      "function gasPayingTokenSymbol() view returns (string symbol_)",
-      "function hash() view returns (bytes32)",
-      "function isCustomGasToken() view returns (bool)",
-      "function l1FeeOverhead() view returns (uint256)",
-      "function l1FeeScalar() view returns (uint256)",
-      "function number() view returns (uint64)",
-      "function sequenceNumber() view returns (uint64)",
-      "function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol)",
-      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
-      "function setL1BlockValuesEcotone()",
-      "function timestamp() view returns (uint64)",
-      "function version() pure returns (string)"
     ],
     "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
       "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
@@ -1143,22 +1080,47 @@
       "function revokeOffchain(bytes32 data) returns (uint64)",
       "function timestamp(bytes32 data) returns (uint64)",
       "function version() view returns (string)"
+    ],
+    "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
+      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function basefee() view returns (uint256)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function gasPayingToken() pure returns (address addr_, uint8 decimals_)",
+      "function gasPayingTokenName() pure returns (string name_)",
+      "function gasPayingTokenSymbol() pure returns (string symbol_)",
+      "function hash() view returns (bytes32)",
+      "function isCustomGasToken() pure returns (bool is_)",
+      "function l1FeeOverhead() view returns (uint256)",
+      "function l1FeeScalar() view returns (uint256)",
+      "function number() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function sequenceNumber() view returns (uint64)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
+      "function setL1BlockValuesEcotone()",
+      "function setL1BlockValuesIsthmus()",
+      "function timestamp() view returns (uint64)",
+      "function version() pure returns (string)"
     ]
   },
   "usedTemplates": {
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/GasPriceOracle": "0xed55fe1e61604ea2a3cd0199651c7b01bfb5afc47dd9a6f74bb53f4b09da4662",
-    "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
+    "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
+    "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
-    "opstack/Layer2/L2ERC721Bridge": "0x9014fd221c67a8a11045cd252fd4bd75e36e7dcea7eaf8d98eb22da2a0d2e919",
-    "opstack/Layer2/L2ProxyAdmin": "0x7bde273b4daed855cea77d29b1784754e22d58967a0dc136b92ced82917da09f",
+    "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2ProxyAdmin": "0x395755991712c2cd84111816160190c4582c6528a9cf15d6015d9f75c42ee15a",
     "opstack/Layer2/L2StandardBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/OptimismMintableERC721Factory": "0xbb8ec39d7870faca409a8c1ff8da350ef80d61228a6aa0e950e8de4b9294f909",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
-  }
+  },
+  "permissionsConfigHash": "0x2c8d6a55c9cc93c89525567c86049731daae83a7c175f6c10db3f2e4d52711bb"
 }

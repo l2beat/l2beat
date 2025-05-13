@@ -18,6 +18,7 @@
     "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649": "G",
     "0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D": "TokenOwnerMultisig"
   },
+  "maxDepth": 34,
   "overrides": {
     "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": {
       // ValidatorUtils

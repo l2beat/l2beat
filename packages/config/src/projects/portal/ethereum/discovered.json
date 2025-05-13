@@ -2,7 +2,7 @@
   "name": "portal",
   "chain": "ethereum",
   "blockNumber": 20089055,
-  "configHash": "0x0294fb4968f78d2680cf46206ac06cda98e40258294226160ba43510131aa537",
+  "configHash": "0x3a0ad4d869eddf41dece37c066a2ab22e465ee6196bbbe88dfe04fcd747b84b8",
   "entries": [
     {
       "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -39,7 +39,9 @@
         "symbol": "",
         "totalSupply": 0
       },
-      "derivedName": "TokenImplementation"
+      "implementationNames": {
+        "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": "TokenImplementation"
+      }
     },
     {
       "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB",
@@ -100,7 +102,10 @@
         "$upgradeCount": 3,
         "getDefaultDeliveryProvider": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
       },
-      "derivedName": "WormholeRelayer"
+      "implementationNames": {
+        "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": "SimpleProxy",
+        "0x90995DBd1aae85872451b50A569dE947D34ac4ee": "WormholeRelayer"
+      }
     },
     {
       "name": "TokenBridge",
@@ -180,7 +185,10 @@
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wormhole": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
       },
-      "derivedName": "BridgeImplementation"
+      "implementationNames": {
+        "0x3ee18B2214AFF97000D974cf647E7C347E8fa585": "TokenBridge",
+        "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e": "BridgeImplementation"
+      }
     },
     {
       "address": "0x53207E216540125e322CdA8A693b0b89576DEb46",
@@ -201,6 +209,7 @@
       "address": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -270,7 +279,10 @@
         "tokenImplementation": "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc",
         "wormhole": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
       },
-      "derivedName": "NFTBridgeImplementation"
+      "implementationNames": {
+        "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE": "NFTBridgeEntrypoint",
+        "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C": "NFTBridgeImplementation"
+      }
     },
     {
       "address": "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3",
@@ -291,13 +303,6 @@
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1686937559,
       "sinceBlock": 17493968,
       "values": {
@@ -330,7 +335,10 @@
         "pricingWallet": "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
         "rewardAddress": "0x53207E216540125e322CdA8A693b0b89576DEb46"
       },
-      "derivedName": "DeliveryProviderImplementation"
+      "implementationNames": {
+        "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": "DeliveryProviderProxy",
+        "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": "DeliveryProviderImplementation"
+      }
     },
     {
       "address": "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf",
@@ -411,7 +419,10 @@
           15, 15, 16, 17, 17, 18, 19, 19, 20
         ]
       },
-      "derivedName": "Implementation"
+      "implementationNames": {
+        "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": "Wormhole",
+        "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0": "Implementation"
+      }
     },
     {
       "name": "CircleIntegration",
@@ -452,7 +463,10 @@
         "wormhole": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
         "wormholeFinality": 1
       },
-      "derivedName": "CircleIntegrationImplementation"
+      "implementationNames": {
+        "0xAaDA05BD399372f0b0463744C09113c137636f6a": "CircleIntegrationProxy",
+        "0x37f26277B1927c6bEDbD94e5C21C337A706af31c": "CircleIntegrationImplementation"
+      }
     },
     {
       "address": "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
@@ -495,7 +509,9 @@
         "symbol": "",
         "tokenURI": []
       },
-      "derivedName": "NFTImplementation"
+      "implementationNames": {
+        "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc": "NFTImplementation"
+      }
     },
     {
       "address": "0xf93124b7c738843CBB89E864c862c38cddCccF95",
@@ -897,5 +913,6 @@
       "function transferFrom(address from, address to, uint256 tokenId)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0xcc4a4150126d700d8bee119ce8ce8c67642160de7ead1c93416718f246f52eb0"
 }

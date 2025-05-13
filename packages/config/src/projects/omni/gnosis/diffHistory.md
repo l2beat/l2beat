@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xd08cdcebb0b388ef98b9345ab9cb717c5d2da05e
+
+# Diff at Mon, 12 May 2025 12:22:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 39725195
+- current block number: 40024439
+
+## Description
+
+vkey update for the SP1 ethereum light client.
+
+## Watched changes
+
+```diff
+    contract SP1Helios (0xa809c536c85b63a2676CbAc3C4064748AD3a2562) {
+    +++ description: None
+      values.heliosProgramVkey:
+-        "0x00ed996c6f79e241fd4879d34ebfef7514ad8b817d0b40ab82a9856460d298c0"
++        "0x0021f5bf3c2516214dc2946556a0ef57e0fbcb908430fbccb7b49259a02fd292"
+    }
+```
+
+Generated with discovered.json: 0xeaceef3604572c4b79eb3a771ac0232395184a35
+
+# Diff at Tue, 29 Apr 2025 08:19:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 39725195
+- current block number: 39725195
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 39725195 (main branch discovery), not current.
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xb1F43dc8B57562e7FA48157D73102a8e4a94975A","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","via":[]},{"permission":"upgrade","to":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}]
+    }
+```
+
+```diff
+    contract HomeAMB (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","description":"change the threshold and manage signers.","via":[]},{"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}]
+    }
+```
+
+```diff
+    contract HomeOmnibridge (0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x92286ed5478bf371d1870708f02033bc65c82620
 
 # Diff at Thu, 24 Apr 2025 15:50:32 GMT:

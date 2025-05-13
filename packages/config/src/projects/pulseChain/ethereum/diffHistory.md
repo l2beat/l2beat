@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x33fe7ea67bea256eee38adc2533c07e08ac47fba
+
+# Diff at Wed, 07 May 2025 10:36:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0ad97a28a4acd494070977b13284d597fbcc6048 block: 17968825
+- current block number: 22431228
+
+## Description
+
+Config: Using template for BridgeValidators.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      values.requiredSignatures:
+-        5
+      values.validatorList:
+-        ["0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0","0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c","0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD","0xfB18Da3bCA8057eB05aab6e77a32925949093533","0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa","0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E","0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C","0xe3B95d0143956A8E643FA29a0795FC4162A41F69"]
++++ description: Array of the signers in the validator multisig
+      values.$members:
++        ["0xfB18Da3bCA8057eB05aab6e77a32925949093533","0xe3B95d0143956A8E643FA29a0795FC4162A41F69","0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD","0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa","0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0","0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E","0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c","0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C"]
+      values.$threshold:
++        5
+      template:
++        "gnosisbridge/BridgeValidators"
+      description:
++        "Custom multisignature contract for Validator addresses."
+      fieldMeta:
++        {"$members":{"description":"Array of the signers in the validator multisig"}}
+    }
+```
+
+```diff
+    EOA  (0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d","description":"change the threshold and manage signers."}]
+    }
+```
+
+Generated with discovered.json: 0x4544bdca3cb385027bdf882fe00a9617eedc7418
+
+# Diff at Tue, 06 May 2025 10:56:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3a394513711f46aa66871603365b6afb40a79057 block: 17968825
+- current block number: 17968825
+
+## Description
+
+Marking EOAs if they control the highest number of upgrade permissions in the project.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    EOA  (0xDf5d165A7EB95D26355c56d53799B7da1240e585) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x04d61cc532635df5a295bcd100a6826315304df1
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 17968825
+- current block number: 17968825
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x13A9594a2696D3c35F9D6E4Be6b332f699C57801","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xDf5d165A7EB95D26355c56d53799B7da1240e585","via":[]}]
+    }
+```
+
+```diff
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xDf5d165A7EB95D26355c56d53799B7da1240e585","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe039dd867d6dcb0b82f8400d41f3a1c43c282b08
 
 # Diff at Tue, 04 Mar 2025 10:39:40 GMT:

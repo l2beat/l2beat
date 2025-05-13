@@ -102,6 +102,11 @@ const nextConfig = {
         destination: '/zk-catalog/sp1-vector/:path*',
         permanent: true,
       },
+      {
+        source: '/scaling/projects/ethernity/:path*',
+        destination: '/scaling/projects/epicchain/:path*',
+        permanent: true,
+      },
       // Legacy pathnames
       {
         source: '/project/:name',

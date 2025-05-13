@@ -4,6 +4,7 @@
   "name": "phala",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"],
+  "maxDepth": 438,
   "names": {
     "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8": "OPSuccinctL2OutputOracle",
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",

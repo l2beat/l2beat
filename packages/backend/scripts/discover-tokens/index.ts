@@ -6,7 +6,8 @@ import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
-import { chunk, groupBy } from 'lodash'
+import chunk from 'lodash/chunk'
+import groupBy from 'lodash/groupBy'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import {
   OUTPUT_PATH,
@@ -390,22 +391,24 @@ function getEtherscanClient(chain: string, chains: ChainConfig[]) {
   )
 
   assert(api)
-  const chainConfig =
-    api.type === 'etherscan'
-      ? {
-          chain,
-          type: api.type,
-          apiKey: env.string([
-            `${config?.name.toUpperCase()}_ETHERSCAN_API_KEY`,
-          ]),
-          url: api.url,
-        }
-      : { chain, type: api.type, url: api.url }
+
+  let clientOptions
+  if (api.type === 'etherscan') {
+    clientOptions = {
+      chain,
+      chainId: api.chainId,
+      type: api.type,
+      url: env.string('ETHERSCAN_API_URL'),
+      apiKey: env.string('ETHERSCAN_API_KEY'),
+    }
+  } else {
+    clientOptions = { chain, type: api.type, url: api.url }
+  }
 
   return new BlockIndexerClient(
     new HttpClient(),
     new RateLimiter({ callsPerMinute: 120 }),
-    chainConfig,
+    clientOptions,
   )
 }
 

@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 133041012,
-  "configHash": "0xf04e41bbf596f6c4ed9c7e4cd6345a3009dbc031ce730d20be7f5e4d014e5ce3",
+  "configHash": "0x4e811ddbc8e622f8efde1b3b245e07d10fb3c6623728b988d84da94d8dd13889",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -60,7 +60,10 @@
         "nonce": 23,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -83,13 +86,6 @@
         "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -142,7 +138,10 @@
         "totalValidatorForwardFeeWithdrawn": "8459017154492723812",
         "txGasPrice": 40000000000
       },
-      "derivedName": "ZkLink"
+      "implementationNames": {
+        "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b": "ERC1967Proxy",
+        "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E": "ZkLink"
+      }
     },
     {
       "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -158,13 +157,6 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
-          "via": [{ "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4" }]
-        }
-      ],
       "sinceTimestamp": 1711095511,
       "sinceBlock": 117748367,
       "values": {
@@ -187,7 +179,10 @@
         "l2TokenBeacon": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
-      "derivedName": "L1ERC20Bridge"
+      "implementationNames": {
+        "0x5Bd51296423A9079b931414C1De65e7057326EaA": "TransparentUpgradeableProxy",
+        "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": "L1ERC20Bridge"
+      }
     },
     {
       "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
@@ -226,7 +221,9 @@
         "owner": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": "ProxyAdmin"
+      }
     },
     {
       "name": "OptimismL2Gateway",
@@ -238,13 +235,6 @@
         "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1711092577,
       "sinceBlock": 117746900,
       "values": {
@@ -263,7 +253,10 @@
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "ZKLINK": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
       },
-      "derivedName": "OptimismL2Gateway"
+      "implementationNames": {
+        "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": "ERC1967Proxy",
+        "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e": "OptimismL2Gateway"
+      }
     },
     {
       "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
@@ -502,9 +495,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

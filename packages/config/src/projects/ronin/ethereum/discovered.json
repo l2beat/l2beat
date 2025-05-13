@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 22346547,
-  "configHash": "0x16c7eab9df2af0a59a82f1c2c97c7d0f5283fc355b258bfdbcc0d4a50ae1f69f",
+  "configHash": "0x2dc4a62de1127178373ab714ac488cae230304f700bf655507b8f02ee730fd79",
   "entries": [
     {
       "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
@@ -48,13 +48,6 @@
         "0xb95d73d375b1e25c5ddb15cbfa79b70a14b58ce1467a12bd841a4f59b063e2f9"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -146,7 +139,10 @@
         "minimumVoteWeight": 1540,
         "totalBridgeOperator": 22
       },
-      "derivedName": "MainchainBridgeManager"
+      "implementationNames": {
+        "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": "TransparentProxyV2",
+        "0x0ac26945032143f6196d4bb5Ae03592BfAf822FD": "MainchainBridgeManager"
+      }
     },
     {
       "name": "RoninManagerMultiSig",
@@ -184,7 +180,9 @@
         "spentToday": 0,
         "transactionCount": 27
       },
-      "derivedName": "MultiSigWalletWithDailyLimit"
+      "implementationNames": {
+        "0x2DA02aC5f19Ae362a4121718d990e655eB628D96": "MultiSigWalletWithDailyLimit"
+      }
     },
     {
       "address": "0x32cB6da260726BB2192c4085B857aFD945A215Cb",
@@ -273,7 +271,10 @@
         "nonce": 8,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "address": "0x54C8C42F07007D43c3049bEF6f10eA68687d43ef",
@@ -319,13 +320,6 @@
         "0x05caa4ae4fc13e910efd2c6a0ae2a136990435283a1527cf1a5ccb577a91d52f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["depositCount"],
       "sinceTimestamp": 1655883630,
       "sinceBlock": 15006576,
@@ -403,7 +397,10 @@
         "WITHDRAWAL_UNLOCKER_ROLE": "0x5e5712e902fff5e704bc4d506ad976718319e019e9d2a872528a01a85db433e4",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "MainchainGatewayV3"
+      "implementationNames": {
+        "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "TransparentUpgradeableProxyV2",
+        "0x450032864C52Cb9210da8e30cE97CEaC8e215953": "MainchainGatewayV3"
+      }
     },
     {
       "address": "0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33",
@@ -503,7 +500,9 @@
         "symbol": "WETH",
         "totalSupply": "2823083246601126011714542"
       },
-      "derivedName": "WETH9"
+      "implementationNames": {
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
     },
     {
       "address": "0xc092Fa0C772b3c850e676c57d8737BB39084B9AC",
@@ -616,7 +615,9 @@
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
       },
-      "derivedName": "PauseEnforcer"
+      "implementationNames": {
+        "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": "PauseEnforcer"
+      }
     },
     {
       "address": "0xf4682B9263d1ba9bd9Db09dA125708607d1eDd3a",
@@ -997,5 +998,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xe41a7e1a67d1180476c4c8bcdf9f7272ac595df7618dadf8523340eb0ff5b3bc"
 }

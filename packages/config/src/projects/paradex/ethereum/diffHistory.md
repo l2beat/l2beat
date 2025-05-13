@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xeb920aa3ac64f1a9fcc2dcdd8f359c14bee22356
+
+# Diff at Mon, 12 May 2025 12:14:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 22397521
+- current block number: 22467133
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.3:
+-        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
++        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.$members.2:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
+      values.$members.1:
+-        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
++        "0x94d5dc7c96Eb6176783787669571970C7ba43e01"
+    }
+```
+
+Generated with discovered.json: 0x0c5aea8beabb3eb8b22ae0629db8e3878028313b
+
+# Diff at Fri, 02 May 2025 17:24:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c598e33a0c469175b7abbd6c2a13b47b63d6b6a4 block: 22337719
+- current block number: 22397521
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.4:
+-        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
++        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
+      values.$members.3:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
+      values.$members.2:
+-        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
++        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.$members.1:
+-        "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6"
++        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
+    }
+```
+
+Generated with discovered.json: 0x6bc586b180876a779af071c9eedc453ec076dd92
+
+# Diff at Tue, 29 Apr 2025 08:19:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337719
+- current block number: 22337719
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337719 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]},{"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"enable the withdrawal limit.","via":[]},{"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]},{"permission":"upgrade","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","via":[]}]
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions:
+-        [{"permission":"governStarknet","to":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]},{"permission":"operateStarknet","to":"0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2","via":[]},{"permission":"upgrade","to":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xa5acd8e953e44b424458f0e539f3d1c0e0e37f68
 
 # Diff at Thu, 24 Apr 2025 08:36:50 GMT:

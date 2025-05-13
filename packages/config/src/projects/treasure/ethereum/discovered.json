@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22181511,
-  "configHash": "0x3ac9aab399c231a1e4a6db69c441194abf3e8ecc54c3a289159abf9dc2a3dae1",
+  "configHash": "0xc8b364389e8a1aa091f178d1e143e8c91b82021aa26c091b43e10cac43e82c9b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -80,7 +80,10 @@
         "nonce": 8,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x282370D1e925ee897CB29Cb3beC13aAe0743067C": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "address": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
@@ -112,18 +115,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x2572835e02b59078711aa0800490e80975e4169d",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -147,7 +138,9 @@
           "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -164,26 +157,6 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "via": [{ "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -428,7 +401,13 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy",
+      "implementationNames": {
+        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879": "DiamondProxy",
+        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": "AdminFacet",
+        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": "GettersFacet",
+        "0x36b026c39125964D99596CE302866B5A59E4dE27": "MailboxFacet",
+        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": "ExecutorFacet"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -450,18 +429,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x2572835e02b59078711aa0800490e80975e4169d",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -485,7 +452,9 @@
           "0x2572835e02b59078711aa0800490e80975e4169d"
         ]
       },
-      "derivedName": "ValidatorTimelock",
+      "implementationNames": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -501,7 +470,9 @@
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
-      "derivedName": "ValidiumL1DAValidator",
+      "implementationNames": {
+        "0x907b30407249949521Bf0c89A43558dae200146A": "ValidiumL1DAValidator"
+      },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -513,14 +484,6 @@
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
       "proxyType": "immutable",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
-          "description": "set the conversion factor for gas token deposits.",
-          "via": []
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -545,7 +508,9 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin",
+      "implementationNames": {
+        "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871": "ChainAdmin"
+      },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -569,7 +534,9 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
-      "derivedName": "Verifier",
+      "implementationNames": {
+        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": "Verifier"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -988,5 +955,6 @@
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
-  }
+  },
+  "permissionsConfigHash": "0x88a471fb7e50f62d0506a5119704ef2aef61e379a7a21709fffd3cc357aa48b8"
 }

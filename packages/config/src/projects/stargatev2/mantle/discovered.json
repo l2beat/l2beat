@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "mantle",
-  "blockNumber": 75699152,
-  "configHash": "0x0ee1536e1d14e3620b3a747167c94dbb0b6ec1df21cde6f37a3ae89437e54d31",
+  "blockNumber": 79207877,
+  "configHash": "0x7e6306187bfa113648abd5a5c8e010ec5e52c0614057fe0e998dc0d189493944",
   "entries": [
     {
       "name": "TokenMessaging",
@@ -57,7 +57,9 @@
           "description": "The highest currently registered assetID"
         }
       },
-      "derivedName": "TokenMessaging"
+      "implementationNames": {
+        "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePool",
@@ -94,16 +96,18 @@
         "lpToken": "0xc2c3Cc203FB607f2f93e6A15f45556bc83620644",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "107636709583178428",
-        "poolBalance": "1741961882000000000000",
+        "plannerFee": "249869462824184398",
+        "poolBalance": "8650475633000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "treasuryFee": 10623043,
-        "tvl": "41153541000000000000"
+        "treasuryFee": 16225170,
+        "tvl": "11902040000000000000"
       },
-      "derivedName": "StargatePool"
+      "implementationNames": {
+        "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463": "StargatePool"
+      }
     },
     {
       "name": "StargatePoolUSDC",
@@ -142,16 +146,18 @@
         "lpToken": "0x5D131cb99cE5642f3d539417A187a93EEae48177",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "47247432332797757",
-        "poolBalance": 3230453143825,
+        "plannerFee": 0,
+        "poolBalance": 8916441364228,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-        "treasuryFee": 21715931672,
-        "tvl": 2042394545218
+        "treasuryFee": 30996196034,
+        "tvl": 1015798253060
       },
-      "derivedName": "StargatePoolUSDC"
+      "implementationNames": {
+        "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC": "StargatePoolUSDC"
+      }
     },
     {
       "name": "StargatePoolMigratable",
@@ -190,16 +196,18 @@
         "lpToken": "0xe1152564ED7B59e01915FC95bBF87cF9b6636fe6",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "238784433214785534",
-        "poolBalance": 2955628901535,
+        "plannerFee": 0,
+        "poolBalance": 2863429228339,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "treasuryFee": 17832928452,
-        "tvl": 3009085305912
+        "treasuryFee": 24573220703,
+        "tvl": 2002730313455
       },
-      "derivedName": "StargatePoolMigratable"
+      "implementationNames": {
+        "0xB715B85682B731dB9D5063187C450095c91C57FC": "StargatePoolMigratable"
+      }
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
@@ -242,15 +250,17 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": 0,
-        "poolBalance": "5475218257000000000000",
+        "poolBalance": "1692750700000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-        "treasuryFee": 8059038,
-        "tvl": "110589208000000000000"
+        "treasuryFee": 9084364,
+        "tvl": "23591881000000000000"
       },
-      "derivedName": "StargatePool"
+      "implementationNames": {
+        "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1": "StargatePool"
+      }
     }
   ],
   "abis": {
@@ -688,5 +698,6 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x6745e5fe9cf7824b9243d07161fb0061a5a4cd82af144d25b5533ae367bbe621"
 }

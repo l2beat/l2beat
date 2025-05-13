@@ -8,7 +8,7 @@ import {
   stripAnsiEscapeCodes,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import { type ZodError, z } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
@@ -203,12 +203,6 @@ export class ConfigReader {
 
   getProjectChainPath(project: string, chain: string): string {
     return path.join(this.getProjectPath(project), chain)
-  }
-
-  getDisplayMode(project: string): 'fromModel' | 'fromDiscovery' {
-    const projectPath = this.getProjectPath(project)
-    const projectPageFactsPath = path.join(projectPath, 'displayUsingModel')
-    return existsSync(projectPageFactsPath) ? 'fromModel' : 'fromDiscovery'
   }
 }
 

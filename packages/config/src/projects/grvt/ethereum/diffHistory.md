@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x3da89b52935a3760ecce037fb519751a08539b64
+
+# Diff at Tue, 29 Apr 2025 08:19:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22181511
+- current block number: 22181511
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22181511 (main branch discovery), not current.
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xE17aeD2fC55f4A876315376ffA49FE6358113a65","description":"address is part of the GRVTTransactionFilterer whitelist.","via":[]},{"permission":"interact","to":"0xe81d64195072e4d09639b31Abb257d0096FEa9d1","description":"address is part of the GRVTTransactionFilterer whitelist.","via":[]},{"permission":"interact","to":"0xF29bFff344c7ef0186432fE30C39fda0cca0550b","description":"address is part of the GRVTTransactionFilterer whitelist.","via":[]},{"permission":"interact","to":"0xF29bFff344c7ef0186432fE30C39fda0cca0550b","description":"manage the whitelist of addresses.","via":[]},{"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0b114d4675Cb79507e68F2616c93e124122c6ef0","via":[]},{"permission":"validateZkStack","to":"0x58D14960E0a2be353eDdE61ad719196A2b816522","via":[]}]
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","description":"set the conversion factor for gas token deposits.","via":[]}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0b114d4675Cb79507e68F2616c93e124122c6ef0","via":[]},{"permission":"validateZkStack","to":"0x58D14960E0a2be353eDdE61ad719196A2b816522","via":[]}]
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37","description":"approve deposits to GRVT via the GRVTBridgeProxy.","via":[]},{"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}]
+    }
+```
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","via":[{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]},{"permission":"interact","to":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.","via":[]},{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x9ec2e3090f263db0a1a6ce50d2fcae75094a5a7f
 
 # Diff at Thu, 10 Apr 2025 14:42:31 GMT:

@@ -2,7 +2,7 @@
   "name": "zkswap2",
   "chain": "ethereum",
   "blockNumber": 16767881,
-  "configHash": "0x44ff0ee1463dcf6347819d777ae13c67cc4552941806eed8786ab5cf65f8c709",
+  "configHash": "0x4ae93c1b9c75d3f0440133c68ec194bdc8605bad77df63d6ec2d385cd196b24e",
   "entries": [
     {
       "name": "UpgradeGatekeeper",
@@ -46,7 +46,9 @@
           "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
         ]
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7": ""
+      }
     },
     {
       "address": "0x38101ae98196C8BCf7dF1835Bf3983B384272ae4",
@@ -62,13 +64,6 @@
         "0xe57a7d24585183351134b42cf28e1fe88dc44f62c93f606e49489c95fb235b3a"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -79,7 +74,10 @@
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829"
       },
-      "derivedName": "Verifier"
+      "implementationNames": {
+        "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef": "Proxy",
+        "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829": "Verifier"
+      }
     },
     {
       "name": "ZkSync",
@@ -90,13 +88,6 @@
         "0xe89f1035c59a163546a58952321af25209cc7c946f7fe23f50b535818c980d29"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "firstPriorityRequestId",
@@ -138,7 +129,10 @@
         "zkSyncCommitBlockAddress": "0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4",
         "zkSyncExitAddress": "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0"
       },
-      "derivedName": "ZkSync"
+      "implementationNames": {
+        "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3": "Proxy",
+        "0xf2c351f22b148A9fF583a0F81701471a74E7338e": "ZkSync"
+      }
     },
     {
       "name": "Governance",
@@ -149,13 +143,6 @@
         "0xfe2c75fea0224e9fcb9594039d0179faaeb8db2a5bd3a9219433c90b069d049d"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -171,7 +158,10 @@
         "totalUserTokens": 45,
         "validators": ["0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"]
       },
-      "derivedName": "Governance"
+      "implementationNames": {
+        "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B": "Proxy",
+        "0x95269f9E76540459c797089034dc74b48dF780a2": "Governance"
+      }
     },
     {
       "address": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
@@ -206,7 +196,9 @@
         "tokenNameLimit": 64,
         "tokenSymbolLimit": 64
       },
-      "derivedName": "ZkSwapListing"
+      "implementationNames": {
+        "0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E": "ZkSwapListing"
+      }
     },
     {
       "name": "VerifierExit",
@@ -214,13 +206,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -231,7 +216,10 @@
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x17e51B3659884d70a306906B5BDD73D1c64a3892"
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513": "Proxy",
+        "0x17e51B3659884d70a306906B5BDD73D1c64a3892": ""
+      }
     },
     {
       "name": "ZkSyncExit",
@@ -242,7 +230,9 @@
       "sinceTimestamp": 1626059893,
       "sinceBlock": 12810000,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0": ""
+      }
     },
     {
       "name": "UniswapV2Factory",
@@ -253,13 +243,6 @@
         "0x86e6238a6b2cd0e01b10a66c120be7cfb092bbeb23c0b83e457b160062477b45"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1626059966,
       "sinceBlock": 12810001,
       "values": {
@@ -272,7 +255,10 @@
         "getTarget": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89",
         "zkSyncAddress": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
       },
-      "derivedName": "UniswapV2Factory"
+      "implementationNames": {
+        "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D": "Proxy",
+        "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89": "UniswapV2Factory"
+      }
     },
     {
       "name": "ZkSyncCommitBlock",
@@ -304,7 +290,9 @@
         "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
         "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "ZkSyncCommitBlock"
+      "implementationNames": {
+        "0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4": "ZkSyncCommitBlock"
+      }
     },
     {
       "name": "ZksToken",
@@ -323,7 +311,9 @@
         "symbol": "ZKS",
         "totalSupply": "1000000000000000000000000000"
       },
-      "derivedName": "ZksToken"
+      "implementationNames": {
+        "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6": "ZksToken"
+      }
     }
   ],
   "abis": {
@@ -628,5 +618,6 @@
       "function zkSyncExitAddress() view returns (address)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x744bf7b868c5ebcc699e20fd84925dba096b07b4d59591f04d4684b7fc4d3b54"
 }

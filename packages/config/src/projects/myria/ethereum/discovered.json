@@ -2,7 +2,7 @@
   "name": "myria",
   "chain": "ethereum",
   "blockNumber": 21981354,
-  "configHash": "0xcf60ce00c6a9d7aa37cbdf0ba7d0386550e578c80f6f7878e469bd4678d601aa",
+  "configHash": "0xf31dcbae2328fc192632582b9fd57b0bf3f1f41aca3093258cad52147e9c5186",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -38,7 +38,9 @@
           "description": "Includes DAC members and threshold."
         }
       },
-      "derivedName": "Committee",
+      "implementationNames": {
+        "0x1e601435E181423e7A8430813d7500012a6169cB": "Committee"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -58,36 +60,6 @@
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x86ED881374a81efcc1Aa9f82cA9740B40F0FCbfe",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
-          "description": "manage the token admin role.",
-          "via": []
-        },
-        {
-          "permission": "operateStarkEx",
-          "to": "0xe997ece81cb8A686206ea6042886B594Ecf6DdED",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
-          "delay": 1209600,
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -203,7 +175,16 @@
           "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
         }
       },
-      "derivedName": "Proxy",
+      "implementationNames": {
+        "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": "Proxy",
+        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": "StarkExchange",
+        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
+        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": "TokensAndRamping",
+        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
+        "0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
+        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
+        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": "ProxyUtils"
+      },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -236,7 +217,9 @@
         "programHash": "16830627573509542901909952446321116535677491650708854009406762893086223513",
         "programHashMapped": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)"
       },
-      "derivedName": "GpsFactRegistryAdapter",
+      "implementationNames": {
+        "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143": "GpsFactRegistryAdapter"
+      },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -284,7 +267,9 @@
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
-      "derivedName": "OrderRegistry"
+      "implementationNames": {
+        "0x806d435a82B0381bD884540c2235147c13B97fe6": "OrderRegistry"
+      }
     },
     {
       "address": "0x86ED881374a81efcc1Aa9f82cA9740B40F0FCbfe",
@@ -302,6 +287,7 @@
       "address": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -698,9 +684,10 @@
     ]
   },
   "usedTemplates": {
-    "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
-    "starkex/GpsFactRegistryAdapter": "0xf6854883be8e71bb74ed5a245bef9bbb9d08cdd9aa9181f0221987b40c9f1663",
-    "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
-    "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
-  }
+    "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
+    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "starkex/StarkExchange": "0xfb69f71d65a0752a2088fe51c43f8d06488cc2a465e19b649b9e317de103ab09"
+  },
+  "permissionsConfigHash": "0xbd6657750873da4fbfd97d39d678cebbfa8480603ee6e1f701043e2689d88e87"
 }

@@ -1,6 +1,4 @@
 import {
-  ElasticSearchTransport,
-  type ElasticSearchTransportOptions,
   type Env,
   LogFormatterEcs,
   LogFormatterJson,
@@ -10,6 +8,11 @@ import {
   type LoggerTransportOptions,
   getEnv,
 } from '@l2beat/backend-tools'
+
+import {
+  ElasticSearchTransport,
+  type ElasticSearchTransportOptions,
+} from './peripherals/elastic-search/ElasticSearchTransport'
 
 import apm from 'elastic-apm-node'
 import { Application } from './Application'

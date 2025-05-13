@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x359c95dca5f2f525b4812d3d095134cb9d0e81e7
+
+# Diff at Tue, 29 Apr 2025 09:37:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22367347
+- current block number: 22367347
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: Official Facet implementation of the Ether Bridge.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x314d660b083675f415cCAA9c545FeedF377d1006","description":"can sign arbitrary withdrawals for users.","via":[]},{"permission":"interact","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","description":"can withdraw all funds from the bridge.","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","description":"set and change address mappings.","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[]},{"permission":"upgrade","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"upgrade","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3","via":[]},{"permission":"propose","to":"0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3","via":[]},{"permission":"upgrade","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[]},{"permission":"upgrade","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}]
+    }
+```
+
 Generated with discovered.json: 0x926c4d2f5698bb4222321f1584ab501ec4224c67
 
 # Diff at Mon, 28 Apr 2025 11:45:15 GMT:

@@ -34,12 +34,12 @@ export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
-  isUnderReview: true,
+  archivedAt: UnixTime(1746798305),
   display: {
     name: 'Ronin V3',
     slug: 'ronin',
     warning:
-      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Stand by while we review the new integration with Chainlink CCIP.',
+      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Ronin is now using the Chainlink CCTP messaging protocol.',
     links: {
       websites: ['https://bridge.roninchain.com/'],
       apps: ['https://bridge.roninchain.com/'],
@@ -74,13 +74,19 @@ export const ronin: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description: `${operatorsString} operators.`,
+      value: 'Multisig (16/22)',
+      description: `16/22 Operators from the set. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'Yes',
-      description: `Gateway Proxy can be upgraded by ${operatorsString} operators.`,
+      value: 'Multisig (16/22)',
+      description: `Gateway Proxy can be upgraded by 16/22 operators.`,
+      sentiment: 'bad',
+    },
+    livenessFailure: {
+      value: 'No mechanism',
+      description:
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
     destinationToken: {

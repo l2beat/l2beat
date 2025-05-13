@@ -1,3 +1,172 @@
+Generated with discovered.json: 0xfc01e23cbf9af045f81497fae8d3e1b968b36d21
+
+# Diff at Thu, 08 May 2025 09:49:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e1926142ab0c57cc131de4d8da307e13d9af54d block: 22337725
+- current block number: 22438012
+
+## Description
+
+Minor upgrade to SystemConfig and the VerifierV2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.0:
+-        "0x06f2d961bb4a244d73779f83003fd66fcda3cc297693cd348d8ac1aa8c29dc63"
++        "0x889638b8fe1fe5acdc9fc63605747e530d07ef7a0e81c151b0e3f546c24adef9"
+      values.$implementation:
+-        "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"
++        "0x795277B6aD8778E27aa70813157134cfC4a4D446"
+      values.$pastUpgrades.1:
++        ["2025-05-07T18:25:23.000Z","0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",["0x795277B6aD8778E27aa70813157134cfC4a4D446"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      implementationNames.0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de:
+-        "SystemConfig"
+      implementationNames.0x795277B6aD8778E27aa70813157134cfC4a4D446:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+      sourceHashes.0:
+-        "0xaf075d81d9fd983d155a21617c104cfab25f4ad9e8f039fd8a15c1220e3d6227"
++        "0x3d0ebf0f8aafb6672ca85a4e9b3f8c912466ace744a78b5749a0b763bdc7876b"
+      values.$implementation:
+-        "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a"
++        "0x89223192E728a830F09b32d93D51AaC88b6a466e"
+      values.$pastUpgrades.1:
++        ["2025-05-07T18:25:23.000Z","0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",["0x89223192E728a830F09b32d93D51AaC88b6a466e"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.digest:
+-        "0x1d544a5de23a23d1e94ae793352208593bfa28c3d76d455f09ea3f9c25c402b8"
++        "0x1adec13f00764ae27bbb7ba225b373bc80f120f4c4c0125619c4dd74b18ceb43"
+      implementationNames.0xD5B424AC36928E2da7dA9eCA9807938a56988F5a:
+-        "VerifierV2"
+      implementationNames.0x89223192E728a830F09b32d93D51AaC88b6a466e:
++        "VerifierV2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 67 +++++++++++++++++-----
+ .../VerifierV2/VerifierV2.sol                      | 10 ++--
+ 2 files changed, 59 insertions(+), 18 deletions(-)
+```
+
+Generated with discovered.json: 0x8a73ea6e8003d3fc90a43a72458e805def58c8e9
+
+# Diff at Tue, 29 Apr 2025 08:19:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22337725
+- current block number: 22337725
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337725 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x2c0B27F7C8F083B539557a0bA787041BF22DB276","via":[]},{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145","via":[]},{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x2c0B27F7C8F083B539557a0bA787041BF22DB276","via":[]},{"permission":"guard","to":"0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5","via":[]},{"permission":"interact","to":"0x2c0B27F7C8F083B539557a0bA787041BF22DB276","description":"manage roles including the guardian role.","via":[]},{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[]},{"permission":"propose","to":"0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65","via":[]},{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+    }
+```
+
 Generated with discovered.json: 0xad866826772fccc82cf7b232810d6d2fc79170b7
 
 # Diff at Thu, 24 Apr 2025 08:37:55 GMT:

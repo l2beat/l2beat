@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x265d5bf55d29c9c4cf8699ef9a4f2df5c087e3dd
+
+# Diff at Tue, 29 Apr 2025 08:19:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 19531527
+- current block number: 19531527
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531527 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xc7cb760e359451fedc76481953dc788c525a2df7
 
 # Diff at Tue, 04 Mar 2025 10:39:03 GMT:

@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x9812cc60af8b0044009abf962c6b410262ab91e8
+
+# Diff at Tue, 29 Apr 2025 08:19:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22265851
+- current block number: 22265851
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22265851 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"can update the root chain it references.","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"can delete arbitrary checkpoints.","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x87e8c39b2ab3f992a35004737bfe8e73cbdfc98f
 
 # Diff at Tue, 22 Apr 2025 12:34:00 GMT:

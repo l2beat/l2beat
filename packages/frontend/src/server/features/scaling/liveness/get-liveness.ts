@@ -1,11 +1,13 @@
 import type {
-  AggregatedLivenessRecord,
   AnomalyRecord,
   IndexerConfigurationRecord,
 } from '@l2beat/database'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { groupBy, range } from 'lodash'
+import groupBy from 'lodash/groupBy'
+import isEmpty from 'lodash/isEmpty'
+import range from 'lodash/range'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -47,11 +49,24 @@ async function getLivenessData() {
     configurations,
     'liveness',
   )
-
   const projectIds = trackedTxsProjects.map((p) => p.id)
 
-  const records = await db.aggregatedLiveness.getByProjectIds(projectIds)
-  const recordsByProjectId = groupBy(records, (r) => r.projectId)
+  const targetTimestamp =
+    UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+
+  const [records30Days, records90Days, recordsMax] = (
+    await Promise.all([
+      db.aggregatedLiveness.getAggregatesByTimeRange([
+        targetTimestamp - 30 * UnixTime.DAY,
+        targetTimestamp,
+      ]),
+      db.aggregatedLiveness.getAggregatesByTimeRange([
+        targetTimestamp - 90 * UnixTime.DAY,
+        targetTimestamp,
+      ]),
+      db.aggregatedLiveness.getAggregatesByTimeRange([null, targetTimestamp]),
+    ])
+  ).map((r) => groupBy(r, (r) => r.projectId))
 
   const last30Days = UnixTime.toStartOf(
     UnixTime.now() - 30 * UnixTime.DAY,
@@ -68,29 +83,41 @@ async function getLivenessData() {
       (p) => p.id === project.id,
     )?.livenessConfig
 
-    const projectRecords = recordsByProjectId[project.id]
-    if (!projectRecords) {
+    const project30Days = records30Days?.[project.id]
+    const project90Days = records90Days?.[project.id]
+    const projectMax = recordsMax?.[project.id]
+    if (
+      isEmpty(project30Days) &&
+      isEmpty(project90Days) &&
+      isEmpty(projectMax)
+    ) {
       continue
     }
     const anomalies = anomaliesByProjectId[project.id] ?? []
 
     const livenessData: LivenessProject = {
       stateUpdates: mapAggregatedLivenessRecords(
-        projectRecords,
+        project30Days,
+        project90Days,
+        projectMax,
         'stateUpdates',
         project,
         configurations,
         anomalies,
       ),
       batchSubmissions: mapAggregatedLivenessRecords(
-        projectRecords,
+        project30Days,
+        project90Days,
+        projectMax,
         'batchSubmissions',
         project,
         configurations,
         anomalies,
       ),
       proofSubmissions: mapAggregatedLivenessRecords(
-        projectRecords,
+        project30Days,
+        project90Days,
+        projectMax,
         'proofSubmissions',
         project,
         configurations,
@@ -113,7 +140,15 @@ async function getLivenessData() {
 }
 
 function mapAggregatedLivenessRecords(
-  records: AggregatedLivenessRecord[],
+  records30Days:
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
+  records90Days:
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
+  recordsMax:
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
   subtype: TrackedTxsConfigSubtype,
   project: TrackedTxsProject,
   configurations: IndexerConfigurationRecord[],
@@ -135,31 +170,27 @@ function mapAggregatedLivenessRecords(
   )
   const maxAnomalyDuration = Math.max(...todaysAnomalies.map((a) => a.duration))
 
-  const last30Days = records.find(
-    (r) => r.subtype === subtype && r.range === '30D',
-  )
-  const last90Days = records.find(
-    (r) => r.subtype === subtype && r.range === '90D',
-  )
-  const max = records.find((r) => r.subtype === subtype && r.range === 'MAX')
+  const last30Days = records30Days?.find((r) => r.subtype === subtype)
+  const last90Days = records90Days?.find((r) => r.subtype === subtype)
+  const max = recordsMax?.find((r) => r.subtype === subtype)
   return {
     '30d': last30Days
       ? {
-          averageInSeconds: last30Days.avg,
+          averageInSeconds: Math.round(last30Days.avg),
           minimumInSeconds: last30Days.min,
           maximumInSeconds: Math.max(last30Days.max, maxAnomalyDuration),
         }
       : undefined,
     '90d': last90Days
       ? {
-          averageInSeconds: last90Days.avg,
+          averageInSeconds: Math.round(last90Days.avg),
           minimumInSeconds: last90Days.min,
           maximumInSeconds: Math.max(last90Days.max, maxAnomalyDuration),
         }
       : undefined,
     max: max
       ? {
-          averageInSeconds: max.avg,
+          averageInSeconds: Math.round(max.avg),
           minimumInSeconds: max.min,
           maximumInSeconds: Math.max(max.max, maxAnomalyDuration),
         }

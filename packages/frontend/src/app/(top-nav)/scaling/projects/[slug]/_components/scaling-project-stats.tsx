@@ -1,5 +1,7 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { chunk, compact, isEmpty } from 'lodash'
+import chunk from 'lodash/chunk'
+import compact from 'lodash/compact'
+import isEmpty from 'lodash/isEmpty'
 import { Fragment, type ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -28,12 +30,7 @@ export function ProjectScalingStats({ project, className }: Props) {
       key="tokens"
       title="Tokens"
       valueClassName="max-md:-mt-0.5"
-      value={
-        <TokenBreakdownStat
-          tokenTvs={project.header.tvs?.tokens}
-          gasTokens={project.header.gasTokens}
-        />
-      }
+      value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
     />,
     <ProjectStat
       key="ops-count"
@@ -81,6 +78,7 @@ export function ProjectScalingStats({ project, className }: Props) {
             <StageCell
               stageConfig={project.stageConfig}
               isAppchain={project.isAppchain}
+              emergencyWarning={project.header.emergencyWarning}
             />
           </a>
         }

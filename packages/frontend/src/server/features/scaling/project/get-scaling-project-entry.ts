@@ -7,7 +7,7 @@ import type {
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -58,6 +58,7 @@ export interface ProjectScalingEntry {
   header: {
     warning?: string
     redWarning?: string
+    emergencyWarning?: string
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -136,6 +137,7 @@ export async function getScalingProjectEntry(
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
+    emergencyWarning: project.statuses.emergencyWarning,
     category,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
@@ -433,6 +435,7 @@ export async function getScalingProjectEntry(
             ? project.scalingStage.additionalConsiderations
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
+        emergencyWarning: project.statuses.emergencyWarning,
       },
     })
   }
@@ -555,7 +558,6 @@ export async function getScalingProjectEntry(
   const permissionsSection = getPermissionsSection(
     {
       id: project.id,
-      type: project.scalingInfo.layer,
       hostChain: hostChain?.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
@@ -579,7 +581,6 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      type: project.scalingInfo.layer,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,

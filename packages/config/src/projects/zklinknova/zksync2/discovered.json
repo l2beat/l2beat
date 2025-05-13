@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0xe5b55b57d496a797b3fa13f031e7581d8e264e72d8d93f813191476d75f4815d",
+  "configHash": "0x5e145091e009e2f6f5df49c312ec67994a4fae28c8e0a0a68b877f7477114678",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -60,7 +60,10 @@
         "nonce": 29,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafeL2"
+      "implementationNames": {
+        "0x3334552599C9aA1FE08CfF276A02033FF37646ca": "GnosisSafeProxy",
+        "0x1727c2c531cf966f902E5927b98490fDFb3b2b70": "GnosisSafeL2"
+      }
     },
     {
       "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -78,13 +81,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
-          "via": [{ "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }]
-        }
-      ],
       "sinceTimestamp": 1709297079,
       "sinceBlock": 27865488,
       "values": {
@@ -104,7 +100,10 @@
         ],
         "$upgradeCount": 2
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08": "TransparentUpgradeableProxy",
+        "0xdBA32e62e929a7e2Fa65782F812416CA65208E40": ""
+      }
     },
     {
       "name": "zkLink",
@@ -112,13 +111,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1709280624,
       "sinceBlock": 27849895,
       "values": {
@@ -143,7 +135,10 @@
         ],
         "$upgradeCount": 3
       },
-      "derivedName": ""
+      "implementationNames": {
+        "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A": "ERC1967Proxy",
+        "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E": ""
+      }
     },
     {
       "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
@@ -186,7 +181,9 @@
         "$immutable": true,
         "owner": "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": "ProxyAdmin"
+      }
     },
     {
       "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -273,7 +270,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
-  }
+  },
+  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
 }

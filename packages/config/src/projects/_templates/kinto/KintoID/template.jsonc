@@ -1,0 +1,102 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "tokenByIndex",
+    "isSanctionsMonitored",
+    "ownerOf"
+  ],
+  "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
+  "ignoreRelatives": [
+    "pendingSanctions",
+    "removedSanctions",
+    "confirmedSanctions"
+  ],
+  "fields": {
+    "pendingSanctions": {
+      "description": "addresses sanctioned by any KYC_PROVIDER role.",
+      "handler": {
+        "type": "event",
+        "select": ["_to", "_timestamp"],
+        "add": {
+          "event": "SanctionAdded"
+        }
+      }
+    },
+    "removedSanctions": {
+      "description": "addresses unsanctioned manually by any KYC_PROVIDER role. Mind that sanctions also expire if not confirmed (and those do not emit).",
+      "handler": {
+        "type": "event",
+        "select": "_to",
+        "add": {
+          "event": "SanctionRemoved"
+        }
+      }
+    },
+    "confirmedSanctions": {
+      "description": "addresses confirmed sanctioned by the GOVERNANCE_ROLE.",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": {
+          "event": "SanctionConfirmed"
+        }
+      }
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    // extracting single roles here for better descriptions
+    "UPGRADERs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "UPGRADER_ROLE"
+      },
+      "permissions": [{ "type": "upgrade" }]
+    },
+    "KYC_PROVIDERs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "KYC_PROVIDER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        }
+      ]
+    },
+    "GOVERNANCErs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVERNANCE_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        }
+      ]
+    },
+    "DEFAULT_ADMINs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer KYC NFTs to a different address."
+        }
+      ]
+    }
+  }
+}

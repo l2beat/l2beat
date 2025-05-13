@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x192267131c09370d4e0356af64db2a4de17d4a2a
+
+# Diff at Tue, 29 Apr 2025 08:19:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 22322978
+- current block number: 22322978
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
+```diff
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x52882c7564fAca480549145fAc4d0b09eD0D9c17","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+    }
+```
+
 Generated with discovered.json: 0x1805c3ccfef3c269f15939674254509419a81156
 
 # Diff at Thu, 24 Apr 2025 10:31:29 GMT:

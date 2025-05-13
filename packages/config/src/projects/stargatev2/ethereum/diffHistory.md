@@ -1,3 +1,96 @@
+Generated with discovered.json: 0x122b1d9add5d3ac5d7f7b0b68f7c03105bdcce0c
+
+# Diff at Tue, 06 May 2025 15:41:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f365211458ce8b1ced035f6b5e4a56c9f10d2546 block: 21944318
+- current block number: 22425618
+
+## Description
+
+Modified liquidity parameter deficitOffset for native and USDC pools.
+
+## Watched changes
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      values.deficitOffset:
+-        "36000000000000000000000"
++        "1440000000000000000000"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      values.deficitOffset:
+-        100000000000000
++        4000000000000
+    }
+```
+
+Generated with discovered.json: 0x07e446b60a527c388cbf1396e458eb1a8acf4ee0
+
+# Diff at Tue, 06 May 2025 13:32:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@09b97f14e3365304f798b0b4fc6971d693d1eb2f block: 21944318
+- current block number: 21944318
+
+## Description
+
+ethereum
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract PriceFeed (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      name:
+-        ""
++        "PriceFeed"
+    }
+```
+
+Generated with discovered.json: 0x859b864b5e9a5312f0ec7d967bc3a005a129adae
+
+# Diff at Tue, 29 Apr 2025 08:19:29 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 21944318
+- current block number: 21944318
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","via":[]}]
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x91b0d1beba6c6ba221938ff57aae761bf5b6f436
 
 # Diff at Thu, 24 Apr 2025 10:31:05 GMT:

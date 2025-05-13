@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "scroll",
-  "blockNumber": 13418769,
-  "configHash": "0x52a2c6aee66d2345f008189d8f40673e43d5f218a621510758fd001a2e5a41f0",
+  "blockNumber": 15243619,
+  "configHash": "0xf0e2eb68f4f9ccd5233bb0122c5c0e5ec5671e1fe888f05c29b9d5b46ec7d09a",
   "entries": [
     {
       "name": "StargatePoolUSDC",
@@ -41,16 +41,18 @@
         "lpToken": "0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "811470384891119569",
-        "poolBalance": 2819219232233,
+        "plannerFee": "911300763812956721",
+        "poolBalance": 6845687820908,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-        "treasuryFee": 25444228957,
-        "tvl": 2360898822794
+        "treasuryFee": 27234524247,
+        "tvl": 168005142401
       },
-      "derivedName": "StargatePoolUSDC"
+      "implementationNames": {
+        "0x3Fc69CC4A842838bCDC9499178740226062b14E4": "StargatePoolUSDC"
+      }
     },
     {
       "name": "TokenMessaging",
@@ -96,7 +98,9 @@
           "description": "The highest currently registered assetID"
         }
       },
-      "derivedName": "TokenMessaging"
+      "implementationNames": {
+        "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePoolNative",
@@ -118,7 +122,7 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": "7000000000000000000000",
+        "deficitOffset": "280000000000000000000",
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x2A6c43e0DBDCde23d40c82F45682BC6D8A6dB219",
@@ -133,16 +137,18 @@
         "lpToken": "0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "181196259205248056",
-        "poolBalance": "5840886036000000000000",
+        "plannerFee": "825659640929008311",
+        "poolBalance": "4488892726000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 27770330,
-        "tvl": "2980916176000000000000"
+        "treasuryFee": 28805365,
+        "tvl": "191597025000000000000"
       },
-      "derivedName": "StargatePoolNative"
+      "implementationNames": {
+        "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
+      }
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
@@ -417,5 +423,6 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x6745e5fe9cf7824b9243d07161fb0061a5a4cd82af144d25b5533ae367bbe621"
 }

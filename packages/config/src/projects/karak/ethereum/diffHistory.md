@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xb188869ac5709bae1c33c60e1a4bfc8ed1c09eea
+
+# Diff at Tue, 29 Apr 2025 08:19:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@ef7477af00fe0b57a2f7cacf7e958c12494af662 block: 20920155
+- current block number: 20920155
+
+## Description
+
+Field .issuedPermissions is removed from the output as no longer needed. Added 'permissionsConfigHash' due to refactoring of the modelling process (into a separate command).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920155 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x0a23342520Aa8Ca963c4201801F4D3E95e731637) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
+-        [{"permission":"challenge","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[]},{"permission":"propose","to":"0x4179f43f3b994e97090557363b09F403138a729e","via":[]},{"permission":"upgrade","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]},{"permission":"sequence","to":"0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E","via":[]},{"permission":"upgrade","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x952851CecB07705A5bb483C1CE080F97e1E7491E) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
+-        [{"permission":"guard","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[]},{"permission":"upgrade","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x28A227d4faF0f4f75897438E24C43EF1CDABb920","description":"set and change address mappings.","via":[{"address":"0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]}]
+    }
+```
+
 Generated with discovered.json: 0xd653a2b2ee0adbcceb3cb8aa193310105a67e583
 
 # Diff at Thu, 27 Mar 2025 11:14:29 GMT:

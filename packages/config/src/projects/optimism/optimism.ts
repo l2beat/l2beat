@@ -9,6 +9,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 const genesisTimestamp = UnixTime(1636665399)
+const chainId = 10
 
 export const optimism: ScalingProject = opStackL2({
   addedAt: UnixTime(1629331200), // 2021-08-19T00:00:00Z
@@ -165,7 +166,7 @@ export const optimism: ScalingProject = opStackL2({
   isNodeAvailable: true,
   chainConfig: {
     name: 'optimism',
-    chainId: 10,
+    chainId,
     explorerUrl: 'https://optimistic.etherscan.io',
     // ~ Timestamp of block number 138 on Optimism
     // The first full hour timestamp that will return the block number
@@ -193,7 +194,7 @@ export const optimism: ScalingProject = opStackL2({
         url: 'https://mainnet.optimism.io/',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api-optimistic.etherscan.io/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },

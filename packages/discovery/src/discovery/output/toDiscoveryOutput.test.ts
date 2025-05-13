@@ -16,7 +16,6 @@ describe(processAnalysis.name, () => {
   const baseContract = {
     ...EMPTY_ANALYZED_CONTRACT,
     type: 'Contract' as const,
-    derivedName: undefined,
     isVerified: true,
     deploymentTimestamp: UnixTime(1234),
     deploymentBlockNumber: 9876,
@@ -55,7 +54,6 @@ describe(processAnalysis.name, () => {
     ...baseContract,
     address: ADDRESS_B,
     name: 'B',
-    derivedName: 'Something not B',
     values: { a: 1, b: 2 },
     errors: { c: 'error' },
     abis: {
@@ -111,6 +109,7 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
+          name: CONTRACT_A.name,
           address: ADDRESS_A,
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
@@ -129,8 +128,8 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
+          name: CONTRACT_B.name,
           address: ADDRESS_B,
-          derivedName: 'Something not B',
           proxyType: CONTRACT_B.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
@@ -152,6 +151,7 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
+          name: CONTRACT_C.name,
           address: ADDRESS_C,
           proxyType: CONTRACT_C.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -181,6 +181,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_A,
+          name: CONTRACT_A.name,
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -189,8 +190,8 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_B,
+          name: CONTRACT_B.name,
           proxyType: CONTRACT_B.proxyType,
-          derivedName: 'Something not B',
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -199,6 +200,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           address: ADDRESS_C,
+          name: CONTRACT_C.name,
           proxyType: CONTRACT_C.proxyType,
           values: CONTRACT_C.values,
           sinceBlock: baseContract.deploymentBlockNumber,

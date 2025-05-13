@@ -7,7 +7,7 @@ import type {
   LivenessRecord,
 } from '@l2beat/database'
 import { type RpcClient, createTrackedTxId } from '@l2beat/shared'
-import { mean } from 'lodash'
+import mean from 'lodash/mean'
 import {
   BaseAnalyzer,
   type Batch,

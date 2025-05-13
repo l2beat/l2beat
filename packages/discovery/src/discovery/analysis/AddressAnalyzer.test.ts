@@ -72,7 +72,7 @@ describe(AddressAnalyzer.name, () => {
         name: undefined,
         deploymentTimestamp: undefined,
         deploymentBlockNumber: undefined,
-        targetsMeta: undefined,
+        implementationNames: undefined,
         address,
       })
     })
@@ -171,7 +171,6 @@ describe(AddressAnalyzer.name, () => {
         ...EMPTY_ANALYZED_CONTRACT,
         address,
         name: 'Test',
-        derivedName: 'Test',
         isVerified: true,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
@@ -182,14 +181,12 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin.toString(),
           owner: owner.toString(),
         },
+        implementationNames: {
+          [address.toString()]: 'Proxy1',
+          [implementation.toString()]: 'Impl1',
+        },
         abis: sources.abis,
         sourceBundles: sources.sources,
-        targetsMeta: {
-          [admin.toString()]: {
-            canActIndependently: undefined,
-            permissions: [{ type: 'upgrade', delay: 0, target: address }],
-          },
-        },
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -289,7 +286,6 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         name: 'Test',
-        derivedName: 'Test',
         address,
         isVerified: false,
         deploymentTimestamp: UnixTime(1234),
@@ -301,14 +297,12 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin.toString(),
           owner: owner.toString(),
         },
+        implementationNames: {
+          [address.toString()]: 'Test',
+          [implementation.toString()]: 'Test2',
+        },
         abis: sources.abis,
         sourceBundles: sources.sources,
-        targetsMeta: {
-          [admin.toString()]: {
-            canActIndependently: undefined,
-            permissions: [{ type: 'upgrade', delay: 0, target: address }],
-          },
-        },
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -406,7 +400,6 @@ describe(AddressAnalyzer.name, () => {
         ...EMPTY_ANALYZED_CONTRACT,
         address,
         name: 'Test',
-        derivedName: 'Test',
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
         isVerified: true,
@@ -417,14 +410,11 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin.toString(),
           owner: owner.toString(),
         },
+        implementationNames: {
+          [address.toString()]: 'Test',
+        },
         abis: sources.abis,
         sourceBundles: sources.sources,
-        targetsMeta: {
-          [admin.toString()]: {
-            canActIndependently: undefined,
-            permissions: [{ type: 'upgrade', delay: 0, target: address }],
-          },
-        },
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),

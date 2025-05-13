@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 22208513,
-  "configHash": "0xf62c37c0a7af7082439a5603aca8c1789cf49d0f97124f4522d7744b6e0513a6",
+  "configHash": "0xf11747c6d817b880d15a4d40b27bd22091c2098e5db1ed31ec819f7b795582a9",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -25,19 +25,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [],
       "sinceTimestamp": 1717522343,
       "sinceBlock": 20019970,
@@ -77,7 +64,10 @@
         "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "Challenge"
+      "implementationNames": {
+        "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": "CoreProxy",
+        "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B": "Challenge"
+      }
     },
     {
       "name": "ChainOracle",
@@ -90,13 +80,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [],
       "sinceTimestamp": 1717522307,
       "sinceBlock": 20019967,
@@ -117,7 +100,10 @@
         "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "ChainOracle"
+      "implementationNames": {
+        "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": "CoreProxy",
+        "0x79B3E839333a74137e78b0DaF84FC12512a8c704": "ChainOracle"
+      }
     },
     {
       "name": "Lightlink Multisig 1",
@@ -152,7 +138,9 @@
         "getTransactionCount": 22,
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
-      "derivedName": "Multisig"
+      "implementationNames": {
+        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": "Multisig"
+      }
     },
     {
       "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
@@ -177,14 +165,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-          "description": "can remove and add validators, update their voting power, and change the required threshold.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [],
       "sinceTimestamp": 1692154667,
       "sinceBlock": 17924561,
@@ -212,7 +192,10 @@
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "systemVerifier": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "L1BridgeRegistry"
+      "implementationNames": {
+        "0x624631881655a310adcF0d1336658Cc977609b72": "BridgeProxy",
+        "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E": "L1BridgeRegistry"
+      }
     },
     {
       "name": "L1ERC20Predicate",
@@ -244,7 +227,10 @@
         "l2Predicate": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
         "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9"
       },
-      "derivedName": "L1ERC20Predicate"
+      "implementationNames": {
+        "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9": "PredicateProxy",
+        "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": "L1ERC20Predicate"
+      }
     },
     {
       "name": "CanonicalStateChain",
@@ -257,25 +243,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
-          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["chainHead", "getHead"],
       "sinceTimestamp": 1717522271,
       "sinceBlock": 20019964,
@@ -332,7 +299,10 @@
         "startingTimestamp": 1717522271,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "CanonicalStateChain"
+      "implementationNames": {
+        "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": "CoreProxy",
+        "0xeFE38Bd58ADDf23eFab1FFa16312030384929289": "CanonicalStateChain"
+      }
     },
     {
       "name": "SystemConfig",
@@ -345,13 +315,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1725540911,
       "sinceBlock": 20684519,
       "values": {
@@ -370,7 +333,10 @@
         "startBlock": 20684513,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": "SystemConfig"
+      "implementationNames": {
+        "0x670E1C42A7A5962348138110E3ede3F422c10e2f": "Proxy",
+        "0x9EC8231132d6722D463077a7cCe1432c3766d9A2": "SystemConfig"
+      }
     },
     {
       "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
@@ -462,7 +428,10 @@
         "nonce": 0,
         "VERSION": "1.4.1"
       },
-      "derivedName": "Safe"
+      "implementationNames": {
+        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -475,13 +444,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1725540863,
       "sinceBlock": 20684515,
@@ -512,7 +474,10 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.4.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
+      "implementationNames": {
+        "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": "Proxy",
+        "0x38104856c02f83f4048c0FBA3D7613042FEAc988": "L1CrossDomainMessenger"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -531,19 +496,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "it can pause the chain and update the gas token.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1725540839,
       "sinceBlock": 20684513,
@@ -578,7 +530,10 @@
         "version": "2.8.1-beta.1"
       },
       "fieldMeta": { "paused": { "severity": "HIGH" } },
-      "derivedName": "LightLinkPortal"
+      "implementationNames": {
+        "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE": "Proxy",
+        "0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD": "LightLinkPortal"
+      }
     },
     {
       "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
@@ -596,14 +551,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1725540887,
       "sinceBlock": 20684517,
       "values": {
@@ -625,7 +572,10 @@
         "paused": false,
         "version": "2.2.0"
       },
-      "derivedName": "L1StandardBridge",
+      "implementationNames": {
+        "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "Proxy",
+        "0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48": "L1StandardBridge"
+      },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -649,7 +599,9 @@
       "sinceTimestamp": 1717522283,
       "sinceBlock": 20019965,
       "values": { "$immutable": true },
-      "derivedName": "RLPReader"
+      "implementationNames": {
+        "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2": "RLPReader"
+      }
     }
   ],
   "abis": {
@@ -1171,15 +1123,16 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "lightlink/CanonicalStateChain": "0x3b6fde3b310dbaa9964ef71d58b9514400670ddd3c9dfe0ba0aa5bb1be76af09",
-    "lightlink/ChainOracle": "0x870f35a4e6e0e77a4cd9ff56eba0915681a357b424cf69c228f813c688c8cae3",
-    "lightlink/Challenge": "0x23f7c0733d2edd0df0ea033af0dc580473b61dfbc1b55578638212e9f4ea8cb6",
-    "lightlink/L1BridgeRegistry": "0x22b6405c6788f017cfdab3e63d88e07ce0a6d7eec6ef511e75af6078c8817490",
-    "lightlink/L1ERC20Predicate": "0x6a57dee3263b656900be8c12a13454969e34d21ffd23e69508d15fb4c40e89bc",
-    "lightlink/LightLinkPortal": "0xf7c4101b38e12213a1d1684cd0de7548309e8a2320bab53e7de198bd44669c03",
-    "lightlink/Multisig": "0x8deaf124d7a4cb0393fa56f749f94abafe7497820679b99110101c8c5d9ea629",
-    "lightlink/SystemConfig": "0x848fd23fbc0ff3a3b507b613b825f3cbfcc97aada56b8d205b1e802eba0f7225",
-    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
-    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75"
-  }
+    "lightlink/CanonicalStateChain": "0x219c144273024b07ca81f91c6c70aedd707f482a8f2d400bdc885ad7fd780467",
+    "lightlink/ChainOracle": "0xf5edeb1b0b41c67d93ed6d4371fb70e9e1f1f97944a561fd49fa119c7503aa07",
+    "lightlink/Challenge": "0x54e478f3eb1e4542b6b3bf1a1eb64269b7a406619fbd417f15e7f3954da0410a",
+    "lightlink/L1BridgeRegistry": "0xa52359c35e33ea087a6cc360a0ab284549c3d7e0d3702cac1dcf9c4920993c8e",
+    "lightlink/L1ERC20Predicate": "0xf5edeb1b0b41c67d93ed6d4371fb70e9e1f1f97944a561fd49fa119c7503aa07",
+    "lightlink/LightLinkPortal": "0xd9d5146c2887a07d8c6fac45c7c3907a4bb9f8561cedead0708cec6265a2d67d",
+    "lightlink/Multisig": "0xbf0a261e6c43f7c32678e3ac3c8b3409a9336d211bf3c10d9e8d64da91d9a2de",
+    "lightlink/SystemConfig": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568"
+  },
+  "permissionsConfigHash": "0xb240b919bb947da147d484ce062ec203fd947c4608b98c15cbef1111a8010cda"
 }

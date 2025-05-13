@@ -1,4 +1,5 @@
-import { isArray, isObject } from 'lodash'
+import isArray from 'lodash/isArray'
+import isObject from 'lodash/isObject'
 
 import { hashJson } from '@l2beat/shared'
 import type { Hash256 } from '@l2beat/shared-pure'

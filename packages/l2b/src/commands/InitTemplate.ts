@@ -3,7 +3,7 @@ import { initTempalte } from '../implementations/initTemplate'
 
 export const InitTemplate = command({
   name: 'init-template',
-  description: 'Creates a new template',
+  description: 'Creates a new template.',
   args: {
     name: positional({
       type: string,

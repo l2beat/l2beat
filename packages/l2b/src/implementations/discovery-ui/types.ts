@@ -77,7 +77,7 @@ export interface Field {
   ignoreRelatives?: boolean
   handler?: { type: string } & Record<string, unknown>
   description?: string
-  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
+  severity?: 'HIGH' | 'LOW'
 }
 
 export type FieldValue =
@@ -139,11 +139,18 @@ export interface ErrorFieldValue {
 }
 
 export interface ApiProjectContract extends ApiAddressEntry {
-  template?: string
+  template?: {
+    id: string
+    shape?: {
+      name: string
+      hasCriteria: boolean
+    }
+  }
   proxyType?: string
   fields: Field[]
   abis: ApiAbi[]
   sources: { name: string; code: string }[]
+  implementationNames?: Record<string, string>
 }
 
 export interface ApiAbi {

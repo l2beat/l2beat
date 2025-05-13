@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x8b60732e570b6962ca6e7f111b8f19b097f80c2dd35cf8fcb97bf16da08c6a6e",
+  "configHash": "0xc77202a5c3788c3cef6407651c818d9a1512cb9ce61bc24e31107df3b968782f",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -42,7 +42,10 @@
         "ResolvedDelegateProxy_addressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger"
       },
-      "derivedName": "L1CrossDomainMessenger"
+      "implementationNames": {
+        "0x081D1101855bD523bA69A9794e0217F0DB6323ff": "Lib_ResolvedDelegateProxy",
+        "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "LockingInfo",
@@ -53,13 +56,6 @@
         "0x3052e020792c1a42febb86916d737ca4d3962b80b97fe18c7a778bf270acf023"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
-        }
-      ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
       "sinceTimestamp": 1710314867,
       "sinceBlock": 19424659,
@@ -91,7 +87,10 @@
         "totalLocked": "489592026707194902745743",
         "totalRewardsLiquidated": "21186281823923435000000"
       },
-      "derivedName": "LockingInfo"
+      "implementationNames": {
+        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
+        "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC": "LockingInfo"
+      }
     },
     {
       "name": "ChainStorageContainer-SCC-batches",
@@ -119,7 +118,9 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
-      "derivedName": "ChainStorageContainer"
+      "implementationNames": {
+        "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer"
+      }
     },
     {
       "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
@@ -162,7 +163,9 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "CanonicalTransactionChain"
       },
-      "derivedName": "ChainStorageContainer"
+      "implementationNames": {
+        "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -173,13 +176,6 @@
         "0x6e30dabe85a54d5753ec304088b4cc9f1fc2ba202fb3982bf202b0cc4a922c99"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637077208,
       "sinceBlock": 13627429,
       "values": {
@@ -193,7 +189,10 @@
         "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
         "metis": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
       },
-      "derivedName": "L1StandardBridge"
+      "implementationNames": {
+        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": "L1ChugSplashProxy",
+        "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798": "L1StandardBridge"
+      }
     },
     {
       "address": "0x4200000000000000000000000000000000000007",
@@ -288,7 +287,10 @@
         "getOwners": { "severity": "LOW", "type": "PERMISSION" },
         "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "CanonicalTransactionChain",
@@ -329,7 +331,9 @@
         "MIN_ROLLUP_TX_GAS": 100000,
         "queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
       },
-      "derivedName": "CanonicalTransactionChain"
+      "implementationNames": {
+        "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": "CanonicalTransactionChain"
+      }
     },
     {
       "name": "BondManager",
@@ -345,7 +349,9 @@
         "$immutable": true,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d"
       },
-      "derivedName": "BondManager"
+      "implementationNames": {
+        "0x595801b85628ec6979C420988b8843A40F850528": "BondManager"
+      }
     },
     {
       "name": "",
@@ -356,7 +362,9 @@
       "sinceTimestamp": 1637083067,
       "sinceBlock": 13627861,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "implementationNames": {
+        "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": ""
+      }
     },
     {
       "name": "RewardEscrowerMultisig",
@@ -389,7 +397,10 @@
         "nonce": 11,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "implementationNames": {
+        "0x62478E4eeb4070fE399866aB05e821AB97200947": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "MVM_CanonicalTransaction",
@@ -400,13 +411,6 @@
         "0xc5bc8dddf764177767a3613d96c31c0fcc86db07c909c72cbf2f6a2443942109"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1649638297,
       "sinceBlock": 14561258,
       "values": {
@@ -430,7 +434,10 @@
         "txDataSliceCount": 100,
         "txDataSliceSize": 90000
       },
-      "derivedName": "MVM_CanonicalTransaction"
+      "implementationNames": {
+        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": "L1ChugSplashProxy",
+        "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": "MVM_CanonicalTransaction"
+      }
     },
     {
       "address": "0x7a9059F4A6e50090e4f55994d465918200AB4454",
@@ -456,7 +463,9 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "minL2Gas": 200000
       },
-      "derivedName": "MVM_DiscountOracle"
+      "implementationNames": {
+        "0x7f6B0b7589febc40419a8646EFf9801b87397063": "MVM_DiscountOracle"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -483,7 +492,9 @@
         "$immutable": true,
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
-      "derivedName": "ProxyAdmin"
+      "implementationNames": {
+        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": "ProxyAdmin"
+      }
     },
     {
       "name": "Lib_AddressManager",
@@ -495,14 +506,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "description": "set and change address mappings.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637047108,
       "sinceBlock": 13625248,
       "values": {
@@ -532,7 +535,9 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Lib_AddressManager",
+      "implementationNames": {
+        "0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager"
+      },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -553,7 +558,9 @@
         "symbol": "Metis",
         "totalSupply": "10000000000000000000000000"
       },
-      "derivedName": "MToken"
+      "implementationNames": {
+        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
+      }
     },
     {
       "name": "StateCommitmentChain",
@@ -564,13 +571,6 @@
         "0xc6bcfffdfe15d4c259332b8f62b29950aecdec253e8eeed2ebfa9e78ca1cea2b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
         "getTotalBatches",
@@ -598,7 +598,10 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
-      "derivedName": "MVM_StateCommitmentChain"
+      "implementationNames": {
+        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
+        "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48": "MVM_StateCommitmentChain"
+      }
     },
     {
       "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E",
@@ -626,7 +629,9 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "CanonicalTransactionChain"
       },
-      "derivedName": "ChainStorageContainer"
+      "implementationNames": {
+        "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": "ChainStorageContainer"
+      }
     },
     {
       "address": "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
@@ -657,13 +662,6 @@
         "0xff86f55c7d91dbdd408e8b44c6aa3647e5d7cef144de8a65bc84e13e3bf3524f"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
-        }
-      ],
       "ignoreInWatchMode": [
         "currentBatch",
         "totalSequencers",
@@ -763,7 +761,10 @@
         "totalSequencers": 10,
         "WITHDRAWAL_DELAY": 1814400
       },
-      "derivedName": "LockingPool"
+      "implementationNames": {
+        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd": "TransparentUpgradeableProxy",
+        "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60": "LockingPool"
+      }
     },
     {
       "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
@@ -784,13 +785,6 @@
         "0x85cae352a6b900f9d20a913095da6267900b8e10f04d7277743dcdd0ce8c809e"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1649719906,
       "sinceBlock": 14567320,
       "values": {
@@ -809,7 +803,10 @@
         "verifiers": [],
         "verifyWindow": 0
       },
-      "derivedName": "MVM_Verifier"
+      "implementationNames": {
+        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": "L1ChugSplashProxy",
+        "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": "MVM_Verifier"
+      }
     },
     {
       "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
@@ -825,13 +822,6 @@
         "0x8be6c2abbd355799e149ebae677a3814685c6b43ebad0b7853fe236af7a84fe7"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1637089464,
       "sinceBlock": 13628326,
       "values": {
@@ -843,7 +833,10 @@
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
         "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
       },
-      "derivedName": "MVM_L2ChainManagerOnL1"
+      "implementationNames": {
+        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": "L1ChugSplashProxy",
+        "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": "MVM_L2ChainManagerOnL1"
+      }
     }
   ],
   "abis": {
@@ -1456,8 +1449,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2"
-  }
+    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26"
+  },
+  "permissionsConfigHash": "0x8b047d0a2c3d4966a5a818d54519bfaba57ffe62f82541ace502b3876a1036d7"
 }

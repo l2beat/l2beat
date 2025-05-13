@@ -45,6 +45,8 @@ assert(
   )}`,
 )
 
+const chainId = 324
+
 export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
   discovery,
@@ -78,7 +80,7 @@ export const zksync2: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {
     name: 'zksync2',
-    chainId: 324,
+    chainId,
     explorerUrl: 'https://era.zksync.network',
     sinceTimestamp: UnixTime(1676384520),
     multicallContracts: [
@@ -96,7 +98,7 @@ export const zksync2: ScalingProject = zkStackL2({
         url: 'https://mainnet.era.zksync.io',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api-era.zksync.network/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   associatedTokens: ['ZK'],
