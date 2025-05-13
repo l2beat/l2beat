@@ -13,7 +13,7 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
-import { attachTemplateRouter } from './template-rpc/router'
+import { attachTemplateRouter } from './templates/router'
 
 const safeStringSchema = z
   .string()
@@ -148,9 +148,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       const { project, chain, devMode } = queryValidation.data
 
       executeTerminalCommand(
-        `cd ${path.dirname(paths.discovery)} && l2b discover ${chain} ${project} ${
-          devMode ? '--dev' : ''
-        }`,
+        `l2b discover ${chain} ${project} ${devMode ? '--dev' : ''}`,
         res,
       )
     })

@@ -1,4 +1,5 @@
 import type { TemplateService } from '@l2beat/discovery'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { Express } from 'express'
 import { z } from 'zod'
 import { createShape } from './create-shape'
@@ -6,7 +7,7 @@ import { listDirectories } from './list-directories'
 
 const createTemplateSchema = z.object({
   chain: z.string(),
-  address: z.string(),
+  address: z.string().refine((address) => EthereumAddress.check(address)),
   templateId: z.string(),
   fileName: z.string(),
   blockNumber: z.number(),
@@ -35,7 +36,7 @@ export function attachTemplateRouter(
     const result = await wrapError(async () =>
       createShape(
         templateService,
-        address,
+        EthereumAddress(address),
         chain,
         blockNumber,
         templateId,
