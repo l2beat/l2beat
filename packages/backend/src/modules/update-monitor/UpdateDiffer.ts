@@ -21,7 +21,6 @@ export class UpdateDiffer {
     latestDiscovery: DiscoveryOutput,
     timestamp: UnixTime,
   ) {
-    await this.deleteOldRecords(projectName, chain)
     const previousDiscovery = this.getPreviousDiscovery({
       name: projectName,
       chain,
@@ -47,14 +46,19 @@ export class UpdateDiffer {
       this.logger.info('No changes in project', {
         projectName,
       })
+      await this.deleteOldRecords(projectName, chain)
       return
     }
 
-    this.logger.info('Inserting update diffs', {
-      projectName,
-      updateDiffs: updateDiffs.length,
+    await this.db.transaction(async () => {
+      await this.deleteOldRecords(projectName, chain)
+      await this.db.updateDiff.insertMany(updateDiffs)
+
+      this.logger.info('Inserted update diffs', {
+        projectName,
+        updateDiffs: updateDiffs.length,
+      })
     })
-    await this.db.updateDiff.insertMany(updateDiffs)
   }
 
   getUpdateDiffs(
