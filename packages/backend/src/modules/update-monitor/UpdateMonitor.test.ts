@@ -174,7 +174,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.update(timestamp)
@@ -264,7 +263,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
       await updateMonitor.updateChain(discoveryRunner, TIMESTAMP)
 
@@ -359,7 +357,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.updateChain(discoveryRunner, 0)
@@ -413,7 +410,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.updateChain(discoveryRunner, 0)
@@ -483,7 +479,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.updateChain(discoveryRunner, 0)
@@ -538,7 +533,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.updateChain(discoveryRunner, 0)
@@ -594,7 +588,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
@@ -645,7 +638,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
@@ -702,7 +694,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
@@ -755,7 +746,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.getPreviousDiscovery(
@@ -861,7 +851,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.update(timestamp)
@@ -930,7 +919,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.update(timestamp)
@@ -986,7 +974,6 @@ describe(UpdateMonitor.name, () => {
         chainConverter,
         Logger.SILENT,
         false,
-        true,
       )
 
       await updateMonitor.update(timestamp)
