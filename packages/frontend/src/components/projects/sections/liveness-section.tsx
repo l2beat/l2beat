@@ -1,12 +1,12 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { DurationCell } from '~/app/(side-nav)/scaling/finality/_components/table/duration-cell'
+import { AnomalyIndicator } from '~/app/(side-nav)/scaling/liveness/_components/anomaly-indicator'
 import { ProjectLivenessChart } from '~/components/chart/liveness/project-liveness-chart'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
-import { AnomalyIndicator } from '~/app/(side-nav)/scaling/liveness/_components/anomaly-indicator'
-import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import { DurationCell } from '~/app/(side-nav)/scaling/finality/_components/table/duration-cell'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string

@@ -1,3 +1,4 @@
+import type { AggregatedLivenessRecord } from '@l2beat/database'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -8,12 +9,11 @@ import { env } from 'process'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { LivenessChartTimeRange } from './utils/chart-range'
 import { getFullySyncedLivenessRange } from './utils/get-fully-synced-liveness-range'
-import type { AggregatedLivenessRecord } from '@l2beat/database'
-import { ps } from '~/server/projects'
 
 export type ProjectLivenessChartParams = z.infer<
   typeof ProjectLivenessChartParams

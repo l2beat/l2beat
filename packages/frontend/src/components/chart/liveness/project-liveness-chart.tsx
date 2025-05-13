@@ -6,11 +6,11 @@ import { LivenessChartSubtypeControls } from '~/app/(side-nav)/scaling/liveness/
 import { LivenessChartTimeRangeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-time-range-controls'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import type { ProjectLivenessChartData } from '~/server/features/scaling/liveness/get-project-liveness-chart'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { LivenessChart } from './liveness-chart'
-import type { ProjectLivenessChartData } from '~/server/features/scaling/liveness/get-project-liveness-chart'
 
 interface Props {
   projectId: string
