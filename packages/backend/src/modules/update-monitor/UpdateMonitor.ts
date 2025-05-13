@@ -16,11 +16,12 @@ import {
 } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
-import type { Database, UpdateDiffRecord } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
@@ -33,6 +34,7 @@ export class UpdateMonitor {
   constructor(
     private readonly discoveryRunners: DiscoveryRunner[],
     private readonly updateNotifier: UpdateNotifier,
+    private readonly updateDiffer: UpdateDiffer,
     private readonly configReader: ConfigReader,
     private readonly db: Database,
     private readonly clock: Clock,
@@ -72,7 +74,6 @@ export class UpdateMonitor {
       chainsCount: this.discoveryRunners.length,
     })
 
-    await this.db.updateDiff.deleteAll()
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
@@ -251,7 +252,13 @@ export class UpdateMonitor {
       runner.chain,
       timestamp,
     )
-    await this.handleUpdateDiff(projectConfig.name, diff, sanitizedDiscovery)
+
+    await this.updateDiffer.run(
+      runner,
+      sanitizedDiscovery,
+      projectConfig,
+      timestamp,
+    )
 
     await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,
@@ -357,77 +364,6 @@ export class UpdateMonitor {
       unknownEntries,
       timestamp,
     )
-  }
-
-  private async handleUpdateDiff(
-    projectName: string,
-    diff: DiscoveryDiff[],
-    sanitizedDiscovery: DiscoveryOutput,
-  ) {
-    const implementationChanges = diff.filter((discoveryDiff) =>
-      discoveryDiff.diff?.some(
-        (f) => f.key && f.key === 'values.$implementation',
-      ),
-    )
-    const fieldHighSeverityChanges = diff.filter((discoveryDiff) =>
-      discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),
-    )
-
-    const upgradeChanges = diff.filter((discoveryDiff) =>
-      discoveryDiff.diff?.some((f) => {
-        if (!f.key.startsWith('receivedPermissions')) {
-          return false
-        }
-
-        const indexString = f.key.split('.')[1]
-        if (indexString === undefined) {
-          return false
-        }
-        const index = parseInt(indexString)
-
-        const entry = sanitizedDiscovery.entries.find(
-          (e) => e.address === discoveryDiff.address,
-        )
-
-        return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
-      }),
-    )
-
-    if (
-      implementationChanges.length === 0 &&
-      fieldHighSeverityChanges.length === 0 &&
-      upgradeChanges.length === 0
-    ) {
-      return
-    }
-
-    const updateDiffs: UpdateDiffRecord[] = []
-
-    for (const implementationChange of implementationChanges) {
-      updateDiffs.push({
-        projectName,
-        type: 'implementationChange',
-        address: implementationChange.address,
-      })
-    }
-
-    for (const fieldHighSeverityChange of fieldHighSeverityChanges) {
-      updateDiffs.push({
-        projectName,
-        type: 'highSeverityFieldChange',
-        address: fieldHighSeverityChange.address,
-      })
-    }
-
-    for (const upgradeChange of upgradeChanges) {
-      updateDiffs.push({
-        projectName,
-        type: 'ultimateUpgraderChange',
-        address: upgradeChange.address,
-      })
-    }
-
-    await this.db.updateDiff.insertMany(updateDiffs)
   }
 
   private getCacheKey(projectName: string, chain: string): string {

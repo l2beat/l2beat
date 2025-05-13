@@ -8,7 +8,9 @@ export class UpdateDiffRepository extends BaseRepository {
     await this.db
       .insertInto('UpdateDiff')
       .values(records.map(toRow))
-      .onConflict((cb) => cb.columns(['address', 'projectName']).doNothing())
+      .onConflict((cb) =>
+        cb.columns(['address', 'projectName', 'chainId', 'type']).doNothing(),
+      )
       .execute()
 
     return records.length

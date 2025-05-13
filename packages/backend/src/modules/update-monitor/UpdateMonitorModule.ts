@@ -6,6 +6,7 @@ import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import type { Clock } from '../../tools/Clock'
 import type { ApplicationModule } from '../ApplicationModule'
+import { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMessagesService } from './UpdateMessagesService'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateNotifier } from './UpdateNotifier'
@@ -48,6 +49,13 @@ export function createUpdateMonitorModule(
     config.updateMonitor.disabledChains,
   )
 
+  const updateDiffer = new UpdateDiffer(
+    configReader,
+    peripherals.database,
+    chainConverter,
+    logger,
+  )
+
   // TODO: get rid of that once we achieve full library separation
   const http = new HttpClient()
 
@@ -68,6 +76,7 @@ export function createUpdateMonitorModule(
   const updateMonitor = new UpdateMonitor(
     runners,
     updateNotifier,
+    updateDiffer,
     configReader,
     peripherals.database,
     clock,
