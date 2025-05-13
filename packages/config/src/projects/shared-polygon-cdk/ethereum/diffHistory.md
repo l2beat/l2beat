@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x44b78c0d29f8a18c8ebdeec38efe9e5b953c93e2
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 22437961
+- current block number: 22437961
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437961 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      fieldMeta.rollupsDataV2.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0x59fd74e4a4dc51e3c208a3164504437795cf2525
 
 # Diff at Fri, 09 May 2025 10:09:20 GMT:

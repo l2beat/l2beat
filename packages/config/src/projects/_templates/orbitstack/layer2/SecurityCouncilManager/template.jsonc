@@ -10,7 +10,7 @@
   "fields": {
     "getBothCohorts": {
       "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
-      "severity": "MEDIUM"
+      "severity": "LOW"
     },
     "defaultAdminAC": {
       "handler": {

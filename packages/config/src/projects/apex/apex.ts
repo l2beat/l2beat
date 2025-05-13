@@ -110,6 +110,8 @@ export const apex: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
+    redWarning:
+      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     architectureImage: 'starkex',
     name: 'ApeX',
     slug: 'apex',

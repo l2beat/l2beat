@@ -124,11 +124,11 @@
         },
         "relaxThreshold": {
           "description": "Threshold of relaxed Guards needed to relax the Sentinel",
-          "severity": "MEDIUM"
+          "severity": "LOW"
         },
         "relaxed": {
           "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)",
-          "severity": "MEDIUM"
+          "severity": "HIGH"
         }
       }
     }
