@@ -117,7 +117,7 @@ function TemplateDialogBody({
         {isError && <ErrorState />}
 
         {templates && step === 'specify-template' && (
-          <SelectPredefinedTemplate
+          <SpecifyTemplate
             templates={templates}
             formData={formData}
             onFormChange={handleFormChange}
@@ -166,7 +166,7 @@ function ErrorState() {
   )
 }
 
-function SelectPredefinedTemplate({
+function SpecifyTemplate({
   templates,
   formData,
   onFormChange,
