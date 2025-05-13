@@ -318,10 +318,10 @@ export const starknet: ScalingProject = {
       stage1: {
         principle: false,
         stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: null,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -368,7 +368,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
+          'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/master/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
         risks: [],
       },
       {
