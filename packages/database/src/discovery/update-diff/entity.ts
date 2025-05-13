@@ -1,3 +1,4 @@
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { UpdateDiff } from '../../kysely/generated/types'
 
@@ -8,22 +9,28 @@ export type UpdateDiffType =
 
 export interface UpdateDiffRecord {
   type: UpdateDiffType
+  chainId: ChainId
   address: string
   projectName: string
+  timestamp: UnixTime
 }
 
 export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
   return {
     projectName: record.projectName,
+    chainId: record.chainId,
     address: record.address,
     type: record.type,
+    timestamp: UnixTime.toDate(record.timestamp),
   }
 }
 
 export function toRecord(row: Selectable<UpdateDiff>): UpdateDiffRecord {
   return {
     projectName: row.projectName,
+    chainId: ChainId(row.chainId),
     address: row.address,
     type: row.type as UpdateDiffType,
+    timestamp: UnixTime.fromDate(row.timestamp),
   }
 }

@@ -262,9 +262,11 @@ model ProjectValue {
 }
 
 model UpdateDiff {
-  projectName String @db.VarChar(255)
-  address     String @db.VarChar(255)
-  type        String @db.VarChar(255)
+  projectName String   @db.VarChar(255)
+  chainId     Int      @default(1)
+  address     String   @db.VarChar(255)
+  type        String   @db.VarChar(255)
+  timestamp   DateTime @db.Timestamp(6)
 
-  @@unique([projectName, address, type])
+  @@unique([projectName, address, type, chainId])
 }
