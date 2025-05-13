@@ -34,14 +34,13 @@ export class UpdateMonitor {
   constructor(
     private readonly discoveryRunners: DiscoveryRunner[],
     private readonly updateNotifier: UpdateNotifier,
-    private readonly updateDiffer: UpdateDiffer,
+    private readonly updateDiffer: UpdateDiffer | undefined,
     private readonly configReader: ConfigReader,
     private readonly db: Database,
     private readonly clock: Clock,
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
-    private readonly updateDifferEnabled: boolean,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -254,14 +253,12 @@ export class UpdateMonitor {
       timestamp,
     )
 
-    if (this.updateDifferEnabled) {
-      await this.updateDiffer.run(
-        projectConfig.name,
-        runner.chain,
-        sanitizedDiscovery,
-        timestamp,
-      )
-    }
+    await this.updateDiffer?.run(
+      projectConfig.name,
+      runner.chain,
+      sanitizedDiscovery,
+      timestamp,
+    )
 
     await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,

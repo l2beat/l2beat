@@ -49,12 +49,14 @@ export function createUpdateMonitorModule(
     config.updateMonitor.disabledChains,
   )
 
-  const updateDiffer = new UpdateDiffer(
-    configReader,
-    peripherals.database,
-    chainConverter,
-    logger,
-  )
+  const updateDiffer = config.updateMonitor.updateDifferEnabled
+    ? new UpdateDiffer(
+        configReader,
+        peripherals.database,
+        chainConverter,
+        logger,
+      )
+    : undefined
 
   // TODO: get rid of that once we achieve full library separation
   const http = new HttpClient()
@@ -83,7 +85,6 @@ export function createUpdateMonitorModule(
     chainConverter,
     logger,
     !!config.updateMonitor.runOnStart,
-    !!config.updateMonitor.updateDifferEnabled,
   )
 
   const updateMonitorController = new UpdateMonitorController(
