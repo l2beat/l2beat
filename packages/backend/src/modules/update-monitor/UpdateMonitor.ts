@@ -41,6 +41,7 @@ export class UpdateMonitor {
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly updateDifferEnabled: boolean,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -74,7 +75,10 @@ export class UpdateMonitor {
       chainsCount: this.discoveryRunners.length,
     })
 
-    await this.updateDiffer.deleteAll()
+    if (this.updateDifferEnabled) {
+      await this.updateDiffer.deleteAll()
+    }
+
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
@@ -254,12 +258,14 @@ export class UpdateMonitor {
       timestamp,
     )
 
-    await this.updateDiffer.run(
-      projectConfig.name,
-      runner.chain,
-      sanitizedDiscovery,
-      timestamp,
-    )
+    if (this.updateDifferEnabled) {
+      await this.updateDiffer.run(
+        projectConfig.name,
+        runner.chain,
+        sanitizedDiscovery,
+        timestamp,
+      )
+    }
 
     await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,

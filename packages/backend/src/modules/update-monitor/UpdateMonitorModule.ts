@@ -83,6 +83,7 @@ export function createUpdateMonitorModule(
     chainConverter,
     logger,
     !!config.updateMonitor.runOnStart,
+    !!config.updateMonitor.updateDifferEnabled,
   )
 
   const updateMonitorController = new UpdateMonitorController(
