@@ -231,7 +231,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -407,7 +407,7 @@
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
@@ -417,7 +417,7 @@
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "upgrade",
@@ -753,7 +753,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
-    "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183"
+    "starknet/StarknetERC20Bridge": "0xf3b5ac6b87a0e4030abc2120a39bc173fec349509594c9ce9235ec0c56decb22"
   },
-  "permissionsConfigHash": "0x62b1961a53d26f2eabc0dc2109cabfd474c6078e5711f29cc7fed1015bf90377"
+  "permissionsConfigHash": "0x807ec3c4c2fceee49c8060f8490894ad2418b1d4ec604c5a34e4d6b6045e7290"
 }

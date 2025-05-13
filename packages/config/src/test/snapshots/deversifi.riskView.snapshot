@@ -8,8 +8,8 @@
     value: "External (DAC)"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Users can be explicitly censored from withdrawing (Blocklist on L1)."
-    orderHint: -604800
+    description: "There is no window for users to exit in case of an unwanted regular upgrade. Users can be explicitly censored from withdrawing (Blocklist on L1)."
+    orderHint: -345600
     secondLine: undefined
     sentiment: "bad"
     value: "None"
