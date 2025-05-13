@@ -18,7 +18,7 @@ export function CodeSearchResultEntry({
   const { setOpen, searchTerm, selectedIndex } = useSearchStore()
   const { setSourceIndex, showRange } = useCodeStore()
   const { ensurePanel } = useMultiViewStore()
-  const codeSearchTerm = getCodeSearchTerm(searchTerm)
+  const codeSearchTerm = getCodeSearchTerm(searchTerm).content
 
   let runningIndex = 0
   return (
@@ -73,6 +73,13 @@ export function CodeSearchResultEntry({
   )
 }
 
-export function getCodeSearchTerm(searchTerm: string): string {
-  return searchTerm.slice(1)
+export interface CodeSearchTerm {
+  content: string
+  onSelectedAddress: boolean
+}
+
+export function getCodeSearchTerm(searchTerm: string): CodeSearchTerm {
+  const onSelectedAddress = searchTerm.startsWith('%%')
+  const content = onSelectedAddress ? searchTerm.slice(2) : searchTerm.slice(1)
+  return { content, onSelectedAddress }
 }

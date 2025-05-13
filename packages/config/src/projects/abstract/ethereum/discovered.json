@@ -1,7 +1,7 @@
 {
   "name": "abstract",
   "chain": "ethereum",
-  "blockNumber": 22367139,
+  "blockNumber": 22466280,
   "configHash": "0xedb8775e3eb75be5aafa4e3cb29e9fb49e5ab4c2d170041307cd656512a0b382",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -22,16 +22,17 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x277D26a45Add5775F21256159F089769892CEa5B",
           "0xc12F6A2D93C0788366FC91aeBf21b33CCCb0c0d8",
           "0xE57e5D24660d83bf8A40Ca2269d31D4A2F4F3C47",
           "0x3846c3A30E62075Fa916216b35EF04B8F53931f6"
         ],
-        "$threshold": 1,
+        "$threshold": 2,
         "domainSeparator": "0x49c74e35dec76c4aca6afd7d05d0a2b6b5f81eb5ab3a386f37c23dca62e21a3f",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 3,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -62,6 +63,11 @@
     },
     {
       "address": "0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x277D26a45Add5775F21256159F089769892CEa5B",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -261,28 +267,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 18872,
+        "getFirstUnprocessedPriorityTx": 19315,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 5,
-        "getPriorityTreeRoot": "0x32b5e86371026fc7cf2b7b2a221f75668266221827f33bff77c284e33949cc50",
+        "getPriorityQueueSize": 6,
+        "getPriorityTreeRoot": "0xe34bee486c31868320395133d20758fdeba90b4d0eb1c4b6123d67f99e5d15cd",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 15196,
-        "getTotalBatchesExecuted": 15182,
-        "getTotalBatchesVerified": 15190,
-        "getTotalBlocksCommitted": 15196,
-        "getTotalBlocksExecuted": 15182,
-        "getTotalBlocksVerified": 15190,
-        "getTotalPriorityTxs": 18877,
+        "getTotalBatchesCommitted": 16332,
+        "getTotalBatchesExecuted": 16321,
+        "getTotalBatchesVerified": 16328,
+        "getTotalBlocksCommitted": 16332,
+        "getTotalBlocksExecuted": 16321,
+        "getTotalBlocksVerified": 16328,
+        "getTotalPriorityTxs": 19321,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -374,7 +380,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -434,7 +440,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 1,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -536,13 +542,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": ["0x28228243eb37cd1754c85980c6F6Ce697d2a1332"],
+        "$members": [
+          "0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
+          "0x28228243eb37cd1754c85980c6F6Ce697d2a1332"
+        ],
         "$threshold": 1,
         "domainSeparator": "0x7b7bb2c704c008bbeabe6f6474fdd366d57472d2106d6dd4a48066705e607ed6",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1144,5 +1153,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xcbd8a7939863f7c7e3184eade70ed83b1f5db7609fac0b003484365b2a01f195"
+  "permissionsConfigHash": "0x3758b48d8f93d60364d545233f56fed113b1679e79e8f0600c5ecf06040c553d"
 }

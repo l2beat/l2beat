@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0a66ded86d59caeabf09b8683d5a4fe67c2d81e0
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 21629064
+- current block number: 21629064
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      fieldMeta.watcherManager.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x0c8da6db22cb7b2e131b229eb94be3ca61f730f4
 
 # Diff at Tue, 29 Apr 2025 08:18:59 GMT:

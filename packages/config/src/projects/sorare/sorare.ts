@@ -57,6 +57,8 @@ export const sorare: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
+    redWarning:
+      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     architectureImage: 'starkex',
     name: 'Sorare',
     slug: 'sorare',

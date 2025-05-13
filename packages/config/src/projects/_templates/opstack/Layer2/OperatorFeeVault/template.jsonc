@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay."
+}

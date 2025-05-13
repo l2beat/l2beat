@@ -1,11 +1,11 @@
 import type { AggregatedLiveness } from '../../kysely/generated/types'
 
 export const selectAggregatedLiveness = [
+  'timestamp',
   'projectId',
   'subtype',
-  'range',
   'min',
   'avg',
   'max',
-  'updatedAt',
+  'numberOfRecords',
 ] as const satisfies (keyof AggregatedLiveness)[]

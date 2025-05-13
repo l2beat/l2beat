@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x03d54803012066ace8ebed52ba70de2abc73e703
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 22438687
+- current block number: 22438687
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438687 (main branch discovery), not current.
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      fieldMeta.getHopperConfiguration.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0xbeb578652ec219346fb21d453c47cc6131311cf1
 
 # Diff at Thu, 08 May 2025 12:02:18 GMT:

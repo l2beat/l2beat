@@ -60,7 +60,7 @@
       "permissions": [{ "type": "upgrade" }]
     },
     "KYC_PROVIDERs": {
-      "severity": "MEDIUM",
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "KYC_PROVIDER_ROLE"

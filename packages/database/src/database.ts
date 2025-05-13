@@ -11,7 +11,6 @@ import { UpdateNotifierRepository } from './discovery/update-notifier/repository
 import { DatabaseClient } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
-import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
@@ -60,7 +59,6 @@ export function createDatabase(config?: PoolConfig) {
     // #region Other
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     aggregatedLiveness: new AggregatedLivenessRepository(db),
-    aggregatedLiveness2: new AggregatedLiveness2Repository(db),
     anomalies: new AnomaliesRepository(db),
     finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),

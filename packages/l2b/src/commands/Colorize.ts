@@ -6,15 +6,23 @@ import {
   getDiscoveryPaths,
   saveDiscoveredJson,
 } from '@l2beat/discovery'
-import { command } from 'cmd-ts'
+import { command, option, optional, string } from 'cmd-ts'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const Colorize = command({
   name: 'colorize',
   description:
     'Recolorize the discovered.json files with newest configuration.',
-  args: {},
-  handler: async () => {
+  args: {
+    message: option({
+      type: optional(string),
+      long: 'message',
+      short: 'm',
+      description:
+        'Message that will be written in the description section of diffHistory.md.',
+    }),
+  },
+  handler: async (args) => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
@@ -38,7 +46,7 @@ export const Colorize = command({
 
         await saveDiscoveredJson(colorized, projectDiscoveryFolder)
 
-        updateDiffHistory(config.name, config.chain)
+        updateDiffHistory(config.name, args.message)
       }
     }
   },
