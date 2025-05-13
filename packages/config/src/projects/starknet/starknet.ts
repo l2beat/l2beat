@@ -270,7 +270,7 @@ export const starknet: ScalingProject = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: false,
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
