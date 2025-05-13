@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useState } from 'react'
+import { Dialog } from '../../../components/Dialog'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { ControlButton } from '../ControlButton'
 import { FieldsList } from './FieldsList'
 import { groupJsonFields } from './groupJsonFields'
-import { Dialog } from '../../../components/Dialog'
 
 export const ValuesDialog = {
   Root: ValuesDialogRoot,

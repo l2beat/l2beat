@@ -1,6 +1,6 @@
 import type { useMutation } from '@tanstack/react-query'
-import type { DialogStep } from './context'
 import { Dialog } from '../../components/Dialog'
+import type { DialogStep } from './context'
 
 interface DialogActionsProps {
   step: DialogStep

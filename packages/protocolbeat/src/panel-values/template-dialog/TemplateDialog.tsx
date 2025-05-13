@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
+import { Dialog } from '../../components/Dialog'
 import { DialogActions } from './DialogActions'
 import { TemplateFolder } from './TemplateFolder'
 import {
@@ -9,7 +10,6 @@ import {
   type TemplateFormData,
   useTemplateDialogContext,
 } from './context'
-import { Dialog } from '../../components/Dialog'
 
 interface TemplateDialogProps {
   address: string
