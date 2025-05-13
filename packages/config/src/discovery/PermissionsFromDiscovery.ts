@@ -1,6 +1,5 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import { type EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-// biome-ignore lint: chain() can't be imported individually as lodash/chain
 import { chain } from 'lodash'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
@@ -44,21 +43,25 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeUpgradePermissions(contractOrEoa: EntryParameters) {
-    return chain(contractOrEoa.receivedPermissions ?? [])
-      .filter((p) => p.permission === 'upgrade')
-      .groupBy((p) => p.from)
-      .mapValues((permissions) => ({
-        from: permissions[0].from,
-        permissionsByDelay: groupBy(permissions, (p) =>
-          totalPermissionDelay(p),
-        ),
-      }))
-      .values()
-      .groupBy((permission) =>
+    const upgradePermissions = (contractOrEoa.receivedPermissions ?? []).filter(
+      (p) => p.permission === 'upgrade',
+    )
+
+    const groupedByTotalDelays = groupBy(
+      Object.values(groupBy(upgradePermissions, (p) => p.from)).map(
+        (permissions) => ({
+          from: permissions[0].from,
+          permissionsByDelay: groupBy(permissions, (p) =>
+            totalPermissionDelay(p),
+          ),
+        }),
+      ),
+      (permission) =>
         Object.keys(permission.permissionsByDelay).sort().join('►'),
-      )
-      .entries()
-      .map(([delays, permissionsByDelay]) => {
+    )
+
+    return Object.entries(groupedByTotalDelays).map(
+      ([delays, permissionsByDelay]) => {
         const delaysString = delays
           .split('►')
           .map((d) => formatPermissionDelay(Number(d)))
@@ -73,8 +76,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
             return `  * ${name} ${vias.join(' - or ')}`
           }),
         ].join('\n')
-      })
-      .value()
+      },
+    )
   }
 
   describeInteractPermissions(contractOrEoa: EntryParameters) {
