@@ -269,8 +269,14 @@ function findAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
   }
 
   if (implementations.value.type === 'array') {
-    // skipping the array type explicity
-    return
+    // diamonds
+    const [first] = implementations.value.values
+
+    if (!first) {
+      return selected.address
+    }
+
+    return first.type === 'address' ? first.address : selected.address
   }
 
   return selected.address
