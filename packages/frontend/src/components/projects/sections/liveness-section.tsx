@@ -12,6 +12,8 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
+  disableAnomalies: boolean
+  hasTrackedContractsChanged: boolean
   batchSubmissionsAvg: number | undefined
   stateUpdatesAvg: number | undefined
   proofSubmissionsAvg: number | undefined
@@ -24,6 +26,8 @@ export function LivenessSection({
   batchSubmissionsAvg,
   stateUpdatesAvg,
   proofSubmissionsAvg,
+  disableAnomalies,
+  hasTrackedContractsChanged,
   ...sectionProps
 }: LivenessSectionProps) {
   return (
@@ -55,13 +59,14 @@ export function LivenessSection({
             <DurationCell durationInSeconds={stateUpdatesAvg} />
           </ChartStatsItem>
         )}
-        <ChartStatsItem label="Past 30 days anomalies">
-          <AnomalyIndicator
-            anomalies={anomalies}
-            showComingSoon={false}
-            hasTrackedContractsChanged={false}
-          />
-        </ChartStatsItem>
+        {!disableAnomalies && (
+          <ChartStatsItem label="Past 30 days anomalies">
+            <AnomalyIndicator
+              anomalies={anomalies}
+              hasTrackedContractsChanged={hasTrackedContractsChanged}
+            />
+          </ChartStatsItem>
+        )}
       </ChartStats>
     </ProjectSection>
   )

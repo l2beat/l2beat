@@ -334,7 +334,11 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const livenessSection = getLivenessSection(project, liveness[project.id])
+  const livenessSection = getLivenessSection(
+    project,
+    liveness[project.id],
+    projectsChangeReport.projects[project.id],
+  )
   if (livenessSection) {
     sections.push({
       type: 'LivenessSection',
