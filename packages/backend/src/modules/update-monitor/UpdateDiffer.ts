@@ -125,14 +125,6 @@ export class UpdateDiffer {
     runner: DiscoveryRunner,
     projectConfig: ConfigRegistry,
   ): DiscoveryOutput {
-    console.time('getPreviousDiscovery')
-    const previousDiscovery = this.configReader.readDiscovery(
-      projectConfig.name,
-      runner.chain,
-    )
-
-    console.timeEnd('getPreviousDiscovery')
-
-    return previousDiscovery
+    return this.configReader.readDiscovery(projectConfig.name, runner.chain)
   }
 }
