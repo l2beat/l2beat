@@ -1,6 +1,5 @@
-import * as Dialog from '@radix-ui/react-dialog'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { type SVGProps, useState } from 'react'
+import { useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
 import { DialogActions } from './DialogActions'
 import { DialogInput } from './DialogInput'
@@ -11,6 +10,7 @@ import {
   type TemplateFormData,
   useTemplateDialogContext,
 } from './context'
+import { Dialog } from '../../components/Dialog'
 
 interface TemplateDialogProps {
   address: string
@@ -106,51 +106,35 @@ function TemplateDialogBody({
   const isFormValid = Boolean(formData.templateId && formData.fileName)
 
   return (
-    <Dialog.Portal>
-      <Dialog.Overlay className="fixed inset-0 z-20 data-[state=open]:bg-coffee-900/60" />
-      <Dialog.Content className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-[25] max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-[var(--shadow-6)] focus:outline-none">
-        <Dialog.Title className="mb-1 font-medium text-lg">
-          Add new shape
-        </Dialog.Title>
+    <Dialog.Body>
+      <Dialog.Title className="mb-1 font-medium text-lg">
+        Add new shape
+      </Dialog.Title>
 
-        {isLoading && <LoadingState />}
-        {isError && <ErrorState />}
+      {isLoading && <LoadingState />}
+      {isError && <ErrorState />}
 
-        {templates && step === 'specify-template' && (
-          <SpecifyTemplate
-            templates={templates}
-            formData={formData}
-            onFormChange={handleFormChange}
-          />
-        )}
-
-        {step === 'finalize-creation' && (
-          <TemplateSummary
-            formData={formData}
-            address={address}
-            chain={chain}
-          />
-        )}
-
-        <DialogActions
-          step={step}
-          isFormValid={Boolean(isFormValid)}
-          onBack={() => handleStepChange('specify-template')}
-          onNext={() => handleStepChange('finalize-creation')}
-          onCreate={() => mutation.mutate()}
-          mutation={mutation}
+      {templates && step === 'specify-template' && (
+        <SpecifyTemplate
+          templates={templates}
+          formData={formData}
+          onFormChange={handleFormChange}
         />
+      )}
 
-        <Dialog.Close asChild>
-          <button
-            className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-none"
-            aria-label="Close"
-          >
-            <XIcon className="stroke-coffee-200" />
-          </button>
-        </Dialog.Close>
-      </Dialog.Content>
-    </Dialog.Portal>
+      {step === 'finalize-creation' && (
+        <TemplateSummary formData={formData} address={address} chain={chain} />
+      )}
+
+      <DialogActions
+        step={step}
+        isFormValid={Boolean(isFormValid)}
+        onBack={() => handleStepChange('specify-template')}
+        onNext={() => handleStepChange('finalize-creation')}
+        onCreate={() => mutation.mutate()}
+        mutation={mutation}
+      />
+    </Dialog.Body>
   )
 }
 
@@ -269,24 +253,5 @@ function TemplateSummary({
         </div>
       ))}
     </div>
-  )
-}
-
-function XIcon(props?: SVGProps<SVGSVGElement>) {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" {...props}>
-      <path
-        d="M18 6L6 18"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6 6L18 18"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   )
 }

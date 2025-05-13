@@ -20,7 +20,7 @@ export function TemplateFolder({
   if (entries.length === 0) {
     return (
       <div
-        className="mb-2 flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20"
+        className="flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20"
         onClick={() => setSelected(name)}
       >
         <IconContract />
@@ -34,7 +34,7 @@ export function TemplateFolder({
   }
 
   return (
-    <div className="mb-2 flex flex-col">
+    <div className="mb-0.5 flex flex-col">
       <div className="group flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20">
         <div onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <IconFolderOpened /> : <IconFolder />}
