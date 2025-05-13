@@ -13,6 +13,7 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
+import { attachTemplateRouter } from './templates/router'
 
 const safeStringSchema = z
   .string()
@@ -123,6 +124,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   if (!readonly) {
+    attachTemplateRouter(app, templateService)
+
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({
         project: req.params.project,
@@ -155,9 +158,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       const { project, chain, devMode } = queryValidation.data
 
       executeTerminalCommand(
-        `cd ${path.dirname(paths.discovery)} && l2b discover ${chain} ${project} ${
-          devMode ? '--dev' : ''
-        }`,
+        `l2b discover ${chain} ${project} ${devMode ? '--dev' : ''}`,
         res,
       )
     })

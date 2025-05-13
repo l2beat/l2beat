@@ -2,7 +2,7 @@ import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
 
 export type ContractValueType = z.infer<typeof ContractValueType>
 export const ContractValueType = z.enum([
