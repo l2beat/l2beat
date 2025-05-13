@@ -21,6 +21,7 @@ import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
@@ -33,6 +34,7 @@ export class UpdateMonitor {
   constructor(
     private readonly discoveryRunners: DiscoveryRunner[],
     private readonly updateNotifier: UpdateNotifier,
+    private readonly updateDiffer: UpdateDiffer | undefined,
     private readonly configReader: ConfigReader,
     private readonly db: Database,
     private readonly clock: Clock,
@@ -242,12 +244,19 @@ export class UpdateMonitor {
       unverifiedEntries,
     )
 
-    await this.handleDiff(
+    await this.handleUpdateNotifier(
       diff,
       discovery,
       projectConfig,
       blockNumber,
       runner.chain,
+      timestamp,
+    )
+
+    await this.updateDiffer?.run(
+      projectConfig.name,
+      runner.chain,
+      sanitizedDiscovery,
       timestamp,
     )
 
@@ -323,7 +332,7 @@ export class UpdateMonitor {
     return discovery
   }
 
-  private async handleDiff(
+  private async handleUpdateNotifier(
     diff: DiscoveryDiff[],
     discovery: DiscoveryOutput,
     projectConfig: ConfigRegistry,
@@ -331,28 +340,30 @@ export class UpdateMonitor {
     chain: string,
     timestamp: UnixTime,
   ) {
-    if (diff.length > 0) {
-      const dependents = findDependents(
-        projectConfig.name,
-        chain,
-        this.configReader,
-      )
-      const unknownEntries = findUnknownEntries(
-        discovery.name,
-        discovery.entries,
-        this.configReader,
-        chain,
-      )
-      await this.updateNotifier.handleUpdate(
-        projectConfig.name,
-        diff,
-        blockNumber,
-        ChainId(this.chainConverter.toChainId(chain)),
-        dependents,
-        unknownEntries,
-        timestamp,
-      )
+    if (diff.length === 0) {
+      return
     }
+
+    const dependents = findDependents(
+      projectConfig.name,
+      chain,
+      this.configReader,
+    )
+    const unknownEntries = findUnknownEntries(
+      discovery.name,
+      discovery.entries,
+      this.configReader,
+      chain,
+    )
+    await this.updateNotifier.handleUpdate(
+      projectConfig.name,
+      diff,
+      blockNumber,
+      ChainId(this.chainConverter.toChainId(chain)),
+      dependents,
+      unknownEntries,
+      timestamp,
+    )
   }
 
   private getCacheKey(projectName: string, chain: string): string {

@@ -272,3 +272,13 @@ model ProjectValue {
 
   @@id([timestamp, project, type])
 }
+
+model UpdateDiff {
+  projectName String   @db.VarChar(255)
+  chain       String   @db.VarChar(255)
+  address     String   @db.VarChar(255)
+  type        String   @db.VarChar(255)
+  timestamp   DateTime @db.Timestamp(6)
+
+  @@unique([projectName, address, type, chain])
+}
