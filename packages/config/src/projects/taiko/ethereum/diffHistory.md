@@ -1,14 +1,143 @@
-Generated with discovered.json: 0xc8f22e4544879faccb7b4da31a0828832341db80
+Generated with discovered.json: 0x704a4e88e9987372e583a909d331c27d456dd645
 
-# Diff at Mon, 12 May 2025 16:38:13 GMT:
+# Diff at Tue, 13 May 2025 13:49:09 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e7801928b60345a3e550e0f818e51329f969ff6f block: 22297586
-- current block number: 22468433
+- current block number: 22474703
 
 ## Description
 
 Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      template:
+-        "taiko/TaikoToken"
+      sourceHashes.1:
+-        "0x5da570fbffd5ab663ce8983496a9ded290ed853a950b4052ac93b35217babac8"
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f"
+      description:
+-        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
+      values.$implementation:
+-        "0xcfe803378D79d1180EbF030455040EA6513869dF"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.5:
++        ["2024-05-29T08:03:23.000Z","0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2",["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"]]
+      values.$pastUpgrades.4.2:
+-        "0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2"
++        "2024-05-11T05:46:11.000Z"
+      values.$pastUpgrades.4.1.0:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
+      values.$pastUpgrades.4.0:
+-        "2024-05-29T08:03:23.000Z"
++        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
+      values.$pastUpgrades.3.2:
+-        "2024-05-11T05:46:11.000Z"
++        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
+      values.$pastUpgrades.3.1.0:
+-        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
++        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
+      values.$pastUpgrades.3.0:
+-        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
++        "2024-04-25T08:29:59.000Z"
+      values.$pastUpgrades.2.2:
+-        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
++        "0xdb7d5de46738ad3f676db47b61772db531f9858b7a01e8c3b5aee49fa74cac95"
+      values.$pastUpgrades.2.1.0:
+-        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.2.0:
+-        "2024-04-25T08:29:59.000Z"
++        "2025-05-13T00:47:23.000Z"
+      values.$upgradeCount:
+-        5
++        6
+      values.addressManager:
+-        "0x0000000000000000000000000000000000000000"
+      values.clock:
+-        1744999847
++        1747144139
+      values.impl:
+-        "0xcfe803378D79d1180EbF030455040EA6513869dF"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.lastUnpausedAt:
+-        0
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.getNonVotingAccounts:
++        ["0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da","0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"]
+      values.getPastTotalSupply:
++        []
+      values.resolver:
++        "0x0000000000000000000000000000000000000000"
+      values.TAIKO_DAO_CONTROLLER:
++        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.TAIKO_FOUNDATION_TREASURY:
++        "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
+      implementationNames.0xcfe803378D79d1180EbF030455040EA6513869dF:
+-        "TaikoToken"
+      implementationNames.0x87C752b0F70cAa237Edd7571B0845470A37DE040:
++        "TaikoToken"
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.4:
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.3:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.2:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/taiko/ethereum/.flat/DAO/DAO.sol  | 1895 ++++++++++++++++++++
+ .../taiko/ethereum/.flat/DAO/ERC1967Proxy.p.sol    |  594 ++++++
+ .../taiko/ethereum/.flat/GnosisSafe/GnosisSafe.sol |  953 ++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |   35 +
+ .../.flat/TaikoDAOController/ERC1967Proxy.p.sol    |  594 ++++++
+ .../TaikoDAOController/TaikoDAOController.sol      | 1393 ++++++++++++++
+ .../TaikoToken/TaikoToken.sol                      |  433 ++---
+ 7 files changed, 5641 insertions(+), 256 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -113,8 +242,36 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 ```diff
     contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
     +++ description: Verifier contract for blocks proven by Guardian minority.
+      values.guardians.7:
+-        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
+      values.guardians.6:
+-        "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
+      values.guardians.5:
+-        "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
+      values.guardians.4:
+-        "0xC384B679c028787166b9B3725aC14A60da205861"
++        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
+      values.guardians.3:
+-        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
++        "0xC384B679c028787166b9B3725aC14A60da205861"
+      values.guardians.2:
+-        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
++        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
+      values.guardians.1:
+-        "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200"
++        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
+      values.$members:
++        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
++++ description: Current guardian minority threshold. Number of guardians required to prove a block.
++++ severity: HIGH
+      values.$threshold:
++        1
       template:
 +        "taiko/GuardianMinorityProver"
+      errors:
++        {"guardians":"Processing error occurred."}
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current guardian minority threshold. Number of guardians required to prove a block."}}
       receivedPermissions:
 +        [{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"Minority guardians can prove blocks on the second highest tier."}]
     }
@@ -205,8 +362,36 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 ```diff
     contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
     +++ description: Verifier contract for Guardian proven blocks.
+      values.guardians.7:
+-        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
+      values.guardians.6:
+-        "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
+      values.guardians.5:
+-        "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
+      values.guardians.4:
+-        "0xC384B679c028787166b9B3725aC14A60da205861"
++        "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
+      values.guardians.3:
+-        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
++        "0xC384B679c028787166b9B3725aC14A60da205861"
+      values.guardians.2:
+-        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
++        "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
+      values.guardians.1:
+-        "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200"
++        "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
+      values.$members:
++        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
++++ description: Current guardian threshold. Number of guardians required to prove a block.
++++ severity: HIGH
+      values.$threshold:
++        6
       template:
 +        "taiko/GuardianProver"
+      errors:
++        {"guardians":"Processing error occurred."}
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current guardian threshold. Number of guardians required to prove a block."}}
       receivedPermissions:
 +        [{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"Guardians, acting as a multisig, can prove blocks on the highest tier."},{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"as the chain watchdog, it can pause proving of blocks."}]
     }

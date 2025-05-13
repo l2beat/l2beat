@@ -9,10 +9,19 @@
         "expectRevert": true
       }
     },
-    "guardians": {
+    "$members": {
       "handler": {
         "type": "array",
         "method": "guardians"
+      }
+    },
+    "$threshold": {
+      "severity": "HIGH",
+      "description": "Current guardian minority threshold. Number of guardians required to prove a block.",
+      "handler": {
+        "type": "call",
+        "method": "minGuardians",
+        "args": []
       }
     }
   }
