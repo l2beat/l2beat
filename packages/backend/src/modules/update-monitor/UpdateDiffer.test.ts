@@ -8,13 +8,7 @@ import type {
   EntryParameters,
   ReceivedPermission,
 } from '@l2beat/discovery'
-import {
-  type ChainConverter,
-  ChainId,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { UpdateDiffer } from './UpdateDiffer'
 
@@ -33,7 +27,6 @@ describe(UpdateDiffer.name, () => {
         mockObject<Database>({
           updateDiff: updateDiffRepository,
         }),
-        mockObject<ChainConverter>(),
         Logger.SILENT,
       )
       updateDiffer.getUpdateDiffs = mockFn().returns([])
@@ -69,7 +62,6 @@ describe(UpdateDiffer.name, () => {
           transaction: dbTransaction,
           updateDiff: updateDiffRepository,
         }),
-        mockObject<ChainConverter>(),
         Logger.SILENT,
       )
       const updateDiffs: UpdateDiffRecord[] = [
@@ -124,9 +116,6 @@ describe(UpdateDiffer.name, () => {
       const updateDiffer = new UpdateDiffer(
         configReader,
         mockObject<Database>({}),
-        mockObject<ChainConverter>({
-          toChainId: mockFn().returns(ChainId.ETHEREUM),
-        }),
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
@@ -167,9 +156,6 @@ describe(UpdateDiffer.name, () => {
       const updateDiffer = new UpdateDiffer(
         configReader,
         mockObject<Database>({}),
-        mockObject<ChainConverter>({
-          toChainId: mockFn().returns(ChainId.ETHEREUM),
-        }),
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
@@ -211,9 +197,6 @@ describe(UpdateDiffer.name, () => {
       const updateDiffer = new UpdateDiffer(
         configReader,
         mockObject<Database>({}),
-        mockObject<ChainConverter>({
-          toChainId: mockFn().returns(ChainId.ETHEREUM),
-        }),
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
@@ -272,7 +255,6 @@ describe(UpdateDiffer.name, () => {
       const updateDiffer = new UpdateDiffer(
         configReader,
         mockObject<Database>({}),
-        mockObject<ChainConverter>(),
         Logger.SILENT,
       )
 

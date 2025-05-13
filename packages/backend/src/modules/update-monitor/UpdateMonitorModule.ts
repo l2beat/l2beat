@@ -50,12 +50,7 @@ export function createUpdateMonitorModule(
   )
 
   const updateDiffer = config.updateMonitor.updateDifferEnabled
-    ? new UpdateDiffer(
-        configReader,
-        peripherals.database,
-        chainConverter,
-        logger,
-      )
+    ? new UpdateDiffer(configReader, peripherals.database, logger)
     : undefined
 
   // TODO: get rid of that once we achieve full library separation

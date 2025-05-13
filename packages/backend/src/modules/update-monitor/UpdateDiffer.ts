@@ -2,14 +2,13 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
 import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import type { DiscoveryDiff, DiscoveryOutput } from '@l2beat/discovery'
-import type { ChainConverter, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 
 export class UpdateDiffer {
   constructor(
     private readonly configReader: ConfigReader,
     private readonly db: Database,
-    private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -45,6 +44,7 @@ export class UpdateDiffer {
     if (updateDiffs.length === 0) {
       this.logger.info('No changes in project', {
         projectName,
+        chain,
       })
       await this.deleteOldRecords(projectName, chain)
       return
@@ -56,6 +56,7 @@ export class UpdateDiffer {
 
       this.logger.info('Inserted update diffs', {
         projectName,
+        chain,
         updateDiffs: updateDiffs.length,
       })
     })
@@ -102,9 +103,6 @@ export class UpdateDiffer {
       fieldHighSeverityChanges.length === 0 &&
       upgradeChanges.length === 0
     ) {
-      this.logger.info('No changes in project', {
-        projectName,
-      })
       return []
     }
 
@@ -144,8 +142,11 @@ export class UpdateDiffer {
   }
 
   async deleteOldRecords(projectName: string, chain: string) {
-    this.logger.info('Deleting all update diffs')
     await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
+    this.logger.info('Deleted all update diffs', {
+      projectName,
+      chain,
+    })
   }
 
   getPreviousDiscovery({
