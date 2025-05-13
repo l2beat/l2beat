@@ -74,6 +74,7 @@ export class UpdateMonitor {
       chainsCount: this.discoveryRunners.length,
     })
 
+    await this.updateDiffer.deleteAll()
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
@@ -254,9 +255,9 @@ export class UpdateMonitor {
     )
 
     await this.updateDiffer.run(
-      runner,
+      projectConfig.name,
+      runner.chain,
       sanitizedDiscovery,
-      projectConfig,
       timestamp,
     )
 
