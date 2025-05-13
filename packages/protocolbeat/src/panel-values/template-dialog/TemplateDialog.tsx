@@ -106,7 +106,9 @@ function TemplateDialogBody({
     mutation.reset()
   }
 
-  const isFormValid = Boolean(formData.templateId && formData.fileName)
+  const nonEmpty = formData.templateId && formData.fileName
+  const regexMatch = templateIdRegex.test(formData.templateId)
+  const isFormValid = Boolean(nonEmpty && regexMatch)
 
   return (
     <Dialog.Body>
@@ -131,7 +133,7 @@ function TemplateDialogBody({
 
       <DialogActions
         step={step}
-        isFormValid={Boolean(isFormValid)}
+        isFormValid={isFormValid}
         onBack={() => handleStepChange('specify-template')}
         onNext={() => handleStepChange('finalize-creation')}
         onCreate={() => mutation.mutate()}
@@ -258,3 +260,16 @@ function TemplateSummary({
     </div>
   )
 }
+
+/**
+ * Only letters and numbers, separated by /
+ * Can optionally end with /
+ * No leading slash
+ * No empty segments
+ * No whitespace
+ * No backslashes
+ * No special characters (e.g., _, -, .)
+ */
+const templateIdRegex = new RegExp(
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+\\/)*[a-zA-Z0-9]+\\/?$',
+)

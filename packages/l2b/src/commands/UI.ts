@@ -13,5 +13,3 @@ export const UI = command({
   },
   handler: runDiscoveryUi,
 })
-
-runDiscoveryUi({ readonly: false })
