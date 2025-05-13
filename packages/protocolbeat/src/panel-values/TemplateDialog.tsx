@@ -180,7 +180,11 @@ function LoadingState() {
 }
 
 function ErrorState() {
-  return <div className="text-center text-red-400">Error loading templates</div>
+  return (
+    <div className="text-center text-red-400">
+      Error while loading templates
+    </div>
+  )
 }
 
 interface DialogActionsProps {
@@ -226,7 +230,7 @@ function DialogActions({
           {mutation.isPending && <div>Creating shape...</div>}
           {mutation.isError && (
             <div className="flex flex-col text-aux-red">
-              <span>Error creating shape:</span>
+              <span>Error while creating shape</span>
               <span className="text-aux-red-light">
                 {mutation.error.message}
               </span>

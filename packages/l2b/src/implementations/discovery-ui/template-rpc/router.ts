@@ -22,8 +22,15 @@ export function attachTemplateRouter(
   })
 
   app.post('/api/templates/create-shape', async (req, res) => {
-    const { chain, address, templateId, fileName, blockNumber } =
-      createTemplateSchema.parse(req.body)
+    const data = createTemplateSchema.safeParse(req.body)
+
+    if (!data.success) {
+      console.error(data.error)
+      res.status(400).json({ errors: data.error.flatten() })
+      return
+    }
+
+    const { chain, address, templateId, fileName, blockNumber } = data.data
 
     const result = await wrapError(async () =>
       createShape(
