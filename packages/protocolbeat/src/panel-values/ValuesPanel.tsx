@@ -101,11 +101,7 @@ function Display({
 
   const dialog = address && canAddShape(selected) && !isReadOnly && (
     <TemplateDialog.Root>
-      <TemplateDialog.Trigger className="relative ml-2 cursor-pointer overflow-hidden bg-coffee-400 px-3 py-1 font-medium text-sm text-white transition-all duration-300 before:absolute before:inset-0 before:animate-[disco_2s_linear_infinite] before:bg-gradient-to-r before:from-aux-pink before:via-aux-purple before:to-aux-blue before:opacity-0 after:absolute after:inset-0 after:animate-[disco_2s_linear_infinite_1s] after:bg-gradient-to-r after:from-aux-yellow after:via-aux-green after:to-aux-red after:opacity-0 hover:shadow-lg hover:after:animate-[disco_1s_linear_infinite_0.5s] hover:after:opacity-100 hover:before:animate-[disco_1s_linear_infinite] hover:before:opacity-100">
-        <div>
-          <span className="relative z-10">Add shape</span>
-        </div>
-      </TemplateDialog.Trigger>
+      <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
       <TemplateDialog.Body
         address={address}
         project={project}
