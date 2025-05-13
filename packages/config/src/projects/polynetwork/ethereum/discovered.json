@@ -212,7 +212,7 @@
       },
       "fieldMeta": {
         "lockProxyIndexMap": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "These addresses can escrow funds for the bridge."
         },
         "maxLockProxyIndex": {

@@ -54,7 +54,7 @@ export type PermissionConfiguration = RawPermissionConfiguration & {
 }
 
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
 
 export type StructureContractField = z.infer<typeof StructureContractField>
 export const StructureContractField = z

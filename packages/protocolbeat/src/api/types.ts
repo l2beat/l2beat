@@ -77,7 +77,7 @@ export interface Field {
   ignoreRelatives?: boolean
   handler?: { type: string } & Record<string, unknown>
   description?: string
-  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
+  severity?: 'HIGH' | 'LOW'
 }
 
 export type FieldValue =
