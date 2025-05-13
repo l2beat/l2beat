@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SHARPVerifierCallProxy",
-  "description": "Upgradable contract through which the SHARPVerifier can be called. This allows {{$admin}} to change the otherwise immutable verifier contract with {{upgradeActivationDelayFmt}} delay.",
+  "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows {{$admin}} to change the otherwise immutable verifier contract with {{upgradeActivationDelayFmt}} delay.",
   "category": "shared",
   "fields": {
     "$admin": {

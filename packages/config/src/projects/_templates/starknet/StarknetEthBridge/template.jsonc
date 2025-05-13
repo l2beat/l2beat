@@ -152,7 +152,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "disable the withdrawal limit and manage the security agent role which can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         }
       ]
     },
