@@ -1,6 +1,6 @@
 import type { useMutation } from '@tanstack/react-query'
-import { DialogButton } from './DialogButton'
 import type { DialogStep } from './context'
+import { Dialog } from '../../components/Dialog'
 
 interface DialogActionsProps {
   step: DialogStep
@@ -23,21 +23,21 @@ export function DialogActions({
     <div className="mt-4 space-y-2">
       <div className="flex justify-end gap-2">
         {step === 'finalize-creation' && (
-          <DialogButton onClick={onBack}>Back</DialogButton>
+          <Dialog.Button onClick={onBack}>Back</Dialog.Button>
         )}
         {step === 'specify-template' && (
-          <DialogButton disabled={!isFormValid} onClick={onNext}>
+          <Dialog.Button disabled={!isFormValid} onClick={onNext}>
             Next
-          </DialogButton>
+          </Dialog.Button>
         )}
         {step === 'finalize-creation' && (
-          <DialogButton
+          <Dialog.Button
             disabled={!isFormValid}
             onClick={onCreate}
-            className="bg-coffee-400"
+            className="bg-coffee-400 hover:bg-coffee-400/80"
           >
             Create shape
-          </DialogButton>
+          </Dialog.Button>
         )}
       </div>
       {step === 'finalize-creation' && (

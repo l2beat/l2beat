@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
 import { DialogActions } from './DialogActions'
@@ -73,6 +73,7 @@ function TemplateDialogBody({
   chain,
   blockNumber,
 }: TemplateDialogProps) {
+  const queryClient = useQueryClient()
   const { step, setStep, formData, setFormData } = useTemplateDialogContext()
 
   const {
@@ -91,6 +92,9 @@ function TemplateDialogBody({
         return Promise.resolve()
       }
       return createShape(chain, address, blockNumber, templateId, fileName)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['templates'] })
     },
   })
 

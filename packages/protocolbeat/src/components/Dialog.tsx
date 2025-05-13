@@ -1,12 +1,15 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
-import type { SVGProps } from 'react'
+import type { ButtonHTMLAttributes, SVGProps } from 'react'
 
 export const Dialog = {
   Root: DialogRoot,
   Trigger: DialogTrigger,
   Title: DialogTitle,
+  Description: DialogDescription,
   Body: DialogBody,
+  Button: DialogButton,
+  Close: DialogClose,
 }
 
 function DialogRoot({ children, ...props }: RadixDialog.DialogProps) {
@@ -28,6 +31,20 @@ function DialogTitle({ children, ...props }: RadixDialog.DialogTitleProps) {
   )
 }
 
+function DialogDescription({
+  children,
+  ...props
+}: RadixDialog.DialogDescriptionProps) {
+  return (
+    <RadixDialog.Description
+      {...props}
+      className={clsx('mb-5 text-sm leading-normal', props.className)}
+    >
+      {children}
+    </RadixDialog.Description>
+  )
+}
+
 function DialogBody({ children, ...props }: RadixDialog.DialogContentProps) {
   return (
     <RadixDialog.Portal>
@@ -41,16 +58,33 @@ function DialogBody({ children, ...props }: RadixDialog.DialogContentProps) {
       >
         {children}
 
-        <RadixDialog.Close asChild>
+        <Dialog.Close asChild>
           <button
             className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-none"
             aria-label="Close"
           >
             <XIcon className="stroke-coffee-200" />
           </button>
-        </RadixDialog.Close>
+        </Dialog.Close>
       </RadixDialog.Content>
     </RadixDialog.Portal>
+  )
+}
+
+export function DialogButton({
+  children,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      {...props}
+      className={clsx(
+        'border border-coffee-400 px-4 py-1 font-medium text-sm transition-colors duration-100 hover:bg-coffee-400 disabled:opacity-50 disabled:hover:bg-transparent',
+        props.className,
+      )}
+    >
+      {children}
+    </button>
   )
 }
 
@@ -71,4 +105,8 @@ function XIcon(props?: SVGProps<SVGSVGElement>) {
       />
     </svg>
   )
+}
+
+function DialogClose({ children, ...props }: RadixDialog.DialogCloseProps) {
+  return <RadixDialog.Close {...props}>{children}</RadixDialog.Close>
 }
