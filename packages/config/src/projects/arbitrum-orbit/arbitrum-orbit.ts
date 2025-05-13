@@ -28,6 +28,14 @@ export const arbitrumOrbit: BaseProject = {
         'Arbitrum Foundation announces the launch of the Arbitrum Orbit stack.',
       type: 'general',
     },
+    {
+      title: 'Timeboost launch',
+      url: 'https://x.com/arbitrum/status/1912945720237367449',
+      date: '2025-04-17T00:00:00.00Z',
+      description:
+        'Arbitrum launches Timeboost - a new transaction ordering policy for Arbitrum chains',
+      type: 'general',
+    },
   ],
   ecosystemConfig: {
     links: {
