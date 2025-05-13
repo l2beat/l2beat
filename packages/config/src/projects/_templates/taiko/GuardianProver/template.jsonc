@@ -1,5 +1,6 @@
 {
   "description": "Verifier contract for Guardian proven blocks.",
+  "ignoreMethods": ["guardians"], // fails otherwise, already getting in Members
   "fields": {
     "proxiableUUID": {
       "handler": {

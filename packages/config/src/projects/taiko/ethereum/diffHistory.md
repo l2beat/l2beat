@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdb410ca6d3809b187d837aae327eaa4e16e193f9
+Generated with discovered.json: 0x3aea42d5913fd27852190ac5fbb63e74d68b4712
 
-# Diff at Tue, 13 May 2025 14:37:43 GMT:
+# Diff at Tue, 13 May 2025 14:42:00 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e7801928b60345a3e550e0f818e51329f969ff6f block: 22297586
-- current block number: 22474945
+- current block number: 22474965
 
 ## Description
 
@@ -245,6 +245,8 @@ discovery. Values are for block 22297586 (main branch discovery), not current.
 ```diff
     contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
     +++ description: Verifier contract for blocks proven by Guardian minority.
+      values.guardians:
+-        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"]
       values.$members:
 +        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
 +++ description: Current guardian minority threshold. Number of guardians required to prove a block.

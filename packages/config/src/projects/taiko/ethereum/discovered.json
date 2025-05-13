@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22474945,
+  "blockNumber": 22474965,
   "configHash": "0xddf472a2152a6f6bc1436e83c20e99ff1bd268c1c9efe5c10a56973048a6be67",
   "entries": [
     {
@@ -229,16 +229,16 @@
             "lastSynecdAt": 1747138571
           },
           {
-            "numBlocks": 1147172,
+            "numBlocks": 1147175,
             "lastVerifiedBlockId": 1146603,
             "provingPaused": false,
-            "lastProposedIn": 22474944,
+            "lastProposedIn": 22474965,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 22474944,
+        "lastProposedIn": 22474965,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -264,10 +264,10 @@
             "lastSynecdAt": 1747138571
           },
           "slotB": {
-            "numBlocks": 1147172,
+            "numBlocks": 1147175,
             "lastVerifiedBlockId": 1146603,
             "provingPaused": false,
-            "lastProposedIn": 22474944,
+            "lastProposedIn": 22474965,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -354,7 +354,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "clock": 1747147055,
+        "clock": 1747147307,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -715,16 +715,6 @@
         "$threshold": 1,
         "$upgradeCount": 7,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
-        "guardians": [
-          "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
-          "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
-          "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
-          "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
-          "0xC384B679c028787166b9B3725aC14A60da205861",
-          "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
-          "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
-          "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
-        ],
         "impl": "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
@@ -2837,8 +2827,8 @@
     "taiko/AutomataDcapV3Attestation": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DAOFallbackProposer": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/GuardianMinorityProver": "0x00bd7d23f4eab2bf9563332dfa85a45693474c02a2893a7aa062b326870d9d80",
-    "taiko/GuardianProver": "0x00bd7d23f4eab2bf9563332dfa85a45693474c02a2893a7aa062b326870d9d80",
+    "taiko/GuardianMinorityProver": "0x5d84dafde0bcb6ea3ade55363798821bc1658c8a6c3836e86b65d2be1c3afbbd",
+    "taiko/GuardianProver": "0x2c2834ab6d8b01193677256359af8839476bf117c9619cc0ee8817d959e78b54",
     "taiko/L1RollupAddressManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/L1SharedAddressManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/MainnetTierRouter": "0xede752b89fb3b0fcfd0481d111f1acf572b37f080a698d8ca76f43805da5c3df",

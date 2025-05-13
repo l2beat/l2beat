@@ -1,5 +1,6 @@
 {
   "description": "Verifier contract for blocks proven by Guardian minority.",
+  "ignoreMethods": ["guardians"], // fails otherwise, already getting in Members
   "fields": {
     "proxiableUUID": {
       "handler": {
@@ -7,12 +8,6 @@
         "method": "function proxiableUUID() view returns (bytes32)",
         "args": [],
         "expectRevert": true
-      }
-    },
-    "guardians": {
-      "handler": {
-        "type": "array",
-        "method": "guardians"
       }
     },
     "$members": {
