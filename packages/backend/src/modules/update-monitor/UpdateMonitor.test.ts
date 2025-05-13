@@ -19,6 +19,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import type { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMonitor } from './UpdateMonitor'
 import type { UpdateNotifier } from './UpdateNotifier'
 
@@ -100,6 +101,7 @@ const flatSourcesRepository = mockObject<Database['flatSources']>({
 
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
+  let updateDiffer = mockObject<UpdateDiffer>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
   const chainConverter = new ChainConverter([
     { name: 'ethereum', chainId: ChainId.ETHEREUM },
@@ -110,6 +112,9 @@ describe(UpdateMonitor.name, () => {
     updateNotifier = mockObject<UpdateNotifier>({
       handleUpdate: async () => {},
       sendDailyReminder: async () => {},
+    })
+    updateDiffer = mockObject<UpdateDiffer>({
+      run: async () => undefined,
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       discoverWithRetry: async () => ({
@@ -158,6 +163,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -247,6 +253,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -294,6 +301,8 @@ describe(UpdateMonitor.name, () => {
       // reads committed discovery.json, 2 + 2 for findUnresolvedProjects() + 2 for findUnknown entries()
       // and + 2 for finding unverifiedContracts
       expect(configReader.readDiscovery).toHaveBeenCalledTimes(3 * 2)
+      // runs update differ
+      expect(updateDiffer.run).toHaveBeenCalledTimes(2)
       // saves discovery result
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(2)
       //sends notification
@@ -338,6 +347,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -390,6 +400,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -458,6 +469,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -485,6 +497,7 @@ describe(UpdateMonitor.name, () => {
         LOGGER,
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
+      expect(updateDiffer.run).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
     })
 
@@ -510,6 +523,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -529,6 +543,8 @@ describe(UpdateMonitor.name, () => {
       expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(1)
       // gets latest from database (with the same config hash)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
+      // does not run update differ
+      expect(updateDiffer.run).toHaveBeenCalledTimes(0)
       // does not save changes to database
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(0)
       // does not send a notification
@@ -562,6 +578,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -611,6 +628,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         mockObject<ConfigReader>(),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -666,6 +684,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -717,6 +736,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         mockObject<ConfigReader>(),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -820,6 +840,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -887,6 +908,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -941,6 +963,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
