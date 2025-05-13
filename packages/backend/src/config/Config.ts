@@ -184,6 +184,7 @@ export interface UpdateMonitorConfig {
   readonly configReader: ConfigReader
   readonly paths: DiscoveryPaths
   readonly runOnStart?: boolean
+  readonly updateDifferEnabled?: boolean
   readonly cacheEnabled?: boolean
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
