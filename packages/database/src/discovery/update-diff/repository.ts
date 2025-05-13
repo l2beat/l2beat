@@ -1,3 +1,4 @@
+import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type UpdateDiffRecord, toRecord, toRow } from './entity'
 
@@ -19,6 +20,14 @@ export class UpdateDiffRepository extends BaseRepository {
   async getAll() {
     const rows = await this.db.selectFrom('UpdateDiff').selectAll().execute()
     return rows.map(toRecord)
+  }
+
+  async deleteByProjectAndChain(projectName: string, chainId: ChainId) {
+    await this.db
+      .deleteFrom('UpdateDiff')
+      .where('projectName', '=', projectName)
+      .where('chainId', '=', chainId)
+      .execute()
   }
 
   async deleteAll(): Promise<number> {

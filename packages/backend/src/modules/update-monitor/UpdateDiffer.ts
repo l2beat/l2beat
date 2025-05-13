@@ -25,6 +25,10 @@ export class UpdateDiffer {
     latestDiscovery: DiscoveryOutput,
     timestamp: UnixTime,
   ) {
+    await this.deleteOldRecords(
+      projectName,
+      ChainId(this.chainConverter.toChainId(chain)),
+    )
     const previousDiscovery = this.getPreviousDiscovery({
       name: projectName,
       chain,
@@ -142,9 +146,9 @@ export class UpdateDiffer {
     return updateDiffs
   }
 
-  async deleteAll() {
+  async deleteOldRecords(projectName: string, chainId: ChainId) {
     this.logger.info('Deleting all update diffs')
-    await this.db.updateDiff.deleteAll()
+    await this.db.updateDiff.deleteByProjectAndChain(projectName, chainId)
   }
 
   getPreviousDiscovery({

@@ -75,10 +75,6 @@ export class UpdateMonitor {
       chainsCount: this.discoveryRunners.length,
     })
 
-    if (this.updateDifferEnabled) {
-      await this.updateDiffer.deleteAll()
-    }
-
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
