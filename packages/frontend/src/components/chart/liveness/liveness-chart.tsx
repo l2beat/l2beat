@@ -1,6 +1,5 @@
 'use client'
 
-import partition from 'lodash/partition'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -25,6 +24,8 @@ interface LivenessChartDataPoint {
   timestamp: number
   range: (number | null)[]
   avg: number | null
+  emptyRange: (number | null)[]
+  emptyAvg: number | null
 }
 
 interface Props {
@@ -60,7 +61,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
         <ChartLegend content={<ChartLegendContent />} />
         {/* Empty areas */}
         <Area
-          dataKey="avg"
+          dataKey="emptyAvg"
           isAnimationActive={false}
           strokeWidth={2}
           legendType="none"
@@ -70,7 +71,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           strokeDasharray="5 5"
         />
         <Area
-          dataKey="range"
+          dataKey="emptyRange"
           isAnimationActive={false}
           stroke="hsl(var(--divider))"
           legendType="none"
@@ -126,7 +127,8 @@ export function LivenessCustomTooltip({
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
   )
-  const [[range], [avg]] = partition(filteredPayload, (p) => p.name === 'range')
+  const range = filteredPayload.find((p) => p.name === 'range')
+  const avg = filteredPayload.find((p) => p.name === 'avg')
 
   if (!range?.value || !avg?.value) return null
 
