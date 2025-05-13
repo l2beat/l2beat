@@ -1,4 +1,4 @@
-import type { ConfigReader, TemplateService } from '@l2beat/discovery'
+import type { TemplateService } from '@l2beat/discovery'
 import type { Express } from 'express'
 import { z } from 'zod'
 import { createShape } from './create-shape'
@@ -7,15 +7,14 @@ import { listDirectories } from './list-directories'
 const createTemplateSchema = z.object({
   chain: z.string(),
   address: z.string(),
-  project: z.string(),
   templateId: z.string(),
   fileName: z.string(),
+  blockNumber: z.number(),
 })
 
 export function attachTemplateRouter(
   app: Express,
   templateService: TemplateService,
-  configReader: ConfigReader,
 ) {
   app.get('/api/templates', (_req, res) => {
     const directories = listDirectories(templateService)
@@ -23,16 +22,15 @@ export function attachTemplateRouter(
   })
 
   app.post('/api/templates/create-shape', async (req, res) => {
-    const { project, chain, address, templateId, fileName } =
+    const { chain, address, templateId, fileName, blockNumber } =
       createTemplateSchema.parse(req.body)
 
     const result = await wrapError(async () =>
       createShape(
         templateService,
-        configReader,
-        project,
         address,
         chain,
+        blockNumber,
         templateId,
         fileName,
       ),

@@ -120,7 +120,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  attachTemplateRouter(app, templateService, configReader)
+  attachTemplateRouter(app, templateService)
 
   app.use(express.static(STATIC_ROOT))
 

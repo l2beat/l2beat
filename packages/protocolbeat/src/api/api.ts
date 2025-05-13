@@ -98,13 +98,13 @@ export async function listTemplates(): Promise<ApiListTemplatesResponse> {
 }
 
 export async function createShape(
-  project: string,
   chain: string,
   address: string,
+  blockNumber: number,
   templateId: string,
   fileName: string,
 ) {
-  const body = { project, chain, address, templateId, fileName }
+  const body = { chain, address, blockNumber, templateId, fileName }
 
   const res = await fetch('/api/templates/create-shape', {
     method: 'POST',

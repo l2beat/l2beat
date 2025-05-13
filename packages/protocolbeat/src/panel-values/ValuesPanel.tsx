@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import type {
@@ -8,9 +7,6 @@ import type {
   ApiProjectContract,
 } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
-import { isReadOnly } from '../config'
-import { IconCopy } from '../icons/IconCopy'
-import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -102,15 +98,6 @@ function Display({
   }
   const address = getAddressToCopy(selected)
 
-  const copy = address && canCopy(selected) && !isReadOnly && (
-    <CopyAddShapeCommand
-      chain={chain}
-      address={address}
-      name={selected.name}
-      blockNumber={blockNumber}
-    />
-  )
-
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
@@ -122,22 +109,21 @@ function Display({
               <span className="text-aux-red"> (Unverified)</span>
             )}
           </div>
-          <div className="hidden">{copy}</div>
-          <TemplateDialog.Root>
-            <TemplateDialog.Trigger
-              disabled={false}
-              className="relative ml-2 cursor-pointer overflow-hidden bg-coffee-400 px-3 py-1 font-medium text-sm text-white transition-all duration-300 before:absolute before:inset-0 before:animate-[disco_2s_linear_infinite] before:bg-gradient-to-r before:from-aux-pink before:via-aux-purple before:to-aux-blue before:opacity-0 after:absolute after:inset-0 after:animate-[disco_2s_linear_infinite_1s] after:bg-gradient-to-r after:from-aux-yellow after:via-aux-green after:to-aux-red after:opacity-0 hover:shadow-lg hover:after:animate-[disco_1s_linear_infinite_0.5s] hover:after:opacity-100 hover:before:animate-[disco_1s_linear_infinite] hover:before:opacity-100"
-            >
-              <div>
-                <span className="relative z-10">Add shape</span>
-              </div>
-            </TemplateDialog.Trigger>
-            <TemplateDialog.Body
-              address={selected.address}
-              project={project}
-              chain={chain}
-            />
-          </TemplateDialog.Root>
+          {address && canAddShape(selected) && (
+            <TemplateDialog.Root>
+              <TemplateDialog.Trigger className="relative ml-2 cursor-pointer overflow-hidden bg-coffee-400 px-3 py-1 font-medium text-sm text-white transition-all duration-300 before:absolute before:inset-0 before:animate-[disco_2s_linear_infinite] before:bg-gradient-to-r before:from-aux-pink before:via-aux-purple before:to-aux-blue before:opacity-0 after:absolute after:inset-0 after:animate-[disco_2s_linear_infinite_1s] after:bg-gradient-to-r after:from-aux-yellow after:via-aux-green after:to-aux-red after:opacity-0 hover:shadow-lg hover:after:animate-[disco_1s_linear_infinite_0.5s] hover:after:opacity-100 hover:before:animate-[disco_1s_linear_infinite] hover:before:opacity-100">
+                <div>
+                  <span className="relative z-10">Add shape</span>
+                </div>
+              </TemplateDialog.Trigger>
+              <TemplateDialog.Body
+                address={address}
+                project={project}
+                chain={chain}
+                blockNumber={blockNumber}
+              />
+            </TemplateDialog.Root>
+          )}
         </div>
         <WithHeadline headline="Address">
           <AddressDisplay
@@ -250,39 +236,6 @@ function Display({
   )
 }
 
-function CopyAddShapeCommand(props: {
-  chain: string
-  address: string
-  blockNumber: number
-  name?: string
-}) {
-  const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    if (copied) {
-      const command = `l2b add-shape ${props.chain} ${props.address} ${props.blockNumber} "${props.name ?? '<NAME>'}.sol" <TEMPLATE_NAME>`
-
-      void navigator.clipboard.writeText(command)
-      const timeout = setTimeout(() => setCopied(false), 1000)
-      return () => clearTimeout(timeout)
-    }
-  }, [props, copied, setCopied])
-
-  return (
-    <button
-      className="flex items-center justify-center gap-1 px-2 py-1 text-coffee-400 text-xs underline underline-offset-2 hover:text-coffee-300"
-      onClick={(e) => {
-        e.preventDefault()
-        setCopied(true)
-      }}
-    >
-      Copy shape command
-      {!copied && <IconCopy className="text-coffee-400" />}
-      {copied && <IconTick className="text-aux-green" />}
-    </button>
-  )
-}
-
 function getAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
   const address = findAddressToCopy(selected)
 
@@ -320,7 +273,7 @@ function findAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
   return selected.address
 }
 
-function canCopy(selected: ApiProjectContract | ApiAddressEntry) {
+function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
   return (
     selected.type !== 'Unverified' &&
     selected.type !== 'Unknown' &&

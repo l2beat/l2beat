@@ -20,6 +20,7 @@ interface TemplateDialogProps {
   address: string
   project: string
   chain: string
+  blockNumber: number
 }
 
 interface TemplateFormData {
@@ -70,12 +71,12 @@ function TemplateDialogRoot({ children }: { children: React.ReactNode }) {
 }
 
 function TemplateDialogTrigger({
-  disabled,
   children,
+  disabled,
   className,
 }: {
-  disabled: boolean
   children: React.ReactNode
+  disabled?: boolean
   className?: string
 }) {
   return (
@@ -85,7 +86,11 @@ function TemplateDialogTrigger({
   )
 }
 
-function TemplateDialogBody({ address, project, chain }: TemplateDialogProps) {
+function TemplateDialogBody({
+  address,
+  chain,
+  blockNumber,
+}: TemplateDialogProps) {
   const context = useContext(DialogContext)
   if (!context)
     throw new Error('TemplateDialogBody must be used within TemplateDialogRoot')
@@ -106,7 +111,7 @@ function TemplateDialogBody({ address, project, chain }: TemplateDialogProps) {
       if (!templateId || !fileName) {
         return Promise.resolve()
       }
-      return createShape(project, chain, address, templateId, fileName)
+      return createShape(chain, address, blockNumber, templateId, fileName)
     },
   })
 
