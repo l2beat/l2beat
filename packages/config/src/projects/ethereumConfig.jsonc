@@ -151,9 +151,6 @@
       "typeCaster": "Mapping",
       "arg": {
         // source: our discovery and random githubs
-        // https://github.com/starkware-libs/cairo-lang/blob/v0.13.5/src/starkware/starknet/core/aggregator/program_hash.json
-        // https://github.com/starkware-libs/cairo-lang/blob/v0.13.5/src/starkware/starknet/core/os/program_hash.json
-        "2534935718742676028234156221136000178296467523045214874259117268197132196876": "Starknet OS (since v0.13.5)",
         "273279642033703284306509103355536170486431195329675679055627933497997642494": "Starknet Aggregator (since v0.13.4)",
         "2231644845387633655859130162745748394456578773184260372693322394988769337368": "StarkNet OS (since v0.13.4)",
         "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
