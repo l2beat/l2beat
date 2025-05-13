@@ -964,6 +964,7 @@ export class ProjectDiscovery {
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
+            { skipForSingle: true },
           ),
           ...(upgradableBy.length > 0 ? { upgradableBy } : {}),
           discoveryDrivenData: true,
@@ -1005,8 +1006,11 @@ function isNonNullable<T>(
   return value !== null && value !== undefined
 }
 
-export function formatAsBulletPoints(description: string[]): string {
-  return description.length > 1
+export function formatAsBulletPoints(
+  description: string[],
+  options: { skipForSingle?: boolean } = {},
+): string {
+  return description.length > 1 || !options.skipForSingle
     ? description.map((s) => `* ${s}\n`).join('')
     : description.join(' ')
 }
