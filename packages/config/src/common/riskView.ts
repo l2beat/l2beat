@@ -427,6 +427,14 @@ export function SEQUENCER_ENQUEUE_VIA(layer: 'L1' | 'L2'): TableReadyValue {
   }
 }
 
+export function SEQUENCER_CAN_SKIP(layer: 'L1' | 'L2'): TableReadyValue {
+  return {
+    value: `Log via ${layer}`,
+    description: `Users can submit transactions to an ${layer} map, but can't force them. When users “complain” that their transaction is stuck on L1 and not picked up by the sequencer, the Security Council minority can bypass the sequencer by posting a state root that includes it.`,
+    sentiment: 'warning',
+  }
+}
+
 export function SEQUENCER_NO_MECHANISM(
   isItThereButJustDisabled?: boolean,
 ): TableReadyValue {
@@ -443,6 +451,8 @@ export function SEQUENCER_NO_MECHANISM(
   }
 }
 
+
+
 // PROPOSER COLUMN
 
 export const PROPOSER_CANNOT_WITHDRAW: TableReadyValue = {
@@ -454,9 +464,17 @@ export const PROPOSER_CANNOT_WITHDRAW: TableReadyValue = {
 }
 
 export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
-  value: 'Cannot withdraw',
+  value: 'Replace proposer',
   description:
     'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade.',
+  sentiment: 'warning',
+  orderHint: -Infinity,
+}
+
+export const PROPOSER_WHITELIST_SECURITY_COUNCIL: TableReadyValue = {
+  value: 'Security Council minority',
+  description:
+    'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator.',
   sentiment: 'warning',
   orderHint: -Infinity,
 }
@@ -659,6 +677,20 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
   orderHint: -Infinity,
 }
 
+export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {
+  const scReactionTime = 60 * 60 * 24 * 1 // time needed for the sc minority to be alerted and prove/propose a new state root
+  const value = formatSeconds(upgradeDelay - scReactionTime)
+  return {
+    value,
+    sentiment: 'warning',
+    description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
+    warning: {
+    value: 'The Security Council can upgrade with no delay.',
+    sentiment: 'warning',
+  }
+  }
+}
+
 export const RISK_VIEW = {
   // stateValidation
   STATE_NONE,
@@ -706,11 +738,13 @@ export const RISK_VIEW = {
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
   SEQUENCER_FORCE_VIA_L1_LOOPRING,
   SEQUENCER_ENQUEUE_VIA,
+  SEQUENCER_CAN_SKIP,
   SEQUENCER_NO_MECHANISM,
 
   // proposerFailure
   PROPOSER_CANNOT_WITHDRAW,
   PROPOSER_WHITELIST_GOVERNANCE,
+  PROPOSER_WHITELIST_SECURITY_COUNCIL,
   PROPOSER_USE_ESCAPE_HATCH_ZK,
   PROPOSER_USE_ESCAPE_HATCH_MP,
   PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
@@ -727,6 +761,7 @@ export const RISK_VIEW = {
   EXIT_WINDOW_ZKSTACK,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
+  EXIT_WINDOW_STARKNET,
 
   UNDER_REVIEW_RISK,
 }
