@@ -122,6 +122,7 @@ export async function getScalingProjectEntry(
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
+    | 'livenessConfig'
   >,
 ): Promise<ProjectScalingEntry> {
   const [projectsChangeReport, activityProjectStats, tvsStats] =

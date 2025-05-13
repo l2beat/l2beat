@@ -13,6 +13,7 @@ import { generateTimestamps } from '../../utils/generate-timestamps'
 import { LivenessChartTimeRange } from './utils/chart-range'
 import { getFullySyncedLivenessRange } from './utils/get-fully-synced-liveness-range'
 import type { AggregatedLivenessRecord } from '@l2beat/database'
+import { ps } from '~/server/projects'
 
 export type ProjectLivenessChartParams = z.infer<
   typeof ProjectLivenessChartParams
@@ -44,6 +45,15 @@ export const getCachedProjectLivenessChartData = cache(
   async ({ range, subtype, projectId }: ProjectLivenessChartParams) => {
     const db = getDb()
     const adjustedRange = getFullySyncedLivenessRange(range)
+
+    const [livenessProject] = await ps.getProjects({
+      ids: [ProjectId(projectId)],
+      optional: ['livenessConfig'],
+    })
+    if (livenessProject?.livenessConfig?.duplicateData.to === subtype) {
+      subtype = livenessProject.livenessConfig.duplicateData.from
+    }
+
     const entries =
       await db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
         ProjectId(projectId),
