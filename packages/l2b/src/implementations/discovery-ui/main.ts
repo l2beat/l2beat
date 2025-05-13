@@ -121,11 +121,11 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  attachTemplateRouter(app, templateService)
-
   app.use(express.static(STATIC_ROOT))
 
   if (!readonly) {
+    attachTemplateRouter(app, templateService)
+
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({
         project: req.params.project,
