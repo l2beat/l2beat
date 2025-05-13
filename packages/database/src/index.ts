@@ -11,10 +11,7 @@ export type { UpdateMonitorRecord } from './discovery/update-monitor/entity'
 export type { UpdateNotifierRecord } from './discovery/update-notifier/entity'
 export type { UpdateMessageRecord } from './discovery/update-message/entity'
 export type { AggregatedL2CostRecord } from './other/aggregated-l2-cost/entity'
-export type {
-  AggregatedLivenessRange,
-  AggregatedLivenessRecord,
-} from './other/aggregated-liveness/entity'
+export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entity'
 export type { AnomalyRecord } from './other/anomalies/entity'
 export type {
   FinalityRecord,
@@ -30,3 +27,4 @@ export type { DataAvailabilityRecord } from './da-beat/data-availability/entity'
 export { DataAvailabilityRepository } from './da-beat/data-availability/repository'
 export type { TokenValueRecord } from './tvs/token-value/entity'
 export type { ProjectValueRecord } from './tvs/project-value/entity'
+export type { UpdateDiffRecord } from './discovery/update-diff/entity'

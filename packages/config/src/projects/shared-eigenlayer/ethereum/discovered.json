@@ -130,7 +130,7 @@
           "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."
         },
         "getHopperConfiguration": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
         }
       },

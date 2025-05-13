@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x81748d37ea946c70a5ba95b85f3fc27a629dae1b
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 21628437
+- current block number: 21628437
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      fieldMeta.relaxThreshold.severity:
+-        "MEDIUM"
++        "LOW"
+      fieldMeta.relaxed.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xbd3004aa8ac5e43070ae7dc9395b8006bb69bae5
 
 # Diff at Tue, 29 Apr 2025 08:19:00 GMT:

@@ -18,8 +18,7 @@
     "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist",
     "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "L1StandardERC20Gateway",
     "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "L1ETHGateway",
-    "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": "MultipleVersionRollupVerifier",
-    "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": "ZkEvmVerifierV1"
+    "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": "MultipleVersionRollupVerifier"
   },
   "overrides": {
     "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": {
@@ -36,7 +35,11 @@
     },
     "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": {
       // ZkEvmVerifierV1
-      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
+      "description": "SP1 verifier using Blobs for DA (being deprecated)."
+    },
+    "0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": {
+      // ZkEvmVerifierV1
+      "description": "Current SP1 verifier using Blobs for DA."
     },
     "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": {
       // EnforcedTxGateway

@@ -154,7 +154,7 @@
         },
         "watcherManager": {
           "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "type": "PERMISSION"
         }
       },

@@ -17,7 +17,6 @@ import type { ContractUtils } from './get-contract-utils'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
-  type: 'layer2' | 'layer3' | 'bridge'
   id: ProjectId
   slug: string
   isUnderReview?: boolean
@@ -185,9 +184,9 @@ function makeTechnologyContract(
 
   const changes = Object.values(projectChangeReport ?? {}).flat()
   const impactfulChangeAddresses = changes.flatMap((c) =>
-    c.implementationContaining
-      .concat(c.fieldHighSeverityContaining)
-      .concat(c.upgradeChanges),
+    c.implementationChange
+      .concat(c.highSeverityFieldChange)
+      .concat(c.ultimateUpgraderChange),
   )
 
   const impactfulChange = impactfulChangeAddresses.some((changedAddress) =>

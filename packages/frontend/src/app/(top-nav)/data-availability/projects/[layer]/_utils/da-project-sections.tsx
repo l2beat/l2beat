@@ -38,8 +38,7 @@ export async function getRegularDaProjectSections({
     bridge?.permissions &&
     getPermissionsSection(
       {
-        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-        id: layer.id,
+        id: bridge.id,
         isUnderReview: layer.statuses.isUnderReview,
         permissions: bridge.permissions,
       },
@@ -50,7 +49,6 @@ export async function getRegularDaProjectSections({
     bridge?.contracts &&
     getContractsSection(
       {
-        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
         id: bridge.id,
         isVerified,
         slug: bridge.slug,

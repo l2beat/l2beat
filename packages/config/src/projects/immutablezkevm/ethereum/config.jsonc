@@ -28,7 +28,7 @@
       "fields": {
         "withdrawalDelay": {
           "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "type": "RISK_PARAMETER"
         },
         "withdrawalQueueActivated": {

@@ -10,5 +10,17 @@
     "address": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
     "chain": "ink",
     "blockNumber": 10183769
+  },
+  "GasPriceOracle_v1_4_0": {
+    "hash": "0xa6ae4f0695335983b644f1524c759f3178ee95c406e1e905b8cbccf5763af43a",
+    "address": "0x93e57A196454CB919193fa9946f14943cf733845",
+    "chain": "ink",
+    "blockNumber": 13539010
+  },
+  "GasPriceOracle_v1_4_0_unichain": {
+    "hash": "0x926a45849c8c68704718056d544ac26d7683a6b44a90a9590dda1a9bdd495962",
+    "address": "0x93e57A196454CB919193fa9946f14943cf733845",
+    "chain": "unichain",
+    "blockNumber": 16289384
   }
 }
