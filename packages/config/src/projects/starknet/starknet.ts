@@ -318,13 +318,13 @@ export const starknet: ScalingProject = {
       stage1: {
         principle: false,
         stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
+        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
         fraudProofSystemIsPermissionless: null,
         delayWith30DExitWindow: false,
       },
