@@ -13,7 +13,7 @@ import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
-import { TemplateDialog } from './TemplateDialog'
+import { TemplateDialog } from './template-dialog/TemplateDialog'
 
 export function ValuesPanel() {
   const { project } = useParams()

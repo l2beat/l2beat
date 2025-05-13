@@ -1,20 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
+import { type SVGProps, useState } from 'react'
+import { createShape, listTemplates } from '../../api/api'
+import { DialogActions } from './DialogActions'
+import { DialogInput } from './DialogInput'
+import { TemplateFolder } from './TemplateFolder'
 import {
-  type ButtonHTMLAttributes,
-  type InputHTMLAttributes,
-  type SVGProps,
-  createContext,
-  useContext,
-  useState,
-} from 'react'
-import { createShape, listTemplates } from '../api/api'
-import { IconContract } from '../icons/IconContract'
-import { IconFolder } from '../icons/IconFolder'
-import { IconFolderOpened } from '../icons/IconFolderOpened'
-
-type DialogStep = 'specify-template' | 'finalize-creation'
+  DialogContext,
+  type DialogStep,
+  type TemplateFormData,
+  useTemplateDialogContext,
+} from './context'
 
 interface TemplateDialogProps {
   address: string
@@ -22,20 +18,6 @@ interface TemplateDialogProps {
   chain: string
   blockNumber: number
 }
-
-interface TemplateFormData {
-  templateId: string
-  fileName: string
-}
-
-interface DialogContextType {
-  step: DialogStep
-  setStep: (step: DialogStep) => void
-  formData: TemplateFormData
-  setFormData: React.Dispatch<React.SetStateAction<TemplateFormData>>
-}
-
-const DialogContext = createContext<DialogContextType | null>(null)
 
 export const TemplateDialog = {
   Root: TemplateDialogRoot,
@@ -91,10 +73,7 @@ function TemplateDialogBody({
   chain,
   blockNumber,
 }: TemplateDialogProps) {
-  const context = useContext(DialogContext)
-  if (!context)
-    throw new Error('TemplateDialogBody must be used within TemplateDialogRoot')
-  const { step, setStep, formData, setFormData } = context
+  const { step, setStep, formData, setFormData } = useTemplateDialogContext()
 
   const {
     data: templates,
@@ -187,64 +166,6 @@ function ErrorState() {
   )
 }
 
-interface DialogActionsProps {
-  step: DialogStep
-  isFormValid: boolean
-  onBack: () => void
-  onNext: () => void
-  onCreate: () => void
-  mutation: ReturnType<typeof useMutation<void, Error, void>>
-}
-
-function DialogActions({
-  step,
-  isFormValid,
-  onBack,
-  onNext,
-  onCreate,
-  mutation,
-}: DialogActionsProps) {
-  return (
-    <div className="mt-4 space-y-2">
-      <div className="flex justify-end gap-2">
-        {step === 'finalize-creation' && (
-          <DialogButton onClick={onBack}>Back</DialogButton>
-        )}
-        {step === 'specify-template' && (
-          <DialogButton disabled={!isFormValid} onClick={onNext}>
-            Next
-          </DialogButton>
-        )}
-        {step === 'finalize-creation' && (
-          <DialogButton
-            disabled={!isFormValid}
-            onClick={onCreate}
-            className="bg-coffee-400"
-          >
-            Create shape
-          </DialogButton>
-        )}
-      </div>
-      {step === 'finalize-creation' && (
-        <div className="text-xs">
-          {mutation.isPending && <div>Creating shape...</div>}
-          {mutation.isError && (
-            <div className="flex flex-col text-aux-red">
-              <span>Error while creating shape</span>
-              <span className="text-aux-red-light">
-                {mutation.error.message}
-              </span>
-            </div>
-          )}
-          {mutation.isSuccess && (
-            <div className="text-aux-green">Shape created successfully</div>
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
-
 function SelectPredefinedTemplate({
   templates,
   formData,
@@ -275,7 +196,7 @@ function SelectPredefinedTemplate({
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-1">
         <label className="font-medium text-xs">Template ID</label>
-        <IsolatedInput
+        <DialogInput
           value={formData.templateId}
           onChange={(e) => onFormChange('templateId', e.target.value)}
           type="text"
@@ -284,7 +205,7 @@ function SelectPredefinedTemplate({
 
       <div className="flex flex-col gap-1">
         <label className="font-medium text-xs">Filename</label>
-        <IsolatedInput
+        <DialogInput
           type="text"
           value={formData.fileName}
           onChange={(e) => onFormChange('fileName', e.target.value)}
@@ -293,7 +214,7 @@ function SelectPredefinedTemplate({
 
       <div className="flex flex-col gap-1">
         <h3 className="font-medium text-sm">Available templates</h3>
-        <IsolatedInput
+        <DialogInput
           type="text"
           placeholder="Search templates..."
           value={searchQuery}
@@ -302,7 +223,7 @@ function SelectPredefinedTemplate({
         <div className="max-h-[40vh] overflow-y-auto border border-coffee-400 bg-coffee-400/10 p-1">
           {Object.keys(filteredTemplates).length > 0 ? (
             Object.entries(filteredTemplates).map(([name, templates]) => (
-              <Folder
+              <TemplateFolder
                 key={name}
                 name={name}
                 entries={templates}
@@ -348,106 +269,6 @@ function FinalizeTemplate({
         </div>
       ))}
     </div>
-  )
-}
-
-function Folder({
-  name,
-  entries,
-  selected,
-  setSelected,
-}: {
-  name: string
-  entries: string[]
-  selected: string
-  setSelected: (selected: string) => void
-}) {
-  const [isOpen, setIsOpen] = useState(true)
-
-  if (entries.length === 0) {
-    return (
-      <div
-        className="mb-2 flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20"
-        onClick={() => setSelected(name)}
-      >
-        <IconContract />
-        <span
-          className={clsx('text-sm', selected === name && 'text-coffee-300')}
-        >
-          {name}
-        </span>
-      </div>
-    )
-  }
-
-  return (
-    <div className="mb-2 flex flex-col">
-      <div className="group flex cursor-pointer items-center gap-2 hover:bg-coffee-400/20">
-        <div onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <IconFolderOpened /> : <IconFolder />}
-        </div>
-        <span
-          className={clsx(
-            'w-full text-sm group-hover:text-coffee-300',
-            selected === name && 'text-coffee-300',
-          )}
-          onClick={() => setSelected(name)}
-        >
-          {name}
-        </span>
-      </div>
-      {isOpen && (
-        <div className="ml-2 flex flex-col border-l">
-          {entries.map((entry) => {
-            const key = `${name}/${entry}`
-            return (
-              <span
-                key={key}
-                className={clsx(
-                  'w-full cursor-pointer pl-5 text-xs hover:bg-coffee-400/20 hover:text-coffee-300',
-                  selected === key && 'text-coffee-300',
-                )}
-                onClick={() => setSelected(key)}
-              >
-                {entry}
-              </span>
-            )
-          })}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function DialogButton({
-  children,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      className={clsx(
-        'border border-coffee-400 px-4 py-1 font-medium text-sm transition-colors hover:bg-coffee-500 disabled:opacity-50 disabled:hover:bg-transparent',
-        props.className,
-      )}
-    >
-      {children}
-    </button>
-  )
-}
-
-function IsolatedInput(props: InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <input
-      onKeyUp={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
-      className={clsx(
-        'border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none',
-      )}
-      {...props}
-    />
   )
 }
 
