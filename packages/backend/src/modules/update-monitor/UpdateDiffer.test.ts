@@ -23,6 +23,7 @@ describe(UpdateDiffer.name, () => {
     it('should not insert update diffs if there are no changes', async () => {
       const updateDiffRepository = mockObject<UpdateDiffRepository>({
         insertMany: async () => 0,
+        deleteByProjectAndChain: async () => {},
       })
 
       const updateDiffer = new UpdateDiffer(
@@ -46,19 +47,26 @@ describe(UpdateDiffer.name, () => {
         UnixTime.now(),
       )
 
+      expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
+        PROJECT_A,
+        'ethereum',
+      )
       expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
     })
 
     it('should insert update diffs', async () => {
       const updateDiffRepository = mockObject<UpdateDiffRepository>({
         insertMany: async () => 0,
+        deleteByProjectAndChain: async () => {},
       })
+      const dbTransaction = mockFn(async (fun) => await fun())
 
       const updateDiffer = new UpdateDiffer(
         mockObject<ConfigReader>({
           readDiscovery: mockFn().returns(mockProject),
         }),
         mockObject<Database>({
+          transaction: dbTransaction,
           updateDiff: updateDiffRepository,
         }),
         mockObject<ChainConverter>(),
@@ -68,21 +76,21 @@ describe(UpdateDiffer.name, () => {
         {
           address: EthereumAddress.random(),
           type: 'implementationChange',
-          chainId: ChainId.ETHEREUM,
+          chain: 'ethereum',
           projectName: PROJECT_A,
           timestamp: UnixTime.now(),
         },
         {
           address: EthereumAddress.random(),
           type: 'highSeverityFieldChange',
-          chainId: ChainId.ETHEREUM,
+          chain: 'ethereum',
           projectName: PROJECT_A,
           timestamp: UnixTime.now(),
         },
         {
           address: EthereumAddress.random(),
           type: 'ultimateUpgraderChange',
-          chainId: ChainId.ETHEREUM,
+          chain: 'ethereum',
           projectName: PROJECT_A,
           timestamp: UnixTime.now(),
         },
@@ -98,6 +106,11 @@ describe(UpdateDiffer.name, () => {
         UnixTime.now(),
       )
 
+      expect(dbTransaction).toHaveBeenCalled()
+      expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
+        PROJECT_A,
+        'ethereum',
+      )
       expect(updateDiffRepository.insertMany).toHaveBeenCalledWith(updateDiffs)
     })
   })
@@ -139,7 +152,7 @@ describe(UpdateDiffer.name, () => {
         {
           address: diff.address,
           type: 'implementationChange',
-          chainId: ChainId.ETHEREUM,
+          chain: 'ethereum',
           projectName: PROJECT_A,
           timestamp,
         },
@@ -183,7 +196,7 @@ describe(UpdateDiffer.name, () => {
         {
           address: diff.address,
           type: 'highSeverityFieldChange',
-          chainId: ChainId.ETHEREUM,
+          chain: 'ethereum',
           projectName: PROJECT_A,
           timestamp,
         },
@@ -242,7 +255,7 @@ describe(UpdateDiffer.name, () => {
         {
           address,
           type: 'ultimateUpgraderChange',
-          chainId: ChainId.ETHEREUM,
+          chain: 'ethereum',
           projectName: PROJECT_A,
           timestamp,
         },
