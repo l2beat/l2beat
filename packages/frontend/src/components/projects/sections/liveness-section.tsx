@@ -6,6 +6,7 @@ import type { ProjectSectionProps } from './types'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { AnomalyIndicator } from '~/app/(side-nav)/scaling/liveness/_components/anomaly-indicator'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import { DurationCell } from '~/app/(side-nav)/scaling/finality/_components/table/duration-cell'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string
@@ -20,6 +21,9 @@ export function LivenessSection({
   projectId,
   configuredSubtypes,
   anomalies,
+  batchSubmissionsAvg,
+  stateUpdatesAvg,
+  proofSubmissionsAvg,
   ...sectionProps
 }: LivenessSectionProps) {
   return (
@@ -36,6 +40,21 @@ export function LivenessSection({
         configuredSubtypes={configuredSubtypes}
       />
       <ChartStats className="mt-4">
+        {batchSubmissionsAvg && (
+          <ChartStatsItem label="Avg. tx data subs. interval">
+            <DurationCell durationInSeconds={batchSubmissionsAvg} />
+          </ChartStatsItem>
+        )}
+        {proofSubmissionsAvg && (
+          <ChartStatsItem label="Avg. proof subs. interval">
+            <DurationCell durationInSeconds={proofSubmissionsAvg} />
+          </ChartStatsItem>
+        )}
+        {stateUpdatesAvg && (
+          <ChartStatsItem label="Avg. state updates interval">
+            <DurationCell durationInSeconds={stateUpdatesAvg} />
+          </ChartStatsItem>
+        )}
         <ChartStatsItem label="Past 30 days anomalies">
           <AnomalyIndicator
             anomalies={anomalies}
