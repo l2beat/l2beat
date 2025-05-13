@@ -4,7 +4,6 @@ import {
   ProjectId,
   UnixTime,
   formatLargeNumber,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -39,7 +38,10 @@ const starknetDelaySeconds = discovery.getContractValue<number>(
   'StarkWareProxy_upgradeDelay',
 )
 
-const delayedExecutorDelaySeconds = discovery.getContractValue<number>('DelayedExecutor', 'executionDelay')
+const delayedExecutorDelaySeconds = discovery.getContractValue<number>(
+  'DelayedExecutor',
+  'executionDelay',
+)
 
 const ESCROW_ETH_ADDRESS = '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
 const ESCROW_WBTC_ADDRESS = '0x283751A21eafBFcD52297820D27C1f1963D9b5b4'
@@ -70,7 +72,6 @@ const minDelay = Math.min(
   getSHARPVerifierUpgradeDelay(),
   escrowETHDelaySeconds,
   escrowSTRKDelaySeconds,
-  
 )
 
 const minNonScDelay = Math.min(
@@ -182,6 +183,13 @@ export const starknet: ScalingProject = {
   id: ProjectId('starknet'),
   capability: 'universal',
   addedAt: UnixTime(1642687633), // 2022-01-20T14:07:13Z
+  badges: [
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
+    BADGES.Other.Governance,
+  ],
   display: {
     name: 'Starknet',
     slug: 'starknet',
@@ -249,9 +257,9 @@ export const starknet: ScalingProject = {
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
+    sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
   },
   stage: getStage(
     {
@@ -388,6 +396,39 @@ The Operator role in the Starknet contract is permissioned to update the state o
 
 All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
 `,
+  milestones: [
+    {
+      title: 'Starknet starts using blobs',
+      url: 'https://twitter.com/Starknet/status/1767915153700290839',
+      date: '2024-03-13T00:00:00Z',
+      description: 'Starknet starts publishing data to blobs.',
+      type: 'general',
+    },
+    {
+      title: 'Starknet Provisions',
+      url: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      date: '2024-02-14T00:00:00Z',
+      description:
+        'Starknet begins allocating $STRK to early contributors and users.',
+      type: 'general',
+    },
+    {
+      title: 'Starknet Alpha',
+      url: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      date: '2021-11-29T00:00:00Z',
+      description:
+        'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
+      type: 'general',
+    },
+    {
+      title: 'StarkGate Alpha',
+      url: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      date: '2022-05-09T00:00:00Z',
+      description:
+        'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',
+      type: 'general',
+    },
+  ],
   config: {
     associatedTokens: ['STRK'],
     escrows: [
@@ -1013,201 +1054,4 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       },
     ],
   },
-  dataAvailability: {
-    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-  },
-  riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_ST,
-      secondLine: formatExecutionDelay(finalizationPeriod),
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-    },
-    exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
-    sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
-  },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
-    },
-  ),
-  technology: {
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
-      description:
-        OPERATOR.CENTRALIZED_OPERATOR.description +
-        ' Typically, the Operator is the hot wallet of the Starknet service submitting state updates for which proofs have been already submitted and verified.',
-    },
-    forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-      references: [
-        {
-          title: 'Censorship resistance of Starknet - Forum Discussion',
-          url: 'https://community.starknet.io/t/censorship-resistance/196',
-        },
-      ],
-    },
-    exitMechanisms: EXITS.STARKNET,
-  },
-  stateDerivation: {
-    nodeSoftware:
-      'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
-    compressionScheme:
-      'Starknet uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
-    genesisState: 'There is no non-empty genesis state.',
-    dataFormat:
-      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
-  },
-  stateValidation: {
-    description:
-      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
-    categories: [
-      {
-        title: 'Proven Program',
-        description:
-          'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
-        risks: [],
-      },
-      {
-        ...STATE_VALIDATION.VALIDITY_PROOFS,
-        references: [
-          {
-            title: 'What is Starknet',
-            url: 'https://starkware.co/starknet/',
-          },
-        ],
-      },
-    ],
-    proofVerification: {
-      shortDescription: 'Starknet is a ZK-CairoVM rollup on Ethereum.',
-      aggregation: true,
-      requiredTools: [],
-      verifiers: [
-        {
-          name: 'SHARPVerifier',
-          description:
-            'Starknet utilizes STARKs for their system. The protocol makes use of recursive aggregation across multiple projects that share the same onchain verifier. SHARP stands for SHARed Prover. Different programs are represented onchain with different program hashes.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
-            {
-              name: 'Main bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo',
-            },
-            {
-              name: 'Simple bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/simple_bootloader/simple_bootloader.cairo',
-            },
-            {
-              name: 'Applicative bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.2a0/src/starkware/cairo/bootloaders/applicative_bootloader/applicative_bootloader.cairo',
-            },
-            {
-              name: 'Recursive Cairo verifier',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
-              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo',
-            },
-            {
-              name: 'StarknetOS',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  permissions: generateDiscoveryDrivenPermissions([discovery]),
-  contracts: {
-    addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
-  },
-  upgradesAndGovernance: `
-  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the overall rollup system is currently split between a Security Council for the Starknet rollup contract and a ${sharpMsThreshold} Multisig for the SHARP verifier proxy with instant upgrade capability. Other Multisigs are governing the bridge escrows or permissioned for operations (posting state updates with proofs).
-  
-  
-  The ${scThreshold} StarknetSecurityCouncil can upgrade the Starknet contract, force state finalization, change central configurations and manage the Operator role. Starkgate bridge contracts can be upgraded (and configured) by the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 without delay, allowing the potential theft of all bridged funds.
-  
-  
-  The Operator role in the Starknet contract is permissioned to update the state of the Starknet rollup by supplying valid (zk) state transition proofs. Since this role is not permissionless, Starknet implements a StarknetSCMinorityMultisig with the Operator role, which potentially allows a minority of the StarknetSecurityCouncil to enforce censorship resistance by including transactions that are not included by regular Operators.
-  
-  
-  The shared SHARPVerifier contract is governed by the ${sharpMsThreshold} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting state validity of all StarkEx and SN stack chains that are using it and potentially allowing this Multisig to finalize malicious state updates.
-  `,
-  milestones: [
-    {
-      title: 'Starknet starts using blobs',
-      url: 'https://twitter.com/Starknet/status/1767915153700290839',
-      date: '2024-03-13T00:00:00Z',
-      description: 'Starknet starts publishing data to blobs.',
-      type: 'general',
-    },
-    {
-      title: 'Starknet Provisions',
-      url: 'https://www.starknet.io/en/content/starknet-provisions-program',
-      date: '2024-02-14T00:00:00Z',
-      description:
-        'Starknet begins allocating $STRK to early contributors and users.',
-      type: 'general',
-    },
-    {
-      title: 'Starknet Alpha',
-      url: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
-      date: '2021-11-29T00:00:00Z',
-      description:
-        'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
-      type: 'general',
-    },
-    {
-      title: 'StarkGate Alpha',
-      url: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
-      date: '2022-05-09T00:00:00Z',
-      description:
-        'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',
-      type: 'general',
-    },
-  ],
-  badges: [
-    BADGES.VM.CairoVM,
-    BADGES.DA.EthereumBlobs,
-    BADGES.Stack.SNStack,
-    BADGES.Infra.SHARP,
-    BADGES.Other.Governance,
-  ],
 }

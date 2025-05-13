@@ -451,8 +451,6 @@ export function SEQUENCER_NO_MECHANISM(
   }
 }
 
-
-
 // PROPOSER COLUMN
 
 export const PROPOSER_CANNOT_WITHDRAW: TableReadyValue = {
@@ -685,9 +683,9 @@ export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {
     sentiment: 'warning',
     description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
     warning: {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'warning',
-  }
+      value: 'The Security Council can upgrade with no delay.',
+      sentiment: 'warning',
+    },
   }
 }
 
