@@ -1,8 +1,7 @@
 import type { FieldDiff } from '../output/diffContracts'
 
 const severityAsNumber = {
-  HIGH: 3,
-  MEDIUM: 2,
+  HIGH: 2,
   LOW: 1,
   NONE: 0,
 }

@@ -46,6 +46,17 @@ export interface ApiProjectChain {
   blockNumber: number
 }
 
+export type ApiListTemplatesResponse = Record<string, string[]>
+
+export type ApiCreateShapeResponse =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      error: string
+    }
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'
@@ -77,7 +88,7 @@ export interface Field {
   ignoreRelatives?: boolean
   handler?: { type: string } & Record<string, unknown>
   description?: string
-  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
+  severity?: 'HIGH' | 'LOW'
 }
 
 export type FieldValue =
