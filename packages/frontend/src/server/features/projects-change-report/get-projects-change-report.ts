@@ -108,7 +108,7 @@ function groupByType(changes: UpdateDiffRecord[]) {
     ultimateUpgraderChange: [],
   }
   for (const change of changes) {
-    result[change.type] = [...(result[change.type] ?? []), change]
+    result[change.type].push(change)
   }
   return result
 }
