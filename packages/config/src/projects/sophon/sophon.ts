@@ -15,6 +15,14 @@ const chainId = 50104
 const trackedTxsSince = UnixTime(1742940287)
 const v26UpgradeTS = UnixTime(1743095267)
 const bridge = discovery.getContract('L1NativeTokenVault')
+const isL2AssetRouterWhitelisted =
+  discovery.getContractValue<EthereumAddress[]>(
+    'SophonTransactionFilterer',
+    'whitelistedContractsAC',
+  )[0] === EthereumAddress('0x0000000000000000000000000000000000010003')
+const assetBridgingWhitelistedText = isL2AssetRouterWhitelisted
+  ? ' The L2AssetRouter contract is currently whitelisted as a target in the TransactionFilterer which allows users to queue withdrawals that use the canonical bridge from L1.'
+  : ''
 
 export const sophon: ScalingProject = zkStackL2({
   discovery,
@@ -66,8 +74,8 @@ export const sophon: ScalingProject = zkStackL2({
       ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
       references: [
         {
-          title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800#code#F1#L46',
+          title: 'AvailL1DAValidator - checkDA() function',
+          url: 'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code#F1#L16',
         },
       ],
     },
@@ -108,6 +116,47 @@ export const sophon: ScalingProject = zkStackL2({
   availDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     appId: '17',
+  },
+  nonTemplateRiskView: {
+    sequencerFailure: {
+      value: 'No mechanism',
+      description:
+        'There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 OR their targets on L2, to be whitelisted.',
+      sentiment: 'bad',
+    },
+  },
+  nonTemplateTechnology: {
+    forceTransactions: {
+      name: "Users can't force all transactions",
+      description:
+        'If a user is censored by the L2 Sequencer, they cannot by default force their transaction via the L1 queue. An active TransactionFilterer contract which allows only whitelisted accounts to enqueue, prevents it. Even if a user was specifically whitelisted, there is no mechanism that forces the L2 Sequencer to include\
+            transactions from the queue in an L2 block, as they have the choice the queue in order or not at all.' +
+        assetBridgingWhitelistedText,
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the operator refuses to include their transactions.',
+        },
+        {
+          category: 'Users can be censored if',
+          text: 'the Operator does not specifically whitelist them in the TransactionFilterer.',
+        },
+      ],
+      references: [
+        {
+          title: "L1 - L2 interoperability - Developer's documentation",
+          url: 'https://docs.zksync.io/zksync-protocol/rollup/l1_l2_communication#priority-operations-1',
+        },
+        {
+          title: 'Mailbox facet',
+          url: 'https://etherscan.io/address/0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f#code#F1#L472',
+        },
+        {
+          title: 'TransactionFilterer',
+          url: 'https://etherscan.io/address/0x9D06B34adc3026eF876e4DABb859C424DbDA3063#code#F1#L34',
+        },
+      ],
+    },
   },
   nonTemplateTrackedTxs: [
     {

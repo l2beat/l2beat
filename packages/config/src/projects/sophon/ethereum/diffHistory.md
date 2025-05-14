@@ -1,16 +1,16 @@
-Generated with discovered.json: 0x869087257d4176a14e3be4cd8fce6e594e2538b0
+Generated with discovered.json: 0xcdb68748f3e212193e7f005ece40988d5b06cadd
 
-# Diff at Wed, 14 May 2025 10:05:21 GMT:
+# Diff at Wed, 14 May 2025 13:53:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@03d2420745f9fd123e05c87dd48abe70f160c805 block: 22336708
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 22336708
 - current block number: 22480309
 
 ## Description
 
 v27 upgrade to standard contracts/verifiers.
 
-add txfilterer.
+add txfilterer (functions like a whitelist, blocks per default).
 
 ## Watched changes
 
@@ -172,7 +172,7 @@ add txfilterer.
 ```diff
 +   Status: CREATED
     contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063)
-    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined as AccessControl roles.
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
 ```
 
 ```diff

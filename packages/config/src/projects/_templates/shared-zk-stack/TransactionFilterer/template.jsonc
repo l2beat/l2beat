@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined as AccessControl roles.",
+  "description": "A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.",
   "fields": {
     "accessControl": {
       "handler": {
@@ -20,7 +20,7 @@
       ]
     },
     "whitelistedContractsAC": {
-      "description": "Addresses with this role are on the whitelist as L2 contract targets for requestL2Transaction() calls.",
+      "description": "Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "WHITELISTED_ROLE"
