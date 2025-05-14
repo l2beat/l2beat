@@ -21,10 +21,6 @@ import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('taiko')
 
-const upgradesTaikoMultisig = {
-  upgradableBy: [{ name: 'Taiko Multisig', delay: 'no' }],
-}
-
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
 const TIER_SGX = discovery.getContractValue<{
@@ -426,122 +422,19 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('TaikoL1Contract', {
-          description:
-            'This contract provides functionalities for sequencing, proving, and verifying batches.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('L1RollupAddressManager', {
-          description:
-            'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('MainnetTierRouter', {
-          description:
-            'Contract managing and routing the multi-tier proof system.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('SgxVerifier', {
-          description: 'Verifier contract for SGX proven batches.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('Risc0Verifier', {
-          description: 'Verifier contract for ZK-proven batches.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('RiscZeroGroth16Verifier', {
-          description: 'Verifier contract for ZK-proven batches.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('SP1Verifier', {
-          description: 'Verifier contract for ZK-proven batches.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('GuardianMinorityProver', {
-          description:
-            'Verifier contract for batches proven by Guardian multisig minority.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('GuardianProver', {
-          description:
-            'Verifier contract for Guardian multisig proven batches.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('DAOFallbackProposer', {
-          description:
-            "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('SignalService', {
-          description:
-            'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('AutomataDcapV3Attestation', {
-          description: 'Contract managing SGX attestation certificates.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('TaikoToken', {
-          description:
-            "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('TaikoBridge', {
-          description: 'Shared bridge for Taiko chains for bridged ETH.',
-          ...upgradesTaikoMultisig,
-        }),
-        discovery.getContractDetails('SharedERC20Vault', {
-          description:
-            'Shared vault for Taiko chains for bridged ERC20 tokens.',
-          ...upgradesTaikoMultisig,
-        }),
-      ],
+      [discovery.chain]: discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getMultisigPermission(
-          'Taiko Multisig',
-          'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
-        ),
-        discovery.getPermissionDetails(
-          'GuardianProvers',
-          discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
-          `Guardians can prove blocks on the highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
-        ),
-        discovery.getPermissionDetails(
-          'GuardianMinorityProver',
-          discovery.getPermissionedAccounts(
-            'GuardianMinorityProver',
-            'guardians',
-          ),
-          `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
-        ),
-        discovery.getPermissionDetails(
-          'ChainWatchdog',
-          discovery.getPermissionedAccounts(
-            'TaikoL1Contract',
-            'chain_watchdog',
-          ),
-          'The chain watchdog role can pause proving of blocks.',
-        ),
-        discovery.getPermissionDetails(
-          'SequencerBlockOne',
-          discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
-          'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
-        ),
-      ],
-    },
+    [discovery.chain]: discovery.getDiscoveredPermissions(),
   },
   milestones: [
     {
-      title: 'TKO Token Airdrop',
+      title: 'TAIKO Token Airdrop',
       url: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
       date: '2024-06-05T00:00:00.00Z',
-      description: 'TKO token launches.',
+      description: 'TAIKO token launches.',
       type: 'general',
     },
     {
