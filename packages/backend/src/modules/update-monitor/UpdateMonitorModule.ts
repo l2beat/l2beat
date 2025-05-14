@@ -6,6 +6,7 @@ import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import type { Clock } from '../../tools/Clock'
 import type { ApplicationModule } from '../ApplicationModule'
+import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMessagesService } from './UpdateMessagesService'
 import { UpdateMonitor } from './UpdateMonitor'
@@ -40,6 +41,8 @@ export function createUpdateMonitorModule(
   )
 
   const chainConverter = new ChainConverter(config.chains)
+  const discoveryOutputCache = new DiscoveryOutputCache()
+
   const updateNotifier = new UpdateNotifier(
     peripherals.database,
     discordClient,
@@ -48,9 +51,13 @@ export function createUpdateMonitorModule(
     updateMessagesService,
     config.updateMonitor.disabledChains,
   )
-
   const updateDiffer = config.updateMonitor.updateDifferEnabled
-    ? new UpdateDiffer(configReader, peripherals.database, logger)
+    ? new UpdateDiffer(
+        configReader,
+        peripherals.database,
+        discoveryOutputCache,
+        logger,
+      )
     : undefined
 
   // TODO: get rid of that once we achieve full library separation
@@ -78,6 +85,7 @@ export function createUpdateMonitorModule(
     peripherals.database,
     clock,
     chainConverter,
+    discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
   )

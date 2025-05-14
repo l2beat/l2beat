@@ -1,0 +1,15 @@
+{
+  "description": "Verifier contract for SGX proven blocks.",
+  "ignoreInWatchMode": ["nextInstanceId"],
+  "ignoreMethods": ["getPastTotalSupply", "instances"],
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  }
+}

@@ -1,0 +1,434 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "TaikoL1Contract",
+  "category": "core",
+  "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",
+  "ignoreInWatchMode": [
+    "getStateVariables",
+    "getLastSyncedBlock",
+    "getLastVerifiedBlock",
+    "state",
+    "lastProposedIn"
+  ],
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    },
+    // Harcoded values for names, is there a better way?
+    "automata_dcap_attestation": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000",
+          "false"
+        ] // bytes32("automata_dcap_attestation");
+      }
+    },
+    "bond_token": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x626f6e645f746f6b656e00000000000000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "bridge": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x6272696467650000000000000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("bridge");
+      }
+    },
+    "bridge_watchdog": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x6272696467655f7761746368646f670000000000000000000000000000000000",
+          "false"
+        ] // bytes32("bridge_watchdog");
+      }
+    },
+    "bridged_erc1155": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x627269646765645f657263313135350000000000000000000000000000000000",
+          "false"
+        ] // bytes32("bridged_erc1155");
+      }
+    },
+    "bridged_erc20": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x627269646765645f657263323000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("bridged_erc20");
+      }
+    },
+    "bridged_erc721": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x627269646765645f657263373231000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("bridged_erc721");
+      }
+    },
+    "chain_watchdog": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x636861696e5f7761746368646f67000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("chain_watchdog");
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "as the chain watchdog, it can pause proving of blocks."
+        }
+      ]
+    },
+    "erc1155_vault": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x657263313135355f7661756c7400000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("erc1155_vault");
+      }
+    },
+    "erc20_vault": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x65726332305f7661756c74000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("erc20_vault");
+      }
+    },
+    "erc721_vault": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x6572633732315f7661756c740000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("erc721_vault");
+      }
+    },
+    "preconf_task_manager": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x707265636f6e665f7461736b5f6d616e61676572000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "prover_assignment": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x50524f5645525f41535349474e4d454e54000000000000000000000000000000",
+          "false"
+        ] // bytes32("prover_assignment");
+      }
+    },
+    "prover_set": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x70726f7665725f73657400000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("prover_set");
+      }
+    },
+    "quota_manager": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x71756f74615f6d616e6167657200000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("quota_manager");
+      }
+    },
+    "sgx_watchdog": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x7367785f7761746368646f670000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("sgx_watchdog");
+      }
+    },
+    "signal_service": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x7369676e616c5f73657276696365000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("signal_service");
+      }
+    },
+    "sp1_remote_verifier": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x7370315f72656d6f74655f766572696669657200000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "taiko": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x7461696b6f000000000000000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("taiko");
+      }
+    },
+    "taiko_token": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("taiko_token");
+      }
+    },
+    "tier_router": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f726f75746572000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("tier_router");
+      }
+    },
+    "verifier_TIER_GUARDIAN": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f677561726469616e00000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("tier_guardian")
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Guardians, acting as a multisig, can prove blocks on the highest tier."
+        }
+      ]
+    },
+    "verifier_TIER_GUARDIAN_MINORITY": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+          "false"
+        ] // bytes32("tier_guardian_minority")
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Minority guardians can prove blocks on the second highest tier."
+        }
+      ]
+    },
+    "verifier_TIER_OPTIMISTIC": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_TIER_SGX": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f736778000000000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("tier_sgx")
+      }
+    },
+    "verifier_TIER_TDX": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f746478000000000000000000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_TIER_TEE_ANY": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f7465655f616e790000000000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_TIER_ZKVM_RISC0": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_TIER_ZKVM_SP1": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_TIER_ZKVM_ANY": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f7a6b766d5f616e7900000000000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_TIER_ZKVM_AND_TEE": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "verifier_RISCZERO_GROTH16_VERIFIER": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x72697363305f67726f746831365f766572696669657200000000000000000000",
+          "false"
+        ]
+      }
+    },
+    "withdrawer": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x7769746864726177657200000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("withdrawer");
+      }
+    },
+    "return_liveness_bond": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x52455455524e5f4c4956454e4553535f424f4e44000000000000000000000000",
+          "false"
+        ] // bytes32("RETURN_LIVENESS_BOND");
+      }
+    },
+    "signal_root": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x5349474e414c5f524f4f54000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("SIGNAL_ROOT");
+      }
+    },
+    "state_root": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x53544154455f524f4f5400000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("STATE_ROOT");
+      }
+    },
+    // recently removed
+    "assignment_hook": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x61737369676e6d656e745f686f6f6b0000000000000000000000000000000000",
+          "false"
+        ] // bytes32("assignment_hook");
+      }
+    },
+    // still resolving but unused
+    "proposer": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x70726f706f736572000000000000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("proposer");
+      }
+    },
+    "proposer_one": {
+      "handler": {
+        "type": "call",
+        "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+        "args": [
+          "0x70726f706f7365725f6f6e650000000000000000000000000000000000000000",
+          "false"
+        ] // bytes32("proposer_one");
+      }
+    }
+  }
+}
