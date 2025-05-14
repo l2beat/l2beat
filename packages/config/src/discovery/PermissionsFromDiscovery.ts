@@ -1,13 +1,21 @@
-import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
+import type {
+  EntryParameters,
+  Permission,
+  ReceivedPermission,
+} from '@l2beat/discovery'
 import { type EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import { UltimatePermissionToPrefix } from './descriptions'
+import {
+  DirectPermissionToPrefix,
+  UltimatePermissionToPrefix,
+} from './descriptions'
 import {
   formatPermissionCondition,
   formatPermissionDelay,
+  formatPermissionDescription,
   isMultisigLike,
   trimTrailingDots,
 } from './utils'
@@ -131,12 +139,64 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
   describePermissions(
     contractOrEoa: EntryParameters,
-    _includeDirectPermissions: boolean = true,
+    includeDirectPermissions: boolean = true,
   ) {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
     const legacy = this.describeLegacyPermissions(contractOrEoa)
-    return [...upgrade, ...interact, ...legacy].filter((s) => s !== '')
+    const direct = includeDirectPermissions
+      ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+      : []
+    return [...direct, ...upgrade, ...interact, ...legacy].filter(
+      (s) => s !== '',
+    )
+  }
+
+  describeDirectlyReceivedPermissions(
+    contractOrEoa: EntryParameters,
+  ): string[] {
+    return Object.entries(
+      groupBy(
+        contractOrEoa.directlyReceivedPermissions ?? [],
+        (value: ReceivedPermission) =>
+          [
+            value.permission,
+            value.description ?? '',
+            value.condition ?? '',
+            value.delay?.toString() ?? '',
+          ].join('►'),
+      ),
+    ).map(([key, entries]) => {
+      const permission = key.split('►')[0] as Permission
+      const description = key.split('►')[1] ?? ''
+      const condition = key.split('►')[2] ?? ''
+      const delay = key.split('►')[3] ?? ''
+      const permissionsRequiringTarget: Permission[] = [
+        'interact',
+        'upgrade',
+        'act',
+      ]
+      const showTargets = permissionsRequiringTarget.includes(permission)
+      const addressesString = showTargets
+        ? entries
+            .map(
+              (entry) =>
+                this.projectDiscovery.getContract(entry.from.toString()).name,
+            )
+            .join(', ')
+        : ''
+
+      return `${[
+        DirectPermissionToPrefix[permission],
+        addressesString,
+        formatPermissionDescription(description),
+        formatPermissionCondition(condition),
+        delay === '' ? '' : formatPermissionDelay(Number(delay)),
+      ]
+        .filter((s) => s !== '')
+        .join(' ')
+        .trim()}.`
+    })
   }
 
   getUpgradableBy(

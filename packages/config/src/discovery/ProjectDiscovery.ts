@@ -801,7 +801,7 @@ export class ProjectDiscovery {
 
     const allActors: ProjectPermission[] = []
     for (const contract of permissionedContracts) {
-      const descriptions = this.describeContractOrEoa(contract, true)
+      const descriptions = this.describeContractOrEoa(contract, false)
       if (isMultisigLike(contract)) {
         allActors.push(
           this.getMultisigPermission(
