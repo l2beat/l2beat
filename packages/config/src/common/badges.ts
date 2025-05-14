@@ -392,7 +392,7 @@ export const badges = [
     },
   },
   {
-    id: 'Agglayer',
+    id: 'AggLayer',
     type: BadgeType.Infra,
     name: 'Part of the Agglayer',
     description:
@@ -400,7 +400,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'infrastructure',
-      value: 'Agglayer',
+      value: 'AggLayer',
     },
   },
   {
