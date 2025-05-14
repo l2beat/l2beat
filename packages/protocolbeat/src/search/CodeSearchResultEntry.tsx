@@ -80,11 +80,11 @@ export interface CodeSearchTerm {
 }
 
 export function isCodeSearchTerm(searchTerm: string): boolean {
-    if(isReadOnly) {
-        return false
-    }
+  if (isReadOnly) {
+    return false
+  }
 
-    return searchTerm.startsWith('%')
+  return searchTerm.startsWith('%')
 }
 
 export function getCodeSearchTerm(searchTerm: string): CodeSearchTerm {
