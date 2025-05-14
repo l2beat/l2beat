@@ -476,7 +476,8 @@ export const badges = [
     id: 'CDKErigon',
     type: BadgeType.Stack,
     name: 'Built on the CDK Erigon stack',
-    description: 'The project is built on the CDK Erigon stack',
+    description:
+      'The project is built using the multistack Agglayer CDK, and is based on the Erigon stack',
     action: {
       type: 'scalingFilter',
       id: 'stack',
