@@ -26,7 +26,7 @@ export const shape: ScalingProject = opStackL2({
         'https://superbridge.app/shape-mainnet',
         'https://shape-mainnet.bridge.alchemy.com/',
       ],
-      documentation: ['https://docs.shape.network/documentation/introduction'],
+      documentation: ['https://docs.shape.network/building-on-shape/gasback'],
       explorers: ['https://shapescan.xyz/'],
       repositories: ['https://github.com/shape-network'],
       socialMedia: [
