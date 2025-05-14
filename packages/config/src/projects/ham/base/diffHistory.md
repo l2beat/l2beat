@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xddf9b3dd7565d0403e6ce30c36981259916fed67
+
+# Diff at Wed, 14 May 2025 15:07:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 22580368
+- current block number: 30222936
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA:
++        {"isSequencerSendingBlobTx":false,"isUsingCelestia":true,"isUsingEigenDA":false}
+      errors:
+-        {"opStackDA":"Processing error occurred."}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22580368 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA:
+-        {"isSequencerSendingBlobTx":false,"isUsingCelestia":true,"isUsingEigenDA":false}
+      errors:
++        {"opStackDA":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0xfcf81a41e15580e21257f461b9e08725ac8fa118
 
 # Diff at Tue, 29 Apr 2025 08:19:23 GMT:
