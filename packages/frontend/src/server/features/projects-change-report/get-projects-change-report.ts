@@ -124,13 +124,3 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
     hasUltimateUpgraderChanged: () => false,
   }
 }
-
-export function toAddressArray(value: string | string[] | undefined) {
-  if (typeof value === 'string') {
-    return [value as unknown as EthereumAddress]
-  }
-  if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
-    return value.map((v) => v as unknown as EthereumAddress)
-  }
-  return []
-}
