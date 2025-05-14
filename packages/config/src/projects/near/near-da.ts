@@ -49,8 +49,8 @@ export const near: BaseProject = {
     are randomly generated. For each block on the main chain, and for every shard, one of the assigned chunk producers is responsible to produce the part of the main chain block
     related to the shard, and share the chunk header with the network. Finality is determined by the NFG (Nightshade finality gadget), and after 2 consecutive blocks are built on the same fork the t-2 block is considered final.
     Reverting a finalized block will require at least 1/3 of the total stake to be slashed.`, // this is not shown anywhere in the UI, and maybe we don't need it
-      blockTime: 1.2, // seconds average
-      consensusFinality: 2.4, // NFG (Nightshade finality gadget, after 2 consecutive blocks are built on the same fork we consider the t-2 block final, thus transactions belonging to t-2 are final )
+      blockTime: 600, // seconds average
+      consensusFinality: 1.2, // NFG (Nightshade finality gadget, after 2 consecutive blocks are built on the same fork we consider the t-2 block final, thus transactions belonging to t-2 are final )
       unbondingPeriod: 86400 * 2, // up to 48 hours
     },
     technology: {
@@ -157,6 +157,11 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
         frequency: 1, // 32 MiB/s
         sinceTimestamp: 1742342400, // 2025-03-19
       },
+      {
+        size: 33554432, // 32 MiB , 4MiB per 8 shards
+        frequency: 0.6, // 32 MiB/s
+        sinceTimestamp: 1747141200, // 2025-05-13
+      },
     ],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
@@ -173,10 +178,17 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
   },
   milestones: [
     {
-      title: 'Near upgrades to 8 shards',
+      title: 'NEAR reduces block time to 600ms',
+      url: 'https://pages.near.org/blog/blink-and-its-final-near-launches-600ms-blocks-and-1-2s-finality/',
+      date: '2025-05-13T00:00:00Z',
+      description: 'NEAR reduces block time to 600ms, achieving finality in 1.2 seconds.',
+      type: 'general',
+    },
+    {
+      title: 'NEAR upgrades to 8 shards',
       url: 'https://x.com/NEARProtocol/status/1903780872760988037',
       date: '2025-03-19T00:00:00Z',
-      description: 'Near upgrades from 6 to 8 shards.',
+      description: 'NEAR upgrades from 6 to 8 shards.',
       type: 'general',
     },
     {
