@@ -42,6 +42,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeUpgradePermissions(contractOrEoa: EntryParameters) {
+    // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
+
     const upgradePermissions = (contractOrEoa.receivedPermissions ?? []).filter(
       (p) => p.permission === 'upgrade',
     )
@@ -80,6 +82,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeInteractPermissions(contractOrEoa: EntryParameters) {
+    // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
+
     const interactPermissions = (
       contractOrEoa.receivedPermissions ?? []
     ).filter((p) => p.permission === 'interact')
