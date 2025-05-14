@@ -160,7 +160,7 @@
       "handler": {
         "type": "accessControl",
         "roleNames": {
-          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "SECURITY_AGENT"
+          "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_AGENT"
         },
         "pickRoleMembers": "SECURITY_AGENT"
       },

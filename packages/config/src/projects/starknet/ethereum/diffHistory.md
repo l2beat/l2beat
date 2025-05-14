@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x188c8c9d994f860666f20d4b4ea2c7000ed9e75e
+Generated with discovered.json: 0xa545d298768594f963a99d989c055fc3763c6981
 
-# Diff at Tue, 13 May 2025 06:30:22 GMT:
+# Diff at Wed, 14 May 2025 10:18:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5ba28053edf7fe0e2de7e027498320d49e46c825 block: 22465335
-- current block number: 22472316
+- comparing to: main@03d2420745f9fd123e05c87dd48abe70f160c805 block: 22465335
+- current block number: 22480764
 
 ## Description
 
@@ -312,33 +312,50 @@ discovery. Values are for block 22465335 (main branch discovery), not current.
 ```diff
     contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
     +++ description: None
-      receivedPermissions.5.from:
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"}
+      receivedPermissions.7.from:
 -        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      receivedPermissions.6.permission:
+-        "governStarknet"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
 +        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
       receivedPermissions.5.description:
 -        "disable the withdrawal limit."
-+        "disable the withdrawal limit and manage the security agent role that can enable it."
+      receivedPermissions.4.permission:
+-        "interact"
++        "governStarknet"
       receivedPermissions.4.from:
 -        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
-+        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
       receivedPermissions.4.description:
 -        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
-+        "disable the withdrawal limit and manage the security agent role that can enable it."
       receivedPermissions.3.description:
 -        "disable the withdrawal limit and manage the security agent role which can enable it."
-+        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "disable the withdrawal limit and manage the security agent role that can enable it."
       receivedPermissions.2.from:
 -        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
 +        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
       receivedPermissions.2.description:
 -        "enable the withdrawal limit."
-+        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "disable the withdrawal limit and manage the security agent role that can enable it."
       receivedPermissions.1.from:
 -        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
 +        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       receivedPermissions.0.description:
 -        "manage critical access control roles and the role that can upgrade the implementation."
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
     }
 ```
 
@@ -361,6 +378,15 @@ discovery. Values are for block 22465335 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.secAgentAC.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+    }
+```
+
+```diff
     contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
     +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
       fieldMeta.govAdminAC.description:
@@ -372,6 +398,11 @@ discovery. Values are for block 22465335 (main branch discovery), not current.
 ```diff
     contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
     +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.secAgentAC.1:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.secAgentAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
       fieldMeta.govAdminAC.description:
 -        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -381,6 +412,9 @@ discovery. Values are for block 22465335 (main branch discovery), not current.
 ```diff
     contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
     +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.secAgentAC.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
       fieldMeta.govAdminAC.description:
 -        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -438,6 +472,24 @@ discovery. Values are for block 22465335 (main branch discovery), not current.
       fieldMeta.govAdminAC.description:
 -        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"operateStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"enable the withdrawal limit."}
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.0.description:
++        "enable the withdrawal limit."
     }
 ```
 

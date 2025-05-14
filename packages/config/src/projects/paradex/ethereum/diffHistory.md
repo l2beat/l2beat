@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x27c807b847ea62f2331840e011c42afff1e3446f
+Generated with discovered.json: 0x1cd43254e2d3337e98f3b1095120dc0cbe3b13d0
 
-# Diff at Tue, 13 May 2025 06:29:33 GMT:
+# Diff at Wed, 14 May 2025 10:18:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5ba28053edf7fe0e2de7e027498320d49e46c825 block: 22467133
+- comparing to: main@03d2420745f9fd123e05c87dd48abe70f160c805 block: 22467133
 - current block number: 22467133
 
 ## Description
@@ -17,8 +17,19 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22467133 (main branch discovery), not current.
 
 ```diff
+    EOA  (0x0000000000000000000000000000000000000020) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."}]
+    }
+```
+
+```diff
     contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
     +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.secAgentAC.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "0x0000000000000000000000000000000000000020"
       fieldMeta.govAdminAC.description:
 -        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -28,15 +39,19 @@ discovery. Values are for block 22467133 (main branch discovery), not current.
 ```diff
     contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
     +++ description: None
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
       receivedPermissions.2.description:
 -        "disable the withdrawal limit."
-+        "disable the withdrawal limit and manage the security agent role that can enable it."
       receivedPermissions.1.description:
 -        "enable the withdrawal limit."
-+        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "disable the withdrawal limit and manage the security agent role that can enable it."
       receivedPermissions.0.description:
 -        "manage critical access control roles and the role that can upgrade the implementation."
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
     }
 ```
 
