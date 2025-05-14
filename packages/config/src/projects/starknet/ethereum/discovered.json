@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 22480922,
-  "configHash": "0xdc5bd8c0d39a283f9a1efa6f0a449fbd5441e6e97c7afcb1b9b5b5bacb2cf504",
+  "configHash": "0x290bc363dddc1c29fbaf21e9802d08d2ef037b7a5e4330dae7f37c6acf30cf73",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -559,7 +559,13 @@
       "implementationNames": {
         "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "references": [
+        {
+          "text": "Security Council members - Starkware Governance Hub",
+          "href": "https://governance.starknet.io/learn/security_council"
+        }
+      ]
     },
     {
       "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",

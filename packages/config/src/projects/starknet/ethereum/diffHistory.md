@@ -1,12 +1,31 @@
-Generated with discovered.json: 0x953c88a864e78572e5a7713b29e4bd6345ed3060
+Generated with discovered.json: 0xefe11bffd408c4cf6b5826c42b661dc92f334c79
 
-# Diff at Wed, 14 May 2025 11:06:50 GMT:
+# Diff at Wed, 14 May 2025 11:39:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@03d2420745f9fd123e05c87dd48abe70f160c805 block: 22465335
 - current block number: 22480922
 
 ## Description
+
+Stage 1 review:
+upgrades:
+
+- **Security Council** without delay, **Starkware MS** with 8d delay: Starknet, ETHBridge, STRKBridge
+- **Starkware MS** with 8d delay: SHARP Verifier (SC could do the immediate upgrade by deploying a new proxy and switch the verifier)
+- **Starkware MS** without delay: almost all other bridge escrows
+
+permissions:
+
+- operate (`updateState()`, `updateStateKZGDA()` ) in Starknet contract with valid proof): **EOA**, **Security Council minority**
+- enable withdrawal limit in ETHBridge, STRKBridge: **Starkware MS**
+- disable, revoke withdrawal limit in ETHBridge, STRKBridge: **Security Council minority**
+
+principle edge cases:
+
+- the SC minority must actively guarantee censorship resistance for the user
+    - by being a permissioned operator
+    - by removing the withdrawal delay when needed
 
 Config: standardized the many templates.
 
@@ -347,6 +366,8 @@ discovery. Values are for block 22465335 (main branch discovery), not current.
       receivedPermissions.0.description:
 -        "manage critical access control roles and the role that can upgrade the implementation."
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      references:
++        [{"text":"Security Council members - Starkware Governance Hub","href":"https://governance.starknet.io/learn/security_council"}]
     }
 ```
 

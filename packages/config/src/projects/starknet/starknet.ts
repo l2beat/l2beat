@@ -285,6 +285,8 @@ export const starknet: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
+      securityCouncilReference:
+        'https://governance.starknet.io/learn/security_council',
     },
   ),
   technology: {
