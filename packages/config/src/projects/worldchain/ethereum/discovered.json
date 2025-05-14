@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 22437751,
+  "blockNumber": 22481876,
   "configHash": "0x662adeced571c83582de151abf249378250f8031715eed43421f2d98e184d55f",
   "entries": [
     {
@@ -72,7 +72,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2887,
+        "gameCount": 3035,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -82,7 +82,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 2887,
+        "permissionedGamesTotal": 3035,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -773,7 +773,7 @@
         "disputeGameFactory": "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea",
         "eip1559Denominator": 250,
         "eip1559Elasticity": 2,
-        "gasLimit": 30000000,
+        "gasLimit": 33000000,
         "gasPayingToken": {
           "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
           "decimals_": 18
@@ -1386,8 +1386,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1301449,
-          "prevBlockNum": 22437692
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 22481800
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1560,7 +1560,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639136",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640039",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
