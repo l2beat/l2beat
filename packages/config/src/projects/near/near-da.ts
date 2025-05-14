@@ -49,7 +49,7 @@ export const near: BaseProject = {
     are randomly generated. For each block on the main chain, and for every shard, one of the assigned chunk producers is responsible to produce the part of the main chain block
     related to the shard, and share the chunk header with the network. Finality is determined by the NFG (Nightshade finality gadget), and after 2 consecutive blocks are built on the same fork the t-2 block is considered final.
     Reverting a finalized block will require at least 1/3 of the total stake to be slashed.`, // this is not shown anywhere in the UI, and maybe we don't need it
-      blockTime: 600, // seconds average
+      blockTime: 0.6, // seconds average
       consensusFinality: 1.2, // NFG (Nightshade finality gadget, after 2 consecutive blocks are built on the same fork we consider the t-2 block final, thus transactions belonging to t-2 are final )
       unbondingPeriod: 86400 * 2, // up to 48 hours
     },
@@ -181,7 +181,8 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       title: 'NEAR reduces block time to 600ms',
       url: 'https://pages.near.org/blog/blink-and-its-final-near-launches-600ms-blocks-and-1-2s-finality/',
       date: '2025-05-13T00:00:00Z',
-      description: 'NEAR reduces block time to 600ms, achieving finality in 1.2 seconds.',
+      description:
+        'NEAR reduces block time to 600ms, achieving finality in 1.2 seconds.',
       type: 'general',
     },
     {
