@@ -159,7 +159,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       },
       {
         size: 33554432, // 32 MiB , 4MiB per 8 shards
-        frequency: 0.6, // 32 MiB/s
+        frequency: 0.6, // 600ms block time
         sinceTimestamp: 1747141200, // 2025-05-13
       },
     ],
