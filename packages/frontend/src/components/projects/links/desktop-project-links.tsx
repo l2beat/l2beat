@@ -15,13 +15,20 @@ import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
 import type { ProjectLink } from './types'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { DiscoUiLink } from './disco-ui-link'
 
 interface Props {
   projectLinks: ProjectLink[]
   variant: 'primary' | 'header'
+  projectId?: ProjectId
 }
 
-export function DesktopProjectLinks({ projectLinks, variant }: Props) {
+export function DesktopProjectLinks({
+  projectLinks,
+  variant,
+  projectId,
+}: Props) {
   return (
     <NavigationMenu asChild>
       <div>
@@ -33,6 +40,7 @@ export function DesktopProjectLinks({ projectLinks, variant }: Props) {
               variant={variant}
             />
           ))}
+          {projectId && <DiscoUiLink projectId={projectId} />}
         </NavigationMenuList>
       </div>
     </NavigationMenu>
@@ -42,7 +50,10 @@ export function DesktopProjectLinks({ projectLinks, variant }: Props) {
 function ProjectLinkItem({
   projectLink,
   variant,
-}: { projectLink: ProjectLink; variant: 'primary' | 'header' }) {
+}: {
+  projectLink: ProjectLink
+  variant: 'primary' | 'header'
+}) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
       <NavigationMenuItem>

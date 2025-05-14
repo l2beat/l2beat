@@ -47,6 +47,7 @@ import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
 
 export interface ProjectScalingEntry {
+  id: ProjectId
   type: 'layer3' | 'layer2'
   name: string
   slug: string
@@ -182,6 +183,7 @@ export async function getScalingProjectEntry(
 
   const changes = projectsChangeReport.getChanges(project.id)
   const common = {
+    id: project.id,
     type: project.scalingInfo.layer,
     name: project.name,
     slug: project.slug,

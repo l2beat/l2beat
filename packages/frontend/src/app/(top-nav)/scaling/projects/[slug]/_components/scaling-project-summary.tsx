@@ -15,6 +15,8 @@ import { getUnderReviewText } from '~/utils/project/under-review'
 import { ProjectScalingRosette } from './scaling-project-rosette'
 import { ProjectScalingStats } from './scaling-project-stats'
 import { ValueSecuredSummary } from './value-secured-summary'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
+import Link from 'next/link'
 
 interface Props {
   project: ProjectScalingEntry
@@ -74,6 +76,7 @@ export function ProjectScalingSummary({ project }: Props) {
               <DesktopProjectLinks
                 projectLinks={project.header.links}
                 variant="header"
+                projectId={project.id}
               />
             </div>
             <div className="grid w-full md:gap-3 xl:grid-cols-3 [@media(min-width:1000px)]:grid-cols-[260px_1fr_1fr] [@media(min-width:1300px)]:grid-cols-[300px_1fr_1fr]">
@@ -92,7 +95,20 @@ export function ProjectScalingSummary({ project }: Props) {
           <ProjectScalingRosette project={project} />
         </div>
 
-        <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
+        <div className="md:hidden">
+          <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
+          <div className="flex items-center justify-between">
+            <Link
+              className="text-xs text-link underline"
+              href={`https://disco.l2beat.com/ui/p/${project.id}`}
+            >
+              Explore more in Discovery UI
+            </Link>
+            {project.id && <DiscoUiLink projectId={project.id} />}
+          </div>
+        </div>
+
+        <HorizontalSeparator className="mt-2 max-md:-mx-4 max-md:w-screen md:my-6" />
         <div className="md:hidden">
           <MobileProjectLinks projectLinks={project.header.links} />
         </div>
