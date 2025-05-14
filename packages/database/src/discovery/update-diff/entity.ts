@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { UpdateDiff } from '../../kysely/generated/types'
 
-export type UpdateDiffType =
+type UpdateDiffType =
   | 'ultimateUpgraderChange'
   | 'implementationChange'
   | 'highSeverityFieldChange'
