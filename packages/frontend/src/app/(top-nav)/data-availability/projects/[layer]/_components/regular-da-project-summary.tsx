@@ -10,6 +10,8 @@ import type { ProjectStat } from './da-project-stats'
 import { DaProjectStats, getCommonDaProjectStats } from './da-project-stats'
 import { MultipleBridgeDetails } from './multiple-bridge-details'
 import { SingleBridgeDetails } from './single-bridge-details'
+import Link from 'next/link'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 
 interface Props {
   project: DaProjectPageEntry
@@ -49,6 +51,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                     <DesktopProjectLinks
                       projectLinks={project.header.links}
                       variant="header"
+                      projectId={project.discoUiLinkId}
                     />
                   </div>
                   <DaProjectStats
@@ -74,6 +77,23 @@ export function RegularDaProjectSummary({ project }: Props) {
               </div>
             )}
           </div>
+
+          {project.discoUiLinkId && (
+            <div className="-mb-4 md:hidden">
+              <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
+              <div className="flex items-center justify-between">
+                <Link
+                  className="text-xs text-link underline"
+                  href={`https://disco.l2beat.com/ui/p/${project.discoUiLinkId}`}
+                >
+                  Explore more in Discovery UI
+                </Link>
+                {project.discoUiLinkId && (
+                  <DiscoUiLink projectId={project.discoUiLinkId} />
+                )}
+              </div>
+            </div>
+          )}
 
           <div className="flex flex-col">
             <div>

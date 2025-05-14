@@ -22,6 +22,7 @@ import {
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
 import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
+import type { ProjectId } from '@l2beat/shared-pure'
 
 interface CommonDaProjectPageEntry {
   name: string
@@ -40,6 +41,7 @@ interface CommonDaProjectPageEntry {
 
 export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
   entryType: 'common'
+  discoUiLinkId?: ProjectId
   selectedBridge: {
     name: string
     slug: string
@@ -155,6 +157,7 @@ export async function getDaProjectEntry(
   const result: DaProjectPageEntry = {
     entryType: 'common',
     name: layer.name,
+    discoUiLinkId: selected?.id,
     slug: layer.slug,
     icon: getProjectIcon(layer.slug),
     kind: layer.daLayer.type,
