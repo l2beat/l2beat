@@ -72,35 +72,6 @@ describe(UpdateDiffer.name, () => {
   })
 
   describe(UpdateDiffer.prototype.runForProject.name, () => {
-    it('should not insert update diffs if there are no changes', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
-        insertMany: async () => 0,
-        deleteByProjectAndChain: async () => {},
-      })
-
-      const updateDiffer = new UpdateDiffer(
-        mockObject<ConfigReader>({
-          readDiscovery: mockFn().returns(mockProject),
-        }),
-        mockObject<Database>({
-          updateDiff: updateDiffRepository,
-        }),
-        mockObject<DiscoveryOutputCache>({
-          get: mockFn().returns({ entries: [] }),
-        }),
-        Logger.SILENT,
-      )
-      updateDiffer.getUpdateDiffs = mockFn().returns([])
-
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
-
-      expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
-        PROJECT_A,
-        'ethereum',
-      )
-      expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
-    })
-
     it('should insert update diffs', async () => {
       const updateDiffRepository = mockObject<UpdateDiffRepository>({
         insertMany: async () => 0,
@@ -154,6 +125,72 @@ describe(UpdateDiffer.name, () => {
         'ethereum',
       )
       expect(updateDiffRepository.insertMany).toHaveBeenCalledWith(updateDiffs)
+    })
+
+    it('should not insert update diffs if there are no changes', async () => {
+      const updateDiffRepository = mockObject<UpdateDiffRepository>({
+        insertMany: async () => 0,
+        deleteByProjectAndChain: async () => {},
+      })
+
+      const updateDiffer = new UpdateDiffer(
+        mockObject<ConfigReader>({
+          readDiscovery: mockFn().returns(mockProject),
+        }),
+        mockObject<Database>({
+          updateDiff: updateDiffRepository,
+        }),
+        mockObject<DiscoveryOutputCache>({
+          get: mockFn().returns({ entries: [] }),
+        }),
+        Logger.SILENT,
+      )
+      updateDiffer.getUpdateDiffs = mockFn().returns([])
+
+      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+
+      expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
+        PROJECT_A,
+        'ethereum',
+      )
+      expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
+    })
+
+    it('should skip if on disk discovery is newer', async () => {
+      const updateDiffRepository = mockObject<UpdateDiffRepository>({
+        insertMany: async () => 0,
+        deleteByProjectAndChain: async () => {},
+      })
+      const dbTransaction = mockFn(async (fun) => await fun())
+
+      const updateDiffer = new UpdateDiffer(
+        mockObject<ConfigReader>({
+          readDiscovery: mockFn().returns({
+            ...mockProject,
+            blockNumber: 2,
+          }),
+        }),
+        mockObject<Database>({
+          transaction: dbTransaction,
+          updateDiff: updateDiffRepository,
+        }),
+        mockObject<DiscoveryOutputCache>({
+          get: mockFn().returns({ entries: [], blockNumber: 1 }),
+        }),
+        Logger.SILENT,
+      )
+
+      const getUpdateDiffsMock = mockFn()
+      updateDiffer.getUpdateDiffs = getUpdateDiffsMock
+
+      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+
+      expect(dbTransaction).not.toHaveBeenCalled()
+      expect(getUpdateDiffsMock).not.toHaveBeenCalled()
+      expect(
+        updateDiffRepository.deleteByProjectAndChain,
+      ).not.toHaveBeenCalled()
+      expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
     })
   })
 

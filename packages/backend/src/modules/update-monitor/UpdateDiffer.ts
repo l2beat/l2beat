@@ -52,6 +52,17 @@ export class UpdateDiffer {
       return
     }
 
+    if (onDiskDiscovery.blockNumber > latestDiscovery.blockNumber) {
+      this.logger.info(
+        'On disk discovery is newer than latest discovery. Skipping.',
+        {
+          projectName,
+          chain,
+        },
+      )
+      return
+    }
+
     const onDiskContracts = [
       ...onDiskDiscovery.entries,
       ...(onDiskDiscovery.sharedModules ?? []).flatMap(
