@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import type { ApiCodeSearchResponse } from '../api/types'
 import { HighlightedText } from '../common/HighlightedText'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { isReadOnly } from '../config'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../panel-code/store'
 import { useSearchStore } from './store'
@@ -76,6 +77,14 @@ export function CodeSearchResultEntry({
 export interface CodeSearchTerm {
   content: string
   onSelectedAddress: boolean
+}
+
+export function isCodeSearchTerm(searchTerm: string): boolean {
+  if (isReadOnly) {
+    return false
+  }
+
+  return searchTerm.startsWith('%')
 }
 
 export function getCodeSearchTerm(searchTerm: string): CodeSearchTerm {
