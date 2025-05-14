@@ -1,7 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
 import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import type { DiscoveryDiff, DiscoveryOutput } from '@l2beat/discovery'
+import type {
+  DiscoveryDiff,
+  DiscoveryOutput,
+  EntryParameters,
+} from '@l2beat/discovery'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
@@ -85,7 +89,7 @@ export class UpdateDiffer {
 
     const updateDiffs = this.getUpdateDiffs(
       diff,
-      latestDiscovery,
+      latestContracts,
       projectName,
       chain,
       timestamp,
@@ -114,7 +118,7 @@ export class UpdateDiffer {
 
   getUpdateDiffs(
     diff: DiscoveryDiff[],
-    latestDiscovery: DiscoveryOutput,
+    latestContracts: EntryParameters[],
     projectName: string,
     chain: string,
     timestamp: UnixTime,
@@ -140,7 +144,7 @@ export class UpdateDiffer {
         }
         const index = parseInt(indexString)
 
-        const entry = latestDiscovery.entries.find(
+        const entry = latestContracts.find(
           (e) => e.address === discoveryDiff.address,
         )
 

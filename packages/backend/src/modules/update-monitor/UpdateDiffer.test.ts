@@ -219,7 +219,7 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
-        mockObject<DiscoveryOutput>(),
+        mockObject<EntryParameters[]>(),
         PROJECT_A,
         'ethereum',
         timestamp,
@@ -261,7 +261,7 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
-        mockObject<DiscoveryOutput>(),
+        mockObject<EntryParameters[]>(),
         PROJECT_A,
         'ethereum',
         timestamp,
@@ -318,7 +318,7 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
-        latestDiscovery,
+        latestDiscovery.entries,
         PROJECT_A,
         'ethereum',
         timestamp,
