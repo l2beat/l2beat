@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22474965,
+  "blockNumber": 22481930,
   "configHash": "0xddf472a2152a6f6bc1436e83c20e99ff1bd268c1c9efe5c10a56973048a6be67",
   "entries": [
     {
@@ -210,35 +210,35 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 1146591,
-          "blockHash_": "0x7c79ced6c30d30f6df0721cb047e25a20fb154fd486f4c7642bee318feef5b74",
-          "stateRoot_": "0xe5c6bd4b7f085225c72397665d63f8c54b1766961a0d8bfe235f15a8b75fa0a2",
-          "verifiedAt_": 1747123307
+          "blockId_": 1148703,
+          "blockHash_": "0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031",
+          "stateRoot_": "0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d",
+          "verifiedAt_": 1747209131
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1146603,
-          "blockHash_": "0x1afb3711a03f96f595164f5b82fdd354ca8a12effb3bb55e64e3085e8698f5f9",
-          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1747123307
+          "blockId_": 1148703,
+          "blockHash_": "0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031",
+          "stateRoot_": "0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d",
+          "verifiedAt_": 1747209131
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1146591,
-            "lastSynecdAt": 1747138571
+            "lastSyncedBlockId": 1148703,
+            "lastSynecdAt": 1747226267
           },
           {
-            "numBlocks": 1147175,
-            "lastVerifiedBlockId": 1146603,
+            "numBlocks": 1149204,
+            "lastVerifiedBlockId": 1148703,
             "provingPaused": false,
-            "lastProposedIn": 22474965,
+            "lastProposedIn": 22481927,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 22474965,
+        "lastProposedIn": 22481927,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -260,14 +260,14 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1146591,
-            "lastSynecdAt": 1747138571
+            "lastSyncedBlockId": 1148703,
+            "lastSynecdAt": 1747226267
           },
           "slotB": {
-            "numBlocks": 1147175,
-            "lastVerifiedBlockId": 1146603,
+            "numBlocks": 1149204,
+            "lastVerifiedBlockId": 1148703,
             "provingPaused": false,
-            "lastProposedIn": 22474965,
+            "lastProposedIn": 22481927,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -354,7 +354,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "clock": 1747147307,
+        "clock": 1747232111,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1496,7 +1496,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37125,
+        "nextMessageId": 37131,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
