@@ -9,6 +9,7 @@ import { usePanelStore } from '../store/store'
 import {
   CodeSearchResultEntry,
   getCodeSearchTerm,
+  isCodeSearchTerm,
 } from './CodeSearchResultEntry'
 import { ContractSearchResultEntry } from './ContractSearchResultEntry'
 import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
@@ -56,7 +57,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   }, [selectedIndex])
 
   const searchTermDebounced = useDebounce(searchTerm, (term: string) => {
-    return term.startsWith('%') ? 350 : 0
+    return isCodeSearchTerm(term) ? 350 : 0
   })
 
   const { isError, isPending, data } = useQuery({
