@@ -136,10 +136,11 @@ export function LivenessCustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-40 flex-col">
+      <div className="flex w-fit flex-col">
         <div className="label-value-14-medium mb-1 whitespace-nowrap text-secondary">
           {formatTimestamp(timestamp, {
             longMonthName: true,
+            mode: 'datetime',
           })}
         </div>
         <HorizontalSeparator className="mt-1.5" />

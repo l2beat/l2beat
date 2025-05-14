@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { rangeToDays } from '~/utils/range/range-to-days'
 
 export const LivenessChartTimeRange = z.union([
   z.literal('7d'),
@@ -9,3 +10,10 @@ export const LivenessChartTimeRange = z.union([
   z.literal('max'),
 ])
 export type LivenessChartTimeRange = z.infer<typeof LivenessChartTimeRange>
+
+export function rangeToResolution(range: LivenessChartTimeRange) {
+  const days = rangeToDays(range)
+  if (days && days <= 7) return 'hourly'
+  if (days && days < 180) return 'sixHourly'
+  return 'daily'
+}

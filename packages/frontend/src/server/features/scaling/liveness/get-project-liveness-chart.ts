@@ -1,4 +1,3 @@
-import type { AggregatedLivenessRecord } from '@l2beat/database'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -12,8 +11,9 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
-import { LivenessChartTimeRange } from './utils/chart-range'
-import { getFullySyncedLivenessRange } from './utils/get-fully-synced-liveness-range'
+import { LivenessChartTimeRange, rangeToResolution } from './utils/chart-range'
+import groupBy from 'lodash/groupBy'
+import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 
 export type ProjectLivenessChartParams = z.infer<
   typeof ProjectLivenessChartParams
@@ -44,7 +44,13 @@ export type ProjectLivenessChartData = Awaited<
 export const getCachedProjectLivenessChartData = cache(
   async ({ range, subtype, projectId }: ProjectLivenessChartParams) => {
     const db = getDb()
-    const adjustedRange = getFullySyncedLivenessRange(range)
+    const target =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+
+    const resolution = rangeToResolution(range)
+    const [from, to] = getRangeWithMax(range, resolution, {
+      now: target,
+    })
 
     const [livenessProject] = await ps.getProjects({
       ids: [ProjectId(projectId)],
@@ -55,10 +61,10 @@ export const getCachedProjectLivenessChartData = cache(
     }
 
     const entries =
-      await db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
+      await db.aggregatedLiveness2.getByProjectAndSubtypeInTimeRange(
         ProjectId(projectId),
         subtype,
-        adjustedRange,
+        [from, to],
       )
 
     if (entries.length === 0) {
@@ -67,22 +73,31 @@ export const getCachedProjectLivenessChartData = cache(
       }
     }
 
-    const groupedByDay = new Map<number, AggregatedLivenessRecord>(
-      entries.map((e) => [e.timestamp, e]),
+    const groupedByResolution = groupBy(entries, (e) =>
+      UnixTime.toStartOf(
+        e.timestamp,
+        resolution === 'hourly'
+          ? 'hour'
+          : resolution === 'daily'
+            ? 'day'
+            : 'six hours',
+      ),
     )
 
-    const startTimestamp = Math.min(...entries.map((e) => e.timestamp))
-    const timestamps = generateTimestamps(
-      [UnixTime(startTimestamp), adjustedRange[1]],
-      'daily',
+    const startTimestamp = Math.min(
+      ...Object.keys(groupedByResolution).map(Number),
     )
+    const timestamps = generateTimestamps([startTimestamp, to], resolution, {
+      addTarget: true,
+    })
 
     const data = timestamps.map((timestamp) => {
-      const entry = groupedByDay.get(timestamp)
+      const entry = groupedByResolution[timestamp]
       if (!entry) {
         return [+timestamp, null, null, null] as const
       }
-      return [+timestamp, entry.min, entry.avg, entry.max] as const
+      const { min, max, avg } = calculateLivenessStats(entry)
+      return [+timestamp, min, avg, max] as const
     })
     return {
       data,
@@ -94,6 +109,21 @@ export const getCachedProjectLivenessChartData = cache(
     revalidate: UnixTime.HOUR,
   },
 )
+
+function calculateLivenessStats(entries: AggregatedLiveness2Record[]) {
+  let min = Infinity
+  let max = -Infinity
+  let weightedSum = 0
+  let totalCount = 0
+  for (const entry of entries) {
+    if (entry.min < min) min = entry.min
+    if (entry.max > max) max = entry.max
+    weightedSum += entry.avg * entry.numberOfRecords
+    totalCount += entry.numberOfRecords
+  }
+  const avg = Math.round(weightedSum / totalCount)
+  return { min, max, avg }
+}
 
 function getMockLivenessChart({
   range,
