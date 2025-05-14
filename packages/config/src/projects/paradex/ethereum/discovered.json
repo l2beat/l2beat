@@ -13,7 +13,7 @@
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         }
       ]
     },
@@ -207,8 +207,8 @@
         "messagingContract": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
-        "secAdminAC": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
-        "secAgentAC": ["0x0000000000000000000000000000000000000020"],
+        "secAdminAC": ["0x0000000000000000000000000000000000000020"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -411,11 +411,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
-        },
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
@@ -755,7 +750,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
-    "starknet/StarknetERC20Bridge": "0x133d55b3f810db62feadd95f00a3c7b77a7176b38fe7719b8ced3a2c61168e27"
+    "starknet/StarknetERC20Bridge": "0xc3489759a7d6cc51bf371412ce38269bf0ff4d6a41c64904199b48627f44768a"
   },
-  "permissionsConfigHash": "0x1fa07a530210033cd55a2d912eec2df9ca746ef6f261b9182aa69af9a355d04c"
+  "permissionsConfigHash": "0xd51dbed254114d1a85283c2046079945740ba213e17fa2f4e0401a280899c333"
 }
