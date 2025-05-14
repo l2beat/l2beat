@@ -34,6 +34,10 @@ export function ProjectSearchResultEntry({ entries }: { entries: string[] }) {
   )
 }
 
+export function isProjectSearchTerm(searchTerm: string): boolean {
+  return searchTerm.startsWith('@')
+}
+
 export function getProjectSearchTerm(searchTerm: string): string {
   return searchTerm.slice(1)
 }

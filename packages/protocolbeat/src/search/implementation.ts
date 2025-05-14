@@ -1,8 +1,11 @@
 import { QueryClient } from '@tanstack/react-query'
 import { getProject, getProjects, searchCode } from '../api/api'
 import type { ApiAddressEntry, ApiCodeSearchResponse } from '../api/types'
-import { getCodeSearchTerm } from './CodeSearchResultEntry'
-import { getProjectSearchTerm } from './ProjectSearchResultEntry'
+import { getCodeSearchTerm, isCodeSearchTerm } from './CodeSearchResultEntry'
+import {
+  getProjectSearchTerm,
+  isProjectSearchTerm,
+} from './ProjectSearchResultEntry'
 
 const queryClient = new QueryClient()
 
@@ -95,9 +98,9 @@ export async function searchQuery(
   searchTerm: string,
   selectedAddress: string | undefined,
 ): Promise<SearchResults> {
-  if (searchTerm.startsWith('%')) {
+  if (isCodeSearchTerm(searchTerm)) {
     return await searchCodeQuery(project, searchTerm, selectedAddress)
-  } else if (searchTerm.startsWith('@')) {
+  } else if (isProjectSearchTerm(searchTerm)) {
     return await searchProjectQuery(searchTerm)
   } else {
     return await serachContractQuery(project, searchTerm)
