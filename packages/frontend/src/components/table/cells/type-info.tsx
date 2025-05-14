@@ -78,9 +78,9 @@ export const providerMap: Record<
     Icon: ArbitrumIcon,
     text: "This project is based on Arbitrum's code base.",
   },
-  Polygon: {
+  'Agglayer CDK': {
     Icon: PolygonIcon,
-    text: "This project is based on Polygon's code base.",
+    text: "This project is based on Polygon's Agglayer CDK code base.",
   },
   'SN Stack': {
     Icon: StarknetIcon,
