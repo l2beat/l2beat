@@ -4,7 +4,7 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -27,6 +27,7 @@ import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associate
 import { getProjectIcon } from '../../utils/get-project-icon'
 
 export interface BridgesProjectEntry {
+  id: ProjectId
   name: string
   slug: string
   icon: string
@@ -89,6 +90,7 @@ export async function getBridgesProjectEntry(
   const changes = projectsChangeReport.getChanges(project.id)
 
   const common: Omit<BridgesProjectEntry, 'sections'> = {
+    id: project.id,
     name: project.name,
     slug: project.slug,
     icon: getProjectIcon(project.slug),
