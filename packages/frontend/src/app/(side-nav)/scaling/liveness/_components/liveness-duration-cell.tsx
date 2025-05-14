@@ -16,7 +16,7 @@ export function LivenessDurationCell(props: { durationInSeconds: number }) {
         ? `${getDurationText(hours, 'hour')} ${getDurationText(remainingMinutes, 'minute')}`
         : minutes > 0
           ? `${getDurationText(minutes, 'minute')}`
-          : `${getDurationText(seconds, 'second')}`
+          : `${seconds} ${pluralize(seconds, 'second')}`
 
   const colorClassName = getDurationColorClassName(seconds)
 
