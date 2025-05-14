@@ -65,7 +65,6 @@ export const molten: ScalingProject = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
       title: 'Mainnet Launch',
