@@ -579,7 +579,6 @@ export async function getScalingProjectEntry(
   const permissionsSection = getPermissionsSection(
     {
       id: project.id,
-      type: project.scalingInfo.layer,
       hostChain: hostChain?.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
@@ -603,7 +602,6 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      type: project.scalingInfo.layer,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,

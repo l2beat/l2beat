@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x44c5f81ab6ce15b0f2923249b3f6dedf3526cc1f
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 21995404
+- current block number: 21995404
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995404 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      fieldMeta.withdrawalDelay.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x58034f3aa66aadf0630ddff0fcc9b5a3a24ca473
 
 # Diff at Tue, 29 Apr 2025 08:19:04 GMT:

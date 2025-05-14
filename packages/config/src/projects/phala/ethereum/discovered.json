@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 22438139,
+  "blockNumber": 22467145,
   "configHash": "0x6bc4f523baa29bd659ba7beed2cc638ab5d690dad925ef31f188a8456fe941fd",
   "entries": [
     {
@@ -530,7 +530,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 98,
+        "nonce": 101,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1089,7 +1089,7 @@
         ],
         "$upgradeCount": 3,
         "additionalProposers": ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"],
-        "aggregationVkey": "0x001af5448a91ee21b97b3efdea14deb54acca359d368628d21bb4b14adabe552",
+        "aggregationVkey": "0x00a4fec570ddb93572e5312e1debb095562fea9ae099622c6f7c9d145d87517f",
         "challenger": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -1097,15 +1097,15 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1226460,
-        "latestOutputIndex": 329,
-        "nextBlockNumber": 1230780,
-        "nextOutputIndex": 330,
+        "latestBlockNumber": 1260660,
+        "latestOutputIndex": 335,
+        "nextBlockNumber": 1264980,
+        "nextOutputIndex": 336,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x5c50d96d27a21e1a4c24736d404c7ead0f4ee056517bbe2c32e2557a5bb44436",
+        "rangeVkeyCommitment": "0x5614b4dc4d7a1c33681c404a27aa1db265ea84b75047859667fed5a303a8dc43",
         "rollupConfigHash": "0x2aee88f2b7f9f1edfab6c535edeb8a7d969c162fe974650fc3c1e4d3c75ecb8b",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,

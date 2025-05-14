@@ -1438,7 +1438,7 @@
       },
       "fieldMeta": {
         "getBothCohorts": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
         }
       },

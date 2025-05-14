@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xcd106fd8dd30280b31fc620db3ebefb05c0f5329
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 22045311
+- current block number: 22045311
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045311 (main branch discovery), not current.
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      fieldMeta.proposalCount.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0x2379b5ebcc398c469cc9937e5708eea4785b9bd4
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

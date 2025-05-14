@@ -267,7 +267,7 @@ export const morph: ScalingProject = {
         {
           title:
             'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
-          url: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code#F1#L534',
+          url: 'https://etherscan.io/address/0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec#code#F1#L534',
         },
       ],
     },

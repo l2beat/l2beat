@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
   "ignoreInWatchMode": [
     "basefee",
@@ -7,6 +7,8 @@
     "number",
     "timestamp",
     "sequenceNumber",
-    "blobBaseFee"
+    "blobBaseFee",
+    "operatorFeeConstant", // operator fee = operatorFeeConstant + operatorFeeScalar * gasUsed / 1e6
+    "operatorFeeScalar"
   ]
 }

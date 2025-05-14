@@ -196,7 +196,7 @@
       },
       "fieldMeta": {
         "withdrawalDelay": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
           "type": "RISK_PARAMETER"
         },

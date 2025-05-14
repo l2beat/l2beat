@@ -5,9 +5,11 @@ import { useDebounce } from '../common/useDebounce'
 import { IconSearch } from '../icons/IconSearch'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../panel-code/store'
+import { usePanelStore } from '../store/store'
 import {
   CodeSearchResultEntry,
   getCodeSearchTerm,
+  isCodeSearchTerm,
 } from './CodeSearchResultEntry'
 import { ContractSearchResultEntry } from './ContractSearchResultEntry'
 import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
@@ -24,6 +26,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const navigate = useNavigate()
   const { ensurePanel } = useMultiViewStore()
   const { setSourceIndex, showRange } = useCodeStore()
+  const selectedAddress = usePanelStore((state) => state.selected)
   const {
     setOpen,
     searchTerm,
@@ -54,12 +57,12 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   }, [selectedIndex])
 
   const searchTermDebounced = useDebounce(searchTerm, (term: string) => {
-    return term.startsWith('%') ? 350 : 0
+    return isCodeSearchTerm(term) ? 350 : 0
   })
 
   const { isError, isPending, data } = useQuery({
-    queryKey: ['search', project, searchTermDebounced],
-    queryFn: () => searchQuery(project, searchTermDebounced),
+    queryKey: ['search', project, selectedAddress, searchTermDebounced],
+    queryFn: () => searchQuery(project, searchTermDebounced, selectedAddress),
     placeholderData: keepPreviousData,
   })
 
@@ -130,7 +133,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
                       setSourceIndex(entry.address, codeLocation.index)
                       showRange({
                         startOffset: codeLocation.offset,
-                        length: getCodeSearchTerm(searchTerm).length,
+                        length: getCodeSearchTerm(searchTerm).content.length,
                       })
                     }
                   }

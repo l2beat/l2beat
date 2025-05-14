@@ -1,4 +1,10 @@
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from 'fs'
 import path, { join } from 'path'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
@@ -29,7 +35,7 @@ export interface Shape {
 }
 
 export class TemplateService {
-  private readonly loadedTemplates: Record<string, StructureContract> = {}
+  private loadedTemplates: Record<string, StructureContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
 
@@ -284,6 +290,33 @@ export class TemplateService {
     if (outdatedTemplates.length > 0) {
       return `template configs has changed: ${outdatedTemplates.join(', ')}`
     }
+  }
+
+  async ensureTemplateExists(templateId: string) {
+    const templateDirPath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const templatePath = join(templateDirPath, 'template.jsonc')
+
+    if (!existsSync(templatePath)) {
+      mkdirSync(templateDirPath, { recursive: true })
+
+      const numOfBackwardsSlashes = templateId.split('/').length - 1
+      const schemaProperty = `../../../../../${'../'.repeat(numOfBackwardsSlashes)}discovery/schemas/contract.v2.schema.json`
+      const json = {
+        $schema: schemaProperty,
+      }
+
+      writeFileSync(templatePath, await toPrettyJson(json))
+
+      return true
+    }
+
+    return false
+  }
+
+  reload() {
+    this.shapeHashes = undefined
+    this.allTemplateHashes = undefined
+    this.loadedTemplates = {}
   }
 
   async addToShape(
