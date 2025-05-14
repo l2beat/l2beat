@@ -392,15 +392,15 @@ export const badges = [
     },
   },
   {
-    id: 'AggLayer',
+    id: 'Agglayer',
     type: BadgeType.Infra,
-    name: 'Part of the AggLayer',
+    name: 'Part of the Agglayer',
     description:
-      'The project is part of the AggLayer, meaning that it uses the shared Agglayer contracts',
+      'The project is part of the Agglayer, meaning that it uses the shared Agglayer contracts',
     action: {
       type: 'scalingFilter',
       id: 'infrastructure',
-      value: 'AggLayer',
+      value: 'Agglayer',
     },
   },
   {
