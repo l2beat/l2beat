@@ -395,7 +395,8 @@ export const badges = [
     id: 'AggLayer',
     type: BadgeType.Infra,
     name: 'Part of the AggLayer',
-    description: 'The project is part of the AggLayer',
+    description:
+      'The project is part of the AggLayer, meaning that it uses the shared Agglayer contracts',
     action: {
       type: 'scalingFilter',
       id: 'infrastructure',
@@ -472,14 +473,14 @@ export const badges = [
     },
   },
   {
-    id: 'PolygonCDK',
+    id: 'CDKErigon',
     type: BadgeType.Stack,
-    name: 'Built on the Polygon CDK stack',
-    description: 'The project is built on the Polygon CDK stack',
+    name: 'Built on the CDK Erigon stack',
+    description: 'The project is built on the CDK Erigon stack',
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'Polygon',
+      value: 'Agglayer CDK',
     },
   },
   {

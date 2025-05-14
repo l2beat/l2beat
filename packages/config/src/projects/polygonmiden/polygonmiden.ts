@@ -13,7 +13,7 @@ export const polygonmiden: ScalingProject = upcomingL2({
       "Polygon Miden is a ZK rollup built on top of Ethereum running on the Miden VM. It will allow you to build high-throughput & private applications using smart contract languages like Rust that offer greater safety and lower fees while still benefiting from Ethereum's security.",
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
       documentation: ['https://docs.polygon.technology/miden/'],
