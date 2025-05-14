@@ -77,6 +77,7 @@ export class UpdateMonitor {
 
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
+      await this.updateDiffer?.runForChain(runner.chain, timestamp)
     }
 
     const updateEnd = UnixTime.now()
@@ -89,12 +90,6 @@ export class UpdateMonitor {
       updateTarget: timestamp,
       updateTargetDate: targetDateIso,
     })
-
-    if (this.updateDiffer) {
-      for (const runner of this.discoveryRunners) {
-        await this.updateDiffer.runForChain(runner.chain, timestamp)
-      }
-    }
 
     const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
