@@ -1,22 +1,24 @@
-import { HttpClient } from '@l2beat/shared'
-import { command, option, positional, Type } from 'cmd-ts'
-import { HttpUrl } from './types'
-import { z } from 'zod'
 import { writeFileSync } from 'fs'
+import { HttpClient } from '@l2beat/shared'
+import { type Type, command, option, positional } from 'cmd-ts'
+import { z } from 'zod'
+import { HttpUrl } from './types'
 
 export const StarknetAddressValue: Type<string, string> = {
   async from(str): Promise<string> {
-    const address = str.startsWith('0x') ? str.slice(2) : str
+    return new Promise((resolve, _) => {
+      const address = str.startsWith('0x') ? str.slice(2) : str
 
-    const isValidHex = /^[0-9a-fA-F]{64}$/.test(address)
+      const isValidHex = /^[0-9a-fA-F]{64}$/.test(address)
 
-    if (!isValidHex) {
-      throw new Error(
-        `Invalid Starknet address: ${str}. Must be a 64-character hex string with optional 0x prefix.`,
-      )
-    }
+      if (!isValidHex) {
+        throw new Error(
+          `Invalid Starknet address: ${str}. Must be a 64-character hex string with optional 0x prefix.`,
+        )
+      }
 
-    return `0x${address.toLowerCase()}`
+      resolve(`0x${address.toLowerCase()}`)
+    })
   },
 }
 
