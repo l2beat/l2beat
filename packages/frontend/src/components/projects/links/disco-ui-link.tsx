@@ -16,7 +16,7 @@ export function DiscoUiLink({ href }: { href: string }) {
         'bg-gradient-to-r from-[#854220] to-[#DE7B16]',
       )}
     >
-      <DiscoUiIcon className="h-[14px] w-[67px]" />
+      <DiscoUiIcon className="h-[14px] w-[67px] fill-white" />
     </Link>
   )
 }

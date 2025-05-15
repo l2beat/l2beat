@@ -576,6 +576,7 @@ export async function getScalingProjectEntry(
         id: 'permissions',
         title: 'Permissions',
         permissionedEntities,
+        discoUiHref: common.discoUiHref,
       },
     })
   }
@@ -599,6 +600,7 @@ export async function getScalingProjectEntry(
         ...contractsSection,
         id: 'contracts',
         title: 'Smart contracts',
+        discoUiHref: common.discoUiHref,
       },
     })
   }

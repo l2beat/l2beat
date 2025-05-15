@@ -9,6 +9,7 @@ import type { TechnologyRisk } from '../risk-list'
 import { RiskList } from '../risk-list'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
+import { DiscoUiBanner } from '../../disco-ui-banner'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
@@ -20,6 +21,7 @@ export interface ContractsSectionProps {
   risks: TechnologyRisk[]
   diagram?: DiagramParams
   isUnderReview?: boolean
+  discoUiHref?: string
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -54,6 +56,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
+      {props.discoUiHref && <DiscoUiBanner href={props.discoUiHref} />}
       {hasContractsChanged && <ContractsUpdated />}
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">

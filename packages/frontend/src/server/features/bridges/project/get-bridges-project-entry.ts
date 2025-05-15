@@ -263,6 +263,7 @@ export async function getBridgesProjectEntry(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        discoUiHref: common.discoUiHref,
       },
     })
   }
@@ -285,6 +286,7 @@ export async function getBridgesProjectEntry(
         id: 'contracts',
         title: 'Smart contracts',
         ...contractsSection,
+        discoUiHref: common.discoUiHref,
       },
     })
 
