@@ -29,10 +29,18 @@ export function hashFirstSource(
   isVerified: boolean,
   perContractSources: PerContractSource[],
 ): Hash256 | undefined {
-  return getFirstSourceHash(
+  const hashes = getSourceHashes(
+    perContractSources.map((s) => s.hash as string),
     isVerified,
-    perContractSources.map((s) => s.hash),
   )
+
+  if (hashes === undefined) {
+    return undefined
+  }
+
+  const firstSourceHash = getFirstSourceHash(isVerified, hashes)
+
+  return firstSourceHash
 }
 
 export function getFirstSourceHash(
@@ -102,8 +110,16 @@ function formatIntoHashable(source: string) {
   return formatted.trim()
 }
 
-export function sha2_256bit(str: string): Hash256 {
-  return Hash256(`0x${createHash('sha256').update(str).digest('hex')}`)
+export function sha2_256bit(input: string | string[]): Hash256 {
+  const baseHash = createHash('sha256')
+  const inputs = Array.isArray(input) ? input : [input]
+
+  inputs.reduce((hash, input) => {
+    hash.update(input)
+    return hash
+  }, baseHash)
+
+  return Hash256(`0x${baseHash.digest('hex')}`)
 }
 
 export function buildSimilarityHashmap(input: string): HashedChunks[] {
@@ -220,4 +236,25 @@ function checkIfLineCountIsCorrect(input: string, lines: string[]): void {
       `Line count mismatch: ${inputLineCount} vs ${linesLineCount}`,
     )
   }
+}
+
+export function getSourceHashes(
+  hashes: string[],
+  isVerified: boolean,
+): string[] | undefined {
+  if (!isVerified || hashes.length === 0) {
+    return undefined
+  }
+
+  // Single source or proxy + impl
+  if (hashes.length === 1 || hashes.length === 2) {
+    return hashes
+  }
+
+  // >2 - Diamond
+  const [proxy, ...implementations] = hashes
+
+  const masterHash = sha2_256bit(implementations.sort())
+  // biome-ignore lint/style/noNonNullAssertion: checked above
+  return [proxy!, masterHash]
 }

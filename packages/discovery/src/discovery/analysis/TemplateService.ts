@@ -8,7 +8,11 @@ import {
 import path, { join } from 'path'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
-import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
+import {
+  contractFlatteningHash,
+  hashFirstSource,
+  sha2_256bit,
+} from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ColorContract } from '../config/ColorConfig'
@@ -322,10 +326,10 @@ export class TemplateService {
   async addToShape(
     templateId: string,
     chain: string,
-    address: EthereumAddress,
+    addresses: EthereumAddress[],
     fileName: string,
     blockNumber: number,
-    source: ContractSource,
+    sources: ContractSource[],
   ): Promise<void> {
     assert(this.exists(templateId), 'Template does not exist')
     const allTemplates = this.listAllTemplates()
@@ -334,16 +338,23 @@ export class TemplateService {
 
     const shapes =
       entry.shapePath === undefined ? {} : this.readShapeSchema(entry.shapePath)
-    const hash = contractFlatteningHash(source)
-    assert(hash !== undefined, 'Could not find hash')
 
-    if (Object.values(shapes).some((s) => s.hash === hash)) {
+    const hashes = sources
+      .map(contractFlatteningHash)
+      .filter((h) => h !== undefined)
+      .sort()
+
+    assert(hashes.length > 0, 'Could not find hash')
+
+    const masterHash = sha2_256bit(hashes)
+
+    if (Object.values(shapes).some((s) => s.hash === masterHash)) {
       return
     }
 
     shapes[fileName] = {
-      hash: Hash256(hash),
-      address,
+      hash: masterHash,
+      address: addresses,
       chain,
       blockNumber,
     }

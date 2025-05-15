@@ -30,9 +30,9 @@ export async function createShape(
   return templateService.addToShape(
     templateId,
     chain,
-    address,
+    [address],
     fileName,
     blockNumber,
-    source,
+    [source],
   )
 }
