@@ -352,7 +352,11 @@ export class TemplateService {
 
     assert(hashes.length > 0, 'Could not find hash')
 
-    const masterHash = combineImplementationHashes(hashes)
+    const masterHash =
+      hashes.length > 1
+        ? combineImplementationHashes(hashes)
+        : // biome-ignore lint/style/noNonNullAssertion: just checked
+          Hash256(hashes[0]!)
 
     if (Object.values(shapes).some((s) => s.hash === masterHash)) {
       return
@@ -360,7 +364,8 @@ export class TemplateService {
 
     shapes[fileName] = {
       hash: masterHash,
-      address: addresses,
+      // biome-ignore lint/style/noNonNullAssertion: just checked
+      address: addresses.length > 1 ? addresses : addresses[0]!,
       chain,
       blockNumber,
     }
