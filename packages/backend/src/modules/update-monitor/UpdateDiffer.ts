@@ -39,17 +39,17 @@ export class UpdateDiffer {
     }
   }
 
-  async runForProject(projectName: string, chain: string, timestamp: UnixTime) {
+  async runForProject(projectId: string, chain: string, timestamp: UnixTime) {
     const onDiskDiscovery = this.getOnDiskDiscovery({
-      name: projectName,
+      name: projectId,
       chain,
     })
-    const latestDiscovery = this.discoveryOutputCache.get(projectName, chain)
+    const latestDiscovery = this.discoveryOutputCache.get(projectId, chain)
     if (!latestDiscovery) {
       this.logger.error(
         'No latest discovery found. This should never happen.',
         {
-          projectName,
+          projectId,
           chain,
         },
       )
@@ -60,7 +60,7 @@ export class UpdateDiffer {
       this.logger.info(
         'On disk discovery is newer than latest discovery. Skipping.',
         {
-          projectName,
+          projectId,
           chain,
         },
       )
@@ -90,26 +90,26 @@ export class UpdateDiffer {
     const updateDiffs = this.getUpdateDiffs(
       diff,
       latestContracts,
-      projectName,
+      projectId,
       chain,
       timestamp,
     )
 
     if (updateDiffs.length === 0) {
       this.logger.info('No changes in project', {
-        projectName,
+        projectId,
         chain,
       })
-      await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
+      await this.db.updateDiff.deleteByProjectAndChain(projectId, chain)
       return
     }
 
     await this.db.transaction(async () => {
-      await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
+      await this.db.updateDiff.deleteByProjectAndChain(projectId, chain)
       await this.db.updateDiff.insertMany(updateDiffs)
 
       this.logger.info('Inserted update diffs', {
-        projectName,
+        projectId,
         chain,
         updateDiffs: updateDiffs.length,
       })
@@ -119,7 +119,7 @@ export class UpdateDiffer {
   getUpdateDiffs(
     diff: DiscoveryDiff[],
     latestContracts: EntryParameters[],
-    projectName: string,
+    projectId: string,
     chain: string,
     timestamp: UnixTime,
   ) {
@@ -164,7 +164,7 @@ export class UpdateDiffer {
 
     for (const implementationChange of implementationChanges) {
       updateDiffs.push({
-        projectName,
+        projectId,
         type: 'implementationChange',
         address: implementationChange.address,
         chain,
@@ -174,7 +174,7 @@ export class UpdateDiffer {
 
     for (const fieldHighSeverityChange of fieldHighSeverityChanges) {
       updateDiffs.push({
-        projectName,
+        projectId,
         type: 'highSeverityFieldChange',
         address: fieldHighSeverityChange.address,
         chain,
@@ -184,7 +184,7 @@ export class UpdateDiffer {
 
     for (const upgradeChange of upgradeChanges) {
       updateDiffs.push({
-        projectName,
+        projectId,
         type: 'ultimateUpgraderChange',
         address: upgradeChange.address,
         chain,

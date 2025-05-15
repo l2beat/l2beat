@@ -97,21 +97,21 @@ describe(UpdateDiffer.name, () => {
           address: EthereumAddress.random(),
           type: 'implementationChange',
           chain: 'ethereum',
-          projectName: PROJECT_A,
+          projectId: PROJECT_A,
           timestamp: UnixTime.now(),
         },
         {
           address: EthereumAddress.random(),
           type: 'highSeverityFieldChange',
           chain: 'ethereum',
-          projectName: PROJECT_A,
+          projectId: PROJECT_A,
           timestamp: UnixTime.now(),
         },
         {
           address: EthereumAddress.random(),
           type: 'ultimateUpgraderChange',
           chain: 'ethereum',
-          projectName: PROJECT_A,
+          projectId: PROJECT_A,
           timestamp: UnixTime.now(),
         },
       ]
@@ -230,7 +230,7 @@ describe(UpdateDiffer.name, () => {
           address: diff.address,
           type: 'implementationChange',
           chain: 'ethereum',
-          projectName: PROJECT_A,
+          projectId: PROJECT_A,
           timestamp,
         },
       ])
@@ -272,7 +272,7 @@ describe(UpdateDiffer.name, () => {
           address: diff.address,
           type: 'highSeverityFieldChange',
           chain: 'ethereum',
-          projectName: PROJECT_A,
+          projectId: PROJECT_A,
           timestamp,
         },
       ])
@@ -329,7 +329,7 @@ describe(UpdateDiffer.name, () => {
           address,
           type: 'ultimateUpgraderChange',
           chain: 'ethereum',
-          projectName: PROJECT_A,
+          projectId: PROJECT_A,
           timestamp,
         },
       ])

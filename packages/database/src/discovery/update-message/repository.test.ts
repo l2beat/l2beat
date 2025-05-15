@@ -29,7 +29,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
 
   it('can upsert messages', async () => {
     const message: UpdateMessageRecord = {
-      projectName: 'project',
+      projectId: 'project',
       chain: 'ethereum',
       blockNumber: 1,
       timestamp: 0,
@@ -49,11 +49,11 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
 
   it('can delete messages before timestamp', async () => {
     const oldMessage = record({
-      projectName: 'projectA',
+      projectId: 'projectA',
       timestamp: UnixTime(100),
     })
     const newMessage = record({
-      projectName: 'projectB',
+      projectId: 'projectB',
       timestamp: UnixTime(200),
     })
 
@@ -69,7 +69,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
 
 function record(params?: Partial<UpdateMessageRecord>): UpdateMessageRecord {
   return {
-    projectName: 'project',
+    projectId: 'project',
     chain: 'ethereum',
     blockNumber: 1,
     timestamp: 0,

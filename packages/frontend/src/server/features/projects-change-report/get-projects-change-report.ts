@@ -35,14 +35,14 @@ async function getProjectsChangeReportWithFns() {
   const db = getDb()
   const updateDiffs = await db.updateDiff.getAll()
 
-  const byProject = groupBy(updateDiffs, (diff) => diff.projectName)
-  for (const [projectName, diffs] of Object.entries(byProject)) {
+  const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
+  for (const [projectId, diffs] of Object.entries(byProject)) {
     const byChain = groupBy(diffs, (diff) => diff.chain)
     for (const [chain, changes] of Object.entries(byChain)) {
       const changesByType = groupByType(changes)
 
-      result[projectName] ??= {}
-      result[projectName][chain] = {
+      result[projectId] ??= {}
+      result[projectId][chain] = {
         implementationChange: changesByType.implementationChange.map((c) =>
           EthereumAddress(c.address),
         ),
