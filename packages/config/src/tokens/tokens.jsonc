@@ -3014,6 +3014,22 @@
   ],
   "optimism": [
     {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "kBTC",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
       "source": "external",
