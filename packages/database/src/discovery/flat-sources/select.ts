@@ -1,7 +1,7 @@
 import type { FlatSources } from '../../kysely/generated/types'
 
 export const selectFlatSources = [
-  'projectName',
+  'projectId',
   'chainId',
   'blockNumber',
   'contentHash',

@@ -1012,7 +1012,7 @@ describe(UpdateMonitor.name, () => {
 })
 
 const mockRecord: UpdateMonitorRecord = {
-  projectName: 'name',
+  projectId: 'name',
   chainId: ChainId.ETHEREUM,
   blockNumber: 1,
   timestamp: UnixTime.now(),

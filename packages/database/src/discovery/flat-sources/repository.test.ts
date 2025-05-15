@@ -15,12 +15,12 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
   })
 
   describe(FlatSourcesRepository.prototype.upsert.name, () => {
-    const projectName = 'project'
+    const projectId = 'project'
     const chainId = ChainId.ETHEREUM
 
     it('basic insert', async () => {
       const flatRecord: FlatSourcesRecord = {
-        projectName,
+        projectId,
         chainId,
         blockNumber: -1,
         contentHash: CONTENT_HASH,
@@ -30,13 +30,13 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       await repository.upsert(flatRecord)
       await repository.upsert(flatRecord)
 
-      const latest = await repository.get(projectName, chainId)
+      const latest = await repository.get(projectId, chainId)
       expect(latest).toEqual(flatRecord)
     })
 
     it('two inserts, update the blockNumber but not the flat', async () => {
       const flatRecord: FlatSourcesRecord = {
-        projectName,
+        projectId,
         chainId,
         blockNumber: 1,
         contentHash: CONTENT_HASH,
@@ -45,7 +45,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       await repository.upsert(flatRecord)
 
       await repository.upsert(flatRecord)
-      let latest = await repository.get(projectName, chainId)
+      let latest = await repository.get(projectId, chainId)
       expect(latest).toEqual(flatRecord)
 
       await repository.upsert({
@@ -54,7 +54,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
         flat: { key: 'after' },
       })
 
-      latest = await repository.get(projectName, chainId)
+      latest = await repository.get(projectId, chainId)
       expect(latest).toEqual({
         ...flatRecord,
         blockNumber: 2,
@@ -65,7 +65,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       const contentHash2 = Hash256.random()
 
       const flatRecord: FlatSourcesRecord = {
-        projectName,
+        projectId,
         chainId,
         blockNumber: 1,
         contentHash: CONTENT_HASH,
@@ -74,7 +74,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       await repository.upsert(flatRecord)
 
       await repository.upsert(flatRecord)
-      let latest = await repository.get(projectName, chainId)
+      let latest = await repository.get(projectId, chainId)
       expect(latest).toEqual(flatRecord)
 
       const newRecord = {
@@ -85,7 +85,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       }
 
       await repository.upsert(newRecord)
-      latest = await repository.get(projectName, chainId)
+      latest = await repository.get(projectId, chainId)
       expect(latest).toEqual(newRecord)
     })
   })

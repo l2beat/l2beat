@@ -254,7 +254,7 @@ export class UpdateMonitor {
     )
 
     await this.db.updateMonitor.upsert({
-      projectName: projectConfig.name,
+      projectId: projectConfig.name,
       chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       timestamp,
       blockNumber,
@@ -315,7 +315,7 @@ export class UpdateMonitor {
     )
 
     await this.db.flatSources.upsert({
-      projectName: projectConfig.name,
+      projectId: projectConfig.name,
       chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       blockNumber: previousDiscovery.blockNumber,
       contentHash: hashJson(sortObjectByKeys(flatSources)),

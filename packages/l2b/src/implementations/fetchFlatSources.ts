@@ -65,7 +65,7 @@ export function saveIntoDirectory(
   for (const project of flat) {
     const outputPath = path.join(
       outputDirectory,
-      project.projectName,
+      project.projectId,
       project.chainName,
     )
     mkdirSync(outputPath, { recursive: true })
@@ -93,7 +93,7 @@ export function saveIntoDiscovery(
   for (const project of flat) {
     const outputPath = path.join(
       discoveryPath,
-      project.projectName,
+      project.projectId,
       project.chainName,
       '.flat',
     )
