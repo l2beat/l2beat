@@ -8847,6 +8847,28 @@
       }
     },
     {
+      "name": "Relend Network USDC",
+      "coingeckoId": "relend-network-usdc-swell",
+      "address": "0x9ab96A4668456896d45c301Bc3A15Cee76AA7B8D",
+      "symbol": "rUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1742921345,
+      "coingeckoListingTimestamp": 1745971200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55341/large/rUSDC-_200x200.png?1745506753",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",

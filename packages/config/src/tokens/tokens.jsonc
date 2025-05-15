@@ -5658,6 +5658,21 @@
   ],
   "swell": [
     {
+      "symbol": "rUSDC",
+      "address": "0x9ab96A4668456896d45c301Bc3A15Cee76AA7B8D",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "rswETH",
       "address": "0x18d33689ae5d02649a859a1cf16c9f0563975258",
       "category": "ether",
