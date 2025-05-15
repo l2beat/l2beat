@@ -1,41 +1,95 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
 import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import type { DiscoveryDiff, DiscoveryOutput } from '@l2beat/discovery'
-import type { UnixTime } from '@l2beat/shared-pure'
-import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
+import type {
+  DiscoveryDiff,
+  DiscoveryOutput,
+  EntryParameters,
+} from '@l2beat/discovery'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
+import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
 export class UpdateDiffer {
   constructor(
     private readonly configReader: ConfigReader,
     private readonly db: Database,
+    private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
 
-  async run(
-    projectName: string,
-    chain: string,
-    latestDiscovery: DiscoveryOutput,
-    timestamp: UnixTime,
-  ) {
-    const previousDiscovery = this.getPreviousDiscovery({
+  async runForChain(chain: string, timestamp: UnixTime) {
+    const projectConfigs = this.configReader.readAllConfigsForChain(chain)
+
+    for (const projectConfig of projectConfigs) {
+      assert(
+        projectConfig.chain === chain,
+        `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
+      )
+
+      try {
+        await this.runForProject(projectConfig.name, chain, timestamp)
+      } catch (error) {
+        this.logger.error(
+          `[chain: ${chain}] Failed to update project [${projectConfig.name}]`,
+          error,
+        )
+      }
+    }
+  }
+
+  async runForProject(projectName: string, chain: string, timestamp: UnixTime) {
+    const onDiskDiscovery = this.getOnDiskDiscovery({
       name: projectName,
       chain,
     })
+    const latestDiscovery = this.discoveryOutputCache.get(projectName, chain)
+    if (!latestDiscovery) {
+      this.logger.error(
+        'No latest discovery found. This should never happen.',
+        {
+          projectName,
+          chain,
+        },
+      )
+      return
+    }
 
-    const prevSanitizedDiscovery = sanitizeDiscoveryOutput(previousDiscovery)
-    const sanitizedDiscovery = sanitizeDiscoveryOutput(latestDiscovery)
+    if (onDiskDiscovery.blockNumber > latestDiscovery.blockNumber) {
+      this.logger.info(
+        'On disk discovery is newer than latest discovery. Skipping.',
+        {
+          projectName,
+          chain,
+        },
+      )
+      return
+    }
 
-    const diff = diffDiscovery(
-      prevSanitizedDiscovery.entries,
-      sanitizedDiscovery.entries,
-    )
+    const onDiskContracts = [
+      ...onDiskDiscovery.entries,
+      ...(onDiskDiscovery.sharedModules ?? []).flatMap(
+        (module) =>
+          this.getOnDiskDiscovery({
+            name: module,
+            chain,
+          }).entries,
+      ),
+    ]
+
+    const latestContracts = [
+      ...latestDiscovery.entries,
+      ...(latestDiscovery.sharedModules ?? []).flatMap(
+        (module) => this.discoveryOutputCache.get(module, chain)?.entries ?? [],
+      ),
+    ]
+
+    const diff = diffDiscovery(onDiskContracts, latestContracts)
 
     const updateDiffs = this.getUpdateDiffs(
       diff,
-      latestDiscovery,
+      latestContracts,
       projectName,
       chain,
       timestamp,
@@ -46,12 +100,12 @@ export class UpdateDiffer {
         projectName,
         chain,
       })
-      await this.deleteOldRecords(projectName, chain)
+      await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
       return
     }
 
     await this.db.transaction(async () => {
-      await this.deleteOldRecords(projectName, chain)
+      await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
       await this.db.updateDiff.insertMany(updateDiffs)
 
       this.logger.info('Inserted update diffs', {
@@ -64,7 +118,7 @@ export class UpdateDiffer {
 
   getUpdateDiffs(
     diff: DiscoveryDiff[],
-    latestDiscovery: DiscoveryOutput,
+    latestContracts: EntryParameters[],
     projectName: string,
     chain: string,
     timestamp: UnixTime,
@@ -90,7 +144,7 @@ export class UpdateDiffer {
         }
         const index = parseInt(indexString)
 
-        const entry = latestDiscovery.entries.find(
+        const entry = latestContracts.find(
           (e) => e.address === discoveryDiff.address,
         )
 
@@ -141,15 +195,7 @@ export class UpdateDiffer {
     return updateDiffs
   }
 
-  async deleteOldRecords(projectName: string, chain: string) {
-    await this.db.updateDiff.deleteByProjectAndChain(projectName, chain)
-    this.logger.info('Deleted all update diffs', {
-      projectName,
-      chain,
-    })
-  }
-
-  getPreviousDiscovery({
+  getOnDiskDiscovery({
     name,
     chain,
   }: { name: string; chain: string }): DiscoveryOutput {

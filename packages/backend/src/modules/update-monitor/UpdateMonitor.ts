@@ -20,6 +20,7 @@ import type { Database } from '@l2beat/database'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
 import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
@@ -29,7 +30,6 @@ import { findUnknownEntries } from './utils/findUnknownEntries'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
-  readonly cachedDiscovery = new Map<string, DiscoveryOutput>()
 
   constructor(
     private readonly discoveryRunners: DiscoveryRunner[],
@@ -39,6 +39,7 @@ export class UpdateMonitor {
     private readonly db: Database,
     private readonly clock: Clock,
     private readonly chainConverter: ChainConverter,
+    private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
   ) {
@@ -76,6 +77,7 @@ export class UpdateMonitor {
 
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
+      await this.updateDiffer?.runForChain(runner.chain, timestamp)
     }
 
     const updateEnd = UnixTime.now()
@@ -102,8 +104,9 @@ export class UpdateMonitor {
       )
 
       for (const projectConfig of projectConfigs) {
-        const discovery = this.cachedDiscovery.get(
-          this.getCacheKey(projectConfig.name, runner.chain),
+        const discovery = this.discoveryOutputCache.get(
+          projectConfig.name,
+          runner.chain,
         )
 
         if (!discovery) {
@@ -219,10 +222,7 @@ export class UpdateMonitor {
 
     if (!previousDiscovery || !discovery) return
 
-    this.cachedDiscovery.set(
-      this.getCacheKey(projectConfig.name, runner.chain),
-      discovery,
-    )
+    this.discoveryOutputCache.set(projectConfig.name, runner.chain, discovery)
 
     const deployedDiscovered = this.configReader.readDiscovery(
       projectConfig.name,
@@ -250,13 +250,6 @@ export class UpdateMonitor {
       projectConfig,
       blockNumber,
       runner.chain,
-      timestamp,
-    )
-
-    await this.updateDiffer?.run(
-      projectConfig.name,
-      runner.chain,
-      sanitizedDiscovery,
       timestamp,
     )
 
@@ -364,10 +357,6 @@ export class UpdateMonitor {
       unknownEntries,
       timestamp,
     )
-  }
-
-  private getCacheKey(projectName: string, chain: string): string {
-    return `${chain}:${projectName}`
   }
 }
 

@@ -1,20 +1,18 @@
 import './dotenv'
 
 import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
 import { appRouter } from '~/server/api/root'
-import { type Manifest, getManifest } from '../../src/utils/Manifest'
+import { type Manifest, manifest } from '../../src/utils/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
 import { type RenderData, render } from './ssr/server'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
 
-const manifest = getManifest(isProduction, join(process.cwd(), 'rewrite'))
 const template = getTemplate(manifest)
 const app = express()
 if (isProduction) {
@@ -59,8 +57,6 @@ app.listen(port, () => {
 
 function renderToHtml(data: RenderData, url: string) {
   const rendered = render(data, url)
-  const sizeInBytes = JSON.stringify(data.ssr).length
-  const sizeInKiB = (sizeInBytes / 1024).toFixed(2)
   const envData = Object.fromEntries(
     Object.entries(process.env)
       .map(([key, value]) => {
@@ -71,7 +67,6 @@ function renderToHtml(data: RenderData, url: string) {
       })
       .filter((x) => x !== undefined),
   )
-  console.log(`SSR data size: ${sizeInKiB} KiB`)
   return template
     .replace(`<!--app-head-->`, rendered.head)
     .replace(`<!--app-html-->`, rendered.html)
