@@ -80,7 +80,7 @@ export const providerMap: Record<
   },
   'Agglayer CDK': {
     Icon: PolygonIcon,
-    text: 'This project is based on the Agglayer CDK code base.',
+    text: "This project is based on the Agglayer CDK code base.",
   },
   'SN Stack': {
     Icon: StarknetIcon,
