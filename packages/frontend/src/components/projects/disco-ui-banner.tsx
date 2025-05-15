@@ -7,10 +7,13 @@ export function DiscoUiBanner({ href }: { href: string }) {
   return (
     <>
       {/* Desktop */}
-      <div className="h-20 w-full overflow-hidden rounded bg-n-stone-200 max-md:hidden">
+      <div className="h-20 w-full overflow-hidden rounded bg-n-stone-200 dark:bg-n-stone-700 max-md:hidden">
         <div className="flex items-center gap-2">
           <div className="flex w-1/2 min-w-[220px] flex-col gap-2 px-4 py-3">
-            <DiscoUiIcon short className="fill-n-stone-700" />
+            <DiscoUiIcon
+              short
+              className="fill-n-stone-700 dark:fill-n-stone-200"
+            />
             <Link
               href={href}
               target="_blank"
@@ -45,7 +48,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
           className="absolute inset-x-3 bottom-3 flex items-center justify-center gap-1.5 rounded bg-white py-2 text-link"
           href={href}
         >
-          <span className="text-xs font-bold text-primary">
+          <span className="mt-px text-xs font-bold leading-none text-link">
             Explore in Disco
           </span>
           <CustomLinkIcon className="size-4 fill-link" />
