@@ -16,7 +16,6 @@ export async function getBridgesProjectData(
       'display',
       'statuses',
       'tvsInfo',
-      'tvsConfig',
       'bridgeInfo',
       'bridgeRisks',
       'bridgeTechnology',
@@ -24,6 +23,7 @@ export async function getBridgesProjectData(
     ],
     where: ['isBridge'],
     optional: [
+      'tvsConfig',
       'chainConfig',
       'archivedAt',
       'isUpcoming',
