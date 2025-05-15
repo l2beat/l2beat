@@ -25,8 +25,8 @@ export function DiscoUiIcon(props: SvgIconProps) {
         fill="white"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M6.75195 0.248047C7.87728 3.90535 9.8466 5.87467 13.5039 7C9.8466 8.12533 7.87728 10.0946 6.75195 13.752C5.62663 10.0946 3.65731 8.12533 0 7C3.65731 5.87467 5.62663 3.90535 6.75195 0.248047Z"
         fill="white"
       />
