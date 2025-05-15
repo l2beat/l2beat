@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xee1369c752d2860a2086e9bcbbb3f543fc579fa6
+
+# Diff at Thu, 15 May 2025 19:19:00 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@82b2d64c74bfba4edbf8be310e136fc204fbaed0 block: 22081893
+- current block number: 22081893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081893 (main branch discovery), not current.
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      sourceHashes.2:
+-        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6"
+      sourceHashes.1:
+-        "0xa219a8a62191e08fe0803a9bee5d9b4cf73ae71a969ff2e1bcbc00330880de07"
++        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6"
+      sourceHashes.0:
+-        "0x51cc7e771fc0a90a4ac4c584004569333b8e5355dea67cb3b6a5e19d602e4a7c"
++        "0x8f3d4519effa17873ea109f5921890111b59d96da635e3691d4a7a96192d8d25"
+    }
+```
+
 Generated with discovered.json: 0xed8e5b2c4763910889126be3eb65a6744a83c321
 
 # Diff at Tue, 29 Apr 2025 08:19:17 GMT:
