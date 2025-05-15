@@ -12,7 +12,7 @@
     sentiment: "warning"
     value: "7d"
     warning: {
-      sentiment: "warning"
+      sentiment: "bad"
       value: "The Security Council can upgrade with no delay."
     }
   }
