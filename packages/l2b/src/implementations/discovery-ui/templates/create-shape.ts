@@ -8,7 +8,7 @@ import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export async function createShape(
   templateService: TemplateService,
-  address: EthereumAddress,
+  addresses: EthereumAddress[],
   chain: string,
   blockNumber: number,
   templateId: string,
@@ -19,7 +19,9 @@ export async function createShape(
   const httpClient = new HttpClient()
   const client = getExplorerClient(httpClient, chainConfig.explorer)
 
-  const source = await client.getContractSource(address)
+  const sources = await Promise.all(
+    addresses.map(async (address) => client.getContractSource(address)),
+  )
 
   const hasBeenCreated = await templateService.ensureTemplateExists(templateId)
 
@@ -30,9 +32,9 @@ export async function createShape(
   return templateService.addToShape(
     templateId,
     chain,
-    [address],
+    addresses,
     fileName,
     blockNumber,
-    [source],
+    sources,
   )
 }

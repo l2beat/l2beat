@@ -13,7 +13,7 @@ import {
 } from './context'
 
 interface TemplateDialogProps {
-  address: string
+  addresses: string[]
   project: string
   chain: string
   blockNumber: number
@@ -77,7 +77,7 @@ function TemplateDialogTrigger({
 }
 
 function TemplateDialogBody({
-  address,
+  addresses,
   chain,
   blockNumber,
 }: TemplateDialogProps) {
@@ -99,7 +99,7 @@ function TemplateDialogBody({
       if (!templateId || !fileName) {
         return Promise.resolve()
       }
-      return createShape(chain, address, blockNumber, templateId, fileName)
+      return createShape(chain, addresses, blockNumber, templateId, fileName)
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['templates'] })
@@ -137,7 +137,11 @@ function TemplateDialogBody({
       )}
 
       {step === 'finalize-creation' && (
-        <TemplateSummary formData={formData} address={address} chain={chain} />
+        <TemplateSummary
+          formData={formData}
+          addresses={addresses}
+          chain={chain}
+        />
       )}
 
       <DialogActions
@@ -244,17 +248,34 @@ function SpecifyTemplate({
 
 function TemplateSummary({
   formData,
-  address,
+  addresses,
   chain,
 }: {
   formData: TemplateFormData
-  address: string
+  addresses: string[]
   chain: string
 }) {
   const details = [
     { label: 'Template ID', value: formData.templateId },
     { label: 'Filename', value: formData.fileName },
-    { label: 'Address', value: address },
+    {
+      label: 'Addresses',
+      value: (
+        <div className="flex flex-wrap gap-1">
+          {addresses.map((address) => (
+            <div key={address} className="text-sm">
+              {address}
+            </div>
+          ))}
+          {addresses.length > 0 && (
+            <span className="text-coffee-400 text-xs italic">
+              Source hashes will be combined together to create a single shape
+              hash
+            </span>
+          )}
+        </div>
+      ),
+    },
     { label: 'Chain', value: chain },
   ]
 
