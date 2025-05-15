@@ -28,6 +28,13 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     getProjectDaThroughputChart(params),
   ])
 
+  if (costsChart.length === 0 || !costs || !throughput) {
+    return {
+      chart: [],
+      stats: undefined,
+    }
+  }
+
   const [costsUopsCount, throughputUopsCount] = await Promise.all([
     getSummedActivityForProject(params.projectId, costs.range),
     getSummedActivityForProject(params.projectId, throughput.range),
