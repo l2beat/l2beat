@@ -3,11 +3,11 @@ import {
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
+import { getSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
 import type { EntryParameters, StructureOutput } from './types'
-import { getSourceHashes } from '../../flatten/utils'
 
 export function getStructureOutput(
   config: StructureConfig,

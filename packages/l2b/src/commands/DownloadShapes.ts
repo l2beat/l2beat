@@ -9,10 +9,10 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { getExplorerClient } from '@l2beat/discovery'
+import { sha2_256bit } from '@l2beat/discovery/dist/flatten/utils'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
 import { rimraf } from 'rimraf'
-import { sha2_256bit } from '@l2beat/discovery/dist/flatten/utils'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
