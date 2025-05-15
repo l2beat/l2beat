@@ -579,10 +579,10 @@ export function EXIT_WINDOW(
     (windowText === 'None'
       ? `There is no window for users to exit in case of an unwanted regular upgrade${instantlyUpgradable}.`
       : `Users have ${windowText} to exit funds in case of an unwanted regular upgrade. There is a ${formatSeconds(
-          upgradeDelay,
-        )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
-          exitDelay,
-        )} to be processed.`) +
+        upgradeDelay,
+      )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+        exitDelay,
+      )} to be processed.`) +
     (options.existsBlocklist
       ? ' Users can be explicitly censored from withdrawing (Blocklist on L1).'
       : '')
@@ -684,7 +684,7 @@ export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {
     description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
     warning: {
       value: 'The Security Council can upgrade with no delay.',
-      sentiment: 'warning',
+      sentiment: 'bad',
     },
   }
 }
