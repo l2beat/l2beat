@@ -45,13 +45,13 @@ export function DiscoUiBanner({ href }: { href: string }) {
         />
         <Link
           target="_blank"
-          className="absolute inset-x-3 bottom-3 flex items-center justify-center gap-1.5 rounded bg-white py-2 text-link"
+          className="absolute inset-x-3 bottom-3 flex items-center justify-center gap-1.5 rounded bg-white py-2"
           href={href}
         >
-          <span className="mt-px text-xs font-bold leading-none text-link">
+          <span className="mt-px text-xs font-bold leading-none text-[#2A5BD8]">
             Explore in Disco
           </span>
-          <CustomLinkIcon className="size-4 fill-link" />
+          <CustomLinkIcon className="size-4 !fill-[#2A5BD8]" />
         </Link>
       </div>
     </>
