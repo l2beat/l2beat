@@ -40,13 +40,13 @@ ALTER TABLE "FlatSources" ADD CONSTRAINT "FlatSources_pkey" PRIMARY KEY ("projec
 ALTER TABLE "UpdateMessage" ADD CONSTRAINT "UpdateMessage_pkey" PRIMARY KEY ("projectId", "chain", "blockNumber");
 ALTER TABLE "UpdateMonitor" ADD CONSTRAINT "UpdateMonitor_pkey" PRIMARY KEY ("projectId", "chainId");
 
--- Step 8: Create new indexes
-CREATE UNIQUE INDEX "UpdateDiff_projectId_address_type_chain_key" ON "UpdateDiff"("projectId", "address", "type", "chain");
-CREATE INDEX "UpdateNotifier_projectId_idx" ON "UpdateNotifier"("projectId");
-
--- Step 9: Ensure the column type is correct (VARCHAR(255) instead of TEXT if needed)
+-- Step 8: Ensure the column type is correct (VARCHAR(255) instead of TEXT if needed)
 ALTER TABLE "FlatSources" ALTER COLUMN "projectId" TYPE VARCHAR(255);
 ALTER TABLE "UpdateDiff" ALTER COLUMN "projectId" TYPE VARCHAR(255);
 ALTER TABLE "UpdateMessage" ALTER COLUMN "projectId" TYPE VARCHAR(255);
 ALTER TABLE "UpdateMonitor" ALTER COLUMN "projectId" TYPE VARCHAR(255);
 ALTER TABLE "UpdateNotifier" ALTER COLUMN "projectId" TYPE VARCHAR(255);
+
+-- Step 9: Create new indexes
+CREATE UNIQUE INDEX "UpdateDiff_projectId_address_type_chain_key" ON "UpdateDiff"("projectId", "address", "type", "chain");
+CREATE INDEX "UpdateNotifier_projectId_idx" ON "UpdateNotifier"("projectId");

@@ -9,7 +9,7 @@ export class UpdateDiffRepository extends BaseRepository {
       .insertInto('UpdateDiff')
       .values(records.map(toRow))
       .onConflict((cb) =>
-        cb.columns(['address', 'projectId', 'chain', 'type']).doNothing(),
+        cb.columns(['projectId', 'address', 'type', 'chain']).doNothing(),
       )
       .execute()
 
