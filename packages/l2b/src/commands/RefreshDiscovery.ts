@@ -33,11 +33,17 @@ export const RefreshDiscovery = command({
       short: 'y',
       description: 'accept the refresh, do not prompt the user.',
     }),
-    exclude: option({
+    excludeProjects: option({
       type: optional(Separated(string)),
-      long: 'exclude',
-      short: 'e',
+      long: 'exclude-projects',
+      short: 'p',
       description: 'exclude projects from discovery, comma separated.',
+    }),
+    excludeChains: option({
+      type: optional(Separated(string)),
+      long: 'exclude-chains',
+      short: 'c',
+      description: 'exclude chains from discovery, comma separated.',
     }),
     message: option({
       type: optional(string),
@@ -79,7 +85,8 @@ export const RefreshDiscovery = command({
         : templateService.discoveryNeedsRefresh(discovery, config)
       if (
         needsRefreshReason !== undefined &&
-        !args.exclude?.includes(config.name)
+        !args.excludeProjects?.includes(config.name) &&
+        !args.excludeChains?.includes(config.chain)
       ) {
         toRefresh.push({
           config,
