@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x65543da201bf58d76266c9f061788738c1d2b16f
+
+# Diff at Mon, 12 May 2025 09:57:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 22445442
+- current block number: 22466421
+
+## Description
+
+Since the private key of the operator EOA is public, its 7702 delegations are spammy.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22445442 (main branch discovery), not current.
+
+```diff
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      name:
+-        "AztecMultisig"
++        "Aztec Multisig"
+    }
+```
+
+Generated with discovered.json: 0xfa5d68df3deccdd4cbbb83fc2bdc32ca7ca4702e
+
+# Diff at Fri, 09 May 2025 10:53:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b9a3516de49f42efd9d26f04918d74a8d92c6204 block: 21387141
+- current block number: 22445442
+
+## Description
+
+The public address (private key was made public so anyone can operate the chain) set a 7702-authorization to a drainer because there were some minor tokens in the EOA.
+
+## Watched changes
+
+```diff
+    EOA FirstAnvilAddress (0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      unverified:
++        true
+      values:
++        {"$implementation":"0x698Cd6D2618bAa3E35ECb7322919C5fce95886Cf"}
+    }
+```
+
 Generated with discovered.json: 0x52c1db69319d4512301017df98d222cf1bbfbd5c
 
 # Diff at Tue, 04 Mar 2025 10:38:58 GMT:

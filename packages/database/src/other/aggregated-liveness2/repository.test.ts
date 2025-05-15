@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { AggregatedLivenessRepository } from '../aggregated-liveness/repository'
 import type { AggregatedLiveness2Record } from './entity'
 import { AggregatedLiveness2Repository } from './repository'
 
@@ -11,7 +10,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
-  const START = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const START = UnixTime.toStartOf(UnixTime.now(), 'hour')
   const DATA: AggregatedLiveness2Record[] = [
     // project A - batchSubmissions
     {
@@ -29,7 +28,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       min: 20,
       avg: 30,
       max: 40,
-      timestamp: START - 1 * UnixTime.DAY,
+      timestamp: START - 1 * UnixTime.HOUR,
       numberOfRecords: 4,
     },
     {
@@ -38,7 +37,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       min: 30,
       avg: 40,
       max: 50,
-      timestamp: START - 2 * UnixTime.DAY,
+      timestamp: START - 2 * UnixTime.HOUR,
       numberOfRecords: 3,
     },
     {
@@ -47,7 +46,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       min: 40,
       avg: 50,
       max: 60,
-      timestamp: START - 3 * UnixTime.DAY,
+      timestamp: START - 3 * UnixTime.HOUR,
       numberOfRecords: 2,
     },
     // project A - stateUpdates
@@ -57,7 +56,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       min: 30,
       avg: 40,
       max: 50,
-      timestamp: START - 1 * UnixTime.DAY,
+      timestamp: START - 1 * UnixTime.HOUR,
       numberOfRecords: 2,
     },
     {
@@ -66,7 +65,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       min: 40,
       avg: 50,
       max: 60,
-      timestamp: START - 2 * UnixTime.DAY,
+      timestamp: START - 2 * UnixTime.HOUR,
       numberOfRecords: 1,
     },
     // project B - stateUpdates
@@ -76,7 +75,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
       min: 10,
       avg: 10,
       max: 10,
-      timestamp: START - 2 * UnixTime.DAY,
+      timestamp: START - 2 * UnixTime.HOUR,
       numberOfRecords: 2,
     },
   ] as const satisfies AggregatedLiveness2Record[]
@@ -107,7 +106,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           min: 10,
           avg: 10,
           max: 10,
-          timestamp: START - 3 * UnixTime.DAY,
+          timestamp: START - 3 * UnixTime.HOUR,
           numberOfRecords: 5,
         },
       ] as const satisfies AggregatedLiveness2Record[]
@@ -143,7 +142,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     .name, () => {
     it('returns aggregates with correctly calculated weighted averages for a given time range, grouped by project and subtype', async () => {
       const results = await repository.getAggregatesByTimeRange([
-        START - 2 * UnixTime.DAY,
+        START - 2 * UnixTime.HOUR,
         START,
       ])
 
@@ -190,7 +189,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
           min: 20,
           avg: 30,
           max: 40,
-          timestamp: START - 1 * UnixTime.DAY,
+          timestamp: START - 1 * UnixTime.HOUR,
           numberOfRecords: 4,
         },
       ])
@@ -208,7 +207,7 @@ describeDatabase(AggregatedLiveness2Repository.name, (db) => {
     })
   })
 
-  describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
+  describe(AggregatedLiveness2Repository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
 

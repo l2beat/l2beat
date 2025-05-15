@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 15457819,
+  "blockNumber": 16289384,
   "configHash": "0x00920e75ab0425cd6c4c4e5274f52202d06b321ee4cf4733438cf65e47fe8e09",
   "entries": [
     {
@@ -55,7 +55,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620528",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620690",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -80,7 +80,7 @@
       "template": "opstack/Layer2/GasPriceOracle",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0x6e5bd465cdf07c7fc7de194833be336109be5aceaeb509643962096c772ec26a"
+        "0x926a45849c8c68704718056d544ac26d7683a6b44a90a9590dda1a9bdd495962"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Provides the current gas price for L2 transactions.",
@@ -89,24 +89,25 @@
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
+        "$implementation": "0x93e57A196454CB919193fa9946f14943cf733845",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 2295686953,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 1953164293,
-        "version": "1.3.1-beta.1"
+        "isIsthmus": true,
+        "l1BaseFee": 5781724235,
+        "version": "1.4.0"
       },
       "implementationNames": {
         "0x420000000000000000000000000000000000000F": "Proxy",
-        "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f": "GasPriceOracle"
+        "0x93e57A196454CB919193fa9946f14943cf733845": "GasPriceOracle"
       }
     },
     {
@@ -267,7 +268,7 @@
       "template": "opstack/Layer2/L1Block",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0x936b7b7eb2a88a64e3eceaf897abfa2dc6e48b4c75eba2da34ff927b98413b6b"
+        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
@@ -277,19 +278,21 @@
         "number",
         "timestamp",
         "sequenceNumber",
-        "blobBaseFee"
+        "blobBaseFee",
+        "operatorFeeConstant",
+        "operatorFeeScalar"
       ],
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
+        "$implementation": "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 1953164293,
+        "basefee": 5781724235,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 2295686953,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 900000,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -298,18 +301,20 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xd14f106c8a0d554b844476d68a42352bef964d6cedcc37a9d77a7a0a96745998",
+        "hash": "0xdd361c294dca555e051c16d75b3cc7748fecfd584651ebf6eff6a4ff0baea695",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22397539,
-        "sequenceNumber": 10,
-        "timestamp": 1746206111,
-        "version": "1.5.1-beta.1"
+        "number": 22465953,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 0,
+        "sequenceNumber": 6,
+        "timestamp": 1747037675,
+        "version": "1.6.0"
       },
       "implementationNames": {
         "0x4200000000000000000000000000000000000015": "Proxy",
-        "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015": "L1Block"
+        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": "L1Block"
       }
     },
     {
@@ -1073,6 +1078,29 @@
       "function transferSetter(address recipient, address newSetter)",
       "function withdrawFees(address to) returns (uint256 amount)"
     ],
+    "0x93e57A196454CB919193fa9946f14943cf733845": [
+      "function DECIMALS() view returns (uint256)",
+      "function baseFee() view returns (uint256)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function decimals() pure returns (uint256)",
+      "function gasPrice() view returns (uint256)",
+      "function getL1Fee(bytes _data) view returns (uint256)",
+      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
+      "function getL1GasUsed(bytes _data) view returns (uint256)",
+      "function getOperatorFee(uint256 _gasUsed) view returns (uint256)",
+      "function isEcotone() view returns (bool)",
+      "function isFjord() view returns (bool)",
+      "function isIsthmus() view returns (bool)",
+      "function l1BaseFee() view returns (uint256)",
+      "function overhead() view returns (uint256)",
+      "function scalar() view returns (uint256)",
+      "function setEcotone()",
+      "function setFjord()",
+      "function setIsthmus()",
+      "function version() view returns (string)"
+    ],
     "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
       "event OwnerChanged(address oldOwner, address newOwner)",
       "event WhitelistDisabled(address oldOwner)",
@@ -1113,26 +1141,6 @@
       "function successfulMessages(bytes32) view returns (bool)",
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
-    ],
-    "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f": [
-      "function DECIMALS() view returns (uint256)",
-      "function baseFee() view returns (uint256)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function decimals() pure returns (uint256)",
-      "function gasPrice() view returns (uint256)",
-      "function getL1Fee(bytes _data) view returns (uint256)",
-      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
-      "function getL1GasUsed(bytes _data) view returns (uint256)",
-      "function isEcotone() view returns (bool)",
-      "function isFjord() view returns (bool)",
-      "function l1BaseFee() view returns (uint256)",
-      "function overhead() view returns (uint256)",
-      "function scalar() view returns (uint256)",
-      "function setEcotone()",
-      "function setFjord()",
-      "function version() view returns (string)"
     ],
     "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
       "constructor()",
@@ -1209,30 +1217,6 @@
       "function otherBridge() view returns (address)",
       "function paused() view returns (bool)",
       "function version() view returns (string)"
-    ],
-    "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015": [
-      "error NotDepositor()",
-      "event GasPayingTokenSet(address indexed token, uint8 indexed decimals, bytes32 name, bytes32 symbol)",
-      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function basefee() view returns (uint256)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function gasPayingToken() view returns (address addr_, uint8 decimals_)",
-      "function gasPayingTokenName() view returns (string name_)",
-      "function gasPayingTokenSymbol() view returns (string symbol_)",
-      "function hash() view returns (bytes32)",
-      "function isCustomGasToken() view returns (bool)",
-      "function l1FeeOverhead() view returns (uint256)",
-      "function l1FeeScalar() view returns (uint256)",
-      "function number() view returns (uint64)",
-      "function sequenceNumber() view returns (uint64)",
-      "function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol)",
-      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
-      "function setL1BlockValuesEcotone()",
-      "function timestamp() view returns (uint64)",
-      "function version() pure returns (string)"
     ],
     "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
       "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
@@ -1362,13 +1346,37 @@
       "function revokeOffchain(bytes32 data) returns (uint64)",
       "function timestamp(bytes32 data) returns (uint64)",
       "function version() view returns (string)"
+    ],
+    "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
+      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function basefee() view returns (uint256)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function gasPayingToken() pure returns (address addr_, uint8 decimals_)",
+      "function gasPayingTokenName() pure returns (string name_)",
+      "function gasPayingTokenSymbol() pure returns (string symbol_)",
+      "function hash() view returns (bytes32)",
+      "function isCustomGasToken() pure returns (bool is_)",
+      "function l1FeeOverhead() view returns (uint256)",
+      "function l1FeeScalar() view returns (uint256)",
+      "function number() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function sequenceNumber() view returns (uint64)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
+      "function setL1BlockValuesEcotone()",
+      "function setL1BlockValuesIsthmus()",
+      "function timestamp() view returns (uint64)",
+      "function version() pure returns (string)"
     ]
   },
   "usedTemplates": {
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/GasPriceOracle": "0xed55fe1e61604ea2a3cd0199651c7b01bfb5afc47dd9a6f74bb53f4b09da4662",
-    "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
+    "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
+    "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
@@ -1382,5 +1390,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "permissionsConfigHash": "0x4b8f8d53bfaa84ecc93f039a0480538e84e779b3f26e246a5ded470465be2ae7"
+  "permissionsConfigHash": "0xf0c5c908208e4fe18bdc0104ed42344e1a9f691b843dab49f16ee495bb10566a"
 }

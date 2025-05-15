@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   adjustTableValue,
@@ -20,7 +21,14 @@ export const scalingRiskColumns = [
       tooltip: 'How is the validity of the system state checked?',
     },
     cell: (ctx) => (
-      <TableValueCell value={ctx.row.original.risks.stateValidation} />
+      <TableValueCell
+        value={ctx.row.original.risks.stateValidation}
+        href={
+          ctx.row.original.hasStateValidationSection
+            ? getProjectSectionLink(ctx.row.original, 'state-validation')
+            : undefined
+        }
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -36,7 +44,14 @@ export const scalingRiskColumns = [
       tooltip: 'Is the data needed to reconstruct the state available?',
     },
     cell: (ctx) => (
-      <TableValueCell value={ctx.row.original.risks.dataAvailability} />
+      <TableValueCell
+        value={ctx.row.original.risks.dataAvailability}
+        href={
+          ctx.row.original.hasDataAvailabilitySection
+            ? getProjectSectionLink(ctx.row.original, 'da-layer')
+            : undefined
+        }
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -52,7 +67,16 @@ export const scalingRiskColumns = [
       tooltip:
         'How much time do users have to exit the system in case of an unwanted upgrade?',
     },
-    cell: (ctx) => <TableValueCell value={ctx.row.original.risks.exitWindow} />,
+    cell: (ctx) => (
+      <TableValueCell
+        value={ctx.row.original.risks.exitWindow}
+        href={
+          ctx.row.original.hasWithdrawalsSection
+            ? getProjectSectionLink(ctx.row.original, 'withdrawals')
+            : undefined
+        }
+      />
+    ),
     sortDescFirst: true,
     sortUndefined: 'last',
     sortingFn: (a, b) =>
@@ -65,7 +89,14 @@ export const scalingRiskColumns = [
         "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
     },
     cell: (ctx) => (
-      <TableValueCell value={ctx.row.original.risks.sequencerFailure} />
+      <TableValueCell
+        value={ctx.row.original.risks.sequencerFailure}
+        href={
+          ctx.row.original.hasOperatorsSection
+            ? getProjectSectionLink(ctx.row.original, 'operator')
+            : undefined
+        }
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -82,7 +113,14 @@ export const scalingRiskColumns = [
         'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
     },
     cell: (ctx) => (
-      <TableValueCell value={ctx.row.original.risks.proposerFailure} />
+      <TableValueCell
+        value={ctx.row.original.risks.proposerFailure}
+        href={
+          ctx.row.original.hasOperatorsSection
+            ? getProjectSectionLink(ctx.row.original, 'operator')
+            : undefined
+        }
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -93,3 +131,10 @@ export const scalingRiskColumns = [
       ),
   }),
 ]
+
+function getProjectSectionLink(
+  project: ScalingRiskEntry,
+  sectionId: ProjectSectionId,
+) {
+  return `/scaling/projects/${project.slug}#${sectionId}`
+}

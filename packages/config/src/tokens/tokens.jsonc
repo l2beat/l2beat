@@ -6314,6 +6314,21 @@
   ],
   "unichain": [
     {
+      "symbol": "WBTC",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "kBTC",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
       "source": "external",
@@ -6659,6 +6674,12 @@
     }
   ],
   "superseed": [
+    {
+      "symbol": "SUPR",
+      "address": "0x6EA1fFcbD7F5D210dB07D9E773862B0512fA219B",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "USDC",
       "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",

@@ -1,4 +1,283 @@
-Generated with discovered.json: 0x195397970e663a3b5a67f678bfb80e945969205d
+Generated with discovered.json: 0x7d512a76c40b61990e7fb801b7ec1bdcb5cf5720
+
+# Diff at Mon, 12 May 2025 08:10:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4a373705dbec82410d264d404f2ff330f41666ef block: 132493968
+- current block number: 135717996
+
+## Description
+
+Isthmus L2 contract upgrades, mainly focusing on support for the new operator fee.
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x6d0f92051952bf3dcccae9e0ff5cf654e3b386df386bc0609b0c7234a2a108bb"
++        "0x926a45849c8c68704718056d544ac26d7683a6b44a90a9590dda1a9bdd495962"
+      values.$implementation:
+-        "0xa919894851548179A0750865e7974DA599C0Fac7"
++        "0x93e57A196454CB919193fa9946f14943cf733845"
+      values.$pastUpgrades.2:
++        ["2024-07-10T16:00:01.000Z","0x2f63bbe08a66796dde569281a58a53e0b0f64b7aa067297e9c70455fb8e375bc",["0xa919894851548179A0750865e7974DA599C0Fac7"]]
+      values.$pastUpgrades.1.2:
+-        "2024-07-10T16:00:01.000Z"
++        "2024-03-14T00:00:01.000Z"
+      values.$pastUpgrades.1.1:
+-        "0x2f63bbe08a66796dde569281a58a53e0b0f64b7aa067297e9c70455fb8e375bc"
++        "0xedbfdad1f44ea830b863eac45eca4408398351b30511826012882059625963d2"
+      values.$pastUpgrades.1.0.0:
+-        "0xa919894851548179A0750865e7974DA599C0Fac7"
++        "0xb528D11cC114E026F138fE568744c6D45ce6Da7A"
+      values.$pastUpgrades.0.2:
+-        "2024-03-14T00:00:01.000Z"
++        "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30"
+      values.$pastUpgrades.0.1:
+-        "0xedbfdad1f44ea830b863eac45eca4408398351b30511826012882059625963d2"
++        "2025-05-09T16:00:01.000Z"
+      values.$pastUpgrades.0.0.0:
+-        "0xb528D11cC114E026F138fE568744c6D45ce6Da7A"
++        "0x93e57A196454CB919193fa9946f14943cf733845"
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.isIsthmus:
++        true
+      implementationNames.0xa919894851548179A0750865e7974DA599C0Fac7:
+-        "GasPriceOracle"
+      implementationNames.0x93e57A196454CB919193fa9946f14943cf733845:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0xbdd7533735ef92fffadfbee431b476e72f2f048487c921c5570443e3cba5cb30"
++        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
+      values.$implementation:
+-        "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"
++        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
+      values.$pastUpgrades.1:
++        ["2024-03-14T00:00:01.000Z","0x9f2b2d34dfa2cb55cceb9860cade0cb03cfbd7ff1dd07d48b4708b29a46b4a24",["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]]
+      values.$pastUpgrades.0.2:
+-        "2024-03-14T00:00:01.000Z"
++        "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd"
+      values.$pastUpgrades.0.1:
+-        "0x9f2b2d34dfa2cb55cceb9860cade0cb03cfbd7ff1dd07d48b4708b29a46b4a24"
++        ["0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
+      values.$pastUpgrades.0.0:
+-        ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]
++        "2025-05-09T16:00:01.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.2.0"
++        "1.6.0"
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+      implementationNames.0x07dbe8500fc591d1852B76feE44d5a05e13097Ff:
+-        "L1Block"
+      implementationNames.0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
++        "L1Block"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      directlyReceivedPermissions.16:
++        {"permission":"upgrade","from":"0x4200000000000000000000000000000000000002"}
+      directlyReceivedPermissions.15.from:
+-        "0x4200000000000000000000000000000000000002"
++        "0x4200000000000000000000000000000000000007"
+      directlyReceivedPermissions.14.from:
+-        "0x4200000000000000000000000000000000000007"
++        "0x420000000000000000000000000000000000000F"
+      directlyReceivedPermissions.13.from:
+-        "0x420000000000000000000000000000000000000F"
++        "0x4200000000000000000000000000000000000010"
+      directlyReceivedPermissions.12.from:
+-        "0x4200000000000000000000000000000000000010"
++        "0x4200000000000000000000000000000000000011"
+      directlyReceivedPermissions.11.from:
+-        "0x4200000000000000000000000000000000000011"
++        "0x4200000000000000000000000000000000000012"
+      directlyReceivedPermissions.10.from:
+-        "0x4200000000000000000000000000000000000012"
++        "0x4200000000000000000000000000000000000013"
+      directlyReceivedPermissions.9.from:
+-        "0x4200000000000000000000000000000000000013"
++        "0x4200000000000000000000000000000000000014"
+      directlyReceivedPermissions.8.from:
+-        "0x4200000000000000000000000000000000000014"
++        "0x4200000000000000000000000000000000000015"
+      directlyReceivedPermissions.7.from:
+-        "0x4200000000000000000000000000000000000015"
++        "0x4200000000000000000000000000000000000016"
+      directlyReceivedPermissions.6.from:
+-        "0x4200000000000000000000000000000000000016"
++        "0x4200000000000000000000000000000000000017"
+      directlyReceivedPermissions.5.from:
+-        "0x4200000000000000000000000000000000000017"
++        "0x4200000000000000000000000000000000000018"
+      directlyReceivedPermissions.4.from:
+-        "0x4200000000000000000000000000000000000018"
++        "0x4200000000000000000000000000000000000019"
+      directlyReceivedPermissions.3.from:
+-        "0x4200000000000000000000000000000000000019"
++        "0x420000000000000000000000000000000000001A"
+      directlyReceivedPermissions.2.from:
+-        "0x420000000000000000000000000000000000001A"
++        "0x4200000000000000000000000000000000000020"
+      directlyReceivedPermissions.1.from:
+-        "0x4200000000000000000000000000000000000020"
++        "0x4200000000000000000000000000000000000021"
+      directlyReceivedPermissions.0.from:
+-        "0x4200000000000000000000000000000000000021"
++        "0x420000000000000000000000000000000000001b"
+    }
+```
+
+```diff
+    contract OperatorFeeVault (0x420000000000000000000000000000000000001b) {
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+      name:
+-        "Proxy"
++        "OperatorFeeVault"
+      sourceHashes.1:
++        "0xc35c98e4b7bad72da3eda4ed9193d928885e62142aaf1ab37e3a298cf7a51371"
+      proxyType:
+-        "immutable"
++        "EIP1967 proxy"
+      values.$immutable:
+-        true
+      values.$admin:
++        "0x4200000000000000000000000000000000000018"
+      values.$implementation:
++        "0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"
+      values.$pastUpgrades:
++        [["2025-05-09T16:00:01.000Z","0xf162acc8ebbaf9237755736b62331a4817fe27bbbe3712f473ecfa8fee499f7c",["0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"]]]
+      values.$upgradeCount:
++        1
+      values.MIN_WITHDRAWAL_AMOUNT:
++        0
+      values.minWithdrawalAmount:
++        0
+      values.recipient:
++        "0x4200000000000000000000000000000000000019"
+      values.RECIPIENT:
++        "0x4200000000000000000000000000000000000019"
+      values.totalProcessed:
++        0
+      values.version:
++        "1.0.0"
+      values.WITHDRAWAL_NETWORK:
++        1
+      values.withdrawalNetwork:
++        1
+      implementationNames.0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537:
++        "OperatorFeeVault"
+      template:
++        "opstack/Layer2/OperatorFeeVault"
+      description:
++        "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay."
+    }
+```
+
+```diff
+    EOA SuperchainProxyAdminOwner - L2 Alias (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"0x4200000000000000000000000000000000000002","via":[{"address":"0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.15.from:
+-        "0x4200000000000000000000000000000000000002"
++        "0x4200000000000000000000000000000000000007"
+      receivedPermissions.14.from:
+-        "0x4200000000000000000000000000000000000007"
++        "0x420000000000000000000000000000000000000F"
+      receivedPermissions.13.from:
+-        "0x420000000000000000000000000000000000000F"
++        "0x4200000000000000000000000000000000000010"
+      receivedPermissions.12.from:
+-        "0x4200000000000000000000000000000000000010"
++        "0x4200000000000000000000000000000000000011"
+      receivedPermissions.11.from:
+-        "0x4200000000000000000000000000000000000011"
++        "0x4200000000000000000000000000000000000012"
+      receivedPermissions.10.from:
+-        "0x4200000000000000000000000000000000000012"
++        "0x4200000000000000000000000000000000000013"
+      receivedPermissions.9.from:
+-        "0x4200000000000000000000000000000000000013"
++        "0x4200000000000000000000000000000000000014"
+      receivedPermissions.8.from:
+-        "0x4200000000000000000000000000000000000014"
++        "0x4200000000000000000000000000000000000015"
+      receivedPermissions.7.from:
+-        "0x4200000000000000000000000000000000000015"
++        "0x4200000000000000000000000000000000000016"
+      receivedPermissions.6.from:
+-        "0x4200000000000000000000000000000000000016"
++        "0x4200000000000000000000000000000000000017"
+      receivedPermissions.5.from:
+-        "0x4200000000000000000000000000000000000017"
++        "0x4200000000000000000000000000000000000018"
+      receivedPermissions.4.from:
+-        "0x4200000000000000000000000000000000000018"
++        "0x4200000000000000000000000000000000000019"
+      receivedPermissions.3.from:
+-        "0x4200000000000000000000000000000000000019"
++        "0x420000000000000000000000000000000000001A"
+      receivedPermissions.2.from:
+-        "0x420000000000000000000000000000000000001A"
++        "0x4200000000000000000000000000000000000020"
+      receivedPermissions.1.from:
+-        "0x4200000000000000000000000000000000000020"
++        "0x4200000000000000000000000000000000000021"
+      receivedPermissions.0.from:
+-        "0x4200000000000000000000000000000000000021"
++        "0x420000000000000000000000000000000000001b"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol              | 531 +++++++++++++++++++-
+ .../{.flat@132493968 => .flat}/L1Block/L1Block.sol | 151 +++++-
+ .../.flat/OperatorFeeVault/OperatorFeeVault.sol    | 546 +++++++++++++++++++++
+ .../OperatorFeeVault/Proxy.p.sol}                  |   0
+ 4 files changed, 1205 insertions(+), 23 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 132493968 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Proxy (0x420000000000000000000000000000000000001b)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x5562284cade647fc85f194127234bc5583fd7b00
 
 # Diff at Tue, 06 May 2025 10:57:06 GMT:
 

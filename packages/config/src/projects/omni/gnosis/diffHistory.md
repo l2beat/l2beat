@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd08cdcebb0b388ef98b9345ab9cb717c5d2da05e
+
+# Diff at Mon, 12 May 2025 12:22:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 39725195
+- current block number: 40024439
+
+## Description
+
+vkey update for the SP1 ethereum light client.
+
+## Watched changes
+
+```diff
+    contract SP1Helios (0xa809c536c85b63a2676CbAc3C4064748AD3a2562) {
+    +++ description: None
+      values.heliosProgramVkey:
+-        "0x00ed996c6f79e241fd4879d34ebfef7514ad8b817d0b40ab82a9856460d298c0"
++        "0x0021f5bf3c2516214dc2946556a0ef57e0fbcb908430fbccb7b49259a02fd292"
+    }
+```
+
 Generated with discovered.json: 0xeaceef3604572c4b79eb3a771ac0232395184a35
 
 # Diff at Tue, 29 Apr 2025 08:19:27 GMT:

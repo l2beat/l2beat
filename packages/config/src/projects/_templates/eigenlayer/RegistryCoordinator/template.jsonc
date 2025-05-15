@@ -43,7 +43,7 @@
     },
     "ejectionCooldown": {
       "description": "The time in seconds that an operator must wait before being able to re-register after being ejected.",
-      "severity": "MEDIUM",
+      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "churnApprover": {

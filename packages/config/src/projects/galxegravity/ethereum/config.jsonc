@@ -18,11 +18,8 @@
     "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649": "G",
     "0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D": "TokenOwnerMultisig"
   },
+  "maxDepth": 34,
   "overrides": {
-    "0x856EA788977Bc771E8Ca87471baeC507A0f54771": {
-      "displayName": "OneStepProverHostIo",
-      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
-    },
     "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": {
       // ValidatorUtils
       "fields": {

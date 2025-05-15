@@ -1,5 +1,4 @@
-import { isChainShortName } from '@l2beat/discovery'
-import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
+import { getChainFullName, isChainShortName } from '@l2beat/discovery'
 import { toAddress } from './toAddress'
 import type { ApiAddressType, FieldValue } from './types'
 

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc478ab31dfeba7bd71977f8dd7d694906eeec1c9
+
+# Diff at Mon, 12 May 2025 13:18:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 21387773
+- current block number: 21387773
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      fieldMeta.accessControl.severity:
+-        "MEDIUM"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x00ce207b1c950381e81df6d6d1a47dbbac906d27
 
 # Diff at Tue, 29 Apr 2025 08:19:14 GMT:

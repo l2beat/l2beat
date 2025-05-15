@@ -7227,6 +7227,28 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1738952865,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
       "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
@@ -9576,6 +9598,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Superseed",
+      "coingeckoId": "superseed",
+      "address": "0x6EA1fFcbD7F5D210dB07D9E773862B0512fA219B",
+      "symbol": "SUPR",
+      "decimals": 18,
+      "deploymentTimestamp": 1743161747,
+      "coingeckoListingTimestamp": 1746403200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55519/large/Small.png?1746469855",
+      "chainId": 5330,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "USDC",

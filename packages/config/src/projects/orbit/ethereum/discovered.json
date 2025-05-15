@@ -121,7 +121,7 @@
       },
       "fieldMeta": {
         "policyAdmin": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
           "type": "PERMISSION"
         },

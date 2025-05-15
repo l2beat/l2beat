@@ -3,7 +3,7 @@ import {
   getChainConfig,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { getExplorerClient } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { getExplorerClient } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'

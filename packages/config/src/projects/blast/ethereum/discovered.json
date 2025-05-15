@@ -795,7 +795,7 @@
       },
       "fieldMeta": {
         "insuranceFeeBips": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "Insurance fee taken from positive yields"
         }
       },
@@ -844,7 +844,7 @@
       },
       "fieldMeta": {
         "insuranceFeeBips": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "Insurance fee taken from positive yields"
         }
       },

@@ -1,9 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  type AllProviderStats,
   type AllProviders,
+  type Analysis,
   type ConfigRegistry,
   type DiscoveryEngine,
   type DiscoveryOutput,
+  ProviderMeasurement,
+  type ProviderStats,
   type TemplateService,
   combinePermissionsIntoDiscovery,
   flattenDiscoveredSources,
@@ -11,13 +15,7 @@ import {
   modelPermissionsForIsolatedDiscovery,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import type { Analysis } from '@l2beat/discovery/dist/discovery/analysis/AddressAnalyzer'
-import {
-  type AllProviderStats,
-  ProviderMeasurement,
-  type ProviderStats,
-} from '@l2beat/discovery/dist/discovery/provider/Stats'
-import { assert } from '@l2beat/shared-pure'
+import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
@@ -201,10 +199,6 @@ const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
   help: 'Average duration of methods in high level provider calls done during discovery',
   labelNames: ['chain', 'method'],
 })
-
-function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj)) as T
-}
 
 function remapNames(
   results: Analysis[],

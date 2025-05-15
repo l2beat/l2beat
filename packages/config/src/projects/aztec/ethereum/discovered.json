@@ -1,8 +1,8 @@
 {
   "name": "aztec",
   "chain": "ethereum",
-  "blockNumber": 21387141,
-  "configHash": "0x14c7965585bf63befd50070bb00b9d5f6620440980be27e0a15864c8d63020d4",
+  "blockNumber": 22466421,
+  "configHash": "0x6c457831ac2821007cce3c71b338a3da4e429a96d1f4700ff1af9b492983d985",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -96,7 +96,7 @@
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 1419],
+        "getEscapeHatchStatus": [false, 2139],
         "getTotalDeposited": [
           "35761937719451296404343",
           "19481078867265097315675826",
@@ -108,7 +108,7 @@
           4559522
         ],
         "getTotalPendingDeposit": [
-          "74951791733427981245",
+          "74961791733427981245",
           "9030790745687623743968",
           300
         ],
@@ -138,7 +138,7 @@
           4559522
         ],
         "totalPendingDeposit": [
-          "74951791733427981245",
+          "74961791733427981245",
           "9030790745687623743968",
           300
         ],
@@ -173,7 +173,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AztecMultisig",
+      "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -209,7 +209,12 @@
       "name": "FirstAnvilAddress",
       "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
-      "proxyType": "EOA"
+      "unverified": true,
+      "proxyType": "EIP7702 EOA",
+      "ignoreInWatchMode": ["$implementation"],
+      "values": {
+        "$implementation": "0x930FcC37d6042c79211EE18A02857Cb1Fd7F0D0b"
+      }
     },
     {
       "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
@@ -360,5 +365,5 @@
     "aztecv1/TurboVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   },
-  "permissionsConfigHash": "0x907fb235536ca51d0789ee77c4a48c4300088ceb205a39fc1219bb2e78e1f832"
+  "permissionsConfigHash": "0xc2e3832ed570930a85b7eea09b4be15fdbd6f6bd97bda26cc7514543f0c4e876"
 }

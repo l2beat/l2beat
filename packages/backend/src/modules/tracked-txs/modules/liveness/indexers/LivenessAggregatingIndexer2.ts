@@ -28,7 +28,7 @@ export interface LivenessAggregatingIndexer2Deps
 
 export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
   constructor(private readonly $: LivenessAggregatingIndexer2Deps) {
-    super({ ...$, name: 'liveness_aggregating2' })
+    super({ ...$, name: 'liveness_aggregating_2' })
   }
 
   override async update(
@@ -38,10 +38,10 @@ export class LivenessAggregatingIndexer2 extends ManagedChildIndexer {
     const from =
       safeHeight <= this.$.minHeight
         ? this.$.minHeight
-        : UnixTime.toStartOf(safeHeight, 'day')
-    const endOfDay = UnixTime.toStartOf(from, 'day') + UnixTime.DAY
+        : UnixTime.toStartOf(safeHeight, 'hour')
+    const endOfHour = UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
 
-    const to = parentSafeHeight > endOfDay ? endOfDay : parentSafeHeight
+    const to = parentSafeHeight > endOfHour ? endOfHour : parentSafeHeight
 
     const updatedLivenessRecords = await this.generateLiveness(from, to)
 

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x66a807d25ec4bf962296b82757e9618aa5ec26f7
+
+# Diff at Mon, 12 May 2025 13:18:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 333894848
+- current block number: 333894848
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 333894848 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      fieldMeta.getBothCohorts.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0x8fb6bd77def2bce4e1a64221a4584b2b177855ae
 
 # Diff at Tue, 06 May 2025 15:56:57 GMT:

@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x22edcbc6aaa64f93a20e0392298b7154c8d38493
+
+# Diff at Fri, 09 May 2025 10:09:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c3a1d49c07f4092914d62c65181e5fec18a88318 block: 22437739
+- current block number: 22437739
+
+## Description
+
+Config related: Move IFs to the editable string for condition configs (yeet IFs from the automatic resolver).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437739 (main branch discovery), not current.
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.1.via.3.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+      receivedPermissions.1.via.1.address:
+-        "0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.1.via.1.condition:
+-        "restricted to the global pause function"
+      receivedPermissions.1.via.0.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.1.via.0.condition:
++        "though restricted to the global pause function"
+      receivedPermissions.0.via.3.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+      receivedPermissions.0.via.1.address:
+-        "0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.0.via.1.condition:
+-        "restricted to the global pause function"
+      receivedPermissions.0.via.0.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.0.via.0.condition:
++        "though restricted to the global pause function"
+      directlyReceivedPermissions.0.condition:
+-        "restricted to the global pause function"
++        "though restricted to the global pause function"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.1.via.0.condition:
+-        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
++        "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+      receivedPermissions.0.via.0.condition:
+-        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
++        "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+      directlyReceivedPermissions.0.condition:
+-        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
++        "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1.via.1.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+      receivedPermissions.0.via.1.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+      directlyReceivedPermissions.0.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+    }
+```
+
 Generated with discovered.json: 0xa8c93d9e326a3599bb392b9be0718a6df0daba8b
 
 # Diff at Thu, 08 May 2025 08:49:27 GMT:

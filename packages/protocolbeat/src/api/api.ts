@@ -1,6 +1,9 @@
+import { withoutUndefinedKeys } from '../common/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
+  ApiCreateShapeResponse,
+  ApiListTemplatesResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
@@ -42,8 +45,15 @@ export async function getCode(
 export async function searchCode(
   project: string,
   searchTerm: string,
+  address?: string,
 ): Promise<ApiCodeSearchResponse> {
-  const res = await fetch(`/api/projects/${project}/codeSearch/${searchTerm}`)
+  const query = new URLSearchParams(
+    withoutUndefinedKeys({ searchTerm, address }) as Record<string, string>,
+  )
+
+  const url = `/api/projects/${project}/codeSearch?${query.toString()}`
+  const res = await fetch(url)
+
   if (!res.ok) {
     throw new Error(res.statusText)
   }
@@ -84,4 +94,37 @@ export function executeMatchFlat(
     against,
   })
   return new EventSource(`/api/terminal/match-flat?${params}`)
+}
+
+export async function listTemplates(): Promise<ApiListTemplatesResponse> {
+  const res = await fetch('/api/templates')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiListTemplatesResponse
+}
+
+export async function createShape(
+  chain: string,
+  address: string,
+  blockNumber: number,
+  templateId: string,
+  fileName: string,
+) {
+  const body = { chain, address, blockNumber, templateId, fileName }
+
+  const res = await fetch('/api/templates/create-shape', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data: ApiCreateShapeResponse = await res.json()
+
+  if (!data.success) {
+    throw new Error(data.error)
+  }
 }
