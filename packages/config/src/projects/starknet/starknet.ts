@@ -400,6 +400,14 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
 `,
   milestones: [
     {
+      title: 'Stage 1',
+      url: 'https://x.com/Starknet',
+      date: '2025-05-15T00:00:00.00Z',
+      description:
+        'Starknet is now Stage 1 by introducing a Security Council, upgrade delays and censorship resistance.',
+      type: 'general',
+    },
+    {
       title: 'Starknet starts using blobs',
       url: 'https://twitter.com/Starknet/status/1767915153700290839',
       date: '2024-03-13T00:00:00Z',
