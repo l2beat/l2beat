@@ -53,10 +53,15 @@ export function printTemplatization(
       if (matchedShape !== undefined) {
         const { name, shape } = matchedShape
 
+        const addressLines = Array.isArray(shape.address)
+          ? shape.address
+          : [shape.address]
+
         nestedLines.push(
           ...[
             name,
-            `${shape.chain} @ ${shape.blockNumber} (${shape.address})`,
+            `${shape.chain} @ ${shape.blockNumber}`,
+            ...addressLines.map((address) => address.toString()),
             `hash: ${shape.hash}`,
           ],
         )
