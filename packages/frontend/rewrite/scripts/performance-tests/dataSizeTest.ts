@@ -108,6 +108,7 @@ type SSRSize =
       size: string
       length: number
       elements: SSRSize[]
+      biggestElement: Record<string, SSRSize>
     }
   | {
       type: 'object'
@@ -154,13 +155,26 @@ function getSSRSize(value: unknown, depth = 0): SSRSize {
   }
 
   if (Array.isArray(value)) {
+    const sortedValue = value.sort(
+      (a, b) =>
+        parseSize(getSSRSize(b, depth + 1)) -
+        parseSize(getSSRSize(a, depth + 1)),
+    )
+
+    const elements = sortedValue.map((v) => getSSRSize(v, depth + 1))
+
+    const biggestElement = sortedValue[0] as Record<string, unknown>
     return {
       type: 'array',
       size: formatBytes(size),
       length: value.length,
-      elements: value
-        .map((v) => getSSRSize(v, depth + 1))
-        .sort((a, b) => parseSize(b) - parseSize(a)),
+      biggestElement: Object.fromEntries(
+        Object.entries(biggestElement).map(([key, value]) => [
+          key,
+          getSSRSize(value, Infinity),
+        ]),
+      ),
+      elements,
     }
   }
   if (typeof value === 'object' && value !== null) {
