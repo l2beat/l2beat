@@ -8,22 +8,24 @@
     value: "Onchain (SD)"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
-    orderHint: 0
-    secondLine: undefined
-    sentiment: "bad"
-    value: "None"
+    description: "Standard upgrades are initiated on L1 and go through a 8d delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take 1d."
+    sentiment: "warning"
+    value: "7d"
+    warning: {
+      sentiment: "warning"
+      value: "The Security Council can upgrade with no delay."
+    }
   }
   proposerFailure: {
-    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    description: "Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator."
     orderHint: -Infinity
-    sentiment: "bad"
-    value: "Cannot withdraw"
+    sentiment: "warning"
+    value: "Security Council minority"
   }
   sequencerFailure: {
-    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
-    sentiment: "bad"
-    value: "No mechanism"
+    description: "Users can submit transactions to an L1 map, but can't force them. When users “complain” that their transaction is stuck on L1 and not picked up by the sequencer, the Security Council minority can bypass the sequencer by posting a state root that includes it."
+    sentiment: "warning"
+    value: "Log via L1"
   }
   stateValidation: {
     description: "STARKs are zero knowledge proofs that ensure state correctness."

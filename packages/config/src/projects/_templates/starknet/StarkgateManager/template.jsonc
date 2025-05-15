@@ -25,7 +25,7 @@
       }
     },
     "govAdminAC": {
-      "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation.",
+      "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -36,7 +36,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         }
       ]
     },
