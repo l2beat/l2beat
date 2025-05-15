@@ -14,7 +14,6 @@ describe('icons', () => {
         // We handle ecosystem logos in a different way
         whereNot: ['ecosystemConfig'],
       })
-      console.log(icons)
 
       const uniqueSlugs = projects
         .map((x) => x.slug)
