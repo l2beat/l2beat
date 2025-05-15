@@ -82,13 +82,16 @@ export const DownloadShapes = command({
         const filePath = join(shapesFolder, fileName, outputFile)
         outputFiles[filePath] = flattenOutput
 
-        // Make sure the hash matches shape.hash
         const hash = flatteningHash(flattenOutput)
         sourceHashes.push(hash)
       }
 
-      const matchingHash = combineImplementationHashes(sourceHashes)
+      const matchingHash =
+        sourceHashes.length > 1
+          ? combineImplementationHashes(sourceHashes)
+          : sourceHashes[0]
 
+      // Make sure the hash matches shape.hash
       if (matchingHash !== shape.hash) {
         logger.logLine(`Error: hash mismatch!`)
         return
