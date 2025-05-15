@@ -9,9 +9,9 @@ import path, { join } from 'path'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
 import {
+  combineImplementationHashes,
   contractFlatteningHash,
   getHashForMatchingFromSources,
-  sha2_256bit,
 } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
@@ -352,7 +352,7 @@ export class TemplateService {
 
     assert(hashes.length > 0, 'Could not find hash')
 
-    const masterHash = sha2_256bit(hashes)
+    const masterHash = combineImplementationHashes(hashes)
 
     if (Object.values(shapes).some((s) => s.hash === masterHash)) {
       return
