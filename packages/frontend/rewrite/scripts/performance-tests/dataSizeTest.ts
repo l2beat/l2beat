@@ -2,8 +2,8 @@ import { writeFileSync } from 'fs'
 import path from 'path'
 import { pages, projectPages } from './pages'
 
-// const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
+// const BASE_URL = 'http://localhost:3000'
 
 const results: {
   mainPages: Record<
@@ -149,7 +149,7 @@ async function testPage(page: string): Promise<PageResult> {
 function getSSRSize(value: unknown, depth = 0): SSRSize {
   const size = JSON.stringify(value).length
 
-  if (depth > 2) {
+  if (depth > getDepth()) {
     return formatBytes(size)
   }
 
@@ -184,6 +184,17 @@ function extractSSRData(html: string) {
     return undefined
   }
   return JSON.parse(result) as { page: string; props: Record<string, unknown> }
+}
+
+function getDepth() {
+  const args = process.argv.slice(2)
+  const depthIndex = args.indexOf('--depth')
+  const depth = depthIndex !== -1 ? args[depthIndex + 1] : null
+  if (!depth) {
+    return 0
+  }
+
+  return parseInt(depth)
 }
 
 function parseSize(ssr: SSRSize) {
