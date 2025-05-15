@@ -3,7 +3,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('molten', 'arbitrum')
@@ -65,7 +64,6 @@ export const molten: ScalingProject = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
       title: 'Mainnet Launch',

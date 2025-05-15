@@ -45,12 +45,6 @@
     "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "Bob Multisig 1",
     "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "Bob Multisig 2",
 
-    "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "Scroll Multisig 1",
-    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "Scroll Multisig 2",
-    "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",
-    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
-    "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council",
-
     "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "Zircuit Multisig 1",
     "0x2c0B27F7C8F083B539557a0bA787041BF22DB276": "Zircuit Multisig 2",
 
@@ -118,16 +112,12 @@
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
 
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "Conduit Multisig 1",
-    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "Conduit Multisig 2",
-    "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "Conduit Multisig 3",
 
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
     "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
 
     "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "Gelato Multisig",
 
-    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig 1",
-    "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "Caldera Multisig 2",
     "0x2bf43034b9559643e986A2fE3cE015a18247b904": "Caldera Multisig 3",
 
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "Lido Dao Agent",

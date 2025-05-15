@@ -1,8 +1,8 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 334875563,
-  "configHash": "0x540244b13043c658cfa81e6924cfcd98e9829639282ff9ecf8f2670e38d93625",
+  "blockNumber": 336629722,
+  "configHash": "0xc4ee1a2381470dba206461c743ae890ad2597bad5fd84a40af347ce5003735cc",
   "entries": [
     {
       "name": "RollupProxy",
@@ -59,13 +59,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1525,
+        "firstUnresolvedNode": 1545,
         "inbox": "0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 1524,
-        "latestNodeCreated": 1550,
+        "latestConfirmed": 1544,
+        "latestNodeCreated": 1570,
         "loserStakeEscrow": "0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -190,7 +190,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 19505,
+        "batchCount": 24832,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"],
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
@@ -221,7 +221,7 @@
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 39072,
+        "totalDelayedMessagesRead": 39167,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -586,10 +586,12 @@
       "name": "OneStepProverHostIo",
       "address": "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8",
       "type": "Contract",
+      "template": "orbitstack/OneStepProverHostIo_Celestia",
       "sourceHashes": [
         "0xd8aa733150471ae7c5f80c9da64d49d363b060d6a993934483a9c749033b3678"
       ],
       "proxyType": "immutable",
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
       "sinceTimestamp": 1746599902,
       "sinceBlock": 334105349,
       "values": {
@@ -799,87 +801,6 @@
       }
     },
     {
-      "name": "SP1Blobstream",
-      "address": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-      "type": "Contract",
-      "template": "succinct/SP1Blobstream",
-      "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
-      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
-      "sinceTimestamp": 1710651080,
-      "sinceBlock": 191198934,
-      "values": {
-        "$admin": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
-        "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
-        "$pastUpgrades": [
-          [
-            "2024-03-17T04:51:20.000Z",
-            "0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a",
-            ["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
-          ],
-          [
-            "2024-03-18T01:19:36.000Z",
-            "0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192",
-            ["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
-          ],
-          [
-            "2024-08-26T18:53:22.000Z",
-            "0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f",
-            ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
-          ],
-          [
-            "2024-12-02T19:09:05.000Z",
-            "0x07dbff15e24a8c124a927a2881cb4d471ace180488a56a56b43b47d1da68a130",
-            ["0x46EbfC399d3913BB9b99E73675722417F9c5d416"]
-          ]
-        ],
-        "$upgradeCount": 4,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          },
-          "TIMELOCK_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          },
-          "GUARDIAN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          }
-        },
-        "blobstreamProgramVkey": "0x00eaf7d396acac046b54bc8d5ba17d3f1c7374d7158ac01c76dfeca6103163eb",
-        "checkRelayer": true,
-        "DATA_COMMITMENT_MAX": 10000,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "frozen": false,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "guardians": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
-        "headerRangeFunctionId_deprecated": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0",
-        "isRelayer1Approved": false,
-        "isRelayer2Approved": true,
-        "isRelayer3Approved": true,
-        "latestBlock": 5332000,
-        "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
-        "relayers": [
-          "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
-          "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
-        ],
-        "state_proofNonce": 11209,
-        "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
-        "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-        "VERSION": "1.1.0"
-      },
-      "implementationNames": {
-        "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "ERC1967Proxy",
-        "0x46EbfC399d3913BB9b99E73675722417F9c5d416": "SP1Blobstream"
-      }
-    },
-    {
       "name": "GatewayRouter",
       "address": "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF",
       "type": "Contract",
@@ -1007,7 +928,7 @@
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
         ],
         "allowedOutboxList": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
-        "delayedMessageCount": 39072,
+        "delayedMessageCount": 39167,
         "inboxHistory": [
           "0x235000876bd58336C802B3546Fc0250f285fCc79",
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1017,8 +938,8 @@
         "outboxHistory": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 19505,
-        "sequencerReportedSubMessageCount": 9533381
+        "sequencerMessageCount": 24832,
+        "sequencerReportedSubMessageCount": 12981921
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1199,60 +1120,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
-      "error ContractFrozen()",
-      "error OnlyGuardian(address sender)",
-      "error OnlyTimelock(address sender)",
-      "error RelayerNotApproved()",
-      "error TargetBlockNotInRange()",
-      "error TrustedHeaderMismatch()",
-      "error TrustedHeaderNotFound()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event DataCommitmentStored(uint256 proofNonce, uint64 indexed startBlock, uint64 indexed endBlock, bytes32 indexed dataCommitment)",
-      "event HeadUpdate(uint64 blockNumber, bytes32 headerHash)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Upgraded(address indexed implementation)",
-      "event ValidatorBitmapEquivocation(uint64 trustedBlock, uint64 targetBlock, uint256 validatorBitmap)",
-      "function DATA_COMMITMENT_MAX() view returns (uint64)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GUARDIAN_ROLE() view returns (bytes32)",
-      "function TIMELOCK_ROLE() view returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function approvedRelayers(address) view returns (bool)",
-      "function blobstreamProgramVkey() view returns (bytes32)",
-      "function blockHeightToHeaderHash(uint64) view returns (bytes32)",
-      "function checkRelayer() view returns (bool)",
-      "function commitHeaderRange(bytes proof, bytes publicValues)",
-      "function frozen() view returns (bool)",
-      "function gateway_deprecated() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function headerRangeFunctionId_deprecated() view returns (bytes32)",
-      "function initialize(tuple(address guardian, uint64 height, bytes32 header, bytes32 blobstreamProgramVkey, address verifier) _params)",
-      "function latestBlock() view returns (uint64)",
-      "function nextHeaderFunctionId_depcrecated() view returns (bytes32)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCheckRelayer(bool _checkRelayer)",
-      "function setRelayerApproval(address _relayer, bool _approved)",
-      "function state_dataCommitments(uint256) view returns (bytes32)",
-      "function state_proofNonce() view returns (uint256)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function updateFreeze(bool _freeze)",
-      "function updateGenesisState(uint32 _height, bytes32 _header)",
-      "function updateProgramVkey(bytes32 _programVkey)",
-      "function updateVerifier(address _verifier)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifier() view returns (address)",
-      "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
     ],
     "0x4f82B5de97Ad3690ee319878083503178Fd8E0B9": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1683,12 +1550,6 @@
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
     ],
-    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1822,6 +1683,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverHostIo_Celestia": "0xdfb89dfaf2aa0cc0cb0a1be0072f20b1716aa3be62152610175c896630a839de",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
@@ -1829,8 +1691,7 @@
     "orbitstack/RollupProxy_fastConfirm": "0x62bcdde440d51d7b36d2dc693743937bfe2d1c2b65d58eee1a50ce06e2c7eddf",
     "orbitstack/SequencerInbox": "0x3fa38bb34cc216c88f30e3bff0ec1476b82eada0b9ea2cd9bae17f45353666b2",
     "orbitstack/UpgradeExecutor": "0x5ccb1a24de22513543702981322da392ea6d43ef971ebf7144c29a5605174b25",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1Blobstream": "0x886e792aba1703e94c7eb1c129babcca484bd908a355b129879c543fdca7d523"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x6824087eb9e98bc1096aaa2cbacdb9dd20574a68f177eea1aa0a2a1c8937b811"
+  "permissionsConfigHash": "0x5bbdc625ad093d2fb4a3757f1b740b846cb89b12b6a5366dc7ef11e7810e6b86"
 }

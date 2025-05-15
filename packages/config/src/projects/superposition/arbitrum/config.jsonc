@@ -2,7 +2,7 @@
   "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "superposition",
-  "import": ["../../globalConfig.jsonc"],
+  "import": ["../../arbitrumConfig.jsonc"],
   "initialAddresses": [
     "0x62bEd4b862254789825Cd6F2352aa2b76B16145e" // standardGW
   ],

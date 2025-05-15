@@ -18,9 +18,9 @@
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
-    sentiment: "warning"
-    value: "Enqueue via L1"
+    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 OR their targets on L2, to be whitelisted."
+    sentiment: "bad"
+    value: "No mechanism"
   }
   stateValidation: {
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
