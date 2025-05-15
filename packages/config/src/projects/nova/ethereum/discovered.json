@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 22397503,
+  "blockNumber": 22490164,
   "configHash": "0xb371a193f940e795fd51abbe3a57b07948076fd79de496b111aa5f128f2ea459",
   "entries": [
     {
@@ -82,7 +82,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 221002,
+        "batchCount": 225757,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -94,9 +94,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 22397324,
+          "prevBlockNumber": 22489896,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22397376
+          "prevSequencedBlockNumber": 22489962
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -129,7 +129,7 @@
         "rollup": "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 466610,
+        "totalDelayedMessagesRead": 471385,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -748,7 +748,7 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 466612,
+        "delayedMessageCount": 471388,
         "inboxHistory": [
           "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -756,8 +756,8 @@
         "outboxHistory": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 221002,
-        "sequencerReportedSubMessageCount": 83484431
+        "sequencerMessageCount": 225757,
+        "sequencerReportedSubMessageCount": 83549795
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2892,8 +2892,7 @@
       "template": "orbitstack/RollupProxyBoLD",
       "sourceHashes": [
         "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642",
-        "0x24c1c1fe007d9dead1f00c99d1490ea00606ea5c7b12bb2f94f2f1dbb4fac23b",
-        "0xa2a02945fecf6c30403d40603a81bdca4ee7efd605e7600f428b94212ff0c9b9"
+        "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
@@ -2945,7 +2944,7 @@
         ],
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x5ad6f284660c7a4ffdc9913022a7d14a70446c712c820d251667d17c9b4d783a",
+        "latestConfirmed": "0x583932a0437795133bb54408955ff388ab473e3956e2d6b42f726fc7b738d1d8",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
