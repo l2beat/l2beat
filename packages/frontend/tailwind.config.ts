@@ -167,6 +167,10 @@ const config: Config = {
       'n-cyan': {
         600: '#1C8BA4',
       },
+      'n-stone': {
+        200: '#F0D8BD',
+        700: '#5A3C2C',
+      },
 
       // New colors
       primary: {

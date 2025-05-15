@@ -7,10 +7,10 @@ export function DiscoUiBanner({ href }: { href: string }) {
   return (
     <>
       {/* Desktop */}
-      <div className="h-20 w-full overflow-hidden rounded bg-[#F0D8BD] max-md:hidden">
+      <div className="h-20 w-full overflow-hidden rounded bg-n-stone-200 max-md:hidden">
         <div className="flex items-center gap-2">
           <div className="flex w-1/2 min-w-[220px] flex-col gap-2 px-4 py-3">
-            <DiscoUiIcon short className="fill-[#5A3C2C]" />
+            <DiscoUiIcon short className="fill-n-stone-700" />
             <Link
               href={href}
               target="_blank"
