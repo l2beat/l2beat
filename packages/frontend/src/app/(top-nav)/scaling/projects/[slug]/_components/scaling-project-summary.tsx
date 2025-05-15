@@ -76,7 +76,7 @@ export function ProjectScalingSummary({ project }: Props) {
               <DesktopProjectLinks
                 projectLinks={project.header.links}
                 variant="header"
-                projectId={project.id}
+                discoUiHref={project.discoUiHref}
               />
             </div>
             <div className="grid w-full md:gap-3 xl:grid-cols-3 [@media(min-width:1000px)]:grid-cols-[260px_1fr_1fr] [@media(min-width:1300px)]:grid-cols-[300px_1fr_1fr]">
@@ -100,11 +100,11 @@ export function ProjectScalingSummary({ project }: Props) {
           <div className="flex items-center justify-between">
             <Link
               className="text-xs text-link underline"
-              href={`https://disco.l2beat.com/ui/p/${project.id}`}
+              href={project.discoUiHref}
             >
               Explore more in Discovery UI
             </Link>
-            {project.id && <DiscoUiLink projectId={project.id} />}
+            {project.discoUiHref && <DiscoUiLink href={project.discoUiHref} />}
           </div>
         </div>
 

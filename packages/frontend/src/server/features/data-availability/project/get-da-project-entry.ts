@@ -22,7 +22,6 @@ import {
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
 import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
-import type { ProjectId } from '@l2beat/shared-pure'
 
 interface CommonDaProjectPageEntry {
   name: string
@@ -41,7 +40,6 @@ interface CommonDaProjectPageEntry {
 
 export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
   entryType: 'common'
-  discoUiLinkId?: ProjectId
   selectedBridge: {
     name: string
     slug: string
@@ -68,6 +66,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     usedIn: UsedInProjectWithIcon[]
   }
   sections: ProjectDetailsSection[]
+  discoUiHref?: string
 }
 
 export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
@@ -157,7 +156,6 @@ export async function getDaProjectEntry(
   const result: DaProjectPageEntry = {
     entryType: 'common',
     name: layer.name,
-    discoUiLinkId: selected?.id,
     slug: layer.slug,
     icon: getProjectIcon(layer.slug),
     kind: layer.daLayer.type,
@@ -210,6 +208,9 @@ export async function getDaProjectEntry(
       title: bridge.daBridge.name,
       href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     })),
+    discoUiHref: selected
+      ? `https://disco.l2beat.com/ui/p/${selected.id}`
+      : undefined,
   }
 
   if (layer.daLayer.usedWithoutBridgeIn.length > 0) {

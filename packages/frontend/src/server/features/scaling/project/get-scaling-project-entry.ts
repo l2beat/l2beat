@@ -47,7 +47,6 @@ import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
 
 export interface ProjectScalingEntry {
-  id: ProjectId
   type: 'layer3' | 'layer2'
   name: string
   slug: string
@@ -99,6 +98,7 @@ export interface ProjectScalingEntry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
+  discoUiHref: string
 }
 
 export async function getScalingProjectEntry(
@@ -183,7 +183,6 @@ export async function getScalingProjectEntry(
 
   const changes = projectsChangeReport.getChanges(project.id)
   const common = {
-    id: project.id,
     type: project.scalingInfo.layer,
     name: project.name,
     slug: project.slug,
@@ -203,6 +202,7 @@ export async function getScalingProjectEntry(
     stageConfig: isProjectOther(project.scalingInfo)
       ? { stage: 'NotApplicable' as const }
       : project.scalingStage,
+    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
   const daSolution = await getScalingDaSolution(project)
 

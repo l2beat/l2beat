@@ -51,7 +51,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                     <DesktopProjectLinks
                       projectLinks={project.header.links}
                       variant="header"
-                      projectId={project.discoUiLinkId}
+                      discoUiHref={project.discoUiHref}
                     />
                   </div>
                   <DaProjectStats
@@ -78,19 +78,17 @@ export function RegularDaProjectSummary({ project }: Props) {
             )}
           </div>
 
-          {project.discoUiLinkId && (
+          {project.discoUiHref && (
             <div className="-mb-4 md:hidden">
               <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
               <div className="flex items-center justify-between">
                 <Link
                   className="text-xs text-link underline"
-                  href={`https://disco.l2beat.com/ui/p/${project.discoUiLinkId}`}
+                  href={project.discoUiHref}
                 >
                   Explore more in Discovery UI
                 </Link>
-                {project.discoUiLinkId && (
-                  <DiscoUiLink projectId={project.discoUiLinkId} />
-                )}
+                <DiscoUiLink href={project.discoUiHref} />
               </div>
             </div>
           )}

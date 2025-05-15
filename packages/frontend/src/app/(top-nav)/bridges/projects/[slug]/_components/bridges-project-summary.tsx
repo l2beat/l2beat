@@ -51,7 +51,7 @@ export function BridgesProjectSummary({ project }: Props) {
             <DesktopProjectLinks
               projectLinks={project.header.links}
               variant="header"
-              projectId={project.id}
+              discoUiHref={project.discoUiHref}
             />
           </div>
           <BridgesProjectStats project={project} />
@@ -62,11 +62,11 @@ export function BridgesProjectSummary({ project }: Props) {
           <div className="flex items-center justify-between">
             <Link
               className="text-xs text-link underline"
-              href={`https://disco.l2beat.com/ui/p/${project.id}`}
+              href={project.discoUiHref}
             >
               Explore more in Discovery UI
             </Link>
-            {project.id && <DiscoUiLink projectId={project.id} />}
+            <DiscoUiLink href={project.discoUiHref} />
           </div>
         </div>
 

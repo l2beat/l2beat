@@ -1,13 +1,12 @@
-import type { ProjectId } from '@l2beat/shared-pure'
 import Link from 'next/link'
 import { navigationMenuTriggerStyle } from '~/components/core/navigation-menu'
 import { DiscoUiIcon } from '~/icons/disco-ui'
 import { cn } from '~/utils/cn'
 
-export function DiscoUiLink({ projectId }: { projectId: ProjectId }) {
+export function DiscoUiLink({ href }: { href: string }) {
   return (
     <Link
-      href={`https://disco.l2beat.com/ui/p/${projectId}`}
+      href={href}
       rel="noopener noreferrer"
       target="_blank"
       className={cn(
