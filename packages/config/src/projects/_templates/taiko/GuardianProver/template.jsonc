@@ -1,0 +1,35 @@
+{
+  "description": "Verifier contract for Guardian proven blocks.",
+  "ignoreMethods": ["guardians"], // fails otherwise, already getting in Members
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    },
+    "guardians": {
+      "handler": {
+        "type": "array",
+        "method": "guardians"
+      }
+    },
+    "$members": {
+      "handler": {
+        "type": "array",
+        "method": "guardians"
+      }
+    },
+    "$threshold": {
+      "severity": "HIGH",
+      "description": "Current guardian threshold. Number of guardians required to prove a block.",
+      "handler": {
+        "type": "call",
+        "method": "minGuardians",
+        "args": []
+      }
+    }
+  }
+}

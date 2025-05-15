@@ -1,3 +1,382 @@
+Generated with discovered.json: 0x3aea42d5913fd27852190ac5fbb63e74d68b4712
+
+# Diff at Tue, 13 May 2025 14:42:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e7801928b60345a3e550e0f818e51329f969ff6f block: 22297586
+- current block number: 22474965
+
+## Description
+
+TAIKO token contract refactor and introduces an explicit list of non-voting accounts, the Foundation (TAIKO_FOUNDATION_TREASURY) and DAO contracts (TAIKO_DAO_CONTROLLER), for which token weight do not count. Sets up the DAO with a separate executor contract (TAIKO_DAO_CONTROLLER) helper that the DAO owns.
+
+## Watched changes
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.
+      sourceHashes.1:
+-        "0x5da570fbffd5ab663ce8983496a9ded290ed853a950b4052ac93b35217babac8"
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f"
+      values.$implementation:
+-        "0xcfe803378D79d1180EbF030455040EA6513869dF"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.5:
++        ["2024-05-29T08:03:23.000Z","0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2",["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"]]
+      values.$pastUpgrades.4.2:
+-        "0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2"
++        "2024-05-11T05:46:11.000Z"
+      values.$pastUpgrades.4.1.0:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
+      values.$pastUpgrades.4.0:
+-        "2024-05-29T08:03:23.000Z"
++        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
+      values.$pastUpgrades.3.2:
+-        "2024-05-11T05:46:11.000Z"
++        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
+      values.$pastUpgrades.3.1.0:
+-        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
++        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
+      values.$pastUpgrades.3.0:
+-        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
++        "2024-04-25T08:29:59.000Z"
+      values.$pastUpgrades.2.2:
+-        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
++        "0xdb7d5de46738ad3f676db47b61772db531f9858b7a01e8c3b5aee49fa74cac95"
+      values.$pastUpgrades.2.1.0:
+-        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.2.0:
+-        "2024-04-25T08:29:59.000Z"
++        "2025-05-13T00:47:23.000Z"
+      values.$upgradeCount:
+-        5
++        6
+      values.addressManager:
+-        "0x0000000000000000000000000000000000000000"
+      values.getPastTotalSupply:
+-        [0,0,0,0,0]
+      values.impl:
+-        "0xcfe803378D79d1180EbF030455040EA6513869dF"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.lastUnpausedAt:
+-        0
+      values.getNonVotingAccounts:
++        ["0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da","0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"]
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      values.resolver:
++        "0x0000000000000000000000000000000000000000"
+      values.TAIKO_DAO_CONTROLLER:
++        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.TAIKO_FOUNDATION_TREASURY:
++        "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
+      errors:
+-        {"getPastTotalSupply":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+      implementationNames.0xcfe803378D79d1180EbF030455040EA6513869dF:
+-        "TaikoToken"
+      implementationNames.0x87C752b0F70cAa237Edd7571B0845470A37DE040:
++        "TaikoToken"
+      template:
++        "taiko/TaikoToken"
+      description:
++        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.4:
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.3:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.2:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261)
+    +++ description: The entry point to the DAO Aragon-based governance framework.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3)
+    +++ description: Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/taiko/ethereum/.flat/DAO/DAO.sol  | 1895 ++++++++++++++++++++
+ .../taiko/ethereum/.flat/DAO/ERC1967Proxy.p.sol    |  594 ++++++
+ .../GnosisSafe.sol                                 |  953 ++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../.flat/TaikoDAOController/ERC1967Proxy.p.sol    |  594 ++++++
+ .../TaikoDAOController/TaikoDAOController.sol      | 1393 ++++++++++++++
+ .../TaikoToken/TaikoToken.sol                      |  433 ++---
+ 7 files changed, 5641 insertions(+), 256 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22297586 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: Library for managing PEM certificate chains.
+      template:
++        "taiko/PEMCertChainLib"
+      description:
++        "Library for managing PEM certificate chains."
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      template:
++        "taiko/TaikoL1Contract"
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.getPastTotalSupply:
++        [0,0,0,0,0]
+      errors:
++        {"getPastTotalSupply":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract MainnetProverSet (0x280eAbfd252f017B78e15b69580F249F45FB55Fa) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+      template:
++        "taiko/DAOFallbackProposer"
+      description:
++        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6) {
+    +++ description: Contract managing and routing the multi-tier proof system.
+      values.TIER_OPTIMISTIC:
+-        {"verifierName":"0x0000000000000000000000000000000000000000000000000000000000000000","validityBond":"50000000000000000000","contestBond":"328125000000000000000","cooldownWindow":1440,"provingWindow":60,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX_ZKVM:
+-        {"verifierName":"0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000","validityBond":"150000000000000000000","contestBond":"984375000000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      fieldMeta.TIER_OPTIMISTIC:
+-        {"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"}
+      fieldMeta.TIER_SGX_ZKVM:
+-        {"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"}
+      template:
++        "taiko/MainnetTierRouter"
+      description:
++        "Contract managing and routing the multi-tier proof system."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9) {
+    +++ description: Library for verifying signatures.
+      template:
++        "taiko/SigVerifyLib"
+      description:
++        "Library for verifying signatures."
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98) {
+    +++ description: Verifier contract for ZK-proven batches.
+      template:
++        "taiko/RiscZeroGroth16Verifier"
+      description:
++        "Verifier contract for ZK-proven batches."
+    }
+```
+
+```diff
+    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
+    +++ description: Verifier contract for Risc0 proven blocks.
+      template:
++        "taiko/Risc0Verifier"
+      description:
++        "Verifier contract for Risc0 proven blocks."
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      values.guardians:
+-        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"]
+      values.$members:
++        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
++++ description: Current guardian minority threshold. Number of guardians required to prove a block.
++++ severity: HIGH
+      values.$threshold:
++        1
+      template:
++        "taiko/GuardianMinorityProver"
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current guardian minority threshold. Number of guardians required to prove a block."}}
+      receivedPermissions:
++        [{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"Minority guardians can prove blocks on the second highest tier."}]
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.
+      template:
++        "taiko/L1RollupAddressManager"
+      description:
++        "This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    +++ description: Verifier contract for ZK-proven batches.
+      template:
++        "taiko/SP1Verifier"
+      description:
++        "Verifier contract for ZK-proven batches."
+    }
+```
+
+```diff
+    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+      description:
+-        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities."
++        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities."
+      template:
++        "taiko/DAOFallbackProposer"
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      template:
++        "taiko/AutomataDcapV3Attestation"
+      description:
++        "Contract managing SGX attestation certificates."
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      template:
++        "taiko/SharedERC20Vault"
+      description:
++        "Shared vault for Taiko chains for bridged ERC20 tokens."
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      template:
++        "taiko/SignalService"
+      description:
++        "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs."
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      template:
++        "taiko/SgxVerifier"
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      template:
++        "taiko/TaikoBridge"
+      description:
++        "Shared bridge for Taiko chains for bridged ETH."
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      values.$members:
++        ["0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33","0x1602958A85494cd9C3e0D6672BA0eE42b95B4200","0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D","0xd26c4e85BC2fAAc27a320987e340971cF3b47d51","0xC384B679c028787166b9B3725aC14A60da205861","0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6","0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68","0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"]
++++ description: Current guardian threshold. Number of guardians required to prove a block.
++++ severity: HIGH
+      values.$threshold:
++        6
+      template:
++        "taiko/GuardianProver"
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current guardian threshold. Number of guardians required to prove a block."}}
+      receivedPermissions:
++        [{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"Guardians, acting as a multisig, can prove blocks on the highest tier."},{"permission":"interact","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"as the chain watchdog, it can pause proving of blocks."}]
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: This contract manages the shared addresses for Taiko rollups.
+      template:
++        "taiko/L1SharedAddressManager"
+      description:
++        "This contract manages the shared addresses for Taiko rollups."
+    }
+```
+
 Generated with discovered.json: 0xe953c85250eae1e926b530c103144dc8d293b489
 
 # Diff at Tue, 29 Apr 2025 08:19:14 GMT:

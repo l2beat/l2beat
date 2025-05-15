@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { imageSize } from 'image-size'
+import { env } from '~/env'
 
 export interface ManifestJson {
   names: Record<string, string>
@@ -15,8 +16,13 @@ export interface Manifest {
 // I know its weird to have this rewrite specific code in the next frontend.
 // However it needs to be imported on next fe side and keeping it in /rewrite makes it
 // impossible to import on next fe side cuz /rewrite is CommonJS module.
+export const manifest = getManifest(
+  env.NODE_ENV === 'production',
+  path.join(process.cwd(), 'rewrite'),
+)
+
 export function getManifest(isProduction: boolean, rootDir: string) {
-  if (isProduction) {
+  if (isProduction && env.NEXT_PUBLIC_REWRITE) {
     const content = fs.readFileSync('rewrite/dist/manifest.json', 'utf-8')
     const json = JSON.parse(content) as ManifestJson
     return {
