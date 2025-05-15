@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb16ee2d99f3ae3cedb392f28d134aeadca98a709
+
+# Diff at Wed, 14 May 2025 14:02:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 60151606
+- current block number: 60151606
+
+## Description
+
+Max upgrade count flag updated (after change to algo to scope per chain).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 60151606 (main branch discovery), not current.
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias_deprecated (0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x0cb2d2c9b68b3e0d3747cb138cfbb16f908ab931
 
 # Diff at Fri, 09 May 2025 11:21:54 GMT:

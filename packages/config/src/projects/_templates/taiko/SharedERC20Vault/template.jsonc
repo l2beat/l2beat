@@ -1,0 +1,14 @@
+{
+  "description": "Shared vault for Taiko chains for bridged ERC20 tokens.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  },
+  "category": "shared"
+}
