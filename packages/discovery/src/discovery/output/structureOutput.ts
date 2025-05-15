@@ -3,7 +3,7 @@ import {
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
-import { getSourceHashes } from '../../flatten/utils'
+import { recalculateSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
@@ -51,10 +51,9 @@ export function processAnalysis(
           type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
-          sourceHashes: getSourceHashes(
-            x.sourceBundles.map((b) => b.hash as string),
-            x.isVerified,
-          ),
+          sourceHashes: x.isVerified
+            ? recalculateSourceHashes(x.sourceBundles)
+            : undefined,
           proxyType: x.proxyType,
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp,

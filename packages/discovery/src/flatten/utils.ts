@@ -25,39 +25,32 @@ const cache: Map<string, Hash256> = new Map()
 // even when there are multiple sources.
 // In the future it may be reimplemented to support
 // all sources for comparison with templates.
-export function hashFirstSource(
-  isVerified: boolean,
+export function getHashForMatchingFromSources(
   perContractSources: PerContractSource[],
 ): Hash256 | undefined {
-  const hashes = getSourceHashes(
-    perContractSources.map((s) => s.hash as string),
-    isVerified,
-  )
+  const hashes = recalculateSourceHashes(perContractSources)
 
   if (hashes === undefined) {
     return undefined
   }
 
-  const firstSourceHash = getFirstSourceHash(isVerified, hashes)
-
-  return firstSourceHash
+  return getHashToBeMatched(hashes)
 }
 
-export function getFirstSourceHash(
-  isVerified: boolean,
+export function getHashToBeMatched(
   hashes: (string | undefined)[],
 ): Hash256 | undefined {
-  if (!isVerified || hashes.length < 1) {
+  if (hashes.length < 1) {
     return undefined
   }
 
-  const sourceHash = hashes.length === 1 ? hashes[0] : hashes[1]
+  const hashToBeMatched = hashes.length === 1 ? hashes[0] : hashes[1]
 
-  if (sourceHash === undefined) {
+  if (hashToBeMatched === undefined) {
     throw Error('No sources found')
   }
 
-  return Hash256(sourceHash)
+  return Hash256(hashToBeMatched)
 }
 
 export function contractFlatteningHash(
@@ -238,11 +231,13 @@ function checkIfLineCountIsCorrect(input: string, lines: string[]): void {
   }
 }
 
-export function getSourceHashes(
-  hashes: string[],
-  isVerified: boolean,
+// Source hashes logic
+export function recalculateSourceHashes(
+  sources: PerContractSource[],
 ): string[] | undefined {
-  if (!isVerified || hashes.length === 0) {
+  const hashes = sources.map((source) => source.hash as string)
+
+  if (hashes.length === 0) {
     return undefined
   }
 
@@ -251,10 +246,15 @@ export function getSourceHashes(
     return hashes
   }
 
-  // >2 - Diamond
+  // >2 - Diamonds and similar with multiple 'sub-implementations'
   const [proxy, ...implementations] = hashes
 
-  const masterHash = sha2_256bit(implementations.sort())
+  const masterHash = combineImplementationHashes(implementations)
+
   // biome-ignore lint/style/noNonNullAssertion: checked above
   return [proxy!, masterHash]
+}
+
+export function combineImplementationHashes(hashes: string[]): Hash256 {
+  return sha2_256bit(hashes.sort())
 }

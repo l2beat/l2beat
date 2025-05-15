@@ -9,7 +9,7 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { getExplorerClient } from '@l2beat/discovery'
-import { sha2_256bit } from '@l2beat/discovery/dist/flatten/utils'
+import { combineImplementationHashes } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
 import { rimraf } from 'rimraf'
@@ -38,7 +38,8 @@ export const DownloadShapes = command({
       join(templatePath, 'shapes.json'),
     )
 
-    // 1. Download the source code and flatten it
+    // 1. Remove and recreate the shapes folder
+    // (helps if there are renames or removed shapes)
     const shapesFolder = join(templatePath, 'shapes')
     logger.logLine('Emptying the shapes folder')
     rimraf.sync(shapesFolder)
@@ -53,6 +54,7 @@ export const DownloadShapes = command({
       const client = getExplorerClient(httpClient, chainConfig.explorer)
       logger.logLine(`Fetching source code of ${fileName}`)
 
+      // 2. Download the source code and flatten it
       const sources = await Promise.all(
         Array.isArray(shape.address)
           ? shape.address.map((address) => client.getContractSource(address))
@@ -85,20 +87,18 @@ export const DownloadShapes = command({
         sourceHashes.push(hash)
       }
 
-      const masterHash =
-        sourceHashes.length === 1
-          ? sourceHashes[0]
-          : sha2_256bit(sourceHashes.sort())
+      const matchingHash = combineImplementationHashes(sourceHashes)
 
-      if (masterHash !== shape.hash) {
+      if (matchingHash !== shape.hash) {
         logger.logLine(`Error: hash mismatch!`)
         return
       }
 
-      console.log(`Creating directory for ${fileName}`)
+      // 3. Create the directory for the shape under shape key
+      logger.logLine(`Creating directory for ${fileName}`)
       mkdirSync(join(shapesFolder, fileName), { recursive: true })
 
-      // 3. Write all the files to the shapes folder
+      // 4. Write all the files to the designated shape folder
       logger.logLine(
         `Writing shape files - ${Object.keys(outputFiles).length} files`,
       )

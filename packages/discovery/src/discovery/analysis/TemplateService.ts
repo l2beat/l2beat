@@ -10,7 +10,7 @@ import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
 import {
   contractFlatteningHash,
-  hashFirstSource,
+  getHashForMatchingFromSources,
   sha2_256bit,
 } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -95,10 +95,16 @@ export class TemplateService {
     sources: ContractSources,
     address: EthereumAddress,
   ): string[] {
-    const sourceHash = hashFirstSource(sources.isVerified, sources.sources)
+    if (!sources.isVerified) {
+      return []
+    }
+
+    const sourceHash = getHashForMatchingFromSources(sources.sources)
+
     if (sourceHash === undefined) {
       return []
     }
+
     return this.findMatchingTemplatesByHash(sourceHash, address)
   }
 
