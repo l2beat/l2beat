@@ -81,7 +81,7 @@ export const grvt: ScalingProject = zkStackL2({
       name: "Users can't force all transactions",
       description:
         'If a user is censored by the L2 Sequencer, they cannot by default force their transaction via the L1 queue. An active TransactionFilterer contract which allows only whitelisted accounts to enqueue, prevents it. Even if a user was specifically whitelisted, there is no mechanism that forces L2 Sequencer to include\
-            transactions from the queue in an L2 block, as they have the choice the queue in order or not at all.',
+            transactions from the queue in an L2 block, as they have the choice to process the queue in order or not at all.',
       risks: [
         {
           category: 'Users can be censored if',
