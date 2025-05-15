@@ -1,5 +1,6 @@
 import { writeFileSync } from 'fs'
 import path from 'path'
+import { formatBytes } from './formatBytes'
 import { pages, projectPages } from './pages'
 
 const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
@@ -91,7 +92,7 @@ async function main() {
   }
   console.log('Performance test completed.')
   writeFileSync(
-    path.join(__dirname, 'dataSizeTest.json'),
+    path.join(__dirname, 'detailedDataSizeTest.json'),
     JSON.stringify(results, null, 2),
   )
 }
@@ -216,17 +217,4 @@ function parseSize(ssr: SSRSize) {
     return parseInt(ssr)
   }
   return parseInt(ssr.size)
-}
-
-function formatBytes(bytes: number) {
-  if (bytes < 1024) {
-    return `${bytes} B`
-  }
-  if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(2)} KiB`
-  }
-  if (bytes < 1024 * 1024 * 1024) {
-    return `${(bytes / 1024 / 1024).toFixed(2)} MiB`
-  }
-  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GiB`
 }
