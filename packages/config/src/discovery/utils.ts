@@ -25,5 +25,5 @@ export function formatPermissionCondition(condition: string): string {
 }
 
 export function formatPermissionDelay(delay: number): string {
-  return ` with ${formatSeconds(delay)} delay`
+  return delay === 0 ? 'with no delay' : `with ${formatSeconds(delay)} delay`
 }

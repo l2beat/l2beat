@@ -9,6 +9,7 @@ import { appRouter } from '~/server/api/root'
 import { type Manifest, manifest } from '../../src/utils/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
 import { type RenderData, render } from './ssr/server'
+import { LoadDurationLogger } from './utils/LoadDurationLogger'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
@@ -26,15 +27,7 @@ if (isProduction) {
   app.use('/', sirv('./rewrite/static', { maxAge: 3600 }))
 } else {
   app.use('/', express.static('./rewrite/static'))
-  app.use((req, res, next) => {
-    const start = process.hrtime()
-    res.on('finish', () => {
-      const diff = process.hrtime(start)
-      const time = (diff[0] * 1e3 + diff[1] / 1e6).toFixed(2) // ms with 2 decimal places
-      console.log(`[${req.method}] ${req.originalUrl} - ${time} ms`)
-    })
-    next()
-  })
+  app.use(LoadDurationLogger)
 }
 
 ServerPageRouter(app, manifest, renderToHtml)
