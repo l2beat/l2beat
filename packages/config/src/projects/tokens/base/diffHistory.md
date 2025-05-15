@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x74d050bb2805c975663303aa49742e3192d680e9
+
+# Diff at Wed, 14 May 2025 14:02:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 30000033
+- current block number: 30000033
+
+## Description
+
+Max upgrade count flag updated (after change to algo to scope per chain).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30000033 (main branch discovery), not current.
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x56abde3df0f324e57d99b3857374b0b30e20a7d8
 
 # Diff at Fri, 09 May 2025 11:17:02 GMT:

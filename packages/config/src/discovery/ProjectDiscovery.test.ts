@@ -137,10 +137,16 @@ describe(formatAsBulletPoints.name, () => {
     expect(formatted).toEqual('* First point\n* Second point\n* Third point\n')
   })
 
-  it('should format single point as string', () => {
+  it('should format single point as string is skipForSingle is true', () => {
+    const description = ['Single point']
+    const formatted = formatAsBulletPoints(description, { skipForSingle: true })
+    expect(formatted).toEqual('Single point')
+  })
+
+  it('should format single point as bullet point if no skipForSingle', () => {
     const description = ['Single point']
     const formatted = formatAsBulletPoints(description)
-    expect(formatted).toEqual('Single point')
+    expect(formatted).toEqual('* Single point\n')
   })
 })
 
