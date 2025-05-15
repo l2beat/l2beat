@@ -55,6 +55,24 @@
       "category": "other",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "abstract-YGG",
+      "priceId": "yield-guild-games",
+      "symbol": "YGG",
+      "name": "Yield Guild Games Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa9053DC939D74222F7aa0B3A2bE407abbfd56C6a",
+        "chain": "abstract",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
     }
   ]
 }
