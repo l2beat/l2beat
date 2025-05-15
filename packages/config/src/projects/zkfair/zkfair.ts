@@ -114,7 +114,7 @@ export const zkfair: ScalingProject = {
   id: ProjectId('zkfair'),
   capability: 'universal',
   addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
-  badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.Stack.PolygonCDK],
+  badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.Stack.CDKErigon],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -129,7 +129,7 @@ export const zkfair: ScalingProject = {
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
     category: 'Validium',
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://zkfair.io/'],
       apps: ['https://wallet.zkfair.io/'],

@@ -13,7 +13,7 @@ export const prom: ScalingProject = underReviewL2({
       'Prom is the primary access point to the Web3 gaming ecosystem, a cutting-edge Zero-Knowledge (ZK) blockchain developed using the Polygon CDK.',
     purposes: ['Gaming', 'NFT'],
     category: 'ZK Rollup',
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://prom.io/'],
       apps: ['https://prom.io/bridge'],

@@ -7,7 +7,7 @@ export const fuse: ScalingProject = upcomingL2({
   id: 'fuse',
   capability: 'universal',
   addedAt: UnixTime(1692958606), // '2023-08-25T10:16:46Z'
-  badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.Stack.PolygonCDK],
+  badges: [BADGES.VM.EVM, BADGES.DA.DAC],
   display: {
     name: 'Fuse',
     slug: 'fuse',
@@ -15,7 +15,7 @@ export const fuse: ScalingProject = upcomingL2({
       'Fuse Ember is a Layer 2 blockchain, designed for real-world payments and scalable Web3 adoption. Powered by Polygon CDK and zkRollup technology, Ember delivers fast, low-cost transaction. It features DAC-powered data availability, AggLayer interoperability, and native account abstraction.',
     purposes: ['Universal'],
     category: 'Validium',
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://fuse.io/'],
       apps: ['https://fuse.io/network'],

@@ -5,7 +5,7 @@ import type { BaseProject } from '../../types'
 export const agglayer: BaseProject = {
   id: ProjectId('agglayer'),
   slug: 'agglayer',
-  name: 'AggLayer',
+  name: 'Agglayer',
   shortName: undefined,
   addedAt: 1743677000,
   display: {
@@ -14,7 +14,7 @@ export const agglayer: BaseProject = {
     links: {
       websites: ['https://www.agglayer.dev/'],
     },
-    badges: [BADGES.Stack.PolygonCDK, BADGES.Infra.AggLayer],
+    badges: [BADGES.Stack.CDKErigon, BADGES.Infra.AggLayer],
   },
   colors: {
     primary: '#6C00F6',
