@@ -8,6 +8,7 @@ import {
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
+import { Separated } from './types'
 
 export const RefreshDiscovery = command({
   name: 'refresh-discovery',
@@ -31,6 +32,12 @@ export const RefreshDiscovery = command({
       long: 'yes',
       short: 'y',
       description: 'accept the refresh, do not prompt the user.',
+    }),
+    exclude: option({
+      type: Separated(string),
+      long: 'exclude',
+      short: 'e',
+      description: 'exclude projects from discovery, comma separated.',
     }),
     message: option({
       type: optional(string),
@@ -70,7 +77,10 @@ export const RefreshDiscovery = command({
       const needsRefreshReason = args.all
         ? '--all flag was provided'
         : templateService.discoveryNeedsRefresh(discovery, config)
-      if (needsRefreshReason !== undefined) {
+      if (
+        needsRefreshReason !== undefined &&
+        !args.exclude.includes(config.name)
+      ) {
         toRefresh.push({
           config,
           reason: needsRefreshReason,
