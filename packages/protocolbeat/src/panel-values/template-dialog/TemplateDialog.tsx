@@ -267,7 +267,7 @@ function TemplateSummary({
               {address}
             </div>
           ))}
-          {addresses.length > 0 && (
+          {addresses.length > 1 && (
             <span className="text-coffee-400 text-xs italic">
               Source hashes will be combined together to create a single shape
               hash
