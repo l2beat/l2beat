@@ -66,10 +66,20 @@ export const RefreshDiscovery = command({
     const chainConfigs = await Promise.all(
       configReader
         .readAllChains()
-        .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
+        .filter((chain) => !args.excludeChains?.includes(chain))
+        .flatMap((chain) => configReader.readAllConfigsForChain(chain))
+        .filter((config) => !args.excludeProjects?.includes(config.name)),
     )
     const toRefresh: { config: ConfigRegistry; reason: string }[] = []
     let foundFrom = false
+
+    if (args.excludeChains?.length) {
+      console.log('Excluding chains:', args.excludeChains?.join(', '))
+    }
+    if (args.excludeProjects?.length) {
+      console.log('Excluding projects:', args.excludeProjects?.join(', '))
+    }
+
     for (const config of chainConfigs) {
       if (args.from !== undefined) {
         if (!foundFrom && `${config.name}/${config.chain}` === args.from) {
@@ -83,11 +93,7 @@ export const RefreshDiscovery = command({
       const needsRefreshReason = args.all
         ? '--all flag was provided'
         : templateService.discoveryNeedsRefresh(discovery, config)
-      if (
-        needsRefreshReason !== undefined &&
-        !args.excludeProjects?.includes(config.name) &&
-        !args.excludeChains?.includes(config.chain)
-      ) {
+      if (needsRefreshReason !== undefined) {
         toRefresh.push({
           config,
           reason: needsRefreshReason,
