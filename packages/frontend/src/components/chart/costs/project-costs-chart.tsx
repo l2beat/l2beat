@@ -135,7 +135,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."
           isLoading={isLoading}
         >
-          {data?.stats.total[unit].total
+          {data?.stats?.total[unit].total
             ? formatCostValue(data?.stats.total[unit].total, unit, 'total')
             : undefined}
         </ChartStatsItem>
@@ -145,7 +145,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           isLoading={isLoading}
           className="max-md:h-7"
         >
-          {data?.stats.perL2Uop?.[unit]?.total
+          {data?.stats?.perL2Uop?.[unit]?.total
             ? formatCostValue(
                 data.stats.perL2Uop[unit].total,
                 unit,
@@ -164,7 +164,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           isLoading={isLoading}
           className="max-md:h-7"
         >
-          {data?.stats.total.posted
+          {data?.stats?.total.posted
             ? formatBytes(data.stats.total.posted)
             : undefined}
         </ChartStatsItem>
@@ -174,7 +174,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           isLoading={isLoading}
           className="max-md:h-7"
         >
-          {data?.stats.perL2Uop?.posted
+          {data?.stats?.perL2Uop?.posted
             ? formatBytes(data.stats.perL2Uop.posted)
             : undefined}
         </ChartStatsItem>

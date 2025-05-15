@@ -17,7 +17,7 @@ export async function getDaThroughputSection(
       getDaThroughputTable([project.id]),
       ps.getProjects({ select: ['colors'] }),
     ])
-  if (throughputChart.chart.length === 0) return undefined
+  if (!throughputChart || throughputChart.chart.length === 0) return undefined
 
   const projectData = throughputData.data[project.id]
 
