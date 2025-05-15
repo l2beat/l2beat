@@ -554,9 +554,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  console.time('getContractUtils')
   const contractUtils = await getContractUtils()
-  console.timeEnd('getContractUtils')
 
   const permissionsSection = getPermissionsSection(
     {
