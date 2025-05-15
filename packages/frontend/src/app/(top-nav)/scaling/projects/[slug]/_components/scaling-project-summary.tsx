@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { AboutSection } from '~/components/projects/sections/about-section'
@@ -15,8 +17,6 @@ import { getUnderReviewText } from '~/utils/project/under-review'
 import { ProjectScalingRosette } from './scaling-project-rosette'
 import { ProjectScalingStats } from './scaling-project-stats'
 import { ValueSecuredSummary } from './value-secured-summary'
-import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
-import Link from 'next/link'
 
 interface Props {
   project: ProjectScalingEntry

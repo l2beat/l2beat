@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { AboutSection } from '~/components/projects/sections/about-section'
@@ -11,8 +13,6 @@ import { WarningBar } from '~/components/warning-bar'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { BridgesProjectStats } from './bridges-project-stats'
-import Link from 'next/link'
-import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 
 interface Props {
   project: BridgesProjectEntry

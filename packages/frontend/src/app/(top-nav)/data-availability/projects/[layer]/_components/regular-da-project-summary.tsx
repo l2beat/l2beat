@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
@@ -10,8 +12,6 @@ import type { ProjectStat } from './da-project-stats'
 import { DaProjectStats, getCommonDaProjectStats } from './da-project-stats'
 import { MultipleBridgeDetails } from './multiple-bridge-details'
 import { SingleBridgeDetails } from './single-bridge-details'
-import Link from 'next/link'
-import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 
 interface Props {
   project: DaProjectPageEntry

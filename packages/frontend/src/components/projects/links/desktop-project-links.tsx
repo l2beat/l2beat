@@ -12,10 +12,10 @@ import { CustomLinkIcon } from '~/icons/outlink'
 import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
+import { DiscoUiLink } from './disco-ui-link'
 import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
 import type { ProjectLink } from './types'
-import { DiscoUiLink } from './disco-ui-link'
 
 interface Props {
   projectLinks: ProjectLink[]

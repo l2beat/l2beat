@@ -2,6 +2,7 @@
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
+import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { ProjectSection } from '../project-section'
@@ -9,7 +10,6 @@ import type { TechnologyRisk } from '../risk-list'
 import { RiskList } from '../risk-list'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
-import { DiscoUiBanner } from '../../disco-ui-banner'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
