@@ -1,0 +1,616 @@
+{
+  "metadata": {
+    "bridge_address": "0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+    "scan_process_start_time_utc": "2025-05-15T09:49:31.215050",
+    "scan_fetch_duration_seconds": 214.59,
+    "scan_completed_time_utc": "2025-05-15T09:53:05.808060",
+    "cache_status": "initial_scan",
+    "scanned_from_block_for_new_data": 0,
+    "highest_block_scanned_in_file": 1392525,
+    "total_events_in_file": 35,
+    "new_events_fetched_this_run": 35
+  },
+  "events": [
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e",
+        "0x0",
+        "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+      ],
+      "role": "0x128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x23edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7",
+        "0x0",
+        "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+      ],
+      "role": "0x23edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228",
+        "0x0",
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846"
+      ],
+      "role": "0x251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+        "0x0",
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3"
+      ],
+      "role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+        "0x0",
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846"
+      ],
+      "role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x37693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96",
+        "0x0",
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3"
+      ],
+      "role": "0x37693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+        "0x0",
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846"
+      ],
+      "role": "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleAdminChanged",
+      "_raw_keys": [
+        "0x2b23b0c08c7b22209aea4100552de1b7876a49f04ee5a4d94f83ad24bc4ec1c"
+      ],
+      "_raw_data": [
+        "0xd2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068",
+        "0x0",
+        "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+      ],
+      "role": "0xd2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068",
+      "previous_admin_role": "0x0",
+      "new_admin_role": "0x3e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "role": "0x251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228",
+      "account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "sender": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+      "account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "sender": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x241c8fef467e8a47b33d9b0c3a418035b40788ddfae284aaef91e54cfb4aeb3",
+      "block_hash": "0x501762775305133538a15fd58b9b153557acabf6e5991e0ab1427f1239079c",
+      "block_number": 505977,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+      "account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "sender": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x3dd1c0b1b29bea5b6b1616a8b1c3180fb6f8f95894f7ead0aba4341c6c8f4f8",
+      "block_hash": "0x4b3436ff227b1ca1e41b53e3085950537faa22acf91fc75128aa435310756e0",
+      "block_number": 506105,
+      "event_name": "ImplementationAdded",
+      "_raw_keys": [
+        "0x38a81c7fd04bac40e22e3eab2bcb3a09398bba67d0c5a263c6665c9c0b13a3"
+      ],
+      "_raw_data": [
+        "0x469e62e2db14948db2579f7e0271759c9944937ac56b0a3698f386b22e49363",
+        "0x1",
+        "0x0"
+      ],
+      "implementation_data_raw": [
+        "0x469e62e2db14948db2579f7e0271759c9944937ac56b0a3698f386b22e49363",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "transaction_hash": "0x2198a0e27ccf56fc5bc5591e68089fcc428e7d173c8c6528e33f1a74973be66",
+      "block_hash": "0x7d4249cb205982f502be0642df31c04e1a9eca255821a29498335780858b7b8",
+      "block_number": 506106,
+      "event_name": "ImplementationReplaced",
+      "_raw_keys": [
+        "0x34bb683f971572e1b0f230f3dd40f3dbcee94e0b3e3261dd0a91229a1adc4b7"
+      ],
+      "_raw_data": [
+        "0x469e62e2db14948db2579f7e0271759c9944937ac56b0a3698f386b22e49363",
+        "0x1",
+        "0x0"
+      ],
+      "implementation_data_raw": [
+        "0x469e62e2db14948db2579f7e0271759c9944937ac56b0a3698f386b22e49363",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "transaction_hash": "0x3845ebe7c9cfffc8240a03d012734992f95efe83e1e0309603498a1a54a8cf9",
+      "block_hash": "0x4956d0540497ed4d1aa75699811e0fc665dfd4b882d7b5a663692a9fdf7c3",
+      "block_number": 541774,
+      "event_name": "GovernanceAdminAdded",
+      "_raw_keys": [
+        "0x3ae95723946e49d38f0cf844cef1fb25870e9a74999a4b96271625efa849b4c"
+      ],
+      "_raw_data": [
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "added_account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "added_by": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x3845ebe7c9cfffc8240a03d012734992f95efe83e1e0309603498a1a54a8cf9",
+      "block_hash": "0x4956d0540497ed4d1aa75699811e0fc665dfd4b882d7b5a663692a9fdf7c3",
+      "block_number": 541774,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+      "account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "sender": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0xdb963e56f2e4dc92354053669ea58587f8a2bc744952682049c97cef20b402",
+      "block_hash": "0x79a14f17e017507f8d90f567b1ba48dbede750f4524a3326530e5cd0a3bb54",
+      "block_number": 541775,
+      "event_name": "SecurityAdminAdded",
+      "_raw_keys": [
+        "0x1d6c15800e6da7a5556b49a824ea4b70c1169d71092c1a4c5d80aaadc6636d1"
+      ],
+      "_raw_data": [
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "added_account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "added_by": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0xdb963e56f2e4dc92354053669ea58587f8a2bc744952682049c97cef20b402",
+      "block_hash": "0x79a14f17e017507f8d90f567b1ba48dbede750f4524a3326530e5cd0a3bb54",
+      "block_number": 541775,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+      "account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "sender": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x67224f476ba6271154a4a61ba8e83d8cd03c286422c07f213774e1fefc3dc05",
+      "block_hash": "0x561decd82658792a6d6d4068cbfb1ffe4d3304a78593e0f5cf5594c4f41ff2b",
+      "block_number": 541776,
+      "event_name": "UpgradeGovernorAdded",
+      "_raw_keys": [
+        "0x2143175c365244751ccde24dd8f54f934672d6bc9110175c9e58e1e73705531"
+      ],
+      "_raw_data": [
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "added_account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "added_by": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x67224f476ba6271154a4a61ba8e83d8cd03c286422c07f213774e1fefc3dc05",
+      "block_hash": "0x561decd82658792a6d6d4068cbfb1ffe4d3304a78593e0f5cf5594c4f41ff2b",
+      "block_number": 541776,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+      ],
+      "role": "0x251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228",
+      "account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "sender": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+    },
+    {
+      "transaction_hash": "0x659bfe2d255ca040f3610da7fdd0e05da498c80f2889725fb8394fabc9d4bed",
+      "block_hash": "0x37bb463189abe6eddab5db73e32b5147adc34b5fcc7869a0b86b89cd0eb4ac6",
+      "block_number": 541780,
+      "event_name": "ImplementationAdded",
+      "_raw_keys": [
+        "0x38a81c7fd04bac40e22e3eab2bcb3a09398bba67d0c5a263c6665c9c0b13a3"
+      ],
+      "_raw_data": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x1",
+        "0x0"
+      ],
+      "implementation_data_raw": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "transaction_hash": "0x7bf699a44d271865ec335b08ba8c924cec6e958e0b5485b3a82556702cf0eaf",
+      "block_hash": "0x37bb463189abe6eddab5db73e32b5147adc34b5fcc7869a0b86b89cd0eb4ac6",
+      "block_number": 541780,
+      "event_name": "ImplementationReplaced",
+      "_raw_keys": [
+        "0x34bb683f971572e1b0f230f3dd40f3dbcee94e0b3e3261dd0a91229a1adc4b7"
+      ],
+      "_raw_data": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x1",
+        "0x0"
+      ],
+      "implementation_data_raw": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "transaction_hash": "0x54893ec2f481eae44f2c38002c8d8474f13f6f49898dd6f65922fd5a9dc25fd",
+      "block_hash": "0x7ad07da31fe020a96cf744f62271fb4ee38f509e95aaae0cd8564d4a561757d",
+      "block_number": 1377663,
+      "event_name": "GovernanceAdminAdded",
+      "_raw_keys": [
+        "0x3ae95723946e49d38f0cf844cef1fb25870e9a74999a4b96271625efa849b4c"
+      ],
+      "_raw_data": [
+        "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+      ],
+      "added_account": "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
+      "added_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+    },
+    {
+      "transaction_hash": "0x54893ec2f481eae44f2c38002c8d8474f13f6f49898dd6f65922fd5a9dc25fd",
+      "block_hash": "0x7ad07da31fe020a96cf744f62271fb4ee38f509e95aaae0cd8564d4a561757d",
+      "block_number": 1377663,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+        "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+      ],
+      "role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+      "account": "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
+      "sender": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+    },
+    {
+      "transaction_hash": "0x75f018c953e44f0c425062eb313f75cf26ef473b8f8a7c900494c56bfd56e0a",
+      "block_hash": "0x19a8d070e7889239f4761f40b4862a7d64f17711e215cb79a46317c172f5d20",
+      "block_number": 1377668,
+      "event_name": "SecurityAdminAdded",
+      "_raw_keys": [
+        "0x1d6c15800e6da7a5556b49a824ea4b70c1169d71092c1a4c5d80aaadc6636d1"
+      ],
+      "_raw_data": [
+        "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+      ],
+      "added_account": "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3",
+      "added_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+    },
+    {
+      "transaction_hash": "0x75f018c953e44f0c425062eb313f75cf26ef473b8f8a7c900494c56bfd56e0a",
+      "block_hash": "0x19a8d070e7889239f4761f40b4862a7d64f17711e215cb79a46317c172f5d20",
+      "block_number": 1377668,
+      "event_name": "RoleGranted",
+      "_raw_keys": [
+        "0x9d4a59b844ac9d98627ddba326ab3707a7d7e105fd03c777569d0f61a91f1e"
+      ],
+      "_raw_data": [
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+        "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+      ],
+      "role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+      "account": "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3",
+      "sender": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+    },
+    {
+      "transaction_hash": "0x4478916b43b6e92537b065a9ac65490c54f3d2120c7c9f267cc3bcc3067e64",
+      "block_hash": "0x5966cbfdcd6c909dbdb138b92407805dd4892ec86726c87e7f30bc62d5d24d1",
+      "block_number": 1377964,
+      "event_name": "ImplementationAdded",
+      "_raw_keys": [
+        "0x38a81c7fd04bac40e22e3eab2bcb3a09398bba67d0c5a263c6665c9c0b13a3"
+      ],
+      "_raw_data": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x0",
+        "0x3efea6dac4a3840f48cde3f18e55641a0a00a7c2ed92d45dc5567e7332658f1",
+        "0x1",
+        "0xa8c00",
+        "0x0"
+      ],
+      "implementation_data_raw": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x0",
+        "0x3efea6dac4a3840f48cde3f18e55641a0a00a7c2ed92d45dc5567e7332658f1",
+        "0x1",
+        "0xa8c00",
+        "0x0"
+      ]
+    },
+    {
+      "transaction_hash": "0x102923a6583893631bd1a9b491ae284b5116f534d09ab1ae90dca9cbe0b2db5",
+      "block_hash": "0x71cef24cb4180b9a51029293d628506c898ebf10f1ca4d37d63fd7e6dc40606",
+      "block_number": 1377976,
+      "event_name": "ImplementationReplaced",
+      "_raw_keys": [
+        "0x34bb683f971572e1b0f230f3dd40f3dbcee94e0b3e3261dd0a91229a1adc4b7"
+      ],
+      "_raw_data": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x0",
+        "0x3efea6dac4a3840f48cde3f18e55641a0a00a7c2ed92d45dc5567e7332658f1",
+        "0x1",
+        "0xa8c00",
+        "0x0"
+      ],
+      "implementation_data_raw": [
+        "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "0x0",
+        "0x3efea6dac4a3840f48cde3f18e55641a0a00a7c2ed92d45dc5567e7332658f1",
+        "0x1",
+        "0xa8c00",
+        "0x0"
+      ]
+    },
+    {
+      "transaction_hash": "0x3df6fb452a9886e1969280517a13125adc4199bc9be4ff9877c30d381aebdd6",
+      "block_hash": "0x4e29ea9cdbc2d70709f2115a293739d0c1c39f44be1c1750fd68d07e10a8299",
+      "block_number": 1384286,
+      "event_name": "RoleRevoked",
+      "_raw_keys": [
+        "0x2842fd3b01bb0858fef6a2da51cdd9f995c7d36d7625fb68dd5d69fcc0a6d76"
+      ],
+      "_raw_data": [
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+      ],
+      "role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+      "account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "sender": "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+    },
+    {
+      "transaction_hash": "0x3df6fb452a9886e1969280517a13125adc4199bc9be4ff9877c30d381aebdd6",
+      "block_hash": "0x4e29ea9cdbc2d70709f2115a293739d0c1c39f44be1c1750fd68d07e10a8299",
+      "block_number": 1384286,
+      "event_name": "RoleRevoked",
+      "_raw_keys": [
+        "0x2842fd3b01bb0858fef6a2da51cdd9f995c7d36d7625fb68dd5d69fcc0a6d76"
+      ],
+      "_raw_data": [
+        "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+      ],
+      "role": "0x26bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+      "account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "sender": "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+    },
+    {
+      "transaction_hash": "0x3df6fb452a9886e1969280517a13125adc4199bc9be4ff9877c30d381aebdd6",
+      "block_hash": "0x4e29ea9cdbc2d70709f2115a293739d0c1c39f44be1c1750fd68d07e10a8299",
+      "block_number": 1384286,
+      "event_name": "SecurityAdminRemoved",
+      "_raw_keys": [
+        "0x2eb7ab861b6ade361ff0e949e94d48fd5b2052639b40cfe9f796f2bb7864f45"
+      ],
+      "_raw_data": [
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+      ],
+      "removed_account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "removed_by": "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+    },
+    {
+      "transaction_hash": "0x3df6fb452a9886e1969280517a13125adc4199bc9be4ff9877c30d381aebdd6",
+      "block_hash": "0x4e29ea9cdbc2d70709f2115a293739d0c1c39f44be1c1750fd68d07e10a8299",
+      "block_number": 1384286,
+      "event_name": "SecurityAdminRemoved",
+      "_raw_keys": [
+        "0x2eb7ab861b6ade361ff0e949e94d48fd5b2052639b40cfe9f796f2bb7864f45"
+      ],
+      "_raw_data": [
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+      ],
+      "removed_account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "removed_by": "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+    },
+    {
+      "transaction_hash": "0x32bfe936153f0d6f2b75c87d5c89a35fbbf74fa08807b3467d375d79e6682b7",
+      "block_hash": "0x2776a08014d731b8760bda5aadb1db161de09f1be3ce41b2ef6efdeeaaafa99",
+      "block_number": 1392525,
+      "event_name": "RoleRevoked",
+      "_raw_keys": [
+        "0x2842fd3b01bb0858fef6a2da51cdd9f995c7d36d7625fb68dd5d69fcc0a6d76"
+      ],
+      "_raw_data": [
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+      ],
+      "role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+      "account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "sender": "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+    },
+    {
+      "transaction_hash": "0x32bfe936153f0d6f2b75c87d5c89a35fbbf74fa08807b3467d375d79e6682b7",
+      "block_hash": "0x2776a08014d731b8760bda5aadb1db161de09f1be3ce41b2ef6efdeeaaafa99",
+      "block_number": 1392525,
+      "event_name": "RoleRevoked",
+      "_raw_keys": [
+        "0x2842fd3b01bb0858fef6a2da51cdd9f995c7d36d7625fb68dd5d69fcc0a6d76"
+      ],
+      "_raw_data": [
+        "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+      ],
+      "role": "0x3711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846",
+      "account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "sender": "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+    },
+    {
+      "transaction_hash": "0x32bfe936153f0d6f2b75c87d5c89a35fbbf74fa08807b3467d375d79e6682b7",
+      "block_hash": "0x2776a08014d731b8760bda5aadb1db161de09f1be3ce41b2ef6efdeeaaafa99",
+      "block_number": 1392525,
+      "event_name": "GovernanceAdminRemoved",
+      "_raw_keys": [
+        "0x2d8a82390cce552844e57407d23a1e48a38c4b979d525b1673171e503e116ab"
+      ],
+      "_raw_data": [
+        "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+      ],
+      "removed_account": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "removed_by": "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+    },
+    {
+      "transaction_hash": "0x32bfe936153f0d6f2b75c87d5c89a35fbbf74fa08807b3467d375d79e6682b7",
+      "block_hash": "0x2776a08014d731b8760bda5aadb1db161de09f1be3ce41b2ef6efdeeaaafa99",
+      "block_number": 1392525,
+      "event_name": "GovernanceAdminRemoved",
+      "_raw_keys": [
+        "0x2d8a82390cce552844e57407d23a1e48a38c4b979d525b1673171e503e116ab"
+      ],
+      "_raw_data": [
+        "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+        "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+      ],
+      "removed_account": "0x4758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "removed_by": "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+    }
+  ]
+}
