@@ -1,7 +1,7 @@
 {
   "name": "ham",
   "chain": "base",
-  "blockNumber": 30222936,
+  "blockNumber": 30252032,
   "configHash": "0x86355dab73bfddaaca7ee720ae031288378f3ed15c52a8610ee30e8f8bdee63b",
   "entries": [
     {
@@ -169,10 +169,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 1,
         "l2BlockTime": 1,
-        "latestBlockNumber": 30639600,
-        "latestOutputIndex": 8510,
-        "nextBlockNumber": 30643200,
-        "nextOutputIndex": 8511,
+        "latestBlockNumber": 30700800,
+        "latestOutputIndex": 8527,
+        "nextBlockNumber": 30704400,
+        "nextOutputIndex": 8528,
         "proposer": "0x78c6285Cc98Ec52De9Cf2E40b763D509489C47fB",
         "PROPOSER": "0x78c6285Cc98Ec52De9Cf2E40b763D509489C47fB",
         "startingBlockNumber": 0,
@@ -254,7 +254,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633376",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633439",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -611,7 +611,7 @@
         "params": {
           "prevBaseFee": 5000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 30214840
+          "prevBlockNum": 30250366
         },
         "paused": false,
         "superchainConfig": "0xFC57b0947C079073A1C5Fe61887Eb3495972EE72",
