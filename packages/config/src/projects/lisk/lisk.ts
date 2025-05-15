@@ -65,6 +65,8 @@ export const lisk: ScalingProject = opStackL2({
   chainConfig: {
     name: 'lisk',
     chainId: 1135,
+    coingeckoPlatform: 'lisk',
+    sinceTimestamp: UnixTime(1714746983),
     apis: [
       {
         type: 'rpc',

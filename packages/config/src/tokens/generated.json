@@ -8326,6 +8326,29 @@
       }
     },
     {
+      "name": "Stargate USD₮0 (Bridged)",
+      "coingeckoId": "usdt0",
+      "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1743180125,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 1135,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      },
+      "excludeFromTotal": true
+    },
+    {
       "name": "Bridged USDC (Stargate)",
       "coingeckoId": "usd-coin",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",

@@ -6778,5 +6778,24 @@
       "source": "native",
       "supply": "circulatingSupply"
     }
+  ],
+  "lisk": [
+    {
+      "symbol": "USD₮0",
+      "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
+      "coingeckoId": "usdt0",
+      "excludeFromTotal": true, // backed by lock-mint on other L2s
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2" // this is not the standard USDT0, but a stargate-version
+          }
+        ]
+      }
+    }
   ]
 }
