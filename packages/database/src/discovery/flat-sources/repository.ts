@@ -31,9 +31,7 @@ export class FlatSourcesRepository extends BaseRepository {
       } else {
         await this.db
           .insertInto('FlatSources')
-          .values(
-            toRow({ projectId, chainId, blockNumber, contentHash }, flat),
-          )
+          .values(toRow({ projectId, chainId, blockNumber, contentHash }, flat))
           .execute()
       }
     })
