@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 22465351,
+  "blockNumber": 22472206,
   "configHash": "0x65e7e0b4c368c737a1162a39f3893e60146a0d514994f995508258b2ce0af12d",
   "entries": [
     {
@@ -221,7 +221,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+          "from": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "delay": 691200
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -241,7 +242,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -433,7 +434,7 @@
         "0x1993eaf381afc46f98a6d57b20658554efa839ecfb519a698bf45042d7ff5b27"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.",
+      "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.",
       "sinceTimestamp": 1635077695,
       "sinceBlock": 13480127,
       "values": {
@@ -480,21 +481,26 @@
             "2024-07-28T20:08:35.000Z",
             "0x4b25445a8e86b4620b9a19f747122b518d8973975ea73aa474b210395e277b66",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2025-05-12T16:09:35.000Z",
+            "0x0764cd09cc5c9a96b151dd222bf14b9c33111c80bdddf27721a6406f4c0e1f3f",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ]
         ],
-        "$upgradeCount": 8,
+        "$upgradeCount": 9,
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 691200,
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "isFrozen": false,
         "isNotFinalized": true,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_callImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
-        "StarkWareProxy_upgradeDelay": 0,
+        "StarkWareProxy_upgradeDelay": 691200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "upgradeActivationDelayFmt": "0s"
+        "upgradeActivationDelayFmt": "8d"
       },
       "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
@@ -2210,5 +2216,5 @@
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xc929e62e78117e1bf49dd633225c9442dddbbd8c8a0d88a05824a371ff0039d6"
   },
-  "permissionsConfigHash": "0x9c0c765b738401583d888b377f21f6e8f69eaa9087262aebc450bf9c575b8ffd"
+  "permissionsConfigHash": "0x2bfa6b8834276a28da45828f978742062c9e520b53c3750c44c3f80959fb0859"
 }

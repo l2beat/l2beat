@@ -38,7 +38,9 @@ const getCachedProjectDaThroughputChartData = cache(
   async ({
     range,
     projectId,
-  }: ProjectDaThroughputChartParams): Promise<ProjectDaThroughputChartData> => {
+  }: ProjectDaThroughputChartParams): Promise<
+    ProjectDaThroughputChartData | undefined
+  > => {
     const db = getDb()
     const [from, to] = getRangeWithMax(range, 'daily', {
       offset: -1 * UnixTime.DAY,
@@ -48,10 +50,7 @@ const getCachedProjectDaThroughputChartData = cache(
       [from, to],
     )
     if (throughput.length === 0) {
-      return {
-        chart: [],
-        range: [from, to],
-      }
+      return undefined
     }
     const { grouped, minTimestamp, maxTimestamp } =
       groupByTimestampAndProjectId(throughput)

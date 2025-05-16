@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22423771,
+  "blockNumber": 22481883,
   "configHash": "0xb7d1f7c8cfe111e3c8976b0ea8eb509b281d1380e7d21a01b7897300da47046d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -71,10 +71,6 @@
         {
           "permission": "validateZkStack",
           "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
     },
@@ -103,6 +99,17 @@
       "implementationNames": {
         "0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF": "L1VerifierFflonk"
       }
+    },
+    {
+      "address": "0x30066439887C0a509Cb38E45c9262E6924a29BbD",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+        }
+      ]
     },
     {
       "name": "ZKsync",
@@ -479,7 +486,7 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3273288,
+        "getFirstUnprocessedPriorityTx": 3273658,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -487,21 +494,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0xc7b7d60227310d01ad6ad3b47978168ba82c4366d16ad131a46c427ddaf2b707",
+        "getPriorityQueueSize": 12,
+        "getPriorityTreeRoot": "0x4a08ec31de8e548b3a1a27ee510b9434ba88a729065b6c4516f97ec708bf08fe",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 499185,
-        "getTotalBatchesExecuted": 499180,
-        "getTotalBatchesVerified": 499184,
-        "getTotalBlocksCommitted": 499185,
-        "getTotalBlocksExecuted": 499180,
-        "getTotalBlocksVerified": 499184,
-        "getTotalPriorityTxs": 3273296,
+        "getTotalBatchesCommitted": 499396,
+        "getTotalBatchesExecuted": 499391,
+        "getTotalBatchesVerified": 499394,
+        "getTotalBlocksCommitted": 499396,
+        "getTotalBlocksExecuted": 499391,
+        "getTotalBlocksVerified": 499394,
+        "getTotalPriorityTxs": 3273670,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -574,10 +581,6 @@
         {
           "permission": "validateZkStack",
           "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
     },
@@ -775,8 +778,8 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+          "0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2",
+          "0x30066439887C0a509Cb38E45c9262E6924a29BbD"
         ]
       },
       "implementationNames": {
@@ -852,6 +855,17 @@
       "implementationNames": {
         "0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e": "L1VerifierPlonk"
       }
+    },
+    {
+      "address": "0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1367,5 +1381,5 @@
     "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x50806ced4b42b1cd6303dac75a7eab048a89350b3d00033910d521bb4fdac6ae"
+  "permissionsConfigHash": "0x95f2cbeab77eb0f2b0a31d33b878064d25eccd0af5a1f1a99045f20c8f3c188e"
 }

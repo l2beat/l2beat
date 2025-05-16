@@ -53,7 +53,7 @@ export const abstract: ScalingProject = zkStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ETH'], // just assuming here, since USDC, USDT are stargate-routed and we want to reduce strain on TVS sync
+      tokens: ['ETH', 'YGG'],
       description:
         'Shared bridge for depositing tokens to Abstract and other ZK stack chains.',
       sharedEscrow: {

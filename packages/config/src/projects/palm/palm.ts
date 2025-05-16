@@ -13,7 +13,7 @@ export const palm: ScalingProject = upcomingL2({
       'The Palm Network is the L2 for Sports, Culture and Entertainment.',
     purposes: ['NFT'],
     category: 'Validium',
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://palm.network/'],
       documentation: ['https://docs.palm.io/'],

@@ -18,6 +18,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
+import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
 import type { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMonitor } from './UpdateMonitor'
@@ -103,6 +104,7 @@ describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let updateDiffer = mockObject<UpdateDiffer>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
+  let discoveryOutputCache = new DiscoveryOutputCache()
   const chainConverter = new ChainConverter([
     { name: 'ethereum', chainId: ChainId.ETHEREUM },
     { name: 'arbitrum', chainId: ChainId.ARBITRUM },
@@ -114,7 +116,7 @@ describe(UpdateMonitor.name, () => {
       sendDailyReminder: async () => {},
     })
     updateDiffer = mockObject<UpdateDiffer>({
-      run: async () => undefined,
+      runForChain: async () => undefined,
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       discoverWithRetry: async () => ({
@@ -124,6 +126,7 @@ describe(UpdateMonitor.name, () => {
       chain: 'ethereum',
       getBlockNumber: async () => BLOCK_NUMBER,
     })
+    discoveryOutputCache = new DiscoveryOutputCache()
   })
 
   describe(UpdateMonitor.prototype.update.name, () => {
@@ -172,6 +175,7 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
         Logger.SILENT,
         false,
       )
@@ -196,6 +200,8 @@ describe(UpdateMonitor.name, () => {
 
       // runs discovery for every project
       expect(discoveryRunnerEth.discoverWithRetry).toHaveBeenCalledTimes(2)
+
+      expect(updateDiffer.runForChain).toHaveBeenCalledTimes(2)
 
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
@@ -261,6 +267,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -301,8 +309,6 @@ describe(UpdateMonitor.name, () => {
       // reads committed discovery.json, 2 + 2 for findUnresolvedProjects() + 2 for findUnknown entries()
       // and + 2 for finding unverifiedContracts
       expect(configReader.readDiscovery).toHaveBeenCalledTimes(3 * 2)
-      // runs update differ
-      expect(updateDiffer.run).toHaveBeenCalledTimes(2)
       // saves discovery result
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(2)
       //sends notification
@@ -355,6 +361,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -408,6 +416,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -477,6 +487,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -497,7 +509,6 @@ describe(UpdateMonitor.name, () => {
         LOGGER,
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
-      expect(updateDiffer.run).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
     })
 
@@ -531,6 +542,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -544,7 +557,7 @@ describe(UpdateMonitor.name, () => {
       // gets latest from database (with the same config hash)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
       // does not run update differ
-      expect(updateDiffer.run).toHaveBeenCalledTimes(0)
+      expect(updateDiffer.runForChain).toHaveBeenCalledTimes(0)
       // does not save changes to database
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(0)
       // does not send a notification
@@ -586,6 +599,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -636,6 +651,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -692,6 +709,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -744,6 +763,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -849,6 +870,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -917,6 +940,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -972,6 +997,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -985,7 +1012,7 @@ describe(UpdateMonitor.name, () => {
 })
 
 const mockRecord: UpdateMonitorRecord = {
-  projectName: 'name',
+  projectId: 'name',
   chainId: ChainId.ETHEREUM,
   blockNumber: 1,
   timestamp: UnixTime.now(),

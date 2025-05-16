@@ -58,6 +58,7 @@
       "address": "0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -237,6 +238,7 @@
       "address": "0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -482,6 +484,7 @@
       "address": "0x88acF681fb9a1DFcE5ac83391991895C54CF24cc",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

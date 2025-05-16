@@ -125,12 +125,52 @@ export async function getScalingProjectEntry(
     | 'livenessConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsStats] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      getActivityProjectStats(project.id),
-      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    ])
+  const [
+    projectsChangeReport,
+    activityProjectStats,
+    tvsStats,
+    tvsChartData,
+    activityChartData,
+    costsChartData,
+    tokens,
+    liveness,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    getActivityProjectStats(project.id),
+    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+    api.tvs.chart({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? api.costs.projectChart({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
+    getTokensForProject(project),
+    api.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? api.costs.projectChart.prefetch({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
+    getLiveness,
+  ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
   const category = isProjectOther(project.scalingInfo)
@@ -206,44 +246,6 @@ export async function getScalingProjectEntry(
       : project.scalingStage,
   }
   const daSolution = await getScalingDaSolution(project)
-
-  await Promise.all([
-    api.tvs.chart.prefetch({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-    }),
-    api.activity.chart.prefetch({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-    }),
-    project.scalingInfo.layer === 'layer2'
-      ? api.costs.projectChart.prefetch({
-          range: '1y',
-          projectId: project.id,
-        })
-      : undefined,
-  ])
-  const [tvsChartData, activityChartData, costsChartData, tokens, liveness] =
-    await Promise.all([
-      api.tvs.chart({
-        range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
-        excludeAssociatedTokens: false,
-      }),
-      api.activity.chart({
-        range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
-      }),
-      project.scalingInfo.layer === 'layer2'
-        ? api.costs.projectChart({
-            range: '1y',
-            projectId: project.id,
-          })
-        : undefined,
-      getTokensForProject(project),
-      getLiveness(),
-    ])
 
   const sections: ProjectDetailsSection[] = []
 

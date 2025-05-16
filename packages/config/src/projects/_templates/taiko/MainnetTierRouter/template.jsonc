@@ -1,0 +1,62 @@
+{
+  "description": "Contract managing and routing the multi-tier proof system.",
+  "category": "core",
+  "ignoreMethods": ["getProvider"],
+  "fields": {
+    "tier_provider": {
+      "handler": {
+        "type": "call",
+        "method": "function getProvider(uint256 blockId) view returns (address)",
+        "args": ["{{ $$.blockNumber }}"]
+      }
+    },
+    "active_tiers": {
+      "handler": {
+        "type": "array",
+        "method": "getTier",
+        "indices": "{{ getTierIds }}"
+      },
+      "edit": ["map", ["get", "verifierName"]]
+    },
+    "TIER_SGX": {
+      "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+      "handler": {
+        "type": "call",
+        "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+        "args": [200]
+      }
+    },
+    "TIER_RISC0": {
+      "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+      "handler": {
+        "type": "call",
+        "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+        "args": [250]
+      }
+    },
+    "TIER_SP1": {
+      "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+      "handler": {
+        "type": "call",
+        "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+        "args": [251]
+      }
+    },
+    "TIER_GUARDIAN_MINORITY": {
+      "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+      "handler": {
+        "type": "call",
+        "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+        "args": [900]
+      }
+    },
+    "TIER_GUARDIAN": {
+      "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+      "handler": {
+        "type": "call",
+        "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+        "args": [1000]
+      }
+    }
+  }
+}

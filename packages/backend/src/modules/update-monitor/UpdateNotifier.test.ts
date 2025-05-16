@@ -113,7 +113,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -215,7 +215,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -311,7 +311,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -385,7 +385,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,

@@ -271,15 +271,15 @@ function TemplateSummary({
 }
 
 /**
- * Only letters, numbers, and dashes, separated by /
- * Dashes can only occur between alphanumeric characters
+ * Only letters, numbers, dashes, and underscores, separated by /
+ * Dashes and underscores can only occur between alphanumeric characters
  * Can optionally end with /
  * No leading slash
  * No empty segments
  * No whitespace
  * No backslashes
- * No special characters (e.g., _, .)
+ * No special characters except _ and - between alphanumeric characters
  */
 const templateIdRegex = new RegExp(
-  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\\/?$',
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
 )

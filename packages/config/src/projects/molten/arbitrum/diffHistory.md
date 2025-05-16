@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xab392f476ec9e250825784d26e5027d4f106388e
+
+# Diff at Wed, 14 May 2025 14:54:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 334875563
+- current block number: 336629722
+
+## Description
+
+contract verified, template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 334875563 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      template:
++        "orbitstack/OneStepProverHostIo_Celestia"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
 Generated with discovered.json: 0xa77078c573f8e5b5d110164047b8f5f1f357c361
 
 # Diff at Fri, 09 May 2025 12:18:34 GMT:

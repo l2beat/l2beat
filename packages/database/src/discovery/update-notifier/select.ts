@@ -4,7 +4,7 @@ export const selectUpdateNotifier = [
   'id',
   'createdAt',
   'updatedAt',
-  'projectName',
+  'projectId',
   'blockNumber',
   'diffJsonBlob',
   'chainId',

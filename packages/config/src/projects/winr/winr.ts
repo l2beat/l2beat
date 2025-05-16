@@ -3,7 +3,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
@@ -13,10 +12,7 @@ export const winr: ScalingProject = orbitStackL3({
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'WINR',
     slug: 'winr',
@@ -39,6 +35,14 @@ export const winr: ScalingProject = orbitStackL3({
     gasTokens: ['WINR'],
   },
   associatedTokens: ['WINR'],
+  isNodeAvailable: true,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  celestiaDa: {
+    sinceBlock: 5390709,
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACFo9Sza5FZw=',
+  },
   nonTemplateEscrows: [
     {
       chain: 'arbitrum',
@@ -160,10 +164,6 @@ export const winr: ScalingProject = orbitStackL3({
       includeInTotal: false,
     },
   ],
-  bridge: discovery.getContract('Bridge'),
-  rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
       title: 'Mainnet Launch',

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x69517602bcbc3ef3d4113e9b436832a95251edb6
+
+# Diff at Wed, 14 May 2025 14:02:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 83508934
+- current block number: 83508934
+
+## Description
+
+Max upgrade count flag updated (after change to algo to scope per chain).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83508934 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x6b8977576fc5a26adc8788df702f6ff1da4601b4
 
 # Diff at Thu, 08 May 2025 10:03:18 GMT:

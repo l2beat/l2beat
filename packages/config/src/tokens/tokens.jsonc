@@ -3014,6 +3014,22 @@
   ],
   "optimism": [
     {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "kBTC",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
       "source": "external",
@@ -5658,6 +5674,21 @@
   ],
   "swell": [
     {
+      "symbol": "rUSDC",
+      "address": "0x9ab96A4668456896d45c301Bc3A15Cee76AA7B8D",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "rswETH",
       "address": "0x18d33689ae5d02649a859a1cf16c9f0563975258",
       "category": "ether",
@@ -6746,6 +6777,25 @@
       "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
       "source": "native",
       "supply": "circulatingSupply"
+    }
+  ],
+  "lisk": [
+    {
+      "symbol": "USD₮0",
+      "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
+      "coingeckoId": "usdt0",
+      "excludeFromTotal": true, // backed by lock-mint on other L2s
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2" // this is not the standard USDT0, but a stargate-version
+          }
+        ]
+      }
     }
   ]
 }

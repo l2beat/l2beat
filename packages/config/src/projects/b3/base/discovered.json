@@ -1,7 +1,7 @@
 {
   "name": "b3",
   "chain": "base",
-  "blockNumber": 28782094,
+  "blockNumber": 30222921,
   "configHash": "0xda5bca317c8505dc7e68513852cd0aff10ea5981e749ceb044db3e9ae5ded7e7",
   "entries": [
     {
@@ -205,7 +205,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651345",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653012",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -261,7 +261,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 28779978
+          "prevBlockNum": 30221024
         },
         "paused": false,
         "superchainConfig": "0xe736142a3e957660cBae61AC4bD61e5b65635140",
@@ -349,10 +349,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 1,
         "l2BlockTime": 1,
-        "latestBlockNumber": 21974400,
-        "latestOutputIndex": 6103,
-        "nextBlockNumber": 21978000,
-        "nextOutputIndex": 6104,
+        "latestBlockNumber": 24858000,
+        "latestOutputIndex": 6904,
+        "nextBlockNumber": 24861600,
+        "nextOutputIndex": 6905,
         "proposer": "0x9c9Db06722b3E33fa356C7347f7fBe328a26Dc7d",
         "PROPOSER": "0x9c9Db06722b3E33fa356C7347f7fBe328a26Dc7d",
         "startingBlockNumber": 0,
@@ -465,7 +465,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

@@ -60,16 +60,17 @@ receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions) :-
   address(Actor, _, _),
   ReceivedUpgradePermissions = #count{Giver: ultimatePermission(Actor, "upgrade", Giver, _, _, _, _, _, isFinal)}.
 
-% The maximum number of upgrade permissions received by any actor:
-maxReceivedUpgradePermissionsCount(Max) :-
-  Max = #max{C: receivedUpgradePermissionsCount(_, C)}.
+% The maximum number of upgrade permissions received by any actor (per chain):
+maxReceivedUpgradePermissionsCount(Max, Chain) :-
+  address(_, Chain, _),
+  Max = #max{ReceivedUpgradePermissions: receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions), address(Actor, Chain, _)}.  
 
-% A potential EOA(s) that controls the maximum number of upgrade permissions:
+% A potential EOA(s) that controls the maximum number of upgrade permissions (per chain):
 eoaWithMajorityUpgradePermissions(Eoa) :-
-  address(Eoa, _, _),
+  address(Eoa, Chain, _),
   addressType(Eoa, eoa),
   receivedUpgradePermissionsCount(Eoa, ReceivedUpgradePermissions),
-  maxReceivedUpgradePermissionsCount(Max),
+  maxReceivedUpgradePermissionsCount(Max, Chain),
   Max > 0, % there are some projects that don't have any upgrade permissions
   ReceivedUpgradePermissions = Max.
 % END
@@ -82,6 +83,6 @@ eoaWithMajorityUpgradePermissions(Eoa) :-
 % #show transitivePermission/8.
 #show ultimatePermission/9.
 
-% #show maxReceivedUpgradePermissionsCount/1.
+% #show maxReceivedUpgradePermissionsCount/2.
 % #show receivedUpgradePermissionsCount/2.
 #show eoaWithMajorityUpgradePermissions/1.

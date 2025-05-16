@@ -32,7 +32,7 @@ export const hermez: ScalingProject = {
     category: 'ZK Rollup',
     // TODO: This is not correct. Research it.
 
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://hermez.io/'],
       apps: ['https://wallet.hermez.io/'],

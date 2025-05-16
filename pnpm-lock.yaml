@@ -487,9 +487,6 @@ importers:
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database
-      '@l2beat/discovery':
-        specifier: workspace:*
-        version: link:../discovery
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared

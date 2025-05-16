@@ -58,7 +58,7 @@ export class UpdateNotifier {
   ) {
     const nonce = await this.getInternalMessageNonce()
     await this.db.updateNotifier.insert({
-      projectName: name,
+      projectId: name,
       diff,
       blockNumber: blockNumber,
       chainId: chainId,
@@ -113,7 +113,7 @@ export class UpdateNotifier {
     const filteredWebMessage = discoveryDiffToMarkdown(filteredDiff)
 
     await this.updateMessagesService.storeAndPrune({
-      projectName: name,
+      projectId: name,
       chain: this.chainConverter.toName(chainId),
       blockNumber,
       message: filteredWebMessage,
@@ -225,10 +225,10 @@ function formatRemindersAsTable(
     return bSum - aSum
   })
 
-  const rows = sorted.map(({ projectName, chainEntry }) => {
+  const rows = sorted.map(({ projectId, chainEntry }) => {
     const { chainName, severityCounts: s } = chainEntry
     return [
-      projectName,
+      projectId,
       chainName,
       s.high === 0 ? '' : s.high.toString(),
       s.low === 0 ? '' : s.low.toString(),
@@ -242,17 +242,17 @@ function formatRemindersAsTable(
 function flattenReminders(
   reminders: Record<string, DailyReminderChainEntry[]>,
 ): {
-  projectName: string
+  projectId: string
   chainEntry: DailyReminderChainEntry
 }[] {
   const entries: {
-    projectName: string
+    projectId: string
     chainEntry: DailyReminderChainEntry
   }[] = []
 
   Object.entries(reminders).forEach(([key, values]) => {
     values.forEach((chainEntry) => {
-      entries.push({ projectName: key, chainEntry })
+      entries.push({ projectId: key, chainEntry })
     })
   })
 

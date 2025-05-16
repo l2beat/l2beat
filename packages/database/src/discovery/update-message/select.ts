@@ -1,7 +1,7 @@
 import type { UpdateMessage } from '../../kysely/generated/types'
 
 export const selectUpdateMessage = [
-  'projectName',
+  'projectId',
   'chain',
   'blockNumber',
   'timestamp',

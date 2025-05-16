@@ -59,6 +59,7 @@ export const swell = opStackL2({
     name: 'swell',
     chainId: 1923,
     sinceTimestamp: UnixTime(1732696703),
+    coingeckoPlatform: 'swellchain',
     apis: [
       {
         type: 'rpc',
