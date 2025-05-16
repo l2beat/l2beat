@@ -229,7 +229,7 @@ function parseAny(tokens: string[]): ParsedType {
 
 function parseTuple(tokens: string[]): ParsedType {
   const members: ParsedType[] = []
-  while (true) {
+  while (!accept(tokens, ')')) {
     const parsed = parseTypeName(tokens)
     members.push(parsed)
     if (accept(tokens, ',')) {
@@ -249,7 +249,10 @@ function parseTuple(tokens: string[]): ParsedType {
 
 function parseTypeName(tokens: string[]): ParsedType {
   let parsed: ParsedType
-  if (accept(tokens, '(')) {
+  if (accept(tokens, 'tuple')) {
+    expect(tokens, '(')
+    parsed = parseTuple(tokens)
+  } else if (accept(tokens, '(')) {
     parsed = parseTuple(tokens)
   } else {
     let type = expect(tokens)
