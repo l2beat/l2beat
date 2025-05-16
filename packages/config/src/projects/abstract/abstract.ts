@@ -159,6 +159,13 @@ export const abstract: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
+      title: 'Liveness failure (batch 16529)',
+      url: 'https://dashboard.tenderly.co/tx/0xcaefda7f4c6e29f90b34a0b68817feeb9fac3da2cb66538ea15fbeed434a7201/state-diff',
+      date: '2025-05-14T00:00:00Z',
+      description: 'Unprovable batch halts finalization for 2 days, resolved by verifier-overriding emergency upgrade.',
+      type: 'incident',
+    },
+    {
       title: 'Mainnet Launch',
       url: 'https://x.com/AbstractChain/status/1883939915169423777',
       date: '2025-01-27T00:00:00Z',

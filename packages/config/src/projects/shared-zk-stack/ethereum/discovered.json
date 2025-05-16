@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22495668,
+  "blockNumber": 22496282,
   "configHash": "0x1ae9b6d7d3421c2b2d93c40ef6367efc6ef88c7d48440d6dae7db429b91d4f79",
   "entries": [
     {
@@ -1919,7 +1919,8 @@
         "CHAIN_TYPE_MANAGER": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "emergencyUpgradeBoard": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
         "emergencyUpgradesExecuted": [
-          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
+          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13",
+          "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
         ],
         "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",

@@ -1,16 +1,36 @@
-Generated with discovered.json: 0x76a5cd4a5511e7e8e9615cd82c3e48fb558e571b
+Generated with discovered.json: 0xee3ef7721d667738eec050ef1f2735fdf9f1ee46
 
-# Diff at Fri, 16 May 2025 09:42:26 GMT:
+# Diff at Fri, 16 May 2025 14:39:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 22480258
-- current block number: 22494814
+- comparing to: main@e002413ca40890ffd9150afa1422bcb6338725ba block: 22480258
+- current block number: 22496279
 
 ## Description
+
+abstract emergency upgrade via zk stack:
+
+emergency upgrade did not change any contract source code, but included an unverified contract that helped change a single state var in the diamond during diamondCut
+https://dashboard.tenderly.co/tx/0xcaefda7f4c6e29f90b34a0b68817feeb9fac3da2cb66538ea15fbeed434a7201/state-diff
+
+which bumped the totalBatchesVerified from `16528` to `16529`
+
+the validator then resumed [executing the unproven batch](https://app.blocksec.com/explorer/tx/eth/0x96ddbadf9200634d4b8151f0236d3ff2676e61c54bb9af78de4fbd32a8e3331b) and [proving](https://app.blocksec.com/explorer/tx/eth/0x70c0de3eb6aa60b538e5894e5d390d5bc73d6c14e59932e26cce85f9de142c5c)/[executing](https://app.blocksec.com/explorer/tx/eth/0x1fb7232e9a17cb396851dcb7f1a85411ad07e4032913906474036ef37c4476a9) subsequent batches
 
 sub MS signer change.
 
 ## Watched changes
+
+```diff
+    contract AbstractZkEvm (0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.5:
++        ["2025-05-16T12:59:47.000Z","0xcaefda7f4c6e29f90b34a0b68817feeb9fac3da2cb66538ea15fbeed434a7201",["0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4","0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4","0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f","0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"]]
+      values.$upgradeCount:
+-        5
++        6
+    }
+```
 
 ```diff
     contract Safe (0x58536761C97F5037931b56efeE922471add0eEe8) {

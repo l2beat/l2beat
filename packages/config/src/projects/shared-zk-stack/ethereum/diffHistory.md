@@ -1,12 +1,14 @@
-Generated with discovered.json: 0x113116065080b58e661df3f911ee368b371fc6c7
+Generated with discovered.json: 0xb2119e0002e5be6f6e8db5f1f94327b216cbc2e2
 
-# Diff at Fri, 16 May 2025 12:35:20 GMT:
+# Diff at Fri, 16 May 2025 14:40:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 22481824
-- current block number: 22495668
+- comparing to: main@e002413ca40890ffd9150afa1422bcb6338725ba block: 22481824
+- current block number: 22496282
 
 ## Description
+
+emergency upgrade executed (see abstract diff).
 
 signer changes.
 
@@ -49,6 +51,19 @@ signer changes.
       values.$members.3:
 -        "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95"
 +        "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.1:
++        "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.0:
+-        "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
++        "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
     }
 ```
 
