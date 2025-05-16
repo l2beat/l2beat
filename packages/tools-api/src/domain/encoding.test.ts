@@ -2,7 +2,12 @@ import { parseAbiParameter } from 'abitype'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { encodeAbiParameters } from 'viem'
-import { type ParsedType, decodeType, parseType } from './encoding'
+import {
+  type ParsedType,
+  decodeType,
+  parseType,
+  tokenizeType,
+} from './encoding'
 
 describe(decodeType.name, () => {
   it('uint', () => {
@@ -347,7 +352,7 @@ function encode(type: string, value: unknown): `0x${string}` {
 }
 
 describe(parseType.name, () => {
-  const testCases: ParsedType[] = [
+  const testCases: (ParsedType & { __type?: string })[] = [
     { type: 'uint256', size: 1, dynamic: false },
     {
       type: 'uint256[2]',
@@ -467,12 +472,72 @@ describe(parseType.name, () => {
         },
       ],
     },
+    {
+      __type: 'uint balance',
+      type: 'uint256',
+      name: 'balance',
+      size: 1,
+      dynamic: false,
+    },
+    {
+      __type: 'bytes calldata data',
+      type: 'bytes',
+      name: 'data',
+      size: 1,
+      dynamic: true,
+    },
+    {
+      __type:
+        'function foo(string calldata name, (uint a, uint b) c) returns (bool)',
+      type: 'function foo(string, (uint256, uint256))',
+      name: 'foo',
+      dynamic: true,
+      size: 1,
+      function: true,
+      tupleElements: [
+        { type: 'string', name: 'name', size: 1, dynamic: true },
+        {
+          type: '(uint256, uint256)',
+          name: 'c',
+          size: 2,
+          dynamic: false,
+          tupleElements: [
+            { type: 'uint256', name: 'a', size: 1, dynamic: false },
+            { type: 'uint256', name: 'b', size: 1, dynamic: false },
+          ],
+        },
+      ],
+    },
   ]
 
   for (const testCase of testCases) {
-    it(testCase.type, () => {
-      const parsed = parseType(testCase.type)
+    const toParse = testCase.__type ?? testCase.type
+    // biome-ignore lint/performance/noDelete: Those are just tests
+    delete testCase.__type
+    it(toParse, () => {
+      const parsed = parseType(toParse)
       expect(parsed).toEqual(testCase)
+    })
+  }
+})
+
+describe(tokenizeType.name, () => {
+  const testCases: [string, string[]][] = [
+    [
+      'function foo() returns (uint)',
+      ['function', 'foo', '(', ')', 'returns', '(', 'uint', ')'],
+    ],
+    [
+      '(uint[2][] a, string)',
+      ['(', 'uint', '[', '2', ']', '[', ']', 'a', ',', 'string', ')'],
+    ],
+  ]
+
+  for (const testCase of testCases) {
+    const [first, rest] = testCase
+    it(first, () => {
+      const tokens = tokenizeType(first)
+      expect(tokens).toEqual(rest)
     })
   }
 })
