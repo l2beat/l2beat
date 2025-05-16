@@ -69,7 +69,7 @@ export interface DecodedAddress {
 
 export interface DecodedCall {
   type: 'call'
-  selector: string
+  selector: `0x${string}`
   abi: string
   interface?: string
   arguments: Value[]

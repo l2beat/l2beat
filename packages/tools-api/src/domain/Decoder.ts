@@ -106,14 +106,21 @@ export class Decoder {
     known: Known,
   ): Promise<DecodedCall> {
     const result = decode(signature, data, chain)
+    const _interface = this.signatureService.getInterface(result.selector)
+    if (_interface) {
+      result.interface = _interface
+    }
     const nested = this.applyPlugins(result, to, chain)
 
     const addresses = getAddresses(result)
     await Promise.all(addresses.map((x) => this.knowSafe(x, chain, known)))
 
     for (const value of nested) {
+      if (value.data.decoded?.type !== 'bytes') {
+        continue
+      }
       value.data.decoded = await this.decodeBytes(
-        value.data.encoded,
+        value.data.decoded.value,
         value.to,
         chain,
         known,

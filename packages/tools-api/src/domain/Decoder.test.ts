@@ -79,6 +79,10 @@ class TestSignatureService implements ISignatureService {
   lookup(selector: `0x${string}`): Promise<string[]> {
     return Promise.resolve(this.signatures.get(selector) ?? [])
   }
+
+  getInterface(_: `0x${string}`): string | undefined {
+    return undefined
+  }
 }
 
 describe(Decoder.name, () => {
