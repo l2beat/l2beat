@@ -1,6 +1,6 @@
 import type { Router } from 'express'
 
-import type { RenderFunction } from 'rewrite/src/ssr/server'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getMultisigReportData } from './getMultisigReportData'
 

@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/server'
+import type { RenderData } from 'rewrite/src/ssr/types'
 import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import type { Manifest } from '~/utils/Manifest'
 

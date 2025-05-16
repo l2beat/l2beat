@@ -1,6 +1,6 @@
 import type { Router } from 'express'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import type { Manifest } from '../../../../src/utils/Manifest'
-import type { RenderFunction } from '../../ssr/server'
 import { getDonateData } from './getDonateData'
 
 export function DonateRouter(

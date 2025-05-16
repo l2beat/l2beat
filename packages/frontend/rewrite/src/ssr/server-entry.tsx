@@ -1,21 +1,8 @@
 import { StrictMode } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
-import type { SsrData } from '../pages/ClientPageRouter'
 import { ClientPageRouter } from '../pages/ClientPageRouter'
-import type { HeadProps } from './head/Head'
 import { Head } from './head/Head'
-
-export interface RenderData {
-  ssr: SsrData
-  head: HeadProps
-}
-
-export type RenderFunction = (data: RenderData, url: string) => string
-
-export interface RenderResult {
-  html: string
-  head: string
-}
+import type { RenderData, RenderResult } from './types'
 
 export function render(data: RenderData, url: string): RenderResult {
   // @ts-expect-error how to type this?

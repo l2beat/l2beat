@@ -1,5 +1,5 @@
 import type { Router } from 'express'
-import type { RenderFunction } from 'rewrite/src/ssr/server'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'

@@ -8,46 +8,51 @@ import sirv from 'sirv'
 import { appRouter } from '~/server/api/root'
 import { type Manifest, manifest } from '../../src/utils/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
-import { type RenderData, render } from './ssr/server'
+import { render } from './ssr/server-entry'
+import { type RenderData } from './ssr/types'
 import { MetricsMiddleware } from './utils/MetricsMiddleware'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
-const app = express()
-if (isProduction) {
-  app.use(compression())
-  // TODO: immutable cache
+createServer()
+
+function createServer() {
+  const app = express()
+  if (isProduction) {
+    app.use(compression())
+    // TODO: immutable cache
+    app.use(
+      '/',
+      sirv('./rewrite/dist/static', { maxAge: 31536000, immutable: true }),
+    )
+    // This is done to delay moving markdown to server side
+    app.use('/', sirv('./rewrite/static', { maxAge: 3600 }))
+  } else {
+    app.use('/', express.static('./rewrite/static'))
+  }
+
+  app.use(MetricsMiddleware)
+
+  ServerPageRouter(app, manifest, renderToHtml)
+
+  const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
+    headers: new Headers(req.headers as Record<string, string>),
+  })
+
   app.use(
-    '/',
-    sirv('./rewrite/dist/static', { maxAge: 31536000, immutable: true }),
+    '/api/trpc',
+    trpcExpress.createExpressMiddleware({
+      router: appRouter,
+      createContext,
+    }),
   )
-  // This is done to delay moving markdown to server side
-  app.use('/', sirv('./rewrite/static', { maxAge: 3600 }))
-} else {
-  app.use('/', express.static('./rewrite/static'))
+
+  app.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`)
+  })
 }
-
-app.use(MetricsMiddleware)
-
-ServerPageRouter(app, manifest, renderToHtml)
-
-const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
-  headers: new Headers(req.headers as Record<string, string>),
-})
-
-app.use(
-  '/api/trpc',
-  trpcExpress.createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  }),
-)
-
-app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`)
-})
 
 function renderToHtml(data: RenderData, url: string) {
   const rendered = render(data, url)

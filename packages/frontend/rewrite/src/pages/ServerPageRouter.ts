@@ -1,6 +1,6 @@
 import type { Router } from 'express'
 import type { Manifest } from '../../../src/utils/Manifest'
-import type { RenderFunction } from '../ssr/server'
+import type { RenderFunction } from '../ssr/types'
 import { AboutUsRouter } from './about/AboutUsRouter'
 import { BridgesRouter } from './bridges/BridgesRouter'
 import { DaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
