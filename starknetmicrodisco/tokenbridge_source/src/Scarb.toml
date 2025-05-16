@@ -1,0 +1,13 @@
+[package]
+name = "src"
+version = "0.7.1"
+
+# See more keys and their definitions at https://docs.swmansion.com/scarb/docs/reference/manifest.html
+
+[dependencies]
+starknet = "^2.3.0"
+
+[[target.starknet-contract]]
+
+[tool.voyager]
+my_contract = { path = "token_bridge.cairo" }
