@@ -8,7 +8,7 @@ export interface Config {
   etherscanApiKey: string
   chains: Chain[]
   discovered: DiscoveredConfig
-  tokens: Record<Address, { name: string; decimals: number }>
+  tokens: TokenConfig
 }
 
 export type Chain = z.infer<typeof Chain>
@@ -31,4 +31,11 @@ export interface DiscoveredConfig {
   names: Record<Address, string>
   abis: Record<Address, string[]>
   allAbis: string[]
+}
+
+export type TokenConfig = Record<Address, TokenInfo>
+
+export interface TokenInfo {
+  name: string
+  decimals: number
 }

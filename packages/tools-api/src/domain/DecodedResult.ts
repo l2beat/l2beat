@@ -13,7 +13,7 @@ export interface DecodedResult {
 export interface Value {
   name: string
   abi: string
-  encoded: string
+  encoded: `0x${string}`
   decoded: DecodedValue | undefined
 }
 
@@ -38,7 +38,7 @@ export interface DecodedAmount {
   value: string
   decimals: number
   currency: string
-  currencyLink: string
+  currencyLink?: string
 }
 
 export interface DecodedBoolean {
