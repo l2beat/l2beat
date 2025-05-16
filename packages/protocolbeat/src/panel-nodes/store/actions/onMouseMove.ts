@@ -13,6 +13,9 @@ export function onMouseMove(
   state: State,
   event: MouseEvent,
   container: HTMLElement,
+  opts?: {
+    disableSelection?: boolean
+  },
 ): Partial<State> {
   if (!state.input.lmbPressed && !state.input.mmbPressed) {
     const { x, y } = toViewCoordinates(event, container, state.transform)
@@ -84,6 +87,14 @@ export function onMouseMove(
       case 'select-add': {
         const { x, y } = toViewCoordinates(event, container, state.transform)
         const input = { ...state.input, mouseX: x, mouseY: y }
+        if (opts?.disableSelection) {
+          return updateNodePositions({
+            ...state,
+            mouseUpAction: undefined,
+            input,
+          })
+        }
+
         const selection: Box = {
           x: Math.min(input.mouseStartX, input.mouseX),
           y: Math.min(input.mouseStartY, input.mouseY),
