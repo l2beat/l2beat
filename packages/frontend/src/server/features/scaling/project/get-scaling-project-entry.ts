@@ -25,6 +25,7 @@ import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transa
 import { getBadgeWithParamsAndLink } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getLivenessSection } from '~/utils/project/liveness/get-liveness-section'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
@@ -36,6 +37,7 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectIcon } from '../../utils/get-project-icon'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
+import { getLiveness } from '../liveness/get-liveness'
 import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
@@ -121,6 +123,7 @@ export async function getScalingProjectEntry(
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
+    | 'livenessConfig'
   >,
 ): Promise<ProjectScalingEntry> {
   const [
@@ -131,6 +134,7 @@ export async function getScalingProjectEntry(
     activityChartData,
     costsChartData,
     tokens,
+    liveness,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -151,6 +155,7 @@ export async function getScalingProjectEntry(
         })
       : undefined,
     getTokensForProject(project),
+    getLiveness(),
     api.tvs.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
@@ -329,6 +334,23 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         trackedTransactions,
+      },
+    })
+  }
+
+  const livenessSection = getLivenessSection(
+    project,
+    liveness[project.id],
+    projectsChangeReport.projects[project.id],
+  )
+  if (livenessSection) {
+    sections.push({
+      type: 'LivenessSection',
+      props: {
+        id: 'liveness',
+        title: 'Liveness',
+        projectId: project.id,
+        ...livenessSection,
       },
     })
   }

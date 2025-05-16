@@ -1,4 +1,8 @@
-import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLivenessRecord, toRecord, toRow } from './entity'
@@ -40,6 +44,28 @@ export class AggregatedLivenessRepository extends BaseRepository {
       .selectFrom('AggregatedLiveness')
       .select(selectAggregatedLiveness)
       .execute()
+    return rows.map(toRecord)
+  }
+
+  async getByProjectAndSubtypeInTimeRange(
+    projectId: ProjectId,
+    subtype: TrackedTxsConfigSubtype,
+    range: [UnixTime | null, UnixTime],
+  ): Promise<AggregatedLivenessRecord[]> {
+    const [from, to] = range
+
+    let query = this.db
+      .selectFrom('AggregatedLiveness')
+      .select(selectAggregatedLiveness)
+      .where('projectId', '=', projectId)
+      .where('subtype', '=', subtype)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.orderBy('timestamp', 'asc').execute()
     return rows.map(toRecord)
   }
 
