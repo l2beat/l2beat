@@ -16,6 +16,9 @@ type Props = {
 // Probably needs better handling in the future
 const EDGE_SAFETY_MARGIN = 5
 
+// Minimum distance to consider a pinch vs pan
+const ZOOM_VS_PAN_THRESHOLD = 3
+
 // Maximum movement to still consider a touch as a tap (in pixels)
 const TAP_THRESHOLD = 10
 
@@ -297,8 +300,8 @@ export function useTouchControls({
       const zoomDelta = touchStateRef.current.lastDistance - currentDistance
 
       // Increased threshold to prevent accidental zooms during panning
-      // 3 is just a magic number to prevent accidental zooms based on trial and error
-      if (Math.abs(zoomDelta) > 3) {
+      // just a magic number to prevent accidental zooms based on trial and error
+      if (Math.abs(zoomDelta) > ZOOM_VS_PAN_THRESHOLD) {
         // Create a wheel event for zooming
         const wheelEvent = new WheelEvent('wheel', {
           clientX: center.x,
