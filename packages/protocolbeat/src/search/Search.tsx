@@ -23,7 +23,7 @@ export function Search() {
       }
     }
 
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
@@ -35,6 +35,7 @@ export function Search() {
     if (opened) {
       document.addEventListener('keydown', handleKeyDown)
       document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('touchstart', handleClickOutside)
       // Focus the input when opened
       inputRef.current?.focus()
     }
@@ -42,8 +43,9 @@ export function Search() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
     }
-  }, [opened])
+  }, [opened, setOpen])
 
   return (
     <div className="relative" ref={containerRef}>
