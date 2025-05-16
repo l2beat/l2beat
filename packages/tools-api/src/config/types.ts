@@ -9,6 +9,7 @@ export interface Config {
   chains: Chain[]
   discovered: DiscoveredConfig
   tokens: TokenConfig
+  wellKnownAbi: Record<string, string[]>
 }
 
 export type Chain = z.infer<typeof Chain>

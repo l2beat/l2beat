@@ -4,6 +4,7 @@ import chainList from './chains.json'
 import { getDiscoveredConfig } from './discovery'
 import tokenList from './tokens.json'
 import { Chain, type Config } from './types'
+import wellKnownAbi from './wellknownabi.json'
 
 export function getConfig(): Config {
   const chains = z.array(Chain).parse(chainList)
@@ -23,5 +24,6 @@ export function getConfig(): Config {
         { name, decimals },
       ]),
     ),
+    wellKnownAbi,
   }
 }

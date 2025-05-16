@@ -6,15 +6,21 @@ import type { OpenChainClient } from '../services/api/OpenChainClient'
 
 export interface ISignatureService {
   lookup(selector: `0x${string}`): Promise<string[]>
+  getInterface(selector: `0x${string}`): string | undefined
 }
 
 export class SignatureService implements ISignatureService {
   private known = new Map<`0x${string}`, string[]>()
+  private wellKnown = new Map<
+    `0x${string}`,
+    { signature: string; interface: string }
+  >()
 
   constructor(
     private openChainClient: OpenChainClient,
     private fourByteClient: FourByteClient,
     discovered: DiscoveredConfig,
+    wellKnownAbi: Record<string, string[]>,
     private logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -28,9 +34,23 @@ export class SignatureService implements ISignatureService {
       array.push(signature)
       this.known.set(selector, array)
     }
+
+    for (const _interface in wellKnownAbi) {
+      for (const signature of _interface) {
+        this.wellKnown.set(toFunctionSelector(signature), {
+          signature,
+          interface: _interface,
+        })
+      }
+    }
   }
 
   async lookup(selector: `0x${string}`): Promise<string[]> {
+    const wellKnown = this.wellKnown.get(selector)
+    if (wellKnown) {
+      return [wellKnown.signature]
+    }
+
     const known = this.known.get(selector)
     if (known) {
       return known
@@ -51,6 +71,10 @@ export class SignatureService implements ISignatureService {
       .filter((v) => toFunctionSelector(v) === selector)
     this.known.set(selector, filtered)
     return filtered
+  }
+
+  getInterface(selector: `0x${string}`): string | undefined {
+    return this.wellKnown.get(selector)?.interface
   }
 }
 
