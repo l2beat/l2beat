@@ -5,7 +5,7 @@ import express from 'express'
 import sirv from 'sirv'
 import { appRouter } from '~/server/api/root'
 import { type Manifest, manifest } from '../../../src/utils/Manifest'
-import { ServerPageRouter } from '../pages/ServerPageRouter'
+import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/server-entry'
 import { type RenderData } from '../ssr/types'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
@@ -31,8 +31,7 @@ export function createServer() {
   }
 
   app.use(MetricsMiddleware)
-
-  ServerPageRouter(app, manifest, renderToHtml)
+  app.use('/', createServerPageRouter(manifest, renderToHtml))
 
   const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
     headers: new Headers(req.headers as Record<string, string>),
