@@ -1,7 +1,8 @@
+import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/get-project-da-throughput-chart'
-import { getSummedActivityForProject } from '../activity/get-summed-activity-for-project'
+import { getActivityForProjectAndRange } from '../activity/get-activity-for-project-and-range'
 import { getCostsChart } from './get-costs-chart'
 import { getCostsForProject } from './get-costs-for-project'
 import type { LatestCostsProjectResponse } from './types'
@@ -18,7 +19,7 @@ type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {
 }
 
 export async function getProjectCostsChart(params: ProjectCostsChartParams) {
-  const [costsChart, costs, throughput] = await Promise.all([
+  const [costsChart, costs, throughput, activityRecords] = await Promise.all([
     getCostsChart({
       previewRecategorisation: false,
       filter: { type: 'projects', projectIds: [params.projectId] },
@@ -26,6 +27,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     }),
     getCostsForProject(params.projectId, params.range),
     getProjectDaThroughputChart(params),
+    getActivityForProjectAndRange(params.projectId, params.range),
   ])
 
   if (costsChart.length === 0 || !costs || !throughput) {
@@ -34,11 +36,11 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
       stats: undefined,
     }
   }
-
-  const [costsUopsCount, throughputUopsCount] = await Promise.all([
-    getSummedActivityForProject(params.projectId, costs.range),
-    getSummedActivityForProject(params.projectId, throughput.range),
-  ])
+  const costsUopsCount = getSummedUopsCount(activityRecords, costs.range)
+  const throughputUopsCount = getSummedUopsCount(
+    activityRecords,
+    throughput.range,
+  )
 
   const timestampedDaData = Object.fromEntries(throughput.chart ?? [])
   const chart = costsChart.map((cost) => {
@@ -142,4 +144,19 @@ function mapToPerL2UopsCost(
     posted:
       data.posted !== undefined ? data.posted / uops.throughput : undefined,
   }
+}
+
+function getSummedUopsCount(
+  records: ActivityRecord[],
+  range: [UnixTime | null, UnixTime],
+) {
+  const [from, to] = range
+  const filteredRecords = records.filter((record) => {
+    return from !== null
+      ? record.timestamp >= from && record.timestamp <= to
+      : record.timestamp <= to
+  })
+  return filteredRecords.reduce((acc, record) => {
+    return acc + (record.uopsCount ?? record.count)
+  }, 0)
 }
