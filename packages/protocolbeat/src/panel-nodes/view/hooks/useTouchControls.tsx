@@ -366,7 +366,7 @@ export function useTouchControls({
         bubbles: true,
       })
 
-      desktopControls.onMouseMove(mouseEvent)
+      desktopControls.onMouseMove(mouseEvent, { disableSelection: true })
     }
 
     // Handle panning with exactly one finger
@@ -381,7 +381,7 @@ export function useTouchControls({
         bubbles: true,
       })
 
-      desktopControls.onMouseMove(mouseEvent)
+      desktopControls.onMouseMove(mouseEvent, { disableSelection: true })
     }
   }
 

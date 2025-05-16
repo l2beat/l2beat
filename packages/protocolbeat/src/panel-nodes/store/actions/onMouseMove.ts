@@ -85,15 +85,25 @@ export function onMouseMove(
       }
       case 'select':
       case 'select-add': {
-        const { x, y } = toViewCoordinates(event, container, state.transform)
-        const input = { ...state.input, mouseX: x, mouseY: y }
         if (opts?.disableSelection) {
+          const [x, y] = [event.clientX, event.clientY]
           return updateNodePositions({
             ...state,
-            mouseUpAction: undefined,
-            input,
+            mouseMoveAction: 'pan',
+            input: {
+              ...state.input,
+              lmbPressed: true,
+              mouseStartX: x,
+              mouseStartY: y,
+              mouseX: x,
+              mouseY: y,
+            },
+            selection: undefined,
           })
         }
+
+        const { x, y } = toViewCoordinates(event, container, state.transform)
+        const input = { ...state.input, mouseX: x, mouseY: y }
 
         const selection: Box = {
           x: Math.min(input.mouseStartX, input.mouseX),
