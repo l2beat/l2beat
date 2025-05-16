@@ -1,10 +1,13 @@
 import './dotenv'
 
+import { createServer } from 'http'
 import { readFileSync } from 'node:fs'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
+import { WebSocketServer } from 'ws'
+import { env } from '~/env'
 import { appRouter } from '~/server/api/root'
 import { type Manifest, manifest } from '../../src/utils/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
@@ -16,6 +19,7 @@ const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
 const app = express()
+
 if (isProduction) {
   app.use(compression())
   // TODO: immutable cache
@@ -48,6 +52,18 @@ app.use(
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
+
+setupDevReload()
+
+function setupDevReload() {
+  if (env.NODE_ENV === 'production') return
+  const server = createServer()
+  new WebSocketServer({ server })
+
+  server.listen(9999, () => {
+    console.log(`Server started at http://localhost:9999`)
+  })
+}
 
 function renderToHtml(data: RenderData, url: string) {
   const rendered = render(data, url)
