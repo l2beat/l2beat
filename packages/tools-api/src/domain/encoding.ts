@@ -14,6 +14,7 @@ export type AbiDecoded =
   | { type: 'bytes'; value: `0x${string}`; extra: `0x${string}` }
   | { type: 'string'; value: string; extra: `0x${string}` }
   | { type: 'array'; value: AbiValue[] }
+  | { type: 'call'; selector: `0x${string}`; parameters: AbiValue[] }
 
 export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
   return decodeParsed(parseType(type), encoded)
@@ -199,65 +200,130 @@ function alignTo32(length: number) {
 
 export interface ParsedType {
   type: string
+  name?: string
   size: number
   dynamic: boolean
+  function?: boolean
   tupleElements?: ParsedType[]
   arrayElement?: ParsedType
 }
 
 export function parseType(type: string): ParsedType {
-  if (type.endsWith(']')) {
-    const openBracket = type.lastIndexOf('[')
-    const elementType = parseType(type.slice(0, openBracket))
-    const countString = type.slice(openBracket + 1, -1)
-    if (countString.length === 0) {
-      return {
-        type: `${elementType.type}[]`,
+  return parseAny(tokenizeType(type))
+}
+
+function parseAny(tokens: string[]): ParsedType {
+  if (accept(tokens, 'function')) {
+    const name = expect(tokens)
+    expect(tokens, '(')
+    const tuple = parseTuple(tokens)
+    return {
+      ...tuple,
+      type: `function ${name}${tuple.type}`,
+      name,
+      function: true,
+    }
+  }
+  return parseTypeName(tokens)
+}
+
+function parseTuple(tokens: string[]): ParsedType {
+  const members: ParsedType[] = []
+  while (true) {
+    const parsed = parseTypeName(tokens)
+    members.push(parsed)
+    if (accept(tokens, ',')) {
+      continue
+    }
+    expect(tokens, ')')
+    break
+  }
+  const dynamic = members.some((x) => x.dynamic)
+  return {
+    type: `(${members.map((x) => x.type).join(', ')})`,
+    dynamic,
+    size: dynamic ? 1 : members.reduce((size, x) => size + x.size, 0),
+    tupleElements: members,
+  }
+}
+
+function parseTypeName(tokens: string[]): ParsedType {
+  let parsed: ParsedType
+  if (accept(tokens, '(')) {
+    parsed = parseTuple(tokens)
+  } else {
+    let type = expect(tokens)
+    if (type === 'uint') {
+      type = 'uint256'
+    } else if (type === 'int') {
+      type = 'int256'
+    }
+    const dynamic = type === 'bytes' || type === 'string'
+    parsed = { type, size: 1, dynamic }
+  }
+  while (accept(tokens, '[')) {
+    if (accept(tokens, ']')) {
+      parsed = {
+        type: `${parsed.type}[]`,
         size: 1,
         dynamic: true,
-        arrayElement: elementType,
+        arrayElement: parsed,
       }
+      continue
     }
-    const length = parseInt(countString)
-    return {
-      type: `${elementType.type}[${length}]`,
-      size: elementType.dynamic ? 1 : elementType.size * length,
-      dynamic: elementType.dynamic,
-      tupleElements: new Array(length).fill(elementType),
+    const length = parseInt(expect(tokens))
+    expect(tokens, ']')
+    parsed = {
+      type: `${parsed.type}[${length}]`,
+      size: parsed.dynamic ? 1 : parsed.size * length,
+      dynamic: parsed.dynamic,
+      tupleElements: new Array(length).fill(parsed),
     }
   }
-  if (type.startsWith('(')) {
-    const tupleEnd = type.lastIndexOf(')')
-    const elements: string[] = []
-    let from = 1
-    let depth = 0
-    for (let i = 1; i < tupleEnd; i++) {
-      if (type[i] === '(') {
-        depth++
-      } else if (type[i] === ')') {
-        depth--
-      } else if (type[i] === ',' && depth === 0) {
-        elements.push(type.slice(from, i))
-        from = i + 1
-      }
+  let name: string | undefined
+  while (tokens[0] && /^\w+$/.test(tokens[0])) {
+    name = expect(tokens)
+  }
+  if (name) {
+    parsed.name = name
+  }
+  return parsed
+}
+
+function expect(tokens: string[], token?: string) {
+  const actual = tokens.shift()
+  if (actual && (!token || actual === token)) {
+    return actual
+  }
+  throw new Error('Invalid type')
+}
+
+function accept(tokens: string[], token: string) {
+  if (tokens[0] === token) {
+    tokens.shift()
+    return true
+  }
+  return false
+}
+
+export function tokenizeType(type: string) {
+  const result: string[] = []
+  let current: string = ''
+  for (const char of type) {
+    if (/\w/.test(char)) {
+      current += char
+      continue
     }
-    elements.push(type.slice(from, tupleEnd))
-    const tupleElements = elements.map((x) => parseType(x.trim()))
-    const typeName = `(${tupleElements.map((x) => x.type).join(', ')})`
-    const dynamic = tupleElements.some((x) => x.dynamic)
-    const size = dynamic
-      ? 1
-      : tupleElements.reduce((size, e) => size + e.size, 0)
-    return { type: typeName, size, dynamic, tupleElements }
+    if (current !== '') {
+      result.push(current)
+      current = ''
+    }
+    if (!/\s/.test(char)) {
+      result.push(char)
+    }
   }
-  if (type === 'uint') {
-    type = 'uint256'
-  } else if (type === 'int') {
-    type = 'int256'
+  if (current !== '') {
+    result.push(current)
   }
-  return {
-    type,
-    size: 1,
-    dynamic: type === 'bytes' || type === 'string',
-  }
+  return result
 }
