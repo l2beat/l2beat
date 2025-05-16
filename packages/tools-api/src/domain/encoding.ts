@@ -283,6 +283,14 @@ function parseTypeName(tokens: string[]): ParsedType {
   let name: string | undefined
   while (tokens[0] && /^\w+$/.test(tokens[0])) {
     name = expect(tokens)
+    if (
+      name === 'memory' ||
+      name === 'storage' ||
+      name === 'calldata' ||
+      name === 'indexed'
+    ) {
+      name = undefined
+    }
   }
   if (name) {
     parsed.name = name

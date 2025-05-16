@@ -487,6 +487,12 @@ describe(parseType.name, () => {
       dynamic: true,
     },
     {
+      __type: 'string calldata',
+      type: 'string',
+      size: 1,
+      dynamic: true,
+    },
+    {
       __type:
         'function foo(string calldata name, (uint a, uint b) c) returns (bool)',
       type: 'function foo(string, (uint256, uint256))',
