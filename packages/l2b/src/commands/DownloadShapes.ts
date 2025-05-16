@@ -9,6 +9,7 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { getExplorerClient } from '@l2beat/discovery'
+import { combineImplementationHashes } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
 import { rimraf } from 'rimraf'
@@ -37,52 +38,77 @@ export const DownloadShapes = command({
       join(templatePath, 'shapes.json'),
     )
 
-    // 1. Download the source code and flatten it
-    const outputFiles: Record<string, string> = {}
+    // 1. Remove and recreate the shapes folder
+    // (helps if there are renames or removed shapes)
     const shapesFolder = join(templatePath, 'shapes')
+    logger.logLine('Emptying the shapes folder')
+    rimraf.sync(shapesFolder)
+    logger.logLine('Creating the shapes folder')
+    mkdirSync(shapesFolder, { recursive: true })
     for (const fileName in shapeSchema) {
+      const outputFiles: Record<string, string> = {}
+
       const shape = shapeSchema[fileName]
       const chainConfig = getChainConfig(shape.chain)
       const httpClient = new HttpClient()
       const client = getExplorerClient(httpClient, chainConfig.explorer)
       logger.logLine(`Fetching source code of ${fileName}`)
-      const source = await client.getContractSource(shape.address)
-      const flattenInput = Object.entries(source.files)
-        .map(([fileName, content]) => ({
-          path: fileName,
-          content,
-        }))
-        .filter((e) => e.path.endsWith('.sol'))
-      const flattenOutput = flattenStartingFrom(
-        source.name,
-        flattenInput,
-        source.remappings,
+
+      // 2. Download the source code and flatten it
+      const sources = await Promise.all(
+        Array.isArray(shape.address)
+          ? shape.address.map((address) => client.getContractSource(address))
+          : [client.getContractSource(shape.address)],
       )
+
+      const sourceHashes: string[] = []
+
+      for (const source of sources) {
+        const flattenInput = Object.entries(source.files)
+          .map(([fileName, content]) => ({
+            path: fileName,
+            content,
+          }))
+          .filter((e) => e.path.endsWith('.sol'))
+        const flattenOutput = flattenStartingFrom(
+          source.name,
+          flattenInput,
+          source.remappings,
+        )
+
+        const outputFile = source.name.endsWith('.sol')
+          ? source.name
+          : `${source.name}.sol`
+        const filePath = join(shapesFolder, fileName, outputFile)
+        outputFiles[filePath] = flattenOutput
+
+        const hash = flatteningHash(flattenOutput)
+        sourceHashes.push(hash)
+      }
+
+      const matchingHash =
+        sourceHashes.length > 1
+          ? combineImplementationHashes(sourceHashes)
+          : sourceHashes[0]
+
       // Make sure the hash matches shape.hash
-      const hash = flatteningHash(flattenOutput)
-      if (hash !== shape.hash) {
+      if (matchingHash !== shape.hash) {
         logger.logLine(`Error: hash mismatch!`)
         return
       }
 
-      // Write the flattened source code to the shapes folder
-      const outputFile = fileName.endsWith('.sol')
-        ? fileName
-        : `${fileName}.sol`
-      const filePath = join(shapesFolder, outputFile)
-      outputFiles[filePath] = flattenOutput
-    }
+      // 3. Create the directory for the shape under shape key
+      logger.logLine(`Creating directory for ${fileName}`)
+      mkdirSync(join(shapesFolder, fileName), { recursive: true })
 
-    // 2. Remove and recreate the shapes folder
-    // (helps if there are renames or removed shapes)
-    logger.logLine('Emptying the shapes folder')
-    rimraf.sync(shapesFolder)
-    mkdirSync(shapesFolder, { recursive: true })
-
-    // 3. Write all the files to the shapes folder
-    logger.logLine(`Writing ${Object.keys(outputFiles).length} files`)
-    for (const [filePath, content] of Object.entries(outputFiles)) {
-      writeFileSync(filePath, content)
+      // 4. Write all the files to the designated shape folder
+      logger.logLine(
+        `Writing shape files - ${Object.keys(outputFiles).length} files`,
+      )
+      for (const [filePath, content] of Object.entries(outputFiles)) {
+        logger.logLine(`Writing ${filePath}`)
+        writeFileSync(filePath, content)
+      }
     }
   },
 })

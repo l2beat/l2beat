@@ -8,6 +8,7 @@ import {
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
+import { Separated } from './types'
 
 export const RefreshDiscovery = command({
   name: 'refresh-discovery',
@@ -32,6 +33,18 @@ export const RefreshDiscovery = command({
       short: 'y',
       description: 'accept the refresh, do not prompt the user.',
     }),
+    excludeProjects: option({
+      type: optional(Separated(string)),
+      long: 'exclude-projects',
+      short: 'p',
+      description: 'exclude projects from discovery, comma separated.',
+    }),
+    excludeChains: option({
+      type: optional(Separated(string)),
+      long: 'exclude-chains',
+      short: 'c',
+      description: 'exclude chains from discovery, comma separated.',
+    }),
     message: option({
       type: optional(string),
       long: 'message',
@@ -53,10 +66,20 @@ export const RefreshDiscovery = command({
     const chainConfigs = await Promise.all(
       configReader
         .readAllChains()
-        .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
+        .filter((chain) => !args.excludeChains?.includes(chain))
+        .flatMap((chain) => configReader.readAllConfigsForChain(chain))
+        .filter((config) => !args.excludeProjects?.includes(config.name)),
     )
     const toRefresh: { config: ConfigRegistry; reason: string }[] = []
     let foundFrom = false
+
+    if (args.excludeChains?.length) {
+      console.log('Excluding chains:', args.excludeChains?.join(', '))
+    }
+    if (args.excludeProjects?.length) {
+      console.log('Excluding projects:', args.excludeProjects?.join(', '))
+    }
+
     for (const config of chainConfigs) {
       if (args.from !== undefined) {
         if (!foundFrom && `${config.name}/${config.chain}` === args.from) {

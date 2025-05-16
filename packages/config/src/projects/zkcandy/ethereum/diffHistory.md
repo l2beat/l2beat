@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xabad414a707447863dc2b497e032f4243ab2f39a
+
+# Diff at Thu, 15 May 2025 17:48:12 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@b6675c89379b9fa87455d4fed68e15a59ba3fc0d block: 22223061
+- current block number: 22223061
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22223061 (main branch discovery), not current.
+
+```diff
+    contract zkCandyZkEvm (0xF2704433d11842d15aa76BBF0E00407267a99C92) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.4:
+-        "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b"
+      sourceHashes.3:
+-        "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6"
+      sourceHashes.2:
+-        "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31"
+      sourceHashes.1:
+-        "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
++        "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b"
+      sourceHashes.0:
+-        "0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da"
++        "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308"
+    }
+```
+
 Generated with discovered.json: 0xe87fac9380e6f2f120e05eec7af43ed4252b0acc
 
 # Diff at Fri, 02 May 2025 17:25:13 GMT:

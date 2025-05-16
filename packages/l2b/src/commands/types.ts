@@ -14,6 +14,19 @@ export const EthereumAddressValue: Type<string, EthereumAddress> = {
   },
 }
 
+export function Separated<T>(
+  type: Type<string, T>,
+  separator = ',',
+): Type<string, T[]> {
+  return {
+    async from(str) {
+      const values = str.split(separator)
+      const parsed = await Promise.all(values.map(type.from))
+      return parsed
+    },
+  }
+}
+
 export const PositiveRpcBoundNumber: Type<string, number> = extendType(string, {
   async from(str) {
     const num = await Promise.resolve(parseInt(str, 10))
