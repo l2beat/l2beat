@@ -72,8 +72,8 @@ describe(LivenessAggregatingIndexer.name, () => {
 
       // 00:00:00 same day as safeHeight
       const expectedFrom = safeHeight
-      // 00:00:00 next day as safeHeight
-      const expectedTo = safeHeight + 1 * UnixTime.DAY
+      // 00:01:00 same day as safeHeight
+      const expectedTo = safeHeight + 1 * UnixTime.HOUR
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
         expectedFrom,
@@ -94,10 +94,10 @@ describe(LivenessAggregatingIndexer.name, () => {
 
       const result = await indexer.update(safeHeight, parentSafeHeight)
 
-      // 00:00:00 same day as safeHeight
-      const expectedFrom = UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY
-      // 00:00:00 next day as safeHeight
-      const expectedTo = expectedFrom + 1 * UnixTime.DAY
+      // same as safeHeight
+      const expectedFrom = safeHeight
+      // 13:00:00 same day as safeHeight
+      const expectedTo = expectedFrom + 1 * UnixTime.HOUR
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
         expectedFrom,
@@ -118,9 +118,7 @@ describe(LivenessAggregatingIndexer.name, () => {
 
       const result = await indexer.update(safeHeight, parentSafeHeight)
 
-      // 00:00:00 of current day
-      const expectedFrom = UnixTime.toStartOf(safeHeight, 'day')
-      // round hour, not rounded to end of day
+      const expectedFrom = safeHeight
       const expectedTo = parentSafeHeight
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
@@ -142,9 +140,7 @@ describe(LivenessAggregatingIndexer.name, () => {
 
       const result = await indexer.update(safeHeight, parentSafeHeight)
 
-      // 00:00:00 of current day
       const expectedFrom = safeHeight
-      // 01:00:00 of current day
       const expectedTo = parentSafeHeight
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
@@ -155,9 +151,12 @@ describe(LivenessAggregatingIndexer.name, () => {
     })
 
     it('handles time range with min height', async () => {
-      // 12:00:00 of some day
+      // 12:30:00 of some day
       const minHeight =
-        UnixTime.toStartOf(NOW, 'day') - 30 * UnixTime.DAY + 12 * UnixTime.HOUR
+        UnixTime.toStartOf(NOW, 'day') -
+        30 * UnixTime.DAY +
+        12 * UnixTime.HOUR +
+        30 * UnixTime.MINUTE
       const indexer = createIndexer({
         tag: 'update-min-height',
         minHeight,
@@ -172,10 +171,10 @@ describe(LivenessAggregatingIndexer.name, () => {
         parentSafeHeight,
       )
 
-      // 12:00:00 of some day - we do not round it to start of day
+      // 12:30:00 of some day - we do not round it to start of day
       const expectedFrom = minHeight
-      // 00:00:00 of next day
-      const expectedTo = minHeight + 12 * UnixTime.HOUR
+      // 13:00:00 of same day
+      const expectedTo = minHeight + 30 * UnixTime.MINUTE
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
         expectedFrom,
