@@ -163,4 +163,49 @@ describe(Decoder.name, () => {
       chainId: 1,
     })
   })
+
+  it('nested call', async () => {
+    const selectorA = signatureService.add('function aaa(bytes call)')
+    const selectorB = signatureService.add('function bbb()')
+    const data = [
+      selectorA,
+      '20'.padStart(64, '0'), // offset
+      '4'.padStart(64, '0'), // length
+      selectorB
+        .slice(2)
+        .padEnd(64, '0'), // bytes
+    ].join('') as `0x${string}`
+
+    const result = await decoder.decode({
+      data: data,
+      chain: ethereum,
+    })
+    expect(result).toEqual({
+      data: {
+        name: 'data',
+        abi: 'bytes',
+        encoded: data,
+        decoded: {
+          type: 'call',
+          abi: 'function aaa(bytes call)',
+          selector: selectorA,
+          arguments: [
+            {
+              name: 'call',
+              abi: 'bytes',
+              encoded: `0x${'4'.padStart(64, '0')}${selectorB.slice(2).padEnd(64, '0')}`,
+              decoded: {
+                type: 'call',
+                abi: 'function bbb()',
+                selector: selectorB,
+                arguments: [],
+              },
+            },
+          ],
+        },
+      },
+      to: undefined,
+      chainId: 1,
+    })
+  })
 })

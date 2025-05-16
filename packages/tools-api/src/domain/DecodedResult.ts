@@ -1,3 +1,5 @@
+import type { Address } from '../config/types'
+
 export interface DecodedResult {
   transaction?: {
     hash: string
@@ -47,7 +49,7 @@ export interface DecodedBoolean {
 export interface DecodedBytes {
   type: 'bytes'
   dynamic: boolean
-  value: string
+  value: `0x${string}`
   extra?: `0x${string}`
 }
 
@@ -59,7 +61,7 @@ export interface DecodedString {
 
 export interface DecodedAddress {
   type: 'address'
-  value: string
+  value: Address
   explorerLink: string
   name?: string
   discovered?: boolean
