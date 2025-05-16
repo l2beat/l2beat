@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 22337861,
+  "blockNumber": 22495658,
   "configHash": "0xacf56a58ec054179f7fe5ce439a4369d09fd0be8235513865c13021aa189f0ac",
   "entries": [
     {
@@ -265,10 +265,10 @@
         "hashiManager": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9794700401791436249428247",
+        "maxAvailablePerTx": "9616893028733324420285376",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 148,
+        "nonce": 529,
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -470,7 +470,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -666,7 +666,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
+        "adapters": ["gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
@@ -741,7 +741,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
+        "adapters": ["gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
