@@ -29,12 +29,20 @@ export function MultiView(props: MultiViewProps) {
   const [sizes, setSizes] = useState<number[]>([])
 
   useEffect(() => {
-    const firstPanel = panels[0]
+    const nodesPanel = panels.find((panel) => panel.id === 'nodes')
 
-    if (isMobileOrTablet && !fullScreen && firstPanel) {
-      toggleFullScreen(firstPanel.id)
+    if (isMobileOrTablet && !fullScreen) {
+      if (nodesPanel) {
+        toggleFullScreen('nodes')
+        setActivePanel('nodes')
+      } else {
+        const firstPanel = panels[0]
+        if (firstPanel) {
+          toggleFullScreen(firstPanel.id)
+        }
+      }
     }
-  }, [isMobileOrTablet, fullScreen, panels, toggleFullScreen])
+  }, [isMobileOrTablet, fullScreen, panels, toggleFullScreen, setActivePanel])
 
   function getPanelElements() {
     const container = panelContainerRef.current
