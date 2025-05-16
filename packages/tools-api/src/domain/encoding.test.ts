@@ -222,6 +222,35 @@ describe(decodeType.name, () => {
             decoded: { type: 'number', value: '2' },
           },
         ],
+        extra: '0x',
+      },
+    })
+  })
+
+  it('uint[2] extra', () => {
+    const e: `0x${string}` = `${encode('uint[2]', [1n, 2n])}deadbeef`
+    const d = decodeType('uint[2]', e)
+    expect(d).toEqual({
+      name: '',
+      abi: 'uint256[2]',
+      encoded: e,
+      decoded: {
+        type: 'array',
+        value: [
+          {
+            name: '',
+            abi: 'uint256',
+            encoded: `0x${'0'.repeat(63)}1`,
+            decoded: { type: 'number', value: '1' },
+          },
+          {
+            name: '',
+            abi: 'uint256',
+            encoded: `0x${'0'.repeat(63)}2`,
+            decoded: { type: 'number', value: '2' },
+          },
+        ],
+        extra: '0xdeadbeef',
       },
     })
   })
@@ -249,6 +278,7 @@ describe(decodeType.name, () => {
             decoded: { type: 'number', value: '2' },
           },
         ],
+        extra: '0x',
       },
     })
   })
@@ -276,6 +306,7 @@ describe(decodeType.name, () => {
             decoded: { type: 'string', value: 'bar', extra: '0x' },
           },
         ],
+        extra: '0x',
       },
     })
   })
@@ -313,6 +344,7 @@ describe(decodeType.name, () => {
                   decoded: { type: 'string', value: 'foo', extra: '0x' },
                 },
               ],
+              extra: '0x',
             },
           },
           {
@@ -335,9 +367,11 @@ describe(decodeType.name, () => {
                   decoded: { type: 'string', value: 'bar', extra: '0x' },
                 },
               ],
+              extra: '0x',
             },
           },
         ],
+        extra: '0x',
       },
     })
   })
@@ -369,6 +403,24 @@ describe(decodeType.name, () => {
             decoded: { type: 'number', value: '1234' },
           },
         ],
+        extra: '0x',
+      },
+    })
+  })
+
+  it('function name() extra', () => {
+    const selector: `0x${string}` = '0x06fdde03'
+    const e: `0x${string}` = `${selector}deadbeef`
+    const d = decodeType('function name()', e)
+    expect(d).toEqual({
+      name: 'name',
+      abi: 'function name()',
+      encoded: e,
+      decoded: {
+        type: 'call',
+        selector,
+        parameters: [],
+        extra: '0xdeadbeef',
       },
     })
   })
