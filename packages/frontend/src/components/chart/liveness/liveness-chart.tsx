@@ -24,8 +24,6 @@ interface LivenessChartDataPoint {
   timestamp: number
   range: (number | null)[]
   avg: number | null
-  emptyRange: (number | null)[]
-  emptyAvg: number | null
 }
 
 interface Props {
@@ -59,27 +57,6 @@ export function LivenessChart({ data, isLoading, className }: Props) {
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {/* Empty areas */}
-        <Area
-          dataKey="emptyAvg"
-          isAnimationActive={false}
-          strokeWidth={2}
-          legendType="none"
-          stroke="hsl(var(--divider))"
-          fill="none"
-          connectNulls
-          strokeDasharray="5 5"
-        />
-        <Area
-          dataKey="emptyRange"
-          isAnimationActive={false}
-          stroke="hsl(var(--divider))"
-          legendType="none"
-          connectNulls
-          strokeWidth={2}
-          fill="none"
-        />
-        {/* Actual valid values */}
         <Area
           dataKey="range"
           isAnimationActive={false}
@@ -87,6 +64,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           strokeWidth={2}
           fill="hsl(var(--chart-pink-fill-gradient))"
           fillOpacity={0.4}
+          connectNulls
         />
         <Area
           dataKey="avg"
@@ -95,6 +73,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           stroke="hsl(var(--chart-pink))"
           fill="none"
           strokeDasharray="5 5"
+          connectNulls
         />
         {getCommonChartComponents({
           data,

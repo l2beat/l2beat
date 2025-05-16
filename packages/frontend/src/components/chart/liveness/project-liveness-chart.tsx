@@ -6,7 +6,6 @@ import { LivenessChartSubtypeControls } from '~/app/(side-nav)/scaling/liveness/
 import { LivenessChartTimeRangeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-time-range-controls'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
-import type { ProjectLivenessChartData } from '~/server/features/scaling/liveness/get-project-liveness-chart'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
@@ -35,15 +34,11 @@ export function ProjectLivenessChart({ projectId, configuredSubtypes }: Props) {
 
   const chartData = useMemo(
     () =>
-      chart?.data.map((dataPoint, index, arr) => {
-        const [timestamp, min, avg, max] = dataPoint
-        const { emptyRange, emptyAvg } = getEmptyRange(dataPoint, index, arr)
+      chart?.data.map(([timestamp, min, avg, max]) => {
         return {
           timestamp,
           range: [min, max],
           avg,
-          emptyRange,
-          emptyAvg,
         }
       }),
     [chart?.data],
@@ -68,47 +63,4 @@ export function ProjectLivenessChart({ projectId, configuredSubtypes }: Props) {
       <LivenessChart data={chartData} isLoading={isLoading} />
     </section>
   )
-}
-
-/** We want to connect values with grayed out line when there is a gap in chart data.
- * This function returns values for additional `emptyRange` and `emptyAvg` data keys
- * that we use to draw grayed out line.
- * It returns last know value before the gap and first know value after the gap, so we can draw a line between them.
- */
-function getEmptyRange(
-  dataPoint: ProjectLivenessChartData['data'][number],
-  index: number,
-  array: ProjectLivenessChartData['data'],
-) {
-  const [_, min, avg, max] = dataPoint
-  if (min === null && avg === null && max === null) {
-    return {
-      emptyRange: [null, null],
-      emptyAvg: null,
-    }
-  }
-  const nextPoint = array[index + 1]
-  if (nextPoint) {
-    const [_, nextMin, nextAvg, nextMax] = nextPoint
-    if (nextMin === null && nextAvg === null && nextMax === null) {
-      return {
-        emptyRange: [min, max],
-        emptyAvg: avg,
-      }
-    }
-  }
-  const previousPoint = array[index - 1]
-  if (previousPoint) {
-    const [_, previousMin, previousAvg, previousMax] = previousPoint
-    if (previousMin === null && previousAvg === null && previousMax === null) {
-      return {
-        emptyRange: [min, max],
-        emptyAvg: avg,
-      }
-    }
-  }
-  return {
-    emptyRange: [null, null],
-    emptyAvg: null,
-  }
 }
