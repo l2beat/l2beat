@@ -168,6 +168,7 @@ function toResultValue(value: AbiValue, chain: Chain): Value {
   if (value.decoded.type === 'array') {
     return {
       ...common,
+      // TODO: handle extra!
       decoded: {
         type: 'array',
         values: value.decoded.value.map((x) => toResultValue(x, chain)),
@@ -177,6 +178,7 @@ function toResultValue(value: AbiValue, chain: Chain): Value {
   if (value.decoded.type === 'call') {
     return {
       ...common,
+      // TODO: handle extra!
       decoded: {
         type: 'call',
         abi: value.abi,

@@ -13,8 +13,13 @@ export type AbiDecoded =
   | { type: 'bool'; value: boolean }
   | { type: 'bytes'; value: `0x${string}`; extra: `0x${string}` }
   | { type: 'string'; value: string; extra: `0x${string}` }
-  | { type: 'array'; value: AbiValue[] }
-  | { type: 'call'; selector: `0x${string}`; parameters: AbiValue[] }
+  | { type: 'array'; value: AbiValue[]; extra: `0x${string}` }
+  | {
+      type: 'call'
+      selector: `0x${string}`
+      parameters: AbiValue[]
+      extra: `0x${string}`
+    }
 
 export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
   return decodeParsed(parseType(type), encoded)
@@ -43,12 +48,14 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     let offset = 0
     const staticData: `0x${string}`[] = []
     const dynamicOffsets: (number | undefined)[] = []
+    let hasDynamic = false
     for (const element of elements) {
       const end = offset + element.size
       const bytes = sliceBytes(encoded, offset * 32, (offset + 1) * 32)
       staticData.push(bytes)
       offset = end
       dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)
+      hasDynamic ||= element.dynamic
     }
     offset *= 32
     const array = elements.map((e, i) => {
@@ -65,13 +72,17 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       // biome-ignore lint/style/noNonNullAssertion: It's there
       return decodeParsed(e, staticData[i]!)
     })
+    let extra: `0x${string}` = '0x'
+    if (!hasDynamic) {
+      extra = sliceBytes(encoded, offset)
+    }
     if (selector) {
       return {
         ...common,
-        decoded: { type: 'call', selector, parameters: array },
+        decoded: { type: 'call', selector, parameters: array, extra },
       }
     }
-    return { ...common, decoded: { type: 'array', value: array } }
+    return { ...common, decoded: { type: 'array', value: array, extra } }
   }
   if (type.type === 'bytes') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
