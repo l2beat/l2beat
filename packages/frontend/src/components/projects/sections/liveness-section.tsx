@@ -7,6 +7,9 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
+import compact from 'lodash/compact'
+import { Fragment } from 'react'
+import { cn } from '~/utils/cn'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string
@@ -43,31 +46,72 @@ export function LivenessSection({
         projectId={projectId}
         configuredSubtypes={configuredSubtypes}
       />
-      <ChartStats className="mt-4">
-        {batchSubmissionsAvg && (
-          <ChartStatsItem label="Avg. tx data subs. interval">
-            <DurationCell durationInSeconds={batchSubmissionsAvg} />
-          </ChartStatsItem>
-        )}
-        {proofSubmissionsAvg && (
-          <ChartStatsItem label="Avg. proof subs. interval">
-            <DurationCell durationInSeconds={proofSubmissionsAvg} />
-          </ChartStatsItem>
-        )}
-        {stateUpdatesAvg && (
-          <ChartStatsItem label="Avg. state updates interval">
-            <DurationCell durationInSeconds={stateUpdatesAvg} />
-          </ChartStatsItem>
-        )}
-        {!disableAnomalies && (
-          <ChartStatsItem label="Past 30 days anomalies">
-            <AnomalyIndicator
-              anomalies={anomalies}
-              hasTrackedContractsChanged={hasTrackedContractsChanged}
-            />
-          </ChartStatsItem>
-        )}
-      </ChartStats>
+      <LivenessChartStats
+        disableAnomalies={disableAnomalies}
+        batchSubmissionsAvg={batchSubmissionsAvg}
+        stateUpdatesAvg={stateUpdatesAvg}
+        proofSubmissionsAvg={proofSubmissionsAvg}
+        anomalies={anomalies}
+        hasTrackedContractsChanged={hasTrackedContractsChanged}
+      />
     </ProjectSection>
+  )
+}
+
+function LivenessChartStats({
+  disableAnomalies,
+  batchSubmissionsAvg,
+  stateUpdatesAvg,
+  proofSubmissionsAvg,
+  anomalies,
+  hasTrackedContractsChanged,
+}: {
+  disableAnomalies: boolean
+  batchSubmissionsAvg: number | undefined
+  stateUpdatesAvg: number | undefined
+  proofSubmissionsAvg: number | undefined
+  anomalies: LivenessAnomaly[]
+  hasTrackedContractsChanged: boolean
+}) {
+  const elements = compact([
+    batchSubmissionsAvg && (
+      <ChartStatsItem label="30D avg. tx data subs. interval">
+        <DurationCell durationInSeconds={batchSubmissionsAvg} />
+      </ChartStatsItem>
+    ),
+    proofSubmissionsAvg && (
+      <ChartStatsItem label="30D avg. proof subs. interval">
+        <DurationCell durationInSeconds={proofSubmissionsAvg} />
+      </ChartStatsItem>
+    ),
+    stateUpdatesAvg && (
+      <ChartStatsItem label="30D avg. state updates interval">
+        <DurationCell durationInSeconds={stateUpdatesAvg} />
+      </ChartStatsItem>
+    ),
+    !disableAnomalies && (
+      <ChartStatsItem label="Past 30 days anomalies">
+        <AnomalyIndicator
+          anomalies={anomalies}
+          hasTrackedContractsChanged={hasTrackedContractsChanged}
+        />
+      </ChartStatsItem>
+    ),
+  ])
+
+  return (
+    <ChartStats
+      className={cn(
+        'mt-4',
+        elements.length === 1 && 'lg:grid-cols-1',
+        elements.length === 2 && 'lg:grid-cols-2',
+        elements.length === 3 && 'lg:grid-cols-3',
+        elements.length === 4 && 'lg:grid-cols-4',
+      )}
+    >
+      {elements.map((element, index) => (
+        <Fragment key={index}>{element}</Fragment>
+      ))}
+    </ChartStats>
   )
 }
