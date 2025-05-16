@@ -21,7 +21,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "treasure-MAGIC",
       "priceId": "magic",
       "symbol": "MAGIC",
@@ -34,6 +34,36 @@
         "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
         "decimals": 18,
         "sinceTimestamp": 1739109131
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "magic",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
+              "chain": "ethereum",
+              "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+              "decimals": 18,
+              "sinceTimestamp": 1739109131
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "magic",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x000000000000000000000000000000000000800A",
+              "chain": "treasure",
+              "decimals": 18,
+              "escrowAddress": "0x24DF29723B54DE65f5fbC66a610053e90534631d",
+              "sinceTimestamp": 1739109131
+            }
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",

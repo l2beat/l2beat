@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x382a44406753018bf034aced9320fe1b8d495579
+
+# Diff at Fri, 16 May 2025 12:25:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 21242106
+- current block number: 22494955
+
+## Description
+
+StateCommitmentChain. A heavily modified DisputeGameFactory/FaultDisputeGame is referenced but apparently not used as proof system yet. Also upgradeable by EOA.
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.DisputeGameFactory:
+-        "0x0000000000000000000000000000000000000000"
++        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc6bcfffdfe15d4c259332b8f62b29950aecdec253e8eeed2ebfa9e78ca1cea2b"
++        "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd"
+      sourceHashes.0:
+-        "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd"
++        "0x97bafeecd79eafa0a2d331c68498ce2ccecf89112ed12cb22b90aac48f1d0aa5"
+      values.$implementation:
+-        "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48"
++        "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365"
+      values.DISPUTE_GAME_FACTORY_NAME:
++        "DisputeGameFactory"
+      values.findEarliestDisputableBatch:
++        []
+      implementationNames.0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48:
+-        "MVM_StateCommitmentChain"
+      implementationNames.0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365:
++        "MVM_StateCommitmentChain"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/DelayedWMetis/DelayedWMetis.sol |  966 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  695 ++++
+ .../DisputeGameFactory/DisputeGameFactory.sol      | 1944 ++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  695 ++++
+ .../metis/ethereum/.flat/FaultDisputeGame.sol      | 4083 ++++++++++++++++++++
+ .../src/projects/metis/ethereum/.flat/MIPS.sol     | 1528 ++++++++
+ .../projects/metis/ethereum/.flat/MetisConfig.sol  |  477 +++
+ .../metis/ethereum/.flat/PreimageOracle.sol        | 1353 +++++++
+ ...-0x280f9c9DF12431Aed70731D5CD3d192456606a21.sol |  147 +
+ ...0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8.sol} |    0
+ .../MVM_StateCommitmentChain.sol                   |  268 +-
+ 11 files changed, 12127 insertions(+), 29 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.DisputeGameFactory:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x90ecc89fe6949f63992ec7b1d2e42ae4684b7ff9
 
 # Diff at Tue, 29 Apr 2025 08:19:06 GMT:

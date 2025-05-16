@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x19b7f3bb5abb4b350d765a9d360ec496e2697998
+
+# Diff at Fri, 16 May 2025 10:03:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 22397496
+- current block number: 22494917
+
+## Description
+
+New Lisk adapter, based on generic OP adapter.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Lisk_Adapter (0x8229E812f20537caA1e8Fb41749b4887B8a75C3B)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.1135:
+-        "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B"
++        "0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Lisk_Adapter (0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22397496 => .flat}/Lisk_Adapter.sol     | 114 ++++++++++++++++-----
+ 1 file changed, 87 insertions(+), 27 deletions(-)
+```
+
 Generated with discovered.json: 0xfc797ebe64af145b771a746c4334eff6db524485
 
 # Diff at Fri, 02 May 2025 17:23:07 GMT:

@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 21242106,
-  "configHash": "0xc77202a5c3788c3cef6407651c818d9a1512cb9ce61bc24e31107df3b968782f",
+  "blockNumber": 22494955,
+  "configHash": "0xf3157aaa9a47b10476dd7a98c4da975e69a91efe4bfb9d0a589048d05ba7a1f0",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -84,8 +84,8 @@
         "minLock": "20000000000000000000000",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "489592026707194902745743",
-        "totalRewardsLiquidated": "21186281823923435000000"
+        "totalLocked": "439184108837702136013579",
+        "totalRewardsLiquidated": "42296928236590808876180"
       },
       "implementationNames": {
         "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
@@ -111,10 +111,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000067403cc30001224b5a",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000067403cc30001224b5a",
-        "length": 26062,
-        "lengthByChainId": 26062,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068270acb000137adf3",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068270acb000137adf3",
+        "length": 28522,
+        "lengthByChainId": 28522,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -133,6 +133,48 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DisputeGameFactory",
+      "address": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1747126931,
+      "sinceBlock": 22473285,
+      "values": {
+        "$admin": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
+        "$implementation": "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3",
+        "$pastUpgrades": [
+          [
+            "2025-05-13T09:02:11.000Z",
+            "0xbf5ee49e50e078552444649c10f208c22d68ec3854b6922449f8115d9c934733",
+            ["0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "GAME_CREATOR_ROLE": "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02",
+        "gameAtIndex": [],
+        "gameCount": 0,
+        "gameImpls": [
+          "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "initBonds": ["4000000000000000000", 0, 0, 0, 0],
+        "METIS": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": "TransparentUpgradeableProxy",
+        "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3": "DisputeGameFactory"
+      }
+    },
+    {
       "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
       "type": "EOA",
       "proxyType": "EOA"
@@ -141,6 +183,57 @@
       "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+        }
+      ],
+      "sinceTimestamp": 1747125995,
+      "sinceBlock": 22473207,
+      "values": {
+        "$immutable": true,
+        "owner": "0x5345fCDCF5449a40df030798C195603d27691502"
+      },
+      "implementationNames": {
+        "0x280f9c9DF12431Aed70731D5CD3d192456606a21": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "MetisConfig",
+      "address": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x558909a2a0c5a264fed5f222b7ceecf453fa3ef587de764b74ae5f8290dde15c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747126991,
+      "sinceBlock": 22473290,
+      "values": {
+        "$immutable": true,
+        "guardian": "0x0000000000000000000000000000000000000000",
+        "GUARDIAN_SLOT": "0x50d681db8bc9633efca150f3f65f126f9e520217b9746db9605f1e12d30ee319",
+        "paused": false,
+        "PAUSED_SLOT": "0x97f28943c081556dccc8a65dd44d936fcf82359ecbde35e60021819342c380fb",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": "MetisConfig"
+      }
     },
     {
       "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
@@ -203,6 +296,59 @@
       "address": "0x4200000000000000000000000000000000000010",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "FaultDisputeGame",
+      "address": "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x41942b2c90ded6bd7da7f87e7398c6b118638d9c97de7bede373140ecabc23d1"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747127747,
+      "sinceBlock": 22473352,
+      "values": {
+        "$immutable": true,
+        "absolutePrestate": "0x03c4495b94be7f77580483c71563265ad1320a722d45ac3951a3dbeaa3d53805",
+        "claimData": [],
+        "claimDataLen": 0,
+        "clockExtension": 0,
+        "createdAt": 0,
+        "disputeCreator": "0x0000000000000000000000000000000000000000",
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 0,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameType": 0,
+        "getChallengerDuration": [],
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2BlockNumberChallenged": false,
+        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2ChainId": 1088,
+        "maxClockDuration": 86400,
+        "maxGameDepth": 73,
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "scc": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+        "splitDepth": 30,
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "1.3.0-rc.1",
+        "vm": "0xAFD640204D73B02C3521eA8ea3771182527Ff057",
+        "wmetis": "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+      },
+      "implementationNames": {
+        "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": "FaultDisputeGame"
+      }
     },
     {
       "name": "Metis Multisig",
@@ -280,7 +426,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 34,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -291,6 +437,29 @@
         "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "GnosisSafeProxy",
         "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "0x5345fCDCF5449a40df030798C195603d27691502",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "via": [{ "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "via": [{ "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
+        }
+      ]
     },
     {
       "name": "CanonicalTransactionChain",
@@ -320,8 +489,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 3031,
-        "getQueueLength": 39315,
+        "getNumPendingQueueElements": 3958,
+        "getQueueLength": 40242,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -394,7 +563,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 11,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -437,6 +606,32 @@
       "implementationNames": {
         "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": "L1ChugSplashProxy",
         "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": "MVM_CanonicalTransaction"
+      }
+    },
+    {
+      "name": "PreimageOracle",
+      "address": "0x789a64284e29d2225430606D3D89a9336870BBbC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x715f5c63ded74faed65181ca2796a35f260a2a074d16724707812a58ded43498"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747125887,
+      "sinceBlock": 22473198,
+      "values": {
+        "$immutable": true,
+        "challengePeriod": 86400,
+        "KECCAK_TREE_DEPTH": 16,
+        "MAX_LEAF_COUNT": 65535,
+        "MIN_BOND_SIZE": "250000000000000000",
+        "minProposalSize": 126000,
+        "PRECOMPILE_CALL_RESERVED_GAS": 100000,
+        "proposalCount": 0,
+        "proposals": [],
+        "version": "1.1.2-rc.1"
+      },
+      "implementationNames": {
+        "0x789a64284e29d2225430606D3D89a9336870BBbC": "PreimageOracle"
       }
     },
     {
@@ -517,6 +712,7 @@
         "BondManager": "0x595801b85628ec6979C420988b8843A40F850528",
         "CanonicalTransactionChain": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
         "ChainStorageContainer_CTC_queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
+        "DisputeGameFactory": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
         "L2CrossDomainMessenger": "0x4200000000000000000000000000000000000007",
         "METIS_MANAGER": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "MVM_DiscountOracle": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
@@ -568,7 +764,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
-        "0xc6bcfffdfe15d4c259332b8f62b29950aecdec253e8eeed2ebfa9e78ca1cea2b"
+        "0x97bafeecd79eafa0a2d331c68498ce2ccecf89112ed12cb22b90aac48f1d0aa5"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -583,24 +779,26 @@
       "sinceBlock": 19438866,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
+        "$implementation": "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
+        "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
+        "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1732263107,
-        "getLastSequencerTimestampByChainId": 1732263107,
-        "getTotalBatches": 26062,
-        "getTotalBatchesByChainId": 26062,
-        "getTotalElements": 19024730,
-        "getTotalElementsByChainId": 19024730,
+        "getLastSequencerTimestamp": 1747389131,
+        "getLastSequencerTimestampByChainId": 1747389131,
+        "getTotalBatches": 28522,
+        "getTotalBatchesByChainId": 28522,
+        "getTotalElements": 20426227,
+        "getTotalElementsByChainId": 20426227,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
       "implementationNames": {
         "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
-        "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48": "MVM_StateCommitmentChain"
+        "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": "MVM_StateCommitmentChain"
       }
     },
     {
@@ -631,6 +829,25 @@
       },
       "implementationNames": {
         "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": "ChainStorageContainer"
+      }
+    },
+    {
+      "name": "MIPS",
+      "address": "0xAFD640204D73B02C3521eA8ea3771182527Ff057",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3a10a9204d3b7ad786308b5b5f2ca78af017388be046c0d3abe7d4193bbf2a0e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747125899,
+      "sinceBlock": 22473199,
+      "values": {
+        "$immutable": true,
+        "oracle": "0x789a64284e29d2225430606D3D89a9336870BBbC",
+        "version": "1.1.0-rc.1"
+      },
+      "implementationNames": {
+        "0xAFD640204D73B02C3521eA8ea3771182527Ff057": "MIPS"
       }
     },
     {
@@ -687,14 +904,14 @@
           ]
         ],
         "$upgradeCount": 2,
-        "BLOCK_REWARD": "41168150680000000",
-        "currentBatch": 65,
+        "BLOCK_REWARD": "19413226030000000",
+        "currentBatch": 119,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "paused": false,
-        "rewardPerBlock": "41168150680000000",
+        "rewardPerBlock": "19413226030000000",
         "sequencers": [
           {
             "owner": "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
@@ -837,6 +1054,44 @@
         "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": "L1ChugSplashProxy",
         "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": "MVM_L2ChainManagerOnL1"
       }
+    },
+    {
+      "name": "DelayedWMetis",
+      "address": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x9d2c1c322c99db1beff551176a6a67aed49220a4307f3d9b797ac7dcc975ecab"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1747127051,
+      "sinceBlock": 22473294,
+      "values": {
+        "$admin": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
+        "$implementation": "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51",
+        "$pastUpgrades": [
+          [
+            "2025-05-13T09:04:11.000Z",
+            "0x01245dfca81d0eee17a1ed68eebcf822d05a17ad298e3879cd40002932079a12",
+            ["0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "config": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
+        "decimals": 18,
+        "delay": 86400,
+        "metisToken": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "name": "Wrapped Metis",
+        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "symbol": "WMETIS",
+        "totalSupply": 0,
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0xfA947f70c3509d5b70A606e871aE0C85397D0738": "TransparentUpgradeableProxy",
+        "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51": "DelayedWMetis"
+      }
     }
   ],
   "abis": {
@@ -920,6 +1175,38 @@
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
     ],
+    "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x280f9c9DF12431Aed70731D5CD3d192456606a21": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": [
+      "constructor()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event Paused(string identifier)",
+      "event Unpaused()",
+      "function GUARDIAN_SLOT() view returns (bytes32)",
+      "function PAUSED_SLOT() view returns (bytes32)",
+      "function guardian() view returns (address guardian_)",
+      "function initialize(address _guardian, bool _paused)",
+      "function pause(string _identifier)",
+      "function paused() view returns (bool paused_)",
+      "function unpause()",
+      "function version() view returns (string)"
+    ],
     "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": [
       "constructor(address _libAddressManager, string _owner)",
       "function DEFAULT_CHAINID() view returns (uint256)",
@@ -951,6 +1238,87 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": [
+      "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _wmetis, address _addressManager, uint256 _l2ChainId)",
+      "error AlreadyInitialized()",
+      "error AnchorRootNotFound()",
+      "error BlockNumberMatches()",
+      "error CannotDefendRootClaim()",
+      "error ClaimAboveSplit()",
+      "error ClaimAlreadyExists()",
+      "error ClaimAlreadyResolved()",
+      "error ClockNotExpired()",
+      "error ClockTimeExceeded()",
+      "error DuplicateStep()",
+      "error GameDepthExceeded()",
+      "error GameNotInProgress()",
+      "error InsufficientAllowance()",
+      "error InsufficientBalance()",
+      "error InvalidChallengePeriod()",
+      "error InvalidClockExtension()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidHeaderRLP()",
+      "error InvalidLocalIdent()",
+      "error InvalidOutputRootProof()",
+      "error InvalidParent()",
+      "error InvalidPrestate()",
+      "error InvalidSplitDepth()",
+      "error L2BlockNumberChallenged()",
+      "error MaxDepthTooLarge()",
+      "error NoCreditToClaim()",
+      "error OutOfOrderResolution()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "error ValidStep()",
+      "event Move(uint256 indexed parentIndex, bytes32 indexed claim, address indexed claimant)",
+      "event Resolved(uint8 indexed status)",
+      "event SlashingFailed(address indexed intendedRecipient, bytes reason)",
+      "function absolutePrestate() view returns (bytes32 absolutePrestate_)",
+      "function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset)",
+      "function attack(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim)",
+      "function challengeRootL2Block(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _outputRootProof, bytes _headerRLP)",
+      "function claimCredit(address _recipient)",
+      "function claimData(uint256) view returns (uint32 parentIndex, address counteredBy, address claimant, uint128 bond, bytes32 claim, uint128 position, uint128 clock)",
+      "function claimDataLen() view returns (uint256 len_)",
+      "function claims(bytes32) view returns (bool)",
+      "function clockExtension() view returns (uint64 clockExtension_)",
+      "function createdAt() view returns (uint64)",
+      "function credit(address) view returns (uint256)",
+      "function defend(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim)",
+      "function disputeCreator() pure returns (address creator_)",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256 _claimIndex) view returns (uint64 duration_)",
+      "function getNumToResolve(uint256 _claimIndex) view returns (uint256 numRemainingChildren_)",
+      "function getRequiredBond(uint128 _position) view returns (uint256 requiredBond_)",
+      "function initialize() payable",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2BlockNumberChallenged() view returns (bool)",
+      "function l2BlockNumberChallenger() view returns (address)",
+      "function l2ChainId() view returns (uint256 l2ChainId_)",
+      "function maxClockDuration() view returns (uint64 maxClockDuration_)",
+      "function maxGameDepth() view returns (uint256 maxGameDepth_)",
+      "function move(bytes32 _disputed, uint256 _challengeIndex, bytes32 _claim, bool _isAttack)",
+      "function resolutionCheckpoints(uint256) view returns (bool initialCheckpointComplete, uint32 subgameIndex, uint128 leftmostPosition, address counteredBy)",
+      "function resolve() returns (uint8 status_)",
+      "function resolveClaim(uint256 _claimIndex, uint256 _numToResolve)",
+      "function resolvedAt() view returns (uint64)",
+      "function resolvedSubgames(uint256) view returns (bool)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function scc() view returns (address scc_)",
+      "function splitDepth() view returns (uint256 splitDepth_)",
+      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2BlockNumber)",
+      "function startingRootHash() view returns (bytes32 startingRootHash_)",
+      "function status() view returns (uint8)",
+      "function step(uint256 _claimIndex, bool _isAttack, bytes _stateData, bytes _proof)",
+      "function subgames(uint256, uint256) view returns (uint256)",
+      "function version() view returns (string)",
+      "function vm() view returns (address vm_)",
+      "function wmetis() view returns (address wmetis_)"
     ],
     "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": [
       "constructor()",
@@ -1078,31 +1446,55 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48": [
-      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
-      "event StateBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
-      "event StateBatchDeleted(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot)",
-      "function DEFAULT_CHAINID() view returns (uint256)",
-      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
-      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
-      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement)",
-      "function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string proposer)",
-      "function batches() view returns (address)",
-      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function deleteStateBatchByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
-      "function getLastSequencerTimestampByChainId(uint256 _chainId) view returns (uint256 _lastSequencerTimestamp)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
-      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function insideFraudProofWindowByChainId(uint256, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function libAddressManager() view returns (address)",
-      "function resolve(string _name) view returns (address)",
-      "function setFraudProofWindow(uint256 window)",
-      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
-      "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
+    "0x789a64284e29d2225430606D3D89a9336870BBbC": [
+      "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
+      "error ActiveProposal()",
+      "error AlreadyFinalized()",
+      "error AlreadyInitialized()",
+      "error BadProposal()",
+      "error BondTransferFailed()",
+      "error InsufficientBond()",
+      "error InvalidInputSize()",
+      "error InvalidPreimage()",
+      "error InvalidProof()",
+      "error NotEOA()",
+      "error NotInitialized()",
+      "error PartOffsetOOB()",
+      "error PostStateMatches()",
+      "error StatesNotContiguous()",
+      "error TreeSizeOverflow()",
+      "error WrongStartingBlock()",
+      "function KECCAK_TREE_DEPTH() view returns (uint256)",
+      "function MAX_LEAF_COUNT() view returns (uint256)",
+      "function MIN_BOND_SIZE() view returns (uint256)",
+      "function PRECOMPILE_CALL_RESERVED_GAS() view returns (uint256)",
+      "function addLeavesLPP(uint256 _uuid, uint256 _inputStartBlock, bytes _input, bytes32[] _stateCommitments, bool _finalize)",
+      "function challengeFirstLPP(address _claimant, uint256 _uuid, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengePeriod() view returns (uint256 challengePeriod_)",
+      "function getTreeRootLPP(address _owner, uint256 _uuid) view returns (bytes32 treeRoot_)",
+      "function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) payable",
+      "function loadBlobPreimagePart(uint256 _z, uint256 _y, bytes _commitment, bytes _proof, uint256 _partOffset)",
+      "function loadKeccak256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset) returns (bytes32 key_)",
+      "function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, uint64 _requiredGas, bytes _input)",
+      "function loadSha256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function minProposalSize() view returns (uint256 minProposalSize_)",
+      "function preimageLengths(bytes32) view returns (uint256)",
+      "function preimagePartOk(bytes32, uint256) view returns (bool)",
+      "function preimageParts(bytes32, uint256) view returns (bytes32)",
+      "function proposalBlocks(address, uint256, uint256) view returns (uint64)",
+      "function proposalBlocksLen(address _claimant, uint256 _uuid) view returns (uint256 len_)",
+      "function proposalBonds(address, uint256) view returns (uint256)",
+      "function proposalBranches(address, uint256, uint256) view returns (bytes32)",
+      "function proposalCount() view returns (uint256 count_)",
+      "function proposalMetadata(address, uint256) view returns (bytes32)",
+      "function proposalParts(address, uint256) view returns (bytes32)",
+      "function proposals(uint256) view returns (address claimant, uint256 uuid)",
+      "function readPreimage(bytes32 _key, uint256 _offset) view returns (bytes32 dat_, uint256 datLen_)",
+      "function squeezeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function version() view returns (string)",
+      "function zeroHashes(uint256) view returns (bytes32)"
     ],
     "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": [
       "constructor()",
@@ -1237,6 +1629,40 @@
       "function messenger() view returns (address)",
       "function metis() view returns (address)"
     ],
+    "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51": [
+      "constructor(uint256 _delay, address _metis)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed user, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unlock(address indexed user, address indexed recipient, uint256 amount)",
+      "event Withdrawal(address indexed user, uint256 amount)",
+      "function allowance(address, address) view returns (uint256)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function config() view returns (address)",
+      "function decimals() view returns (uint8)",
+      "function delay() view returns (uint256)",
+      "function deposit(uint256 _amount)",
+      "function hold(address _guy, uint256 _amount)",
+      "function initialize(address _owner, address _config)",
+      "function metisToken() view returns (address)",
+      "function name() pure returns (string)",
+      "function owner() view returns (address)",
+      "function recover(uint256 _amount)",
+      "function renounceOwnership()",
+      "function symbol() pure returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unlock(address _guy, uint256 _amount)",
+      "function version() view returns (string)",
+      "function withdraw(uint256 _amount)",
+      "function withdraw(address _guy, uint256 _amount)",
+      "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
+    ],
     "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -1268,6 +1694,50 @@
       "function setByChainId(uint256 _chainId, uint256 _index, bytes32 _object)",
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
+    ],
+    "0xAFD640204D73B02C3521eA8ea3771182527Ff057": [
+      "constructor(address _oracle)",
+      "function oracle() view returns (address oracle_)",
+      "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32)",
+      "function version() view returns (string)"
+    ],
+    "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3": [
+      "constructor(address _metis)",
+      "error AlreadyDisputed(bytes32 uuid)",
+      "error GameAlreadyExists(bytes32 uuid)",
+      "error NoDisputeGameRequests()",
+      "error NoImplementation(uint32 gameType)",
+      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
+      "event DisputeGameRequested(address indexed requestor, uint32 indexed gameType, uint256 bond, bytes extraData)",
+      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
+      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GAME_CREATOR_ROLE() view returns (bytes32)",
+      "function METIS() view returns (address)",
+      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) returns (address proxy_)",
+      "function dispute(uint32 _gameType, bytes _extraData)",
+      "function disputeGameCreationRequests(bytes32) view returns (uint32 gameType, address sender, uint256 bond, bytes32 l1Head)",
+      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
+      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
+      "function gameCount() view returns (uint256 gameCount_)",
+      "function gameImpls(uint32) view returns (address)",
+      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
+      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initBonds(uint32) view returns (uint256)",
+      "function initialize(address _owner)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setImplementation(uint32 _gameType, address _impl)",
+      "function setInitBond(uint32 _gameType, uint256 _initBond)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function version() view returns (string)"
     ],
     "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": [
       "constructor()",
@@ -1431,6 +1901,41 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": [
+      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
+      "error ClaimAlreadyResolved()",
+      "error UnregisteredGame()",
+      "event StateBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
+      "event StateBatchDeleted(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot)",
+      "function DEFAULT_CHAINID() view returns (uint256)",
+      "function DISPUTE_GAME_FACTORY_NAME() view returns (string)",
+      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
+      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
+      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)",
+      "function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string _proposer, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)",
+      "function batchLastL2BlockNumbers(bytes32) view returns (uint256)",
+      "function batchTimes(uint256, uint256) view returns (bytes16)",
+      "function batches() view returns (address)",
+      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
+      "function deleteStateBatchByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
+      "function disputedBatches(bytes32) view returns (bool)",
+      "function findEarliestDisputableBatch(uint256 _chainId) view returns (tuple(bytes32 batchHeaderHash, uint256 lastL2BlockNumber) _lastFinalized, tuple(bytes32 batchHeaderHash, uint256 lastL2BlockNumber) _earliestDisputable)",
+      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
+      "function getLastSequencerTimestampByChainId(uint256 _chainId) view returns (uint256 _lastSequencerTimestamp)",
+      "function getTotalBatches() view returns (uint256 _totalBatches)",
+      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
+      "function getTotalElements() view returns (uint256 _totalElements)",
+      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
+      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
+      "function insideFraudProofWindowByChainId(uint256, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
+      "function isDisputedBatch(bytes32 stateHeaderHash) view returns (bool)",
+      "function libAddressManager() view returns (address)",
+      "function resolve(string _name) view returns (address)",
+      "function saveDisputedBatch(bytes32 stateHeaderHash)",
+      "function setFraudProofWindow(uint256 window)",
+      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
+      "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
+    ],
     "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -1446,6 +1951,12 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "0xfA947f70c3509d5b70A606e871aE0C85397D0738": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ]
   },
   "usedTemplates": {
@@ -1453,5 +1964,5 @@
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26"
   },
-  "permissionsConfigHash": "0x8b047d0a2c3d4966a5a818d54519bfaba57ffe62f82541ace502b3876a1036d7"
+  "permissionsConfigHash": "0x3b259ef09f858994824ea44692be19c6c1bf292652904130ac0cdb44b689cfd9"
 }

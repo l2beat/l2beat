@@ -25,11 +25,6 @@ export const treasure: ScalingProject = zkStackL2({
   display: {
     name: 'Treasure',
     slug: 'treasure',
-    tvsWarning: {
-      value:
-        'The total TVS includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. L2BEAT is working on a fix.',
-      sentiment: 'warning',
-    },
     description:
       'Treasure is a gaming-specific L2 built on ZKsync, the Elastic Network. Treasure offers an end-to-end tech stack for developers and consumer apps to build the next generation of gaming.',
     links: {

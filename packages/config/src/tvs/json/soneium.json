@@ -108,7 +108,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "soneium-SolvBTC-1",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
@@ -121,12 +121,41 @@
         "decimals": 18,
         "sinceTimestamp": 1738747771
       },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+              "chain": "soneium",
+              "decimals": 18,
+              "sinceTimestamp": 1738747771
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+              "chain": "soneium",
+              "decimals": 8,
+              "escrowAddress": "0xeDCD3B3E3d7724908aBf5341427143Fd2D258E48",
+              "sinceTimestamp": 1739247701
+            }
+          }
+        ]
+      },
       "category": "other",
       "source": "external",
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "soneium-SolvBTC.BBN-1",
       "priceId": "solv-protocol-solvbtc-bbn",
       "symbol": "SolvBTC.BBN",
@@ -138,6 +167,35 @@
         "chain": "soneium",
         "decimals": 18,
         "sinceTimestamp": 1738747957
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-protocol-solvbtc-bbn",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+              "chain": "soneium",
+              "decimals": 18,
+              "sinceTimestamp": 1738747957
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+              "chain": "soneium",
+              "decimals": 18,
+              "escrowAddress": "0x1795226710373FeCC7f5e3841811a13E3C0E3B11",
+              "sinceTimestamp": 1739248353
+            }
+          }
+        ]
       },
       "category": "other",
       "source": "external",
