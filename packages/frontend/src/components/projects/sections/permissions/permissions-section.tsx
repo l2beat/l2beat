@@ -1,3 +1,4 @@
+import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
@@ -10,15 +11,18 @@ export interface PermissionsSectionProps extends ProjectSectionProps {
     { roles: TechnologyContract[]; actors: TechnologyContract[] }
   >
   permissionedEntities?: { name: string; href: string; key?: string }[]
+  discoUiHref?: string
 }
 
 export function PermissionsSection({
   permissionsByChain,
   permissionedEntities,
+  discoUiHref,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
+      {discoUiHref && <DiscoUiBanner href={discoUiHref} />}
       {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
           The DA committee has the following members:

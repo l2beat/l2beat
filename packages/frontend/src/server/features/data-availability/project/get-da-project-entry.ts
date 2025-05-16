@@ -66,6 +66,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     usedIn: UsedInProjectWithIcon[]
   }
   sections: ProjectDetailsSection[]
+  discoUiHref?: string
 }
 
 export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
@@ -207,6 +208,9 @@ export async function getDaProjectEntry(
       title: bridge.daBridge.name,
       href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     })),
+    discoUiHref: selected
+      ? `https://disco.l2beat.com/ui/p/${selected.id}`
+      : undefined,
   }
 
   if (layer.daLayer.usedWithoutBridgeIn.length > 0) {

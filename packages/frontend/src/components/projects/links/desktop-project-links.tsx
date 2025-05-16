@@ -12,6 +12,7 @@ import { CustomLinkIcon } from '~/icons/outlink'
 import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
+import { DiscoUiLink } from './disco-ui-link'
 import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
 import type { ProjectLink } from './types'
@@ -19,9 +20,14 @@ import type { ProjectLink } from './types'
 interface Props {
   projectLinks: ProjectLink[]
   variant: 'primary' | 'header'
+  discoUiHref?: string
 }
 
-export function DesktopProjectLinks({ projectLinks, variant }: Props) {
+export function DesktopProjectLinks({
+  projectLinks,
+  variant,
+  discoUiHref,
+}: Props) {
   return (
     <NavigationMenu asChild>
       <div>
@@ -33,6 +39,7 @@ export function DesktopProjectLinks({ projectLinks, variant }: Props) {
               variant={variant}
             />
           ))}
+          {discoUiHref && <DiscoUiLink href={discoUiHref} />}
         </NavigationMenuList>
       </div>
     </NavigationMenu>
@@ -42,7 +49,10 @@ export function DesktopProjectLinks({ projectLinks, variant }: Props) {
 function ProjectLinkItem({
   projectLink,
   variant,
-}: { projectLink: ProjectLink; variant: 'primary' | 'header' }) {
+}: {
+  projectLink: ProjectLink
+  variant: 'primary' | 'header'
+}) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
       <NavigationMenuItem>
