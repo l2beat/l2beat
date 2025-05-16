@@ -9,7 +9,6 @@ import {
   TypeInfo,
 } from '~/components/table/cells/type-info'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
 import { InfoIcon } from '~/icons/info'
 import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
@@ -81,9 +80,7 @@ export const columns = [
     header: '30-day\nanomalies',
     cell: (ctx) => {
       const entry = ctx.row.original
-      const showComingSoon =
-        !entry.data?.isSynced ||
-        LIVENESS_ANOMALIES_COMING_SOON_PROJECTS.includes(entry.id.toString())
+      const showComingSoon = !entry.data?.isSynced
 
       return (
         <AnomalyIndicator
