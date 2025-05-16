@@ -23,6 +23,7 @@ export class Application {
       openChainClient,
       fourByteClient,
       config.discovered,
+      config.wellKnownAbi,
       logger,
     )
 
@@ -35,7 +36,7 @@ export class Application {
       config.tokens,
     )
 
-    const decoder = new Decoder(addressService, signatureService)
+    const decoder = new Decoder(addressService, signatureService, config.tokens)
 
     const controller = new ApiController(decoder, config.chains)
     const httpServer = createHttpServer(
