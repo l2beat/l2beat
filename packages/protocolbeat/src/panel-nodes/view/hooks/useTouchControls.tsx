@@ -10,6 +10,11 @@ type Props = {
   desktopControls: DesktopControls
 }
 
+// Minimum safe distance from window edge (in pixels)
+// Sometimes we're stuck with touch events that are too close to the edge
+// Probably needs better handling in the future
+const EDGE_SAFETY_MARGIN = 5
+
 // We could use store, but at the end of the day
 // we still treat mouse events as primary ones.
 // Touch controls are just wrappers around mouse events.
@@ -29,7 +34,21 @@ export function useTouchControls({
     initialCenterY: 0,
     lastCenterX: 0,
     lastCenterY: 0,
+    isRecovering: false, // Flag to track if we're recovering from an edge event
   })
+
+  // Check if touch point is close to window edge
+  function isTouchNearEdge(touch: Touch): boolean {
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+
+    return (
+      touch.clientX < EDGE_SAFETY_MARGIN ||
+      touch.clientY < EDGE_SAFETY_MARGIN ||
+      touch.clientX > windowWidth - EDGE_SAFETY_MARGIN ||
+      touch.clientY > windowHeight - EDGE_SAFETY_MARGIN
+    )
+  }
 
   function handleTouchStart(event: TouchEvent) {
     if (!containerRef.current) return
@@ -39,6 +58,9 @@ export function useTouchControls({
 
     // Clear the current mode
     setTouchMode('none')
+
+    // Reset recovery flag
+    touchStateRef.current.isRecovering = false
 
     // Force end any current interactions
     const endEvent = new MouseEvent('mouseup', { bubbles: true })
@@ -50,6 +72,13 @@ export function useTouchControls({
       const touch2 = event.touches[1]
 
       if (touch1 && touch2) {
+        // Check if either touch is too close to the edge
+        if (isTouchNearEdge(touch1) || isTouchNearEdge(touch2)) {
+          // Mark we're in recovery mode but don't start any gesture yet
+          touchStateRef.current.isRecovering = true
+          return
+        }
+
         const distance = getTouchDistance(touch1, touch2)
         const center = getTouchCenter(touch1, touch2)
 
@@ -61,6 +90,7 @@ export function useTouchControls({
           initialCenterY: center.y,
           lastCenterX: center.x,
           lastCenterY: center.y,
+          isRecovering: false,
         }
 
         // Use pinch mode for combined pan and zoom
@@ -71,10 +101,17 @@ export function useTouchControls({
 
     // Exactly one finger = selection mode
     if (event.touches.length === 1) {
-      setTouchMode('select')
-
       const touch = event.touches[0]
       if (!touch) return
+
+      // Check if touch is too close to the edge
+      if (isTouchNearEdge(touch)) {
+        // Mark we're in recovery mode but don't start selection
+        touchStateRef.current.isRecovering = true
+        return
+      }
+
+      setTouchMode('select')
 
       const mouseEvent = new MouseEvent('mousedown', {
         clientX: touch.clientX,
@@ -93,6 +130,11 @@ export function useTouchControls({
     // Prevent browser default behaviors like pull-to-refresh
     event.preventDefault()
 
+    // Skip processing if we're in recovery mode from an edge touch
+    if (touchStateRef.current.isRecovering) {
+      return
+    }
+
     // Handle changes in the number of touches
     const expectedTouches =
       touchMode === 'select' ? 1 : touchMode === 'pinch' ? 2 : 0
@@ -110,6 +152,14 @@ export function useTouchControls({
       const touch2 = event.touches[1]
 
       if (!touch1 || !touch2) return
+
+      // Check if either touch moved too close to the edge during the gesture
+      if (isTouchNearEdge(touch1) || isTouchNearEdge(touch2)) {
+        touchStateRef.current.isRecovering = true
+        // End current gesture cleanly
+        handleTouchEnd(event)
+        return
+      }
 
       const currentDistance = getTouchDistance(touch1, touch2)
       const center = getTouchCenter(touch1, touch2)
@@ -180,6 +230,14 @@ export function useTouchControls({
       const touch = event.touches[0]
       if (!touch) return
 
+      // Check if touch moved too close to the edge during the gesture
+      if (isTouchNearEdge(touch)) {
+        touchStateRef.current.isRecovering = true
+        // End current gesture cleanly
+        handleTouchEnd(event)
+        return
+      }
+
       const mouseEvent = new MouseEvent('mousemove', {
         clientX: touch.clientX,
         clientY: touch.clientY,
@@ -205,6 +263,7 @@ export function useTouchControls({
     // Reset mode if all fingers are lifted
     if (event.touches.length === 0) {
       setTouchMode('none')
+      touchStateRef.current.isRecovering = false
     }
   }
 
