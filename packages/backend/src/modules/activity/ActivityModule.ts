@@ -11,9 +11,11 @@ import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
+import { SlotTargetIndexer } from './indexers/SlotTargetIndexer'
 import type { ActivityIndexer } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
+import { SlotTxsCountService } from './services/txs/SlotTxsCountService'
 
 export function initActivityModule(
   config: Config,
@@ -67,6 +69,36 @@ export function initActivityModule(
         })
 
         indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+
+      case 'slot': {
+        const slotTargetIndexer = new SlotTargetIndexer(
+          logger,
+          clock,
+          providers.slotTimestamp,
+          project,
+        )
+
+        const provider = providers.svmBlock.getBlockProvider(project.chainName)
+        const txsCountService = new SlotTxsCountService({
+          provider,
+          projectId: project.id,
+          logger,
+        })
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          batchSize: project.activityConfig.batchSize ?? 100,
+          minHeight: project.activityConfig.startSlot ?? 1,
+          parents: [slotTargetIndexer],
+          txsCountService,
+          indexerService,
+          db: database,
+        })
+
+        indexers.push(slotTargetIndexer, activityIndexer)
         break
       }
 
