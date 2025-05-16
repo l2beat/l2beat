@@ -35,8 +35,8 @@ export class SignatureService implements ISignatureService {
       this.known.set(selector, array)
     }
 
-    for (const _interface in wellKnownAbi) {
-      for (const signature of _interface) {
+    for (const [_interface, signatures] of Object.entries(wellKnownAbi)) {
+      for (const signature of signatures) {
         this.wellKnown.set(toFunctionSelector(signature), {
           signature,
           interface: _interface,
