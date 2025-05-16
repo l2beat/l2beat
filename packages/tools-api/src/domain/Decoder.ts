@@ -131,7 +131,6 @@ export class Decoder {
   }
 
   async decodeNested(value: Value, chain: Chain, known: Known) {
-    console.log('nested', value)
     if (value.decoded?.type === 'array') {
       for (const v of value.decoded.values) {
         if (v.decoded) {
