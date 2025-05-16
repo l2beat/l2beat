@@ -1,5 +1,3 @@
-import './dotenv'
-
 import { readFileSync } from 'node:fs'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import compression from 'compression'
@@ -16,7 +14,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
-createServer()
 
 export function createServer() {
   const app = express()
