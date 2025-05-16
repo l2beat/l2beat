@@ -1,10 +1,7 @@
 import { useRef, useState } from 'react'
 import type { DesktopControls } from './useDesktopControls'
 
-type TouchMode = 'none' | 'select' | 'pan' | 'zoom'
-
-const PINCH_DISTANCE_THRESHOLD = 35 // Minimum distance change to consider as pinch
-const MODE_SWITCH_COOLDOWN_MS = 150 // Minimum time between mode switches to prevent jitter
+type TouchMode = 'none' | 'select' | 'pinch' // Changed from having separate pan/zoom modes
 
 type Props = {
   viewRef: React.RefObject<HTMLElement | null>
@@ -30,10 +27,15 @@ export function useTouchControls({
     lastModeSwitch: 0,
     initialCenterX: 0,
     initialCenterY: 0,
+    lastCenterX: 0,
+    lastCenterY: 0,
   })
 
   function handleTouchStart(event: TouchEvent) {
     if (!containerRef.current) return
+
+    // Prevent browser default behaviors like pull-to-refresh
+    event.preventDefault()
 
     // Clear the current mode
     setTouchMode('none')
@@ -42,7 +44,7 @@ export function useTouchControls({
     const endEvent = new MouseEvent('mouseup', { bubbles: true })
     desktopControls.onMouseUp(endEvent)
 
-    // Exactly two fingers = multi-touch mode (either pan or zoom)
+    // Exactly two fingers = multi-touch mode (combined pan and zoom)
     if (event.touches.length === 2) {
       const touch1 = event.touches[0]
       const touch2 = event.touches[1]
@@ -57,20 +59,12 @@ export function useTouchControls({
           lastModeSwitch: Date.now(),
           initialCenterX: center.x,
           initialCenterY: center.y,
+          lastCenterX: center.x,
+          lastCenterY: center.y,
         }
 
-        // Default to pan until we detect significant pinch
-        setTouchMode('pan')
-
-        // Create a middle-mouse button event for panning with the center point
-        const mouseEvent = new MouseEvent('mousedown', {
-          clientX: center.x,
-          clientY: center.y,
-          button: 1, // Middle mouse button for panning
-          bubbles: true,
-        })
-
-        desktopControls.onMouseDown(mouseEvent)
+        // Use pinch mode for combined pan and zoom
+        setTouchMode('pinch')
       }
       return
     }
@@ -96,13 +90,12 @@ export function useTouchControls({
   function handleTouchMove(event: TouchEvent) {
     if (!containerRef.current) return
 
+    // Prevent browser default behaviors like pull-to-refresh
+    event.preventDefault()
+
     // Handle changes in the number of touches
     const expectedTouches =
-      touchMode === 'select'
-        ? 1
-        : touchMode === 'pan' || touchMode === 'zoom'
-          ? 2
-          : 0
+      touchMode === 'select' ? 1 : touchMode === 'pinch' ? 2 : 0
 
     if (event.touches.length !== expectedTouches) {
       // Number of touches changed - reset and restart
@@ -111,11 +104,8 @@ export function useTouchControls({
       return
     }
 
-    // Handle two-finger gesture (either pan or zoom)
-    if (
-      (touchMode === 'pan' || touchMode === 'zoom') &&
-      event.touches.length === 2
-    ) {
+    // Handle two-finger gesture (combined pan and zoom)
+    if (touchMode === 'pinch' && event.touches.length === 2) {
       const touch1 = event.touches[0]
       const touch2 = event.touches[1]
 
@@ -123,55 +113,18 @@ export function useTouchControls({
 
       const currentDistance = getTouchDistance(touch1, touch2)
       const center = getTouchCenter(touch1, touch2)
-      const distanceDelta = Math.abs(
-        currentDistance - touchStateRef.current.initialDistance,
-      )
-      const currentTime = Date.now()
 
-      // Determine if we should switch modes based on finger movement
-      if (
-        currentTime - touchStateRef.current.lastModeSwitch >
-        MODE_SWITCH_COOLDOWN_MS
-      ) {
-        // If distance changed significantly, switch to zoom mode
-        if (distanceDelta > PINCH_DISTANCE_THRESHOLD && touchMode !== 'zoom') {
-          setTouchMode('zoom')
-          touchStateRef.current.lastModeSwitch = currentTime
+      // Handle zooming - calculate zoom delta from distance change
+      const zoomDelta = touchStateRef.current.lastDistance - currentDistance
 
-          // Send mouseup to cancel any panning
-          const cancelEvent = new MouseEvent('mouseup', { bubbles: true })
-          desktopControls.onMouseUp(cancelEvent)
-        }
-        // If distance is relatively stable and we're moving from initial position, ensure we're in pan mode
-        else if (
-          distanceDelta < PINCH_DISTANCE_THRESHOLD &&
-          touchMode !== 'pan'
-        ) {
-          setTouchMode('pan')
-          touchStateRef.current.lastModeSwitch = currentTime
-
-          // Reset pan from current position
-          const mouseEvent = new MouseEvent('mousedown', {
-            clientX: center.x,
-            clientY: center.y,
-            button: 1, // Middle mouse button for panning
-            bubbles: true,
-          })
-
-          desktopControls.onMouseDown(mouseEvent)
-        }
-      }
-
-      // Handle based on current mode
-      if (touchMode === 'zoom') {
-        // Calculate zoom delta
-        const delta = touchStateRef.current.lastDistance - currentDistance
-
+      // Increased threshold to prevent accidental zooms during panning
+      // 3 is just a magic number to prevent accidental zooms based on trial and error
+      if (Math.abs(zoomDelta) > 3) {
         // Create a wheel event for zooming
         const wheelEvent = new WheelEvent('wheel', {
           clientX: center.x,
           clientY: center.y,
-          deltaY: delta,
+          deltaY: zoomDelta,
           ctrlKey: true, // Simulate pinch zoom
           bubbles: true,
         })
@@ -181,8 +134,12 @@ export function useTouchControls({
         }
       }
 
-      if (touchMode === 'pan') {
-        // Continue with the panning using the center point
+      // Handle panning - calculate position change from center movement
+      if (
+        touchStateRef.current.lastCenterX !== center.x ||
+        touchStateRef.current.lastCenterY !== center.y
+      ) {
+        // Simulate middle mouse button for panning
         const mouseEvent = new MouseEvent('mousemove', {
           clientX: center.x,
           clientY: center.y,
@@ -190,11 +147,31 @@ export function useTouchControls({
           bubbles: true,
         })
 
+        // Need to simulate a mousedown first if this is the first pan movement
+        if (
+          touchStateRef.current.lastCenterX ===
+            touchStateRef.current.initialCenterX &&
+          touchStateRef.current.lastCenterY ===
+            touchStateRef.current.initialCenterY
+        ) {
+          const mouseDownEvent = new MouseEvent('mousedown', {
+            clientX: touchStateRef.current.initialCenterX,
+            clientY: touchStateRef.current.initialCenterY,
+            button: 1, // Middle mouse button for panning
+            bubbles: true,
+          })
+
+          desktopControls.onMouseDown(mouseDownEvent)
+        }
+
         desktopControls.onMouseMove(mouseEvent)
       }
 
-      // Update last distance
+      // Update last values
       touchStateRef.current.lastDistance = currentDistance
+      touchStateRef.current.lastCenterX = center.x
+      touchStateRef.current.lastCenterY = center.y
+
       return
     }
 
@@ -215,6 +192,9 @@ export function useTouchControls({
   }
 
   function handleTouchEnd(event: TouchEvent) {
+    // Prevent browser default behaviors
+    event.preventDefault()
+
     // Create a mouseup event to end current interaction
     const mouseEvent = new MouseEvent('mouseup', {
       bubbles: true,
