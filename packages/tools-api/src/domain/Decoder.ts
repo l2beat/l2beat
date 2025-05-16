@@ -30,9 +30,17 @@ export class Decoder {
   async decode(tx: Transaction) {
     const known: Known = { addresses: new Map(), signatures: new Map() }
     if (tx.to) {
-      await this.know(tx.to, tx.chain, known)
+      await this.knowSafe(tx.to, tx.chain, known)
     }
     return this.decodeKnown(tx, known)
+  }
+
+  private async knowSafe(address: Address, chain: Chain, known: Known) {
+    try {
+      await this.know(address, chain, known)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   private async know(address: Address, chain: Chain, known: Known) {
@@ -87,10 +95,60 @@ export class Decoder {
       (await this.signatureService.lookup(selector))
     for (const signature of signatures) {
       try {
-        return decodeFunction(data, signature, chain)
+        return await this.decodeFunction(data, signature, chain, known)
       } catch {}
     }
     return { type: 'bytes', value: data, dynamic: true }
+  }
+
+  async decodeFunction(
+    data: `0x${string}`,
+    signature: string,
+    chain: Chain,
+    known: Known,
+  ): Promise<DecodedCall> {
+    if (!signature.startsWith('function ')) {
+      throw new Error('Abi provided is not a function')
+    }
+    const { decoded } = decodeType(signature, data)
+    if (decoded.type !== 'call') {
+      throw new Error('Programmer error, decoding failed')
+    }
+    const result: DecodedCall = {
+      type: 'call',
+      abi: signature,
+      selector: decoded.selector,
+      arguments: decoded.parameters.map((x) => toResultValue(x, chain)),
+    }
+    const addresses = getAddresses(result)
+    await Promise.all(addresses.map((x) => this.knowSafe(x, chain, known)))
+
+    for (const value of result.arguments) {
+      await this.decodeNested(value, chain, known)
+    }
+
+    return result
+  }
+
+  async decodeNested(value: Value, chain: Chain, known: Known) {
+    console.log('nested', value)
+    if (value.decoded?.type === 'array') {
+      for (const v of value.decoded.values) {
+        if (v.decoded) {
+          await this.decodeNested(v, chain, known)
+        }
+      }
+    }
+    if (value.decoded?.type === 'call') {
+      for (const v of value.decoded.arguments) {
+        if (v.decoded) {
+          await this.decodeNested(v, chain, known)
+        }
+      }
+    }
+    if (value.decoded?.type === 'bytes' && value.decoded.dynamic) {
+      value.decoded = await this.decodeBytes(value.decoded.value, chain, known)
+    }
   }
 }
 
@@ -100,27 +158,6 @@ function getSelector(data: `0x${string}`): `0x${string}` | undefined {
     return undefined
   }
   return selector
-}
-
-function decodeFunction(
-  data: `0x${string}`,
-  signature: string,
-  chain: Chain,
-): DecodedCall {
-  if (!signature.startsWith('function ')) {
-    throw new Error('Abi provided is not a function')
-  }
-  const result = decodeType(signature, data)
-  if (result.decoded.type !== 'call') {
-    throw new Error('Programmer error, decoding failed')
-  }
-
-  return {
-    type: 'call',
-    abi: signature,
-    selector: result.decoded.selector,
-    arguments: result.decoded.parameters.map((x) => toResultValue(x, chain)),
-  }
 }
 
 function toResultValue(value: AbiValue, chain: Chain): Value {
@@ -195,4 +232,21 @@ function toResultValue(value: AbiValue, chain: Chain): Value {
     }
   }
   assertUnreachable(value.decoded)
+}
+
+function getAddresses(value: DecodedValue): Address[] {
+  if (value.type === 'address') {
+    return [value.value]
+  }
+  if (value.type === 'array') {
+    return value.values.flatMap((x) =>
+      x.decoded ? getAddresses(x.decoded) : [],
+    )
+  }
+  if (value.type === 'call') {
+    return value.arguments.flatMap((x) =>
+      x.decoded ? getAddresses(x.decoded) : [],
+    )
+  }
+  return []
 }
