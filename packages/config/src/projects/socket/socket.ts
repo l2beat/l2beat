@@ -18,13 +18,13 @@ export const socket: Bridge = {
       'The security parameters of each individual token and vault must be individually assessed, and can be changed by the developers. DYOR and use Socket at your own risk.',
     category: 'Token Bridge',
     links: {
-      websites: ['https://socketscan.io/'],
+      websites: ['https://socket.tech/'],
       repositories: [
         'https://github.com/SocketDotTech/socket-DL',
         'https://github.com/SocketDotTech/socket-plugs/tree/main/contracts/bridge',
       ],
       documentation: ['https://developer.socket.tech/Learn/protocol-design'],
-      socialMedia: ['https://twitter.com/SocketDotTech'],
+      socialMedia: ['https://twitter.com/SocketProtocol'],
     },
     description:
       'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol.',
