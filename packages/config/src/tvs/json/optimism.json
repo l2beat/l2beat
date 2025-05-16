@@ -1998,7 +1998,25 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-weETH",
+      "id": "optimism-weETH-1",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1717433111
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-weETH-2",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",

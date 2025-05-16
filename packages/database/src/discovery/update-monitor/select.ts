@@ -1,7 +1,7 @@
 import type { UpdateMonitor } from '../../kysely/generated/types'
 
 export const selectUpdateMonitor = [
-  'projectName',
+  'projectId',
   'chainId',
   'blockNumber',
   'timestamp',

@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 22465335,
-  "configHash": "0xdc5bd8c0d39a283f9a1efa6f0a449fbd5441e6e97c7afcb1b9b5b5bacb2cf504",
+  "blockNumber": 22480922,
+  "configHash": "0x290bc363dddc1c29fbaf21e9802d08d2ef037b7a5e4330dae7f37c6acf30cf73",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -24,7 +24,7 @@
         {
           "permission": "interact",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -34,167 +34,112 @@
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         },
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "upgrade",
@@ -301,7 +246,45 @@
     {
       "address": "0x030ceEE5D4CBc304287234720B11E00f47695755",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        }
+      ]
     },
     {
       "name": "DAIBridge",
@@ -432,7 +415,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "tokenAdminAC": {
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
@@ -525,32 +508,12 @@
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "disable the withdrawal limit and manage the security agent role which can enable it."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "upgrade",
@@ -596,7 +559,13 @@
       "implementationNames": {
         "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "references": [
+        {
+          "text": "Security Council members - Starkware Governance Hub",
+          "href": "https://governance.starknet.io/learn/security_council"
+        }
+      ]
     },
     {
       "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
@@ -708,7 +677,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -738,7 +707,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -788,7 +757,45 @@
     {
       "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
+        }
+      ]
     },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -895,7 +902,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -925,7 +932,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -966,6 +973,38 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727171111,
       "sinceBlock": 20819642,
@@ -1235,8 +1274,8 @@
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
-        "secAdminAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
-        "secAgentAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "secAdminAC": ["0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"],
+        "secAgentAC": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -1397,7 +1436,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -1427,7 +1466,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -1537,8 +1576,11 @@
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
-        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAdminAC": [
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+        ],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -1568,7 +1610,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -1685,7 +1727,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1670739,
+        "l1ToL2MessageNonce": 1670805,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1709,9 +1751,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2188423224628065720313508982157794031503918852317434789391092932543840599413",
-        "stateBlockNumber": 1392605,
-        "stateRoot": "2555659148022449892596160632546928486264473601397171783145720778408625959536",
+        "stateBlockHash": "3553746097990116414656875041040501503056680435170025007799732699724550181206",
+        "stateBlockNumber": 1399380,
+        "stateRoot": "2784758738428595382191688748843633496115532430002027799771893592189770606182",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1919,8 +1961,8 @@
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
-        "secAdminAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
-        "secAgentAC": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "secAdminAC": ["0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"],
+        "secAgentAC": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -1950,7 +1992,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2064,7 +2106,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2094,7 +2136,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2204,7 +2246,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2234,7 +2276,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2339,7 +2381,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2369,7 +2411,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2473,7 +2515,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2503,7 +2545,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2642,7 +2684,7 @@
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": [],
@@ -2668,7 +2710,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2782,7 +2824,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2812,7 +2854,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -2859,6 +2901,16 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+        },
         {
           "permission": "operateStarknet",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
@@ -2976,7 +3028,7 @@
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
-        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": [],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -3006,7 +3058,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "implementationNames": {
@@ -4139,12 +4191,12 @@
     "starknet/DelayedExecutor": "0xd487cb8f4fc40dae5f302c2e60f6841921dafce3fde8b3461e75549ced30f87f",
     "starknet/L1EscrowDAI": "0x3e7ec24586a5b0460c26ec640c00e29df45f1d5f47ef6701a13cb7f6056bc6c1",
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
-    "starknet/StarkgateManager": "0x74cd8ae86590963abb3809a0f4f1dc2d5c6600a8c54d63bdcb9d727e4735d45b",
+    "starknet/StarkgateManager": "0x410a0924ea6e129cb543a6b1e2e682ba236c15e2718ed0f8e520ad74c09c19a9",
     "starknet/StarkgateRegistry": "0xf97ce3e8949e1a09811b01712acc2c09b944bad3bb8505e4b5f817c75a11c3ae",
     "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
-    "starknet/StarknetERC20Bridge": "0xee9a9b79bac540d950cd5b1923161a8086dd2ff4d27c22339cbbc08011978183",
-    "starknet/StarknetEthBridge": "0xdfe788cfed69e5ad82659da201e114820f81ba6f4b2cb9046cc49c6ccb2133b4",
-    "starknet/StarknetMultiBridge": "0x61321009feca9bb05ddf52331ab3017dfcf7a1f09b3b248cc6bb1fe910cedb07"
+    "starknet/StarknetERC20Bridge": "0xc3489759a7d6cc51bf371412ce38269bf0ff4d6a41c64904199b48627f44768a",
+    "starknet/StarknetEthBridge": "0xc3489759a7d6cc51bf371412ce38269bf0ff4d6a41c64904199b48627f44768a",
+    "starknet/StarknetMultiBridge": "0x67604ab02358b8b743459e2924d81833857cd75617b983b33e8c3eece1560e27"
   },
-  "permissionsConfigHash": "0x58437f4c35d8af4e9a1498ea2976c03f92eab55789b4894a4e77a2564be26638"
+  "permissionsConfigHash": "0x77b8ea6231095ee6e267f5bf260931f9b571e579c7f2ebe108cde33deda92a98"
 }

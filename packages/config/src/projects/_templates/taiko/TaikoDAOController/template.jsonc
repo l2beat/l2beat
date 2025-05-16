@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "TaikoDAOController",
+  "description": "Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  },
+  "category": "gov"
+}

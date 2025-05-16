@@ -1,6 +1,9 @@
 .vercel
 .env*.local
 
+performanceTest.json
+detailedDataSizeTest.json
+
 *storybook.log
 storybook-static
 

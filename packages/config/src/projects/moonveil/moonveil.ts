@@ -12,7 +12,7 @@ export const moonveil: ScalingProject = upcomingL2({
     description: 'Moonveil is a gaming chain utilizing Polygon CDK technology.',
     purposes: ['Gaming'],
     category: 'Validium',
-    stack: 'Polygon',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://moonveil.gg/'],
       apps: ['https://moonveil.gg/AstrArk/'],

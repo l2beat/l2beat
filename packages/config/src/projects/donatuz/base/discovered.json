@@ -1,7 +1,7 @@
 {
   "name": "donatuz",
   "chain": "base",
-  "blockNumber": 27754690,
+  "blockNumber": 30222868,
   "configHash": "0xa020f48f1ec97111330eca61f87a80fd11b8e120381ef5d91c67b8b7285ba2f1",
   "entries": [
     {
@@ -45,7 +45,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620119",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620228",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -181,7 +181,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 21,
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -278,10 +278,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 22939200,
-        "latestOutputIndex": 530,
-        "nextBlockNumber": 22982400,
-        "nextOutputIndex": 531,
+        "latestBlockNumber": 27907200,
+        "latestOutputIndex": 645,
+        "nextBlockNumber": 27950400,
+        "nextOutputIndex": 646,
         "PROPOSER": "0xfB04981fa938f03b82B4Ca8F5B1FAAA1A547306B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719319433,
@@ -421,7 +421,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 27721308
+          "prevBlockNum": 30116122
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xa096dD38362bd2cE3C696474329989960722A7Fd",

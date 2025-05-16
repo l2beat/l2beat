@@ -61,6 +61,7 @@ export class ZkStackDataFetcher {
     '0x03F5BE358fc2C4DF88723a63148bd829B8AA5c91': 'ozETH',
     '0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a': 'LGHO',
     '0x0Df3a853e4B604fC2ac0881E9Dc92db27fF7f51b': 'LAC',
+    '0x66A5cFB2e9c529f14FE6364Ad1075dF3a649C0A5': 'ZK(fake)',
   }
 
   private pubdataModes: PubdataModeMap = {

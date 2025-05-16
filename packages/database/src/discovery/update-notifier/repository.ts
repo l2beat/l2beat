@@ -51,14 +51,14 @@ export class UpdateNotifierRepository extends BaseRepository {
 
   async getNewerThan(
     from: UnixTime,
-    projectName: string,
+    projectId: string,
     chainId: ChainId,
   ): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
       .selectFrom('UpdateNotifier')
       .select(selectUpdateNotifier)
       .where('createdAt', '>=', UnixTime.toDate(from))
-      .where('projectName', '=', projectName)
+      .where('projectId', '=', projectId)
       .where('chainId', '=', +chainId)
       .execute()
     return rows.map(toRecord)

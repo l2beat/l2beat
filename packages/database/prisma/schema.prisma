@@ -129,37 +129,37 @@ model Liveness {
 }
 
 model UpdateMonitor {
-  projectName       String    @db.VarChar(255)
+  projectId         String    @db.VarChar(255)
   blockNumber       Int
   timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
   chainId           Int       @default(1)
 
-  @@id([projectName, chainId])
+  @@id([projectId, chainId])
 }
 
 model UpdateNotifier {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
-  projectName  String   @db.VarChar(255)
+  projectId    String   @db.VarChar(255)
   blockNumber  Int
   diffJsonBlob Json
   chainId      Int      @default(1)
 
   @@index([blockNumber])
-  @@index([projectName])
+  @@index([projectId])
 }
 
 model UpdateMessage {
-  projectName String   @db.VarChar(255)
+  projectId   String   @db.VarChar(255)
   chain       String   @db.VarChar(255)
   blockNumber Int
   timestamp   DateTime @db.Timestamp(6)
   message     String   @db.Text
 
-  @@id([projectName, chain, blockNumber])
+  @@id([projectId, chain, blockNumber])
 }
 
 model VerifierStatus {
@@ -205,13 +205,13 @@ model Anomaly {
 }
 
 model FlatSources {
-  projectName String @db.VarChar(255)
+  projectId   String @db.VarChar(255)
   chainId     Int
   blockNumber Int
   contentHash String @db.VarChar(255)
   flat        Json
 
-  @@id([projectName, chainId])
+  @@id([projectId, chainId])
 }
 
 model TvsAmount {
@@ -274,11 +274,11 @@ model ProjectValue {
 }
 
 model UpdateDiff {
-  projectName String   @db.VarChar(255)
-  chain       String   @db.VarChar(255)
-  address     String   @db.VarChar(255)
-  type        String   @db.VarChar(255)
-  timestamp   DateTime @db.Timestamp(6)
+  projectId String   @db.VarChar(255)
+  chain     String   @db.VarChar(255)
+  address   String   @db.VarChar(255)
+  type      String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
 
-  @@unique([projectName, address, type, chain])
+  @@unique([projectId, address, type, chain])
 }

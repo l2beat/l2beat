@@ -2,7 +2,7 @@ import z from 'zod'
 
 export const FlatSourcesApiResponse = z.array(
   z.object({
-    projectName: z.string(),
+    projectId: z.string(),
     chainName: z.string(),
     blockNumber: z.number(),
     contentHash: z.string(),

@@ -1,24 +1,8 @@
-import type { ChainConfig } from '@l2beat/config'
-import {
-  type ContractValue,
-  type EntryParameters,
-  diffDiscovery,
-} from '@l2beat/discovery/frontend'
-import type { EthereumAddress } from '@l2beat/shared-pure'
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
+import type { UpdateDiffRecord } from '@l2beat/database'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
-import { getOnDiskData } from './get-on-disk-data'
-
-export async function getProjectsChangeReport() {
-  if (env.MOCK) {
-    return getProjectsChangeReportMock()
-  }
-
-  return getProjectsChangeReportWithFns()
-}
 
 export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
@@ -28,8 +12,50 @@ export interface ProjectChanges {
   impactfulChange: boolean
 }
 
+type ProjectChangeReport = Record<
+  string,
+  {
+    implementationChange: EthereumAddress[]
+    highSeverityFieldChange: EthereumAddress[]
+    ultimateUpgraderChange: EthereumAddress[]
+  }
+>
+
+export async function getProjectsChangeReport() {
+  if (env.MOCK) {
+    return getProjectsChangeReportMock()
+  }
+
+  return getProjectsChangeReportWithFns()
+}
+
 async function getProjectsChangeReportWithFns() {
-  const result = await getCachedProjectsChangeReport()
+  const result: Record<string, ProjectChangeReport> = {}
+
+  const db = getDb()
+  const updateDiffs = await db.updateDiff.getAll()
+
+  const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
+  for (const [projectId, diffs] of Object.entries(byProject)) {
+    const byChain = groupBy(diffs, (diff) => diff.chain)
+    for (const [chain, changes] of Object.entries(byChain)) {
+      const changesByType = groupByType(changes)
+
+      result[projectId] ??= {}
+      result[projectId][chain] = {
+        implementationChange: changesByType.implementationChange.map((c) =>
+          EthereumAddress(c.address),
+        ),
+        highSeverityFieldChange: changesByType.highSeverityFieldChange.map(
+          (c) => EthereumAddress(c.address),
+        ),
+        ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
+          EthereumAddress(c.address),
+        ),
+      }
+    }
+  }
+
   return {
     projects: result,
     getChanges: function (projectId: string): ProjectChanges {
@@ -64,148 +90,17 @@ async function getProjectsChangeReportWithFns() {
   }
 }
 
-type ProjectChangeReport = Record<
-  string,
-  {
-    implementationChange: EthereumAddress[]
-    highSeverityFieldChange: EthereumAddress[]
-    ultimateUpgraderChange: EthereumAddress[]
+function groupByType(changes: UpdateDiffRecord[]) {
+  const result: Record<UpdateDiffRecord['type'], UpdateDiffRecord[]> = {
+    implementationChange: [],
+    highSeverityFieldChange: [],
+    ultimateUpgraderChange: [],
   }
->
-
-const getCachedProjectsChangeReport = cache(
-  async () => {
-    const result: Record<string, ProjectChangeReport> = {}
-
-    const db = getDb()
-    const onDisk = getOnDiskData()
-    const newDiscoveries = await db.updateMonitor.getAll()
-
-    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-      (p) => p.chainConfig,
-    )
-
-    for (const onDiskChain of onDisk.chains) {
-      const onDiskChainProjects = onDisk.projects[onDiskChain]
-      if (!onDiskChainProjects) continue
-      const onDiskChainDiscovery = onDisk.discoveries[onDiskChain]
-      if (!onDiskChainDiscovery) continue
-
-      for (const project of onDiskChainProjects) {
-        const onDiskDiscovery = onDiskChainDiscovery[project]
-        const chainId = chainNameToId(onDiskChain, chains)
-
-        const newDiscovery = newDiscoveries.find(
-          (d) => d.chainId === chainId && d.projectName === project,
-        )
-
-        if (!newDiscovery || !onDiskDiscovery) {
-          continue
-        }
-
-        // Skip if the new discovery is older than the on-disk discovery
-        if (onDiskDiscovery.blockNumber > newDiscovery.blockNumber) {
-          continue
-        }
-
-        const onDiskContracts = [
-          ..._TEMP_getEntries(onDiskDiscovery),
-          ...(onDiskDiscovery.sharedModules ?? []).flatMap((module) =>
-            _TEMP_getEntries(onDiskChainDiscovery[module]),
-          ),
-        ]
-        const latestContracts = [
-          ..._TEMP_getEntries(newDiscovery.discovery),
-          ...(newDiscovery.discovery.sharedModules ?? []).flatMap((module) =>
-            newDiscoveries
-              .filter(
-                (d) =>
-                  d.chainId === newDiscovery.chainId &&
-                  d.discovery.name === module,
-              )
-              .flatMap((d) => _TEMP_getEntries(d.discovery)),
-          ),
-        ]
-
-        const discoveryDiffs = diffDiscovery(onDiskContracts, latestContracts)
-        const implementationChanges = discoveryDiffs.filter((discoveryDiff) =>
-          discoveryDiff.diff?.some(
-            (f) => f.key && f.key === 'values.$implementation',
-          ),
-        )
-        const fieldHighSeverityChanges = discoveryDiffs.filter(
-          (discoveryDiff) =>
-            discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),
-        )
-
-        const upgradeChanges = discoveryDiffs.filter((discoveryDiff) =>
-          discoveryDiff.diff?.some((f) => {
-            if (!f.key.startsWith('receivedPermissions')) {
-              return false
-            }
-
-            const indexString = f.key.split('.')[1]
-            if (indexString === undefined) {
-              return false
-            }
-            const index = parseInt(indexString)
-
-            const entry = latestContracts.find(
-              (e) => e.address === discoveryDiff.address,
-            )
-
-            return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
-          }),
-        )
-
-        if (
-          implementationChanges.length === 0 &&
-          fieldHighSeverityChanges.length === 0 &&
-          upgradeChanges.length === 0
-        ) {
-          continue
-        }
-
-        result[project] ??= {}
-        result[project][onDiskChain] ??= {
-          implementationChange: [],
-          highSeverityFieldChange: [],
-          ultimateUpgraderChange: [],
-        }
-
-        for (const implementationChange of implementationChanges) {
-          const diffedContract = latestContracts.find(
-            (c) => c.address === implementationChange.address,
-          )
-          assert(diffedContract, 'diffedContract is undefined')
-
-          result[project][onDiskChain].implementationChange.push(
-            implementationChange.address,
-          )
-        }
-
-        for (const fieldHighSeverityChange of fieldHighSeverityChanges) {
-          const fieldDiffs = fieldHighSeverityChange.diff?.filter(
-            (f) => f.severity === 'HIGH',
-          )
-          if (!fieldDiffs) continue
-          result[project][onDiskChain].highSeverityFieldChange.push(
-            fieldHighSeverityChange.address,
-          )
-        }
-
-        for (const upgradeChange of upgradeChanges) {
-          result[project][onDiskChain].ultimateUpgraderChange.push(
-            upgradeChange.address,
-          )
-        }
-      }
-    }
-    return result
-  },
-  [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
-  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
-)
+  for (const change of changes) {
+    result[change.type].push(change)
+  }
+  return result
+}
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
@@ -217,32 +112,4 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
     hasHighSeverityFieldChanged: () => false,
     hasUltimateUpgraderChanged: () => false,
   }
-}
-
-function chainNameToId(chainName: string, chains: ChainConfig[]): ChainId {
-  const chain = chains.find((chain) => chain.name === chainName)
-  assert(chain, `Unknown chain name: ${chainName}`)
-  assert(chain.chainId, `Missing chainId for chain: ${chainName}`)
-  return ChainId(chain.chainId)
-}
-
-export function toAddressArray(value: ContractValue | undefined) {
-  if (typeof value === 'string') {
-    return [value as unknown as EthereumAddress]
-  }
-  if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
-    return value.map((v) => v as unknown as EthereumAddress)
-  }
-  return []
-}
-
-// TODO: REMOVE THIS CODE ON 2025-03-11
-function _TEMP_getEntries(
-  value: { entries: EntryParameters[] } | undefined,
-): EntryParameters[] {
-  if (value === undefined) {
-    return []
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return Reflect.get(value, 'contracts') ?? value.entries
 }

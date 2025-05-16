@@ -179,7 +179,7 @@ export function polygonCDKStack(
         templateVars.daProvider !== undefined)
           ? 'polygon-cdk-validium'
           : 'polygon-cdk-rollup',
-      stack: 'Polygon',
+      stack: 'Agglayer CDK',
       tvsWarning: templateVars.display.tvsWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod,
@@ -431,7 +431,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
     milestones: templateVars.milestones,
     badges: mergeBadges(
       [
-        BADGES.Stack.PolygonCDK,
+        BADGES.Stack.CDKErigon,
         BADGES.VM.EVM,
         BADGES.DA.EthereumCalldata,
         BADGES.Infra.AggLayer,

@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { UpdateDiff } from '../../kysely/generated/types'
 
-export type UpdateDiffType =
+type UpdateDiffType =
   | 'ultimateUpgraderChange'
   | 'implementationChange'
   | 'highSeverityFieldChange'
@@ -11,13 +11,13 @@ export interface UpdateDiffRecord {
   type: UpdateDiffType
   chain: string
   address: string
-  projectName: string
+  projectId: string
   timestamp: UnixTime
 }
 
 export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
   return {
-    projectName: record.projectName,
+    projectId: record.projectId,
     chain: record.chain,
     address: record.address,
     type: record.type,
@@ -27,7 +27,7 @@ export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
 
 export function toRecord(row: Selectable<UpdateDiff>): UpdateDiffRecord {
   return {
-    projectName: row.projectName,
+    projectId: row.projectId,
     chain: row.chain,
     address: row.address,
     type: row.type as UpdateDiffType,
