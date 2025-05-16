@@ -154,6 +154,7 @@ export async function getScalingProjectEntry(
         })
       : undefined,
     getTokensForProject(project),
+    getLiveness(),
     api.tvs.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
@@ -169,7 +170,6 @@ export async function getScalingProjectEntry(
           projectId: project.id,
         })
       : undefined,
-    getLiveness,
   ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
