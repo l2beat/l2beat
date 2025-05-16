@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xfc0ea3fec5fca023c27699f4621900e26a2d35b0
+
+# Diff at Fri, 16 May 2025 11:51:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3a3b01d201c04aa0bb78a0c7682565eba0c9e4e3 block: 22330737
+- current block number: 22330737
+
+## Description
+
+Changed argument in a handler to discover SP1Verifier contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22330737 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.verifier.prover:
+-        "0x0000000000000000000000000000000000000000"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+```
+
 Generated with discovered.json: 0xbe844a113e7279e248f0f18bea0b7b90babf9304
 
 # Diff at Tue, 29 Apr 2025 09:40:55 GMT:
