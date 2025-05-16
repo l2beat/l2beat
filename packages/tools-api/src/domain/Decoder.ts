@@ -80,7 +80,7 @@ export class Decoder {
   ): Promise<DecodedValue> {
     const selector = getSelector(data)
     if (!selector) {
-      return { type: 'bytes', value: data }
+      return { type: 'bytes', value: data, dynamic: true }
     }
     const signatures =
       known.signatures.get(selector) ??
@@ -90,7 +90,7 @@ export class Decoder {
         return decodeFunction(data, signature, chain)
       } catch {}
     }
-    return { type: 'bytes', value: data }
+    return { type: 'bytes', value: data, dynamic: true }
   }
 }
 
@@ -148,15 +148,22 @@ function toResultValue(value: AbiValue, chain: Chain): Value {
   if (value.decoded.type === 'string') {
     return {
       ...common,
-      // TODO: handle extra!
-      decoded: { type: 'string', value: value.decoded.value },
+      decoded: {
+        type: 'string',
+        value: value.decoded.value,
+        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
+      },
     }
   }
   if (value.decoded.type === 'bytes') {
     return {
       ...common,
-      // TODO: handle extra!
-      decoded: { type: 'bytes', value: value.decoded.value },
+      decoded: {
+        type: 'bytes',
+        dynamic: value.decoded.dynamic,
+        value: value.decoded.value,
+        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
+      },
     }
   }
   if (value.decoded.type === 'bool') {
@@ -168,22 +175,22 @@ function toResultValue(value: AbiValue, chain: Chain): Value {
   if (value.decoded.type === 'array') {
     return {
       ...common,
-      // TODO: handle extra!
       decoded: {
         type: 'array',
         values: value.decoded.value.map((x) => toResultValue(x, chain)),
+        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
       },
     }
   }
   if (value.decoded.type === 'call') {
     return {
       ...common,
-      // TODO: handle extra!
       decoded: {
         type: 'call',
         abi: value.abi,
         selector: value.decoded.selector,
         arguments: value.decoded.parameters.map((x) => toResultValue(x, chain)),
+        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
       },
     }
   }

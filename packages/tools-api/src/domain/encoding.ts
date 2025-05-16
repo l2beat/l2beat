@@ -11,7 +11,12 @@ export type AbiDecoded =
   | { type: 'number'; value: string }
   | { type: 'address'; value: `0x${string}` }
   | { type: 'bool'; value: boolean }
-  | { type: 'bytes'; value: `0x${string}`; extra: `0x${string}` }
+  | {
+      type: 'bytes'
+      value: `0x${string}`
+      extra: `0x${string}`
+      dynamic: boolean
+    }
   | { type: 'string'; value: string; extra: `0x${string}` }
   | { type: 'array'; value: AbiValue[]; extra: `0x${string}` }
   | {
@@ -86,7 +91,10 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
   }
   if (type.type === 'bytes') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
-    return { ...common, decoded: { type: 'bytes', value: bytes, extra } }
+    return {
+      ...common,
+      decoded: { type: 'bytes', value: bytes, extra, dynamic: true },
+    }
   }
   if (type.type === 'string') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
@@ -131,7 +139,10 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       throw new Error('Invalid encoding')
     }
     const bytes = sliceBytes(encoded, 0, size)
-    return { ...common, decoded: { type: 'bytes', value: bytes, extra: '0x' } }
+    return {
+      ...common,
+      decoded: { type: 'bytes', value: bytes, extra: '0x', dynamic: false },
+    }
   }
   throw new Error(`Invalid type: ${type.type}`)
 }

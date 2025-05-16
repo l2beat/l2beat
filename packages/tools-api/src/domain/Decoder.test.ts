@@ -101,7 +101,7 @@ describe(Decoder.name, () => {
         name: 'data',
         abi: 'bytes',
         encoded: '0x',
-        decoded: { type: 'bytes', value: '0x' },
+        decoded: { type: 'bytes', value: '0x', dynamic: true },
       },
       to: undefined,
       chainId: 1,

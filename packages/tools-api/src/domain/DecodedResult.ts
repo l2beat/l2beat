@@ -46,12 +46,15 @@ export interface DecodedBoolean {
 
 export interface DecodedBytes {
   type: 'bytes'
+  dynamic: boolean
   value: string
+  extra?: `0x${string}`
 }
 
 export interface DecodedString {
   type: 'string'
   value: string
+  extra?: `0x${string}`
 }
 
 export interface DecodedAddress {
@@ -68,9 +71,11 @@ export interface DecodedCall {
   abi: string
   interface?: string
   arguments: Value[]
+  extra?: `0x${string}`
 }
 
 export interface DecodedArray {
   type: 'array'
   values: Value[]
+  extra?: `0x${string}`
 }
