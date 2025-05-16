@@ -22,7 +22,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
               target="_blank"
               className="flex w-fit items-center gap-1.5 rounded bg-surface-primary px-4 py-2 text-sm font-medium text-link underline"
             >
-              Explore in Discovery UI
+              Go to Disco
               <CustomLinkIcon className="size-4 fill-link" />
             </Link>
           </div>
