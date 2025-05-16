@@ -1,14 +1,9 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
-import type { Address, Chain } from '../config/types'
+import type { Address, Chain, TokenConfig } from '../config/types'
 import type { AddressInfo, IAddressService } from './AddressService'
-import type {
-  DecodedCall,
-  DecodedResult,
-  DecodedValue,
-  Value,
-} from './DecodedResult'
+import type { DecodedCall, DecodedResult, DecodedValue } from './DecodedResult'
 import type { ISignatureService } from './SignatureService'
-import { type AbiValue, decodeType } from './encoding'
+import { decode } from './decode'
+import { plugins } from './plugins/plugins'
 
 export interface Transaction {
   to?: Address
@@ -25,6 +20,7 @@ export class Decoder {
   constructor(
     private addressService: IAddressService,
     private signatureService: ISignatureService,
+    private tokens: TokenConfig,
   ) {}
 
   async decode(tx: Transaction) {
@@ -68,7 +64,7 @@ export class Decoder {
         name: 'data',
         abi: 'bytes',
         encoded: tx.data,
-        decoded: await this.decodeBytes(tx.data, tx.chain, known),
+        decoded: await this.decodeBytes(tx.data, tx.to, tx.chain, known),
       },
       to: toInfo && {
         type: 'address',
@@ -83,6 +79,7 @@ export class Decoder {
 
   private async decodeBytes(
     data: `0x${string}`,
+    to: Address | undefined,
     chain: Chain,
     known: Known,
   ): Promise<DecodedValue> {
@@ -95,59 +92,49 @@ export class Decoder {
       (await this.signatureService.lookup(selector))
     for (const signature of signatures) {
       try {
-        return await this.decodeFunction(data, signature, chain, known)
+        return await this.decodeCall(data, signature, to, chain, known)
       } catch {}
     }
     return { type: 'bytes', value: data, dynamic: true }
   }
 
-  async decodeFunction(
+  private async decodeCall(
     data: `0x${string}`,
     signature: string,
+    to: Address | undefined,
     chain: Chain,
     known: Known,
   ): Promise<DecodedCall> {
-    if (!signature.startsWith('function ')) {
-      throw new Error('Abi provided is not a function')
-    }
-    const { decoded } = decodeType(signature, data)
-    if (decoded.type !== 'call') {
-      throw new Error('Programmer error, decoding failed')
-    }
-    const result: DecodedCall = {
-      type: 'call',
-      abi: signature,
-      selector: decoded.selector,
-      arguments: decoded.parameters.map((x) => toResultValue(x, chain)),
-    }
+    const result = decode(signature, data, chain)
+    const nested = this.applyPlugins(result, to, chain)
+
     const addresses = getAddresses(result)
     await Promise.all(addresses.map((x) => this.knowSafe(x, chain, known)))
 
-    for (const value of result.arguments) {
-      await this.decodeNested(value, chain, known)
+    for (const value of nested) {
+      value.data.decoded = await this.decodeBytes(
+        value.data.encoded,
+        value.to,
+        chain,
+        known,
+      )
     }
 
     return result
   }
 
-  async decodeNested(value: Value, chain: Chain, known: Known) {
-    if (value.decoded?.type === 'array') {
-      for (const v of value.decoded.values) {
-        if (v.decoded) {
-          await this.decodeNested(v, chain, known)
-        }
+  private applyPlugins(
+    result: DecodedCall,
+    to: Address | undefined,
+    chain: Chain,
+  ) {
+    for (const plugin of plugins) {
+      const nested = plugin(result, to, chain, this.tokens)
+      if (nested) {
+        return nested
       }
     }
-    if (value.decoded?.type === 'call') {
-      for (const v of value.decoded.arguments) {
-        if (v.decoded) {
-          await this.decodeNested(v, chain, known)
-        }
-      }
-    }
-    if (value.decoded?.type === 'bytes' && value.decoded.dynamic) {
-      value.decoded = await this.decodeBytes(value.decoded.value, chain, known)
-    }
+    return []
   }
 }
 
@@ -157,80 +144,6 @@ function getSelector(data: `0x${string}`): `0x${string}` | undefined {
     return undefined
   }
   return selector
-}
-
-function toResultValue(value: AbiValue, chain: Chain): Value {
-  const common = {
-    abi: value.abi,
-    name: value.name,
-    encoded: value.encoded,
-  }
-  if (value.decoded.type === 'address') {
-    return {
-      ...common,
-      decoded: {
-        type: 'address',
-        value: `${chain.shortName}:${value.decoded.value}`,
-        explorerLink: `${chain.explorerUrl}/address/${value.decoded.value}`,
-      },
-    }
-  }
-  if (value.decoded.type === 'number') {
-    return {
-      ...common,
-      decoded: { type: 'number', value: value.decoded.value },
-    }
-  }
-  if (value.decoded.type === 'string') {
-    return {
-      ...common,
-      decoded: {
-        type: 'string',
-        value: value.decoded.value,
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  if (value.decoded.type === 'bytes') {
-    return {
-      ...common,
-      decoded: {
-        type: 'bytes',
-        dynamic: value.decoded.dynamic,
-        value: value.decoded.value,
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  if (value.decoded.type === 'bool') {
-    return {
-      ...common,
-      decoded: { type: 'boolean', value: value.decoded.value },
-    }
-  }
-  if (value.decoded.type === 'array') {
-    return {
-      ...common,
-      decoded: {
-        type: 'array',
-        values: value.decoded.value.map((x) => toResultValue(x, chain)),
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  if (value.decoded.type === 'call') {
-    return {
-      ...common,
-      decoded: {
-        type: 'call',
-        abi: value.abi,
-        selector: value.decoded.selector,
-        arguments: value.decoded.parameters.map((x) => toResultValue(x, chain)),
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  assertUnreachable(value.decoded)
 }
 
 function getAddresses(value: DecodedValue): Address[] {

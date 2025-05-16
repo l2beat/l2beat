@@ -84,7 +84,7 @@ class TestSignatureService implements ISignatureService {
 describe(Decoder.name, () => {
   const addressService = new TestAddressService()
   const signatureService = new TestSignatureService()
-  const decoder = new Decoder(addressService, signatureService)
+  const decoder = new Decoder(addressService, signatureService, {})
 
   beforeEach(() => {
     addressService.clear()
