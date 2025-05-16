@@ -139,7 +139,7 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'bytes32',
       encoded: encoded,
-      decoded: { type: 'bytes', value: encoded, extra: '0x' },
+      decoded: { type: 'bytes', value: encoded, extra: '0x', dynamic: false },
     })
   })
 
@@ -150,7 +150,12 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'bytes4',
       encoded: encoded,
-      decoded: { type: 'bytes', value: `0xdeadbeef`, extra: '0x' },
+      decoded: {
+        type: 'bytes',
+        value: `0xdeadbeef`,
+        extra: '0x',
+        dynamic: false,
+      },
     })
   })
 
@@ -167,7 +172,7 @@ describe(decodeType.name, () => {
       name: '',
       abi: 'bytes',
       encoded: e,
-      decoded: { type: 'bytes', value: bytes, extra: '0x' },
+      decoded: { type: 'bytes', value: bytes, extra: '0x', dynamic: true },
     })
   })
 
@@ -183,6 +188,7 @@ describe(decodeType.name, () => {
         type: 'bytes',
         value: bytes,
         extra: `0x${'deadbeef'.repeat(8)}`,
+        dynamic: true,
       },
     })
   })
