@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 22330737,
-  "configHash": "0x12864c9e9658aaed138de7074fc943d61ef7b9eb2db740bdfdc165574c26554b",
+  "configHash": "0x613db8bc1432959eacd242df260ca5695e990e7bc76353448b9b92b56db5f4d1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -483,7 +483,7 @@
         },
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
         "verifier": {
-          "prover": "0x0000000000000000000000000000000000000000",
+          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
           "frozen": false
         }
       },
@@ -1207,6 +1207,34 @@
           "description": "one of the signers of the KromaSecurityCouncil."
         }
       ]
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "proxyType": "immutable",
+      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
+      "sinceTimestamp": 1735949699,
+      "sinceBlock": 21547470,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
+      },
+      "implementationNames": {
+        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
+      }
     },
     {
       "name": "SecurityCouncilTokenOwners",
@@ -2289,6 +2317,15 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0xE36776FFA20a9206dcD742C981402a3f3d81938d": [
       "constructor(address _l2OutputOracle, address _portal, address _securityCouncil, address _trustedValidator, uint256 _requiredBondAmount, uint256 _maxUnbond, uint256 _roundDuration, uint256 _terminateOutputIndex)",
       "event BondIncreased(uint256 indexed outputIndex, address indexed challenger, uint128 amount)",
@@ -2481,7 +2518,8 @@
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
     "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0x380a50f020e6b3ddcbec10cb9d3aa3f288f47d00506b85a621bb845ca9bf5d1b"
+  "permissionsConfigHash": "0xf10413481578ec7a54feedb2cf5db281ca078b627583a79d2766fbde3c6fc1d6"
 }
