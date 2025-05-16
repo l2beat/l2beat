@@ -1,7 +1,7 @@
 'use client'
 
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -48,6 +48,9 @@ export function LivenessChart({ data, isLoading, className }: Props) {
     },
   } satisfies ChartMeta
 
+  const lastValidTimestamp = data?.findLast((d) => d.avg !== null)?.timestamp
+  const lastTimestamp = data?.at(-1)?.timestamp
+
   return (
     <ChartContainer
       data={data}
@@ -87,6 +90,12 @@ export function LivenessChart({ data, isLoading, className }: Props) {
             domain: ([dataMin, dataMax]) => [dataMin, dataMax],
           },
         })}
+        <ReferenceArea
+          x1={lastValidTimestamp}
+          x2={lastTimestamp}
+          fill="hsl(var(--negative))"
+          fillOpacity={0.2}
+        />
         <ChartTooltip content={<LivenessCustomTooltip />} />
         <defs>
           <PinkFillGradientDef id="fillRange" />
