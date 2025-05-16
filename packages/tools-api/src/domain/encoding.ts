@@ -21,7 +21,12 @@ export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
 }
 
 function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
-  const common = { name: '', abi: type.type, encoded }
+  const common = { name: type.name ?? '', abi: type.type, encoded }
+  let selector: `0x${string}` | undefined
+  if (type.function) {
+    selector = sliceBytes(encoded, 0, 4)
+    encoded = sliceBytes(encoded, 4)
+  }
   let elements: ParsedType[] | undefined
   if (type.tupleElements) {
     elements = type.tupleElements
@@ -60,6 +65,12 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       // biome-ignore lint/style/noNonNullAssertion: It's there
       return decodeParsed(e, staticData[i]!)
     })
+    if (selector) {
+      return {
+        ...common,
+        decoded: { type: 'call', selector, parameters: array },
+      }
+    }
     return { ...common, decoded: { type: 'array', value: array } }
   }
   if (type.type === 'bytes') {
