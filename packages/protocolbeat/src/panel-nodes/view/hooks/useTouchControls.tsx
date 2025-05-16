@@ -39,22 +39,53 @@ export function useTouchControls({
 
   // Check if touch point is close to window edge
   function isTouchNearEdge(touch: Touch): boolean {
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
+    // Only check edge detection if the touch is within our container
+    // This will allow touches outside our container (like on UI controls) to work normally
+    if (!containerRef.current) return false
 
+    const rect = containerRef.current.getBoundingClientRect()
+
+    // Check if touch is within container bounds
+    if (
+      touch.clientX < rect.left ||
+      touch.clientX > rect.right ||
+      touch.clientY < rect.top ||
+      touch.clientY > rect.bottom
+    ) {
+      // Touch is outside container, so not near our edges
+      return false
+    }
+
+    // Check if touch is near the edge of our container
     return (
-      touch.clientX < EDGE_SAFETY_MARGIN ||
-      touch.clientY < EDGE_SAFETY_MARGIN ||
-      touch.clientX > windowWidth - EDGE_SAFETY_MARGIN ||
-      touch.clientY > windowHeight - EDGE_SAFETY_MARGIN
+      touch.clientX < rect.left + EDGE_SAFETY_MARGIN ||
+      touch.clientY < rect.top + EDGE_SAFETY_MARGIN ||
+      touch.clientX > rect.right - EDGE_SAFETY_MARGIN ||
+      touch.clientY > rect.bottom - EDGE_SAFETY_MARGIN
     )
   }
 
   function handleTouchStart(event: TouchEvent) {
     if (!containerRef.current) return
 
-    // Prevent browser default behaviors like pull-to-refresh
-    event.preventDefault()
+    // Only prevent default for touches within our container
+    // This allows normal touch behavior on UI elements outside our container
+    const container = containerRef.current
+    const rect = container.getBoundingClientRect()
+    const allTouchesInContainer = Array.from(event.touches).every(
+      (touch) =>
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom,
+    )
+
+    if (allTouchesInContainer) {
+      event.preventDefault()
+    } else {
+      // Touch is outside our container, don't handle it
+      return
+    }
 
     // Clear the current mode
     setTouchMode('none')
@@ -127,8 +158,24 @@ export function useTouchControls({
   function handleTouchMove(event: TouchEvent) {
     if (!containerRef.current) return
 
-    // Prevent browser default behaviors like pull-to-refresh
-    event.preventDefault()
+    // Only prevent default for touches within our container
+    const container = containerRef.current
+    const rect = container.getBoundingClientRect()
+    const allTouchesInContainer = Array.from(event.touches).every(
+      (touch) =>
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom,
+    )
+
+    if (allTouchesInContainer) {
+      // Prevent browser default behaviors like pull-to-refresh
+      event.preventDefault()
+    } else {
+      // Touch is outside our container, don't handle it
+      return
+    }
 
     // Skip processing if we're in recovery mode from an edge touch
     if (touchStateRef.current.isRecovering) {
@@ -250,8 +297,16 @@ export function useTouchControls({
   }
 
   function handleTouchEnd(event: TouchEvent) {
-    // Prevent browser default behaviors
-    event.preventDefault()
+    if (!containerRef.current) return
+
+    // Only prevent default for touches that started within our container
+    // If we're in a touch mode, we know the touch started in our container
+    if (touchMode !== 'none') {
+      event.preventDefault()
+    } else {
+      // Not handling touches outside our container
+      return
+    }
 
     // Create a mouseup event to end current interaction
     const mouseEvent = new MouseEvent('mouseup', {
