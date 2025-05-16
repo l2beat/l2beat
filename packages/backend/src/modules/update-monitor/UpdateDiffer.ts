@@ -152,41 +152,52 @@ export class UpdateDiffer {
       }),
     )
 
-    if (
-      implementationChanges.length === 0 &&
-      fieldHighSeverityChanges.length === 0 &&
-      upgradeChanges.length === 0
-    ) {
-      return []
-    }
+    const verificationChanges: DiscoveryDiff[] = diff.filter((discoveryDiff) =>
+      discoveryDiff.diff?.some(
+        (f) =>
+          f.key === 'unverified' &&
+          f.after === undefined &&
+          f.before === 'true',
+      ),
+    )
 
     const updateDiffs: UpdateDiffRecord[] = []
 
-    for (const implementationChange of implementationChanges) {
+    for (const { address } of implementationChanges) {
       updateDiffs.push({
         projectId,
         type: 'implementationChange',
-        address: implementationChange.address,
+        address: address,
         chain,
         timestamp,
       })
     }
 
-    for (const fieldHighSeverityChange of fieldHighSeverityChanges) {
+    for (const { address } of fieldHighSeverityChanges) {
       updateDiffs.push({
         projectId,
         type: 'highSeverityFieldChange',
-        address: fieldHighSeverityChange.address,
+        address: address,
         chain,
         timestamp,
       })
     }
 
-    for (const upgradeChange of upgradeChanges) {
+    for (const { address } of upgradeChanges) {
       updateDiffs.push({
         projectId,
         type: 'ultimateUpgraderChange',
-        address: upgradeChange.address,
+        address: address,
+        chain,
+        timestamp,
+      })
+    }
+
+    for (const { address } of verificationChanges) {
+      updateDiffs.push({
+        projectId,
+        type: 'verificationChange',
+        address,
         chain,
         timestamp,
       })
