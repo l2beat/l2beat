@@ -1,0 +1,137 @@
+{
+  "bridge_address": "0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+  "roles": {
+    "app_governors": {},
+    "app_role_admins": {},
+    "governance_admins": {
+      "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0": {
+        "added_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "added_at_block": 1377641
+      }
+    },
+    "operators": {},
+    "token_admins": {},
+    "upgrade_governors": {},
+    "security_admins": {
+      "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3": {
+        "added_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "added_at_block": 1377644
+      }
+    },
+    "security_agents": {}
+  },
+  "role_admins": {
+    "0x128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "APP_ROLE_ADMIN",
+      "changed_at_block": 541407
+    },
+    "0x23edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "APP_ROLE_ADMIN",
+      "changed_at_block": 541407
+    },
+    "UPGRADE_GOVERNOR": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "GOVERNANCE_ADMIN",
+      "changed_at_block": 541407
+    },
+    "SECURITY_ADMIN": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "SECURITY_ADMIN",
+      "changed_at_block": 541407
+    },
+    "GOVERNANCE_ADMIN": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "GOVERNANCE_ADMIN",
+      "changed_at_block": 541407
+    },
+    "SECURITY_AGENT": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "SECURITY_ADMIN",
+      "changed_at_block": 541407
+    },
+    "APP_ROLE_ADMIN": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "GOVERNANCE_ADMIN",
+      "changed_at_block": 541407
+    },
+    "APP_GOVERNOR": {
+      "previous_admin_role": "0x0",
+      "current_admin_role": "APP_ROLE_ADMIN",
+      "changed_at_block": 541407
+    }
+  },
+  "generic_roles": {
+    "UPGRADE_GOVERNOR": {
+      "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07": {
+        "granted_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "granted_at_block": 541407
+      }
+    },
+    "SECURITY_ADMIN": {
+      "0x73b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3": {
+        "granted_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "granted_at_block": 1377644
+      }
+    },
+    "GOVERNANCE_ADMIN": {
+      "0xeaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0": {
+        "granted_by": "0x45653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+        "granted_at_block": 1377641
+      }
+    }
+  },
+  "l1_bridge": null,
+  "l2_token_governance": null,
+  "implementations": {
+    "added": {
+      "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046": {
+        "data": [
+          "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+          "0x0",
+          "0x3efea6dac4a3840f48cde3f18e55641a0a00a7c2ed92d45dc5567e7332658f1",
+          "0x1",
+          "0xa8c00",
+          "0x0"
+        ],
+        "added_at_block": 1377954
+      }
+    },
+    "removed": {},
+    "replaced": {
+      "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046": {
+        "data": [
+          "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+          "0x0",
+          "0x3efea6dac4a3840f48cde3f18e55641a0a00a7c2ed92d45dc5567e7332658f1",
+          "0x1",
+          "0xa8c00",
+          "0x0"
+        ],
+        "replaced_at_block": 1377971
+      }
+    },
+    "finalized": null
+  },
+  "withdrawal_limits": {},
+  "last_processed_block": 1392525,
+  "summary": {
+    "app_governors_count": 0,
+    "app_role_admins_count": 0,
+    "governance_admins_count": 1,
+    "operators_count": 0,
+    "token_admins_count": 0,
+    "upgrade_governors_count": 0,
+    "security_admins_count": 1,
+    "security_agents_count": 0,
+    "role_admins_count": 8,
+    "generic_roles_count": 3,
+    "withdrawal_limits_count": 0,
+    "implementations_added_count": 1,
+    "implementations_removed_count": 0,
+    "implementations_replaced_count": 1,
+    "implementation_finalized": false,
+    "last_processed_block": 1392525
+  }
+}
