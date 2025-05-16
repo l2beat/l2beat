@@ -271,6 +271,7 @@ model ProjectValue {
   associated Float    @db.Real
 
   @@id([timestamp, project, type])
+  @@index([type, timestamp])
 }
 
 model UpdateDiff {
