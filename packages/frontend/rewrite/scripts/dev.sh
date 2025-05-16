@@ -31,7 +31,7 @@ rm -rf rewrite/dist
 
 # Start processes and capture their PIDs
 esbuild \
-  rewrite/src/ssr/client.tsx \
+  rewrite/src/ssr/client-entry.tsx \
   --bundle \
   --watch=forever \
   --tsconfig=rewrite/tsconfig.json \

@@ -1,30 +1,31 @@
-import type { Router } from 'express'
+import express from 'express'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '../../../../src/utils/Manifest'
-import type { RenderFunction } from '../../ssr/server'
 import { getGovernanceData } from './getGovernanceData'
 import { getGovernancePublicationData } from './publication/getGovernancePublicationData'
 import { getGovernancePublicationsData } from './publications/getGovernancePublicationsData'
 
-export function GovernanceRouter(
-  app: Router,
+export function createGovernanceRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/governance', async (req, res) => {
+  const router = express.Router()
+
+  router.get('/governance', async (req, res) => {
     const data = await getGovernanceData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/governance/publications', async (req, res) => {
+  router.get('/governance/publications', async (req, res) => {
     const data = await getGovernancePublicationsData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get(
+  router.get(
     '/governance/publications/:id',
     validateRoute({
       params: z.object({ id: z.string() }),
@@ -41,7 +42,9 @@ export function GovernanceRouter(
         return
       }
       const html = render(data, req.originalUrl)
-      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+      res.status(200).send(html)
     },
   )
+
+  return router
 }

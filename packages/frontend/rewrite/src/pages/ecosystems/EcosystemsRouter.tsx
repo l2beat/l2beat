@@ -1,17 +1,18 @@
-import type { Router } from 'express'
+import express from 'express'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import { env } from '~/env'
 import type { Manifest } from '../../../../src/utils/Manifest'
-import type { RenderFunction } from '../../ssr/server'
 import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 
-export function EcosystemsRouter(
-  app: Router,
+export function createEcosystemsRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get(
+  const router = express.Router()
+
+  router.get(
     '/ecosystems/:slug',
     validateRoute({
       params: z.object({
@@ -29,7 +30,9 @@ export function EcosystemsRouter(
         return
       }
       const html = render(data, req.originalUrl)
-      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+      res.status(200).send(html)
     },
   )
+
+  return router
 }

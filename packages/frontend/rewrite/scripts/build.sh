@@ -7,7 +7,7 @@ export PATH="$(pwd)/../../node_modules/.bin:$PATH"
 rm -rf rewrite/dist
 
 esbuild \
-  rewrite/src/ssr/client.tsx \
+  rewrite/src/ssr/client-entry.tsx \
   --bundle \
   --minify \
   --tsconfig=rewrite/tsconfig.json \

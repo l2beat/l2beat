@@ -1,7 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/server'
+import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import type { Manifest } from '~/utils/Manifest'
 
