@@ -341,6 +341,37 @@ describe(decodeType.name, () => {
       },
     })
   })
+
+  it('function approve(address spender, uint256 amount)', () => {
+    const spender: `0x${string}` = `0x${'deadbeef'.repeat(5)}`
+    const selector = '0x095ea7b3'
+    const tuple = encode('(address spender, uint256 amount)', [spender, 1234n])
+    const e: `0x${string}` = `${selector}${tuple.slice(2)}`
+    const d = decodeType('function approve(address spender, uint256 amount)', e)
+    expect(d).toEqual({
+      name: 'approve',
+      abi: 'function approve(address, uint256)',
+      encoded: e,
+      decoded: {
+        type: 'call',
+        selector,
+        parameters: [
+          {
+            name: 'spender',
+            abi: 'address',
+            encoded: encode('address', spender),
+            decoded: { type: 'address', value: spender },
+          },
+          {
+            name: 'amount',
+            abi: 'uint256',
+            encoded: encode('uint256', 1234n),
+            decoded: { type: 'number', value: '1234' },
+          },
+        ],
+      },
+    })
+  })
 })
 
 function encode(type: string, value: unknown): `0x${string}` {

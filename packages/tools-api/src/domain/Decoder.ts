@@ -1,10 +1,14 @@
-import { parseAbiItem } from 'abitype'
-import { decodeFunctionData, encodeFunctionData } from 'viem'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Address, Chain } from '../config/types'
 import type { AddressInfo, IAddressService } from './AddressService'
-import type { DecodedCall, DecodedResult, DecodedValue } from './DecodedResult'
+import type {
+  DecodedCall,
+  DecodedResult,
+  DecodedValue,
+  Value,
+} from './DecodedResult'
 import type { ISignatureService } from './SignatureService'
-import { mix } from './mix'
+import { type AbiValue, decodeType } from './encoding'
 
 export interface Transaction {
   to?: Address
@@ -56,7 +60,7 @@ export class Decoder {
         name: 'data',
         abi: 'bytes',
         encoded: tx.data,
-        decoded: await this.decodeBytes(tx.data, known),
+        decoded: await this.decodeBytes(tx.data, tx.chain, known),
       },
       to: toInfo && {
         type: 'address',
@@ -71,6 +75,7 @@ export class Decoder {
 
   private async decodeBytes(
     data: `0x${string}`,
+    chain: Chain,
     known: Known,
   ): Promise<DecodedValue> {
     const selector = getSelector(data)
@@ -82,7 +87,7 @@ export class Decoder {
       (await this.signatureService.lookup(selector))
     for (const signature of signatures) {
       try {
-        return decodeFunction(data, selector, signature)
+        return decodeFunction(data, signature, chain)
       } catch {}
     }
     return { type: 'bytes', value: data }
@@ -99,39 +104,86 @@ function getSelector(data: `0x${string}`): `0x${string}` | undefined {
 
 function decodeFunction(
   data: `0x${string}`,
-  selector: `0x${string}`,
   signature: string,
+  chain: Chain,
 ): DecodedCall {
-  const abiItem = parseAbiItem(signature)
-  if (abiItem.type !== 'function') {
+  if (!signature.startsWith('function ')) {
     throw new Error('Abi provided is not a function')
   }
-  const decoded = decodeFunctionData({
-    abi: [abiItem],
-    data,
-  })
-  const encoded = encodeFunctionData({
-    abi: [abiItem],
-    ...decoded,
-  })
-  if (!data.startsWith(encoded)) {
-    throw new Error('Invalid encoding')
-  }
-  const extra = data.slice(encoded.length).toLowerCase()
-  const values = mix(abiItem.inputs, decoded.args)
-  if (extra) {
-    values.push({
-      name: 'extra data',
-      abi: 'bytes',
-      encoded: `0x${extra}`,
-      decoded: { type: 'bytes', value: `0x${extra}` },
-    })
+  const result = decodeType(signature, data)
+  if (result.decoded.type !== 'call') {
+    throw new Error('Programmer error, decoding failed')
   }
 
   return {
     type: 'call',
     abi: signature,
-    selector,
-    arguments: values,
+    selector: result.decoded.selector,
+    arguments: result.decoded.parameters.map((x) => toResultValue(x, chain)),
   }
+}
+
+function toResultValue(value: AbiValue, chain: Chain): Value {
+  const common = {
+    abi: value.abi,
+    name: value.name,
+    encoded: value.encoded,
+  }
+  if (value.decoded.type === 'address') {
+    return {
+      ...common,
+      decoded: {
+        type: 'address',
+        value: `${chain.shortName}:${value.decoded.value}`,
+        explorerLink: `${chain.explorerUrl}/address/${value.decoded.value}`,
+      },
+    }
+  }
+  if (value.decoded.type === 'number') {
+    return {
+      ...common,
+      decoded: { type: 'number', value: value.decoded.value },
+    }
+  }
+  if (value.decoded.type === 'string') {
+    return {
+      ...common,
+      // TODO: handle extra!
+      decoded: { type: 'string', value: value.decoded.value },
+    }
+  }
+  if (value.decoded.type === 'bytes') {
+    return {
+      ...common,
+      // TODO: handle extra!
+      decoded: { type: 'bytes', value: value.decoded.value },
+    }
+  }
+  if (value.decoded.type === 'bool') {
+    return {
+      ...common,
+      decoded: { type: 'boolean', value: value.decoded.value },
+    }
+  }
+  if (value.decoded.type === 'array') {
+    return {
+      ...common,
+      decoded: {
+        type: 'array',
+        values: value.decoded.value.map((x) => toResultValue(x, chain)),
+      },
+    }
+  }
+  if (value.decoded.type === 'call') {
+    return {
+      ...common,
+      decoded: {
+        type: 'call',
+        abi: value.abi,
+        selector: value.decoded.selector,
+        arguments: value.decoded.parameters.map((x) => toResultValue(x, chain)),
+      },
+    }
+  }
+  assertUnreachable(value.decoded)
 }
