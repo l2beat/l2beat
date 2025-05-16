@@ -169,7 +169,7 @@ const config: Config = {
       },
       'n-stone': {
         200: '#F0D8BD',
-        700: '#5A3C2C',
+        900: '#593522',
       },
 
       // New colors

@@ -7,29 +7,31 @@ export function DiscoUiBanner({ href }: { href: string }) {
   return (
     <>
       {/* Desktop */}
-      <div className="h-20 w-full overflow-hidden rounded bg-n-stone-200 dark:bg-n-stone-700 max-md:hidden">
-        <div className="flex items-center gap-2">
-          <div className="flex w-1/2 min-w-[220px] flex-col gap-2 px-4 py-3">
+      <div className="w-full overflow-hidden rounded bg-n-stone-200 dark:bg-n-stone-900 max-md:hidden">
+        <div className="flex ">
+          <div className="flex w-1/2 min-w-[260px] flex-col gap-2 px-6 pb-5 pt-3">
             <DiscoUiIcon
               short
-              className="fill-n-stone-700 dark:fill-n-stone-200"
+              className="fill-n-stone-900 dark:fill-n-stone-200"
             />
+            <div className="mb-0.5 text-xs text-primary">
+              A dashboard to explore contracts and permissions
+            </div>
             <Link
               href={href}
               target="_blank"
-              className="flex items-center gap-1.5 text-sm font-medium text-link underline"
+              className="flex w-fit items-center gap-1.5 rounded bg-surface-primary px-4 py-2 text-sm font-medium text-link underline"
             >
               Explore in Discovery UI
               <CustomLinkIcon className="size-4 fill-link" />
             </Link>
           </div>
-          <div className="h-20 w-1/2">
+          <div className="relative w-1/2">
             <Image
               src={'/images/disco-ui-desktop.png'}
               alt="Disco UI Banner"
-              className="size-full object-cover"
-              width={423}
-              height={160}
+              fill
+              className="object-cover object-top"
             />
           </div>
         </div>
