@@ -13,20 +13,20 @@ export function createGovernanceRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', async (req, res) => {
+  router.get('/governance', async (req, res) => {
     const data = await getGovernanceData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
-  router.get('/publications', async (req, res) => {
+  router.get('/governance/publications', async (req, res) => {
     const data = await getGovernancePublicationsData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get(
-    '/publications/:id',
+    '/governance/publications/:id',
     validateRoute({
       params: z.object({ id: z.string() }),
     }),

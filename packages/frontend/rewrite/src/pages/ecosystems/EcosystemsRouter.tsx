@@ -13,7 +13,7 @@ export function createEcosystemsRouter(
   const router = express.Router()
 
   router.get(
-    '/:slug',
+    '/ecosystems/:slug',
     validateRoute({
       params: z.object({
         slug: z.string(),

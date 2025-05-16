@@ -28,28 +28,28 @@ export function createServerPageRouter(
     next()
   })
 
-  router.get('/', async (req, res) => {
+  router.get('/', async (_, res) => {
     res.redirect('/scaling/summary')
   })
 
-  router.use('/scaling', createScalingRouter(manifest, render))
-  router.use('/bridges', createBridgesRouter(manifest, render))
-  router.use(
-    '/data-availability',
-    createDataAvailabilityRouter(manifest, render),
-  )
-  router.use('/zk-catalog', createZkCatalogRouter(manifest, render))
-  router.use('/ecosystems', createEcosystemsRouter(manifest, render))
-  router.use('/governance', createGovernanceRouter(manifest, render))
-  router.use('/faq', createFaqRouter(manifest, render))
-  router.use('/about', createAboutUsRouter(manifest, render))
-  router.use('/donate', createDonateRouter(manifest, render))
-  router.use('/glossary', createGlossaryRouter(manifest, render))
-  router.use(
-    '/da-risk-framework',
-    createDaRiskFrameworkRouter(manifest, render),
-  )
-  router.use('/multisig-report', createMutlisigReportRouter(manifest, render))
+  const routers = [
+    createScalingRouter,
+    createBridgesRouter,
+    createDataAvailabilityRouter,
+    createZkCatalogRouter,
+    createEcosystemsRouter,
+    createGovernanceRouter,
+    createFaqRouter,
+    createAboutUsRouter,
+    createDonateRouter,
+    createGlossaryRouter,
+    createDaRiskFrameworkRouter,
+    createMutlisigReportRouter,
+  ]
+
+  for (const createRouter of routers) {
+    router.use('/', createRouter(manifest, render))
+  }
 
   return router
 }

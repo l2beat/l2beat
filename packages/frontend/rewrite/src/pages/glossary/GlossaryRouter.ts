@@ -9,7 +9,7 @@ export function createGlossaryRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', async (req, res) => {
+  router.get('/glossary', async (req, res) => {
     const data = await getGlossaryData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)

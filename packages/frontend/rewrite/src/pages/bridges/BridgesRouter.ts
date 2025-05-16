@@ -13,24 +13,24 @@ export function createBridgesRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', async (req, res) => {
+  router.get('/bridges', async (req, res) => {
     res.redirect('/bridges/summary')
   })
 
-  router.get('/summary', async (req, res) => {
+  router.get('/bridges/summary', async (req, res) => {
     const data = await getBridgesSummaryData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
-  router.get('/archived', async (req, res) => {
+  router.get('/bridges/archived', async (req, res) => {
     const data = await getBridgesArchivedData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get(
-    '/projects/:slug',
+    '/bridges/projects/:slug',
     validateRoute({
       params: z.object({
         slug: z.string(),

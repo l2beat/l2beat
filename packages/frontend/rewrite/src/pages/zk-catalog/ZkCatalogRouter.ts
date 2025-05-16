@@ -12,14 +12,14 @@ export function createZkCatalogRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', async (req, res) => {
+  router.get('/zk-catalog', async (req, res) => {
     const data = await getZkCatalogData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get(
-    '/:slug',
+    '/zk-catalog/projects/:slug',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),

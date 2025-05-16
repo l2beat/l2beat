@@ -22,8 +22,8 @@ export function createScalingRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', async (req, res) => {
-    res.redirect('/summary')
+  router.get('/scaling', async (req, res) => {
+    res.redirect('/scaling/summary')
   })
 
   router.get('/scaling/summary', async (req, res) => {
@@ -87,7 +87,7 @@ export function createScalingRouter(
   })
 
   router.get(
-    '/projects/:slug',
+    '/scaling/projects/:slug',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),
@@ -107,7 +107,7 @@ export function createScalingRouter(
   )
 
   router.get(
-    '/projects/:slug/tvs-breakdown',
+    '/scaling/projects/:slug/tvs-breakdown',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),

@@ -9,7 +9,7 @@ export function createDaRiskFrameworkRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', (req, res) => {
+  router.get('/da-risk-framework', (req, res) => {
     const data = getDaRiskFrameworkData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)

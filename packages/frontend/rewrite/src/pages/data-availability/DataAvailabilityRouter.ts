@@ -14,19 +14,23 @@ export function createDataAvailabilityRouter(
 ) {
   const router = express.Router()
 
-  router.get('/summary', async (req, res) => {
+  router.get('/data-availability', async (_, res) => {
+    res.redirect('/data-availability/summary')
+  })
+
+  router.get('/data-availability/summary', async (req, res) => {
     const data = await getDataAvailabilitySummaryData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
-  router.get('/risk', async (req, res) => {
+  router.get('/data-availability/risk', async (req, res) => {
     const data = await getDataAvailabilityRiskData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
-  router.get('/throughput', async (req, res) => {
+  router.get('/data-availability/throughput', async (req, res) => {
     const data = await getDataAvailabilityThroughputData(
       manifest,
       req.originalUrl,
@@ -36,7 +40,7 @@ export function createDataAvailabilityRouter(
   })
 
   router.get(
-    '/projects/:layer/:bridge',
+    '/data-availability/projects/:layer/:bridge',
     validateRoute({
       params: z.object({
         layer: z.string(),
