@@ -74,6 +74,10 @@ export const eclipse: ScalingProject = {
         namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
       },
     ],
+    activityConfig: {
+      type: 'slot',
+      startSlot: 1,
+    },
   },
   dataAvailability: {
     layer: DA_LAYERS.CELESTIA,
@@ -176,5 +180,16 @@ export const eclipse: ScalingProject = {
         ),
       ],
     },
+  },
+  chainConfig: {
+    name: 'eclipse',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'solana',
+        url: 'https://eclipse.helius-rpc.com',
+        callsPerMinute: 120,
+      },
+    ],
   },
 }
