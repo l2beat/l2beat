@@ -56,14 +56,15 @@ export const getCachedProjectLivenessChartData = cache(
       ids: [ProjectId(projectId)],
       optional: ['livenessConfig'],
     })
+    let effectiveSubtype = subtype
     if (livenessProject?.livenessConfig?.duplicateData.to === subtype) {
-      subtype = livenessProject.livenessConfig.duplicateData.from
+      effectiveSubtype = livenessProject.livenessConfig.duplicateData.from
     }
 
     const entries =
       await db.aggregatedLiveness2.getByProjectAndSubtypeInTimeRange(
         ProjectId(projectId),
-        subtype,
+        effectiveSubtype,
         [from, to],
       )
 

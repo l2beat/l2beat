@@ -1,12 +1,11 @@
 'use client'
 
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 
 interface Props {
   subtype: TrackedTxsConfigSubtype
   setSubtype: (subtype: TrackedTxsConfigSubtype) => void
-  projectSection?: boolean
   configuredSubtypes: TrackedTxsConfigSubtype[]
 }
 
@@ -19,16 +18,19 @@ const VALUES: { value: TrackedTxsConfigSubtype; label: string }[] = [
 export function LivenessChartSubtypeControls({
   subtype,
   setSubtype,
-  projectSection,
   configuredSubtypes,
 }: Props) {
   return (
-    <ChartTimeRangeControls
-      name="livenessChartTimeRange"
+    <RadioGroup
+      name="livenessChartSubtype"
       value={subtype}
-      setValue={setSubtype}
-      options={VALUES.filter((x) => configuredSubtypes.includes(x.value))}
-      projectSection={projectSection}
-    />
+      onValueChange={setSubtype}
+    >
+      {VALUES.filter((x) => configuredSubtypes.includes(x.value)).map((x) => (
+        <RadioGroupItem key={x.value} value={x.value}>
+          {x.label}
+        </RadioGroupItem>
+      ))}
+    </RadioGroup>
   )
 }
