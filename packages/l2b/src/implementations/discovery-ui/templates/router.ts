@@ -7,7 +7,9 @@ import { listDirectories } from './list-directories'
 
 const createTemplateSchema = z.object({
   chain: z.string(),
-  address: z.string().refine((address) => EthereumAddress.check(address)),
+  addresses: z.array(
+    z.string().refine((address) => EthereumAddress.check(address)),
+  ),
   templateId: z.string(),
   fileName: z.string(),
   blockNumber: z.number(),
@@ -31,12 +33,12 @@ export function attachTemplateRouter(
       return
     }
 
-    const { chain, address, templateId, fileName, blockNumber } = data.data
+    const { chain, addresses, templateId, fileName, blockNumber } = data.data
 
     const result = await wrapError(async () =>
       createShape(
         templateService,
-        EthereumAddress(address),
+        addresses.map(EthereumAddress),
         chain,
         blockNumber,
         templateId,

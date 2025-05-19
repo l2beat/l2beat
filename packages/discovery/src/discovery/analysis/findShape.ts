@@ -1,5 +1,7 @@
-import { undefinedIfEmpty } from '@l2beat/shared-pure'
-import { getFirstSourceHash, hashFirstSource } from '../../flatten/utils'
+import {
+  getHashForMatchingFromSources,
+  getHashToBeMatched,
+} from '../../flatten/utils'
 import type { EntryParameters } from '../output/types'
 import type { AnalyzedContract } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
@@ -8,17 +10,13 @@ export function getShapeFromAnalyzedContract(
   templateService: TemplateService,
   entry: AnalyzedContract,
 ) {
-  const { extendedTemplate, sourceBundles } = entry
+  const { extendedTemplate } = entry
 
-  const sourceHashes = undefinedIfEmpty(
-    sourceBundles.map((b) => b.hash as string),
-  )
-
-  if (!extendedTemplate || !sourceHashes) {
+  if (!extendedTemplate || !entry.isVerified) {
     return
   }
 
-  const sourceHash = hashFirstSource(entry.isVerified, entry.sourceBundles)
+  const sourceHash = getHashForMatchingFromSources(entry.sourceBundles)
 
   if (!sourceHash) {
     return
@@ -36,17 +34,15 @@ export function getShapeFromOutputEntry(
 ) {
   const { sourceHashes, template } = entry
 
-  if (!sourceHashes || !template) {
+  if (!sourceHashes || !template || entry.unverified) {
     return
   }
 
-  const isVerified = !entry.unverified
+  const hashToBeMatched = getHashToBeMatched(sourceHashes)
 
-  const sourceHash = getFirstSourceHash(isVerified, sourceHashes)
-
-  if (!sourceHash) {
+  if (!hashToBeMatched) {
     return
   }
 
-  return templateService.findShapeByTemplateAndHash(template, sourceHash)
+  return templateService.findShapeByTemplateAndHash(template, hashToBeMatched)
 }

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x1b6bab4e31369964dca244a11a0eb0570b84566d
+
+# Diff at Thu, 15 May 2025 11:12:03 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@110dc89476a2b133f603a2498a8b12742d2d831f block: 21981180
+- current block number: 22488105
+
+## Description
+
+Store single hash of all source hashes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981180 (main branch discovery), not current.
+
+```diff
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.5:
+-        "0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29"
+      sourceHashes.4:
+-        "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587"
+      sourceHashes.3:
+-        "0xb5161e812087e15dd53a4c29ab296ade613b540445f7d1eb470de4f81a9c555c"
+      sourceHashes.2:
+-        "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d"
+      sourceHashes.1:
+-        "0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069"
++        "0xd2cfc40f85f0171f0b9b5a88fc7638bbb2af49fb1b87cf13a11d58f32403c598"
+      sourceHashes.0:
+-        "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
++        "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587"
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.5:
+-        "0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29"
+      sourceHashes.4:
+-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
+      sourceHashes.3:
+-        "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d"
+      sourceHashes.2:
+-        "0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069"
+      sourceHashes.1:
+-        "0xb60327bf3481ca8d5ad46cb4fcec2f2db0b7d9eaa2cc0479fda600eb1021de93"
++        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
+      sourceHashes.0:
+-        "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
++        "0xd44985473645ee33ac39b971c16c6b06bbada1d7c54ae7aa1e106e020fc3f4c1"
+    }
+```
+
 Generated with discovered.json: 0xf7927ae145280c166148abe7e41bdc7b0ddb5723
 
 # Diff at Tue, 06 May 2025 10:56:46 GMT:
@@ -610,6 +668,7 @@ Generated with discovered.json: 0x38230bf391f21e818fe4fcf5837049e6204e1609
 Minor upgrade to the StarkExchangeUSDC contract which is an implementation of StarkEx Perpetual.
 
 Two new asset IDs are added:
+
 - NON_UNIQUE_MINTABLE_ASSET_ID_FLAG (ERC-1155)
 - MINTABLE_ERC20_ASSET_ID_FLAG (ERC-20)
 

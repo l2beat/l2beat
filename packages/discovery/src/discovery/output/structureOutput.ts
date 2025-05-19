@@ -3,6 +3,7 @@ import {
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
+import { recalculateSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
@@ -39,6 +40,7 @@ export function processAnalysis(
   results: Analysis[],
 ): Pick<StructureOutput, 'entries' | 'abis'> {
   const { contracts, abis } = getEntries(results)
+
   return {
     entries: contracts
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
@@ -50,7 +52,7 @@ export function processAnalysis(
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
           sourceHashes: x.isVerified
-            ? undefinedIfEmpty(x.sourceBundles.map((b) => b.hash as string))
+            ? recalculateSourceHashes(x.sourceBundles)
             : undefined,
           proxyType: x.proxyType,
           ignoreInWatchMode: x.ignoreInWatchMode,

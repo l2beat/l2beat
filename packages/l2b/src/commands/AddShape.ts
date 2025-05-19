@@ -5,42 +5,44 @@ import {
 } from '@l2beat/discovery'
 import { getExplorerClient } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
-import { formatAsciiBorder } from '@l2beat/shared-pure'
+import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, positional, string } from 'cmd-ts'
-import { EthereumAddressValue } from './types'
+import { EthereumAddressValue, Separated } from './types'
 
 export const AddShape = command({
   name: 'add-shape',
-  description: 'Add a new contract shape to a template.',
+  description: 'Add one or more contract shapes to a template.',
   args: {
     chain: positional({
       type: string,
       displayName: 'chain',
-      description: 'chain to add the contract to.',
-    }),
-    address: positional({
-      type: EthereumAddressValue,
-      displayName: 'address',
-      description: 'address of the contract to add.',
+      description: 'chain to add the contracts to.',
     }),
     blockNumber: positional({
       type: number,
       displayName: 'blockNumber',
-      description: 'block number of the contract.',
+      description: 'block number of the contracts.',
     }),
     fileName: positional({
       type: string,
       displayName: 'fileName',
-      description: 'fileName of the contract.',
+      description: 'fileName of the contracts.',
     }),
     template: positional({
       type: string,
       displayName: 'template',
       description: 'name of the template to add the shape to.',
     }),
+    addresses: positional({
+      type: Separated(EthereumAddressValue),
+      description:
+        'addresses of the contracts ultimate source hash will be calculated from',
+    }),
   },
   handler: async (args) => {
+    assert(args.addresses.length > 0, 'No addresses provided')
+
     const logger = new CliLogger()
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
@@ -80,15 +82,19 @@ export const AddShape = command({
     const client = getExplorerClient(httpClient, chainConfig.explorer)
 
     logger.logLine('Fetching contract source code...')
-    const source = await client.getContractSource(args.address)
+    const sources = await Promise.all(
+      args.addresses.map((address) => client.getContractSource(address)),
+    )
+
+    assert(sources.length > 0, 'No sources found')
 
     await templateService.addToShape(
       args.template,
       args.chain,
-      args.address,
+      args.addresses,
       args.fileName,
       args.blockNumber,
-      source,
+      sources,
     )
   },
 })

@@ -25,31 +25,32 @@ const cache: Map<string, Hash256> = new Map()
 // even when there are multiple sources.
 // In the future it may be reimplemented to support
 // all sources for comparison with templates.
-export function hashFirstSource(
-  isVerified: boolean,
+export function getHashForMatchingFromSources(
   perContractSources: PerContractSource[],
 ): Hash256 | undefined {
-  return getFirstSourceHash(
-    isVerified,
-    perContractSources.map((s) => s.hash),
-  )
-}
+  const hashes = recalculateSourceHashes(perContractSources)
 
-export function getFirstSourceHash(
-  isVerified: boolean,
-  hashes: (string | undefined)[],
-): Hash256 | undefined {
-  if (!isVerified || hashes.length < 1) {
+  if (hashes === undefined) {
     return undefined
   }
 
-  const sourceHash = hashes.length === 1 ? hashes[0] : hashes[1]
+  return getHashToBeMatched(hashes)
+}
 
-  if (sourceHash === undefined) {
+export function getHashToBeMatched(
+  hashes: (string | undefined)[],
+): Hash256 | undefined {
+  if (hashes.length < 1) {
+    return undefined
+  }
+
+  const hashToBeMatched = hashes.length === 1 ? hashes[0] : hashes[1]
+
+  if (hashToBeMatched === undefined) {
     throw Error('No sources found')
   }
 
-  return Hash256(sourceHash)
+  return Hash256(hashToBeMatched)
 }
 
 export function contractFlatteningHash(
@@ -102,8 +103,16 @@ function formatIntoHashable(source: string) {
   return formatted.trim()
 }
 
-export function sha2_256bit(str: string): Hash256 {
-  return Hash256(`0x${createHash('sha256').update(str).digest('hex')}`)
+export function sha2_256bit(input: string | string[]): Hash256 {
+  const baseHash = createHash('sha256')
+  const inputs = Array.isArray(input) ? input : [input]
+
+  inputs.reduce((hash, input) => {
+    hash.update(input)
+    return hash
+  }, baseHash)
+
+  return Hash256(`0x${baseHash.digest('hex')}`)
 }
 
 export function buildSimilarityHashmap(input: string): HashedChunks[] {
@@ -220,4 +229,32 @@ function checkIfLineCountIsCorrect(input: string, lines: string[]): void {
       `Line count mismatch: ${inputLineCount} vs ${linesLineCount}`,
     )
   }
+}
+
+// Source hashes logic
+export function recalculateSourceHashes(
+  sources: PerContractSource[],
+): string[] | undefined {
+  const hashes = sources.map((source) => source.hash as string)
+
+  if (hashes.length === 0) {
+    return undefined
+  }
+
+  // Single source or proxy + impl
+  if (hashes.length === 1 || hashes.length === 2) {
+    return hashes
+  }
+
+  // >2 - Diamonds and similar with multiple 'sub-implementations'
+  const [proxy, ...implementations] = hashes
+
+  const masterHash = combineImplementationHashes(implementations)
+
+  // biome-ignore lint/style/noNonNullAssertion: checked above
+  return [proxy!, masterHash]
+}
+
+export function combineImplementationHashes(hashes: string[]): Hash256 {
+  return sha2_256bit(hashes.sort())
 }
