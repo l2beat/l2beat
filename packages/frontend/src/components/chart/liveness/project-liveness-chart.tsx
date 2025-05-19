@@ -28,11 +28,7 @@ export function ProjectLivenessChart({
 }: Props) {
   const [timeRange, setTimeRange] = useState<LivenessChartTimeRange>('30d')
   const [subtype, setSubtype] = useState<TrackedTxsConfigSubtype>(
-    configuredSubtypes.includes('batchSubmissions')
-      ? 'batchSubmissions'
-      : configuredSubtypes.includes('proofSubmissions')
-        ? 'proofSubmissions'
-        : 'stateUpdates',
+    getDefaultSubtype(configuredSubtypes),
   )
 
   const { data: chart, isLoading } = api.liveness.projectChart.useQuery({
@@ -80,4 +76,12 @@ export function ProjectLivenessChart({
       />
     </section>
   )
+}
+
+function getDefaultSubtype(
+  configuredSubtypes: TrackedTxsConfigSubtype[],
+): TrackedTxsConfigSubtype {
+  if (configuredSubtypes.includes('batchSubmissions')) return 'batchSubmissions'
+  if (configuredSubtypes.includes('proofSubmissions')) return 'proofSubmissions'
+  return 'stateUpdates'
 }

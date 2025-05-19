@@ -12,7 +12,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
-  trackedTransactions: TrackedTransactionsByType | undefined
+  trackedTransactions: TrackedTransactionsByType
 }
 
 export function LivenessSection({
@@ -39,9 +39,7 @@ export function LivenessSection({
         hasTrackedContractsChanged={hasTrackedContractsChanged}
       />
       <div className="mt-4">
-        {trackedTransactions && (
-          <TrackedTransactions {...trackedTransactions} />
-        )}
+        <TrackedTransactions {...trackedTransactions} />
       </div>
     </ProjectSection>
   )

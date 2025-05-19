@@ -147,7 +147,15 @@ function getMockLivenessChart({
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {
-    data: timestamps.map((timestamp) => [+timestamp, 11, 13, 16]),
+    data: timestamps.map((timestamp, i) => {
+      const base = Math.sin(i * 0.1) * 5
+      return [
+        +timestamp,
+        Math.round(10 + base),
+        Math.round(13 + base),
+        Math.round(16 + base),
+      ]
+    }),
     stats: {
       batchSubmissions: 10000,
       proofSubmissions: 1000,
