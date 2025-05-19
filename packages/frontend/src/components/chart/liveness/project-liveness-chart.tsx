@@ -46,7 +46,7 @@ export function ProjectLivenessChart({
       const lastValidTimestamp = rawChartData?.findLastIndex(
         ([_, min, avg, max]) => min !== null && avg !== null && max !== null,
       )
-      if (lastValidTimestamp && lastValidTimestamp >= 0) {
+      if (lastValidTimestamp !== undefined && lastValidTimestamp !== -1) {
         rawChartData = rawChartData?.slice(0, lastValidTimestamp + 1)
       }
     }

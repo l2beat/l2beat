@@ -22,8 +22,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
 
-export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
-
 interface LivenessChartDataPoint {
   timestamp: number
   range: (number | null)[]

@@ -80,6 +80,7 @@ export const getCachedProjectLivenessChartData = cache(
     if (chartEntries.length === 0) {
       return {
         data: [],
+        stats: undefined,
       }
     }
 
