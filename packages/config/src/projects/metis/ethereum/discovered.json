@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22518157,
+  "blockNumber": 22518186,
   "configHash": "0x556ac373a56883c5bf21b35d4a11469064ef6ad714162ea8d2fd3da1694af084",
   "entries": [
     {
@@ -41,14 +41,14 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
         "paused": false,
-        "proxiableUUID": "EXPECT_REVERT",
         "ResolvedDelegateProxy_addressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger"
       },
       "implementationNames": {
         "0x081D1101855bD523bA69A9794e0217F0DB6323ff": "Lib_ResolvedDelegateProxy",
         "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": "L1CrossDomainMessenger"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "LockingInfo",
@@ -515,7 +515,8 @@
       },
       "implementationNames": {
         "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": "CanonicalTransactionChain"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BondManager",
@@ -826,7 +827,8 @@
       "implementationNames": {
         "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
         "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": "MVM_StateCommitmentChain"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E",
@@ -2007,7 +2009,7 @@
     "metis/ChainStorageContainer-SCC-batches": "0xcd021c2fba2b365c63f7d95323b7c2d6104ef46bb56933bd22cfdfab848cef1d",
     "metis/DisputeGameFactory_Metis": "0x6a8d6f11f834731e39240590d7e622a3fb7a8b6db2dee0f1381bb4bb64111d4a",
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
-    "metis/L1CrossDomainMessenger": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/Lib_AddressManager": "0x38323af560cf2d9ce55b60d8fc332e8d96aff52860490c7e10ec189b59f8b38a",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",

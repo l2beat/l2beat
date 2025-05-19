@@ -1,14 +1,17 @@
-Generated with discovered.json: 0x0a3dafd8225d29f1990a4849bdd11a2f12e652b5
+Generated with discovered.json: 0xbcdefe96ecea5ed3692e91cb93003fbcabebe314
 
-# Diff at Mon, 19 May 2025 16:20:48 GMT:
+# Diff at Mon, 19 May 2025 16:26:19 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
-- current block number: 22518157
+- current block number: 22518186
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Posting blobs to the inbox, authorized batcher in L2 node config (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
+
+Templitized contracts.
+
 
 ## Config/verification related changes
 
@@ -19,12 +22,12 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 ```diff
     contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
     +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
-      values.proxiableUUID:
-+        "EXPECT_REVERT"
       template:
 +        "metis/L1CrossDomainMessenger"
       description:
 +        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -122,6 +125,8 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 +        "metis/CanonicalTransactionChain"
       description:
 +        "The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -205,6 +210,8 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 +        "metis/MVM_StateCommitmentChain"
       description:
 +        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 

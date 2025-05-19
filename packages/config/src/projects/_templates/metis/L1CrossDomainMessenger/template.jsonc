@@ -1,15 +1,6 @@
 {
-    "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-    "name": "L1CrossDomainMessenger",
-    "description": "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
-    "fields": {
-        "proxiableUUID": {
-            "handler": {
-                "type": "call",
-                "method": "function proxiableUUID() view returns (bytes32)",
-                "args": [],
-                "expectRevert": true
-            }
-        }
-    }
-} 
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "L1CrossDomainMessenger",
+  "category": "core",
+  "description": "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function."
+}
