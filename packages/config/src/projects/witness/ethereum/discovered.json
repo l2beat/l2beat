@@ -403,9 +403,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "polygon-cdk/PolygonDataCommittee": "0xa2cd28aa0b94c4db5a20a0ca83c4a6212c40ef98308518c8cb16e762eb2b4e7f",
-    "polygon-cdk/PolygonZkEVM": "0x9975bbc516d977a470835e42b76f1c7fe70e39e6894f628432b4b5c5f9593834",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "polygon-cdk/PolygonDataCommittee": "0x09dff653651e4e4f737268c33f60834e82e0b7640f4e80059ddbe9544dd978bb",
+    "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0x4596ce4d94fda427e55192123d42235e2a6317a6c210c578547fcc0dae6afcd6"
