@@ -10,13 +10,22 @@ import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { LivenessChart } from './liveness-chart'
+import { LivenessChartStats } from './liveness-chart-stats'
+import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 
 interface Props {
   projectId: string
   configuredSubtypes: TrackedTxsConfigSubtype[]
+  anomalies: LivenessAnomaly[]
+  hasTrackedContractsChanged: boolean
 }
 
-export function ProjectLivenessChart({ projectId, configuredSubtypes }: Props) {
+export function ProjectLivenessChart({
+  projectId,
+  configuredSubtypes,
+  anomalies,
+  hasTrackedContractsChanged,
+}: Props) {
   const [timeRange, setTimeRange] = useState<LivenessChartTimeRange>('30d')
   const [subtype, setSubtype] = useState<TrackedTxsConfigSubtype>(
     configuredSubtypes.includes('batchSubmissions')
@@ -61,6 +70,14 @@ export function ProjectLivenessChart({ projectId, configuredSubtypes }: Props) {
         />
       </ChartControlsWrapper>
       <LivenessChart data={chartData} isLoading={isLoading} />
+      <LivenessChartStats
+        timeRange={timeRange}
+        isLoading={isLoading}
+        stats={chart?.stats}
+        anomalies={anomalies}
+        configuredSubtypes={configuredSubtypes}
+        hasTrackedContractsChanged={hasTrackedContractsChanged}
+      />
     </section>
   )
 }

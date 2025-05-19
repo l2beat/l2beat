@@ -69,6 +69,41 @@ export class AggregatedLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getAvgByProjectAndTimeRange(
+    projectId: ProjectId,
+    range: [UnixTime | null, UnixTime],
+  ): Promise<
+    Pick<AggregatedLivenessRecord, 'projectId' | 'subtype' | 'avg'>[]
+  > {
+    const [from, to] = range
+
+    let query = this.db
+      .selectFrom('AggregatedLiveness')
+      .select([
+        'projectId',
+        'subtype',
+        (eb) =>
+          sql<number>`
+          SUM(${eb.ref('avg')} * ${eb.ref('numberOfRecords')})
+          / SUM(${eb.ref('numberOfRecords')})
+        `.as('avg'),
+      ])
+      .where('projectId', '=', projectId)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .groupBy(['projectId', 'subtype'])
+
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+    return rows.map((row) => ({
+      ...row,
+      subtype: row.subtype as TrackedTxsConfigSubtype,
+      avg: Number(row.avg),
+    }))
+  }
+
   async getAggregatesByTimeRange(
     range: [UnixTime | null, UnixTime],
   ): Promise<

@@ -41,9 +41,6 @@ export function getLivenessSection(
       duplicatedData,
     ]) as TrackedTxsConfigSubtype[],
     anomalies: liveness?.anomalies ?? [],
-    batchSubmissionsAvg: liveness?.batchSubmissions?.max?.averageInSeconds,
-    stateUpdatesAvg: liveness?.stateUpdates?.max?.averageInSeconds,
-    proofSubmissionsAvg: liveness?.proofSubmissions?.max?.averageInSeconds,
     hasTrackedContractsChanged,
     trackedTransactions,
   }

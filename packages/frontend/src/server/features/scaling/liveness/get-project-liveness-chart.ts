@@ -61,20 +61,29 @@ export const getCachedProjectLivenessChartData = cache(
       effectiveSubtype = livenessProject.livenessConfig.duplicateData.from
     }
 
-    const entries =
-      await db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
+    const [chartEntries, subtypeAverages] = await Promise.all([
+      db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
         ProjectId(projectId),
         effectiveSubtype,
         [from, to],
-      )
+      ),
+      db.aggregatedLiveness.getAvgByProjectAndTimeRange(ProjectId(projectId), [
+        from,
+        to,
+      ]),
+    ])
 
-    if (entries.length === 0) {
+    const stats = Object.fromEntries(
+      subtypeAverages.map(({ subtype, avg }) => [subtype, avg]),
+    ) as Partial<Record<TrackedTxsConfigSubtype, number>>
+
+    if (chartEntries.length === 0) {
       return {
         data: [],
       }
     }
 
-    const groupedByResolution = groupBy(entries, (e) =>
+    const groupedByResolution = groupBy(chartEntries, (e) =>
       UnixTime.toStartOf(
         e.timestamp,
         resolution === 'hourly'
@@ -102,6 +111,7 @@ export const getCachedProjectLivenessChartData = cache(
     })
     return {
       data,
+      stats,
     }
   },
   ['liveness-chart-data'],
@@ -138,5 +148,10 @@ function getMockLivenessChart({
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 11, 13, 16]),
+    stats: {
+      batchSubmissions: 10000,
+      proofSubmissions: 1000,
+      stateUpdates: 10,
+    },
   }
 }

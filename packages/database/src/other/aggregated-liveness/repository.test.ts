@@ -316,6 +316,58 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
+  describe(AggregatedLivenessRepository.prototype.getAvgByProjectAndTimeRange
+    .name, () => {
+    it('returns weighted averages for a project within a time range, grouped by subtype', async () => {
+      const results = await repository.getAvgByProjectAndTimeRange(PROJECT_A, [
+        START - 2 * UnixTime.HOUR,
+        START,
+      ])
+
+      expect(results).toEqualUnsorted([
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql rounds down
+        },
+        {
+          projectId: PROJECT_A,
+          subtype: 'stateUpdates',
+          avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
+        },
+      ])
+    })
+
+    it('returns averages when from is null', async () => {
+      const results = await repository.getAvgByProjectAndTimeRange(PROJECT_A, [
+        null,
+        START - 1 * UnixTime.HOUR,
+      ])
+
+      expect(results).toEqualUnsorted([
+        {
+          projectId: PROJECT_A,
+          subtype: 'batchSubmissions',
+          avg: 37, // 4 * 30 + 3 * 40 + 2 * 50 / 4 + 3 + 2 = 37.2 but sql rounds down
+        },
+        {
+          projectId: PROJECT_A,
+          subtype: 'stateUpdates',
+          avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
+        },
+      ])
+    })
+
+    it('returns empty array when no records match criteria', async () => {
+      const results = await repository.getAvgByProjectAndTimeRange(
+        ProjectId('non-existent'),
+        [START - 3 * UnixTime.HOUR, START],
+      )
+
+      expect(results).toEqual([])
+    })
+  })
+
   describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
