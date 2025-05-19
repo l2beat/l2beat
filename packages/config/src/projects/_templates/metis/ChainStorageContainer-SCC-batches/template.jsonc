@@ -24,6 +24,5 @@
                 "args": ["{{ DEFAULT_CHAINID }}"]
             }
         }
-    },
-
+    }
 } 

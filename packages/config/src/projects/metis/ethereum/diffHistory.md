@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x037a2bb6bb78b56aadaf6995a90ef36a904c034a
+Generated with discovered.json: 0x0a3dafd8225d29f1990a4849bdd11a2f12e652b5
 
-# Diff at Mon, 19 May 2025 15:22:13 GMT:
+# Diff at Mon, 19 May 2025 16:20:48 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
-- current block number: 22517869
+- current block number: 22518157
 
 ## Description
 
@@ -17,6 +17,70 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22494955 (main branch discovery), not current.
 
 ```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/L1CrossDomainMessenger"
+      description:
++        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/LockingInfo"
+      description:
++        "Contract acting as an escrow for METIS tokens managed by LockingPool."
+    }
+```
+
+```diff
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: Storage container for SCC batches.
+      template:
++        "metis/ChainStorageContainer-SCC-batches"
+      description:
++        "Storage container for SCC batches."
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games.
+      template:
++        "metis/DisputeGameFactory_Metis"
+      description:
++        "Factory contract for creating dispute games."
+    }
+```
+
+```diff
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff) {
+    +++ description: Contract used to manage configuration of global metis values
+      template:
++        "metis/MetisConfig"
+      description:
++        "Contract used to manage configuration of global metis values"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: Storage container for CTC batches.
+      template:
++        "metis/ChainStorageContainer-CTC-batches"
+      description:
++        "Storage container for CTC batches."
+    }
+```
+
+```diff
     contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235) {
     +++ description: Contract for handling fault disputes.
       template:
@@ -27,10 +91,33 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"}
+      receivedPermissions.6.from:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.5.from:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.4.from:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.3.description:
+-        "set and change address mappings."
+    }
+```
+
+```diff
     contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
     +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
-      values.proxiableUUID:
-+        "EXPECT_REVERT"
       template:
 +        "metis/CanonicalTransactionChain"
       description:
@@ -47,6 +134,18 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 +        "metis/BondManager"
       description:
 +        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented."
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_CanonicalTransaction"
+      description:
++        "MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain."
     }
 ```
 
@@ -73,10 +172,27 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 ```
 
 ```diff
-    contract MToken (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
-    +++ description: Metis token contract.
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       template:
-+        "metis/MToken"
+-        "opstack/AddressManager"
++        "metis/Lib_AddressManager"
+      description:
+-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
++        "Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: Metis token contract.
+      name:
+-        "MToken"
++        "Metis Token"
+      template:
++        "metis/METISToken"
       description:
 +        "Metis token contract."
     }
@@ -85,12 +201,38 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 ```diff
     contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
     +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
-      values.proxiableUUID:
-+        "EXPECT_REVERT"
       template:
 +        "metis/MVM_StateCommitmentChain"
       description:
 +        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: Storage container for CTC queue.
+      template:
++        "metis/ChainStorageContainer-CTC-queue"
+      description:
++        "Storage container for CTC queue."
+    }
+```
+
+```diff
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057) {
+    +++ description: None
+      template:
++        "metis/MIPS"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+      template:
++        "metis/LockingPool"
+      description:
++        "Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution."
     }
 ```
 
@@ -103,6 +245,18 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 +        "metis/MVM_Verifier"
       description:
 +        "The MVM Verifier contract is responsible for verifying the state of the MVM."
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_L2ChainManagerOnL1"
+      description:
++        "Contract that allows METIS_MANAGER to switch Sequencer."
     }
 ```
 

@@ -1,8 +1,8 @@
 {
-  "L1CrossDomainMessenger.sol": {
-    "hash": "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
-    "address": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+  "L1CrossDomainMessenger": {
+    "hash": "0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7",
+    "address": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
     "chain": "ethereum",
-    "blockNumber": 22517630
+    "blockNumber": 22517869
   }
 }

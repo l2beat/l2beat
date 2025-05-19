@@ -1,6 +1,6 @@
 {
     "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-    "name": "MToken",
+    "name": "Metis Token",
     "description": "Metis token contract.",
     "fields": {
     },
