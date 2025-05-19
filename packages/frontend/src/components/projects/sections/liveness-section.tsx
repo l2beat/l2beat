@@ -1,17 +1,17 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
+import { Fragment } from 'react'
 import { DurationCell } from '~/app/(side-nav)/scaling/finality/_components/table/duration-cell'
 import { AnomalyIndicator } from '~/app/(side-nav)/scaling/liveness/_components/anomaly-indicator'
 import { ProjectLivenessChart } from '~/components/chart/liveness/project-liveness-chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import { ProjectSection } from './project-section'
-import type { ProjectSectionProps } from './types'
-import compact from 'lodash/compact'
-import { Fragment } from 'react'
 import { cn } from '~/utils/cn'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/get-tracked-transactions'
 import { TrackedTransactions } from './costs/tracked-transactions'
+import { ProjectSection } from './project-section'
+import type { ProjectSectionProps } from './types'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string

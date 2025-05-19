@@ -1,8 +1,10 @@
+import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from 'process'
 import { z } from 'zod'
@@ -12,8 +14,6 @@ import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chart-range'
-import groupBy from 'lodash/groupBy'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
 
 export type ProjectLivenessChartParams = z.infer<
   typeof ProjectLivenessChartParams
