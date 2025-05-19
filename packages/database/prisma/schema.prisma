@@ -243,6 +243,7 @@ model TokenValue {
   @@id([timestamp, configurationId])
   @@index([projectId])
   @@index([tokenId])
+  @@index([projectId, tokenId, timestamp(sort: Desc)])
 }
 
 model ProjectValue {
@@ -260,6 +261,7 @@ model ProjectValue {
 
   @@id([timestamp, project, type])
   @@index([type, timestamp(sort: Desc)])
+  @@index([type, project, timestamp])
 }
 
 model UpdateDiff {
