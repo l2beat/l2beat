@@ -62,7 +62,7 @@ export const getCachedProjectLivenessChartData = cache(
     }
 
     const entries =
-      await db.aggregatedLiveness2.getByProjectAndSubtypeInTimeRange(
+      await db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
         ProjectId(projectId),
         effectiveSubtype,
         [from, to],
