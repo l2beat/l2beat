@@ -19,7 +19,7 @@ export function createZkCatalogRouter(
   })
 
   router.get(
-    '/zk-catalog/projects/:slug',
+    '/zk-catalog/:slug',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),

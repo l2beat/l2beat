@@ -38,10 +38,10 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     const from =
       safeHeight <= this.$.minHeight
         ? this.$.minHeight
-        : UnixTime.toStartOf(safeHeight, 'day')
-    const endOfDay = UnixTime.toStartOf(from, 'day') + UnixTime.DAY
+        : UnixTime.toStartOf(safeHeight, 'hour')
+    const endOfHour = UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
 
-    const to = parentSafeHeight > endOfDay ? endOfDay : parentSafeHeight
+    const to = parentSafeHeight > endOfHour ? endOfHour : parentSafeHeight
 
     const updatedLivenessRecords = await this.generateLiveness(from, to)
 
