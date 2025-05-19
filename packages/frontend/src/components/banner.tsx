@@ -35,7 +35,7 @@ export function Banner({ className }: { className?: string }) {
         />
       </div>
       <div className="text-sm">
-        Our latest article about native rollups is live!
+        Our latest article on native rollups is live!
       </div>
       <BannerActionButton />
     </div>
