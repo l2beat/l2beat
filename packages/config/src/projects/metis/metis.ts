@@ -127,6 +127,7 @@ export const metis: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stateValidation: {
+    isUnderReview: true,
     categories: [
       {
         title: 'No state validation',

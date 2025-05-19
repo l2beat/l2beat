@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 333894848,
+  "blockNumber": 337288646,
   "configHash": "0x45ec79f8a9d463da9637729fe3dcab61e509d71e4d69be666654688c8a999a8a",
   "entries": [
     {
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 32715,
+        "exitNum": 33090,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -97,11 +97,6 @@
       "implementationNames": {
         "0x1D62fFeB72e4c360CcBbacf7c965153b00260417": "ArbitrumDAOConstitution"
       }
-    },
-    {
-      "address": "0x25032D068633cfbe52c134EBdD965b2C2B4C2710",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L2SurplusFee",
@@ -1190,9 +1185,9 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6",
           "0xa98290a7A282d8249544D35b288E160A5580D57E",
           "0xc43a77b64b34551beA865C9E85A116B444EF44B1",
-          "0x25032D068633cfbe52c134EBdD965b2C2B4C2710",
           "0x0adc7D8eB4C01219858a579C9539780CD9575035",
           "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
         ],
@@ -1201,7 +1196,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1235,7 +1230,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2047,
+        "exitNum": 2057,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1668,6 +1663,11 @@
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }],
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1Timelock_l2alias",
@@ -2858,5 +2858,5 @@
     "orbitstack/layer2/TreasuryTimelock": "0x980b51e8fac48051f563d3246b01c151b043c4bd3e252b27a5f4a301a0a3fad3",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0xf345ec40fe1222ef7f4a526c7eb6312670077f7d9b24d7f9f82c517103b02639"
   },
-  "permissionsConfigHash": "0xdd8437b4e8e0d0d3e6d767a22af5d57a01f794dfc1d81d728b30704f7c8681ee"
+  "permissionsConfigHash": "0x6550950663d23c7fa380a5c70df1efa67c5b084a4addaee047e307ab28afb670"
 }
