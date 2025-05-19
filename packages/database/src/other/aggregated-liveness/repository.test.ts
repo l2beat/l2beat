@@ -10,7 +10,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
-  const START = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const START = UnixTime.toStartOf(UnixTime.now(), 'hour')
   const DATA: AggregatedLivenessRecord[] = [
     // project A - batchSubmissions
     {
@@ -28,7 +28,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       min: 20,
       avg: 30,
       max: 40,
-      timestamp: START - 1 * UnixTime.DAY,
+      timestamp: START - 1 * UnixTime.HOUR,
       numberOfRecords: 4,
     },
     {
@@ -37,7 +37,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       min: 30,
       avg: 40,
       max: 50,
-      timestamp: START - 2 * UnixTime.DAY,
+      timestamp: START - 2 * UnixTime.HOUR,
       numberOfRecords: 3,
     },
     {
@@ -46,7 +46,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       min: 40,
       avg: 50,
       max: 60,
-      timestamp: START - 3 * UnixTime.DAY,
+      timestamp: START - 3 * UnixTime.HOUR,
       numberOfRecords: 2,
     },
     // project A - stateUpdates
@@ -56,7 +56,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       min: 30,
       avg: 40,
       max: 50,
-      timestamp: START - 1 * UnixTime.DAY,
+      timestamp: START - 1 * UnixTime.HOUR,
       numberOfRecords: 2,
     },
     {
@@ -65,7 +65,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       min: 40,
       avg: 50,
       max: 60,
-      timestamp: START - 2 * UnixTime.DAY,
+      timestamp: START - 2 * UnixTime.HOUR,
       numberOfRecords: 1,
     },
     // project B - stateUpdates
@@ -75,7 +75,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       min: 10,
       avg: 10,
       max: 10,
-      timestamp: START - 2 * UnixTime.DAY,
+      timestamp: START - 2 * UnixTime.HOUR,
       numberOfRecords: 2,
     },
   ] as const satisfies AggregatedLivenessRecord[]
@@ -106,7 +106,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           min: 10,
           avg: 10,
           max: 10,
-          timestamp: START - 3 * UnixTime.DAY,
+          timestamp: START - 3 * UnixTime.HOUR,
           numberOfRecords: 5,
         },
       ] as const satisfies AggregatedLivenessRecord[]
@@ -142,7 +142,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     .name, () => {
     it('returns aggregates with correctly calculated weighted averages for a given time range, grouped by project and subtype', async () => {
       const results = await repository.getAggregatesByTimeRange([
-        START - 2 * UnixTime.DAY,
+        START - 2 * UnixTime.HOUR,
         START,
       ])
 
@@ -189,7 +189,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           min: 20,
           avg: 30,
           max: 40,
-          timestamp: START - 1 * UnixTime.DAY,
+          timestamp: START - 1 * UnixTime.HOUR,
           numberOfRecords: 4,
         },
       ])

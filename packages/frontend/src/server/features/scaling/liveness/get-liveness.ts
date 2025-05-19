@@ -2,7 +2,7 @@ import type {
   AnomalyRecord,
   IndexerConfigurationRecord,
 } from '@l2beat/database'
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
@@ -56,15 +56,15 @@ async function getLivenessData() {
 
   const [records30Days, records90Days, recordsMax] = (
     await Promise.all([
-      db.aggregatedLiveness2.getAggregatesByTimeRange([
+      db.aggregatedLiveness.getAggregatesByTimeRange([
         targetTimestamp - 30 * UnixTime.DAY,
         targetTimestamp,
       ]),
-      db.aggregatedLiveness2.getAggregatesByTimeRange([
+      db.aggregatedLiveness.getAggregatesByTimeRange([
         targetTimestamp - 90 * UnixTime.DAY,
         targetTimestamp,
       ]),
-      db.aggregatedLiveness2.getAggregatesByTimeRange([null, targetTimestamp]),
+      db.aggregatedLiveness.getAggregatesByTimeRange([null, targetTimestamp]),
     ])
   ).map((r) => groupBy(r, (r) => r.projectId))
 
@@ -141,13 +141,13 @@ async function getLivenessData() {
 
 function mapAggregatedLivenessRecords(
   records30Days:
-    | Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
   records90Days:
-    | Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
   recordsMax:
-    | Omit<AggregatedLiveness2Record, 'timestamp' | 'numberOfRecords'>[]
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
   subtype: TrackedTxsConfigSubtype,
   project: TrackedTxsProject,
