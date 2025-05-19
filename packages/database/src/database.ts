@@ -5,13 +5,13 @@ import { DataAvailabilityRepository } from './da-beat/data-availability/reposito
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
 import { FlatSourcesRepository } from './discovery/flat-sources/repository'
+import { UpdateDiffRepository } from './discovery/update-diff/repository'
 import { UpdateMessageRepository } from './discovery/update-message/repository'
 import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
 import { UpdateNotifierRepository } from './discovery/update-notifier/repository'
 import { DatabaseClient } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
-import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
@@ -46,6 +46,7 @@ export function createDatabase(config?: PoolConfig) {
 
     // #region Discovery
     discoveryCache: new DiscoveryCacheRepository(db),
+    updateDiff: new UpdateDiffRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
@@ -60,7 +61,6 @@ export function createDatabase(config?: PoolConfig) {
     // #region Other
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     aggregatedLiveness: new AggregatedLivenessRepository(db),
-    aggregatedLiveness2: new AggregatedLiveness2Repository(db),
     anomalies: new AnomaliesRepository(db),
     finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),

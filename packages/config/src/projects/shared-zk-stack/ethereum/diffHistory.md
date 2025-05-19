@@ -1,3 +1,267 @@
+Generated with discovered.json: 0xb2119e0002e5be6f6e8db5f1f94327b216cbc2e2
+
+# Diff at Fri, 16 May 2025 14:40:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e002413ca40890ffd9150afa1422bcb6338725ba block: 22481824
+- current block number: 22496282
+
+## Description
+
+emergency upgrade executed (see abstract diff).
+
+signer changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803) {
+    +++ description: None
+      values.$members.8:
++        "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553"
+      values.$members.7:
++        "0x98E24e308c4B7cdADcf4d116B2B8939a21420bA1"
+      values.$members.6:
+-        "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553"
++        "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392"
+      values.$members.5:
+-        "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392"
++        "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e"
+      values.$members.4:
+-        "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e"
++        "0xc8E2806A97413b5496A1ba6050b517CC98D0EfCA"
+      values.$members.3:
+-        "0xc8E2806A97413b5496A1ba6050b517CC98D0EfCA"
++        "0xBab69188f07F2569A41C5B875e147216D974eB3e"
+      values.$members.2:
+-        "0xBab69188f07F2569A41C5B875e147216D974eB3e"
++        "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF"
+      values.$members.1:
+-        "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF"
++        "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2"
+      values.multisigThreshold:
+-        "1 of 7 (14%)"
++        "1 of 9 (11%)"
+    }
+```
+
+```diff
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      values.$members.3:
+-        "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95"
++        "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.1:
++        "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.0:
+-        "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
++        "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
+    }
+```
+
+Generated with discovered.json: 0x79b4df69baa0d32210e5bdf125498d68403727a4
+
+# Diff at Wed, 14 May 2025 13:54:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 22437978
+- current block number: 22481824
+
+## Description
+
+New chain deployed with chainID 9075 and an unknown gas token called ZK.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.15:
++        {"chainId":9637,"chainTypeManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.14.chainId:
+-        9637
++        388
+      values.chainsCreated.14.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.13.chainId:
+-        388
++        325
+      values.chainsCreated.13.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.12.chainId:
+-        325
++        320
+      values.chainsCreated.12.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.11.chainId:
+-        320
++        324
+      values.chainsCreated.11.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.10.chainId:
+-        324
++        51888
+      values.chainsCreated.10.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0x21bFaD8F0f781F367ACCb5276199B0c0E819CbD9"
+      values.chainsCreated.9.chainId:
+-        51888
++        50104
+      values.chainsCreated.9.chainGovernance:
+-        "0x21bFaD8F0f781F367ACCb5276199B0c0E819CbD9"
++        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.chainsCreated.8.chainId:
+-        50104
++        543210
+      values.chainsCreated.8.chainGovernance:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      values.chainsCreated.7.chainId:
+-        543210
++        1217
+      values.chainsCreated.7.chainGovernance:
+-        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
+      values.chainsCreated.6.chainId:
+-        1217
++        375
+      values.chainsCreated.6.chainGovernance:
+-        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
++        "0x6ec9117dCFBe2E8Dd747c9D45034E2DF9C7d2da0"
+      values.chainsCreated.5.chainId:
+-        375
++        2741
+      values.chainsCreated.5.chainGovernance:
+-        "0x6ec9117dCFBe2E8Dd747c9D45034E2DF9C7d2da0"
++        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
+      values.chainsCreated.4.chainId:
+-        2741
++        1345
+      values.chainsCreated.4.chainGovernance:
+-        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
++        "0x49664fFe2c2335c28631629606E26a6971aEf261"
+      values.chainsCreated.3.chainId:
+-        1345
++        232
+      values.chainsCreated.3.chainGovernance:
+-        "0x49664fFe2c2335c28631629606E26a6971aEf261"
++        "0x0000000000000000000000000000000000000000"
+      values.chainsCreated.2.chainId:
+-        232
++        61166
+      values.chainsCreated.2.chainGovernance:
+-        "0x0000000000000000000000000000000000000000"
++        "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+      values.chainsCreated.1.chainId:
+-        61166
++        2904
+      values.chainsCreated.1.chainGovernance:
+-        "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
++        "0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
+      values.chainsCreated.0.chainId:
+-        2904
++        9075
+      values.chainsCreated.0.chainGovernance:
+-        "0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
++        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      values.getAllZKChainChainIDs.15:
++        388
+      values.getAllZKChainChainIDs.14:
+-        388
++        375
+      values.getAllZKChainChainIDs.13:
+-        375
++        325
+      values.getAllZKChainChainIDs.12:
+-        325
++        324
+      values.getAllZKChainChainIDs.11:
+-        324
++        320
+      values.getAllZKChainChainIDs.10:
+-        320
++        232
+      values.getAllZKChainChainIDs.9:
+-        232
++        9637
+      values.getAllZKChainChainIDs.8:
+-        9637
++        9075
+      values.getAllZKChains.15:
++        "0xD231E2fD0DeC5993fCeae3E504930631876e8C63"
+      values.getAllZKChains.14:
+-        "0xD231E2fD0DeC5993fCeae3E504930631876e8C63"
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllZKChains.13:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      values.getAllZKChains.12:
+-        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
+      values.getAllZKChains.11:
+-        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
++        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.getAllZKChains.10:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
+      values.getAllZKChains.9:
+-        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
+      values.getAllZKChains.8:
+-        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.getAllZKChains.7:
+-        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "0x89f90748A9a36C30A324481133fa198f4E16A824"
+      values.getAllZKChains.6:
+-        "0x89f90748A9a36C30A324481133fa198f4E16A824"
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.getAllZKChains.5:
+-        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
++        "0x742A28e22277945BBAAa34810393bf6e8512576C"
+      values.getAllZKChains.4:
+-        "0x742A28e22277945BBAAa34810393bf6e8512576C"
++        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+      values.getAllZKChains.3:
+-        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
++        "0xF2704433d11842d15aa76BBF0E00407267a99C92"
+      values.getAllZKChains.2:
+-        "0xF2704433d11842d15aa76BBF0E00407267a99C92"
++        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+      values.getAllZKChains.1:
+-        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
++        "0x270bF3978FeA60719Dd25A400EbE6969bF451493"
+      values.getAllZKChains.0:
+-        "0x270bF3978FeA60719Dd25A400EbE6969bF451493"
++        "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        16
++        17
+      values.getAggregatedRoot:
+-        "0xd893aacecf7a4ed2d1aa0c30c3b52d12388abecacbaa7b6e63a5a7f00178f1cf"
++        "0x3915543a6d021896bf955b7f4eb63ef57a27b8b1412eb83de831d169ff0db864"
+    }
+```
+
 Generated with discovered.json: 0xe2f8451543b5671bfb1c462ff54621b82357a232
 
 # Diff at Thu, 08 May 2025 09:50:10 GMT:

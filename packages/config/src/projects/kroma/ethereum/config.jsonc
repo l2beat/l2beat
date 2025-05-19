@@ -39,8 +39,8 @@
             "type": "call",
             "method": "function routes(bytes4) view returns (address prover, bool frozen)",
             "args": [
-              // first 4 bytes of the blobstream proof are used as identifier
-              "0x0000dead" // identifier for kroma is unknown
+              // first 4 bytes of verifier hash are used as identifier
+              "0x1b34fe11" // selector for current SP1Verifier contract
             ]
           },
           "permissions": [

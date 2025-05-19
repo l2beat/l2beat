@@ -20,7 +20,9 @@ import type { Database } from '@l2beat/database'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
@@ -28,15 +30,16 @@ import { findUnknownEntries } from './utils/findUnknownEntries'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
-  readonly cachedDiscovery = new Map<string, DiscoveryOutput>()
 
   constructor(
     private readonly discoveryRunners: DiscoveryRunner[],
     private readonly updateNotifier: UpdateNotifier,
+    private readonly updateDiffer: UpdateDiffer | undefined,
     private readonly configReader: ConfigReader,
     private readonly db: Database,
     private readonly clock: Clock,
     private readonly chainConverter: ChainConverter,
+    private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
   ) {
@@ -74,6 +77,7 @@ export class UpdateMonitor {
 
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
+      await this.updateDiffer?.runForChain(runner.chain, timestamp)
     }
 
     const updateEnd = UnixTime.now()
@@ -100,8 +104,9 @@ export class UpdateMonitor {
       )
 
       for (const projectConfig of projectConfigs) {
-        const discovery = this.cachedDiscovery.get(
-          this.getCacheKey(projectConfig.name, runner.chain),
+        const discovery = this.discoveryOutputCache.get(
+          projectConfig.name,
+          runner.chain,
         )
 
         if (!discovery) {
@@ -217,10 +222,7 @@ export class UpdateMonitor {
 
     if (!previousDiscovery || !discovery) return
 
-    this.cachedDiscovery.set(
-      this.getCacheKey(projectConfig.name, runner.chain),
-      discovery,
-    )
+    this.discoveryOutputCache.set(projectConfig.name, runner.chain, discovery)
 
     const deployedDiscovered = this.configReader.readDiscovery(
       projectConfig.name,
@@ -242,7 +244,7 @@ export class UpdateMonitor {
       unverifiedEntries,
     )
 
-    await this.handleDiff(
+    await this.handleUpdateNotifier(
       diff,
       discovery,
       projectConfig,
@@ -252,7 +254,7 @@ export class UpdateMonitor {
     )
 
     await this.db.updateMonitor.upsert({
-      projectName: projectConfig.name,
+      projectId: projectConfig.name,
       chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       timestamp,
       blockNumber,
@@ -313,7 +315,7 @@ export class UpdateMonitor {
     )
 
     await this.db.flatSources.upsert({
-      projectName: projectConfig.name,
+      projectId: projectConfig.name,
       chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       blockNumber: previousDiscovery.blockNumber,
       contentHash: hashJson(sortObjectByKeys(flatSources)),
@@ -323,7 +325,7 @@ export class UpdateMonitor {
     return discovery
   }
 
-  private async handleDiff(
+  private async handleUpdateNotifier(
     diff: DiscoveryDiff[],
     discovery: DiscoveryOutput,
     projectConfig: ConfigRegistry,
@@ -331,32 +333,30 @@ export class UpdateMonitor {
     chain: string,
     timestamp: UnixTime,
   ) {
-    if (diff.length > 0) {
-      const dependents = findDependents(
-        projectConfig.name,
-        chain,
-        this.configReader,
-      )
-      const unknownEntries = findUnknownEntries(
-        discovery.name,
-        discovery.entries,
-        this.configReader,
-        chain,
-      )
-      await this.updateNotifier.handleUpdate(
-        projectConfig.name,
-        diff,
-        blockNumber,
-        ChainId(this.chainConverter.toChainId(chain)),
-        dependents,
-        unknownEntries,
-        timestamp,
-      )
+    if (diff.length === 0) {
+      return
     }
-  }
 
-  private getCacheKey(projectName: string, chain: string): string {
-    return `${chain}:${projectName}`
+    const dependents = findDependents(
+      projectConfig.name,
+      chain,
+      this.configReader,
+    )
+    const unknownEntries = findUnknownEntries(
+      discovery.name,
+      discovery.entries,
+      this.configReader,
+      chain,
+    )
+    await this.updateNotifier.handleUpdate(
+      projectConfig.name,
+      diff,
+      blockNumber,
+      ChainId(this.chainConverter.toChainId(chain)),
+      dependents,
+      unknownEntries,
+      timestamp,
+    )
   }
 }
 
@@ -373,7 +373,7 @@ const errorCount = new Gauge({
 })
 
 function countSeverities(diffs: DiscoveryDiff[]) {
-  const result = { low: 0, medium: 0, high: 0, unknown: 0 }
+  const result = { low: 0, high: 0, unknown: 0 }
 
   for (const diff of diffs) {
     if (diff.diff === undefined) {
@@ -400,9 +400,6 @@ function countSeverities(diffs: DiscoveryDiff[]) {
       switch (severity) {
         case 'LOW':
           result.low++
-          break
-        case 'MEDIUM':
-          result.medium++
           break
         case 'HIGH':
           result.high++

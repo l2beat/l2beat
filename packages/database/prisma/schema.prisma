@@ -129,37 +129,37 @@ model Liveness {
 }
 
 model UpdateMonitor {
-  projectName       String    @db.VarChar(255)
+  projectId         String    @db.VarChar(255)
   blockNumber       Int
   timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
   chainId           Int       @default(1)
 
-  @@id([projectName, chainId])
+  @@id([projectId, chainId])
 }
 
 model UpdateNotifier {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
-  projectName  String   @db.VarChar(255)
+  projectId    String   @db.VarChar(255)
   blockNumber  Int
   diffJsonBlob Json
   chainId      Int      @default(1)
 
   @@index([blockNumber])
-  @@index([projectName])
+  @@index([projectId])
 }
 
 model UpdateMessage {
-  projectName String   @db.VarChar(255)
+  projectId   String   @db.VarChar(255)
   chain       String   @db.VarChar(255)
   blockNumber Int
   timestamp   DateTime @db.Timestamp(6)
   message     String   @db.Text
 
-  @@id([projectName, chain, blockNumber])
+  @@id([projectId, chain, blockNumber])
 }
 
 model VerifierStatus {
@@ -172,18 +172,6 @@ model VerifierStatus {
 }
 
 model AggregatedLiveness {
-  projectId String   @db.VarChar(255)
-  subtype   String   @db.VarChar(255)
-  range     String   @db.VarChar(255)
-  min       Int
-  avg       Int
-  max       Int
-  updatedAt DateTime @db.Timestamp(6)
-
-  @@id([projectId, subtype, range])
-}
-
-model AggregatedLiveness2 {
   timestamp       DateTime @db.Timestamp(6)
   projectId       String   @db.VarChar(255)
   subtype         String   @db.VarChar(255)
@@ -205,13 +193,13 @@ model Anomaly {
 }
 
 model FlatSources {
-  projectName String @db.VarChar(255)
+  projectId   String @db.VarChar(255)
   chainId     Int
   blockNumber Int
   contentHash String @db.VarChar(255)
   flat        Json
 
-  @@id([projectName, chainId])
+  @@id([projectId, chainId])
 }
 
 model TvsAmount {
@@ -271,4 +259,14 @@ model ProjectValue {
   associated Float    @db.Real
 
   @@id([timestamp, project, type])
+}
+
+model UpdateDiff {
+  projectId String   @db.VarChar(255)
+  chain     String   @db.VarChar(255)
+  address   String   @db.VarChar(255)
+  type      String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+
+  @@unique([projectId, address, type, chain])
 }

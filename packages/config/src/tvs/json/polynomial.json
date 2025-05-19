@@ -37,6 +37,35 @@
     },
     {
       "mode": "auto",
+      "id": "polynomial-OP",
+      "priceId": "optimism",
+      "symbol": "OP",
+      "name": "Optimism",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4200000000000000000000000000000000000042",
+        "chain": "optimism",
+        "escrowAddress": "0x2A905D69Cdb343B2e5F5E25a11788cDFb67d4E1d",
+        "decimals": 18,
+        "sinceTimestamp": 1732794033
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1732794033
+        },
+        "priceId": "optimism"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polynomial-sDAI-2",
       "priceId": "savings-dai",
       "symbol": "sDAI",
@@ -56,22 +85,161 @@
     },
     {
       "mode": "auto",
+      "id": "polynomial-SolvBTC-2",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+            "chain": "ethereum",
+            "escrowAddress": "0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E",
+            "decimals": 18,
+            "sinceTimestamp": 1744193267
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+            "chain": "arbitrum",
+            "escrowAddress": "0x9f9D878bbd1118e7223f9d268d74fa6bdAf6CC52",
+            "decimals": 18,
+            "sinceTimestamp": 1744193261
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+              "chain": "ethereum",
+              "escrowAddress": "0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E",
+              "decimals": 18,
+              "sinceTimestamp": 1744193267
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1744193261
+            },
+            "priceId": "solv-btc"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polynomial-sUSDe-2",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
       "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-        "chain": "ethereum",
-        "escrowAddress": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
-        "decimals": 18,
-        "sinceTimestamp": 1721382935
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+            "chain": "ethereum",
+            "escrowAddress": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
+            "decimals": 18,
+            "sinceTimestamp": 1721382935
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+            "chain": "optimism",
+            "escrowAddress": "0x31d16b451C4063FE24ca4149740aF10948FdE955",
+            "decimals": 18,
+            "sinceTimestamp": 1733432921
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+            "chain": "base",
+            "escrowAddress": "0xD08e20aAb70fE4aBC7f7BAA9d1A9BD02d6C6e883",
+            "decimals": 18,
+            "sinceTimestamp": 1733432557
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+            "chain": "arbitrum",
+            "escrowAddress": "0x876fFa8AcBf043380675a579Eb1c67e8F097C045",
+            "decimals": 18,
+            "sinceTimestamp": 1733432556
+          }
+        ]
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "ethena-staked-usde",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+              "chain": "ethereum",
+              "escrowAddress": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
+              "decimals": 18,
+              "sinceTimestamp": 1721382935
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733432921
+            },
+            "priceId": "ethena-staked-usde"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733432557
+            },
+            "priceId": "ethena-staked-usde"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733432556
+            },
+            "priceId": "ethena-staked-usde"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -185,6 +353,297 @@
               "sinceTimestamp": 1721230760
             },
             "priceId": "usd-coin"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-weETH-2",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+            "chain": "ethereum",
+            "escrowAddress": "0x847579e12CFb96a3357d9C51e374330af61716C2",
+            "decimals": 18,
+            "sinceTimestamp": 1746458207
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+            "chain": "optimism",
+            "escrowAddress": "0xaE3f9951fdC045E03Eb460D34B9728E327331Ccd",
+            "decimals": 18,
+            "sinceTimestamp": 1746458201
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+            "chain": "base",
+            "escrowAddress": "0xae88be44e17BcB66A8640831a9AB6f973181df7C",
+            "decimals": 18,
+            "sinceTimestamp": 1746458199
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+            "chain": "arbitrum",
+            "escrowAddress": "0x66E4158A9341eF7950aF5B1435dcCf84FB8D6993",
+            "decimals": 18,
+            "sinceTimestamp": 1746458198
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "wrapped-eeth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "chain": "ethereum",
+              "escrowAddress": "0x847579e12CFb96a3357d9C51e374330af61716C2",
+              "decimals": 18,
+              "sinceTimestamp": 1746458207
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1746458201
+            },
+            "priceId": "wrapped-eeth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1746458199
+            },
+            "priceId": "wrapped-eeth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1746458198
+            },
+            "priceId": "wrapped-eeth"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-WETH-2",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a",
+            "decimals": 18,
+            "sinceTimestamp": 1732796447
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4200000000000000000000000000000000000006",
+            "chain": "optimism",
+            "escrowAddress": "0x2396843Ea97cf6b77239bB25fa018a3CD2ee06A6",
+            "decimals": 18,
+            "sinceTimestamp": 1732796449
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4200000000000000000000000000000000000006",
+            "chain": "base",
+            "escrowAddress": "0xb4d1b0333Ba154ed42DECB07b0342C128bB492cf",
+            "decimals": 18,
+            "sinceTimestamp": 1732796449
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+            "chain": "arbitrum",
+            "escrowAddress": "0xBD9fB031dAC8FC48e7eB701DDEC90Cc194d5F4Db",
+            "decimals": 18,
+            "sinceTimestamp": 1732796447
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a",
+              "decimals": 18,
+              "sinceTimestamp": 1732796447
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1732796449
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1732796449
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1732796447
+            },
+            "priceId": "weth"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-wstETH-2",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x572A4080c16beD33Cf2E876ad969E2E35769EDB4",
+            "decimals": 18,
+            "sinceTimestamp": 1744192691
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+            "chain": "optimism",
+            "escrowAddress": "0x744E4E32c8b49bB0F812590a5124C183eD2Cd836",
+            "decimals": 18,
+            "sinceTimestamp": 1744192681
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+            "chain": "base",
+            "escrowAddress": "0x33A1Ae6703362A0bcca814e3c1fC65Be0b8ccE61",
+            "decimals": 18,
+            "sinceTimestamp": 1744192681
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
+            "chain": "arbitrum",
+            "escrowAddress": "0xC3C20718050019fF79eB8961b2A38289dB8204B4",
+            "decimals": 18,
+            "sinceTimestamp": 1744192680
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "wrapped-steth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "chain": "ethereum",
+              "escrowAddress": "0x572A4080c16beD33Cf2E876ad969E2E35769EDB4",
+              "decimals": 18,
+              "sinceTimestamp": 1744192691
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1744192681
+            },
+            "priceId": "wrapped-steth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1744192681
+            },
+            "priceId": "wrapped-steth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1744192680
+            },
+            "priceId": "wrapped-steth"
           }
         ]
       }

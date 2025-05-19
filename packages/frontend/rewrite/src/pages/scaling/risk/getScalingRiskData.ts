@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/server'
+import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import type { Manifest } from '~/utils/Manifest'
 

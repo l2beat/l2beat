@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 22438139,
+  "blockNumber": 22467145,
   "configHash": "0x6bc4f523baa29bd659ba7beed2cc638ab5d690dad925ef31f188a8456fe941fd",
   "entries": [
     {
@@ -286,12 +286,12 @@
             { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
             {
               "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
+              "condition": "if not revoked by the Security Council"
             },
             { "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "restricted to the global pause function"
+              "condition": "though restricted to the global pause function"
             }
           ]
         },
@@ -302,7 +302,7 @@
             { "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "restricted to the global pause function"
+              "condition": "though restricted to the global pause function"
             }
           ]
         },
@@ -313,7 +313,7 @@
             { "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "restricted to the global pause function"
+              "condition": "though restricted to the global pause function"
             }
           ]
         }
@@ -322,7 +322,7 @@
         {
           "permission": "act",
           "from": "0x126a736B18E0a64fBA19D421647A530E327E112C",
-          "condition": "restricted to the global pause function"
+          "condition": "though restricted to the global pause function"
         }
       ]
     },
@@ -530,7 +530,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 98,
+        "nonce": 101,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -751,7 +751,7 @@
             { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
             {
               "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+              "condition": "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
             }
           ]
         }
@@ -761,7 +761,7 @@
           "permission": "act",
           "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
           "description": "takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+          "condition": "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -920,7 +920,7 @@
             { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
             {
               "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "not revoked by the Security Council"
+              "condition": "if not revoked by the Security Council"
             }
           ]
         },
@@ -937,7 +937,7 @@
         {
           "permission": "act",
           "from": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-          "condition": "not revoked by the Security Council"
+          "condition": "if not revoked by the Security Council"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1089,7 +1089,7 @@
         ],
         "$upgradeCount": 3,
         "additionalProposers": ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"],
-        "aggregationVkey": "0x001af5448a91ee21b97b3efdea14deb54acca359d368628d21bb4b14adabe552",
+        "aggregationVkey": "0x00a4fec570ddb93572e5312e1debb095562fea9ae099622c6f7c9d145d87517f",
         "challenger": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -1097,15 +1097,15 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1226460,
-        "latestOutputIndex": 329,
-        "nextBlockNumber": 1230780,
-        "nextOutputIndex": 330,
+        "latestBlockNumber": 1260660,
+        "latestOutputIndex": 335,
+        "nextBlockNumber": 1264980,
+        "nextOutputIndex": 336,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x5c50d96d27a21e1a4c24736d404c7ead0f4ee056517bbe2c32e2557a5bb44436",
+        "rangeVkeyCommitment": "0x5614b4dc4d7a1c33681c404a27aa1db265ea84b75047859667fed5a303a8dc43",
         "rollupConfigHash": "0x2aee88f2b7f9f1edfab6c535edeb8a7d969c162fe974650fc3c1e4d3c75ecb8b",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,
@@ -2149,10 +2149,10 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "gnosisSafeModules/DeputyGuardianModule": "0x2ac08dd61da2b2fa9573299ac5d5655d1610eded8d72a53907070bb41f17f3b9",
-    "gnosisSafeModules/LivenessModule": "0x02a2171f6f593d4f9b509a9f8aa4e50662de6a8dfc6b84128255163b33809f02",
+    "gnosisSafeModules/DeputyGuardianModule": "0x8b90baf04dee1921e1e57f188eeaf85ed0bf5dd20c023ee5c59ba4b679f14809",
+    "gnosisSafeModules/LivenessModule": "0x84ebe3f876938b7e8af892e85878d552551156c5de90c2782952b405d394f3cd",
     "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
-    "opstack/DeputyPauseModule": "0x0d2ec55d130dfc12157f643dd0e2def97d62c60ea5558a9cd904ae516233c31a",
+    "opstack/DeputyPauseModule": "0x2140a0f84c07311a5976aac404a07346dc35dbe3d71337001a5d1fa6eed8e467",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
@@ -2165,5 +2165,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   },
-  "permissionsConfigHash": "0xcd183d5b0b4c94a97d730ad958747df0b98b51f1d834d012f0e68a880c5bca5c"
+  "permissionsConfigHash": "0x5387ec1454cf7dec4c6a7fce513b6be982e062aa57ce918c19772184626650b2"
 }

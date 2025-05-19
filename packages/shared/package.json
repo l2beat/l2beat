@@ -10,12 +10,21 @@
       "types": "./build/index.d.ts",
       "default": "./build/index.js"
     },
+    "./uops": {
+      "types": "./build/index-uops.d.ts",
+      "default": "./build/index-uops.js"
+    },
     "./frontend": {
       "types": "./build/index-fe.d.ts",
       "default": "./build/index-fe.js"
     }
   },
-
+  "typesVersions": {
+    "*": {
+      "uops": ["./build/index-uops.d.ts"],
+      "frontend": ["./build/index-fe.d.ts"]
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build",

@@ -56,17 +56,22 @@ export class ActivityRepository extends BaseRepository {
 
   async getByProjectAndTimeRange(
     projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
+    timeRange: [UnixTime | null, UnixTime],
   ): Promise<ActivityRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.db
+    let query = this.db
       .selectFrom('Activity')
       .select(selectActivity)
       .where('projectId', '=', projectId.toString())
-      .where('timestamp', '>=', UnixTime.toDate(from))
+
       .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
-      .execute()
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
     return rows.map(toRecord)
   }
 

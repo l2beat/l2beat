@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x39912565a1154aee6bcff458d671fee1a6d6e53c
+
+# Diff at Fri, 16 May 2025 12:33:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 22337861
+- current block number: 22495658
+
+## Description
+
+SP1HeliosAdapter ref in Hashimanager changed.
+
+## Watched changes
+
+```diff
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++        "gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"
+    }
+```
+
+```diff
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++        "gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"
+    }
+```
+
 Generated with discovered.json: 0xfa00353b4393cd50ece11f6603e33aac18842a8d
 
 # Diff at Tue, 29 Apr 2025 08:19:27 GMT:

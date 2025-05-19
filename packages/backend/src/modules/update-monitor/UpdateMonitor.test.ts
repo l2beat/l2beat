@@ -18,7 +18,9 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
+import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import type { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMonitor } from './UpdateMonitor'
 import type { UpdateNotifier } from './UpdateNotifier'
 
@@ -70,7 +72,7 @@ const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
     {
       ...mockContract(NAME_A, ADDRESS_A),
       values: { a: false },
-      fieldMeta: { a: { severity: 'MEDIUM' } },
+      fieldMeta: { a: { severity: 'LOW' } },
     },
     mockContract(NAME_B, ADDRESS_B),
   ],
@@ -100,7 +102,9 @@ const flatSourcesRepository = mockObject<Database['flatSources']>({
 
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
+  let updateDiffer = mockObject<UpdateDiffer>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
+  let discoveryOutputCache = new DiscoveryOutputCache()
   const chainConverter = new ChainConverter([
     { name: 'ethereum', chainId: ChainId.ETHEREUM },
     { name: 'arbitrum', chainId: ChainId.ARBITRUM },
@@ -111,6 +115,9 @@ describe(UpdateMonitor.name, () => {
       handleUpdate: async () => {},
       sendDailyReminder: async () => {},
     })
+    updateDiffer = mockObject<UpdateDiffer>({
+      runForChain: async () => undefined,
+    })
     discoveryRunner = mockObject<DiscoveryRunner>({
       discoverWithRetry: async () => ({
         discovery: DISCOVERY_RESULT,
@@ -119,6 +126,7 @@ describe(UpdateMonitor.name, () => {
       chain: 'ethereum',
       getBlockNumber: async () => BLOCK_NUMBER,
     })
+    discoveryOutputCache = new DiscoveryOutputCache()
   })
 
   describe(UpdateMonitor.prototype.update.name, () => {
@@ -150,18 +158,24 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => undefined,
         upsert: async () => undefined,
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
       const timestamp = 0
 
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
         Logger.SILENT,
         false,
       )
@@ -187,17 +201,19 @@ describe(UpdateMonitor.name, () => {
       // runs discovery for every project
       expect(discoveryRunnerEth.discoverWithRetry).toHaveBeenCalledTimes(2)
 
+      expect(updateDiffer.runForChain).toHaveBeenCalledTimes(2)
+
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
         {
           ['project-a']: [
             {
               chainName: 'ethereum',
-              severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+              severityCounts: { low: 0, high: 0, unknown: 2 },
             },
             {
               chainName: 'arbitrum',
-              severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+              severityCounts: { low: 0, high: 0, unknown: 2 },
             },
           ],
         },
@@ -243,6 +259,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -250,6 +267,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -334,6 +353,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -341,6 +361,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -386,6 +408,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -393,6 +416,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -454,6 +479,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -461,6 +487,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -506,6 +534,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -513,6 +542,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -525,6 +556,8 @@ describe(UpdateMonitor.name, () => {
       expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(1)
       // gets latest from database (with the same config hash)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
+      // does not run update differ
+      expect(updateDiffer.runForChain).toHaveBeenCalledTimes(0)
       // does not save changes to database
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(0)
       // does not send a notification
@@ -558,6 +591,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -565,6 +599,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -607,6 +643,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         mockObject<ConfigReader>(),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -614,6 +651,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -662,6 +701,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -669,6 +709,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -713,6 +755,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
+        mockObject<UpdateDiffer>(),
         mockObject<ConfigReader>(),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
@@ -720,6 +763,8 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -747,7 +792,7 @@ describe(UpdateMonitor.name, () => {
             entries: [
               {
                 ...DISCOVERY_RESULT.entries[0],
-                fieldMeta: { a: { severity: 'MEDIUM' } },
+                fieldMeta: { a: { severity: 'LOW' } },
               },
               ...DISCOVERY_RESULT.entries.slice(1),
             ],
@@ -795,7 +840,7 @@ describe(UpdateMonitor.name, () => {
               {
                 ...mockContract(NAME_A, ADDRESS_A),
                 values: { a: true },
-                fieldMeta: { a: { severity: 'MEDIUM' } },
+                fieldMeta: { a: { severity: 'LOW' } },
               },
             ],
           }
@@ -809,17 +854,24 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
         },
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
 
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -832,13 +884,13 @@ describe(UpdateMonitor.name, () => {
         [PROJECT_A]: [
           {
             chainName: 'ethereum',
-            severityCounts: { low: 0, medium: 1, high: 0, unknown: 1 },
+            severityCounts: { low: 1, high: 0, unknown: 1 },
           },
         ],
         [PROJECT_B]: [
           {
             chainName: 'arbitrum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
+            severityCounts: { low: 0, high: 0, unknown: 3 },
           },
         ],
       })
@@ -872,16 +924,24 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
+
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -895,11 +955,11 @@ describe(UpdateMonitor.name, () => {
         [PROJECT_A]: [
           {
             chainName: 'ethereum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+            severityCounts: { low: 0, high: 0, unknown: 2 },
           },
           {
             chainName: 'arbitrum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+            severityCounts: { low: 0, high: 0, unknown: 2 },
           },
         ],
       })
@@ -921,17 +981,24 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
+        deleteAll: async () => 0,
+      })
 
       const updateMonitor = new UpdateMonitor(
         [],
         updateNotifier,
+        updateDiffer,
         configReader,
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
+          updateDiff: updateDiffRepository,
         }),
         mockObject<Clock>(),
         chainConverter,
+        discoveryOutputCache,
+
         Logger.SILENT,
         false,
       )
@@ -945,7 +1012,7 @@ describe(UpdateMonitor.name, () => {
 })
 
 const mockRecord: UpdateMonitorRecord = {
-  projectName: 'name',
+  projectId: 'name',
   chainId: ChainId.ETHEREUM,
   blockNumber: 1,
   timestamp: UnixTime.now(),

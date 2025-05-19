@@ -86,11 +86,11 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 })
 
 function mockRecord(
-  projectName: string,
+  projectId: string,
   chainId: ChainId = ChainId.ETHEREUM,
 ): Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'> {
   return {
-    projectName,
+    projectId,
     blockNumber: -1,
     diff: [
       {

@@ -1,4 +1,106 @@
-Generated with discovered.json: 0xf21d7e27c8e9f8d4ba708d5eaa50d9b2a07fd782
+Generated with discovered.json: 0xffed950f579632834964573de897b30cd802ce8b
+
+# Diff at Tue, 13 May 2025 05:48:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ba28053edf7fe0e2de7e027498320d49e46c825 block: 22465351
+- current block number: 22472206
+
+## Description
+
+sharp verifier call proxy upgraded: same code, upgrade delay 8d.
+
+## Watched changes
+
+```diff
+    contract SHARP Multisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions.0.delay:
++        691200
+    }
+```
+
+```diff
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      description:
+-        "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay."
++        "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay."
+      values.$pastUpgrades.8:
++        ["2022-05-02T16:49:21.000Z","0x604e235c6207b7909f6fc8dc0bd86b410e935dcf2f6f6bd37a5567a89379353a",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]]
+      values.$pastUpgrades.7.2:
+-        "0x604e235c6207b7909f6fc8dc0bd86b410e935dcf2f6f6bd37a5567a89379353a"
++        "0xc31b74237a0c68aa1b95fe2ed28ad54cf6d7df42a8beab1ea947532c95dda20a"
+      values.$pastUpgrades.7.1:
+-        "2022-05-02T16:49:21.000Z"
++        "2022-08-07T10:50:09.000Z"
+      values.$pastUpgrades.6.2:
+-        "0xc31b74237a0c68aa1b95fe2ed28ad54cf6d7df42a8beab1ea947532c95dda20a"
++        "0x4b25445a8e86b4620b9a19f747122b518d8973975ea73aa474b210395e277b66"
+      values.$pastUpgrades.6.1:
+-        "2022-08-07T10:50:09.000Z"
++        "2024-07-28T20:08:35.000Z"
+      values.$pastUpgrades.5.2:
+-        "0x4b25445a8e86b4620b9a19f747122b518d8973975ea73aa474b210395e277b66"
++        "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312"
+      values.$pastUpgrades.5.1:
+-        "2024-07-28T20:08:35.000Z"
++        "2024-02-26T09:25:23.000Z"
+      values.$pastUpgrades.3.2:
+-        "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312"
++        "0x80ebb7a22a207d00e26464db2f8a719d43eb3b836740a693aad13d5ef922f5e4"
+      values.$pastUpgrades.3.1:
+-        "2024-02-26T09:25:23.000Z"
++        "2021-10-24T13:06:25.000Z"
+      values.$pastUpgrades.2.2:
+-        "0x80ebb7a22a207d00e26464db2f8a719d43eb3b836740a693aad13d5ef922f5e4"
++        "0xbaa8ffb1b7e5177dbf75de753b9b2ff2fc313b244ff910cfd6d7f1f6254b6e1a"
+      values.$pastUpgrades.2.1:
+-        "2021-10-24T13:06:25.000Z"
++        "2023-03-06T12:34:23.000Z"
+      values.$pastUpgrades.1.2:
+-        "0xbaa8ffb1b7e5177dbf75de753b9b2ff2fc313b244ff910cfd6d7f1f6254b6e1a"
++        "0x7c71592ea4c455371365d843f1a21bbf647aad7d6fae12f7187650ce24805f00"
+      values.$pastUpgrades.1.1:
+-        "2023-03-06T12:34:23.000Z"
++        "2024-07-28T10:07:47.000Z"
+      values.$pastUpgrades.0.2:
+-        "0x7c71592ea4c455371365d843f1a21bbf647aad7d6fae12f7187650ce24805f00"
++        "2025-05-12T16:09:35.000Z"
+      values.$pastUpgrades.0.1:
+-        "2024-07-28T10:07:47.000Z"
++        "0x0764cd09cc5c9a96b151dd222bf14b9c33111c80bdddf27721a6406f4c0e1f3f"
+      values.$upgradeCount:
+-        8
++        9
+      values.getUpgradeActivationDelay:
+-        0
++        691200
+      values.StarkWareProxy_upgradeDelay:
+-        0
++        691200
+      values.upgradeActivationDelayFmt:
+-        "0s"
++        "8d"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22465351 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.
+      description:
+-        "Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay."
++        "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay."
+    }
+```
+
+Generated with discovered.json: 0x0e63db5716c9630ee782d0345007f309df32bb45
 
 # Diff at Tue, 29 Apr 2025 08:19:11 GMT:
 

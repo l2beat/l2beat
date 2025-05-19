@@ -11,7 +11,7 @@ export class UpdateMonitorRepository extends BaseRepository {
     const row = await this.db
       .selectFrom('UpdateMonitor')
       .select(selectUpdateMonitor)
-      .where('projectName', '=', name)
+      .where('projectId', '=', name)
       .where('chainId', '=', +chainId)
       .limit(1)
       .executeTakeFirst()
@@ -30,7 +30,7 @@ export class UpdateMonitorRepository extends BaseRepository {
         .insertInto('UpdateMonitor')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['projectName', 'chainId']).doUpdateSet((eb) => ({
+          cb.columns(['projectId', 'chainId']).doUpdateSet((eb) => ({
             blockNumber: eb.ref('excluded.blockNumber'),
             timestamp: eb.ref('excluded.timestamp'),
             discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),

@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the whitelist."
+        }
+      ]
+    },
+    "whitelistedContractsAC": {
+      "description": "Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "WHITELISTED_ROLE"
+      }
+    },
+    "whitelistedSendersAC": {
+      "description": "Addresses with this role are on the whitelist as senders for requestL2Transaction() calls.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SUPERUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender)."
+        }
+      ]
+    }
+  }
+}

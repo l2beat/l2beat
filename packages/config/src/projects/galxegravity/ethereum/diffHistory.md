@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x13ab61568372c40f1176e213f43a04c64780127a
+
+# Diff at Fri, 09 May 2025 10:57:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b9a3516de49f42efd9d26f04918d74a8d92c6204 block: 22396423
+- current block number: 22445463
+
+## Description
+
+hostIO verified, blobstreamed!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22396423 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (0x856EA788977Bc771E8Ca87471baeC507A0f54771) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) as source of truth for the DA referenced by the fault proof.
+      unverified:
+-        true
+      description:
+-        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) as source of truth for the DA referenced by the fault proof."
+      values.BLOBSTREAM:
++        "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+      values.CELESTIA_MESSAGE_HEADER_FLAG:
++        "0x63"
+      implementationNames.0x856EA788977Bc771E8Ca87471baeC507A0f54771:
+-        ""
++        "OneStepProverHostIo"
+      template:
++        "orbitstack/OneStepProverHostIo_Celestia"
+      sourceHashes:
++        ["0x73c3c22d54ad12907dffd5f715cea7f724c65ba212d2b3da84ded2333fd76ce8"]
+    }
+```
+
 Generated with discovered.json: 0x5b5f4a34afa4bf24220db86c335b75aaddf18355
 
 # Diff at Fri, 02 May 2025 17:23:43 GMT:

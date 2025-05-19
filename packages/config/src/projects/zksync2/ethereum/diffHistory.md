@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xd2899a9bfade6cf411bd9ad148e962e10eb6f625
+
+# Diff at Wed, 14 May 2025 14:05:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e40b87963942c5b1b364373f150a7eda9e4eccd block: 22423771
+- current block number: 22481883
+
+## Description
+
+Add 2 new validators behind the VTL.
+
+## Watched changes
+
+```diff
+    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
+```
+
+```diff
+    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.1:
+-        "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
++        "0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2"
+      values.validatorsVTL.0:
+-        "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
++        "0x30066439887C0a509Cb38E45c9262E6924a29BbD"
+    }
+```
+
 Generated with discovered.json: 0xa0e608f9b2aa3c829d780c5b3f7254234fc271a2
 
 # Diff at Tue, 06 May 2025 10:31:21 GMT:

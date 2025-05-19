@@ -25,7 +25,8 @@ export const DeploymentTimestamp = command({
       console.log('Contract not found')
       return
     }
-
+    const date = new Date(timestamp * 1000)
+    console.log(date.toISOString())
     console.log(timestamp.toString())
   },
 })

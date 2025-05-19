@@ -26,6 +26,49 @@
     "0x62478E4eeb4070fE399866aB05e821AB97200947": "RewardEscrowerMultisig"
   },
   "overrides": {
+    "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": {
+      // disputegamefactory
+      "fields": {
+        "gameImpls": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        },
+        "initBonds": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        }
+        // "permissionedGamesTotal": {
+        //   "handler": {
+        //     "type": "eventCount",
+        //     "topics": [
+        //       "0x5b565efe82411da98814f356d0e7bcb8f0219b8d970307c5afb4a6903a8b2e35", //DisputeGameCreated
+        //       null, // disputeProxy
+        //       "0x0000000000000000000000000000000000000000000000000000000000000001" // gameType
+        //     ]
+        //   }
+        // }
+      }
+    },
+    "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": {
+      // FaultDisputeGame
+      "ignoreMethods": [
+        "getNumToResolve",
+        "resolutionCheckpoints",
+        "resolvedSubgames"
+      ]
+    },
+    "0x789a64284e29d2225430606D3D89a9336870BBbC": {
+      //PreimageOracle
+      "ignoreMethods": ["zeroHashes"]
+    },
+    "0xfA947f70c3509d5b70A606e871aE0C85397D0738": {
+      //delayedWmetis
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     "0x62478E4eeb4070fE399866aB05e821AB97200947": {
       // RewardEscrowerMultisig
       "description": "Escrows staking rewards for Sequencers.",
@@ -71,6 +114,13 @@
     "0x918778e825747a892b17C66fe7D24C618262867d": {
       // Lib_AddressManager
       "fields": {
+        "DisputeGameFactory": {
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["DisputeGameFactory"]
+          }
+        },
         "BondManager": {
           "handler": {
             "type": "call",

@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import type {
@@ -9,13 +8,12 @@ import type {
 } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { isReadOnly } from '../config'
-import { IconCopy } from '../icons/IconCopy'
-import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
+import { TemplateDialog } from './template-dialog/TemplateDialog'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -95,30 +93,37 @@ function Display({
   chain: string
   blockNumber: number
 }) {
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
   const address = getAddressToCopy(selected)
 
-  const copy = address && canCopy(selected) && !isReadOnly && (
-    <CopyAddShapeCommand
-      chain={chain}
-      address={address}
-      name={selected.name}
-      blockNumber={blockNumber}
-    />
+  const dialog = address && canAddShape(selected) && !isReadOnly && (
+    <TemplateDialog.Root>
+      <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
+      <TemplateDialog.Body
+        address={address}
+        project={project}
+        chain={chain}
+        blockNumber={blockNumber}
+      />
+    </TemplateDialog.Root>
   )
 
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
-        <p className="flex items-center">
-          <p className="flex items-center gap-1 font-bold">
+        <div className="flex items-center">
+          <div className="flex items-center gap-1 font-bold">
             <AddressIcon type={selected.type} />
             {selected.name ?? 'Unknown'}
             {selected.type === 'Unverified' && (
               <span className="text-aux-red"> (Unverified)</span>
             )}
-          </p>
-          {copy}
-        </p>
+          </div>
+          {dialog}
+        </div>
         <WithHeadline headline="Address">
           <AddressDisplay
             simplified
@@ -230,39 +235,6 @@ function Display({
   )
 }
 
-function CopyAddShapeCommand(props: {
-  chain: string
-  address: string
-  blockNumber: number
-  name?: string
-}) {
-  const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    if (copied) {
-      const command = `l2b add-shape ${props.chain} ${props.address} ${props.blockNumber} "${props.name ?? '<NAME>'}.sol" <TEMPLATE_NAME>`
-
-      void navigator.clipboard.writeText(command)
-      const timeout = setTimeout(() => setCopied(false), 1000)
-      return () => clearTimeout(timeout)
-    }
-  }, [props, copied, setCopied])
-
-  return (
-    <button
-      className="flex items-center justify-center gap-1 px-2 py-1 text-coffee-400 text-xs underline underline-offset-2 hover:text-coffee-300"
-      onClick={(e) => {
-        e.preventDefault()
-        setCopied(true)
-      }}
-    >
-      Copy shape command
-      {!copied && <IconCopy className="text-coffee-400" />}
-      {copied && <IconTick className="text-aux-green" />}
-    </button>
-  )
-}
-
 function getAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
   const address = findAddressToCopy(selected)
 
@@ -293,14 +265,20 @@ function findAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
   }
 
   if (implementations.value.type === 'array') {
-    // skipping the array type explicity
-    return
+    // diamonds
+    const [first] = implementations.value.values
+
+    if (!first) {
+      return selected.address
+    }
+
+    return first.type === 'address' ? first.address : selected.address
   }
 
   return selected.address
 }
 
-function canCopy(selected: ApiProjectContract | ApiAddressEntry) {
+function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
   return (
     selected.type !== 'Unverified' &&
     selected.type !== 'Unknown' &&

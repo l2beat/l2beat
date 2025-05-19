@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x3e29cbed7936fc18e6a5f3001eb0f1b598168a1a
+
+# Diff at Fri, 16 May 2025 13:00:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 333894848
+- current block number: 337288646
+
+## Description
+
+MS member change (l2 nominee vetter).
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) {
+    +++ description: None
+      values.$members.3:
+-        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
++        "0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6"
+      values.$members.2:
+-        "0xa98290a7A282d8249544D35b288E160A5580D57E"
++        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
+      values.$members.1:
+-        "0x25032D068633cfbe52c134EBdD965b2C2B4C2710"
++        "0xa98290a7A282d8249544D35b288E160A5580D57E"
+    }
+```
+
+Generated with discovered.json: 0xad1d0d3dcd1f3a6cdbd9c3acf8d45af766f85290
+
+# Diff at Mon, 12 May 2025 13:18:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e25d362b71032c18a3417a2307d6923e1b5a519 block: 333894848
+- current block number: 333894848
+
+## Description
+
+replace medium severity everywhere.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 333894848 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      fieldMeta.getBothCohorts.severity:
+-        "MEDIUM"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0x8fb6bd77def2bce4e1a64221a4584b2b177855ae
 
 # Diff at Tue, 06 May 2025 15:56:57 GMT:

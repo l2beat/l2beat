@@ -2,13 +2,8 @@ import type {
   EntryParameters,
   Permission,
   ReceivedPermission,
-  ResolvedPermissionPath,
 } from '@l2beat/discovery'
-import {
-  type EthereumAddress,
-  formatSeconds,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { type EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
@@ -22,6 +17,7 @@ import {
   formatPermissionDelay,
   formatPermissionDescription,
   isMultisigLike,
+  trimTrailingDots,
 } from './utils'
 
 export class PermissionsFromDiscovery implements PermissionRegistry {
@@ -53,16 +49,107 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       .map((e) => e.address)
   }
 
+  describeUpgradePermissions(contractOrEoa: EntryParameters) {
+    // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
+
+    const upgradePermissions = (contractOrEoa.receivedPermissions ?? []).filter(
+      (p) => p.permission === 'upgrade',
+    )
+
+    const groupedByTotalDelays = groupBy(
+      Object.values(groupBy(upgradePermissions, (p) => p.from)).map(
+        (permissions) => ({
+          from: permissions[0].from,
+          permissionsByDelay: groupBy(permissions, (p) =>
+            totalPermissionDelay(p),
+          ),
+        }),
+      ),
+      (permission) =>
+        Object.keys(permission.permissionsByDelay).sort().join('►'),
+    )
+
+    return Object.entries(groupedByTotalDelays).map(
+      ([delays, permissionsByDelay]) => {
+        const delaysString = delays
+          .split('►')
+          .map((d) => formatPermissionDelay(Number(d)))
+          .join(' or ')
+        return [
+          `Can upgrade **${delaysString}**`,
+          ...Object.values(permissionsByDelay).map((p) => {
+            const name = this.projectDiscovery.getContract(p.from).name
+            const vias = Object.values(p.permissionsByDelay).map((p) =>
+              this.formatMultiplePermissionsVia(p),
+            )
+            return `  * ${name} ${vias.join(' - or ')}`
+          }),
+        ].join('\n')
+      },
+    )
+  }
+
+  describeInteractPermissions(contractOrEoa: EntryParameters) {
+    // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
+
+    const interactPermissions = (
+      contractOrEoa.receivedPermissions ?? []
+    ).filter((p) => p.permission === 'interact')
+
+    const groupedByGiver = groupBy(interactPermissions, (p) => p.from)
+
+    return Object.entries(groupedByGiver).map(([from, permissions]) => {
+      const name = this.projectDiscovery.getContract(from).name
+      const permissionsString = Object.entries(
+        groupBy(permissions, (p) => p.description),
+      )
+        .map(([description, permissions]) => {
+          const result = [`  * ${trimTrailingDots(description)}`]
+          const sumTotalDelays = sum(
+            permissions.map((p) => totalPermissionDelay(p)),
+          )
+          if (sumTotalDelays > 0) {
+            result.push(
+              `**${permissions.map((p) => formatPermissionDelay(totalPermissionDelay(p))).join(' or ')}**`,
+            )
+          }
+          result.push(this.formatMultiplePermissionsVia(permissions))
+          return result.join(' ')
+        })
+        .join('\n')
+      return `Can interact with ${name}\n${permissionsString}`
+    })
+  }
+
+  describeLegacyPermissions(contractOrEoa: EntryParameters) {
+    const excludedPermissions: ReceivedPermission['permission'][] = [
+      'act',
+      'upgrade',
+      'interact',
+      'member',
+    ] satisfies ReceivedPermission['permission'][]
+    return (contractOrEoa.receivedPermissions ?? [])
+      .filter((p) => !excludedPermissions.includes(p.permission))
+      .map((p) => {
+        const prefix = UltimatePermissionToPrefix[p.permission]
+        const via = this.formatPermissionVia(p)
+        return `${prefix} ${via}`
+      })
+  }
+
   describePermissions(
     contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ) {
-    return [
-      ...(includeDirectPermissions
-        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-        : []),
-      ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
-    ].filter(notUndefined)
+    const upgrade = this.describeUpgradePermissions(contractOrEoa)
+    const interact = this.describeInteractPermissions(contractOrEoa)
+    const legacy = this.describeLegacyPermissions(contractOrEoa)
+    const direct = includeDirectPermissions
+      ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+      : []
+    return [...direct, ...upgrade, ...interact, ...legacy].filter(
+      (s) => s !== '',
+    )
   }
 
   describeDirectlyReceivedPermissions(
@@ -112,65 +199,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     })
   }
 
-  describeUltimatelyReceivedPermissions(
-    contractOrEoa: EntryParameters,
-  ): string[] {
-    const formatVia = (via: ResolvedPermissionPath[]) =>
-      `- acting via ${via.map((p) => this.projectDiscovery.formatViaPath(p)).join(', ')}`
-
-    return Object.entries(
-      groupBy(
-        contractOrEoa.receivedPermissions ?? [],
-        (value: ReceivedPermission) => {
-          return [
-            value.permission,
-            value.via !== undefined ? formatVia(value.via) : '',
-            value.description ?? '',
-            value.condition ?? '',
-            value.delay?.toString() ?? '',
-          ].join('►')
-        },
-      ),
-    ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as Permission
-      const via = key.split('►')[1] ?? ''
-      const description = key.split('►')[2] ?? ''
-      const condition = key.split('►')[3] ?? ''
-      const delay = key.split('►')[4] ?? ''
-      const prefix = UltimatePermissionToPrefix[permission]
-      if (prefix === undefined) {
-        return ''
-      }
-
-      const permissionsRequiringTarget: Permission[] = [
-        'interact',
-        'upgrade',
-        'act',
-      ]
-      const showTargets = permissionsRequiringTarget.includes(permission)
-      const addressesString = showTargets
-        ? entries
-            .map(
-              (entry) =>
-                this.projectDiscovery.getContract(entry.from.toString()).name,
-            )
-            .join(', ')
-        : ''
-
-      return `${[
-        UltimatePermissionToPrefix[permission as Permission],
-        addressesString,
-        formatPermissionDescription(description),
-        formatPermissionCondition(condition),
-        delay === '' ? '' : formatPermissionDelay(Number(delay)),
-        via,
-      ]
-        .filter((s) => s !== '')
-        .join(' ')
-        .trim()}.`
-    })
-  }
-
   getUpgradableBy(
     contract: EntryParameters,
   ): { name: string; delay: string }[] {
@@ -210,4 +238,43 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           : formatSeconds(upgradersWithDelay[actor]),
     }))
   }
+
+  formatMultiplePermissionsVia(permissions: ReceivedPermission[]) {
+    const sumTotalDelays = sum(permissions.map((p) => totalPermissionDelay(p)))
+    const sumAllVias = sum(permissions.map((p) => p.via?.length ?? 0))
+    if (sumTotalDelays === 0 && sumAllVias === 0) {
+      return ''
+    }
+    const result = permissions
+      .map((p) => this.formatPermissionVia(p))
+      .join(' - or ')
+    return `[via: ${result}]`
+  }
+
+  formatPermissionVia(receivedPermission: ReceivedPermission) {
+    const reversedVia = [...(receivedPermission.via ?? [])].reverse()
+    const result = []
+    if (reversedVia.length > 0) {
+      result.push('- acting via')
+      result.push(
+        reversedVia
+          .map((p) => this.projectDiscovery.formatViaPath(p))
+          .join(' → '),
+      )
+    } else {
+      result.push('- acting directly')
+    }
+    // if via is empty, there still may be a direct delay or condition:
+    if (receivedPermission.delay) {
+      result.push(formatPermissionDelay(receivedPermission.delay))
+    }
+    if (receivedPermission.condition) {
+      result.push(formatPermissionCondition(receivedPermission.condition))
+    }
+    return result.join(' ')
+  }
+}
+
+function totalPermissionDelay(p: ReceivedPermission): number {
+  return (p.delay ?? 0) + sum((p.via ?? []).map((v) => v.delay ?? 0))
 }

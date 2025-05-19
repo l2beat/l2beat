@@ -87,7 +87,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
+              "condition": "(no delay if in emergency state)"
             }
           ]
         },
@@ -101,12 +101,12 @@
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay",
+          "condition": "(no delay if in emergency state)",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
+              "condition": "(no delay if in emergency state)"
             }
           ]
         },
@@ -115,7 +115,7 @@
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay"
+          "condition": "(no delay if in emergency state)"
         },
         {
           "permission": "upgrade",
@@ -125,7 +125,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
+              "condition": "(no delay if in emergency state)"
             }
           ]
         },
@@ -137,7 +137,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
+              "condition": "(no delay if in emergency state)"
             }
           ]
         },
@@ -149,7 +149,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there would be no delay"
+              "condition": "(no delay if in emergency state)"
             }
           ]
         }
@@ -159,7 +159,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
-          "condition": "there is no emergency state, in which case there would be no delay"
+          "condition": "(no delay if in emergency state)"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -724,7 +724,7 @@
           "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
         },
         "rollupsDataV2": {
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"
         },
         "rollupTypes": {
@@ -912,7 +912,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
-          "condition": "there is no emergency state, in which case there would be no delay"
+          "condition": "(no delay if in emergency state)"
         },
         {
           "permission": "interact",
@@ -924,7 +924,7 @@
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "condition": "there is no emergency state, in which case there would be no delay"
+          "condition": "(no delay if in emergency state)"
         }
       ],
       "sinceTimestamp": 1679653187,
@@ -1653,7 +1653,7 @@
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
     "polygon-cdk/PolygonRollupManager_pessimistic": "0x5e1d98de3ff46a75b64cc2f65431dc2eb78d843aa0f1dcd462a2dbd073a6bf97",
     "polygon-cdk/PolygonSharedBridge": "0x79b4355cba744a06d8705695336f169622edf05c3f32b1ae35da91fa577c536c",
-    "polygon-cdk/Timelock": "0xc5d0dec6b83e90bebb0f07296040e0d5888be19daf2500e48b25c48f27a17d0f"
+    "polygon-cdk/Timelock": "0x3f5d5523ccf7da29d1906039ac58c1201abf0deb7f65c30d122606cb2fd20468"
   },
-  "permissionsConfigHash": "0x8c520e587126cfbf8447b8e9552e8ff5ea322d5bbafec09a9f9980a1e578f15f"
+  "permissionsConfigHash": "0x7365af2cce295f619376bcb40303311e3d5c7459b624e20e8d01b53da4bdb072"
 }

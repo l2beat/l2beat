@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22437978,
+  "blockNumber": 22496282,
   "configHash": "0x1ae9b6d7d3421c2b2d93c40ef6367efc6ef88c7d48440d6dae7db429b91d4f79",
   "entries": [
     {
@@ -393,11 +393,16 @@
             "chainId": 51888,
             "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0x21bFaD8F0f781F367ACCb5276199B0c0E819CbD9"
+          },
+          {
+            "chainId": 9075,
+            "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
           }
         ],
         "getAllZKChainChainIDs": [
           324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217,
-          2904, 375, 51888
+          2904, 375, 51888, 9075
         ],
         "getAllZKChains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -414,7 +419,8 @@
           "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
           "0x742A28e22277945BBAAa34810393bf6e8512576C",
           "0x270bF3978FeA60719Dd25A400EbE6969bF451493",
-          "0xD231E2fD0DeC5993fCeae3E504930631876e8C63"
+          "0xD231E2fD0DeC5993fCeae3E504930631876e8C63",
+          "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
         ],
         "L1_CHAIN_ID": 1,
         "l1CtmDeployer": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
@@ -657,7 +663,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 196,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -794,12 +800,12 @@
         ],
         "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "chainCount": 16,
-        "getAggregatedRoot": "0xd893aacecf7a4ed2d1aa0c30c3b52d12388abecacbaa7b6e63a5a7f00178f1cf",
+        "chainCount": 17,
+        "getAggregatedRoot": "0x3915543a6d021896bf955b7f4eb63ef57a27b8b1412eb83de831d169ff0db864",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "sharedTree": { "_height": 4, "_leafNumber": 16 }
+        "sharedTree": { "_height": 5, "_leafNumber": 17 }
       },
       "implementationNames": {
         "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": "TransparentUpgradeableProxy",
@@ -1276,6 +1282,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x98E24e308c4B7cdADcf4d116B2B8939a21420bA1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
       "type": "Contract",
@@ -1327,6 +1338,8 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
+          "0x98E24e308c4B7cdADcf4d116B2B8939a21420bA1",
           "0xc8E2806A97413b5496A1ba6050b517CC98D0EfCA",
           "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e",
           "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF",
@@ -1339,8 +1352,8 @@
         "domainSeparator": "0x8990652fa175690b7ef4cf7f1ae85971a55c587ff8e565372999ea62269e9742",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 7 (14%)",
-        "nonce": 11,
+        "multisigThreshold": "1 of 9 (11%)",
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1351,6 +1364,11 @@
     },
     {
       "address": "0x9f708301AA8CB86A06D23152fE67F2bFaa094cA1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1463,9 +1481,9 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52",
           "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222",
           "0x441e5c8910Ef39996B2D01499509861228cbc2d1",
-          "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95",
           "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709",
           "0x610e45F112e0c8a9aA7137677C83E7A198A1b991"
         ],
@@ -1474,7 +1492,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1756,11 +1774,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1839,6 +1852,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProtocolUpgradeHandler",
       "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
       "type": "Contract",
@@ -1901,7 +1919,8 @@
         "CHAIN_TYPE_MANAGER": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "emergencyUpgradeBoard": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
         "emergencyUpgradesExecuted": [
-          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
+          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13",
+          "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
         ],
         "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
@@ -3035,5 +3054,5 @@
     "shared-zk-stack/v26/RollupDAManager": "0x1f13223d5cafcdf085f21bbe6e4a988bc53d13fce1257c48f223e38ac6a11eb9",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x3e6e4286503b069af3ae831757971db9232c54f7b918b92a3848a19ac8ee8401"
+  "permissionsConfigHash": "0x36d96cb7f70916d115e86b344284ac0f0ecb4f339f40da0a3b3cef7bde38a9c1"
 }

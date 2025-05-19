@@ -30,7 +30,7 @@ export function PanelHeader(props: { id: PanelId }) {
     <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
       <select
         className={clsx(
-          'border-b bg-coffee-800 font-bold text-xs uppercase max-md:w-full',
+          'rounded-none border-b bg-coffee-800 font-bold text-xs uppercase max-md:w-full',
           isActive ? 'border-coffee-200' : 'border-coffee-800',
         )}
         value={props.id}

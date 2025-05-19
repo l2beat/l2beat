@@ -2,7 +2,7 @@
   "name": "sanko",
   "chain": "arbitrum",
   "blockNumber": 332541642,
-  "configHash": "0x0fe12f7b620eefd80981cefa3aa68c720ccf7a0dec708270c528fd20b35d049a",
+  "configHash": "0x6429ed9996fc8687395fa070771aaf981e073f2d39f4f86a9ea317ce84ad612d",
   "entries": [
     {
       "address": "0x03eb90D1E10EEd08b0B3Ca1b3eb85FcFED3d94f4",

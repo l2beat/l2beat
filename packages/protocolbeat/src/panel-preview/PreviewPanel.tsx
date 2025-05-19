@@ -31,7 +31,7 @@ export function PreviewPanel() {
   }
 
   return (
-    <div className="flex h-full w-full select-none flex-col text-sm">
+    <div className="flex h-full w-full flex-col text-sm">
       <div className="sticky top-0 z-10">
         <OptionsPanel
           showOnlySelected={showOnlySelected}
@@ -209,7 +209,7 @@ function PreviewItem(props: {
         </div>
       )}
       {props.description.split('\n').map((a, idx) => (
-        <div key={idx} className="ml-2">
+        <div key={idx} className="ml-2 whitespace-pre-wrap">
           {a}
         </div>
       ))}

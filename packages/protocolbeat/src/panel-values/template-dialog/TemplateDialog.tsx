@@ -1,0 +1,285 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import clsx from 'clsx'
+import { useState } from 'react'
+import { createShape, listTemplates } from '../../api/api'
+import { Dialog } from '../../components/Dialog'
+import { DialogActions } from './DialogActions'
+import { TemplateFolder } from './TemplateFolder'
+import {
+  DialogContext,
+  type DialogStep,
+  type TemplateFormData,
+  useTemplateDialogContext,
+} from './context'
+
+interface TemplateDialogProps {
+  address: string
+  project: string
+  chain: string
+  blockNumber: number
+}
+
+export const TemplateDialog = {
+  Root: TemplateDialogRoot,
+  Trigger: TemplateDialogTrigger,
+  Body: TemplateDialogBody,
+}
+
+function TemplateDialogRoot({ children }: { children: React.ReactNode }) {
+  const [step, setStep] = useState<DialogStep>('specify-template')
+  const [formData, setFormData] = useState<TemplateFormData>({
+    templateId: '',
+    fileName: '',
+  })
+
+  return (
+    <DialogContext.Provider value={{ step, setStep, formData, setFormData }}>
+      <Dialog.Root
+        onOpenChange={(open) => {
+          if (!open) {
+            // Reset state when dialog is closed
+            setStep('specify-template')
+            setFormData({
+              templateId: '',
+              fileName: '',
+            })
+          }
+        }}
+      >
+        {children}
+      </Dialog.Root>
+    </DialogContext.Provider>
+  )
+}
+
+function TemplateDialogTrigger({
+  children,
+  disabled,
+  className,
+}: {
+  children: React.ReactNode
+  disabled?: boolean
+  className?: string
+}) {
+  return (
+    <Dialog.Trigger asChild disabled={disabled}>
+      <div
+        className={clsx(
+          'group relative ml-2 cursor-pointer overflow-hidden bg-coffee-400 px-3 py-1 font-medium text-sm text-white transition-all duration-300',
+          className,
+        )}
+      >
+        <span className="pointer-events-none absolute inset-0 animate-[disco_1.5s_linear_infinite] bg-[length:400%_400%] bg-[linear-gradient(270deg,#ff0080,#ff8c00,#40e0d0,#8a2be2)] opacity-0 transition-opacity duration-200 group-hover:opacity-80"></span>
+        <span className="relative z-10">{children}</span>
+      </div>
+    </Dialog.Trigger>
+  )
+}
+
+function TemplateDialogBody({
+  address,
+  chain,
+  blockNumber,
+}: TemplateDialogProps) {
+  const queryClient = useQueryClient()
+  const { step, setStep, formData, setFormData } = useTemplateDialogContext()
+
+  const {
+    data: templates,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['templates'],
+    queryFn: () => listTemplates(),
+  })
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      const { templateId, fileName } = formData
+      if (!templateId || !fileName) {
+        return Promise.resolve()
+      }
+      return createShape(chain, address, blockNumber, templateId, fileName)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['templates'] })
+    },
+  })
+
+  const handleFormChange = (field: keyof TemplateFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleStepChange = (newStep: DialogStep) => {
+    setStep(newStep)
+    mutation.reset()
+  }
+
+  const nonEmpty = formData.templateId && formData.fileName
+  const regexMatch = templateIdRegex.test(formData.templateId)
+  const isFormValid = Boolean(nonEmpty && regexMatch)
+
+  return (
+    <Dialog.Body>
+      <Dialog.Title className="mb-1 font-medium text-lg">
+        Add new shape
+      </Dialog.Title>
+
+      {isLoading && <LoadingState />}
+      {isError && <ErrorState />}
+
+      {templates && step === 'specify-template' && (
+        <SpecifyTemplate
+          templates={templates}
+          formData={formData}
+          onFormChange={handleFormChange}
+        />
+      )}
+
+      {step === 'finalize-creation' && (
+        <TemplateSummary formData={formData} address={address} chain={chain} />
+      )}
+
+      <DialogActions
+        step={step}
+        isFormValid={isFormValid}
+        onBack={() => handleStepChange('specify-template')}
+        onNext={() => handleStepChange('finalize-creation')}
+        onCreate={() => mutation.mutate()}
+        mutation={mutation}
+      />
+    </Dialog.Body>
+  )
+}
+
+function LoadingState() {
+  return <div className="text-center text-coffee-200">Loading templates...</div>
+}
+
+function ErrorState() {
+  return (
+    <div className="text-center text-red-400">
+      Error while loading templates
+    </div>
+  )
+}
+
+function SpecifyTemplate({
+  templates,
+  formData,
+  onFormChange,
+}: {
+  templates: Record<string, string[]>
+  formData: TemplateFormData
+  onFormChange: (field: keyof TemplateFormData, value: string) => void
+}) {
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredTemplates = Object.entries(templates).reduce<
+    Record<string, string[]>
+  >((acc, [name, entries]) => {
+    const searchLower = searchQuery.toLowerCase()
+    const nameMatches = name.toLowerCase().includes(searchLower)
+    const filteredEntries = entries.filter((entry) =>
+      entry.toLowerCase().includes(searchLower),
+    )
+
+    if (nameMatches || filteredEntries.length > 0) {
+      acc[name] = filteredEntries.length > 0 ? filteredEntries : entries
+    }
+    return acc
+  }, {})
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
+        <label className="font-medium text-xs">Template ID</label>
+        <Dialog.Input
+          value={formData.templateId}
+          onChange={(e) => onFormChange('templateId', e.target.value)}
+          type="text"
+        />
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="font-medium text-xs">Filename</label>
+        <Dialog.Input
+          type="text"
+          value={formData.fileName}
+          onChange={(e) => onFormChange('fileName', e.target.value)}
+        />
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <h3 className="font-medium text-sm">Available templates</h3>
+        <Dialog.Input
+          type="text"
+          placeholder="Search templates..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <div className="max-h-[40vh] overflow-y-auto border border-coffee-400 bg-coffee-400/10 p-1">
+          {Object.keys(filteredTemplates).length > 0 ? (
+            Object.entries(filteredTemplates).map(([name, templates]) => (
+              <TemplateFolder
+                key={name}
+                name={name}
+                entries={templates}
+                selected={formData.templateId}
+                setSelected={(id) => onFormChange('templateId', id)}
+              />
+            ))
+          ) : (
+            <div className="text-center text-coffee-400">
+              {searchQuery
+                ? 'No matching templates found'
+                : 'No templates found'}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TemplateSummary({
+  formData,
+  address,
+  chain,
+}: {
+  formData: TemplateFormData
+  address: string
+  chain: string
+}) {
+  const details = [
+    { label: 'Template ID', value: formData.templateId },
+    { label: 'Filename', value: formData.fileName },
+    { label: 'Address', value: address },
+    { label: 'Chain', value: chain },
+  ]
+
+  return (
+    <div className="space-y-2 border border-coffee-400 bg-coffee-400/10 p-4">
+      {details.map(({ label, value }) => (
+        <div key={label} className="flex flex-col">
+          <span className="font-medium text-coffee-400 text-xs">{label}</span>
+          <span className="text-sm">{value}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Only letters, numbers, dashes, and underscores, separated by /
+ * Dashes and underscores can only occur between alphanumeric characters
+ * Can optionally end with /
+ * No leading slash
+ * No empty segments
+ * No whitespace
+ * No backslashes
+ * No special characters except _ and - between alphanumeric characters
+ */
+const templateIdRegex = new RegExp(
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
+)

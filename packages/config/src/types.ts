@@ -373,7 +373,7 @@ export type ProjectScalingStack =
   | 'ZKsync Lite'
   | 'ZK Stack'
   | 'Loopring'
-  | 'Polygon'
+  | 'Agglayer CDK'
   | 'OVM'
   | 'SN Stack'
   | 'Taiko'

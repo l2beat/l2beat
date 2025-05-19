@@ -13,6 +13,7 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
+import { attachTemplateRouter } from './templates/router'
 
 const safeStringSchema = z
   .string()
@@ -38,6 +39,7 @@ const projectAddressParamsSchema = z.object({
 const projectSearchTermParamsSchema = z.object({
   project: safeStringSchema,
   searchTerm: z.string(),
+  address: z.string().optional(),
 })
 
 const discoverQuerySchema = z.object({
@@ -122,17 +124,28 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   if (!readonly) {
-    app.get('/api/projects/:project/codeSearch/:searchTerm', (req, res) => {
-      const paramsValidation = projectSearchTermParamsSchema.safeParse(
-        req.params,
-      )
+    attachTemplateRouter(app, templateService)
+
+    app.get('/api/projects/:project/codeSearch', (req, res) => {
+      const paramsValidation = projectSearchTermParamsSchema.safeParse({
+        project: req.params.project,
+        searchTerm: req.query.searchTerm,
+        address: req.query.address,
+      })
+
       if (!paramsValidation.success) {
         res.status(400).json({ errors: paramsValidation.error.flatten() })
         return
       }
-      const { project, searchTerm } = paramsValidation.data
+      const { project, searchTerm, address } = paramsValidation.data
 
-      const response = searchCode(paths, configReader, project, searchTerm)
+      const response = searchCode(
+        paths,
+        configReader,
+        project,
+        searchTerm,
+        address,
+      )
       res.json(response)
     })
 
@@ -145,9 +158,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       const { project, chain, devMode } = queryValidation.data
 
       executeTerminalCommand(
-        `cd ${path.dirname(paths.discovery)} && l2b discover ${chain} ${project} ${
-          devMode ? '--dev' : ''
-        }`,
+        `l2b discover ${chain} ${project} ${devMode ? '--dev' : ''}`,
         res,
       )
     })

@@ -5,7 +5,7 @@
   "fields": {
     "deputyGuardian": {
       "permissions": [
-        { "type": "act", "condition": "not revoked by the Security Council" }
+        { "type": "act", "condition": "if not revoked by the Security Council" }
       ]
     }
   }

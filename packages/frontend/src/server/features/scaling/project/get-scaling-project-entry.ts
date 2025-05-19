@@ -98,6 +98,7 @@ export interface ProjectScalingEntry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
+  discoUiHref: string
 }
 
 export async function getScalingProjectEntry(
@@ -122,12 +123,50 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsStats] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      getActivityProjectStats(project.id),
-      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    ])
+  const [
+    projectsChangeReport,
+    activityProjectStats,
+    tvsStats,
+    tvsChartData,
+    activityChartData,
+    costsChartData,
+    tokens,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    getActivityProjectStats(project.id),
+    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+    api.tvs.chart({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? api.costs.projectChart({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
+    getTokensForProject(project),
+    api.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? api.costs.projectChart.prefetch({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
+  ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
   const category = isProjectOther(project.scalingInfo)
@@ -201,45 +240,9 @@ export async function getScalingProjectEntry(
     stageConfig: isProjectOther(project.scalingInfo)
       ? { stage: 'NotApplicable' as const }
       : project.scalingStage,
+    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
   const daSolution = await getScalingDaSolution(project)
-
-  await Promise.all([
-    api.tvs.chart.prefetch({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-    }),
-    api.activity.chart.prefetch({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-    }),
-    project.scalingInfo.layer === 'layer2'
-      ? api.costs.projectChart.prefetch({
-          range: '1y',
-          projectId: project.id,
-        })
-      : undefined,
-  ])
-  const [tvsChartData, activityChartData, costsChartData, tokens] =
-    await Promise.all([
-      api.tvs.chart({
-        range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
-        excludeAssociatedTokens: false,
-      }),
-      api.activity.chart({
-        range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
-      }),
-      project.scalingInfo.layer === 'layer2'
-        ? api.costs.projectChart({
-            range: '1y',
-            projectId: project.id,
-          })
-        : undefined,
-      getTokensForProject(project),
-    ])
 
   const sections: ProjectDetailsSection[] = []
 
@@ -558,7 +561,6 @@ export async function getScalingProjectEntry(
   const permissionsSection = getPermissionsSection(
     {
       id: project.id,
-      type: project.scalingInfo.layer,
       hostChain: hostChain?.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
@@ -575,6 +577,7 @@ export async function getScalingProjectEntry(
         id: 'permissions',
         title: 'Permissions',
         permissionedEntities,
+        discoUiHref: common.discoUiHref,
       },
     })
   }
@@ -582,7 +585,6 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      type: project.scalingInfo.layer,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,
@@ -599,6 +601,7 @@ export async function getScalingProjectEntry(
         ...contractsSection,
         id: 'contracts',
         title: 'Smart contracts',
+        discoUiHref: common.discoUiHref,
       },
     })
   }

@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
@@ -49,6 +51,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                     <DesktopProjectLinks
                       projectLinks={project.header.links}
                       variant="header"
+                      discoUiHref={project.discoUiHref}
                     />
                   </div>
                   <DaProjectStats
@@ -74,6 +77,21 @@ export function RegularDaProjectSummary({ project }: Props) {
               </div>
             )}
           </div>
+
+          {project.discoUiHref && (
+            <div className="-mb-4 md:hidden">
+              <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
+              <div className="flex items-center justify-between">
+                <Link
+                  className="text-xs text-link underline"
+                  href={project.discoUiHref}
+                >
+                  Explore more in Discovery UI
+                </Link>
+                <DiscoUiLink href={project.discoUiHref} />
+              </div>
+            </div>
+          )}
 
           <div className="flex flex-col">
             <div>

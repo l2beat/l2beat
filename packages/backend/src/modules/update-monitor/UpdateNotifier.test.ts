@@ -113,7 +113,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -161,7 +161,7 @@ describe(UpdateNotifier.name, () => {
               key: 'A',
               before: '1',
               after: '2',
-              severity: 'MEDIUM',
+              severity: 'LOW',
               description: 'This should never be equal to two',
             },
           ],
@@ -188,7 +188,7 @@ describe(UpdateNotifier.name, () => {
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
           '+++ description: This should never be equal to two',
-          '+++ severity: MEDIUM',
+          '+++ severity: LOW',
           '      A:',
           '-        1',
           '+        2',
@@ -204,7 +204,7 @@ describe(UpdateNotifier.name, () => {
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
           '+++ description: This should never be equal to two',
-          '+++ severity: MEDIUM',
+          '+++ severity: LOW',
           '      A:',
           '-        1',
           '+        2',
@@ -215,7 +215,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -311,7 +311,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -385,7 +385,7 @@ describe(UpdateNotifier.name, () => {
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
-        projectName: project,
+        projectId: project,
         diff: changes,
         blockNumber: BLOCK,
         chainId: ChainId.ETHEREUM,
@@ -420,52 +420,32 @@ describe(UpdateNotifier.name, () => {
         ['project-a']: [
           {
             chainName: 'ethereum',
-            severityCounts: {
-              low: 1,
-              medium: 0,
-              high: 2,
-              unknown: 4,
-            },
+            severityCounts: { low: 1, high: 2, unknown: 4 },
           },
           {
             chainName: 'arbitrum',
-            severityCounts: {
-              low: 0,
-              medium: 0,
-              high: 0,
-              unknown: 12,
-            },
+            severityCounts: { low: 0, high: 0, unknown: 12 },
           },
         ],
         ['project-b']: [
           {
             chainName: 'ethereum',
-            severityCounts: {
-              low: 0,
-              medium: 2,
-              high: 3,
-              unknown: 0,
-            },
+            severityCounts: { low: 0, high: 3, unknown: 0 },
           },
           {
             chainName: 'optimism',
-            severityCounts: {
-              low: 0,
-              medium: 0,
-              high: 3,
-              unknown: 4,
-            },
+            severityCounts: { low: 0, high: 3, unknown: 4 },
           },
         ],
       }
       const timestamp =
         UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
-      const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
+      const headers = ['Project', 'Chain', 'High', 'Low', '???']
       const rows = [
-        ['project-b', 'ethereum', '3', '2', '', ''],
-        ['project-b', 'optimism', '3', '', '', '4'],
-        ['project-a', 'ethereum', '2', '', '1', '4'],
-        ['project-a', 'arbitrum', '', '', '', '12'],
+        ['project-b', 'optimism', '3', '', '4'],
+        ['project-b', 'ethereum', '3', '', ''],
+        ['project-a', 'ethereum', '2', '1', '4'],
+        ['project-a', 'arbitrum', '', '', '12'],
       ]
       const table = formatAsAsciiTable(headers, rows)
       const templatizationStatus = await generateTemplatizedStatus()
@@ -483,12 +463,7 @@ describe(UpdateNotifier.name, () => {
     it('truncates daily reminder', async () => {
       const randomReminder = (chain: string): DailyReminderChainEntry => ({
         chainName: chain,
-        severityCounts: {
-          low: 0,
-          medium: 0,
-          high: 0,
-          unknown: 0,
-        },
+        severityCounts: { low: 0, high: 0, unknown: 0 },
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({

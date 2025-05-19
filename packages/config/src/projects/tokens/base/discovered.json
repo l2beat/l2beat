@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 29954366,
+  "blockNumber": 30000033,
   "configHash": "0x27a2b901054959d99743aa2d6fad647d7a56e04efe87e0502503778c1ebe4d01",
   "entries": [
     {
@@ -58,6 +58,7 @@
       "address": "0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -237,6 +238,7 @@
       "address": "0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -301,7 +303,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 168,
+        "nonce": 171,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -459,7 +461,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3742848338957406,
+        "totalSupply": 3748968857132008,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -482,6 +484,7 @@
       "address": "0x88acF681fb9a1DFcE5ac83391991895C54CF24cc",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -627,7 +630,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 546815,
+        "nextAvailableNonce": 548181,
         "owner": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -720,7 +723,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "17609285493769022188519"
+        "totalSupply": "15879267724555126756958"
       },
       "implementationNames": {
         "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
@@ -1455,5 +1458,5 @@
     "tokens/circle/USDC": "0x46f93a9b087ef1d0bd774ffd53dacd0d336c4e406daf36e52eb187140bcffe70",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0x6d191346b662fc806f4d339a10f5ef25f32be205bb7d4d468956e54ab863cd07"
+  "permissionsConfigHash": "0x1b434e256fd8167b345318254a5b94abb30b06bf0f93fd5650a4a2dd910697fe"
 }

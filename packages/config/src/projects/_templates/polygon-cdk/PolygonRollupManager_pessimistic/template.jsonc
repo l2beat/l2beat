@@ -147,7 +147,7 @@
     },
     "rollupsDataV2": {
       "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]",
-      "severity": "MEDIUM",
+      "severity": "LOW",
       "handler": {
         "type": "array",
         "method": "rollupIDToRollupDataV2",

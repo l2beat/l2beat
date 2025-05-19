@@ -4,7 +4,7 @@ import type { Insertable, Selectable } from 'kysely'
 import type { UpdateMonitor } from '../../kysely/generated/types'
 
 export interface UpdateMonitorRecord {
-  projectName: string
+  projectId: string
   chainId: ChainId
   blockNumber: number
   timestamp: UnixTime | null
@@ -14,7 +14,7 @@ export interface UpdateMonitorRecord {
 
 export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
   return {
-    projectName: record.projectName,
+    projectId: record.projectId,
     chainId: +record.chainId,
     blockNumber: record.blockNumber,
     timestamp:
@@ -26,7 +26,7 @@ export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
 
 export function toRecord(row: Selectable<UpdateMonitor>): UpdateMonitorRecord {
   return {
-    projectName: row.projectName,
+    projectId: row.projectId,
     chainId: ChainId(row.chainId),
     blockNumber: row.blockNumber,
     timestamp: row.timestamp ? UnixTime.fromDate(row.timestamp) : null,

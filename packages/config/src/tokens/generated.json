@@ -7076,6 +7076,28 @@
       "supply": "zero"
     },
     {
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1717433111,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped Ether",
       "coingeckoId": "weth",
       "address": "0x4200000000000000000000000000000000000006",
@@ -8304,6 +8326,29 @@
       }
     },
     {
+      "name": "Stargate USD₮0 (Bridged)",
+      "coingeckoId": "usdt0",
+      "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1743180125,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 1135,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      },
+      "excludeFromTotal": true
+    },
+    {
       "name": "Bridged USDC (Stargate)",
       "coingeckoId": "usd-coin",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
@@ -8836,6 +8881,28 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
       "chainId": 1923,
       "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Relend Network USDC",
+      "coingeckoId": "relend-network-usdc-swell",
+      "address": "0x9ab96A4668456896d45c301Bc3A15Cee76AA7B8D",
+      "symbol": "rUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1742921345,
+      "coingeckoListingTimestamp": 1745971200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55341/large/rUSDC-_200x200.png?1745506753",
+      "chainId": 1923,
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -9598,6 +9665,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Superseed",
+      "coingeckoId": "superseed",
+      "address": "0x6EA1fFcbD7F5D210dB07D9E773862B0512fA219B",
+      "symbol": "SUPR",
+      "decimals": 18,
+      "deploymentTimestamp": 1743161747,
+      "coingeckoListingTimestamp": 1746403200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55519/large/Small.png?1746469855",
+      "chainId": 5330,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "USDC",

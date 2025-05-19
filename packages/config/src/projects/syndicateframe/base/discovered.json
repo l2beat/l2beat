@@ -1,7 +1,7 @@
 {
   "name": "syndicateframe",
   "chain": "base",
-  "blockNumber": 29954282,
+  "blockNumber": 30222952,
   "configHash": "0x39ebd939e63354710ae4e0ea4bb4a9f95cde0812abd213cc9b268287fac3d368",
   "entries": [
     {
@@ -40,7 +40,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623266",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623923",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -105,10 +105,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 19644480,
-        "latestOutputIndex": 27283,
-        "nextBlockNumber": 19645200,
-        "nextOutputIndex": 27284,
+        "latestBlockNumber": 19932480,
+        "latestOutputIndex": 27683,
+        "nextBlockNumber": 19933200,
+        "nextOutputIndex": 27684,
         "PROPOSER": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1707367873,
@@ -160,7 +160,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 29953582
+          "prevBlockNum": 30222056
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",

@@ -1,8 +1,8 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 334476520,
-  "configHash": "0xd844415626cea44bf72c88632a8a3b70f73eac7fba2e7b9396d7b17bd3004742",
+  "blockNumber": 336629722,
+  "configHash": "0xc4ee1a2381470dba206461c743ae890ad2597bad5fd84a40af347ce5003735cc",
   "entries": [
     {
       "name": "RollupProxy",
@@ -59,13 +59,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1520,
+        "firstUnresolvedNode": 1545,
         "inbox": "0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 1519,
-        "latestNodeCreated": 1545,
+        "latestConfirmed": 1544,
+        "latestNodeCreated": 1570,
         "loserStakeEscrow": "0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -190,7 +190,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 19461,
+        "batchCount": 24832,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"],
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
@@ -221,7 +221,7 @@
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 39063,
+        "totalDelayedMessagesRead": 39167,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -586,14 +586,21 @@
       "name": "OneStepProverHostIo",
       "address": "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8",
       "type": "Contract",
-      "unverified": true,
+      "template": "orbitstack/OneStepProverHostIo_Celestia",
+      "sourceHashes": [
+        "0xd8aa733150471ae7c5f80c9da64d49d363b060d6a993934483a9c749033b3678"
+      ],
       "proxyType": "immutable",
-      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
       "sinceTimestamp": 1746599902,
       "sinceBlock": 334105349,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "BLOBSTREAM": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+        "CELESTIA_MESSAGE_HEADER_FLAG": "0x63"
+      },
       "implementationNames": {
-        "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8": ""
+        "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8": "OneStepProverHostIo"
       }
     },
     {
@@ -921,7 +928,7 @@
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
         ],
         "allowedOutboxList": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
-        "delayedMessageCount": 39065,
+        "delayedMessageCount": 39167,
         "inboxHistory": [
           "0x235000876bd58336C802B3546Fc0250f285fCc79",
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -931,8 +938,8 @@
         "outboxHistory": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 19461,
-        "sequencerReportedSubMessageCount": 9487626
+        "sequencerMessageCount": 24832,
+        "sequencerReportedSubMessageCount": 12981921
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1324,6 +1331,11 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8": [
+      "function BLOBSTREAM() view returns (address)",
+      "function CELESTIA_MESSAGE_HEADER_FLAG() view returns (bytes1)",
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
     "0x7DD439Ec22c91b0703EE7d80175fd8d5319906A1": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
       "error CallNotAllowed()",
@@ -1671,6 +1683,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverHostIo_Celestia": "0xdfb89dfaf2aa0cc0cb0a1be0072f20b1716aa3be62152610175c896630a839de",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",

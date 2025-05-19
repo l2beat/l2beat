@@ -3,7 +3,7 @@ import type { Insertable, Selectable } from 'kysely'
 import type { FlatSources } from '../../kysely/generated/types'
 
 export interface FlatSourcesRecord {
-  projectName: string
+  projectId: string
   chainId: ChainId
   blockNumber: number
   contentHash: Hash256
@@ -15,7 +15,7 @@ export function toRow(
   flat?: FlatSourcesRecord['flat'],
 ): Insertable<FlatSources> {
   const result = {
-    projectName: record.projectName,
+    projectId: record.projectId,
     chainId: +record.chainId,
     blockNumber: record.blockNumber,
     contentHash: record.contentHash.toString(),
@@ -25,7 +25,7 @@ export function toRow(
 
 export function toRecord(row: Selectable<FlatSources>): FlatSourcesRecord {
   return {
-    projectName: row.projectName,
+    projectId: row.projectId,
     chainId: ChainId(row.chainId),
     blockNumber: row.blockNumber,
     contentHash: Hash256(row.contentHash),

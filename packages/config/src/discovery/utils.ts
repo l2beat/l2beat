@@ -21,9 +21,9 @@ export function trimTrailingDots(s: string): string {
 }
 
 export function formatPermissionCondition(condition: string): string {
-  return condition !== '' ? `if ${trimTrailingDots(condition)}` : ''
+  return condition !== '' ? `${trimTrailingDots(condition)}` : ''
 }
 
 export function formatPermissionDelay(delay: number): string {
-  return ` with ${formatSeconds(delay)} delay`
+  return delay === 0 ? 'with no delay' : `with ${formatSeconds(delay)} delay`
 }

@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x83e0b2381655e43ece40ccff630cdc0b00b972b3
+
+# Diff at Mon, 12 May 2025 12:17:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43865580b95b7ff3abb4f43944aed50cc5d69ee3 block: 22438139
+- current block number: 22467145
+
+## Description
+
+vkeys updated.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x001af5448a91ee21b97b3efdea14deb54acca359d368628d21bb4b14adabe552"
++        "0x00a4fec570ddb93572e5312e1debb095562fea9ae099622c6f7c9d145d87517f"
+      values.rangeVkeyCommitment:
+-        "0x5c50d96d27a21e1a4c24736d404c7ead0f4ee056517bbe2c32e2557a5bb44436"
++        "0x5614b4dc4d7a1c33681c404a27aa1db265ea84b75047859667fed5a303a8dc43"
+    }
+```
+
+Generated with discovered.json: 0x3739031654784ad577eb4fe7552c5a0cd3a28bf8
+
+# Diff at Fri, 09 May 2025 10:09:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c3a1d49c07f4092914d62c65181e5fec18a88318 block: 22438139
+- current block number: 22438139
+
+## Description
+
+Config related: Move IFs to the editable string for condition configs (yeet IFs from the automatic resolver).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438139 (main branch discovery), not current.
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.2.via.0.condition:
+-        "restricted to the global pause function"
++        "though restricted to the global pause function"
+      receivedPermissions.1.via.3.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+      receivedPermissions.1.via.1.address:
+-        "0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.1.via.1.condition:
+-        "restricted to the global pause function"
+      receivedPermissions.1.via.0.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.1.via.0.condition:
++        "though restricted to the global pause function"
+      receivedPermissions.0.via.0.condition:
+-        "restricted to the global pause function"
++        "though restricted to the global pause function"
+      directlyReceivedPermissions.0.condition:
+-        "restricted to the global pause function"
++        "though restricted to the global pause function"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.via.0.condition:
+-        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
++        "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+      directlyReceivedPermissions.0.condition:
+-        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
++        "if the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1.via.1.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+      directlyReceivedPermissions.0.condition:
+-        "not revoked by the Security Council"
++        "if not revoked by the Security Council"
+    }
+```
+
 Generated with discovered.json: 0x86de04e8c2bd9466cd43bdf8141b1d819fb2a890
 
 # Diff at Thu, 08 May 2025 10:53:13 GMT:

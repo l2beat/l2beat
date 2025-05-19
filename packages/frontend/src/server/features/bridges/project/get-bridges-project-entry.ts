@@ -59,6 +59,7 @@ export interface BridgesProjectEntry {
     validatedBy: TableReadyValue
   }
   sections: ProjectDetailsSection[]
+  discoUiHref: string
 }
 
 export async function getBridgesProjectEntry(
@@ -129,6 +130,7 @@ export async function getBridgesProjectEntry(
       category: project.bridgeInfo.category,
       validatedBy: project.bridgeRisks.validatedBy,
     },
+    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
 
   await api.tvs.chart.prefetch({
@@ -248,7 +250,6 @@ export async function getBridgesProjectEntry(
 
   const permissionsSection = getPermissionsSection(
     {
-      type: 'bridge',
       id: project.id,
       isUnderReview: project.statuses.isUnderReview,
       permissions: project.permissions,
@@ -262,13 +263,13 @@ export async function getBridgesProjectEntry(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        discoUiHref: common.discoUiHref,
       },
     })
   }
 
   const contractsSection = getContractsSection(
     {
-      type: 'bridge',
       id: project.id,
       slug: project.slug,
       isVerified: !project.statuses.isUnverified,
@@ -285,6 +286,7 @@ export async function getBridgesProjectEntry(
         id: 'contracts',
         title: 'Smart contracts',
         ...contractsSection,
+        discoUiHref: common.discoUiHref,
       },
     })
 

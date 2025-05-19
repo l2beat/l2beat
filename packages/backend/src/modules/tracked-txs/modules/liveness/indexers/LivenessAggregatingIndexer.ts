@@ -1,13 +1,11 @@
-import type {
-  AggregatedLivenessRange,
-  AggregatedLivenessRecord,
-  Database,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
+import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import {
-  type ProjectId,
+  ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
@@ -19,7 +17,6 @@ import {
 } from '../services/LivenessWithConfigService'
 import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
-import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
@@ -38,37 +35,18 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     safeHeight: number,
     parentSafeHeight: number,
   ): Promise<number> {
-    const now = UnixTime.now()
-    const endOfPreviousDay = UnixTime.toStartOf(now, 'day') - 1
-    let targetHeight = UnixTime.toEndOf(safeHeight, 'day') - 1
+    const from =
+      safeHeight <= this.$.minHeight
+        ? this.$.minHeight
+        : UnixTime.toStartOf(safeHeight, 'hour')
+    const endOfHour = UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
 
-    if (parentSafeHeight <= endOfPreviousDay) {
-      this.logger.info('Not enough data to calculate - skipping', {
-        parentSafeHeight,
-      })
-      return parentSafeHeight
-    }
+    const to = parentSafeHeight > endOfHour ? endOfHour : parentSafeHeight
 
-    if (targetHeight < endOfPreviousDay) {
-      targetHeight = endOfPreviousDay
-      this.logger.info('Adjusting target height', { targetHeight })
-    }
-
-    if (targetHeight > parentSafeHeight) {
-      this.logger.info('Up to date - skipping', {
-        targetHeight,
-        parentSafeHeight,
-      })
-      return parentSafeHeight
-    }
-
-    this.logger.info('Recalculating liveness data', { targetHeight })
-
-    const updatedLivenessRecords = await this.generateLiveness(targetHeight)
+    const updatedLivenessRecords = await this.generateLiveness(from, to)
 
     await this.$.db.aggregatedLiveness.upsertMany(updatedLivenessRecords)
-
-    return parentSafeHeight
+    return to
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -78,108 +56,119 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
   }
 
   async generateLiveness(
-    syncTo: UnixTime,
+    from: UnixTime,
+    to: UnixTime,
   ): Promise<AggregatedLivenessRecord[]> {
-    const aggregatedRecords: AggregatedLivenessRecord[] = []
+    const aggregatedRecords: (AggregatedLivenessRecord | undefined)[] = []
 
     const configurations = await this.$.indexerService.getSavedConfigurations(
       'tracked_txs_indexer',
     )
 
-    for (const project of this.$.projects) {
-      const activeConfigs = getActiveConfigurations(project, configurations)
+    const allProjectConfigs = this.$.projects
+      .flatMap((p) => getActiveConfigurations(p, configurations))
+      .filter((c) => c !== undefined)
 
-      if (!activeConfigs) {
+    const livenessWithConfig = new LivenessWithConfigService(
+      allProjectConfigs,
+      this.$.db,
+    )
+
+    // for every considered time range we also take latest record before `from`
+    // for each configuration to calculate interval for first record in time range
+    const livenessRecords =
+      await livenessWithConfig.getWithinTimeRangeWithLatestBeforeFrom(from, to)
+
+    const groupedConfigs = groupBy(allProjectConfigs, (c) => c.projectId)
+
+    for (const project of Object.keys(groupedConfigs)) {
+      const projectConfigs = groupedConfigs[project]
+
+      if (projectConfigs.length === 0) {
         continue
       }
 
-      const livenessWithConfig = new LivenessWithConfigService(
-        activeConfigs,
-        this.$.db,
+      const activeConfigIds = projectConfigs.map((c) => c.id)
+      const projectLivenessRecords = livenessRecords.filter((r) =>
+        activeConfigIds.includes(r.id),
       )
 
-      const livenessRecords = await livenessWithConfig.getUpTo(syncTo)
-
-      if (livenessRecords.length === 0) {
+      if (projectLivenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
-          projectId: project.id,
+          projectId: project,
         })
         continue
       }
 
       this.logger.debug('Liveness records loaded', {
-        projectId: project.id,
+        projectId: project,
         count: livenessRecords.length,
       })
 
-      const [batchSubmissions, stateUpdates, proofSubmissions] =
-        groupByType(livenessRecords)
+      const [batchSubmissions, stateUpdates, proofSubmissions] = groupByType(
+        projectLivenessRecords,
+      )
 
       aggregatedRecords.push(
-        ...this.aggregatedRecords(
-          project.id,
+        this.aggregateRecords(
+          ProjectId(project),
           'batchSubmissions',
           batchSubmissions,
-          syncTo,
-          ['30D', '90D', 'MAX'],
+          from,
         ),
       )
       aggregatedRecords.push(
-        ...this.aggregatedRecords(
-          project.id,
+        this.aggregateRecords(
+          ProjectId(project),
           'stateUpdates',
           stateUpdates,
-          syncTo,
-          ['30D', '90D', 'MAX'],
+          from,
         ),
       )
       aggregatedRecords.push(
-        ...this.aggregatedRecords(
-          project.id,
+        this.aggregateRecords(
+          ProjectId(project),
           'proofSubmissions',
           proofSubmissions,
-          syncTo,
-          ['30D', '90D', 'MAX'],
+          from,
         ),
       )
     }
 
-    return aggregatedRecords
+    return aggregatedRecords.filter((r) => r !== undefined)
   }
 
-  aggregatedRecords(
+  aggregateRecords(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
     livenessRecords: LivenessRecordWithConfig[],
-    syncTo: UnixTime,
-    ranges: AggregatedLivenessRange[],
-  ): AggregatedLivenessRecord[] {
-    const intervals = calculateIntervals(livenessRecords)
+    timestamp: UnixTime,
+  ): AggregatedLivenessRecord | undefined {
+    // here we have few records before timestamp as we take one for each configuration
+    // so here we need to filter out all and leave only the latest before timestamp
+    const timeRangeStartIndex = livenessRecords.findIndex(
+      (r) => r.timestamp < timestamp,
+    )
+    const timeRangeRecords =
+      timeRangeStartIndex === -1
+        ? livenessRecords
+        : livenessRecords.slice(0, timeRangeStartIndex + 1)
 
-    const aggregatedRecords: AggregatedLivenessRecord[] = []
+    // if <= 1 record, than we can't calculate intervals
+    if (timeRangeRecords.length <= 1) return
+    const intervals = calculateIntervals(timeRangeRecords)
+    const stats = calculateStats(intervals)
 
-    ranges.forEach((range) => {
-      const filteredIntervals = filterIntervalsByRange(intervals, syncTo, range)
-
-      if (filteredIntervals.length === 0) {
-        return
-      }
-
-      const stats = calculateStats(filteredIntervals)
-
-      const record: AggregatedLivenessRecord = {
-        projectId: projectId,
-        subtype,
-        range,
-        min: stats.minimumInSeconds,
-        avg: stats.averageInSeconds,
-        max: stats.maximumInSeconds,
-        updatedAt: syncTo,
-      }
-
-      aggregatedRecords.push(record)
-    })
-
-    return aggregatedRecords
+    return {
+      projectId: projectId,
+      subtype,
+      min: stats.minimumInSeconds,
+      avg: stats.averageInSeconds,
+      max: stats.maximumInSeconds,
+      timestamp,
+      // We are saving the number of records to later correctly calculate the average for a given time range.
+      // This ensures we calculate the correct average from all records, not just from daily aggregations.
+      numberOfRecords: intervals.length,
+    }
   }
 }

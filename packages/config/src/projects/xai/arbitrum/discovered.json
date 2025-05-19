@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 324577860,
-  "configHash": "0x275f638d36c50b8de5d9f24c6e0fab36132bd70e9103dffb9a5d882bff0e3281",
+  "blockNumber": 336630059,
+  "configHash": "0x677d383dc8bcac88d6778e75ff8a895b6ba5e27a3db6f6a11568bfddc0e09e0c",
   "entries": [
     {
       "name": "XaiMultisig2",
@@ -37,7 +37,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -586,6 +586,11 @@
       }
     },
     {
+      "address": "0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "type": "EOA",
       "proxyType": "EOA",
@@ -663,7 +668,7 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 91844,
+        "delayedMessageCount": 91940,
         "inboxHistory": [
           "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
@@ -672,8 +677,8 @@
         "outboxHistory": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 147623,
-        "sequencerReportedSubMessageCount": 90985507
+        "sequencerMessageCount": 150962,
+        "sequencerReportedSubMessageCount": 98662847
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -723,11 +728,6 @@
           "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
         }
       ]
-    },
-    {
-      "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
@@ -799,7 +799,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 147623,
+        "batchCount": 150962,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -834,7 +834,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 91844,
+        "totalDelayedMessagesRead": 91940,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1052,7 +1052,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 3583103,
+        "totalSupply": 3583161,
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "usdcAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1117,13 +1117,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 10658,
+        "firstUnresolvedNode": 11494,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 10657,
-        "latestNodeCreated": 10810,
+        "latestConfirmed": 11493,
+        "latestNodeCreated": 11647,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1428,7 +1428,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 300,
+        "getPoolsCount": 301,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "STAKE_KEYS_ADMIN_ROLE": "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28",
@@ -1467,11 +1467,11 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f",
           "0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
           "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
           "0xbBE90F6748C82623F130A4486722a436c5a72440",
           "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
           "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
         ],
         "$threshold": 3,
@@ -1479,7 +1479,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 61,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1614,13 +1614,13 @@
           "17836757990867579908675",
           "312500000000000000000000000"
         ],
-        "challengeCounter": 11549,
+        "challengeCounter": 12385,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6877,
+        "getKycWalletCount": 6894,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 131872,
@@ -2729,5 +2729,5 @@
     "orbitstack/UpgradeExecutor": "0x5ccb1a24de22513543702981322da392ea6d43ef971ebf7144c29a5605174b25",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x5733950d07b5fcdee140a821c46296c55776cd0a4a0c9fc9f221cc17e1ca7658"
+  "permissionsConfigHash": "0xeb0b735efe8e87505622f532a0d597e1eb731d9f5863e7306d9dbe8dde453ed2"
 }

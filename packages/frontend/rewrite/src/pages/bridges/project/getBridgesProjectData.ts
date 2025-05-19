@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/server'
+import type { RenderData } from 'rewrite/src/ssr/types'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { ps } from '~/server/projects'
 import type { Manifest } from '~/utils/Manifest'
@@ -16,7 +16,6 @@ export async function getBridgesProjectData(
       'display',
       'statuses',
       'tvsInfo',
-      'tvsConfig',
       'bridgeInfo',
       'bridgeRisks',
       'bridgeTechnology',
@@ -24,6 +23,7 @@ export async function getBridgesProjectData(
     ],
     where: ['isBridge'],
     optional: [
+      'tvsConfig',
       'chainConfig',
       'archivedAt',
       'isUpcoming',

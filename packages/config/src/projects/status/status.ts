@@ -10,15 +10,15 @@ export const status: ScalingProject = upcomingL2({
     name: 'status',
     slug: 'status',
     description:
-      'Status is an upcoming social L2 being built on the Linea stack.',
+      'Status is a free network with sustainable funding for public apps, games and protocols.',
     purposes: ['Social'],
     category: 'ZK Rollup',
     links: {
-      websites: ['https://status.app/'],
-      apps: ['https://status.app/apps#desktop'],
-      documentation: ['https://status.app/specs'],
+      websites: ['https://status.network/'],
+      apps: ['https://bridge.status.network/'],
+      documentation: ['https://docs.status.network/'],
       repositories: ['https://github.com/status-im'],
-      socialMedia: ['https://x.com/ethstatus'],
+      socialMedia: ['https://x.com/StatusL2'],
     },
   },
 })

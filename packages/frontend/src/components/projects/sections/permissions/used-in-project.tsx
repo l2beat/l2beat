@@ -23,10 +23,8 @@ export function UsedInProjectEntry({
 }: { label: string; implementations: UsedInProject[] }) {
   return (
     <div className="mt-2 flex flex-row items-center">
-      <p className="text-gray-850 dark:text-gray-400">
-        <strong className="text-primary">{label}: </strong>
-      </p>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row flex-wrap items-center">
+        <strong className="whitespace-nowrap text-primary">{label}: </strong>
         {implementations.map((project, i) => (
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
@@ -40,7 +38,7 @@ export function UsedInProjectEntry({
                   key={i}
                   src={project.icon}
                   alt="Project icon"
-                  className="mx-1 inline"
+                  className="mx-1 inline min-h-5 min-w-5"
                 />
               </LinkWithOnHoverPrefetch>
             </TooltipTrigger>

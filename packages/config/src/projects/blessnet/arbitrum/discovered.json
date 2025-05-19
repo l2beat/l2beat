@@ -1,8 +1,8 @@
 {
   "name": "blessnet",
   "chain": "arbitrum",
-  "blockNumber": 333851321,
-  "configHash": "0xf438d7e5f0bb9ce084cb8fb27db66b7cac68891e6125ccd37a29637ce5976f9e",
+  "blockNumber": 336620777,
+  "configHash": "0x42d90219aa688b1c79140d6312c45199183cbc2526b7d4cecd4b4db95f45bc39",
   "entries": [
     {
       "name": "Blessnet Multisig 2",
@@ -42,7 +42,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 3 (100%)",
-        "nonce": 1773,
+        "nonce": 1905,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -171,7 +171,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 148011,
+        "batchCount": 148208,
         "batchPosterManager": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
         "batchPosters": ["0xa0899d20D9665EB0FfE311A395FCd481bF38A5Ff"],
         "bridge": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
@@ -523,7 +523,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -725,8 +725,8 @@
         "outboxHistory": ["0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB"],
         "rollup": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
         "sequencerInbox": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
-        "sequencerMessageCount": 148011,
-        "sequencerReportedSubMessageCount": 2617033
+        "sequencerMessageCount": 148208,
+        "sequencerReportedSubMessageCount": 2618549
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -873,13 +873,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 48290,
+        "firstUnresolvedNode": 48422,
         "inbox": "0x46B6462301182B393ac5f014779687d3B6d4FB57",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20487666,
-        "latestConfirmed": 48289,
-        "latestNodeCreated": 48289,
+        "latestConfirmed": 48421,
+        "latestNodeCreated": 48481,
         "loserStakeEscrow": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
         "minimumAssertionPeriod": 75,
         "outbox": "0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",

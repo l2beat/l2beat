@@ -38,8 +38,7 @@ export async function getRegularDaProjectSections({
     bridge?.permissions &&
     getPermissionsSection(
       {
-        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-        id: layer.id,
+        id: bridge.id,
         isUnderReview: layer.statuses.isUnderReview,
         permissions: bridge.permissions,
       },
@@ -50,7 +49,6 @@ export async function getRegularDaProjectSections({
     bridge?.contracts &&
     getContractsSection(
       {
-        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
         id: bridge.id,
         isVerified,
         slug: bridge.slug,
@@ -128,6 +126,7 @@ export async function getRegularDaProjectSections({
     },
   })
 
+  const discoUiHref = `https://disco.l2beat.com/ui/p/${bridge?.id}`
   if (permissionsSection) {
     daBridgeItems.push({
       type: 'PermissionsSection',
@@ -136,6 +135,7 @@ export async function getRegularDaProjectSections({
         permissionedEntities: bridge.daBridge.dac?.knownMembers,
         id: 'da-bridge-permissions',
         title: 'Permissions',
+        discoUiHref,
       },
     })
   }
@@ -147,6 +147,7 @@ export async function getRegularDaProjectSections({
         ...contractsSection,
         id: 'da-bridge-contracts',
         title: 'Contracts',
+        discoUiHref,
       },
     })
   }

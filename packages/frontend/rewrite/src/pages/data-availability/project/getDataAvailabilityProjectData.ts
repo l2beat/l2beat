@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
-import type { RenderData } from 'rewrite/src/ssr/server'
+import type { RenderData } from 'rewrite/src/ssr/types'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
