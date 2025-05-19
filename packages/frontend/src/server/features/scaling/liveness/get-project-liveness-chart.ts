@@ -1,4 +1,4 @@
-import type { AggregatedLiveness2Record } from '@l2beat/database/dist/other/aggregated-liveness2/entity'
+import type { AggregatedLivenessRecord } from '@l2beat/database'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -111,7 +111,7 @@ export const getCachedProjectLivenessChartData = cache(
   },
 )
 
-function calculateLivenessStats(entries: AggregatedLiveness2Record[]) {
+function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
   let min = Infinity
   let max = -Infinity
   let weightedSum = 0
