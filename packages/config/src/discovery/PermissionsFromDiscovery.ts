@@ -137,6 +137,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       })
   }
 
+  describeDirectlyIssuesPermissions(contractOrEoa: EntryParameters) {
+    // TODO
+    return []
+  }
+
   describePermissions(
     contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
@@ -199,10 +204,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     })
   }
 
-  getUpgradableBy(
-    contract: EntryParameters,
-  ): { name: string; delay: string }[] {
-    const issuedPermissions = this.projectDiscovery
+  getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
+    return this.projectDiscovery
       .getEntries()
       .flatMap((c) =>
         (c.receivedPermissions ?? []).map((p) => ({
@@ -210,9 +213,32 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         })),
       )
-      .filter(
-        (receivedPermission) => receivedPermission.from === contract.address,
-      )
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+  }
+
+  getDirectlyIssuedPermissions(fromAddress: EthereumAddress) {
+    return this.projectDiscovery
+      .getEntries()
+      .flatMap((c) => {
+        const fromReceived = (c.receivedPermissions ?? []).filter(
+          (p) => p.via?.length === 0,
+        )
+        const fromDirectlyReceived = c.directlyReceivedPermissions ?? []
+        const directPermissions = [...fromReceived, ...fromDirectlyReceived]
+        return directPermissions.map((p) => ({
+          to: c.address,
+          ...p,
+        }))
+      })
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+  }
+
+  getUpgradableBy(
+    contract: EntryParameters,
+  ): { name: string; delay: string }[] {
+    const issuedPermissions = this.getUltimatelyIssuedPermissions(
+      contract.address,
+    )
 
     const upgradersWithDelay: Record<string, number> = Object.fromEntries(
       issuedPermissions
