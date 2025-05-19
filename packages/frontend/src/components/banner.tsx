@@ -6,9 +6,9 @@ import { cn } from '~/utils/cn'
 import { CustomLink } from './link/custom-link'
 
 const localStorageTag = 'top-banner'
-const purpose = 'gg-22'
+const purpose = 'native-rollups-article'
 
-const enabled = false
+const enabled = true
 
 export function Banner({ className }: { className?: string }) {
   const isClient = useIsClient()
@@ -35,7 +35,7 @@ export function Banner({ className }: { className?: string }) {
         />
       </div>
       <div className="text-sm">
-        L2BEAT is participating in Gitcoin Grants 22!
+        Our latest article about native rollups is live!
       </div>
       <BannerActionButton />
     </div>
@@ -45,13 +45,13 @@ export function Banner({ className }: { className?: string }) {
 function BannerActionButton() {
   return (
     <CustomLink
-      href="https://explorer.gitcoin.co/#/round/42161/610/26"
+      href="https://medium.com/l2beat/native-rollups-where-they-are-and-where-they-are-going-cb21eb103d46"
       variant="plain"
       underline={false}
       className="text-white dark:text-white"
     >
       <div className="flex items-center justify-center gap-1 rounded-lg border border-[#9360BC] bg-[#53227A] px-5 py-1 transition-colors duration-200 hover:bg-[#53227A]/80">
-        <span className="text-xs font-medium">Donate</span>
+        <span className="text-xs font-medium">Read article</span>
       </div>
     </CustomLink>
   )
