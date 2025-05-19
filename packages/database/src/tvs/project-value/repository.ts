@@ -62,6 +62,29 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByTypeAndRange(
+    types: ProjectValueType[],
+    range: [number | null, number | null],
+  ): Promise<ProjectValueRecord[]> {
+    const [from, to] = range
+    let query = this.db
+      .selectFrom('ProjectValue')
+      .selectAll()
+      .where('type', 'in', types)
+      .orderBy('timestamp', 'desc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    if (to !== null) {
+      query = query.where('timestamp', '<=', UnixTime.toDate(to))
+    }
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
   async getByProjectsForType(
     projects: ProjectId[],
     type: ProjectValueType,
