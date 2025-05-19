@@ -2,7 +2,7 @@
 title: "Governance Review #50"
 description: "Fresh month, same beat: L2s flood the forums with new discussions and proposals."
 publishedOn: "2025-05-05"
-authorId: anastassis-oikonomopoulos
+authorId: manuel-gonzalez
 ---
 
 ## **Optimism**

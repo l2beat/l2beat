@@ -2,7 +2,7 @@
   title: "Governance Review #42"
   description: "An update on the last 2 weeks in governance."
   publishedOn: "2025-03-10"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 
 ## **Optimism**
