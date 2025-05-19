@@ -1545,7 +1545,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/CustomGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1559,9 +1559,9 @@
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
     "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupProxy": "0x60ec10bf847fbce416c8a63d3d6b3e68905923f512aa9060f7d848eaaa36474d",
-    "orbitstack/SequencerInbox": "0x3fa38bb34cc216c88f30e3bff0ec1476b82eada0b9ea2cd9bae17f45353666b2",
-    "orbitstack/UpgradeExecutor": "0x5ccb1a24de22513543702981322da392ea6d43ef971ebf7144c29a5605174b25",
+    "orbitstack/RollupProxy": "0x9ecd81a9da8abc61f7ca4b4d204fabb54ffafc208082ed540300e88c7b5c00ee",
+    "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
+    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0xe7d3b15ad2417e4e8ac9ab4b65035173a23ef04d980e76f1b86e82b3648b310e"

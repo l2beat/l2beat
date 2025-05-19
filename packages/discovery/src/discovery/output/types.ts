@@ -1,9 +1,7 @@
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { ContractValueType } from '../config/ColorConfig'
-import type {
-  ContractFieldSeverity,
-  Permission,
-} from '../config/StructureConfig'
+import type { ContractFieldSeverity } from '../config/StructureConfig'
+import type { Permission } from '../config/PermissionConfig'
 
 export type ContractValue =
   | string

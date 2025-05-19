@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "scroll",
   "blockNumber": 15285599,
-  "configHash": "0x188910b6828d3a124c04aace380e5f0a6ee7cb75393c4a2117654249feaf0e03",
+  "configHash": "0x2d13b4e6c86dddff5b2947490faebdf1553c81a875acea9b5a2efc7ec523c43e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -2843,10 +2843,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "scroll/L1Timelock": "0x97f0a624e955d4f357fdcb7966d3a68dfcccc1fcce33de3b85d52eab6a2400ef",
-    "scroll/ScrollOwnerL2": "0x3c12807fd2f2ec81f8f74667d689ec0e64269ae7f029ed22c4f43b89c6cc03a4",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
+    "scroll/ScrollOwnerL2": "0x7e77245231051fbc6f335852afd5305e4b1c493b1005a7826e24aa54340b2ad4",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0x97f4366ea29d6ed8312c47392b878bf508ecf113b0d2c65475feee4e494cae74"

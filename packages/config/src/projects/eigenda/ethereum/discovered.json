@@ -1336,14 +1336,14 @@
   },
   "usedTemplates": {
     "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "eigenlayer/EigenDAPauserRegistry": "0x0ec68cbcfada757ce4d184b3ad2f6f8d08d51e01ea981090e78323d850557281",
-    "eigenlayer/EigenDAServiceManager": "0x2d11dbc84d77f4f12aa67ed1e3f678e4954d53b2e03973f5dd6a24faacf0afbc",
-    "eigenlayer/EjectionManager": "0xe9a60b43999e814f77706e311fc4de0bc270faf2aeb8edd76afc4bc1d38936df",
+    "eigenlayer/EigenDAPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
+    "eigenlayer/EigenDAServiceManager": "0x43be05ba9f6891eb189c2895b180400592e5a6628f6148b82760ee4bfb6ce1c6",
+    "eigenlayer/EjectionManager": "0xbf1efcdc54104ebb9105e95373588d3451b5a97a4fcfdc4cbab5c69278a04a8b",
     "eigenlayer/IndexRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "eigenlayer/RegistryCoordinator": "0x20f2acaa365af18611d618b040f8539a3fd3086fa7c793921a5d2903290db765",
+    "eigenlayer/RegistryCoordinator": "0xeef8d3302c7236f5745dd51b4d6b05b44a371c9708994d86a8d2b7e4b573dedc",
     "eigenlayer/StakeRegistry": "0x354e5717008504cef09d88027f76fe2fe308210a96b59fce263f4d8ec5868080",
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "permissionsConfigHash": "0x2fdd288a791ea275e3e8fe8d362fc4f124d1f3da8aebbe66292d012f97895205"
 }

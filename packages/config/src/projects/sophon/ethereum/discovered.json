@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 22480309,
-  "configHash": "0xb7d2075f779b61455394915274d39daeb2694c4422d3b3befed2371e98681f6a",
+  "configHash": "0xaae642321be505e6a34e58d769f738469fea1ec1ff7671e64473a84a0dc9a635",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -1261,15 +1261,15 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/TransactionFilterer": "0x27821c082036aacd4e8becb949aeeea206a63089078aa4ddf09e718335f0a7ef",
+    "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
     "shared-zk-stack/v26/AvailL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
+    "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "permissionsConfigHash": "0x8592074a8fb9fe7adb941ac62856275d6141708a9248f1e6529beae1fa7f0d66"

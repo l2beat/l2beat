@@ -895,13 +895,13 @@
     ]
   },
   "usedTemplates": {
-    "avail/AvailBridgeV1": "0x1e30044e2ab7a26fa8c43ab28fbb2c5afaf96522cd40309de731d20185455f9f",
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "global/TimelockController": "0x60e838d29700a6d061e59ca3368cac599be90c8893b98e10be902ab573c13e90",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "succinct/SP1Vector": "0xba71ec9709d89d352f7a245e5b72cf3434f4e06994cd62092c06382309a93fa3",
+    "avail/AvailBridgeV1": "0x47d6764b41adf3e90706798900d80124e248d9de2b031ca29e1462cc93da03f7",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Vector": "0x0d84ef33171173950df0aa38b6204925027638e1f67ed495360805f9f3186402",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
+    "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
   },
   "permissionsConfigHash": "0x945bc2bd3cec638e9caa5b8c0454330be58463c59deeca2191cd4f94943fbcb1"
 }

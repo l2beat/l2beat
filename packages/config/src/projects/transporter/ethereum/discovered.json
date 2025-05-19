@@ -19591,7 +19591,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/CommitStoreV1": "0x1ece386a05791f14e597cf46a5683c96874556a32171cecee941f10b3e55aa5f",
     "transporter/ManyChainMultiSig": "0x21581960386f06fc34963035830a3ca548780df8068db571d08450196a3a0d15",
     "transporter/OffRampV1": "0x728a2acf1dc05efa76c7d11920525e16aadf1ac9448875c17eeeaf351416e090",

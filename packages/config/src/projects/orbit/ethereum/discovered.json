@@ -500,7 +500,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "permissionsConfigHash": "0x99c72d1d8562e9003f05080e54860251fc859062b04a128d112f53199b3e5b1e"
 }

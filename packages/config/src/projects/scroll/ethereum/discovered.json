@@ -3723,8 +3723,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "scroll/EnforcedTxGateway": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
     "scroll/L1CustomERC20Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
@@ -3734,13 +3734,13 @@
     "scroll/L1MessageQueue": "0x5cec50d36f5c888cc9815ba4ee94ec48f3df987dc9b5ee78fbd46bd166e014b2",
     "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
     "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
-    "scroll/L1Timelock": "0x97f0a624e955d4f357fdcb7966d3a68dfcccc1fcce33de3b85d52eab6a2400ef",
+    "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
     "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
     "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
     "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
-    "scroll/ScrollOwner": "0xfd66b0dc42cf0df543470fb20ffad080c5050c5b20ad3f272aa74becef76efed",
-    "scroll/SystemConfig": "0x9a4e9f2d20d157cab92c6950661e3141306abd40e573b6d43ad92f7640c94d5c"
+    "scroll/ScrollOwner": "0xd4eda93bc90519848ba490c9a9dadcf87bde9d1528e271008a7e726f3bd6e998",
+    "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "permissionsConfigHash": "0x97f4366ea29d6ed8312c47392b878bf508ecf113b0d2c65475feee4e494cae74"
 }
