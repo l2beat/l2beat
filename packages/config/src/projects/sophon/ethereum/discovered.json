@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 22480309,
+  "blockNumber": 22516159,
   "configHash": "0xb7d2075f779b61455394915274d39daeb2694c4422d3b3befed2371e98681f6a",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -214,7 +214,7 @@
           "0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 5886,
+        "getFirstUnprocessedPriorityTx": 5997,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -222,21 +222,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0x801da5c86c4c780659050ecfe12a7f7ff55b366d3c197b1c124208517ecd4fcf",
+        "getPriorityQueueSize": 2,
+        "getPriorityTreeRoot": "0x09b2a892176a4f41c65e726cab8eb9e78a103ee5efe242b4e6ad8c835452ecb8",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 23565,
-        "getTotalBatchesExecuted": 23555,
-        "getTotalBatchesVerified": 23563,
-        "getTotalBlocksCommitted": 23565,
-        "getTotalBlocksExecuted": 23555,
-        "getTotalBlocksVerified": 23563,
-        "getTotalPriorityTxs": 5887,
+        "getTotalBatchesCommitted": 24054,
+        "getTotalBatchesExecuted": 24039,
+        "getTotalBatchesVerified": 24052,
+        "getTotalBlocksCommitted": 24054,
+        "getTotalBlocksExecuted": 24039,
+        "getTotalBlocksVerified": 24052,
+        "getTotalPriorityTxs": 5999,
         "getTransactionFilterer": "0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -329,6 +329,11 @@
     },
     {
       "address": "0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0F44bac3ec514BE912aa4359017593B35E868d74",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -544,7 +549,10 @@
           },
           "WHITELISTED_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x0000000000000000000000000000000000010003"]
+            "members": [
+              "0x0000000000000000000000000000000000010003",
+              "0x0F44bac3ec514BE912aa4359017593B35E868d74"
+            ]
           },
           "SUPERUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -559,7 +567,8 @@
         "SUPERUSER_ROLE": "0x756df11799aaceda4067614c35fe47ff6a75745e0c15792193c7bad56a1ad932",
         "WHITELISTED_ROLE": "0x8429d542926e6695b59ac6fbdcd9b37e8b1aeb757afab06ab60b1bb5878c3b49",
         "whitelistedContractsAC": [
-          "0x0000000000000000000000000000000000010003"
+          "0x0000000000000000000000000000000000010003",
+          "0x0F44bac3ec514BE912aa4359017593B35E868d74"
         ],
         "whitelistedSendersAC": ["0x50B238788747B26c408681283D148659F9da7Cf9"]
       },
@@ -1272,5 +1281,5 @@
     "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x8592074a8fb9fe7adb941ac62856275d6141708a9248f1e6529beae1fa7f0d66"
+  "permissionsConfigHash": "0xc3fcc1cd8084eddf6d6bf2d542e398feb1e1448bb2febd3562784dbdfdc99331"
 }
