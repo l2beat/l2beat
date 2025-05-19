@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22494955,
+  "blockNumber": 22517253,
   "configHash": "0xf3157aaa9a47b10476dd7a98c4da975e69a91efe4bfb9d0a589048d05ba7a1f0",
   "entries": [
     {
@@ -84,7 +84,7 @@
         "minLock": "20000000000000000000000",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "439184108837702136013579",
+        "totalLocked": "439157156472770501574718",
         "totalRewardsLiquidated": "42296928236590808876180"
       },
       "implementationNames": {
@@ -111,10 +111,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068270acb000137adf3",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068270acb000137adf3",
-        "length": 28522,
-        "lengthByChainId": 28522,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000682b2e4f000137ff17",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682b2e4f000137ff17",
+        "length": 28633,
+        "lengthByChainId": 28633,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -489,8 +489,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 3958,
-        "getQueueLength": 40242,
+        "getNumPendingQueueElements": 3973,
+        "getQueueLength": 40257,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -787,12 +787,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1747389131,
-        "getLastSequencerTimestampByChainId": 1747389131,
-        "getTotalBatches": 28522,
-        "getTotalBatchesByChainId": 28522,
-        "getTotalElements": 20426227,
-        "getTotalElementsByChainId": 20426227,
+        "getLastSequencerTimestamp": 1747660367,
+        "getLastSequencerTimestampByChainId": 1747660367,
+        "getTotalBatches": 28633,
+        "getTotalBatchesByChainId": 28633,
+        "getTotalElements": 20446999,
+        "getTotalElementsByChainId": 20446999,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -905,7 +905,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
-        "currentBatch": 119,
+        "currentBatch": 120,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
