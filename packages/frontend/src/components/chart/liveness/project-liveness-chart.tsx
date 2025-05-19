@@ -1,6 +1,6 @@
 'use client'
 
-import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { LivenessChartSubtypeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-subtype-controls'
 import { LivenessChartTimeRangeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-time-range-controls'
@@ -37,17 +37,27 @@ export function ProjectLivenessChart({
     subtype,
   })
 
-  const chartData = useMemo(
-    () =>
-      chart?.data.map(([timestamp, min, avg, max]) => {
-        return {
-          timestamp,
-          range: [min, max],
-          avg,
-        }
-      }),
-    [chart?.data],
-  )
+  const chartData = useMemo(() => {
+    let rawChartData = chart?.data
+    const anyAnomalyLive = getAnyAnomalyLive(anomalies, subtype)
+
+    if (!anyAnomalyLive) {
+      // If there is no anomaly live, remove all data after the last valid timestamp
+      const lastValidTimestamp = rawChartData?.findLastIndex(
+        ([_, min, avg, max]) => min !== null && avg !== null && max !== null,
+      )
+      if (lastValidTimestamp && lastValidTimestamp >= 0) {
+        rawChartData = rawChartData?.slice(0, lastValidTimestamp + 1)
+      }
+    }
+    return rawChartData?.map(([timestamp, min, avg, max]) => {
+      return {
+        timestamp,
+        range: [min, max],
+        avg,
+      }
+    })
+  }, [chart?.data, anomalies, subtype])
 
   const chartRange = getChartRange(chartData)
 
@@ -78,6 +88,19 @@ export function ProjectLivenessChart({
   )
 }
 
+function getAnyAnomalyLive(
+  anomalies: LivenessAnomaly[],
+  subtype: TrackedTxsConfigSubtype,
+) {
+  const NOW = UnixTime.now()
+  const subtypeAnomalies = anomalies.filter(
+    (anomaly) => anomaly.type === subtype,
+  )
+  return subtypeAnomalies.some(
+    (anomaly) =>
+      NOW - 4 * UnixTime.HOUR <= anomaly.timestamp + anomaly.durationInSeconds,
+  )
+}
 function getDefaultSubtype(
   configuredSubtypes: TrackedTxsConfigSubtype[],
 ): TrackedTxsConfigSubtype {
