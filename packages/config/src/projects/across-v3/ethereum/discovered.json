@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22516008,
+  "blockNumber": 22517852,
   "configHash": "0xfcba692cecdb9b8dfedcb36c6aa852f7606961503fa2dc3bb1265672c46c0dea",
   "entries": [
     {
@@ -50,7 +50,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "124671804803638968714987427",
+        "totalSupply": "124672803745658940881791792",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -364,7 +364,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1747645547,
+        "getCurrentTime": 1747667903,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -491,11 +491,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1747645547,
+        "getCurrentTime": 1747667903,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2615196,
+        "numberOfDeposits": 2616221,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -600,7 +600,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1747645547,
+        "getCurrentTime": 1747667903,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -766,7 +766,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1747645547,
+        "getCurrentTime": 1747667903,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1015,13 +1015,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x887957dd002df120db7c039b69a72d3be0c7308f298bd837cff8b0ef2ad4e31c",
-          "relayerRefundRoot": "0x9e140c48b944fa80c4d47d9f96885e0ad6faa3b05a6f137252475408a82a888c",
+          "poolRebalanceRoot": "0x5084a8a54414d85a066a4bf9906a49b5f0f1e79900ab81f0599fc05859a3903e",
+          "relayerRefundRoot": "0xd7137b19488266249d36154d66c0f02f8c0754ce4ee2610ba59f7681880301c7",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 19,
-          "challengePeriodEndTimestamp": 1747645535
+          "unclaimedPoolRebalanceLeafCount": 18,
+          "challengePeriodEndTimestamp": 1747668659
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
