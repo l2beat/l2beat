@@ -13,12 +13,14 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
+import { DataCache } from '../server/utils/Cache'
 
 export function createServerPageRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
   const router = express.Router()
+  const cache = new DataCache()
 
   router.use('/', (_, res, next) => {
     const headers = new Headers({
@@ -48,7 +50,7 @@ export function createServerPageRouter(
   ]
 
   for (const createRouter of routers) {
-    router.use('/', createRouter(manifest, render))
+    router.use('/', createRouter(manifest, render, cache))
   }
 
   return router
