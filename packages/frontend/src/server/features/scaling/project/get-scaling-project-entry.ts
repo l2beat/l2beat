@@ -100,6 +100,7 @@ export interface ProjectScalingEntry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
+  discoUiHref: string
 }
 
 export async function getScalingProjectEntry(
@@ -244,6 +245,7 @@ export async function getScalingProjectEntry(
     stageConfig: isProjectOther(project.scalingInfo)
       ? { stage: 'NotApplicable' as const }
       : project.scalingStage,
+    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
   const daSolution = await getScalingDaSolution(project)
 
@@ -597,6 +599,7 @@ export async function getScalingProjectEntry(
         id: 'permissions',
         title: 'Permissions',
         permissionedEntities,
+        discoUiHref: common.discoUiHref,
       },
     })
   }
@@ -620,6 +623,7 @@ export async function getScalingProjectEntry(
         ...contractsSection,
         id: 'contracts',
         title: 'Smart contracts',
+        discoUiHref: common.discoUiHref,
       },
     })
   }

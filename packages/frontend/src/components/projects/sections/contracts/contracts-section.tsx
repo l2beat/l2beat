@@ -2,6 +2,7 @@
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
+import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { ProjectSection } from '../project-section'
@@ -20,6 +21,7 @@ export interface ContractsSectionProps {
   risks: TechnologyRisk[]
   diagram?: DiagramParams
   isUnderReview?: boolean
+  discoUiHref?: string
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -54,6 +56,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
+      {props.discoUiHref && <DiscoUiBanner href={props.discoUiHref} />}
       {hasContractsChanged && <ContractsUpdated />}
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
