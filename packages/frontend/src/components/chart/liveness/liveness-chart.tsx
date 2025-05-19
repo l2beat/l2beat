@@ -91,8 +91,7 @@ export function LivenessChart({ data, isLoading, className, subtype }: Props) {
               width: 100,
             },
             tickFormatter: (value: number) => formatDuration(value),
-            scale: 'lin',
-            domain: ([dataMin, dataMax]) => [dataMin, dataMax],
+            domain: ['auto', 'auto'],
           },
         })}
         <ReferenceArea
