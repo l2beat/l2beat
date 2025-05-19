@@ -137,9 +137,18 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       })
   }
 
-  describeDirectlyIssuesPermissions(contractOrEoa: EntryParameters) {
-    // TODO
-    return []
+  describeDirectlyIssuedPermissions(contractOrEoa: EntryParameters) {
+    const directlyIssued = this.getDirectlyIssuedPermissions(
+      contractOrEoa.address,
+    )
+    const result = ['Roles']
+    for (const p of directlyIssued) {
+      const receiver =
+        this.projectDiscovery.getContractByAddress(p.to)?.name ??
+        p.to.toString()
+      result.push(`  * ${p.permission} : ${receiver} - ${p.description}`)
+    }
+    return [result.join('\n')]
   }
 
   describePermissions(
@@ -149,12 +158,17 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
     const legacy = this.describeLegacyPermissions(contractOrEoa)
-    const direct = includeDirectPermissions
+    const directlyReceived = includeDirectPermissions
       ? this.describeDirectlyReceivedPermissions(contractOrEoa)
       : []
-    return [...direct, ...upgrade, ...interact, ...legacy].filter(
-      (s) => s !== '',
-    )
+    const directlyIssued = this.describeDirectlyIssuedPermissions(contractOrEoa)
+    return [
+      ...directlyReceived,
+      ...upgrade,
+      ...interact,
+      ...legacy,
+      ...directlyIssued,
+    ].filter((s) => s !== '')
   }
 
   describeDirectlyReceivedPermissions(
