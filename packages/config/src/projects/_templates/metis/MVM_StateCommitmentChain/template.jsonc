@@ -1,0 +1,15 @@
+{
+    "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+    "name": "MVM_StateCommitmentChain",
+    "description": "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.",
+    "fields": {
+        "proxiableUUID": {
+            "handler": {
+                "type": "call",
+                "method": "function proxiableUUID() view returns (bytes32)",
+                "args": [],
+                "expectRevert": true
+            }
+        }
+    }
+} 

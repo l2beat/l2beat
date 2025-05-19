@@ -1,0 +1,16 @@
+{
+    "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+    "name": "MetisMultisig",
+    "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
+    "fields": {
+        "getOwners": {
+            "severity": "LOW",
+            "type": "PERMISSION"
+        },
+        "getThreshold": {
+            "severity": "HIGH",
+            "type": "PERMISSION"
+        }
+    },
+    "ignoreInWatchMode": ["nonce"]
+} 

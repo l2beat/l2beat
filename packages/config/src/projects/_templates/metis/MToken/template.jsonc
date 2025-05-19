@@ -1,0 +1,8 @@
+{
+    "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+    "name": "MToken",
+    "description": "Metis token contract.",
+    "fields": {
+    },
+    "ignoreMethods": ["isOwner"]
+} 

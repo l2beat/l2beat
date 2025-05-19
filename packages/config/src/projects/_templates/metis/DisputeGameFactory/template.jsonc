@@ -1,0 +1,19 @@
+{
+    "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+    "name": "DisputeGameFactory",
+    "description": "Factory contract for creating dispute games.",
+    "fields": {
+        "gameImpls": {
+            "handler": {
+                "type": "array",
+                "length": 5
+            }
+        },
+        "initBonds": {
+            "handler": {
+                "type": "array",
+                "length": 5
+            }
+        }
+    }
+} 

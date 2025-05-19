@@ -1,4 +1,112 @@
-Generated with discovered.json: 0x4147e02f78b5cee12a4381da44c88fdca1f4d94d
+Generated with discovered.json: 0x037a2bb6bb78b56aadaf6995a90ef36a904c034a
+
+# Diff at Mon, 19 May 2025 15:22:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
+- current block number: 22517869
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22494955 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235) {
+    +++ description: Contract for handling fault disputes.
+      template:
++        "metis/FaultDisputeGame"
+      description:
++        "Contract for handling fault disputes."
+    }
+```
+
+```diff
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/CanonicalTransactionChain"
+      description:
++        "The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state."
+    }
+```
+
+```diff
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528) {
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/BondManager"
+      description:
++        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented."
+    }
+```
+
+```diff
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC) {
+    +++ description: Oracle for providing preimages.
+      template:
++        "metis/PreimageOracle"
+      description:
++        "Oracle for providing preimages."
+    }
+```
+
+```diff
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063) {
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_DiscountOracle"
+      description:
++        "Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication."
+    }
+```
+
+```diff
+    contract MToken (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: Metis token contract.
+      template:
++        "metis/MToken"
+      description:
++        "Metis token contract."
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_StateCommitmentChain"
+      description:
++        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_Verifier"
+      description:
++        "The MVM Verifier contract is responsible for verifying the state of the MVM."
+    }
+```
+
+Generated with discovered.json: 0xe76af737833e2ba17ce79291ef9499bc8dfac9fb
 
 # Diff at Fri, 16 May 2025 12:25:09 GMT:
 

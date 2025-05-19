@@ -1,0 +1,15 @@
+{
+    "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+    "name": "LockingPool",
+    "description": "Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.",
+    "fields": {
+        "proxiableUUID": {
+            "handler": {
+                "type": "call",
+                "method": "function proxiableUUID() view returns (bytes32)",
+                "args": [],
+                "expectRevert": true
+            }
+        }
+    }
+} 
