@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { SolanaClient } from './SolanaClient'
-import { UnixTime } from '@l2beat/shared-pure'
 
 describe(SolanaClient.name, () => {
   describe(SolanaClient.prototype.getLatestSlotNumber.name, () => {
