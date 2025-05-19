@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22517253,
+  "blockNumber": 22517290,
   "configHash": "0xf3157aaa9a47b10476dd7a98c4da975e69a91efe4bfb9d0a589048d05ba7a1f0",
   "entries": [
     {
@@ -111,10 +111,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000682b2e4f000137ff17",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682b2e4f000137ff17",
-        "length": 28633,
-        "lengthByChainId": 28633,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000682b2fc3000137ffa1",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682b2fc3000137ffa1",
+        "length": 28634,
+        "lengthByChainId": 28634,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -787,12 +787,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1747660367,
-        "getLastSequencerTimestampByChainId": 1747660367,
-        "getTotalBatches": 28633,
-        "getTotalBatchesByChainId": 28633,
-        "getTotalElements": 20446999,
-        "getTotalElementsByChainId": 20446999,
+        "getLastSequencerTimestamp": 1747660739,
+        "getLastSequencerTimestampByChainId": 1747660739,
+        "getTotalBatches": 28634,
+        "getTotalBatchesByChainId": 28634,
+        "getTotalElements": 20447137,
+        "getTotalElementsByChainId": 20447137,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
