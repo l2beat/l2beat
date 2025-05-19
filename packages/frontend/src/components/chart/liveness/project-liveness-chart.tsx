@@ -65,7 +65,7 @@ export function ProjectLivenessChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-      <LivenessChart data={chartData} isLoading={isLoading} />
+      <LivenessChart data={chartData} isLoading={isLoading} subtype={subtype} />
       <LivenessChartStats
         timeRange={timeRange}
         isLoading={isLoading}

@@ -1,5 +1,9 @@
 'use client'
 
+import {
+  type TrackedTxsConfigSubtype,
+  assertUnreachable,
+} from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -30,9 +34,10 @@ interface Props {
   data: LivenessChartDataPoint[] | undefined
   isLoading: boolean
   className?: string
+  subtype: TrackedTxsConfigSubtype
 }
 
-export function LivenessChart({ data, isLoading, className }: Props) {
+export function LivenessChart({ data, isLoading, className, subtype }: Props) {
   const chartMeta = {
     range: {
       label: 'Min&max submission interval',
@@ -96,7 +101,7 @@ export function LivenessChart({ data, isLoading, className }: Props) {
           fill="hsl(var(--negative))"
           fillOpacity={0.2}
         />
-        <ChartTooltip content={<LivenessCustomTooltip />} />
+        <ChartTooltip content={<LivenessCustomTooltip subtype={subtype} />} />
         <defs>
           <PinkFillGradientDef id="fillRange" />
           <PinkStrokeGradientDef id="strokeRange" />
@@ -110,7 +115,10 @@ export function LivenessCustomTooltip({
   active,
   payload,
   label: timestamp,
-}: TooltipProps<number, string>) {
+  subtype,
+}: TooltipProps<number, string> & {
+  subtype: TrackedTxsConfigSubtype
+}) {
   if (!active || !payload || typeof timestamp !== 'number') return null
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
@@ -118,10 +126,23 @@ export function LivenessCustomTooltip({
   const range = filteredPayload.find((p) => p.name === 'range')
   const avg = filteredPayload.find((p) => p.name === 'avg')
 
-  if (!range?.value || !avg?.value) return null
-
-  const [min, max] = range.value as unknown as [number, number]
-
+  let content: React.ReactNode = null
+  if (!range?.value || !avg?.value) {
+    content = (
+      <div className="label-value-16-medium mt-2">
+        {getTooltipContent(subtype)}
+      </div>
+    )
+  } else {
+    const [min, max] = range.value as unknown as [number, number]
+    content = (
+      <div className="mt-2 flex flex-col gap-2">
+        <Stat name="Minimum" seconds={min} />
+        <Stat name="Average" seconds={avg.value} />
+        <Stat name="Maximum" seconds={max} />
+      </div>
+    )
+  }
   return (
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
@@ -132,11 +153,7 @@ export function LivenessCustomTooltip({
           })}
         </div>
         <HorizontalSeparator className="mt-1.5" />
-        <div className="mt-2 flex flex-col gap-2">
-          <Stat name="Minimum" seconds={min} />
-          <Stat name="Average" seconds={avg.value} />
-          <Stat name="Maximum" seconds={max} />
-        </div>
+        {content}
       </div>
     </ChartTooltipWrapper>
   )
@@ -172,4 +189,17 @@ function formatDuration(durationInSeconds: number) {
 
 function getDurationText(amount: number, unit: 'd' | 'h' | 'm' | 's') {
   return amount > 0 ? `${amount}${unit}` : ''
+}
+
+function getTooltipContent(subtype: TrackedTxsConfigSubtype) {
+  switch (subtype) {
+    case 'stateUpdates':
+      return <div>No state updates</div>
+    case 'batchSubmissions':
+      return <div>No tx data submissions</div>
+    case 'proofSubmissions':
+      return <div>No proof submissions</div>
+    default:
+      assertUnreachable(subtype)
+  }
 }
