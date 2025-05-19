@@ -59,7 +59,8 @@ permission(
   "&permission.type",
   &permission.from,
   &permission.delay,
-  &permission.description|quote|orNil).`,
+  &permission.description|quote|orNil,
+  &permission.role|quote|orNil).`,
   when: () => true,
 }
 const permissionConditionTemplate: InlineTemplate = {
@@ -70,6 +71,7 @@ permissionCondition(
   &permission.from,
   &permission.delay,
   &permission.description|quote|orNil,
+  &permission.role|quote|orNil,
   "&permission.condition").`,
   when: (_c, _cp, p) => p?.condition !== undefined,
 }
@@ -142,6 +144,7 @@ export function buildPermissionsModel(
         permission.condition,
         structureEntry,
       ),
+      'permission.role': permission.role,
     }
 
     for (const template of [permissionTemplate, permissionConditionTemplate]) {
@@ -202,6 +205,7 @@ export function getPermissionsForAdmins(
       to: admin,
       type: 'upgrade',
       delay: 0,
+      role: 'admin',
     }
   })
 }
