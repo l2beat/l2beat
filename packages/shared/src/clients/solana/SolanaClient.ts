@@ -37,7 +37,7 @@ export class SolanaClient extends ClientCore {
     return parsedResponse.data.result.context.slot
   }
 
-  async getBlockWithTransactions(slot: number): Promise<SvmBlock> {
+  async getBlockWithTransactions(slot: number): Promise<SvmBlock | undefined> {
     const method = 'getBlock'
 
     const response = await this.query(method, [
@@ -53,11 +53,25 @@ export class SolanaClient extends ClientCore {
     const parsedResponse = SolanaGetBlockResponse.safeParse(response)
 
     if (!parsedResponse.success) {
+      const parsedError = SolanaApiErrorResponse.safeParse(response)
+
+      if (
+        parsedError.success &&
+        parsedError.data.error.code === -32009 &&
+        parsedError.data.error.message.match(
+          /Slot \d+ was skipped, or missing in long-term storage/,
+        )
+      ) {
+        // in Solana chains there can be a slot that is skipped
+        return undefined
+      }
+
       this.$.logger.warn(`Invalid response`, {
         method,
         slot,
         response: JSON.stringify(response),
       })
+
       throw new Error(`getBlock: Error during parsing`)
     }
 
@@ -128,6 +142,16 @@ export class SolanaClient extends ClientCore {
     const parsedError = SolanaApiErrorResponse.safeParse(response)
 
     if (parsedError.success) {
+      if (
+        // in Solana chains there can be a slot that is skipped
+        parsedError.data.error.code === -32009 &&
+        parsedError.data.error.message.match(
+          /Slot \d+ was skipped, or missing in long-term storage/,
+        )
+      ) {
+        return { success: true }
+      }
+
       this.$.logger.warn(`Response validation error`, {
         message: parsedError.data.error.message,
       })

@@ -9,7 +9,7 @@ export interface BlockClient {
 
 export interface SvmBlockClient {
   getLatestSlotNumber(): Promise<number>
-  getBlockWithTransactions(slot: number): Promise<SvmBlock>
+  getBlockWithTransactions(slot: number): Promise<SvmBlock | undefined>
   getSlotTime(slot: number): Promise<{ timestamp: number }>
   chain: string
 }

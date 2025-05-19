@@ -38,7 +38,7 @@ export const SolanaGetBlockResponse = z.object({
     blockhash: z.string(),
     parentSlot: z.number(),
     previousBlockhash: z.string(),
-    transactions: z.array(z.any()), // TODO: Define the structure of transactions
+    transactions: z.array(z.any()),
   }),
 })
 
