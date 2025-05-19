@@ -21,7 +21,7 @@ import { api } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
-import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getTrackedTransactions } from '~/utils/project/tracked-txs/get-tracked-transactions'
 import { getBadgeWithParamsAndLink } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -317,7 +317,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const trackedTransactions = getTrackedTransactions(project)
+  const trackedTransactions = getTrackedTransactions(project, 'l2costs')
   if (
     !project.isUpcoming &&
     trackedTransactions &&

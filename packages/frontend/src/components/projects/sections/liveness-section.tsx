@@ -10,16 +10,18 @@ import type { ProjectSectionProps } from './types'
 import compact from 'lodash/compact'
 import { Fragment } from 'react'
 import { cn } from '~/utils/cn'
+import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/get-tracked-transactions'
+import { TrackedTransactions } from './costs/tracked-transactions'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   projectId: string
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
-  disableAnomalies: boolean
   hasTrackedContractsChanged: boolean
   batchSubmissionsAvg: number | undefined
   stateUpdatesAvg: number | undefined
   proofSubmissionsAvg: number | undefined
+  trackedTransactions: TrackedTransactionsByType | undefined
 }
 
 export function LivenessSection({
@@ -29,8 +31,8 @@ export function LivenessSection({
   batchSubmissionsAvg,
   stateUpdatesAvg,
   proofSubmissionsAvg,
-  disableAnomalies,
   hasTrackedContractsChanged,
+  trackedTransactions,
   ...sectionProps
 }: LivenessSectionProps) {
   return (
@@ -47,26 +49,28 @@ export function LivenessSection({
         configuredSubtypes={configuredSubtypes}
       />
       <LivenessChartStats
-        disableAnomalies={disableAnomalies}
         batchSubmissionsAvg={batchSubmissionsAvg}
         stateUpdatesAvg={stateUpdatesAvg}
         proofSubmissionsAvg={proofSubmissionsAvg}
         anomalies={anomalies}
         hasTrackedContractsChanged={hasTrackedContractsChanged}
       />
+      <div className="mt-4">
+        {trackedTransactions && (
+          <TrackedTransactions {...trackedTransactions} />
+        )}
+      </div>
     </ProjectSection>
   )
 }
 
 function LivenessChartStats({
-  disableAnomalies,
   batchSubmissionsAvg,
   stateUpdatesAvg,
   proofSubmissionsAvg,
   anomalies,
   hasTrackedContractsChanged,
 }: {
-  disableAnomalies: boolean
   batchSubmissionsAvg: number | undefined
   stateUpdatesAvg: number | undefined
   proofSubmissionsAvg: number | undefined
@@ -89,14 +93,12 @@ function LivenessChartStats({
         <DurationCell durationInSeconds={stateUpdatesAvg} />
       </ChartStatsItem>
     ),
-    !disableAnomalies && (
-      <ChartStatsItem label="Past 30 days anomalies">
-        <AnomalyIndicator
-          anomalies={anomalies}
-          hasTrackedContractsChanged={hasTrackedContractsChanged}
-        />
-      </ChartStatsItem>
-    ),
+    <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
+      <AnomalyIndicator
+        anomalies={anomalies}
+        hasTrackedContractsChanged={hasTrackedContractsChanged}
+      />
+    </ChartStatsItem>,
   ])
 
   return (

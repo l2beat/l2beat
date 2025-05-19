@@ -121,7 +121,7 @@ function calculateLivenessStats(entries: AggregatedLiveness2Record[]) {
     weightedSum += entry.avg * entry.numberOfRecords
     totalCount += entry.numberOfRecords
   }
-  const avg = Math.round(weightedSum / totalCount)
+  const avg = totalCount === 0 ? null : Math.round(weightedSum / totalCount)
   return { min, max, avg }
 }
 
