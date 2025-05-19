@@ -1,8 +1,8 @@
 ---
-title: "Governance Review #47"
-description: "A packed week in DAOs, with news, updates, proposals, and more."
-publishedOn: "2025-04-14"
-authorId: anastassis-oikonomopoulos
+  title: "Governance Review #47"
+  description: "A packed week in DAOs, with news, updates, proposals, and more."
+  publishedOn: "2025-04-14"
+  authorId: manuel-gonzalez
 ---
 
 ## **Optimism**
