@@ -207,7 +207,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
-  describe.only(AggregatedLivenessRepository.prototype
+  describe(AggregatedLivenessRepository.prototype
     .getByProjectAndSubtypeInTimeRange.name, () => {
     it('returns records for a specific project and subtype within a time range, ordered asc', async () => {
       const results = await repository.getByProjectAndSubtypeInTimeRange(
