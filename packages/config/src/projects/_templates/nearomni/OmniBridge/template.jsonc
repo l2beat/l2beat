@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow for all tokens of the NEAR Omnibridge.",
+  "ignoreMethods": ["paused", "proxiableUUID"],
+  "ignoreInWatchMode": ["currentOriginNonce"],
+  "ignoreRelatives": ["nearBridgeDerivedAddress"],
+  "fields": {
+    "pausedFlags": {
+      "description": "0: UNPAUSED_ALL, 1: PAUSED_INIT_TRANSFER, 2: PAUSED_FIN_TRANSFER, 3: fully paused",
+      "severity": "HIGH"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the pauser role and all pause flags (pause and unpause)."
+        }
+      ]
+    },
+    "pauseAdminAC": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSABLE_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the bridge escrow for deposits and withdrawals."
+        }
+      ]
+    },
+    "nearBridgeDerivedAddress": {
+      "severity": "HIGH"
+    }
+  }
+}

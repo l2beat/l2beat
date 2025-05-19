@@ -3,7 +3,5 @@
   "chain": "ethereum",
   "name": "nearomni",
   "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": [
-    "0xe00c629aFaCCb0510995A2B95560E446A24c85B9"
-  ]
+  "initialAddresses": ["0xe00c629aFaCCb0510995A2B95560E446A24c85B9"]
 }
