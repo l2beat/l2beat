@@ -18,7 +18,7 @@ export const grvt: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1734652800), // 2024-12-20T00:00:00Z
-  additionalPurposes: ['Gaming'],
+  overridingPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'GRVT',
