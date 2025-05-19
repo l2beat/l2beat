@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc6c5351129e6b3f77958630eeafb1f5bae038b5b
+Generated with discovered.json: 0x6e39042f4aa91f926d93b33e393ed4a07a6a61c0
 
-# Diff at Mon, 19 May 2025 09:06:15 GMT:
+# Diff at Mon, 19 May 2025 15:19:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4736f5c36862c00bdd000c7d0446f4575edb2532 block: 22494917
-- current block number: 22516008
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22494917
+- current block number: 22517852
 
 ## Description
 
@@ -40,7 +40,7 @@ Upgrade to the Linea_Adapter to use the general CCTP adapter.
  1 file changed, 145 insertions(+), 12 deletions(-)
 ```
 
-Generated with discovered.json: 0x19b7f3bb5abb4b350d765a9d360ec496e2697998
+Generated with discovered.json: 0x037991be57e22885eb3db5d1e8fde2b0dfbc9871
 
 # Diff at Fri, 16 May 2025 10:03:06 GMT:
 

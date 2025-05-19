@@ -1122,17 +1122,17 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "lightlink/CanonicalStateChain": "0x219c144273024b07ca81f91c6c70aedd707f482a8f2d400bdc885ad7fd780467",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "lightlink/CanonicalStateChain": "0xe3cc4c86082455089a573a3718fa958bc4f7202fdbd9a57164be4c713a261490",
     "lightlink/ChainOracle": "0xf5edeb1b0b41c67d93ed6d4371fb70e9e1f1f97944a561fd49fa119c7503aa07",
-    "lightlink/Challenge": "0x54e478f3eb1e4542b6b3bf1a1eb64269b7a406619fbd417f15e7f3954da0410a",
-    "lightlink/L1BridgeRegistry": "0xa52359c35e33ea087a6cc360a0ab284549c3d7e0d3702cac1dcf9c4920993c8e",
+    "lightlink/Challenge": "0x1836016ec4b53b382eb6f74977ec6844799e1d510664a03e96856cf3d6cd4db7",
+    "lightlink/L1BridgeRegistry": "0x7e1d49d90906d68e0d175619bc3ab85e41a8281d179b8dfc6293a537938ffa31",
     "lightlink/L1ERC20Predicate": "0xf5edeb1b0b41c67d93ed6d4371fb70e9e1f1f97944a561fd49fa119c7503aa07",
-    "lightlink/LightLinkPortal": "0xd9d5146c2887a07d8c6fac45c7c3907a4bb9f8561cedead0708cec6265a2d67d",
+    "lightlink/LightLinkPortal": "0xe0fcc9299776b8384b60df1e2908abb375fe01985e75e67684bd590a74bb49c0",
     "lightlink/Multisig": "0xbf0a261e6c43f7c32678e3ac3c8b3409a9336d211bf3c10d9e8d64da91d9a2de",
     "lightlink/SystemConfig": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
-    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568"
+    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e"
   },
   "permissionsConfigHash": "0xb240b919bb947da147d484ce062ec203fd947c4608b98c15cbef1111a8010cda"
 }

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x2d5e56cbad9bec46c30a592d46bb910ac6edce16
+Generated with discovered.json: 0xce736a957f962cb3138b1a5b5ffcab6d53781286
 
-# Diff at Mon, 19 May 2025 09:48:02 GMT:
+# Diff at Mon, 19 May 2025 15:23:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4736f5c36862c00bdd000c7d0446f4575edb2532 block: 29878278
-- current block number: 30429066
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 29878278
+- current block number: 30439434
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+upgrade to unverified bridge contract.
 
 ## Watched changes
 
@@ -170,7 +170,7 @@ Provide description of changes. This section will be preserved.
  3 files changed, 1879 deletions(-)
 ```
 
-Generated with discovered.json: 0xbfa105f87b97694a41d02f084822746d7f87f95e
+Generated with discovered.json: 0x03768a1f8a0634a16002192ad2f4c7dcd9fa36d2
 
 # Diff at Wed, 07 May 2025 07:56:57 GMT:
 

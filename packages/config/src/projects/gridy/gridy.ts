@@ -7,6 +7,7 @@ import { underReviewL3 } from '../../templates/underReview'
 
 export const gridy: ScalingProject = underReviewL3({
   id: ProjectId('gridy'),
+  archivedAt: UnixTime(1747648277), // 2025-05-19T09:51:17
   capability: 'appchain',
   addedAt: UnixTime(1745041853), // 2025-04-19T05:50:53Z
   hostChain: ProjectId('starknet'),
@@ -29,6 +30,7 @@ export const gridy: ScalingProject = underReviewL3({
       socialMedia: ['https://twitter.com/karnotxyz'],
     },
   },
+
   ecosystemInfo: {
     id: ProjectId('starknet'),
   },

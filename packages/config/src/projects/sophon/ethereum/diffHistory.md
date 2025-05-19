@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xfa05e17ddb6a2ad873940efbdf4d8a1ee1122d69
+Generated with discovered.json: 0xd51f92447314ab19b6ec29ca15b9abcfcb973592
 
-# Diff at Mon, 19 May 2025 09:36:14 GMT:
+# Diff at Mon, 19 May 2025 15:29:22 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4736f5c36862c00bdd000c7d0446f4575edb2532 block: 22480309
-- current block number: 22516159
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22480309
+- current block number: 22517904
 
 ## Description
 
@@ -23,7 +23,7 @@ Whitelisted USDC bridge contract on L2.
     }
 ```
 
-Generated with discovered.json: 0xcdb68748f3e212193e7f005ece40988d5b06cadd
+Generated with discovered.json: 0x821b11cd324bfdf250c740d460994f73a6f084f3
 
 # Diff at Wed, 14 May 2025 13:53:00 GMT:
 

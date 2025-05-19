@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd208b789e9b215b4ccb020277b9396f4311cc4e8
+Generated with discovered.json: 0x1428a138ccaf5a1535f70496453755dcd1bf28b1
 
-# Diff at Mon, 19 May 2025 09:08:39 GMT:
+# Diff at Mon, 19 May 2025 15:25:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4736f5c36862c00bdd000c7d0446f4575edb2532 block: 22181511
-- current block number: 22516020
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22181511
+- current block number: 22517885
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+v27 upgrade to standard contracts. Same filterer.
 
 ## Watched changes
 
@@ -192,7 +192,7 @@ Provide description of changes. This section will be preserved.
  7 files changed, 1885 insertions(+), 49 deletions(-)
 ```
 
-Generated with discovered.json: 0x3da89b52935a3760ecce037fb519751a08539b64
+Generated with discovered.json: 0x92f03103ce71842d490e6ea177798d9bd96f2888
 
 # Diff at Tue, 29 Apr 2025 08:19:17 GMT:
 

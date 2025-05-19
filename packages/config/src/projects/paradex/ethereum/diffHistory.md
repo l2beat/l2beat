@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4b734c0dd592bbea80b437c7329a773c4ba4dba7
+Generated with discovered.json: 0xf7ad29432de7c8c023f91d04532287efa3f3de15
 
-# Diff at Mon, 19 May 2025 09:28:50 GMT:
+# Diff at Mon, 19 May 2025 15:28:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4736f5c36862c00bdd000c7d0446f4575edb2532 block: 22467133
-- current block number: 22516122
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22467133
+- current block number: 22517899
 
 ## Description
 
@@ -74,7 +74,7 @@ Upgrade USDC Bridge to change withdrawal limit: now 0% meaning enabling the with
     }
 ```
 
-Generated with discovered.json: 0x46126604e5480eab9e66b99d591041d411affdd3
+Generated with discovered.json: 0x4fb9c8d6725ebbb01ac220ea9e445c77c4f32c38
 
 # Diff at Wed, 14 May 2025 11:06:55 GMT:
 

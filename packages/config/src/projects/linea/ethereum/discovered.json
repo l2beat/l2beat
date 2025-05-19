@@ -1289,15 +1289,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "global/Timelock": "0x2a5acc8f4981464126cb7f697f7a842f884c7eff8e410bcbd566233da0581e0e",
-    "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
+    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/LineaRollup": "0x782d021eada7e58a52192161a527c7609cc7abfbbd38767d906d5df60f09c0cc",
-    "linea/Roles": "0xa2464d6b0b8a583e2a25b7127ea401ba7f63faf48f95f5fb9838cebca0c98aba",
-    "linea/TokenBridge": "0x05707735d4786722458aba31122e188b7dfd0b37c967ee490c7e71e962fd0813",
+    "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
+    "linea/Roles": "0xd60a52a9cab1528e2a8c3adf9d940db4c5760a5f4e648611053f40916972b07b",
+    "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0xa7dfeb6fc78e5e2841238c4346cbbf089b50bead767a8b1820fb014ce51f27a4"
