@@ -19,6 +19,7 @@ describe(SlotTargetIndexer.name, () => {
       const slotTimestampProvider = mockObject<SlotTimestampProvider>({
         getSlotNumberAtOrBefore: mockFn().resolvesTo(0),
       })
+
       const indexer = new SlotTargetIndexer(
         Logger.SILENT,
         clock,
@@ -26,6 +27,10 @@ describe(SlotTargetIndexer.name, () => {
         mockObject<ActivityConfigProject>({
           id: ProjectId('mock'),
           chainName: 'chain',
+          activityConfig: {
+            type: 'slot',
+            startSlot: 1,
+          },
         }),
       )
 
