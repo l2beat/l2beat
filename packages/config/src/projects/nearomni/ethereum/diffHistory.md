@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb34a530348edfb0c11a9ef2bbea91f3d61b37332
+Generated with discovered.json: 0x9cd9a0c3a1b5495ba2780df78d9ae952f0af658d
 
-# Diff at Tue, 20 May 2025 14:44:33 GMT:
+# Diff at Tue, 20 May 2025 14:59:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22524093

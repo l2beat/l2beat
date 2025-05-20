@@ -3,6 +3,7 @@
   "description": "Escrow for all tokens of the NEAR Omnibridge.",
   "ignoreMethods": ["paused", "proxiableUUID"],
   "ignoreInWatchMode": ["currentOriginNonce"],
+  "category": "core",
   "fields": {
     "pausedFlags": {
       "description": "0: UNPAUSED_ALL, 1: PAUSED_INIT_TRANSFER, 2: PAUSED_FIN_TRANSFER, 3: fully paused",

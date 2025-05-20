@@ -48,12 +48,13 @@ export const nearomni: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Multi-party computation',
-      description: `The derived EVM address of the MPC signer is ${nearBridgeDerivedAddress}. MPC setup is offchain and thus unverified.`,
+      value: 'MPC',
+      description: `The derived EVM address of the multi-party computation signer is ${nearBridgeDerivedAddress}. MPC setup is offchain and members are not public.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: `Multisig (${discovery.getMultisigStats('Near Omni Multisig')})`,
+      secondLine: 'EOA',
       description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Near Omni Multisig')} Near Omni Multisig.`,
       sentiment: 'bad',
     },

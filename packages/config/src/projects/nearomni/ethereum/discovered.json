@@ -176,7 +176,8 @@
       "implementationNames": {
         "0xe00c629aFaCCb0510995A2B95560E446A24c85B9": "ERC1967Proxy",
         "0x53785920165FbDf33B3F56885DBC8D12854ac414": "OmniBridge"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xed9cB50304991951Cbee747900484E9a041DA464",
