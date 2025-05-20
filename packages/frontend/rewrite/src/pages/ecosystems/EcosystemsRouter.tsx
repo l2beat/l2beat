@@ -4,8 +4,8 @@ import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import { env } from '~/env'
 import type { Manifest } from '../../../../src/utils/Manifest'
-import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 import type { DataCache } from '../../server/utils/DataCache'
+import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 
 export function createEcosystemsRouter(
   manifest: Manifest,
@@ -22,10 +22,10 @@ export function createEcosystemsRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getEcosystemProjectData(
-        manifest,
-        req.params.slug,
-        req.originalUrl,
+      const data = await cache.getData(
+        { key: `/ecosystems/${req.params.slug}`, ttl: 60 * 10 },
+        () =>
+          getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data || !env.NEXT_PUBLIC_ECOSYSTEMS) {
         res.status(404).send('Not found')
