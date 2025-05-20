@@ -141,9 +141,13 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
         this.projectDiscovery.getContractByAddress(p.to)?.name ??
         p.to.toString()
       if (p.role) {
+        let text = receiver
+        if (p.condition) {
+          text += ` if ${formatPermissionCondition(p.condition)}`
+        }
         const prettyfiedRole = prettifyRole(p.role)
         roles[prettyfiedRole] ??= new Set()
-        roles[prettyfiedRole].add(receiver)
+        roles[prettyfiedRole].add(text)
       }
     }
     const roleNames = Object.keys(roles).sort()
