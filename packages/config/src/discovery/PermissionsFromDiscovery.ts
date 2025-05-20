@@ -133,14 +133,24 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     const directlyIssued = this.getDirectlyIssuedPermissions(
       contractOrEoa.address,
     )
+    const roles: Record<string, Set<string>> = {}
+
     const result = []
     for (const p of directlyIssued) {
       const receiver =
         this.projectDiscovery.getContractByAddress(p.to)?.name ??
         p.to.toString()
       if (p.role) {
-        result.push(`  * **${prettifyRole(p.role)}** : ${receiver}`)
+        const prettyfiedRole = prettifyRole(p.role)
+        roles[prettyfiedRole] ??= new Set()
+        roles[prettyfiedRole].add(receiver)
       }
+    }
+    const roleNames = Object.keys(roles).sort()
+    for (const roleName of roleNames) {
+      result.push(
+        `  * **${roleName}** : ${Array.from(roles[roleName]).join(', ')}`,
+      )
     }
     if (result.length > 0) {
       result.unshift('Roles:')
@@ -265,6 +275,7 @@ function totalPermissionDelay(p: ReceivedPermission): number {
 function prettifyRole(role: string): string {
   const trimmed = role.replace(/^[.$]+/, '')
   const withoutAcPrefix = trimmed.replace(/^ac/, '')
+  const withoutACSuffix = withoutAcPrefix.replace(/AC$/, '')
   const decapitalized = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
-  return decapitalized(withoutAcPrefix)
+  return decapitalized(withoutACSuffix)
 }
