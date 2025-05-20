@@ -5,10 +5,12 @@ import { z } from 'zod'
 import { env } from '~/env'
 import type { Manifest } from '../../../../src/utils/Manifest'
 import { getEcosystemProjectData } from './project/getEcosystemProjectData'
+import type { DataCache } from '../../server/utils/DataCache'
 
 export function createEcosystemsRouter(
   manifest: Manifest,
   render: RenderFunction,
+  cache: DataCache,
 ) {
   const router = express.Router()
 
