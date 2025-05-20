@@ -1,11 +1,14 @@
-import { UnixTime } from '@l2beat/shared-pure';
-import type { ICache } from './ICache';
+import { UnixTime } from '@l2beat/shared-pure'
+import type { ICache } from './ICache'
 
 const PROMISE_TIMEOUT = 30
 
 export class InMemoryCache implements ICache {
   private cache
-  private inFlight = new Map<string, { promise: Promise<unknown>; timestamp: number }>()
+  private inFlight = new Map<
+    string,
+    { promise: Promise<unknown>; timestamp: number }
+  >()
 
   constructor(
     initialCache?: Map<string, { result: unknown; timestamp: number }>,
@@ -25,7 +28,10 @@ export class InMemoryCache implements ICache {
     }
 
     const existingPromise = this.inFlight.get(options.key)
-    if (existingPromise && existingPromise.timestamp + PROMISE_TIMEOUT > UnixTime.now()) {
+    if (
+      existingPromise &&
+      existingPromise.timestamp + PROMISE_TIMEOUT > UnixTime.now()
+    ) {
       return existingPromise.promise as Promise<T>
     }
 
