@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xcdb68748f3e212193e7f005ece40988d5b06cadd
+Generated with discovered.json: 0xd51f92447314ab19b6ec29ca15b9abcfcb973592
+
+# Diff at Mon, 19 May 2025 15:29:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22480309
+- current block number: 22517904
+
+## Description
+
+Whitelisted USDC bridge contract on L2.
+
+## Watched changes
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      values.accessControl.WHITELISTED_ROLE.members.1:
++        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
++++ description: Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.
+      values.whitelistedContractsAC.1:
++        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
+    }
+```
+
+Generated with discovered.json: 0x821b11cd324bfdf250c740d460994f73a6f084f3
 
 # Diff at Wed, 14 May 2025 13:53:00 GMT:
 

@@ -14,6 +14,7 @@ export type TrackedTransaction = Omit<TrackedTxCostsConfig, 'id'> & {
 
 export function getTrackedTransactions(
   project: Project<never, 'trackedTxsConfig'>,
+  type: 'l2costs' | 'liveness',
 ): TrackedTransactionsByType | undefined {
   if (!project.trackedTxsConfig) {
     return undefined
@@ -21,7 +22,7 @@ export function getTrackedTransactions(
 
   const now = UnixTime.now()
   const txs = project.trackedTxsConfig
-    .filter((x): x is TrackedTxCostsConfig => x.type === 'l2costs')
+    .filter((x): x is TrackedTxCostsConfig => x.type === type)
     .map(
       (x): TrackedTransaction => ({
         ...x,

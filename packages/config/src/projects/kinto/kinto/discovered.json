@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 850146,
-  "configHash": "0x27e31e0c7e71b23fab4b1d2d933aca8019eade4e283bcd28070df66b60b3e970",
+  "configHash": "0x6f21c1713db8dc80377eac63e2e206ca18ba3f896cc10b1eb4e5113eb0960d28",
   "entries": [
     {
       "name": "NioGuardians",
@@ -3933,10 +3933,10 @@
     ]
   },
   "usedTemplates": {
-    "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1",
-    "kinto/AccessManager": "0x973f973e76e7603444a03fd4d48de2a38ecad709cc7c76e070f173c86d991262",
-    "kinto/KintoAppRegistry": "0xb3039ae3b2e3496e76ff42ff29845fecccf615300382914157c9d02611e2afac",
-    "kinto/KintoID": "0x42a67c6ab4a6b57a1cd73ef8ef2786b66d34cc910c08ed2297eab1d183371e29"
+    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "kinto/AccessManager": "0x5f613078dec03b478066cd2e27d73c558a7b01db7e74fc21aa87bd67e05d4548",
+    "kinto/KintoAppRegistry": "0xb37bd2f43ee0daa14c470dd51a29784276dfaadfb3a6e142e9753d27d138df1d",
+    "kinto/KintoID": "0x60c7db78a1d45df2b83b6c019907865abc7fb5b31ab065b7d69aafa67c19fb8b"
   },
   "permissionsConfigHash": "0x844ff3e03fa3560dd4a830cb5508c0d7f1290a922f27201633cb0ea60ad01b39"
 }

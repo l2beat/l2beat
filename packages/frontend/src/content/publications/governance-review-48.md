@@ -2,7 +2,7 @@
 title: "Governance Review #48"
 description: "Another week of governance news, proposals, updates, and innovation in the DAOs."
 publishedOn: "2025-04-22"
-authorId: anastassis-oikonomopoulos
+authorId: manuel-gonzalez
 ---
 
 ## **Optimism**

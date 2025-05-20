@@ -28,7 +28,7 @@ import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
-import { StarknetEvents } from './StarknetEvents'
+import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
@@ -61,7 +61,7 @@ export function getSubcommands() {
     RefreshDiscovery,
     ScanKintoAm,
     SolFmt,
-    StarknetEvents,
+    StarknetAccessControl,
     StarknetProgramHashes,
     FetchAgglayer,
     FetchZkStack,

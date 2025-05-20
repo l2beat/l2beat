@@ -2,7 +2,7 @@
 title: "Governance Review #49"
 description: "Governance activity remains high as we approach the end of the month."
 publishedOn: "2025-04-28"
-authorId: anastassis-oikonomopoulos
+authorId: manuel-gonzalez
 ---
 
 

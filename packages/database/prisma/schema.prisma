@@ -181,6 +181,7 @@ model AggregatedLiveness {
   numberOfRecords Int
 
   @@id([timestamp, projectId, subtype])
+  @@index([projectId])
 }
 
 model Anomaly {
@@ -243,6 +244,7 @@ model TokenValue {
   @@id([timestamp, configurationId])
   @@index([projectId])
   @@index([tokenId])
+  @@index([projectId, tokenId, timestamp(sort: Desc)])
 }
 
 model ProjectValue {
@@ -259,6 +261,8 @@ model ProjectValue {
   associated Float    @db.Real
 
   @@id([timestamp, project, type])
+  @@index([type, timestamp(sort: Desc)])
+  @@index([type, project, timestamp])
 }
 
 model UpdateDiff {

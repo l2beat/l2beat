@@ -70,6 +70,24 @@
     },
     {
       "mode": "auto",
+      "id": "lisk-M-BTC",
+      "priceId": "merlin-s-seal-btc",
+      "symbol": "M-BTC",
+      "name": "Merlin BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9BFA177621119e64CecbEabE184ab9993E2ef727",
+        "chain": "lisk",
+        "decimals": 18,
+        "sinceTimestamp": 1734625977
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lisk-TRB",
       "priceId": "tellor",
       "symbol": "TRB",

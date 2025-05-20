@@ -2,7 +2,7 @@
   title: "Governance Review #41"
   description: "ETH Denver slows down governance activity."
   publishedOn: "2025-02-24"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 
 ## **Optimism**
