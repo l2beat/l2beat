@@ -1,7 +1,7 @@
 {
   "name": "nearomni",
   "chain": "ethereum",
-  "blockNumber": 22517159,
+  "blockNumber": 22524093,
   "configHash": "0x662f8c1649b1880dd83045873be09dd385cbd3f098f0451e1d932b8e0d323fca",
   "entries": [
     {
@@ -24,6 +24,10 @@
           "permission": "interact",
           "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "manage the pauser role and all pause flags (pause and unpause)."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -71,6 +75,7 @@
         "0x02d990d2967ee4acf934d56b2603fdc9cc8bc6d4c72ab983dbc02ce5b01f0b36"
       ],
       "proxyType": "immutable",
+      "description": "The standard implementation used for new tokens minted by the bridge.",
       "sinceTimestamp": 1743681743,
       "sinceBlock": 22188254,
       "values": {
@@ -110,6 +115,7 @@
         "0xe42ac15db175c2ae87aede625244b9c437f4c90625b9f70e20f9b85ee1b4e545"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow for all tokens of the NEAR Omnibridge.",
       "ignoreInWatchMode": ["currentOriginNonce"],
       "sinceTimestamp": 1743682043,
       "sinceBlock": 22188279,
@@ -134,7 +140,7 @@
             "members": ["0xD9cB077700AA4D32d30bDA5e99bb171549b5a382"]
           }
         },
-        "currentOriginNonce": 291,
+        "currentOriginNonce": 298,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1"],
         "nearBridgeDerivedAddress": "0x22EB4d37677eD931d9dE2218cecE1A832a147490",
@@ -344,9 +350,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "nearomni/BridgeToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "nearomni/OmniBridge": "0x49785401a915955c9751d29b3288541e104b33847c036e9c7bb1ec1d4477f2b9"
+    "nearomni/OmniBridge": "0xbdeb1c62793ec5a8db2a5732ca3ce5a14c65b12cd54bd2fdf4b68b83731a9bb3"
   },
-  "permissionsConfigHash": "0x61c8e33cfd0a31b998558267c2dd179690ba5505a7c03b14e009d485f07f2e47"
+  "permissionsConfigHash": "0x6550bf5a70152a0898bf411e3334a655ea1f3ec9b83651fc7ebef635411de31e"
 }

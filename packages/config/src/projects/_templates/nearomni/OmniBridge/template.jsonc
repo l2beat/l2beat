@@ -21,6 +21,9 @@
         {
           "type": "interact",
           "description": "manage the pauser role and all pause flags (pause and unpause)."
+        },
+        {
+          "type": "upgrade" // proxy handler fails here, manual override
         }
       ]
     },
