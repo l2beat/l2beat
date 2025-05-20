@@ -10,11 +10,15 @@ import {
   ExternalReference,
 } from '../src/discovery/config/ColorConfig'
 import {
+  ContractPermission,
+  ContractPermissionField,
+  Permission,
+  RawPermissionConfiguration,
+} from '../src/discovery/config/PermissionConfig'
+import {
   ContractFieldSeverity,
   DiscoveryCustomType,
   ManualProxyType,
-  Permission,
-  RawPermissionConfiguration,
   StructureConfig,
   StructureContract,
   StructureContractField,
@@ -52,10 +56,14 @@ async function generateAndSaveSchema(
 }
 
 async function main() {
-  const MergedField = ColorContractField.merge(StructureContractField)
+  const MergedField = ContractPermissionField.merge(ColorContractField).merge(
+    // special handling due to the .refine() call in StructureContractField
+    StructureContractField._def.schema,
+  )
   const MergedContract = z.object({
     ...StructureContract.omit({ fields: true }).shape,
     ...ColorContract.omit({ fields: true }).shape,
+    ...ContractPermission.omit({ fields: true }).shape,
     fields: z.record(MergedField).optional(),
   })
   const MergedConfig = z.object({
