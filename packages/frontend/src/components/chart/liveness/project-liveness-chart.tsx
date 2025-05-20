@@ -10,6 +10,7 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './liveness-chart'
 import { LivenessChartStats } from './liveness-chart-stats'
 
@@ -100,12 +101,4 @@ function isAnyAnomalyLive(
     (anomaly) =>
       NOW - 4 * UnixTime.HOUR <= anomaly.timestamp + anomaly.durationInSeconds,
   )
-}
-
-export function getDefaultSubtype(
-  configuredSubtypes: TrackedTxsConfigSubtype[],
-): TrackedTxsConfigSubtype {
-  if (configuredSubtypes.includes('batchSubmissions')) return 'batchSubmissions'
-  if (configuredSubtypes.includes('proofSubmissions')) return 'proofSubmissions'
-  return 'stateUpdates'
 }
