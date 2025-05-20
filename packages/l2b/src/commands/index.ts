@@ -7,10 +7,12 @@ import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
+import { DetectProxy } from './Proxy'
 import { Discover } from './Discover'
 import { DownloadShapes } from './DownloadShapes'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
+import { FetchDiscoveryCache } from './FetchDiscoveryCache'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
@@ -24,7 +26,6 @@ import { MatchFlat } from './MatchFlat'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
-import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
@@ -46,14 +47,20 @@ export function getSubcommands() {
     CountUserOperations,
     DeploymentTimestamp,
     DetectProxy,
-    DownloadShapes,
     Discover,
+    DownloadShapes,
     Events,
+    FetchAgglayer,
+    FetchDiscoveryCache,
     FetchFlatSources,
+    FetchZkStack,
+    FindCelestiaNamespace,
+    FindL2,
     Flatten,
     FlattenAndDiff,
-    FindCelestiaNamespace,
     GetTokenMinters,
+    Init,
+    InitTemplate,
     MatchFlat,
     ModelPermissions,
     OPConfigs,
@@ -63,11 +70,6 @@ export function getSubcommands() {
     SolFmt,
     StarknetAccessControl,
     StarknetProgramHashes,
-    FetchAgglayer,
-    FetchZkStack,
-    FindL2,
-    Init,
-    InitTemplate,
     TVL,
     UI,
     ZkGovProposal,
