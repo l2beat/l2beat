@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x6e39042f4aa91f926d93b33e393ed4a07a6a61c0
+
+# Diff at Mon, 19 May 2025 15:19:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22494917
+- current block number: 22517852
+
+## Description
+
+Upgrade to the Linea_Adapter to use the general CCTP adapter.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Linea_Adapter (0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.59144:
+-        "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE"
++        "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Linea_Adapter (0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22494917 => .flat}/Linea_Adapter.sol    | 157 +++++++++++++++++++--
+ 1 file changed, 145 insertions(+), 12 deletions(-)
+```
+
 Generated with discovered.json: 0x037991be57e22885eb3db5d1e8fde2b0dfbc9871
 
 # Diff at Fri, 16 May 2025 10:03:06 GMT:

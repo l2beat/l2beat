@@ -1,3 +1,175 @@
+Generated with discovered.json: 0xce736a957f962cb3138b1a5b5ffcab6d53781286
+
+# Diff at Mon, 19 May 2025 15:23:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 29878278
+- current block number: 30439434
+
+## Description
+
+upgrade to unverified bridge contract.
+
+## Watched changes
+
+```diff
+    EOA  (0x01F010a5e001fe9d6940758EA5e8c777885E351e) {
+    +++ description: None
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3","via":[{"address":"0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD"},{"address":"0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"}]}
+      receivedPermissions.7.from:
+-        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
++        "0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3"
+      receivedPermissions.6.from:
+-        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
++        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
+      receivedPermissions.5.from:
+-        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
++        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
+      receivedPermissions.4.from:
+-        "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
++        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RollupEventInbox (0x6D67FD4af128eAb051EE8976e6aa65664A4806EE)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3","via":[{"address":"0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD"},{"address":"0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"}]}
+      receivedPermissions.7.from:
+-        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
++        "0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3"
+      receivedPermissions.6.from:
+-        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
++        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
+      receivedPermissions.5.from:
+-        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
++        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
+      receivedPermissions.4.from:
+-        "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
++        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
+    }
+```
+
+```diff
+    contract Bridge (0x9F904Fea0efF79708B37B99960e05900fE310A8E) {
+    +++ description: None
+      template:
+-        "orbitstack/Bridge"
+      sourceHashes:
+-        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x73087d4667e81f676a10708feb2774bab3a9a558a1987b8ac4f112cc464bba96"]
+      description:
+-        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+      values.$implementation:
+-        "0x8F0169dcF705E3c500a5f44C8966a18F7E3bdF7A"
++        "0x56C2e7691441fDcDfA15BcCfe5a1Aec9d031e656"
+      values.$pastUpgrades.1:
++        ["2024-10-23T21:19:03.000Z","0x43cadcfbccd1c9d31753b79afeee54298787a85289a611d531abf2bd1467ee52",["0x8F0169dcF705E3c500a5f44C8966a18F7E3bdF7A"]]
+      values.$pastUpgrades.0.2:
+-        ["0x8F0169dcF705E3c500a5f44C8966a18F7E3bdF7A"]
++        "2025-05-17T04:53:55.000Z"
+      values.$pastUpgrades.0.1:
+-        "2024-10-23T21:19:03.000Z"
++        "0x26d71626c5c2f49878d6ee14ba27d028a0ddc3ce91279e4abf1c2940767f3ef4"
+      values.$pastUpgrades.0.0:
+-        "0x43cadcfbccd1c9d31753b79afeee54298787a85289a611d531abf2bd1467ee52"
++        ["0x56C2e7691441fDcDfA15BcCfe5a1Aec9d031e656"]
+      values.$upgradeCount:
+-        1
++        2
+      values.activeOutbox:
+-        "0x0000000000000000000000000000000000000000"
+      values.allowedDelayedInboxList:
+-        ["0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f","0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"]
+      values.allowedOutboxList:
+-        ["0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"]
+      values.delayedMessageCount:
+-        5380
+      values.inboxHistory:
+-        ["0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f","0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"]
+      values.nativeToken:
+-        "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB"
+      values.nativeTokenDecimals:
+-        18
+      values.outboxHistory:
+-        ["0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"]
+      values.rollup:
+-        "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09"
+      values.sequencerInbox:
+-        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
+      values.sequencerMessageCount:
+-        14758
+      values.sequencerReportedSubMessageCount:
+-        2589814
+      fieldMeta:
+-        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
+      implementationNames.0x8F0169dcF705E3c500a5f44C8966a18F7E3bdF7A:
+-        "ERC20Bridge"
+      implementationNames.0x56C2e7691441fDcDfA15BcCfe5a1Aec9d031e656:
++        ""
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD) {
+    +++ description: None
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3"}
+      directlyReceivedPermissions.5.from:
+-        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
++        "0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3"
+      directlyReceivedPermissions.4.from:
+-        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
++        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
+      directlyReceivedPermissions.3.from:
+-        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
++        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
+      directlyReceivedPermissions.2.from:
+-        "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
++        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
+    }
+```
+
+```diff
+    EOA  (0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7) {
+    +++ description: None
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3","via":[{"address":"0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD"},{"address":"0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"}]}
+      receivedPermissions.7.from:
+-        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
++        "0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3"
+      receivedPermissions.6.from:
+-        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
++        "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
+      receivedPermissions.5.from:
+-        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
++        "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
+      receivedPermissions.4.from:
+-        "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
++        "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol => /dev/null            | 1120 --------------------
+ .../ERC20RollupEventInbox.sol => /dev/null         |  130 ---
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 -----------
+ 3 files changed, 1879 deletions(-)
+```
+
 Generated with discovered.json: 0x03768a1f8a0634a16002192ad2f4c7dcd9fa36d2
 
 # Diff at Wed, 07 May 2025 07:56:57 GMT:
