@@ -1,5 +1,6 @@
 import express from 'express'
 import type { Manifest } from '../../../src/utils/Manifest'
+import { DataCache } from '../server/utils/DataCache'
 import type { RenderFunction } from '../ssr/types'
 import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBridgesRouter } from './bridges/BridgesRouter'
@@ -13,7 +14,6 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
-import { DataCache } from '../server/utils/DataCache'
 
 export function createServerPageRouter(
   manifest: Manifest,

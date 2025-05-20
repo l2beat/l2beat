@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
-import { DataCache } from './Cache'
+import { DataCache } from './DataCache'
 
 describe(DataCache.name, () => {
   describe('getData', () => {
