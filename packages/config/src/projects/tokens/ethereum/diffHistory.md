@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x082bf3644c87f914c32f2d7597969abd6e3eaa7e
+
+# Diff at Tue, 20 May 2025 13:06:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22445558
+- current block number: 22445558
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22445558 (main branch discovery), not current.
+
+```diff
+    contract Voting (0x2e59A20f205bB85a89C53f1936454680651E618e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Safe (0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xa8e3f5dfc477b38a35cb083e59ce1aa6c9eeabb5
 
 # Diff at Fri, 09 May 2025 11:17:03 GMT:

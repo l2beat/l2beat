@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x237a55ab7f651093f954df2549dff2cca011bbc6
+
+# Diff at Tue, 20 May 2025 13:07:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 16289384
+- current block number: 16289384
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16289384 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      directlyReceivedPermissions.15.role:
++        "admin"
+      directlyReceivedPermissions.14.role:
++        "admin"
+      directlyReceivedPermissions.13.role:
++        "admin"
+      directlyReceivedPermissions.12.role:
++        "admin"
+      directlyReceivedPermissions.11.role:
++        "admin"
+      directlyReceivedPermissions.10.role:
++        "admin"
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA UnichainProxyAdminOwner_L2Alias (0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    +++ description: None
+      receivedPermissions.15.role:
++        "admin"
+      receivedPermissions.14.role:
++        "admin"
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x783f0f32568fa8bd7f4663606e310d215bb500e8
 
 # Diff at Mon, 12 May 2025 08:22:46 GMT:

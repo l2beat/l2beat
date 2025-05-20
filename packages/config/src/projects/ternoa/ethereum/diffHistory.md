@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xbd58469b11329210462c020668c322f337fd65fa
+
+# Diff at Tue, 20 May 2025 13:06:46 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22208591
+- current block number: 22208591
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208591 (main branch discovery), not current.
+
+```diff
+    EOA  (0x129A94208bb3030D809c36849d43b50d13e0cACf) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedSequencer"
+    }
+```
+
+```diff
+    EOA  (0x49015545B46B07082bd7faf2633643eae87710EC) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
++        "0xB408a216927d31A27fd96176dbF1B825630f0301"
+      receivedPermissions.3.description:
+-        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.3.via:
++        [{"address":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xB408a216927d31A27fd96176dbF1B825630f0301"
++        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
+      receivedPermissions.2.via:
+-        [{"address":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]
+      receivedPermissions.2.description:
++        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+      receivedPermissions.2.role:
++        ".admin"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".forceBatchAddress"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x2b8c16c5cf524e97352682d52720d344646cc0a5
 
 # Diff at Tue, 06 May 2025 10:56:58 GMT:

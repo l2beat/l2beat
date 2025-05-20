@@ -1,3 +1,219 @@
+Generated with discovered.json: 0x73a6d33a2ebb572dac957e59c35c37a0de33eea0
+
+# Diff at Tue, 20 May 2025 13:06:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 60151606
+- current block number: 60151606
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 60151606 (main branch discovery), not current.
+
+```diff
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Proposer"
+      receivedPermissions.1.role:
++        ".Canceller"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    contract ProtocolTimelockController_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract TokenTimelockController_deprecated (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor_deprecated (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Proposer"
+      receivedPermissions.1.role:
++        ".Canceller"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    EOA Guardians_l2Alias (0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".VETO_GUARDIAN"
+      receivedPermissions.0.role:
++        ".VETO_GUARDIAN"
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.7.role:
++        ".Executor"
+      receivedPermissions.6.role:
++        ".Executor"
+      receivedPermissions.5.role:
++        ".Proposer"
+      receivedPermissions.4.from:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.4.description:
+-        "propose transactions."
++        "cancel queued transactions."
+      receivedPermissions.4.role:
++        ".Canceller"
+      receivedPermissions.3.from:
+-        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      receivedPermissions.3.description:
+-        "cancel queued transactions."
++        "propose transactions."
+      receivedPermissions.3.role:
++        ".Proposer"
+      receivedPermissions.2.role:
++        ".Canceller"
+      receivedPermissions.1.role:
++        ".timelockAdminAC"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.1.role:
++        ".Executor"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias_deprecated (0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.4.role:
++        ".MinterAdmin"
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".timelockAdminAC"
+      receivedPermissions.1.role:
++        ".Proposer"
+      receivedPermissions.0.role:
++        ".Canceller"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    contract GovOpsTimelockController_deprecated (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    EOA ZKFoundationMultisig_l2Alias (0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSE_GUARDIAN"
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.1.role:
++        ".MinterAdmin"
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Proposer"
+      receivedPermissions.1.role:
++        ".Canceller"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".DefaultAdmin"
+    }
+```
+
 Generated with discovered.json: 0x08582c0d6231062a036f71ee48f13e25ba73f564
 
 # Diff at Wed, 14 May 2025 14:02:05 GMT:

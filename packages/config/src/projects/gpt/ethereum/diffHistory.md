@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x43d5623d0f99440db98c537f11d08c5fa8d1b09c
+
+# Diff at Tue, 20 May 2025 13:06:36 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3451F208447c4D81346c10239eF92A1eB98b65C3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedSequencer"
+    }
+```
+
+```diff
+    EOA  (0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".admin"
+      receivedPermissions.1.role:
++        ".forceBatchAddress"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0xb8605297399baEb6628C9E8F5D3E52A056492cfe) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x6c4cfa82b7e4616ec3aa4d6b50c7b55cfdda7ac7
 
 # Diff at Tue, 06 May 2025 10:56:50 GMT:

@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xbea867b915598897cf6607a51232c2a9fb5b6019
+
+# Diff at Tue, 20 May 2025 13:06:48 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22496279
+- current block number: 22496279
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22496279 (main branch discovery), not current.
+
+```diff
+    EOA  (0x11805594be0229EF08429D775AF0c55f7c4535dE) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x54aB716D465be3D5EEca64E63ac0048D7a81659a) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract Abstract Multisig (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getAdmin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
 Generated with discovered.json: 0xe2d0389a305066196f1800063716aa9a764d054c
 
 # Diff at Fri, 16 May 2025 14:39:40 GMT:

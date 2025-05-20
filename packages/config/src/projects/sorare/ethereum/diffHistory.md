@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x2b49696b2929a3ed297f745a64c0565acf13bae7
+
+# Diff at Tue, 20 May 2025 13:06:44 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21981156
+- current block number: 21981156
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981156 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0x63881ac44293E22F3c3183a0C4113586ABb3e653) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    EOA  (0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
 Generated with discovered.json: 0x57d6fddc0721befb5d71964e179042bf8f65f4a4
 
 # Diff at Tue, 06 May 2025 10:56:57 GMT:

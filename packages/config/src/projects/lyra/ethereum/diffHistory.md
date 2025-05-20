@@ -1,3 +1,124 @@
+Generated with discovered.json: 0xd2b769c141a604a2459d4954884f9b00b7b63e69
+
+# Diff at Tue, 20 May 2025 13:06:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22046064
+- current block number: 22046064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046064 (main branch discovery), not current.
+
+```diff
+    EOA  (0x03e820562ffd2e0390787caD706EaF1FF98C2608) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x35d5D43271548c984662d4879FBc8e041Bc1Ff93) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0x61E44dC0dae6888B5a301887732217d5725B0bFf"
++        "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
+      directlyReceivedPermissions.2.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.from:
+-        "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
++        "0x61E44dC0dae6888B5a301887732217d5725B0bFf"
+      directlyReceivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e"
++        "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22"
+      receivedPermissions.4.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.4.via:
++        [{"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"}]
+      receivedPermissions.3.from:
+-        "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22"
++        "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
++        "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e"
+      receivedPermissions.1.via:
+-        [{"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"}]
+      receivedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract LyraMultisig (0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".GUARDIAN"
+      receivedPermissions.0.role:
++        ".CHALLENGER"
+    }
+```
+
 Generated with discovered.json: 0xa20e84cdb941e4968fd1523db8ca8ba9241ae7b8
 
 # Diff at Tue, 29 Apr 2025 08:19:06 GMT:

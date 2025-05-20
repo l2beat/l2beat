@@ -1,3 +1,323 @@
+Generated with discovered.json: 0x1160187ed2ab7524446adf8d92cd6d7a417195f9
+
+# Diff at Tue, 20 May 2025 13:06:37 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22330737
+- current block number: 22330737
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22330737 (main branch discovery), not current.
+
+```diff
+    EOA  (0x16876e5c608cec36968517A9Eb345269D308D94a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x27EFE61C5266e461995141f57b4D13F13c83f786) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    EOA  (0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    EOA KromaOperator (0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      receivedPermissions.2.role:
++        ".SECURITY_COUNCIL"
+      receivedPermissions.1.permission:
+-        "interact"
++        "guard"
+      receivedPermissions.1.from:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.1.description:
+-        "become a validator without posting a bond."
+      receivedPermissions.1.role:
++        ".GUARDIAN"
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      receivedPermissions.0.description:
++        "become a validator without posting a bond."
+      receivedPermissions.0.role:
++        ".SECURITY_COUNCIL"
+    }
+```
+
+```diff
+    EOA  (0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    EOA  (0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    EOA  (0x5ddcf494A8b6EeE4904934E829109cCF584EAF80) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      directlyReceivedPermissions.15.role:
++        "admin"
+      directlyReceivedPermissions.14.role:
++        "admin"
+      directlyReceivedPermissions.13.role:
++        "admin"
+      directlyReceivedPermissions.12.role:
++        "admin"
+      directlyReceivedPermissions.11.role:
++        "admin"
+      directlyReceivedPermissions.10.role:
++        "admin"
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0x66FA82F4AEA284d1d208437F179dFE13d8118f3A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    EOA  (0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    EOA  (0x8ECF028Cd647379E580DaA6701A11154750fcd3c) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      directlyReceivedPermissions.4.description:
+-        "execute transactions that are ready."
++        "propose transactions."
+      directlyReceivedPermissions.4.role:
++        ".proposerAC"
+      directlyReceivedPermissions.3.description:
+-        "propose transactions."
++        "execute transactions that are ready."
+      directlyReceivedPermissions.3.role:
++        ".executorAC"
+      directlyReceivedPermissions.2.role:
++        ".cancellerAC"
+      directlyReceivedPermissions.1.role:
++        ".executorAC"
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenOwners"
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      receivedPermissions.0.role:
++        ".verifier"
+    }
+```
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      receivedPermissions.22.role:
++        "admin"
+      receivedPermissions.21.role:
++        "admin"
+      receivedPermissions.20.role:
++        "admin"
+      receivedPermissions.19.role:
++        "admin"
+      receivedPermissions.18.role:
++        "admin"
+      receivedPermissions.17.role:
++        "admin"
+      receivedPermissions.16.role:
++        "admin"
+      receivedPermissions.15.role:
++        "admin"
+      receivedPermissions.14.role:
++        "admin"
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.11.from:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.11.description:
+-        "execute transactions that are ready."
+      receivedPermissions.11.via.2:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      receivedPermissions.11.via.1:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      receivedPermissions.11.via.0.address:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.from:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.from:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        ".proposerAC"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.5.via.2:
+-        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      receivedPermissions.5.via.1:
+-        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      receivedPermissions.5.via.0.address:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.5.description:
++        "execute transactions that are ready."
+      receivedPermissions.5.role:
++        ".executorAC"
+      receivedPermissions.4.role:
++        ".cancellerAC"
+      receivedPermissions.3.role:
++        ".timelockAdminAC"
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".timelockAdminAC"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".token"
+    }
+```
+
 Generated with discovered.json: 0x58c70cecac82fc12ff73f7473901ebb70084e0d1
 
 # Diff at Fri, 16 May 2025 11:51:04 GMT:

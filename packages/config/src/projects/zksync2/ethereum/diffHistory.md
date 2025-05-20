@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x19d24398acc753904e78f1251baae7a1f10567dc
+
+# Diff at Tue, 20 May 2025 13:06:50 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22481883
+- current block number: 22481883
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481883 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x30066439887C0a509Cb38E45c9262E6924a29BbD) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
 Generated with discovered.json: 0x84b4ba69b750862f8f2c1188e37d63a5410894c3
 
 # Diff at Wed, 14 May 2025 14:05:56 GMT:

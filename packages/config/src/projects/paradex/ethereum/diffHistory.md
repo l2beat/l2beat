@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x16698a69a474a97d091809b8bb14dc2450bf3e29
+
+# Diff at Tue, 20 May 2025 13:06:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22517899
+- current block number: 22517899
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22517899 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.description:
++        "disable the withdrawal limit and manage the security agent role that can enable it."
+      receivedPermissions.3.role:
++        ".secAdminAC"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.description:
+-        "disable the withdrawal limit and manage the security agent role that can enable it."
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".govAdminAC"
+      receivedPermissions.0.role:
++        ".secAgentAC"
+    }
+```
+
 Generated with discovered.json: 0xf7ad29432de7c8c023f91d04532287efa3f3de15
 
 # Diff at Mon, 19 May 2025 15:28:27 GMT:

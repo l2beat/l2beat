@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x09edb2f6b67fda10e54f1753782b341a3d64fb4d
+
+# Diff at Tue, 20 May 2025 13:06:36 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22208402
+- current block number: 22208402
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208402 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x081A54442Af40a26Ae453Da0F044a49Aa3314453) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0xCD749A3e59543B31658b725136Ef3616bE7001bc"
++        "0x2321F7982Af3cBbA1Ab9D426ae7fe595E1CF427C"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x2321F7982Af3cBbA1Ab9D426ae7fe595E1CF427C"
++        "0xCD749A3e59543B31658b725136Ef3616bE7001bc"
+      directlyReceivedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x4d9D11fF877aCD0918CF467B14cE4C3d8F1b97d9) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"0x53C64d7c9a28911203Ba4BE2a6cA58254184920a","role":".CHALLENGER"}
+      receivedPermissions.0.role:
++        ".challenger"
+    }
+```
+
+```diff
+    EOA  (0x4FACE9ec6237C04a22d434989Beb30b43055886D) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0x53C64d7c9a28911203Ba4BE2a6cA58254184920a","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0x652b0ee2F6727e3627328E170Fa2373B50E81601) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xA1D6a47973D55FD4F6432B370CE5381fB24A3094) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"guard","from":"0xd2726bde3D07645faf5aD7cCF15C94817B3556D6","role":".GUARDIAN"}
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    EOA  (0xd668A64E69ef82026deB46491BFCd28ba14024C8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract GmMultisig (0xf040a7A04e914E1b4383C04359D03Ab5F12E7828) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0xCD749A3e59543B31658b725136Ef3616bE7001bc"
++        "0x2321F7982Af3cBbA1Ab9D426ae7fe595E1CF427C"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x2321F7982Af3cBbA1Ab9D426ae7fe595E1CF427C"
++        "0xCD749A3e59543B31658b725136Ef3616bE7001bc"
+      receivedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "set and change address mappings."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x9c2a1cc9a6ac1a43edf90ffae1a09b86d6501dfc
 
 # Diff at Tue, 29 Apr 2025 08:19:03 GMT:

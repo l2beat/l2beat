@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xcedc72aa9089218f4c6432e1bd82b9d530cf156b
+
+# Diff at Tue, 20 May 2025 13:06:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21394291
+- current block number: 21394291
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21394291 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x52a1934a968c35eeef3467d51b2533d70b982111
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

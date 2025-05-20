@@ -1,3 +1,246 @@
+Generated with discovered.json: 0x11521e6115c598ce15a1a495272efa0618431904
+
+# Diff at Tue, 20 May 2025 13:06:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22437741
+- current block number: 22437741
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437741 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C) {
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x320E53df19662A58fF4953d62B229E9BCAAC0b49) {
+    +++ description: None
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".guardian"
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputy"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0x9dd8e00Ff731FBf3dd3559578BeB518a41b16Cfe","role":"admin","via":[{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]}
+      receivedPermissions.9.from:
+-        "0x9dd8e00Ff731FBf3dd3559578BeB518a41b16Cfe"
++        "0x3D831FD51f80398488a2452b9Ba44eDe104e8789"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0x3D831FD51f80398488a2452b9Ba44eDe104e8789"
++        "0x11654D67e0360A82e5Badd272Ced336B80972135"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x11654D67e0360A82e5Badd272Ced336B80972135"
++        "0x384e3AE4D5efC9471201039b555EAe496b2A7240"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x384e3AE4D5efC9471201039b555EAe496b2A7240"
++        "0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92"
++        "0xF41E72f55d9bE849ecCe3b7AEe2A07Ccdadb655d"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "challenge"
+      receivedPermissions.4.from:
+-        "0xF41E72f55d9bE849ecCe3b7AEe2A07Ccdadb655d"
++        "0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92"
+      receivedPermissions.4.via:
+-        [{"address":"0x320E53df19662A58fF4953d62B229E9BCAAC0b49"}]
+      receivedPermissions.4.role:
++        ".CHALLENGER"
+      receivedPermissions.3.role:
++        ".challenger"
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.0.description:
++        "set and change address mappings."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x5c89b56bead2f99d41721f1D15442Fe813879587) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".fallbackOwner"
+    }
+```
+
+```diff
+    EOA  (0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".guardian"
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputyGuardian"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
 Generated with discovered.json: 0x9338cdc37db14d89fad80615383b8a9a7e085241
 
 # Diff at Fri, 09 May 2025 10:09:10 GMT:

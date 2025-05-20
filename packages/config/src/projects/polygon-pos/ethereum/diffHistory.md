@@ -1,3 +1,90 @@
+Generated with discovered.json: 0xb0713789a3e3fc45343ab8399154e66654b33b28
+
+# Diff at Tue, 20 May 2025 13:06:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22265851
+- current block number: 22265851
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22265851 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      receivedPermissions.7.description:
+-        "can delete arbitrary checkpoints."
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      receivedPermissions.1.description:
++        "can delete arbitrary checkpoints."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xa6a6a43ed252b88f7cac0d74c9d63f390e449679
 
 # Diff at Tue, 29 Apr 2025 08:19:09 GMT:

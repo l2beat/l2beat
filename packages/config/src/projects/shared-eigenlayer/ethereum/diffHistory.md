@@ -1,3 +1,214 @@
+Generated with discovered.json: 0x173e4823f043fb41b95ae69e379d7213265c873c
+
+# Diff at Tue, 20 May 2025 13:06:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22438687
+- current block number: 22438687
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438687 (main branch discovery), not current.
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions.1.from:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      directlyReceivedPermissions.1.role:
++        ".pausers"
+      directlyReceivedPermissions.0.from:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.3.description:
+-        "executes scheduled operations after the delay"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.3.via:
++        [{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]
+      receivedPermissions.2.from:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      receivedPermissions.1.via:
+-        [{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]
+      receivedPermissions.1.description:
++        "executes scheduled operations after the delay"
+      receivedPermissions.1.role:
++        ".executors"
+      receivedPermissions.0.role:
++        ".executors"
+      directlyReceivedPermissions.1.role:
++        ".proposers"
+      directlyReceivedPermissions.0.role:
++        ".proposers"
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".pausers"
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        ".cancellers"
+      receivedPermissions.0.role:
++        ".cancellers"
+      directlyReceivedPermissions.2.role:
++        ".proposers"
+      directlyReceivedPermissions.1.from:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      directlyReceivedPermissions.1.delay:
+-        2073600
+      directlyReceivedPermissions.1.role:
++        ".pausers"
+      directlyReceivedPermissions.0.from:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      directlyReceivedPermissions.0.delay:
++        2073600
+      directlyReceivedPermissions.0.role:
++        ".proposers"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x86914f7a4e4b3bbb7c7815187084977d06158d97
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:

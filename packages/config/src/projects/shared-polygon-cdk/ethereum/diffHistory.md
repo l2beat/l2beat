@@ -1,3 +1,153 @@
+Generated with discovered.json: 0x7adb913b987559e48029587f5d6a0d06f181a679
+
+# Diff at Tue, 20 May 2025 13:06:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22437961
+- current block number: 22437961
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437961 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedAggregatorAC"
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      receivedPermissions.5.delay:
+-        259200
+      receivedPermissions.5.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.5.condition:
+-        "(no delay if in emergency state)"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.5.via:
++        [{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.4.role:
++        ".tweakParametersAC"
+      receivedPermissions.3.via:
+-        [{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.3.role:
++        ".timelockAdminAC"
+      receivedPermissions.2.role:
++        ".defaultAdminAC"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.1.via.1:
+-        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+      receivedPermissions.1.delay:
++        259200
+      receivedPermissions.1.description:
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.1.role:
++        ".timelockAdminAC"
+      receivedPermissions.1.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.0.role:
++        ".createRollupAC"
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".emergencyCouncilAdminAC"
+    }
+```
+
+```diff
+    EOA  (0x6329Fe417621925C81c16F9F9a18c203C21Af7ab) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedAggregatorAC"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".createRollupAC"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      directlyReceivedPermissions.3.from:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      directlyReceivedPermissions.3.delay:
+-        259200
+      directlyReceivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      directlyReceivedPermissions.3.condition:
+-        "(no delay if in emergency state)"
+      directlyReceivedPermissions.3.role:
++        ".defaultAdminAC"
+      directlyReceivedPermissions.2.from:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      directlyReceivedPermissions.2.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.2.delay:
++        259200
+      directlyReceivedPermissions.2.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.2.condition:
++        "(no delay if in emergency state)"
+      directlyReceivedPermissions.1.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xf24409b47de5bb61044cd351a996611ad12516e5
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:

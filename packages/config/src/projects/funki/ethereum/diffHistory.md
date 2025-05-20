@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x503c3995b890c5918c3ceee2120bf5bc1efa6a1b
+
+# Diff at Tue, 20 May 2025 13:06:36 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22208380
+- current block number: 22208380
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208380 (main branch discovery), not current.
+
+```diff
+    EOA  (0x052a8cd5967bc3Bdb5660c989a3A68bCA683A077) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    EOA  (0x0B3476949e1C82160575295f58720E16EeD2BF7b) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"0x1A9aE6486caEc0504657351ac473B3dF8A1367cb","role":".CHALLENGER"}
+      receivedPermissions.0.role:
++        ".challenger"
+    }
+```
+
+```diff
+    contract Funki Multisig 2 (0x3D389212A78FD7D4600C9483470e59630C293416) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x4712454AddDbAbACaAb84916546899CA9690A6fF) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract Funki Multisig 1 (0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xA1ddae0829c3bD4096c34aEC58b2BC21e3a6d10E) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0x1A9aE6486caEc0504657351ac473B3dF8A1367cb","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0xc0CE2761d5cC92d25dB6ccD95e4b9483eD22D11B) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD069C4724f9bC15FA53b3b2516594512AEf8c957) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xd529ad03cd26e11a684896ba9f915ebe4f0ce3ac
 
 # Diff at Tue, 29 Apr 2025 08:19:03 GMT:

@@ -1,3 +1,185 @@
+Generated with discovered.json: 0x6d553969e3680229ffed5a3400a86002a95c66ea
+
+# Diff at Tue, 20 May 2025 13:06:56 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 850146
+- current block number: 850146
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 850146 (main branch discovery), not current.
+
+```diff
+    EOA KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".securityCouncilPermission"
+      receivedPermissions.2.role:
++        ".securityCouncilPermission"
+      receivedPermissions.1.role:
++        ".securityCouncilPermission"
+      receivedPermissions.0.role:
++        ".securityCouncilPermission"
+    }
+```
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.5.delay:
+-        1036800
+      receivedPermissions.5.description:
+-        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.3.delay:
++        1036800
+      receivedPermissions.3.description:
++        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.3.role:
++        ".kintoMultisig2Permission"
+      receivedPermissions.2.from:
+-        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.2.description:
+-        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      receivedPermissions.2.role:
++        ".KYC_PROVIDERs"
+      receivedPermissions.1.role:
++        ".kintoMultisig2Permission"
+      receivedPermissions.0.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+      receivedPermissions.0.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    EOA  (0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    EOA  (0x6E31039abF8d248aBed57E307C9E1b7530c269E4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    EOA  (0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.5.from:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      directlyReceivedPermissions.5.description:
+-        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.5.role:
++        ".UPGRADERs"
+      directlyReceivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.4.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      directlyReceivedPermissions.4.role:
++        ".KYC_PROVIDERs"
+      directlyReceivedPermissions.3.from:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      directlyReceivedPermissions.3.description:
+-        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
++        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.3.role:
++        ".owner"
+      directlyReceivedPermissions.2.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.2.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+      directlyReceivedPermissions.2.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".GOVERNANCErs"
+      directlyReceivedPermissions.0.role:
++        ".DEFAULT_ADMINs"
+    }
+```
+
+```diff
+    EOA  (0xb539019776eF803E89EC062Ad54cA24D1Fdb008a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
 Generated with discovered.json: 0x0bae3346b6031c6b404caac70477c7fdbc38f44c
 
 # Diff at Mon, 12 May 2025 13:18:51 GMT:

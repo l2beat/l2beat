@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x8bc1ebd2a8771da6fa01b3d955b4f00bd1a46fdd
+
+# Diff at Tue, 20 May 2025 13:06:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22472206
+- current block number: 22472206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22472206 (main branch discovery), not current.
+
+```diff
+    contract SHARP Multisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
 Generated with discovered.json: 0xca84e6ce394ec8220d1f1afebb375b40956ab646
 
 # Diff at Tue, 13 May 2025 05:48:08 GMT:

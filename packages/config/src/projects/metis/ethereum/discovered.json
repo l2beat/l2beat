@@ -196,11 +196,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+          "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1747125995,
@@ -365,43 +367,52 @@
         {
           "permission": "interact",
           "from": "0x918778e825747a892b17C66fe7D24C618262867d",
-          "description": "set and change address mappings."
+          "description": "set and change address mappings.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "role": "admin",
           "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         },
         {
           "permission": "upgrade",
-          "from": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+          "from": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+          "from": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+          "from": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "role": "admin",
           "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         },
         {
           "permission": "upgrade",
-          "from": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+          "from": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+          "from": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+          "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+          "from": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -446,18 +457,21 @@
         {
           "permission": "upgrade",
           "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin",
           "via": [{ "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21" }]
         },
         {
           "permission": "upgrade",
           "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "role": "admin",
           "via": [{ "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
+          "from": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
+          "role": ".owner"
         }
       ]
     },
@@ -674,11 +688,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1710314795,
@@ -1964,5 +1980,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0x3b259ef09f858994824ea44692be19c6c1bf292652904130ac0cdb44b689cfd9"
+  "permissionsConfigHash": "0x75dbd6fd8858b691340c8af2cddb7bcc8deb5348357dfd2bb87c645cc318d2c1"
 }

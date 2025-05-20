@@ -1,3 +1,127 @@
+Generated with discovered.json: 0x042538bc7fe26344a1d7316c1ef7f16b9f6a1865
+
+# Diff at Tue, 20 May 2025 13:06:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22208300
+- current block number: 22208300
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208300 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0C883f622b4ccbF1e8ce86217998f87e6d36BCE4) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"guard","from":"0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99","role":".GUARDIAN"}
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    EOA  (0x0DE6711cE623d03f0888310ca3A04a69DE0E12e1) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0xa669A743b065828682eE16109273F5CFeF5e676d","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract Cyber Multisig 2 (0x68ca4cDCb0F47457273B554E60ff8321D5C133E4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Cyber Multisig 1 (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xc76C563185d01284AdbC9cF5bb909162dD2F15e7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xE363e5aeAbf7F6c20589a774fCD83389ebBF0275) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"0xa669A743b065828682eE16109273F5CFeF5e676d","role":".CHALLENGER"}
+      receivedPermissions.0.role:
++        ".challenger"
+    }
+```
+
 Generated with discovered.json: 0x4f06692db512842b8ef02d6f1c94ce5f3ad8fb0f
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

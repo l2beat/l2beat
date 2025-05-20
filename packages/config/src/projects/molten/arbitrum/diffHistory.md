@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x8ed384382ecf31ec88c0a219a352725639440ff2
+
+# Diff at Tue, 20 May 2025 13:06:51 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 336629722
+- current block number: 336629722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 336629722 (main branch discovery), not current.
+
+```diff
+    EOA  (0x152FFeF04881BD1390D2A52009f42d56EaC7AA03) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0x451f05C41BC5CC10d7D63ed88bA0A522FE183074) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      receivedPermissions.4.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.4.via.1:
++        {"address":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"}
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "0xE1d32C985825562edAa906fAC39295370Db72195"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.from:
+-        "0xE1d32C985825562edAa906fAC39295370Db72195"
++        "0x235000876bd58336C802B3546Fc0250f285fCc79"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      receivedPermissions.0.via.1:
+-        {"address":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"}
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x8f9ea35c328d1cb1b978ef45d26112dcbef1d6b5
 
 # Diff at Wed, 14 May 2025 14:54:42 GMT:

@@ -1,3 +1,103 @@
+Generated with discovered.json: 0xee316cd9d06ba620002ce4a912220373f42eb647
+
+# Diff at Tue, 20 May 2025 13:06:39 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22494955
+- current block number: 22494955
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22494955 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.3.description:
+-        "set and change address mappings."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.2.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.1.from:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0x918778e825747a892b17C66fe7D24C618262867d"
+      receivedPermissions.0.via:
+-        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.0.description:
++        "set and change address mappings."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x5345fCDCF5449a40df030798C195603d27691502) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xe76af737833e2ba17ce79291ef9499bc8dfac9fb
 
 # Diff at Fri, 16 May 2025 12:25:09 GMT:

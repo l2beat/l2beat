@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xdce0cc333f75d3dcc877376b582abd4424f38708
+
+# Diff at Tue, 20 May 2025 13:06:37 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21995398
+- current block number: 21995398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995398 (main branch discovery), not current.
+
+```diff
+    EOA  (0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    EOA  (0xeDb0219557ba13816f1dEb7fA54688362B05A5aE) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
 Generated with discovered.json: 0x8f78f7a9ca5679e9f97d3c3d48d4a41b78af0792
 
 # Diff at Tue, 29 Apr 2025 08:19:04 GMT:

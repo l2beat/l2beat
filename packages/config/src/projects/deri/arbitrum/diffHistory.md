@@ -1,3 +1,119 @@
+Generated with discovered.json: 0x38699fa8df06e318b16f228e4762920e3f492b30
+
+# Diff at Tue, 20 May 2025 13:06:51 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 287770865
+- current block number: 287770865
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287770865 (main branch discovery), not current.
+
+```diff
+    EOA  (0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.permission:
+-        "act"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
++        "0x846387C3D6001F74170455B1074D01f05eB3067a"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "act"
+      directlyReceivedPermissions.1.from:
+-        "0x846387C3D6001F74170455B1074D01f05eB3067a"
++        "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    EOA  (0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
 Generated with discovered.json: 0xa2e2cb989ca62eb94d5220d5cb627e8dcd5adc55
 
 # Diff at Tue, 06 May 2025 10:57:02 GMT:

@@ -1,3 +1,188 @@
+Generated with discovered.json: 0xf71b8ec6e7933f972977bd8a8cf78920eaf7418a
+
+# Diff at Tue, 20 May 2025 13:06:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 20914730
+- current block number: 20914730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20914730 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) {
+    +++ description: None
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0x624808dc4A34B79B90C3c085942D2100F09A0376"
++        "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
+      directlyReceivedPermissions.2.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
++        "0x624808dc4A34B79B90C3c085942D2100F09A0376"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x864A02Ca4a40616f8995709D1B26CDe588709043) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"0x2297eB8DC91f532C91c57b3fb33C06b782e9594A","role":".CHALLENGER"}
+      receivedPermissions.0.role:
++        ".challenger"
+    }
+```
+
+```diff
+    EOA  (0xC16EAEDaB78E033B555c9eF3C326c07B49F21907) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0x2297eB8DC91f532C91c57b3fb33C06b782e9594A","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054","role":"admin","via":[{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]}
+      receivedPermissions.10.from:
+-        "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
++        "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.9.from:
+-        "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
++        "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
+      receivedPermissions.9.via:
+-        [{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+      receivedPermissions.9.role:
++        ".GUARDIAN"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
++        "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.7.via:
++        [{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+      receivedPermissions.6.from:
+-        "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
++        "0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
++        "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "interact"
++        "guard"
+      receivedPermissions.4.from:
+-        "0x624808dc4A34B79B90C3c085942D2100F09A0376"
++        "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
+      receivedPermissions.4.description:
+-        "set and change address mappings."
+      receivedPermissions.4.via:
+-        [{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+      receivedPermissions.4.role:
++        ".guardian"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.3.from:
+-        "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F"
++        "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+      receivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.3.via:
+-        [{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+      receivedPermissions.3.role:
++        ".guardian"
+      receivedPermissions.2.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
++        "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F"
+      receivedPermissions.2.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.2.via:
++        [{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
++        "0x624808dc4A34B79B90C3c085942D2100F09A0376"
+      receivedPermissions.1.description:
++        "set and change address mappings."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xDeC273BF31AD79ad00D619c52662f724176A12Fb) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
 Generated with discovered.json: 0xd3192ed257c9bfe916ca6590d8c1a40eabf7197f
 
 # Diff at Tue, 06 May 2025 10:56:51 GMT:

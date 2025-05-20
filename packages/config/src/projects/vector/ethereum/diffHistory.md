@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x03ffefff9b56f84592507ce6a53cd782d9f53103
+
+# Diff at Tue, 20 May 2025 13:06:47 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22431133
+- current block number: 22431133
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431133 (main branch discovery), not current.
+
+```diff
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".pauserAC"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.2.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".defaultAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".defaultAdminAC"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.8.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.8.description:
+-        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+      receivedPermissions.8.via.1:
++        {"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        ".timelocks"
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.via.1:
+-        {"address":"0x36194271a00dBBBae314E83dA56d0FF75fDa367B"}
+      receivedPermissions.6.description:
++        "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+      receivedPermissions.6.role:
++        ".defaultAdminAC"
+      receivedPermissions.5.description:
+-        "manage all access control roles."
++        "execute transactions that are ready."
+      receivedPermissions.5.via:
+-        [{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]
+      receivedPermissions.5.role:
++        ".Executor"
+      receivedPermissions.4.role:
++        ".defaultAdminAC"
+      receivedPermissions.4.via:
++        [{"address":"0x45828180bbE489350D621d002968A0585406d487","delay":86400}]
+      receivedPermissions.3.from:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.3.description:
+-        "execute transactions that are ready."
++        "can freeze the Vector contract and update the list of authorized relayers."
+      receivedPermissions.3.role:
++        ".guardians"
+      receivedPermissions.2.from:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.2.description:
+-        "can freeze the Vector contract and update the list of authorized relayers."
++        "manage all access control roles."
+      receivedPermissions.2.role:
++        ".defaultAdminAC"
+      receivedPermissions.1.role:
++        ".Proposer"
+      receivedPermissions.0.role:
++        ".Canceller"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    EOA  (0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".relayers"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x0882f58084771e2180bcc926a3664c01e8f1b95b
 
 # Diff at Wed, 07 May 2025 10:16:04 GMT:

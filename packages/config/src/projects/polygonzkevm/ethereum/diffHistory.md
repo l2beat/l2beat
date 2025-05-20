@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x0fca9e6c7bd50169ea8084a39895d803ccb5ca6f
+
+# Diff at Tue, 20 May 2025 13:06:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    EOA  (0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedSequencer"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x1863289fc8f7c014e7d176d665d8c302fb1369a0
 
 # Diff at Tue, 29 Apr 2025 08:19:09 GMT:

@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xe26fa881a0b825fd88aa710849a05e617660be6b
+
+# Diff at Tue, 20 May 2025 13:06:37 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21995404
+- current block number: 21995404
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995404 (main branch discovery), not current.
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xd114f501790c5afea11c52df12cfcac458228d8a
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:
