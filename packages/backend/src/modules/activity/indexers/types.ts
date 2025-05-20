@@ -5,6 +5,7 @@ import type { BlockActivityIndexer } from './BlockActivityIndexer'
 import type { BlockTargetIndexer } from './BlockTargetIndexer'
 import type { DayActivityIndexer } from './DayActivityIndexer'
 import type { DayTargetIndexer } from './DayTargetIndexer'
+import type { SlotTargetIndexer } from './SlotTargetIndexer'
 
 export interface ActivityIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -30,3 +31,4 @@ export type ActivityIndexer =
   | DayActivityIndexer
   | BlockTargetIndexer
   | DayTargetIndexer
+  | SlotTargetIndexer
