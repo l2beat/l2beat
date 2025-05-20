@@ -4,5 +4,4 @@ export const MIN_TIMESTAMPS = {
   tvs: UnixTime(1573776000),
   activity: UnixTime(1590883200),
   costs: UnixTime(1682899200),
-  liveness: UnixTime(1682899200),
 }

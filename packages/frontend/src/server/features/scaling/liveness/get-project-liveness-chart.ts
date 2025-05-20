@@ -8,7 +8,6 @@ import groupBy from 'lodash/groupBy'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from 'process'
 import { z } from 'zod'
-import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -68,7 +67,7 @@ export const getCachedProjectLivenessChartData = cache(
         [from, to],
       ),
       db.aggregatedLiveness.getAvgByProjectAndTimeRange(ProjectId(projectId), [
-        from,
+        from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
         to,
       ]),
     ])
@@ -142,7 +141,7 @@ function getMockLivenessChart({
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
   const [from, to] = getRangeWithMax(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? MIN_TIMESTAMPS.liveness,
+    from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     to,
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
