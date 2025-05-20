@@ -46,6 +46,7 @@ export const RawPermissionConfiguration = z.object({
   delay: z.union([z.number(), z.string()]).default(0),
   description: z.string().optional(),
   condition: z.string().optional(),
+  role: z.string().optional(),
 })
 
 export type ContractPermissionField = z.infer<typeof ContractPermissionField>

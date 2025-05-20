@@ -19,15 +19,16 @@ export function parseUltimatePermissionFact(
     ),
     delay: delay === 0 ? undefined : delay,
     description: orUndefined(String, fact.params[4]),
-    condition: orUndefined(String, fact.params[5]),
+    role: orUndefined(String, fact.params[5]),
+    condition: orUndefined(String, fact.params[6]),
     // totalDelay: totalDelay === 0 ? undefined : totalDelay,
     via:
-      fact.params[7] === undefined
+      fact.params[8] === undefined
         ? undefined
-        : ((fact.params[7] as ClingoFact[]).map((x) =>
+        : ((fact.params[8] as ClingoFact[]).map((x) =>
             parseUltimatePermissionVia(x, modelIdRegistry),
           ) ?? undefined),
-    isFinal: fact.params[8] === 'isFinal',
+    isFinal: fact.params[9] === 'isFinal',
   }
 }
 
