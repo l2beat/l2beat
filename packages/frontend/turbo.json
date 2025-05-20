@@ -3,7 +3,8 @@
   "extends": ["//"],
   "tasks": {
     "rewrite:build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "outputs": ["rewrite/dist"]
     },
     "build": {
       "env": [
