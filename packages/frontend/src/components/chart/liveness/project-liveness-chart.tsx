@@ -39,7 +39,7 @@ export function ProjectLivenessChart({
 
   const chartData = useMemo(() => {
     let rawChartData = chart?.data
-    const anyAnomalyLive = getAnyAnomalyLive(anomalies, subtype)
+    const anyAnomalyLive = isAnyAnomalyLive(anomalies, subtype)
 
     if (!anyAnomalyLive) {
       // If there is no anomaly live, remove all data after the last valid timestamp
@@ -88,7 +88,7 @@ export function ProjectLivenessChart({
   )
 }
 
-function getAnyAnomalyLive(
+function isAnyAnomalyLive(
   anomalies: LivenessAnomaly[],
   subtype: TrackedTxsConfigSubtype,
 ) {
@@ -101,6 +101,7 @@ function getAnyAnomalyLive(
       NOW - 4 * UnixTime.HOUR <= anomaly.timestamp + anomaly.durationInSeconds,
   )
 }
+
 function getDefaultSubtype(
   configuredSubtypes: TrackedTxsConfigSubtype[],
 ): TrackedTxsConfigSubtype {
