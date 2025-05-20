@@ -1,21 +1,13 @@
-import type {
-  EntryParameters,
-  Permission,
-  ReceivedPermission,
-} from '@l2beat/discovery'
+import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import { type EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import {
-  DirectPermissionToPrefix,
-  UltimatePermissionToPrefix,
-} from './descriptions'
+import { UltimatePermissionToPrefix } from './descriptions'
 import {
   formatPermissionCondition,
   formatPermissionDelay,
-  formatPermissionDescription,
   isMultisigLike,
   trimTrailingDots,
 } from './utils'
@@ -137,85 +129,36 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       })
   }
 
-  describeDirectlyIssuedPermissions(contractOrEoa: EntryParameters) {
+  describeRoles(contractOrEoa: EntryParameters) {
     const directlyIssued = this.getDirectlyIssuedPermissions(
       contractOrEoa.address,
     )
-    const result = ['Roles']
+    const result = []
     for (const p of directlyIssued) {
       const receiver =
         this.projectDiscovery.getContractByAddress(p.to)?.name ??
         p.to.toString()
-      result.push(`  * ${p.permission} : ${receiver} - ${p.description}`)
+      if (p.role) {
+        result.push(`  * **${prettifyRole(p.role)}** : ${receiver}`)
+      }
+    }
+    if (result.length > 0) {
+      result.unshift('Roles:')
     }
     return [result.join('\n')]
   }
 
   describePermissions(
     contractOrEoa: EntryParameters,
-    includeDirectPermissions: boolean = true,
+    describeRoles: boolean = true,
   ) {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
     const legacy = this.describeLegacyPermissions(contractOrEoa)
-    const directlyReceived = includeDirectPermissions
-      ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-      : []
-    const directlyIssued = this.describeDirectlyIssuedPermissions(contractOrEoa)
-    return [
-      ...directlyReceived,
-      ...upgrade,
-      ...interact,
-      ...legacy,
-      ...directlyIssued,
-    ].filter((s) => s !== '')
-  }
-
-  describeDirectlyReceivedPermissions(
-    contractOrEoa: EntryParameters,
-  ): string[] {
-    return Object.entries(
-      groupBy(
-        contractOrEoa.directlyReceivedPermissions ?? [],
-        (value: ReceivedPermission) =>
-          [
-            value.permission,
-            value.description ?? '',
-            value.condition ?? '',
-            value.delay?.toString() ?? '',
-          ].join('►'),
-      ),
-    ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as Permission
-      const description = key.split('►')[1] ?? ''
-      const condition = key.split('►')[2] ?? ''
-      const delay = key.split('►')[3] ?? ''
-      const permissionsRequiringTarget: Permission[] = [
-        'interact',
-        'upgrade',
-        'act',
-      ]
-      const showTargets = permissionsRequiringTarget.includes(permission)
-      const addressesString = showTargets
-        ? entries
-            .map(
-              (entry) =>
-                this.projectDiscovery.getContract(entry.from.toString()).name,
-            )
-            .join(', ')
-        : ''
-
-      return `${[
-        DirectPermissionToPrefix[permission],
-        addressesString,
-        formatPermissionDescription(description),
-        formatPermissionCondition(condition),
-        delay === '' ? '' : formatPermissionDelay(Number(delay)),
-      ]
-        .filter((s) => s !== '')
-        .join(' ')
-        .trim()}.`
-    })
+    const roles = describeRoles ? this.describeRoles(contractOrEoa) : []
+    return [...upgrade, ...interact, ...legacy, ...roles].filter(
+      (s) => s !== '',
+    )
   }
 
   getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
@@ -317,4 +260,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
 function totalPermissionDelay(p: ReceivedPermission): number {
   return (p.delay ?? 0) + sum((p.via ?? []).map((v) => v.delay ?? 0))
+}
+
+function prettifyRole(role: string): string {
+  const trimmed = role.replace(/^[.$]+/, '')
+  const withoutAcPrefix = trimmed.replace(/^ac/, '')
+  const decapitalized = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
+  return decapitalized(withoutAcPrefix)
 }

@@ -743,14 +743,14 @@ export class ProjectDiscovery {
 
   describeContractOrEoa(
     contractOrEoa: EntryParameters,
-    includeDirectPermissions: boolean = true,
+    describeRoles: boolean = true,
   ): string[] {
     return [
       contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
       ...this.permissionRegistry.describePermissions(
         contractOrEoa,
-        includeDirectPermissions,
+        describeRoles,
       ),
     ].filter(notUndefined)
   }

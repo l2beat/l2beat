@@ -54,6 +54,7 @@ export interface ResolvedPermissionDetails {
   permission: Permission
   delay?: number
   description?: string
+  role?: string
   condition?: string
   via?: ResolvedPermissionPath[]
 }
