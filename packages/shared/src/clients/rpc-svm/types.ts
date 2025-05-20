@@ -7,17 +7,17 @@ export interface SvmBlock {
   transactionsCount: number
 }
 
-export type SolanaGetBlockTimeResponse = z.infer<
-  typeof SolanaGetBlockTimeResponse
+export type SvmRpcGetBlockTimeResponse = z.infer<
+  typeof SvmRpcGetBlockTimeResponse
 >
-export const SolanaGetBlockTimeResponse = z.object({
+export const SvmRpcGetBlockTimeResponse = z.object({
   result: z.number().nullable(),
 })
 
-export type SolanaGetLatestBlockhashResponse = z.infer<
-  typeof SolanaGetLatestBlockhashResponse
+export type SvmRpcGetLatestBlockhashResponse = z.infer<
+  typeof SvmRpcGetLatestBlockhashResponse
 >
-export const SolanaGetLatestBlockhashResponse = z.object({
+export const SvmRpcGetLatestBlockhashResponse = z.object({
   result: z.object({
     context: z.object({
       apiVersion: z.string(),
@@ -30,8 +30,8 @@ export const SolanaGetLatestBlockhashResponse = z.object({
   }),
 })
 
-export type SolanaGetBlockResponse = z.infer<typeof SolanaGetBlockResponse>
-export const SolanaGetBlockResponse = z.object({
+export type SvmRpcGetBlockResponse = z.infer<typeof SvmRpcGetBlockResponse>
+export const SvmRpcGetBlockResponse = z.object({
   result: z.object({
     blockHeight: z.number(),
     blockTime: z.number(),
@@ -42,8 +42,8 @@ export const SolanaGetBlockResponse = z.object({
   }),
 })
 
-export type SolanaApiErrorResponse = z.infer<typeof SolanaApiErrorResponse>
-export const SolanaApiErrorResponse = z.object({
+export type SvmRpcApiErrorResponse = z.infer<typeof SvmRpcApiErrorResponse>
+export const SvmRpcApiErrorResponse = z.object({
   error: z.object({
     code: z.number(),
     message: z.string(),

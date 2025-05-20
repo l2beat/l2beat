@@ -254,7 +254,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
-  | ChainBasicApi<'solana'>
+  | ChainBasicApi<'svm-rpc'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>

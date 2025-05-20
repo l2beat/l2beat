@@ -2,10 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
-import { SolanaClient } from './SolanaClient'
+import { SvmRpcClient } from './SvmRpcClient'
 
-describe(SolanaClient.name, () => {
-  describe(SolanaClient.prototype.getLatestSlotNumber.name, () => {
+describe(SvmRpcClient.name, () => {
+  describe(SvmRpcClient.prototype.getLatestSlotNumber.name, () => {
     it('returns the latest slot number', async () => {
       const mockSlotNumber = 123
       const mockResponse = {
@@ -32,7 +32,7 @@ describe(SolanaClient.name, () => {
     })
   })
 
-  describe(SolanaClient.prototype.getBlockWithTransactions.name, () => {
+  describe(SvmRpcClient.prototype.getBlockWithTransactions.name, () => {
     it('returns block with transactions for given slot', async () => {
       const blockTime = UnixTime.now()
       const mockResponse = {
@@ -84,7 +84,7 @@ describe(SolanaClient.name, () => {
     })
   })
 
-  describe(SolanaClient.prototype.getSlotTime.name, () => {
+  describe(SvmRpcClient.prototype.getSlotTime.name, () => {
     it('returns the time of nearest non-empty slot', async () => {
       const mockTime = UnixTime.now()
 
@@ -101,7 +101,7 @@ describe(SolanaClient.name, () => {
     })
   })
 
-  describe(SolanaClient.prototype.query.name, () => {
+  describe(SvmRpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => 'data-returned-from-api',
@@ -127,7 +127,7 @@ describe(SolanaClient.name, () => {
     })
   })
 
-  describe(SolanaClient.prototype.validateResponse.name, () => {
+  describe(SvmRpcClient.prototype.validateResponse.name, () => {
     it('returns false when response includes errors', async () => {
       const client = mockClient({})
       const validationInfo = client.validateResponse({
@@ -156,7 +156,7 @@ function mockClient(deps: {
   url?: string
   generateId?: () => string
 }) {
-  return new SolanaClient({
+  return new SvmRpcClient({
     sourceName: 'chain',
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient>({}),

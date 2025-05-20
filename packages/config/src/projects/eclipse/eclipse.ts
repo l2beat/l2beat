@@ -186,7 +186,7 @@ export const eclipse: ScalingProject = {
     chainId: undefined,
     apis: [
       {
-        type: 'solana',
+        type: 'svm-rpc',
         url: 'https://eclipse.helius-rpc.com',
         callsPerMinute: 120,
       },

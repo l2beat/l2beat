@@ -2,11 +2,11 @@ import type { json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
-  SolanaApiErrorResponse,
-  SolanaGetBlockResponse,
-  SolanaGetBlockTimeResponse,
-  SolanaGetLatestBlockhashResponse,
   type SvmBlock,
+  SvmRpcApiErrorResponse,
+  SvmRpcGetBlockResponse,
+  SvmRpcGetBlockTimeResponse,
+  SvmRpcGetLatestBlockhashResponse,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -14,7 +14,7 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class SolanaClient extends ClientCore {
+export class SvmRpcClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
   }
@@ -24,7 +24,7 @@ export class SolanaClient extends ClientCore {
 
     const response = await this.query(method, [{ commitment: 'finalized' }])
 
-    const parsedResponse = SolanaGetLatestBlockhashResponse.safeParse(response)
+    const parsedResponse = SvmRpcGetLatestBlockhashResponse.safeParse(response)
 
     if (!parsedResponse.success) {
       this.$.logger.warn(`Invalid response`, {
@@ -50,10 +50,10 @@ export class SolanaClient extends ClientCore {
       },
     ])
 
-    const parsedResponse = SolanaGetBlockResponse.safeParse(response)
+    const parsedResponse = SvmRpcGetBlockResponse.safeParse(response)
 
     if (!parsedResponse.success) {
-      const parsedError = SolanaApiErrorResponse.safeParse(response)
+      const parsedError = SvmRpcApiErrorResponse.safeParse(response)
 
       if (
         parsedError.success &&
@@ -62,7 +62,7 @@ export class SolanaClient extends ClientCore {
           /Slot \d+ was skipped, or missing in long-term storage/,
         )
       ) {
-        // in Solana chains there can be a slot that is skipped
+        // in SvmRpc chains there can be a slot that is skipped
         return undefined
       }
 
@@ -94,7 +94,7 @@ export class SolanaClient extends ClientCore {
     while (timestamp === null) {
       const response = await this.query(method, [slot])
 
-      const parsedResponse = SolanaGetBlockTimeResponse.safeParse(response)
+      const parsedResponse = SvmRpcGetBlockTimeResponse.safeParse(response)
 
       if (!parsedResponse.success) {
         this.$.logger.warn(`Invalid response`, {
@@ -139,11 +139,11 @@ export class SolanaClient extends ClientCore {
     success: boolean
     message?: string
   } {
-    const parsedError = SolanaApiErrorResponse.safeParse(response)
+    const parsedError = SvmRpcApiErrorResponse.safeParse(response)
 
     if (parsedError.success) {
       if (
-        // in Solana chains there can be a slot that is skipped
+        // in SvmRpc chains there can be a slot that is skipped
         parsedError.data.error.code === -32009 &&
         parsedError.data.error.message.match(
           /Slot \d+ was skipped, or missing in long-term storage/,

@@ -1,5 +1,5 @@
 import type { Block } from '@l2beat/shared-pure'
-import type { SvmBlock } from './solana/types'
+import type { SvmBlock } from './rpc-svm/types'
 
 export interface BlockClient {
   getLatestBlockNumber(): Promise<number>

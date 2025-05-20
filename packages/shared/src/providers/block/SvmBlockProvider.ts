@@ -19,7 +19,7 @@ export class SvmBlockProvider {
       }
     }
 
-    throw new Error(`Missing solana client for ${this.chain}`)
+    throw new Error(`Missing SVM RPC client for ${this.chain}`)
   }
 
   async getBlockWithTransactions(slot: number): Promise<SvmBlock | undefined> {
@@ -31,7 +31,7 @@ export class SvmBlockProvider {
       }
     }
 
-    throw new Error(`Missing solana client for ${this.chain}`)
+    throw new Error(`Missing SVM RPC client for ${this.chain}`)
   }
 
   async getSlotNumberAtOrBefore(
@@ -53,6 +53,6 @@ export class SvmBlockProvider {
       }
     }
 
-    throw new Error(`Missing solana client for ${this.chain}`)
+    throw new Error(`Missing SVM RPC client for ${this.chain}`)
   }
 }

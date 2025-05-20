@@ -12,7 +12,7 @@ interface BlockBasedApi {
 }
 
 interface SvmBlockBasedApi {
-  type: 'solana'
+  type: 'svm-rpc'
   url: string
   callsPerMinute: number
   retryStrategy: 'RELIABLE' | 'UNRELIABLE'

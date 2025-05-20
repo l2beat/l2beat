@@ -104,9 +104,9 @@ export async function getChainConfig(
             retryStrategy: 'RELIABLE',
           })
           break
-        case 'solana':
+        case 'svm-rpc':
           blockApis.push({
-            type: 'solana',
+            type: 'svm-rpc',
             url: env.string(Env.key(chain, 'RPC_URL'), api.url),
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),

@@ -11,10 +11,10 @@ import {
   MulticallV3Client,
   PolkadotRpcClient,
   RpcClient,
-  SolanaClient,
   StarkexClient,
   StarknetClient,
   type SvmBlockClient,
+  SvmRpcClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
@@ -160,8 +160,8 @@ export function initClients(config: Config, logger: Logger): Clients {
           })
           break
         }
-        case 'solana': {
-          const client = new SolanaClient({
+        case 'svm-rpc': {
+          const client = new SvmRpcClient({
             sourceName: chain.name,
             url: blockApi.url,
             http,
