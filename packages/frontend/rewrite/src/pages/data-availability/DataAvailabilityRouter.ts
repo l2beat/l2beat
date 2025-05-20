@@ -3,6 +3,7 @@ import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
+import type { DataCache } from '../../server/utils/DataCache'
 import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
 import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
@@ -11,6 +12,7 @@ import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabil
 export function createDataAvailabilityRouter(
   manifest: Manifest,
   render: RenderFunction,
+  cache: DataCache,
 ) {
   const router = express.Router()
 
@@ -19,21 +21,27 @@ export function createDataAvailabilityRouter(
   })
 
   router.get('/data-availability/summary', async (req, res) => {
-    const data = await getDataAvailabilitySummaryData(manifest, req.originalUrl)
+    const data = await cache.getData(
+      { key: '/data-availability/summary', ttl: 60 * 10 },
+      () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/data-availability/risk', async (req, res) => {
-    const data = await getDataAvailabilityRiskData(manifest, req.originalUrl)
+    const data = await cache.getData(
+      { key: '/data-availability/risk', ttl: 60 * 10 },
+      () => getDataAvailabilityRiskData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/data-availability/throughput', async (req, res) => {
-    const data = await getDataAvailabilityThroughputData(
-      manifest,
-      req.originalUrl,
+    const data = await cache.getData(
+      { key: '/data-availability/throughput', ttl: 60 * 10 },
+      () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
@@ -48,10 +56,13 @@ export function createDataAvailabilityRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getDataAvailabilityProjectData(
-        manifest,
-        req.params,
-        req.originalUrl,
+      const data = await cache.getData(
+        {
+          key: `/data-availability/projects/${req.params.layer}/${req.params.bridge}`,
+          ttl: 60 * 10,
+        },
+        () =>
+          getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),
       )
       if (!data) {
         res.status(404).send('Not found')
