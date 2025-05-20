@@ -25,6 +25,7 @@ export function createServerPageRouter(
   router.use('/', (_, res, next) => {
     const headers = new Headers({
       'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=600',
     })
     res.setHeaders(headers)
     next()
