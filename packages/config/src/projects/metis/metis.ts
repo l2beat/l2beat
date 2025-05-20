@@ -27,6 +27,7 @@ const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
 
 export const metis: ScalingProject = {
   type: 'layer2',
+  isUnderReview: true,
   id: ProjectId('metis'),
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
@@ -127,6 +128,7 @@ export const metis: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stateValidation: {
+    isUnderReview: true,
     categories: [
       {
         title: 'No state validation',

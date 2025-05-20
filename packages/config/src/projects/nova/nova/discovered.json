@@ -1100,13 +1100,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "orbitstack/layer2/L2ERC20Gateway": "0x057a08e3ebdc17e381b641116fbe4420b0a5ee84271562870b462f7e33d5d685",
     "orbitstack/layer2/L2GatewayRouter": "0x6eb456cde28339a9bdd6fc83576b4fd75b96930f7a57be0a26c80d4c45215cbc",
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
     "orbitstack/layer2/L2SurplusFee": "0x35909e6c98ff9dc33cebb87d3a2b06a219f78e429c555102d9be6eaa65d55fa4",
     "orbitstack/layer2/L2WethGateway": "0xd84f362cbad6cd7de185b612e49e8eee1ad5e4d94eb0dd821258681d7f1448a5",
-    "orbitstack/UpgradeExecutor": "0x5ccb1a24de22513543702981322da392ea6d43ef971ebf7144c29a5605174b25"
+    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "permissionsConfigHash": "0x71d12c1293cc26ed4e6330c3199b26467fb0fd52659fd40ffd3336edf7ba8b02"
 }

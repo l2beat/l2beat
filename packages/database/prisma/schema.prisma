@@ -183,18 +183,6 @@ model AggregatedLiveness {
   @@id([timestamp, projectId, subtype])
 }
 
-model AggregatedLiveness2 {
-  timestamp       DateTime @db.Timestamp(6)
-  projectId       String   @db.VarChar(255)
-  subtype         String   @db.VarChar(255)
-  min             Int
-  avg             Int
-  max             Int
-  numberOfRecords Int
-
-  @@id([timestamp, projectId, subtype])
-}
-
 model Anomaly {
   timestamp DateTime @db.Timestamp(6)
   projectId String   @db.VarChar(255)
@@ -255,6 +243,7 @@ model TokenValue {
   @@id([timestamp, configurationId])
   @@index([projectId])
   @@index([tokenId])
+  @@index([projectId, tokenId, timestamp(sort: Desc)])
 }
 
 model ProjectValue {
@@ -271,6 +260,8 @@ model ProjectValue {
   associated Float    @db.Real
 
   @@id([timestamp, project, type])
+  @@index([type, timestamp(sort: Desc)])
+  @@index([type, project, timestamp])
 }
 
 model UpdateDiff {

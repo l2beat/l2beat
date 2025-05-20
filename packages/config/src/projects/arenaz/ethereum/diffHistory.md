@@ -1,3 +1,220 @@
+Generated with discovered.json: 0x7d95eb389cd9311f276ec9e1b078a5f6daaf7b87
+
+# Diff at Fri, 16 May 2025 10:05:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 22437731
+- current block number: 22494925
+
+## Description
+
+Upgrade to new proof system version with MIPS v1.2.1, still permissioned.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x227882E5972EbAd990dcF04E2dbe2fC84094E146)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A","via":[{"address":"0xEEFD1782D70824CBcacf9438afab7f353F1797F0"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee","via":[{"address":"0xEEFD1782D70824CBcacf9438afab7f353F1797F0"}]}
+      receivedPermissions.11.from:
+-        "0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "0x658656A14AFdf9c507096aC406564497d13EC754"
+      receivedPermissions.10.from:
+-        "0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
++        "0x564Eb0CeFCcA86160649a8986C419693c82F3678"
+      receivedPermissions.10.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.9.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.9.from:
+-        "0x658656A14AFdf9c507096aC406564497d13EC754"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.9.via.0.address:
+-        "0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.9.description:
++        "set and change address mappings."
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0x564Eb0CeFCcA86160649a8986C419693c82F3678"
++        "0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
+      receivedPermissions.8.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "set and change address mappings."
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
+      receivedPermissions.7.description:
+-        "set and change address mappings."
+      receivedPermissions.7.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
++        "0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be"
+      receivedPermissions.6.description:
+-        "set and change address mappings."
+      receivedPermissions.5.from:
+-        "0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
++        "0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+      receivedPermissions.4.from:
+-        "0xAF1308930B721e763a6b21cf143E4e86e702f164"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.4.via.0.address:
+-        "0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.3.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xa33f75a3A2babD502cbC1A6F54345B529C1F306E"
+      receivedPermissions.3.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.2.from:
+-        "0xa33f75a3A2babD502cbC1A6F54345B529C1F306E"
++        "0xB20f99b598E8d888d1887715439851BC68806b22"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xB20f99b598E8d888d1887715439851BC68806b22"
++        "0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be"
+      receivedPermissions.1.via:
+-        [{"address":"0xEEFD1782D70824CBcacf9438afab7f353F1797F0"}]
+      receivedPermissions.1.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.0.from:
+-        "0xAF1308930B721e763a6b21cf143E4e86e702f164"
++        "0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x658656A14AFdf9c507096aC406564497d13EC754) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x227882E5972EbAd990dcF04E2dbe2fC84094E146"
++        "0x80533687a66A1bB366094A9B622873a6CA8415a5"
+      values.gameImpls.3:
+-        "0x0000000000000000000000000000000000000000"
++        "0x733a80Ce3bAec1f27869b6e4C8bc0E358C121045"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0xAF1308930B721e763a6b21cf143E4e86e702f164)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract ProxyAdmin (0xEEFD1782D70824CBcacf9438afab7f353F1797F0) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"}
+      directlyReceivedPermissions.8.from:
+-        "0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
+      directlyReceivedPermissions.7.from:
+-        "0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
++        "0x658656A14AFdf9c507096aC406564497d13EC754"
+      directlyReceivedPermissions.6.from:
+-        "0x658656A14AFdf9c507096aC406564497d13EC754"
++        "0x564Eb0CeFCcA86160649a8986C419693c82F3678"
+      directlyReceivedPermissions.6.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0x564Eb0CeFCcA86160649a8986C419693c82F3678"
++        "0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
+      directlyReceivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "set and change address mappings."
+      directlyReceivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.4.from:
+-        "0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
++        "0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
+      directlyReceivedPermissions.4.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.3.from:
+-        "0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
++        "0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be"
+      directlyReceivedPermissions.2.from:
+-        "0xAF1308930B721e763a6b21cf143E4e86e702f164"
++        "0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x733a80Ce3bAec1f27869b6e4C8bc0E358C121045)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x80533687a66A1bB366094A9B622873a6CA8415a5)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH.sol                                |    0
+ .../Proxy.p.sol                                    |    0
+ .../DelayedWETH.sol                                |  651 ++++
+ .../Proxy.p.sol                                    |  200 +
+ .../arenaz/ethereum/.flat/FaultDisputeGame.sol     | 3921 ++++++++++++++++++++
+ .../ethereum/{.flat@22437731 => .flat}/MIPS.sol    |  444 ++-
+ .../PermissionedDisputeGame.sol                    |   14 +-
+ 7 files changed, 5106 insertions(+), 124 deletions(-)
+```
+
 Generated with discovered.json: 0x0b668b163543f8447213feec3cb630d3e90aef9e
 
 # Diff at Fri, 09 May 2025 10:09:02 GMT:

@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectValueRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import pick from 'lodash/pick'
 import { unstable_cache as cache } from 'next/cache'
@@ -56,96 +57,73 @@ const getCached7dTokenBreakdown = cache(
     const db = getDb()
     const target = getTvsTargetTimestamp()
 
-    const [tvsProjects, values] = await Promise.all([
+    const [tvsProjects, records] = await Promise.all([
       getTvsProjects(createTvsBreakdownProjectFilter(props)),
-      db.tvsProjectValue.getProjectValuesAtTimestamps(
-        target - 7 * UnixTime.DAY,
-        target,
+      db.tvsProjectValue.getByTypeAndRange(
         ['PROJECT', 'PROJECT_WA'],
+        [target - 30 * UnixTime.DAY, null],
       ),
     ])
+    const comparisionRecords = getComparisionRecords(records, target)
 
     const valuesByProject = pick(
-      groupBy(values, (v) => v.project),
+      comparisionRecords,
       tvsProjects.map((p) => p.projectId),
     )
 
     const projects = Object.fromEntries(
       Object.entries(valuesByProject).map(
         ([projectId, projectValues]): [string, ProjectSevenDayTvsBreakdown] => {
-          const projectValuesWithoutAssociated = projectValues.filter(
-            (v) => v.type === 'PROJECT_WA',
-          )
-          const projectValuesAll = projectValues.filter(
-            (v) => v.type === 'PROJECT',
-          )
-
-          const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
-          const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
-          const latestValue = projectValuesAll.at(-1)
-          const oldestValue = projectValuesAll.at(0)
-
-          assert(
-            latestValue &&
-              oldestValue &&
-              latestWithoutAssociated &&
-              oldestWithoutAssociated,
-            `No values for project ${projectId}`,
-          )
+          const { current, previous, currentWa, previousWa } = projectValues
 
           return [
             projectId,
             {
               breakdown: {
-                total: latestValue.value,
-                native: latestValue.native,
-                canonical: latestValue.canonical,
-                external: latestValue.external,
-                ether: latestValue.ether,
-                stablecoin: latestValue.stablecoin,
+                total: current.value,
+                native: current.native,
+                canonical: current.canonical,
+                external: current.external,
+                ether: current.ether,
+                stablecoin: current.stablecoin,
               },
               associated: {
-                total: latestValue.associated,
-                native: latestValue.native - latestWithoutAssociated.native,
-                canonical:
-                  latestValue.canonical - latestWithoutAssociated.canonical,
-                external:
-                  latestValue.external - latestWithoutAssociated.external,
+                total: current.associated,
+                native: current.native - currentWa.native,
+                canonical: current.canonical - currentWa.canonical,
+                external: current.external - currentWa.external,
               },
               change: {
-                total: calculatePercentageChange(
-                  latestValue.value,
-                  oldestValue.value,
-                ),
+                total: calculatePercentageChange(current.value, previous.value),
                 native: calculatePercentageChange(
-                  latestValue.native,
-                  oldestValue.native,
+                  current.native,
+                  previous.native,
                 ),
                 canonical: calculatePercentageChange(
-                  latestValue.canonical,
-                  oldestValue.canonical,
+                  current.canonical,
+                  previous.canonical,
                 ),
                 external: calculatePercentageChange(
-                  latestValue.external,
-                  oldestValue.external,
+                  current.external,
+                  previous.external,
                 ),
               },
               changeExcludingAssociated: {
                 total: calculatePercentageChange(
-                  latestWithoutAssociated.value,
-                  oldestWithoutAssociated.value,
+                  currentWa.value,
+                  previousWa.value,
                 ),
                 native: calculatePercentageChange(
-                  latestWithoutAssociated.native,
-                  oldestWithoutAssociated.native,
+                  currentWa.native,
+                  previousWa.native,
                 ),
                 canonical: calculatePercentageChange(
-                  latestWithoutAssociated.canonical,
-                  oldestWithoutAssociated.canonical,
+                  currentWa.canonical,
+                  previousWa.canonical,
                 ),
                 external: calculatePercentageChange(
-                  latestWithoutAssociated.external,
-                  oldestWithoutAssociated.external,
+                  currentWa.external,
+                  previousWa.external,
                 ),
               },
             },
@@ -170,6 +148,39 @@ const getCached7dTokenBreakdown = cache(
     revalidate: UnixTime.HOUR,
   },
 )
+
+function getComparisionRecords(
+  records: ProjectValueRecord[],
+  target: UnixTime,
+) {
+  const result: Record<
+    string,
+    {
+      current: ProjectValueRecord
+      previous: ProjectValueRecord
+      currentWa: ProjectValueRecord
+      previousWa: ProjectValueRecord
+    }
+  > = {}
+  const byProject = groupBy(records, (r) => r.project)
+
+  for (const [project, byProjectRecords] of Object.entries(byProject)) {
+    const byType = groupBy(byProjectRecords, (r) => r.type)
+    const current = byType.PROJECT?.find((r) => r.timestamp <= target)
+    const previous = byType.PROJECT?.find(
+      (r) => r.timestamp <= target - 7 * UnixTime.DAY,
+    )
+    const currentWa = byType.PROJECT_WA?.find((r) => r.timestamp <= target)
+    const previousWa = byType.PROJECT_WA?.find(
+      (r) => r.timestamp <= target - 7 * UnixTime.DAY,
+    )
+    if (!current || !previous || !currentWa || !previousWa) {
+      continue
+    }
+    result[project] = { current, previous, currentWa, previousWa }
+  }
+  return result
+}
 
 function createTvsBreakdownProjectFilter(
   filter: TvsBreakdownProjectFilter,

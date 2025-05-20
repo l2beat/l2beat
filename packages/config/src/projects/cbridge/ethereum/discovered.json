@@ -988,7 +988,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "permissionsConfigHash": "0xe37452469982e707cd693f7c5e37ac023574e202f90df5c8b903f4ad05386223"
 }

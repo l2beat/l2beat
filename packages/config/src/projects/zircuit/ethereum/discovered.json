@@ -1453,17 +1453,17 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
+    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal": "0x6887b4bbf169bbbc6b50b3dcc2ceff2da0df7a824a84827301b57063bc0f1ba9",
-    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153",
-    "opstack/zircuit/L2OutputOracle": "0x20ddf1a14e90fbdedaf65e9594b67b2ac424318ebb1549398340f69192653242",
-    "opstack/zircuit/SuperchainConfig": "0x7d31b917c3486cb3ccfda90fe6732bfe9c8d40ec84489c6e6c884327bfa771c1",
+    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
+    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc",
+    "opstack/zircuit/L2OutputOracle": "0x94d3eb3f5212e94aaa7fd5cf9c0451b6056c129b867e1c1a09b407d129d31a56",
+    "opstack/zircuit/SuperchainConfig": "0x88333adf1f4e7a6bbd8da95cbcd6e91ee1dbda7da976597818c96c0dbef27421",
     "opstack/zircuit/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0x85b4f0df44897566b61970b326ade8d9b470463d138aed5f039d7b4305876247"

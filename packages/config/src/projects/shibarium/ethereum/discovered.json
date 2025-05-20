@@ -1815,22 +1815,22 @@
     ]
   },
   "usedTemplates": {
-    "polygonposbridge/DepositManager": "0x508d4444e3c21f1361f9b0948976412f48fe067c7d529bf6121ac18a4cabd004",
+    "polygonposbridge/DepositManager": "0x6f4da1313c9430a0d74b2b699e6c30210705857922f30262c4533dc9c0e2690e",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
     "polygonposbridge/Registry": "0x740dd1c9a6f29e9a794b82248a0b4db07a11d3016347bb97a121b714a5018529",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
+    "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
-    "polygonposbridge/SlashingManager": "0xff988e17661283d80f937c5ed6b0b648c510181283f32327373a7ece9c12584d",
-    "polygonposbridge/StakeManager_shibarium": "0x49f15371f74243e39c359f2a6d210cf2aefa616d0b7973abdb52f266a50a0931",
-    "polygonposbridge/StakeManagerExtension_shibarium": "0x677de9736569f920b2137c3fffcc33e745538b857e5bc56e01b4cd9326170710",
+    "polygonposbridge/SlashingManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "polygonposbridge/StakeManager_shibarium": "0xcc48512951882c2d208c04947dcd277aeffd72f2d518baa13df242e7eb9e5502",
+    "polygonposbridge/StakeManagerExtension_shibarium": "0xe60d3951cea911d74c13738cf122394571cb6bcd98f0a5549372b1b99a397a27",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
-    "polygonposbridge/ValidatorRegistry": "0x6d525dc05290b0183414a4731a6dc9236e6d96841b6b657bae95deebeddee807",
+    "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0x10dc816c7af47a91ad8f5d2c34186f8887f8e105596dc497cd39850e443aa5e2"

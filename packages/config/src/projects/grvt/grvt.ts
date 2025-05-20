@@ -18,7 +18,7 @@ export const grvt: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1734652800), // 2024-12-20T00:00:00Z
-  additionalPurposes: ['Gaming'],
+  overridingPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'GRVT',
@@ -63,7 +63,7 @@ export const grvt: ScalingProject = zkStackL2({
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address//0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800#code#F1#L46',
+          url: 'https://etherscan.io/address/0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490#code#F1#L50',
         },
       ],
     },
@@ -99,7 +99,7 @@ export const grvt: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address/0x36b026c39125964D99596CE302866B5A59E4dE27#code#F1#L441',
+          url: 'https://etherscan.io/address/0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f#code#F1#L472',
         },
         {
           title: 'TransactionFilterer',

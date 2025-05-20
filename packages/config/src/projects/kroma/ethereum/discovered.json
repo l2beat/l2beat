@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 22330737,
-  "configHash": "0x613db8bc1432959eacd242df260ca5695e990e7bc76353448b9b92b56db5f4d1",
+  "configHash": "0xa91a54db6c259e3ccecdc460be96b314a7c89bfb1a82543cd1f350897f44995d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -2511,15 +2511,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "global/Timelock": "0x2a5acc8f4981464126cb7f697f7a842f884c7eff8e410bcbd566233da0581e0e",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
-    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153",
+    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
+    "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
   },
   "permissionsConfigHash": "0xf10413481578ec7a54feedb2cf5db281ca078b627583a79d2766fbde3c6fc1d6"
 }

@@ -557,7 +557,7 @@
     ]
   },
   "usedTemplates": {
-    "gnosisbridge/BridgeValidators": "0x356534465ab0329c89ea80ed97f0ee0b0ca948e3dadde05fe442c4709d352d27"
+    "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019"
   },
   "permissionsConfigHash": "0xb76a552effed22c4fdc08a5a3395345138d5152fdde60733faff4c1c46401660"
 }

@@ -1648,12 +1648,12 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x5e1d98de3ff46a75b64cc2f65431dc2eb78d843aa0f1dcd462a2dbd073a6bf97",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x07e6443363d3b1a55f9514d38946df4f6030615786d629c78e66e0e134c8b383",
     "polygon-cdk/PolygonSharedBridge": "0x79b4355cba744a06d8705695336f169622edf05c3f32b1ae35da91fa577c536c",
-    "polygon-cdk/Timelock": "0x3f5d5523ccf7da29d1906039ac58c1201abf0deb7f65c30d122606cb2fd20468"
+    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
   },
   "permissionsConfigHash": "0x7365af2cce295f619376bcb40303311e3d5c7459b624e20e8d01b53da4bdb072"
 }

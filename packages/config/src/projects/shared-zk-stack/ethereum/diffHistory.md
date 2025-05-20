@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xef8d564dad79326bcd20932896350ba05a834f44
+
+# Diff at Fri, 16 May 2025 14:40:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e002413ca40890ffd9150afa1422bcb6338725ba block: 22481824
+- current block number: 22496282
+
+## Description
+
+emergency upgrade executed (see abstract diff).
+
+signer changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803) {
+    +++ description: None
+      values.$members.8:
++        "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553"
+      values.$members.7:
++        "0x98E24e308c4B7cdADcf4d116B2B8939a21420bA1"
+      values.$members.6:
+-        "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553"
++        "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392"
+      values.$members.5:
+-        "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392"
++        "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e"
+      values.$members.4:
+-        "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e"
++        "0xc8E2806A97413b5496A1ba6050b517CC98D0EfCA"
+      values.$members.3:
+-        "0xc8E2806A97413b5496A1ba6050b517CC98D0EfCA"
++        "0xBab69188f07F2569A41C5B875e147216D974eB3e"
+      values.$members.2:
+-        "0xBab69188f07F2569A41C5B875e147216D974eB3e"
++        "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF"
+      values.$members.1:
+-        "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF"
++        "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2"
+      values.multisigThreshold:
+-        "1 of 7 (14%)"
++        "1 of 9 (11%)"
+    }
+```
+
+```diff
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      values.$members.3:
+-        "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95"
++        "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.1:
++        "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.0:
+-        "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
++        "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
+    }
+```
+
 Generated with discovered.json: 0x79b4df69baa0d32210e5bdf125498d68403727a4
 
 # Diff at Wed, 14 May 2025 13:54:54 GMT:

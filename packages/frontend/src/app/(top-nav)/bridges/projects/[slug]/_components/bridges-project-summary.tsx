@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { AboutSection } from '~/components/projects/sections/about-section'
@@ -49,12 +51,26 @@ export function BridgesProjectSummary({ project }: Props) {
             <DesktopProjectLinks
               projectLinks={project.header.links}
               variant="header"
+              discoUiHref={project.discoUiHref}
             />
           </div>
           <BridgesProjectStats project={project} />
         </div>
 
-        <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
+        <div className="md:hidden">
+          <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
+          <div className="flex items-center justify-between">
+            <Link
+              className="text-xs text-link underline"
+              href={project.discoUiHref}
+            >
+              Explore more in Discovery UI
+            </Link>
+            <DiscoUiLink href={project.discoUiHref} />
+          </div>
+        </div>
+
+        <HorizontalSeparator className="mt-2 max-md:-mx-4 max-md:w-screen md:my-6" />
         <div className="md:hidden">
           <MobileProjectLinks projectLinks={project.header.links} />
         </div>
