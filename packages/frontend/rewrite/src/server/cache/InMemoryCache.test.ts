@@ -49,5 +49,20 @@ describe(InMemoryCache.name, () => {
       expect(res2).toEqual('test2')
       expect(res3).toEqual('test2')
     })
+
+    it('should timeout if fallback takes too long', async () => {
+      const cache = new InMemoryCache(undefined, 0)
+      const cacheOptions = { key: 'key', ttl: 1000 }
+      const fallback1 = () => new Promise((resolve) => setTimeout(() => resolve('test1'), 10))
+      const fallback2 = () => new Promise((resolve) => resolve('test2'))
+
+      const [result1, result2] = await Promise.all([
+        cache.get(cacheOptions, fallback1),
+        cache.get(cacheOptions, fallback2),
+      ])
+
+      expect(result1).toEqual('test1')
+      expect(result2).toEqual('test2')
+    })
   })
 })

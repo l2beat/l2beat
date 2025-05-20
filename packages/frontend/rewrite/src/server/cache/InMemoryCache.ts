@@ -12,6 +12,7 @@ export class InMemoryCache implements ICache {
 
   constructor(
     initialCache?: Map<string, { result: unknown; timestamp: number }>,
+    private readonly promiseTimeout = PROMISE_TIMEOUT,
   ) {
     this.cache =
       initialCache ?? new Map<string, { result: unknown; timestamp: number }>()
@@ -30,7 +31,7 @@ export class InMemoryCache implements ICache {
     const existingPromise = this.inFlight.get(options.key)
     if (
       existingPromise &&
-      existingPromise.timestamp + PROMISE_TIMEOUT > UnixTime.now()
+      existingPromise.timestamp + this.promiseTimeout > UnixTime.now()
     ) {
       return existingPromise.promise as Promise<T>
     }
