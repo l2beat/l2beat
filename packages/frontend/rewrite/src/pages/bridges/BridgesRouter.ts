@@ -1,5 +1,5 @@
 import express from 'express'
-import { ICache } from 'rewrite/src/server/cache/ICache'
+import type { ICache } from 'rewrite/src/server/cache/ICache'
 import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
