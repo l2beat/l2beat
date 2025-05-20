@@ -54,16 +54,16 @@ type TvsBreakdownProjectFilter = z.infer<typeof TvsBreakdownProjectFilter>
 
 const getCached7dTokenBreakdown = cache(
   async (props: TvsBreakdownProjectFilter): Promise<SevenDayTvsBreakdown> => {
-    const tvsProjects = await getTvsProjects(
-      createTvsBreakdownProjectFilter(props),
-    )
     const db = getDb()
     const target = getTvsTargetTimestamp()
-    const records = await db.tvsProjectValue.getByTypeAndRange(
-      ['PROJECT', 'PROJECT_WA'],
-      [target - 30 * UnixTime.DAY, null],
-    )
 
+    const [tvsProjects, records] = await Promise.all([
+      getTvsProjects(createTvsBreakdownProjectFilter(props)),
+      db.tvsProjectValue.getByTypeAndRange(
+        ['PROJECT', 'PROJECT_WA'],
+        [target - 30 * UnixTime.DAY, null],
+      ),
+    ])
     const comparisionRecords = getComparisionRecords(records, target)
 
     const valuesByProject = pick(

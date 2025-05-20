@@ -1,4 +1,5 @@
 import express from 'express'
+import type { ICache } from 'rewrite/src/server/cache/ICache'
 import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
@@ -9,6 +10,7 @@ import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 export function createEcosystemsRouter(
   manifest: Manifest,
   render: RenderFunction,
+  cache: ICache,
 ) {
   const router = express.Router()
 
@@ -20,10 +22,10 @@ export function createEcosystemsRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getEcosystemProjectData(
-        manifest,
-        req.params.slug,
-        req.originalUrl,
+      const data = await cache.get(
+        { key: `/ecosystems/${req.params.slug}`, ttl: 10 * 60 },
+        () =>
+          getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data || !env.NEXT_PUBLIC_ECOSYSTEMS) {
         res.status(404).send('Not found')
