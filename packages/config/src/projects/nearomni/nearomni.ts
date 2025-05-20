@@ -85,8 +85,12 @@ export const nearomni: Bridge = {
           text: 'the MPC signers collude or the MPC implementation is exploited.',
         },
         {
-          category: 'Funds can be stolen if',
-          text: 'bridge administrator removes funds from the bridge escrow.',
+          category: 'Funds can be frozen if',
+          text: 'the MPC signers stop signing bridge messages.',
+        },
+        {
+          category: 'Users can be censored if',
+          text: 'the MPC signers do not sign bridge messages.',
         },
       ],
     },
