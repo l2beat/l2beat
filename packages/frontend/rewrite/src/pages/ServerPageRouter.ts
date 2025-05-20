@@ -13,7 +13,7 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
-import { DataCache } from '../server/utils/Cache'
+import { DataCache } from '../server/utils/DataCache'
 
 export function createServerPageRouter(
   manifest: Manifest,
