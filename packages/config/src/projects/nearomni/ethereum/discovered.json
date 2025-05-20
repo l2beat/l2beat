@@ -10,6 +10,18 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x22EB4d37677eD931d9dE2218cecE1A832a147490",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "description": "validate bridge transactions (derived address of the MPC setup)."
+        }
+      ]
+    },
+    {
       "name": "Near Omni Multisig",
       "address": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
       "type": "Contract",
@@ -23,7 +35,7 @@
         {
           "permission": "interact",
           "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
-          "description": "manage the pauser role and all pause flags (pause and unpause)."
+          "description": "manage the pauser role and all pause flags (pause and unpause), manage token lists, claim ownership of token contracts and upgrade them, change the derived signer address for incoming message validation."
         },
         {
           "permission": "upgrade",
@@ -156,7 +168,10 @@
           "severity": "HIGH",
           "description": "0: UNPAUSED_ALL, 1: PAUSED_INIT_TRANSFER, 2: PAUSED_FIN_TRANSFER, 3: fully paused"
         },
-        "nearBridgeDerivedAddress": { "severity": "HIGH" }
+        "nearBridgeDerivedAddress": {
+          "severity": "HIGH",
+          "description": "Derived EVM address of the signer for all incoming bridge messages. NEAR calls this chain signatures and it is supposed to use MPC."
+        }
       },
       "implementationNames": {
         "0xe00c629aFaCCb0510995A2B95560E446A24c85B9": "ERC1967Proxy",
@@ -352,7 +367,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "nearomni/BridgeToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "nearomni/OmniBridge": "0xbdeb1c62793ec5a8db2a5732ca3ce5a14c65b12cd54bd2fdf4b68b83731a9bb3"
+    "nearomni/OmniBridge": "0x18c902c1d4452563624923642743a529e6b1fd2780490fa6d5c31164aee07141"
   },
-  "permissionsConfigHash": "0x6550bf5a70152a0898bf411e3334a655ea1f3ec9b83651fc7ebef635411de31e"
+  "permissionsConfigHash": "0x79aa3984f8fb1148757edf275ce1087380889318214e591b1b7e46ebce5d2add"
 }

@@ -38,7 +38,13 @@
     },
     "nearBridgeDerivedAddress": {
       "description": "Derived EVM address of the signer for all incoming bridge messages. NEAR calls this chain signatures and it is supposed to use MPC.",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "validate bridge transactions (derived address of the MPC setup)."
+        }
+      ]
     }
   }
 }
