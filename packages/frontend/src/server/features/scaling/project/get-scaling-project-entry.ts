@@ -338,7 +338,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const livenessSection = getLivenessSection(
+  const livenessSection = await getLivenessSection(
     project,
     liveness[project.id],
     projectsChangeReport.projects[project.id],

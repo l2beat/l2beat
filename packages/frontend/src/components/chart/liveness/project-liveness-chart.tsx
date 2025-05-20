@@ -102,7 +102,7 @@ function isAnyAnomalyLive(
   )
 }
 
-function getDefaultSubtype(
+export function getDefaultSubtype(
   configuredSubtypes: TrackedTxsConfigSubtype[],
 ): TrackedTxsConfigSubtype {
   if (configuredSubtypes.includes('batchSubmissions')) return 'batchSubmissions'
