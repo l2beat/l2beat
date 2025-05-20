@@ -1,6 +1,7 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure';
+import type { ICache } from './ICache';
 
-export class DataCache {
+export class InMemoryCache implements ICache {
   private cache
   private inFlight = new Map<string, Promise<unknown>>()
 
@@ -11,7 +12,7 @@ export class DataCache {
       initialCache ?? new Map<string, { result: unknown; timestamp: number }>()
   }
 
-  async getData<T>(
+  async get<T>(
     options: { key: string; ttl: number },
     fallback: () => Promise<T>,
   ): Promise<T> {

@@ -1,16 +1,16 @@
 import express from 'express'
+import { ICache } from 'rewrite/src/server/cache/ICache'
 import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
-import type { DataCache } from '../../server/utils/DataCache'
 import { getBridgesArchivedData } from './archived/getBridgesArchivedData'
 import { getBridgesProjectData } from './project/getBridgesProjectData'
 import { getBridgesSummaryData } from './summary/getBridgesSummaryData'
 export function createBridgesRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: DataCache,
+  cache: ICache,
 ) {
   const router = express.Router()
 
@@ -19,8 +19,8 @@ export function createBridgesRouter(
   })
 
   router.get('/bridges/summary', async (req, res) => {
-    const data = await cache.getData(
-      { key: '/bridges/summary', ttl: 60 * 10 },
+    const data = await cache.get(
+      { key: '/bridges/summary', ttl: 10 * 60 },
       () => getBridgesSummaryData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -28,8 +28,8 @@ export function createBridgesRouter(
   })
 
   router.get('/bridges/archived', async (req, res) => {
-    const data = await cache.getData(
-      { key: '/bridges/archived', ttl: 60 * 10 },
+    const data = await cache.get(
+      { key: '/bridges/archived', ttl: 10 * 60 },
       () => getBridgesArchivedData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -44,8 +44,8 @@ export function createBridgesRouter(
       }),
     }),
     async (req, res) => {
-      const data = await cache.getData(
-        { key: `/bridges/projects/${req.params.slug}`, ttl: 60 * 10 },
+      const data = await cache.get(
+        { key: `/bridges/projects/${req.params.slug}`, ttl: 10 * 60 },
         () => getBridgesProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {

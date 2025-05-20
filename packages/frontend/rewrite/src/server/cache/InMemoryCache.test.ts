@@ -1,18 +1,18 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
-import { DataCache } from './DataCache'
+import { InMemoryCache } from './InMemoryCache'
 
-describe(DataCache.name, () => {
+describe(InMemoryCache.name, () => {
   describe('getData', () => {
     it('it should return cached value if it is not expired', async () => {
       const now = UnixTime.now()
       const initialCache = new Map([
         ['key', { result: 'test', timestamp: now }],
       ])
-      const cache = new DataCache(initialCache)
+      const cache = new InMemoryCache(initialCache)
       const fallback = mockFn().resolvesTo('test2')
 
-      const result = await cache.getData({ key: 'key', ttl: 1000 }, fallback)
+      const result = await cache.get({ key: 'key', ttl: 1000 }, fallback)
 
       expect(fallback).not.toHaveBeenCalled()
       expect(cache._get('key')).toEqual({ result: 'test', timestamp: now })
@@ -24,10 +24,10 @@ describe(DataCache.name, () => {
       const initialCache = new Map([
         ['key', { result: 'test', timestamp: now - 10000 }],
       ])
-      const cache = new DataCache(initialCache)
+      const cache = new InMemoryCache(initialCache)
       const fallback = mockFn().resolvesTo('test2')
 
-      const result = await cache.getData({ key: 'key', ttl: 1000 }, fallback)
+      const result = await cache.get({ key: 'key', ttl: 1000 }, fallback)
 
       expect(fallback).toHaveBeenCalled()
       expect(cache._get('key')).toEqual({ result: 'test2', timestamp: now })
@@ -35,13 +35,13 @@ describe(DataCache.name, () => {
     })
 
     it('should not run fallback three times if three getData calls are ongoing', async () => {
-      const cache = new DataCache()
+      const cache = new InMemoryCache()
       const fallback = mockFn().resolvesTo('test2')
 
       const [res1, res2, res3] = await Promise.all([
-        cache.getData({ key: 'key', ttl: 1000 }, fallback),
-        cache.getData({ key: 'key', ttl: 1000 }, fallback),
-        cache.getData({ key: 'key', ttl: 1000 }, fallback),
+        cache.get({ key: 'key', ttl: 1000 }, fallback),
+        cache.get({ key: 'key', ttl: 1000 }, fallback),
+        cache.get({ key: 'key', ttl: 1000 }, fallback),
       ])
 
       expect(fallback).toHaveBeenCalledTimes(1)

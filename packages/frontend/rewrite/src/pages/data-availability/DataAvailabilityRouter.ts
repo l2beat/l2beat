@@ -1,9 +1,9 @@
 import express from 'express'
+import { ICache } from 'rewrite/src/server/cache/ICache'
 import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
-import type { DataCache } from '../../server/utils/DataCache'
 import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
 import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
@@ -12,7 +12,7 @@ import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabil
 export function createDataAvailabilityRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: DataCache,
+  cache: ICache,
 ) {
   const router = express.Router()
 
@@ -21,8 +21,8 @@ export function createDataAvailabilityRouter(
   })
 
   router.get('/data-availability/summary', async (req, res) => {
-    const data = await cache.getData(
-      { key: '/data-availability/summary', ttl: 60 * 10 },
+    const data = await cache.get(
+      { key: '/data-availability/summary', ttl: 10 * 60 },
       () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -30,8 +30,8 @@ export function createDataAvailabilityRouter(
   })
 
   router.get('/data-availability/risk', async (req, res) => {
-    const data = await cache.getData(
-      { key: '/data-availability/risk', ttl: 60 * 10 },
+    const data = await cache.get(
+      { key: '/data-availability/risk', ttl: 10 * 60 },
       () => getDataAvailabilityRiskData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -39,8 +39,8 @@ export function createDataAvailabilityRouter(
   })
 
   router.get('/data-availability/throughput', async (req, res) => {
-    const data = await cache.getData(
-      { key: '/data-availability/throughput', ttl: 60 * 10 },
+    const data = await cache.get(
+      { key: '/data-availability/throughput', ttl: 10 * 60 },
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -56,10 +56,10 @@ export function createDataAvailabilityRouter(
       }),
     }),
     async (req, res) => {
-      const data = await cache.getData(
+      const data = await cache.get(
         {
           key: `/data-availability/projects/${req.params.layer}/${req.params.bridge}`,
-          ttl: 60 * 10,
+          ttl: 10 * 60,
         },
         () =>
           getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),

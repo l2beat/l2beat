@@ -1,16 +1,16 @@
 import express from 'express'
+import { ICache } from 'rewrite/src/server/cache/ICache'
 import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import { env } from '~/env'
 import type { Manifest } from '../../../../src/utils/Manifest'
-import type { DataCache } from '../../server/utils/DataCache'
 import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 
 export function createEcosystemsRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: DataCache,
+  cache: ICache,
 ) {
   const router = express.Router()
 
@@ -22,8 +22,8 @@ export function createEcosystemsRouter(
       }),
     }),
     async (req, res) => {
-      const data = await cache.getData(
-        { key: `/ecosystems/${req.params.slug}`, ttl: 60 * 10 },
+      const data = await cache.get(
+        { key: `/ecosystems/${req.params.slug}`, ttl: 10 * 60 },
         () =>
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
