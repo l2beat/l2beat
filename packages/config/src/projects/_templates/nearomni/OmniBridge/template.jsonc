@@ -3,7 +3,6 @@
   "description": "Escrow for all tokens of the NEAR Omnibridge.",
   "ignoreMethods": ["paused", "proxiableUUID"],
   "ignoreInWatchMode": ["currentOriginNonce"],
-  "ignoreRelatives": ["nearBridgeDerivedAddress"],
   "fields": {
     "pausedFlags": {
       "description": "0: UNPAUSED_ALL, 1: PAUSED_INIT_TRANSFER, 2: PAUSED_FIN_TRANSFER, 3: fully paused",
@@ -20,7 +19,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage the pauser role and all pause flags (pause and unpause)."
+          "description": "manage the pauser role and all pause flags (pause and unpause), manage token lists, claim ownership of token contracts and upgrade them, change the derived signer address for incoming message validation."
         },
         {
           "type": "upgrade" // proxy handler fails here, manual override
@@ -38,6 +37,7 @@
       ]
     },
     "nearBridgeDerivedAddress": {
+      "description": "Derived EVM address of the signer for all incoming bridge messages. NEAR calls this chain signatures and it is supposed to use MPC.",
       "severity": "HIGH"
     }
   }
