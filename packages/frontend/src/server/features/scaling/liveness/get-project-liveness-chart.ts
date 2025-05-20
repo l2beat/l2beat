@@ -67,7 +67,7 @@ export const getCachedProjectLivenessChartData = cache(
         [from, to],
       ),
       db.aggregatedLiveness.getAvgByProjectAndTimeRange(ProjectId(projectId), [
-        from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+        from,
         to,
       ]),
     ])
