@@ -6781,6 +6781,19 @@
   ],
   "lisk": [
     {
+      "symbol": "M-BTC",
+      "address": "0x9BFA177621119e64CecbEabE184ab9993E2ef727",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Tunnel)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USD₮0",
       "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
       "coingeckoId": "usdt0",

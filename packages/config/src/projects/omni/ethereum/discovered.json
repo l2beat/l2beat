@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22495658,
-  "configHash": "0xacf56a58ec054179f7fe5ce439a4369d09fd0be8235513865c13021aa189f0ac",
+  "configHash": "0x2f9f3ae3c94bef7c5e2aab708c7cc16411424500051bd23696fc55123a640cec",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -1646,11 +1646,11 @@
     ]
   },
   "usedTemplates": {
-    "gnosisbridge/BridgeValidators": "0x356534465ab0329c89ea80ed97f0ee0b0ca948e3dadde05fe442c4709d352d27",
-    "gnosisbridge/HashiManager": "0xb24fa0969d8719d206e37e5479bf6c335e46bf45a6e6ff17ac6d2e22f3ca507d",
+    "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019",
+    "gnosisbridge/HashiManager": "0xa1138883de6a552d21b8e9078c9213aabe3c975dffc34d54f61c0f3c437ab1ff",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
 }

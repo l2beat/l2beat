@@ -8326,6 +8326,27 @@
       }
     },
     {
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0x9BFA177621119e64CecbEabE184ab9993E2ef727",
+      "symbol": "M-BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1734625977,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 1135,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Tunnel)"
+          }
+        ]
+      }
+    },
+    {
       "name": "Stargate USD₮0 (Bridged)",
       "coingeckoId": "usdt0",
       "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
@@ -8338,6 +8359,7 @@
       "chainId": 1135,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8345,8 +8367,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Bridged USDC (Stargate)",

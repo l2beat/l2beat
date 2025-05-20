@@ -2,7 +2,7 @@
   title: "Governance Review #46"
   description: "Relatively slow week in governance, but with some important discussions!."
   publishedOn: "2025-04-07"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 ## **Optimism**
 
