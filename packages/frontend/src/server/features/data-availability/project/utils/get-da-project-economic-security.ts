@@ -14,15 +14,13 @@ export async function getDaProjectEconomicSecurity(
     return 100
   }
   const db = getDb()
-
-  const stake = await db.stake.findById(economicSecurity.name)
-  if (!stake) {
-    return undefined
-  }
-
   const coingeckoId = economicSecurity.token.coingeckoId
-  const currentPrice = await db.currentPrice.findByCoingeckoId(coingeckoId)
-  if (!currentPrice) {
+
+  const [stake, currentPrice] = await Promise.all([
+    db.stake.findById(economicSecurity.name),
+    db.currentPrice.findByCoingeckoId(coingeckoId),
+  ])
+  if (!stake || !currentPrice) {
     return undefined
   }
 
