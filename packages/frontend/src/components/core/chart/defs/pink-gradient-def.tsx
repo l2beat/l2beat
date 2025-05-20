@@ -22,7 +22,14 @@ export function PinkFillGradientDef({ id }: { id: string }) {
 
 export function PinkStrokeGradientDef({ id }: { id: string }) {
   return (
-    <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
+    <linearGradient
+      id={id}
+      x1="0"
+      y1="0"
+      x2="100%"
+      y2="0"
+      gradientUnits="userSpaceOnUse"
+    >
       <stop offset="0%" stopColor="hsl(var(--chart-pink-stroke-gradient-1))" />
       <stop
         offset="100%"
