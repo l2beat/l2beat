@@ -19,6 +19,7 @@ export async function getActivityTable(projects: Project[]) {
   if (env.MOCK) {
     return getMockActivityTableData()
   }
+
   return getCachedActivityTableData(projects)
 }
 
@@ -29,11 +30,13 @@ const getCachedActivityTableData = cache(
   async (projects: Project[]) => {
     const db = getDb()
     const range = getFullySyncedActivityRange('max')
-    const records = await db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
-      range,
-    )
-    const maxCounts = await db.activity.getMaxCountsForProjects()
+    const [records, maxCounts] = await Promise.all([
+      db.activity.getByProjectsAndTimeRange(
+        [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
+        range,
+      ),
+      db.activity.getMaxCountsForProjects(),
+    ])
 
     const grouped = groupBy(records, (r) => r.projectId)
 
