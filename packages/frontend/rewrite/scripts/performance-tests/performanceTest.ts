@@ -127,13 +127,9 @@ async function testPage(page: string) {
   const duration = response.headers.get('metrics-execution-time')
   const size = response.headers.get('metrics-data-size')
 
-  if (!duration || !size) {
-    throw new Error('No metrics found')
-  }
-
   return {
-    duration: parseFloat(duration),
-    size: parseInt(size),
+    duration: duration ? parseFloat(duration) : Infinity,
+    size: size ? parseInt(size) : Infinity,
   }
 }
 
