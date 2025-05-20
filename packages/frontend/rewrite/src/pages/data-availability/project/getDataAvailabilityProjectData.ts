@@ -9,6 +9,8 @@ import type { Manifest } from '~/utils/Manifest'
 
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import { ps } from '~/server/projects'
+import type { ExpressHelpers } from '~/trpc/server'
+import { getExpressHelpers } from '~/trpc/server'
 
 export async function getDataAvailabilityProjectData(
   manifest: Manifest,
@@ -18,9 +20,10 @@ export async function getDataAvailabilityProjectData(
   },
   url: string,
 ): Promise<RenderData | undefined> {
+  const helpers = getExpressHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getProjectEntry(params),
+    getProjectEntry(params, helpers),
   ])
   if (!projectEntry) return undefined
 
@@ -41,12 +44,16 @@ export async function getDataAvailabilityProjectData(
       props: {
         ...appLayoutProps,
         projectEntry,
+        dehydratedState: helpers.dehydrate(),
       },
     },
   }
 }
 
-async function getProjectEntry(params: { layer: string; bridge: string }) {
+async function getProjectEntry(
+  params: { layer: string; bridge: string },
+  helpers: ExpressHelpers,
+) {
   const layer = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
@@ -54,6 +61,18 @@ async function getProjectEntry(params: { layer: string; bridge: string }) {
   })
 
   if (!layer) return
+
+  await Promise.all([
+    helpers.da.projectChart.prefetch({
+      range: 'max',
+      projectId: layer.id,
+    }),
+    helpers.da.projectChartByProject.prefetch({
+      range: '30d',
+      daLayer: layer.id,
+    }),
+  ])
+
   if (layer.id === ProjectId.ETHEREUM) {
     const bridge = await ps.getProject({
       slug: params.bridge,

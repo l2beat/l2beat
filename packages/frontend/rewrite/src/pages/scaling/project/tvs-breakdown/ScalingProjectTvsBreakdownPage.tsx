@@ -1,3 +1,5 @@
+import type { DehydratedState } from '@tanstack/react-query'
+import { HydrationBoundary } from '@tanstack/react-query'
 import { ScalingProjectTvsBreakdownPage as NextScalingProjectTvsBreakdownPage } from '~/app/(top-nav)/scaling/projects/[slug]/tvs-breakdown/_page'
 import { TopNavLayout } from '~/app/(top-nav)/top-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'
@@ -6,17 +8,21 @@ import type { ScalingProjectTvsBreakdownData } from '~/server/features/scaling/p
 
 interface Props extends AppLayoutProps {
   tvsBreakdownData: ScalingProjectTvsBreakdownData
+  dehydratedState: DehydratedState
 }
 
 export function ScalingProjectTvsBreakdownPage({
   tvsBreakdownData,
+  dehydratedState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <TopNavLayout>
-        <NextScalingProjectTvsBreakdownPage {...tvsBreakdownData} />
-      </TopNavLayout>
+      <HydrationBoundary state={dehydratedState}>
+        <TopNavLayout>
+          <NextScalingProjectTvsBreakdownPage {...tvsBreakdownData} />
+        </TopNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }
