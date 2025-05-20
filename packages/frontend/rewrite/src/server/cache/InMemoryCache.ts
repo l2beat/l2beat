@@ -1,9 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure';
 import type { ICache } from './ICache';
 
+const PROMISE_TIMEOUT = 30
+
 export class InMemoryCache implements ICache {
   private cache
-  private inFlight = new Map<string, Promise<unknown>>()
+  private inFlight = new Map<string, { promise: Promise<unknown>; timestamp: number }>()
 
   constructor(
     initialCache?: Map<string, { result: unknown; timestamp: number }>,
@@ -23,14 +25,14 @@ export class InMemoryCache implements ICache {
     }
 
     const existingPromise = this.inFlight.get(options.key)
-    if (existingPromise) {
-      return existingPromise as Promise<T>
+    if (existingPromise && existingPromise.timestamp + PROMISE_TIMEOUT > UnixTime.now()) {
+      return existingPromise.promise as Promise<T>
     }
 
     const promise = fallback().finally(() => {
       this.inFlight.delete(options.key)
     })
-    this.inFlight.set(options.key, promise)
+    this.inFlight.set(options.key, { promise, timestamp: UnixTime.now() })
 
     const fallbackResult = await promise
     this.cache.set(options.key, {
