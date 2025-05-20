@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-// TODO: when two gets are ongoing do not run fallback twice
 export class DataCache {
   private cache
   private inFlight = new Map<string, Promise<unknown>>()
