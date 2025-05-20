@@ -13,6 +13,7 @@ import {
   ContractPermission,
   ContractPermissionField,
   Permission,
+  PermissionsConfig,
   RawPermissionConfiguration,
 } from '../src/discovery/config/PermissionConfig'
 import {
@@ -69,6 +70,7 @@ async function main() {
   const MergedConfig = z.object({
     ...StructureConfig.omit({ overrides: true }).shape,
     ...ColorConfig.omit({ overrides: true }).shape,
+    ...PermissionsConfig.omit({ overrides: true }).shape,
     overrides: z.record(MergedContract).optional(),
   })
 
