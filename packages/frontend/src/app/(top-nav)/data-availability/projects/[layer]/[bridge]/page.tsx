@@ -6,7 +6,7 @@ import {
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { ps } from '~/server/projects'
-import { HydrateClient } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { DataAvailabilityProjectPage } from './_page'
 
@@ -104,10 +104,32 @@ async function getEntry(params: { layer: string; bridge: string }) {
       notFound()
     }
 
-    return getEthereumDaProjectEntry(layer, bridge)
+    const [entry] = await Promise.all([
+      getEthereumDaProjectEntry(layer, bridge),
+      api.da.projectChart.prefetch({
+        range: 'max',
+        projectId: layer.id,
+      }),
+      api.da.projectChartByProject.prefetch({
+        range: '30d',
+        daLayer: layer.id,
+      }),
+    ])
+
+    return entry
   }
 
-  const entry = await getDaProjectEntry(layer, params.bridge)
+  const [entry] = await Promise.all([
+    getDaProjectEntry(layer, params.bridge),
+    api.da.projectChart.prefetch({
+      range: 'max',
+      projectId: layer.id,
+    }),
+    api.da.projectChartByProject.prefetch({
+      range: '30d',
+      daLayer: layer.id,
+    }),
+  ])
   if (!entry) {
     notFound()
   }

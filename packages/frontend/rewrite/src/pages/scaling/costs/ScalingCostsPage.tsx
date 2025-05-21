@@ -1,4 +1,6 @@
 import type { Milestone } from '@l2beat/config'
+import type { DehydratedState } from '@tanstack/react-query'
+import { HydrationBoundary } from '@tanstack/react-query'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ScalingCostsPage as NextCostsPage } from '~/app/(side-nav)/scaling/costs/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
@@ -9,14 +11,22 @@ import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scal
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingCostsEntry>
   milestones: Milestone[]
+  queryState: DehydratedState
 }
 
-export function ScalingCostsPage(props: Props) {
+export function ScalingCostsPage({
+  entries,
+  milestones,
+  queryState,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <NextCostsPage entries={props.entries} milestones={props.milestones} />
-      </SideNavLayout>
+      <HydrationBoundary state={queryState}>
+        <SideNavLayout>
+          <NextCostsPage entries={entries} milestones={milestones} />
+        </SideNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }

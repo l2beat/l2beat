@@ -12,7 +12,6 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
-import { api } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectIcon } from '../../utils/get-project-icon'
@@ -119,14 +118,6 @@ export async function getDaProjectEntry(
       getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
-      api.da.projectChart.prefetch({
-        range: 'max',
-        projectId: layer.id,
-      }),
-      api.da.projectChartByProject.prefetch({
-        range: '30d',
-        daLayer: layer.id,
-      }),
     ])
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
