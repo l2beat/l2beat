@@ -5,7 +5,7 @@ import {
   type EthereumAddress,
   type json,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,

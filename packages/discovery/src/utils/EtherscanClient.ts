@@ -11,7 +11,7 @@ import {
 import type { ContractSource } from './IEtherscanClient'
 
 import type { HttpClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
@@ -286,7 +286,7 @@ export class EtherscanClient implements IEtherscanClient {
   }
 }
 
-const Sources = z.record(z.object({ content: z.string() }))
+const Sources = z.record(z.string(), z.object({ content: z.string() }))
 const Settings = z.object({ remappings: z.array(z.string()).optional() })
 const EtherscanSource = z.object({ sources: Sources, settings: Settings })
 

@@ -1,5 +1,5 @@
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 import { isDeepStrictEqual } from 'util'
 import { type providers, utils } from 'ethers'
@@ -43,13 +43,13 @@ const common = {
 const setOnlySchema = z.object({
   ...common,
   set: oneOrMany(EventHandlerAction),
-  add: z.undefined(),
-  remove: z.undefined(),
+  add: z.undefined().optional(),
+  remove: z.undefined().optional(),
 })
 
 const addAndRemoveSchema = z.object({
   ...common,
-  set: z.undefined(),
+  set: z.undefined().optional(),
   add: oneOrMany(EventHandlerAction),
   remove: oneOrMany(EventHandlerAction).optional(),
 })

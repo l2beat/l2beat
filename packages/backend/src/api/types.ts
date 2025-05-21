@@ -1,6 +1,6 @@
 import type { Middleware } from '@koa/router'
 import type { Context, Request } from 'koa'
-import type { z } from 'zod'
+import type { z } from 'zod/v4'
 
 interface ParsedRequest extends Request {
   body?: unknown
@@ -10,7 +10,7 @@ interface ParsedContext extends Context {
   request: ParsedRequest
 }
 
-export function withTypedContext<T extends z.AnyZodObject>(
+export function withTypedContext<T extends z.ZodAny>(
   parser: T,
   handler: (ctx: ParsedContext & z.infer<T>) => Promise<void> | void,
 ): Middleware {

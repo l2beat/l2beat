@@ -1,5 +1,5 @@
 import { UnixTime, stringAs } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export const ZksyncLiteBlocksResult = z.object({
   result: z.object({

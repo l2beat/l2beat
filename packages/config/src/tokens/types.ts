@@ -6,7 +6,7 @@ import {
   numberAs,
   stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export type GeneratedToken = z.infer<typeof GeneratedToken>
 export const GeneratedToken = z.object({
@@ -64,7 +64,7 @@ export const SourceEntry = z.object({
 })
 
 export type Source = z.infer<typeof Source>
-export const Source = z.record(z.array(SourceEntry))
+export const Source = z.record(z.string(), z.array(SourceEntry))
 
 export type Output = z.infer<typeof Output>
 export const Output = z.object({

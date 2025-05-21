@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "noUncheckedIndexedAccess": true,
     "module": "ESNext",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {

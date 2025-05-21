@@ -1,5 +1,5 @@
 import { type Node, grammar } from 'ohm-js'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 // In Ohm grammar, uppercase ids are for syntactic rules
 // which allow spaces in-between tokens.

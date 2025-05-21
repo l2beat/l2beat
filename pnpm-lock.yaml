@@ -388,8 +388,8 @@ importers:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
       ohm-js:
-        specifier: ^17.1.0
-        version: 17.1.0
+        specifier: ^16.6.0
+        version: 16.6.0
       prettier:
         specifier: ^3.0.3
         version: 3.3.3
@@ -753,8 +753,8 @@ importers:
         specifier: ^4.21.1
         version: 4.21.1
       graphviz-wasm:
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^2.0.2
+        version: 2.0.2
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -1838,6 +1838,9 @@ packages:
 
   '@ethersproject/wordlists@5.7.0':
     resolution: {integrity: sha512-S2TFNJNfHWVHNE6cNDjbVlZ6MgE17MIxMbMg2zv3wn+3XSJGosL1m9ZVv3GXCf/2ymSsQ+hRI5IzoMJTG6aoVA==}
+
+  '@fabiospampinato/once@1.0.0':
+    resolution: {integrity: sha512-apUArzpyfYaF7hBwsgPLN9pAS2n+CshLSZ3QtWu492RaWCxxCAIZUeR1xY3oNRM4o4fAgOnW2QRLIQQntvO5xw==}
 
   '@floating-ui/core@1.6.6':
     resolution: {integrity: sha512-Vkvsw6EcpMHjvZZdMkSY+djMGFbt7CRssW99Ne8tar2WLnZ/l3dbxeTShbLQj+/s35h+Qb4cmnob+EzwtjrXGQ==}
@@ -4588,8 +4591,8 @@ packages:
   decimal.js-light@2.5.1:
     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
 
-  decode-base64@3.0.1:
-    resolution: {integrity: sha512-IWgiXlMAdm9c4RrOnvkFxYpfZRlOys4Wxnc/QT72hVLUZKCr7RPkfamgn2GXysCo06Zd4TGZyKaPHO4soBgSAg==}
+  decode-base64@2.0.0:
+    resolution: {integrity: sha512-k+RFQe9UiOowWG1u3yRMkmxm9huTQtuIA6/E6zUyk+6TJgD6K5evmkYJMPd1kdp9PPozHNUUSbngcc2uOUnZ3A==}
 
   decompress-response@6.0.0:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
@@ -5266,9 +5269,6 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  function-once@3.0.0:
-    resolution: {integrity: sha512-WEhgu9PE55sHFf+SBg3lI8+CWpsqReLcsp3g12XhwSJJgnodpSpHk6StvpeVcKuHAFCAdttLrslJRFDSdLDf4g==}
-
   function.prototype.name@1.1.6:
     resolution: {integrity: sha512-Z5kx79swU5P27WEayXM1tBi5Ze/lbIyiNgU3qyXUOf9b2rgXYyF9Dy9Cx+IQv/Lc8WCG6L82zwUPpSS9hGehIg==}
     engines: {node: '>= 0.4'}
@@ -5388,8 +5388,8 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  graphviz-wasm@3.0.2:
-    resolution: {integrity: sha512-aaO9dxQ7LTk9zvelCajRRSdSB+ZLniL5DNSkuLXAfIAbVvYCqlLmxz4zWC2LBbNNT+w6vp8Du8SvAVxH1bSVBQ==}
+  graphviz-wasm@2.0.2:
+    resolution: {integrity: sha512-z10QEX/iNPZ5vwU6YqRLBsb/yWbKgvx8MveiJmbuGmbpQHSOjHOH+o67tngWId+u9pIPgP+nP9zwAfadF9CAWw==}
 
   gray-matter@4.0.3:
     resolution: {integrity: sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==}
@@ -6335,9 +6335,6 @@ packages:
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
 
-  node-buffer-encoding@1.0.2:
-    resolution: {integrity: sha512-v2QFjf04xWb5Q7cyzbi8qEwe2vw2xJBXT7+pMOLA02+KJZlcJ/6syFYiH96ClXKfOG/kyBeysAuewJ7zfAUYKQ==}
-
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
@@ -6463,8 +6460,8 @@ packages:
     resolution: {integrity: sha512-yBYjY9QX2hnRmZHAjG/f13MzmBzxzYgQhFrke06TTyKY5zSTEqkOeukBzIdVA3j3ulu8Qa3MbVFShV7T2RmGtQ==}
     engines: {node: '>= 0.4'}
 
-  ohm-js@17.1.0:
-    resolution: {integrity: sha512-xc3B5dgAjTBQGHaH7B58M2Pmv6WvzrJ/3/7LeUzXNg0/sY3jQPdSd/S2SstppaleO77rifR1tyhdfFGNIwxf2Q==}
+  ohm-js@16.6.0:
+    resolution: {integrity: sha512-X9P4koSGa7swgVQ0gt71UCYtkAQGOjciJPJAz74kDxWt8nXbH5HrDOQG6qBDH7SR40ktNv4x61BwpTDE9q4lRA==}
     engines: {node: '>=0.12.1'}
 
   on-exit-leak-free@2.1.2:
@@ -8978,6 +8975,8 @@ snapshots:
       '@ethersproject/logger': 5.7.0
       '@ethersproject/properties': 5.7.0
       '@ethersproject/strings': 5.7.0
+
+  '@fabiospampinato/once@1.0.0': {}
 
   '@floating-ui/core@1.6.6':
     dependencies:
@@ -11969,9 +11968,7 @@ snapshots:
 
   decimal.js-light@2.5.1: {}
 
-  decode-base64@3.0.1:
-    dependencies:
-      node-buffer-encoding: 1.0.2
+  decode-base64@2.0.0: {}
 
   decompress-response@6.0.0:
     dependencies:
@@ -13007,8 +13004,6 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  function-once@3.0.0: {}
-
   function.prototype.name@1.1.6:
     dependencies:
       call-bind: 1.0.7
@@ -13177,10 +13172,10 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphviz-wasm@3.0.2:
+  graphviz-wasm@2.0.2:
     dependencies:
-      decode-base64: 3.0.1
-      function-once: 3.0.0
+      decode-base64: 2.0.0
+      once: '@fabiospampinato/once@1.0.0'
 
   gray-matter@4.0.3:
     dependencies:
@@ -14115,8 +14110,6 @@ snapshots:
 
   node-addon-api@7.1.1: {}
 
-  node-buffer-encoding@1.0.2: {}
-
   node-domexception@1.0.0: {}
 
   node-fetch@2.6.12(encoding@0.1.13):
@@ -14251,7 +14244,7 @@ snapshots:
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
 
-  ohm-js@17.1.0: {}
+  ohm-js@16.6.0: {}
 
   on-exit-leak-free@2.1.2: {}
 

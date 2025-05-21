@@ -1,6 +1,6 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers, utils } from 'ethers'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'

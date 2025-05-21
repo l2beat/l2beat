@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import { z } from 'zod/v4'
 
 function nullish<T extends z.ZodTypeAny>(schema: T) {
   return z.union([z.undefined(), z.null(), schema])

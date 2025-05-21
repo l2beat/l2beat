@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import { ProjectTvsConfigSchema } from '../../src/types'
 

@@ -1,5 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { toContractValue } from '../handlers/utils/toContractValue'
 import type { ContractValue } from '../output/types'
 import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'

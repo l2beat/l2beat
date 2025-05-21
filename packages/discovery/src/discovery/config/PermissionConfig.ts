@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 export type PermissionConfiguration = RawPermissionConfiguration & {
   target: EthereumAddress

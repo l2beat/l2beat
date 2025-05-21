@@ -1,5 +1,5 @@
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { z } from 'zod/v4'
 
 import type { BlipSexp } from '../../blip/type'
 import { validateBlip } from '../../blip/validateBlip'
@@ -65,7 +65,7 @@ export const StructureContract = z.object({
   ignoreRelatives: z.array(z.string()).default([]),
   fields: z.record(z.string(), StructureContractField).default({}),
   methods: z.record(z.string(), z.string()).default({}),
-  manualSourcePaths: z.record(z.string()).default({}),
+  manualSourcePaths: z.record(z.string(), z.string()).default({}),
   types: z.record(z.string(), DiscoveryCustomType).default({}),
 })
 

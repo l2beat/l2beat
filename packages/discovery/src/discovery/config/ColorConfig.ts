@@ -1,5 +1,5 @@
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
@@ -40,7 +40,7 @@ export const ColorContract = z.object({
   description: z.optional(z.string()),
   references: z.optional(z.array(ExternalReference)),
   fields: z.record(z.string(), ColorContractField).default({}),
-  manualSourcePaths: z.record(z.string()).default({}),
+  manualSourcePaths: z.record(z.string(), z.string()).default({}),
 })
 
 export type ColorConfig = z.infer<typeof ColorConfig>

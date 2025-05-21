@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export function parseEthersError(e: unknown): Error | undefined {
   const parsed = ethersError.safeParse(e)
