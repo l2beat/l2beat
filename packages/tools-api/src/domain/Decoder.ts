@@ -87,9 +87,15 @@ export class Decoder {
     if (!selector) {
       return { type: 'bytes', value: data, dynamic: true }
     }
-    const signatures =
-      known.signatures.get(selector) ??
-      (await this.signatureService.lookup(selector))
+    let signatures: string[]
+    const wellKnown = this.signatureService.lookupWellKnown(selector)
+    if (wellKnown) {
+      signatures = [wellKnown]
+    } else {
+      signatures =
+        known.signatures.get(selector) ??
+        (await this.signatureService.lookup(selector))
+    }
     for (const signature of signatures) {
       try {
         return await this.decodeCall(data, signature, to, chain, known)

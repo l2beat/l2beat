@@ -6,6 +6,7 @@ import type { OpenChainClient } from '../services/api/OpenChainClient'
 
 export interface ISignatureService {
   lookup(selector: `0x${string}`): Promise<string[]>
+  lookupWellKnown(selector: `0x${string}`): string | undefined
   getInterface(selector: `0x${string}`): string | undefined
 }
 
@@ -71,6 +72,10 @@ export class SignatureService implements ISignatureService {
       .filter((v) => toFunctionSelector(v) === selector)
     this.known.set(selector, filtered)
     return filtered
+  }
+
+  lookupWellKnown(selector: `0x${string}`): string | undefined {
+    return this.wellKnown.get(selector)?.signature
   }
 
   getInterface(selector: `0x${string}`): string | undefined {
