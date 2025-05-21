@@ -1,5 +1,6 @@
 import { formatAbi } from 'abitype'
 import { z } from 'zod'
+import { RateLimiter } from './RateLimiter'
 
 export interface ContractInfo {
   verified: boolean
@@ -9,12 +10,16 @@ export interface ContractInfo {
 }
 
 export class EtherscanClient {
+  private rateLimiter = new RateLimiter({ requestsPerSecond: 4 })
+
   constructor(private apikey: string) {}
 
   async getContractInfo(
     chainId: number,
     address: `0x${string}`,
   ): Promise<ContractInfo> {
+    await this.rateLimiter.wait()
+
     const source = await this.getContractSource(chainId, address)
     const verified = !source.ABI.includes('not verified')
     return {
@@ -31,6 +36,8 @@ export class EtherscanClient {
     chainId: number,
     address: `0x${string}`,
   ): Promise<ContractSource> {
+    await this.rateLimiter.wait()
+
     const base = 'https://api.etherscan.io/v2/api'
     const query = new URLSearchParams({
       chainid: chainId.toString(),

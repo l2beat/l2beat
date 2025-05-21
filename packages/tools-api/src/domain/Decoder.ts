@@ -142,7 +142,7 @@ export class Decoder {
     chain: Chain,
   ) {
     for (const plugin of plugins) {
-      const nested = plugin(result, to, chain, this.tokens)
+      const nested = plugin(result, chain, to, this.tokens)
       if (nested) {
         return nested
       }

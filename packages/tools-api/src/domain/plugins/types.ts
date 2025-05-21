@@ -8,7 +8,7 @@ export interface NestedCall {
 
 export type Plugin = (
   call: DecodedCall,
-  to: Address | undefined,
   chain: Chain,
+  to: Address | undefined,
   tokens: TokenConfig,
 ) => NestedCall[] | false

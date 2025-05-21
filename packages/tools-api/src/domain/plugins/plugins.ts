@@ -1,8 +1,9 @@
 import type { DecodedCall, Value } from '../DecodedResult'
 import { erc20Plugin } from './erc20'
+import { multiSendPlugin } from './multiSend'
 import type { NestedCall, Plugin } from './types'
 
-export const plugins: Plugin[] = [erc20Plugin, defaultPlugin]
+export const plugins: Plugin[] = [erc20Plugin, multiSendPlugin, defaultPlugin]
 
 function defaultPlugin(call: DecodedCall): NestedCall[] {
   return call.arguments.flatMap(getNestedBytes)
@@ -22,6 +23,32 @@ function getNestedBytes(value: Value): NestedCall[] {
   }
   if (value.decoded?.type === 'bytes' && value.decoded.dynamic) {
     nested.push({ data: value })
+  }
+  if (value.decoded?.type === 'number') {
+    if (
+      /amount/i.test(value.name) ||
+      /value/i.test(value.name) ||
+      value.name === 'wad'
+    ) {
+      value.decoded.hint = 'e18'
+    }
+    if (
+      /date/i.test(value.name) ||
+      /time/i.test(value.name) ||
+      /expir/i.test(value.name) ||
+      /since/i.test(value.name) ||
+      /until/i.test(value.name)
+    ) {
+      value.decoded.hint = 'date'
+    }
+    if (
+      /seconds/i.test(value.name) ||
+      /duration/i.test(value.name) ||
+      /delay/i.test(value.name) ||
+      /wait/i.test(value.name)
+    ) {
+      value.decoded.hint = 'seconds'
+    }
   }
   return nested
 }

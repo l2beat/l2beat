@@ -19,5 +19,6 @@
     "function mint(uint256 amount)",
     "function mint(address spender, uint256 amount)",
     "function mintFrom(address spender, uint256 amount)"
-  ]
+  ],
+  "MultiSend": ["function multiSend(bytes transactions)"]
 }

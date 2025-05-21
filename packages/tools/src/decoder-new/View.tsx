@@ -406,7 +406,7 @@ function formatDuration(value: string): string {
   n -= days * 86_400n
 
   if (days > 0) {
-    parts.push(`${formatDecimals(n.toString(), 0)} days`)
+    parts.push(`${formatDecimals(days.toString(), 0)} days`)
   }
 
   const hours = n / 3600n
