@@ -1,5 +1,4 @@
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
-
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
 export function diffToMessage(
@@ -9,16 +8,21 @@ export function diffToMessage(
   chain: string,
   dependents: string[],
   nonce?: number,
+  trackedTxsAffected?: boolean,
 ): string {
   const header = getHeader(name, chain, blockNumber, nonce)
   const dependentsMessage = getDependentsMessage(dependents)
+  const trackedTxsMessage = trackedTxsAffected
+    ? getTrackedTxsMessage()
+    : undefined
 
-  const overheadLength = header.length + dependentsMessage.length
+  const overheadLength =
+    header.length + dependentsMessage.length + (trackedTxsMessage?.length ?? 0)
   const maxLength = MAX_MESSAGE_LENGTH - overheadLength
 
   const message = discoveryDiffToMarkdown(diffs, maxLength)
 
-  return `${header}${dependentsMessage}${message}`
+  return `${header}${dependentsMessage}${trackedTxsMessage || ''}${message}`
 }
 
 function getHeader(
@@ -47,6 +51,10 @@ function getDependentsMessage(dependents: string[]) {
     ' ' +
     wrapBoldAndItalic(dependents.join(', ') + '.')
   )
+}
+
+function getTrackedTxsMessage(): string {
+  return '\n' + wrapItalic('Tracked transactions might be affected.')
 }
 
 export function formatNonce(nonce: number): string {
