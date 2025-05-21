@@ -130,31 +130,44 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeRoles(contractOrEoa: EntryParameters) {
-    const directlyIssued = this.getDirectlyIssuedPermissions(
-      contractOrEoa.address,
-    )
-    const roles: Record<string, Set<string>> = {}
+    const issued = this.getIssuedPermissions(contractOrEoa.address)
+    const roles: Record<string, Record<'direct' | 'ultimate', Set<string>>> = {}
+    const entryName = (address: EthereumAddress) =>
+      this.projectDiscovery.getContractByAddress(address)?.name ??
+      this.projectDiscovery.getEOAName(address) ??
+      address.toString()
 
     const result = []
-    for (const p of directlyIssued) {
-      const receiver =
-        this.projectDiscovery.getContractByAddress(p.to)?.name ??
-        p.to.toString()
+    for (const p of issued) {
+      const receiverName = entryName(p.to)
       if (p.role) {
-        let text = receiver
+        let text = receiverName
         if (p.condition) {
           text += ` if ${formatPermissionCondition(p.condition)}`
         }
         const prettyfiedRole = prettifyRole(p.role)
-        roles[prettyfiedRole] ??= new Set()
-        roles[prettyfiedRole].add(text)
+        roles[prettyfiedRole] ??= {
+          direct: new Set(),
+          ultimate: new Set(),
+        }
+
+        if ((p.via ?? []).length === 0) {
+          roles[prettyfiedRole].direct.add(text)
+        } else {
+          roles[prettyfiedRole].ultimate.add(text)
+        }
       }
     }
+
     const roleNames = Object.keys(roles).sort()
     for (const roleName of roleNames) {
-      result.push(
-        `  * **${roleName}** : ${Array.from(roles[roleName]).join(', ')}`,
-      )
+      const direct = Array.from(roles[roleName].direct).sort().join(', ')
+      const ultimate = Array.from(roles[roleName].ultimate).sort().join(', ')
+      const value = [`  * **${roleName}** : ${direct}`]
+      if (ultimate.length > 0) {
+        value.push(`; ultimately ${ultimate}`)
+      }
+      result.push(value.join(''))
     }
     if (result.length > 0) {
       result.unshift('Roles:')
@@ -187,16 +200,15 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       .filter((receivedPermission) => receivedPermission.from === fromAddress)
   }
 
-  getDirectlyIssuedPermissions(fromAddress: EthereumAddress) {
+  getIssuedPermissions(fromAddress: EthereumAddress) {
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) => {
-        const fromReceived = (c.receivedPermissions ?? []).filter(
-          (p) => p.via?.length === 0,
-        )
-        const fromDirectlyReceived = c.directlyReceivedPermissions ?? []
-        const directPermissions = [...fromReceived, ...fromDirectlyReceived]
-        return directPermissions.map((p) => ({
+        const allPermissions = [
+          ...(c.receivedPermissions ?? []),
+          ...(c.directlyReceivedPermissions ?? []),
+        ]
+        return allPermissions.map((p) => ({
           to: c.address,
           ...p,
         }))
