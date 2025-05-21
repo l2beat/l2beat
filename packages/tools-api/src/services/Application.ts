@@ -38,7 +38,7 @@ export class Application {
 
     const decoder = new Decoder(addressService, signatureService, config.tokens)
 
-    const controller = new ApiController(decoder, config.chains)
+    const controller = new ApiController(decoder, alchemyClient, config.chains)
     const httpServer = createHttpServer(
       config,
       controller,

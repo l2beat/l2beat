@@ -44,12 +44,15 @@ const SuccessSchema = z.object({
   ok: z.literal(true),
   result: z.object({
     function: z.record(
-      z.array(
-        z.object({
-          name: z.string(),
-          filtered: z.boolean(),
-        }),
-      ),
+      z.union([
+        z.array(
+          z.object({
+            name: z.string(),
+            filtered: z.boolean(),
+          }),
+        ),
+        z.null(),
+      ]),
     ),
   }),
 })
