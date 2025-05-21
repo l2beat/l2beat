@@ -159,7 +159,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     for (const roleName of roleNames) {
       const direct = Array.from(roles[roleName].direct).sort().join(', ')
       const ultimate = Array.from(roles[roleName].ultimate).sort().join(', ')
-      const value = [`  * **${roleName}** : ${direct}`]
+      const value = [`  * **${roleName}**: ${direct}`]
       if (ultimate.length > 0) {
         value.push(`; ultimately ${ultimate}`)
       }
