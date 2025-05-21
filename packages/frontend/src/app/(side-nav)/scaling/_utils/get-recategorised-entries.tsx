@@ -16,19 +16,62 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
     (entry) => entry.statuses?.countdowns?.otherMigration,
   )
 
-  const others = [
+  const othersAll = [
     ...migratedRollups,
     ...migratedValidiumsAndOptimiums,
     ...entries.others,
   ].sort(sortFn)
 
+  const [underReviewRollups, activeRollups] = partition(
+    rollups,
+    (e) => e.statuses?.underReview === 'config',
+  )
+  const [underReviewValidiums, activeValidiums] = partition(
+    validiumsAndOptimiums,
+    (e) => e.statuses?.underReview === 'config',
+  )
+  const [underReviewOthers, activeOthers] = partition(
+    othersAll,
+    (e) => e.statuses?.underReview === 'config',
+  )
+
   return {
-    rollups: rollups.filter(
-      (entry) => entry.statuses?.underReview !== 'config',
-    ),
-    validiumsAndOptimiums: validiumsAndOptimiums.filter(
-      (entry) => entry.statuses?.underReview !== 'config',
-    ),
-    others: others.filter((entry) => entry.statuses?.underReview !== 'config'),
+    rollups: activeRollups,
+    validiumsAndOptimiums: activeValidiums,
+    others: activeOthers,
+    underReview: [
+      ...entries.underReview,
+      ...underReviewRollups,
+      ...underReviewValidiums,
+      ...underReviewOthers,
+    ],
+  }
+}
+
+export function splitUnderReviewEntries<T extends CommonScalingEntry>(
+  entries: TabbedScalingEntries<T>,
+) {
+  const [underReviewRollups, rollups] = partition(
+    entries.rollups,
+    (e) => e.statuses?.underReview === 'config',
+  )
+  const [underReviewValidiums, validiumsAndOptimiums] = partition(
+    entries.validiumsAndOptimiums,
+    (e) => e.statuses?.underReview === 'config',
+  )
+  const [underReviewOthers, others] = partition(
+    entries.others,
+    (e) => e.statuses?.underReview === 'config',
+  )
+
+  return {
+    rollups,
+    validiumsAndOptimiums,
+    others,
+    underReview: [
+      ...underReviewRollups,
+      ...underReviewValidiums,
+      ...underReviewOthers,
+    ],
   }
 }

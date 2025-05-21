@@ -21,9 +21,13 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { UopsExplorerLink } from '../../_components/uops-explorer-link'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import {
+  getRecategorisedEntries,
+  splitUnderReviewEntries,
+} from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
 type Props = TabbedScalingEntries<ScalingActivityEntry> & {
@@ -33,17 +37,22 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 export function ScalingActivityTabs(props: Props) {
   const filterEntries = useFilterEntries()
   const { checked } = useRecategorisationPreviewContext()
+  const showRecategorised = checked || featureFlags.othersMigrated()
 
   const filteredEntries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
+    underReview: props.underReview.filter(filterEntries),
   }
 
-  const entries = checked
-    ? // No need to sort because it is done later by TPS/UOPS switch
-      getRecategorisedEntries(filteredEntries, undefined)
-    : filteredEntries
+  const baseEntries = showRecategorised
+    ? filteredEntries
+    : splitUnderReviewEntries(filteredEntries)
+
+  const entries = showRecategorised
+    ? getRecategorisedEntries(filteredEntries, undefined)
+    : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
@@ -72,6 +81,7 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
+            ...props.underReview,
           ]}
         />
         <UopsExplorerLink />
@@ -87,6 +97,9 @@ export function ScalingActivityTabs(props: Props) {
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="underReview">
+            Under review <CountBadge>{entries.underReview.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
@@ -132,6 +145,11 @@ export function ScalingActivityTabs(props: Props) {
               projectsToBeMigrated={projectToBeMigratedToOthers}
               className="mt-2"
             />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
+            <ScalingActivityTable entries={entries.underReview} />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
