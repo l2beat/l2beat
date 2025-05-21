@@ -125,6 +125,14 @@
         "method": "getAddress",
         "args": ["Proxy__OVM_L1StandardBridge"]
       }
+    },
+    // contract allowed to delete batches
+    "1088_MVM_FraudVerifier": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["1088_MVM_FraudVerifier"]
+      }
     }
   }
 }

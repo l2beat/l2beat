@@ -1,17 +1,16 @@
-Generated with discovered.json: 0xbcdefe96ecea5ed3692e91cb93003fbcabebe314
+Generated with discovered.json: 0x301aa0184a84bbc0ecead4b6e616b933f3030395
 
-# Diff at Mon, 19 May 2025 16:26:19 GMT:
+# Diff at Wed, 21 May 2025 09:34:01 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
-- current block number: 22518186
+- current block number: 22530402
 
 ## Description
 
 Posting blobs to the inbox, authorized batcher in L2 node config (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
 
 Templitized contracts.
-
 
 ## Config/verification related changes
 
@@ -185,6 +184,8 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
       description:
 -        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
 +        "Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      values.1088_MVM_FraudVerifier:
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
       category:
 -        {"name":"Spam","priority":-1}
     }
