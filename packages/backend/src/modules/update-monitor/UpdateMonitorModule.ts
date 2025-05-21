@@ -98,6 +98,7 @@ export function createUpdateMonitorModule(
     chains,
     configReader,
     chainConverter,
+    projectService,
   )
   const updateMonitorRouter = createUpdateMonitorRouter(updateMonitorController)
 
