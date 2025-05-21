@@ -1,8 +1,13 @@
+# This file is used by preview builds in heroku pipeline
 build:
   docker:
-    backend: Dockerfile.backend
+    frontend: Dockerfile.frontend
+setup:
+  config:
+    NODE_ENV: production
+    NEXT_PUBLIC_REWRITE: 'true'
 run:
   web:
-    command: 
-    - npm run start
-    image: backend
+    command:
+    - node ./rewrite/dist/server/index.js
+    image: frontend
