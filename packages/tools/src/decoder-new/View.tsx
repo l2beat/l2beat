@@ -50,7 +50,7 @@ interface ExplorerLinkProps {
 function ExplorerLink(props: ExplorerLinkProps) {
   return (
     <a
-      className="font-mono text-blue-400"
+      className="w-min font-mono text-blue-400"
       href={props.href}
       target="_blank"
       rel="noopener noreferrer"

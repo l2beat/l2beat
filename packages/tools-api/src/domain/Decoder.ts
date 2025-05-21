@@ -1,6 +1,11 @@
 import type { Address, Chain, TokenConfig } from '../config/types'
 import type { AddressInfo, IAddressService } from './AddressService'
-import type { DecodedCall, DecodedResult, DecodedValue } from './DecodedResult'
+import type {
+  DecodedAddress,
+  DecodedCall,
+  DecodedResult,
+  DecodedValue,
+} from './DecodedResult'
 import type { ISignatureService } from './SignatureService'
 import { decode } from './decode'
 import { plugins } from './plugins/plugins'
@@ -119,7 +124,16 @@ export class Decoder {
     const nested = this.applyPlugins(result, to, chain)
 
     const addresses = getAddresses(result)
-    await Promise.all(addresses.map((x) => this.knowSafe(x, chain, known)))
+    await Promise.all(
+      addresses.map(async (x) => {
+        await this.knowSafe(x.value, chain, known)
+        const info = known.addresses.get(x.value)
+        x.name = info?.name
+        if (info?.fromDiscovery) {
+          x.discovered = true
+        }
+      }),
+    )
 
     for (const value of nested) {
       if (value.data.decoded?.type !== 'bytes') {
@@ -159,9 +173,9 @@ function getSelector(data: `0x${string}`): `0x${string}` | undefined {
   return selector
 }
 
-function getAddresses(value: DecodedValue): Address[] {
+function getAddresses(value: DecodedValue): DecodedAddress[] {
   if (value.type === 'address') {
-    return [value.value]
+    return [value]
   }
   if (value.type === 'array') {
     return value.values.flatMap((x) =>
