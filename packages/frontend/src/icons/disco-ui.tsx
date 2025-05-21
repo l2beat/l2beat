@@ -5,8 +5,8 @@ interface DiscoUiIconProps extends SvgIconProps {
   short?: boolean
 }
 
-export function DiscoUiIcon(props: DiscoUiIconProps) {
-  if (props.short) {
+export function DiscoUiIcon({ short, ...props }: DiscoUiIconProps) {
+  if (short) {
     return (
       <SvgIcon width={55} height={26} viewBox="0 0 55 26" {...props}>
         <g clipPath="url(#a)">

@@ -21,21 +21,23 @@ import { api } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
-import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
 import { getBadgeWithParamsAndLink } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getLivenessSection } from '~/utils/project/liveness/get-liveness-section'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
+import { getTrackedTransactions } from '~/utils/project/tracked-txs/get-tracked-transactions'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectIcon } from '../../utils/get-project-icon'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
+import { getLiveness } from '../liveness/get-liveness'
 import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
@@ -121,6 +123,7 @@ export async function getScalingProjectEntry(
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
+    | 'livenessConfig'
   >,
 ): Promise<ProjectScalingEntry> {
   const [
@@ -131,6 +134,7 @@ export async function getScalingProjectEntry(
     activityChartData,
     costsChartData,
     tokens,
+    liveness,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -151,6 +155,7 @@ export async function getScalingProjectEntry(
         })
       : undefined,
     getTokensForProject(project),
+    getLiveness(),
   ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
@@ -299,7 +304,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const trackedTransactions = getTrackedTransactions(project)
+  const trackedTransactions = getTrackedTransactions(project, 'l2costs')
   if (
     !project.isUpcoming &&
     trackedTransactions &&
@@ -314,6 +319,23 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         trackedTransactions,
+      },
+    })
+  }
+
+  const livenessSection = await getLivenessSection(
+    project,
+    liveness[project.id],
+    projectsChangeReport.projects[project.id],
+  )
+  if (livenessSection) {
+    sections.push({
+      type: 'LivenessSection',
+      props: {
+        id: 'liveness',
+        title: 'Liveness',
+        projectId: project.id,
+        ...livenessSection,
       },
     })
   }

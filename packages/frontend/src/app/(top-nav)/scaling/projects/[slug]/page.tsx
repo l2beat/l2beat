@@ -70,6 +70,7 @@ export default async function Page(props: Props) {
       'milestones',
       'trackedTxsConfig',
       'tvsConfig',
+      'livenessConfig',
     ],
   })
   if (!project) {

@@ -2,6 +2,7 @@
 
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
 import React from 'react'
+import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 
 function Collapsible({
@@ -23,18 +24,24 @@ const CollapsibleContent = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) => (
-  <CollapsiblePrimitive.CollapsibleContent
-    ref={ref}
-    {...props}
-    className={cn(
-      className,
-      'overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down',
-    )}
-  >
-    {children}
-  </CollapsiblePrimitive.CollapsibleContent>
-)
+}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) => {
+  const isClient = useIsClient()
+
+  return (
+    <CollapsiblePrimitive.CollapsibleContent
+      ref={ref}
+      {...props}
+      className={cn(
+        className,
+        'overflow-hidden',
+        isClient &&
+          'data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down',
+      )}
+    >
+      {children}
+    </CollapsiblePrimitive.CollapsibleContent>
+  )
+}
 CollapsibleContent.displayName =
   CollapsiblePrimitive.CollapsibleContent.displayName
 
