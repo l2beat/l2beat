@@ -1,0 +1,8 @@
+{
+  "name": "l2beat-fe",
+  "stack": "container",
+  "env": {},
+  "addons": [],
+  "scripts": {}
+}
+

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { env } from '~/env'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { ps } from '~/server/projects'
-import { HydrateClient } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectPage } from './_page'
 
@@ -70,7 +70,14 @@ export default async function Page(props: Props) {
     notFound()
   }
 
-  const projectEntry = await getBridgesProjectEntry(project)
+  const [projectEntry] = await Promise.all([
+    getBridgesProjectEntry(project),
+    api.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+  ])
 
   // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (

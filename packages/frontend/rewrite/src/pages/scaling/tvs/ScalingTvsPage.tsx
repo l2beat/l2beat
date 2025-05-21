@@ -1,4 +1,6 @@
 import type { Milestone } from '@l2beat/config'
+import type { DehydratedState } from '@tanstack/react-query'
+import { HydrationBoundary } from '@tanstack/react-query'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ScalingTvsPage as NextTvsPage } from '~/app/(side-nav)/scaling/tvs/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
@@ -9,14 +11,22 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingTvsEntry>
   milestones: Milestone[]
+  queryState: DehydratedState
 }
 
-export function ScalingTvsPage(props: Props) {
+export function ScalingTvsPage({
+  entries,
+  milestones,
+  queryState,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <NextTvsPage entries={props.entries} milestones={props.milestones} />
-      </SideNavLayout>
+      <HydrationBoundary state={queryState}>
+        <SideNavLayout>
+          <NextTvsPage entries={entries} milestones={milestones} />
+        </SideNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }

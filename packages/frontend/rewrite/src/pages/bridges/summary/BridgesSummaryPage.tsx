@@ -1,3 +1,5 @@
+import type { DehydratedState } from '@tanstack/react-query'
+import { HydrationBoundary } from '@tanstack/react-query'
 import type { TabbedBridgeEntries } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { BridgesSummaryPage as NextSummaryPage } from '~/app/(side-nav)/bridges/summary/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
@@ -7,14 +9,17 @@ import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-
 
 interface Props extends AppLayoutProps {
   entries: TabbedBridgeEntries<BridgesSummaryEntry>
+  queryState: DehydratedState
 }
 
-export function BridgesSummaryPage(props: Props) {
+export function BridgesSummaryPage({ entries, queryState, ...props }: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <NextSummaryPage entries={props.entries} />
-      </SideNavLayout>
+      <HydrationBoundary state={queryState}>
+        <SideNavLayout>
+          <NextSummaryPage entries={entries} />
+        </SideNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }

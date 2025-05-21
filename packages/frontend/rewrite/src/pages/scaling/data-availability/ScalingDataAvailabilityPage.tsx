@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingDaEntry>
 }
 
-export function ScalingDataAvailabilityPage(props: Props) {
+export function ScalingDataAvailabilityPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextDaPage entries={props.entries} />
+        <NextDaPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )

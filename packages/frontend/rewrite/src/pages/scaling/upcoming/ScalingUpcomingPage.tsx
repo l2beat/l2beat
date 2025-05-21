@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingUpcomingEntry>
 }
 
-export function ScalingUpcomingPage(props: Props) {
+export function ScalingUpcomingPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextUpcomingPage entries={props.entries} />
+        <NextUpcomingPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )

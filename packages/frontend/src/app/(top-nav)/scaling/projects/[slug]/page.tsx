@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ps } from '~/server/projects'
-import { HydrateClient } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectPage } from './_page'
 
@@ -77,7 +77,24 @@ export default async function Page(props: Props) {
     notFound()
   }
 
-  const projectEntry = await getScalingProjectEntry(project)
+  const [projectEntry] = await Promise.all([
+    getScalingProjectEntry(project),
+    api.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? api.costs.projectChart.prefetch({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
+  ])
 
   return (
     <HydrateClient>
