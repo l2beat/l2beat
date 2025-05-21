@@ -21,14 +21,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { UopsExplorerLink } from '../../_components/uops-explorer-link'
-import {
-  getRecategorisedEntries,
-  splitUnderReviewEntries,
-} from '../../_utils/get-recategorised-entries'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
+import { featureFlags } from '~/consts/feature-flags'
 
 type Props = TabbedScalingEntries<ScalingActivityEntry> & {
   milestones: Milestone[]
@@ -43,15 +40,25 @@ export function ScalingActivityTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
   }
 
-  const baseEntries = showRecategorised
-    ? filteredEntries
-    : splitUnderReviewEntries(filteredEntries)
+  const recategorisedEntries = getRecategorisedEntries(filteredEntries, undefined)
+
+  const baseEntries = {
+    rollups: filteredEntries.rollups.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    validiumsAndOptimiums: filteredEntries.validiumsAndOptimiums.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    others: filteredEntries.others.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    underReview: [],
+  }
 
   const entries = showRecategorised
-    ? getRecategorisedEntries(filteredEntries, undefined)
+    ? recategorisedEntries
     : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
@@ -81,8 +88,7 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.underReview,
-          ]}
+          ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
         />
         <UopsExplorerLink />
       </div>
@@ -98,9 +104,11 @@ export function ScalingActivityTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="underReview">
-            Under review <CountBadge>{entries.underReview.length}</CountBadge>
-          </DirectoryTabsTrigger>
+          {showRecategorised && (
+            <DirectoryTabsTrigger value="underReview">
+              Under review <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
@@ -147,11 +155,13 @@ export function ScalingActivityTabs(props: Props) {
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
-            <ScalingActivityTable entries={entries.underReview} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
+        {showRecategorised && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
+              <ScalingActivityTable entries={entries.underReview} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+        )}
       </DirectoryTabs>
     </>
   )

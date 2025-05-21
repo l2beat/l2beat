@@ -22,10 +22,7 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
     ...entries.others,
   ].sort(sortFn)
 
-  const [underReviewRollups, activeRollups] = partition(
-    rollups,
-    (e) => e.statuses?.underReview === 'config',
-  )
+  const [underReviewRollups, activeRollups] = partition(rollups, (e) => e.statuses?.underReview === 'config')
   const [underReviewValidiums, activeValidiums] = partition(
     validiumsAndOptimiums,
     (e) => e.statuses?.underReview === 'config',
@@ -39,35 +36,6 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
     rollups: activeRollups,
     validiumsAndOptimiums: activeValidiums,
     others: activeOthers,
-    underReview: [
-      ...entries.underReview,
-      ...underReviewRollups,
-      ...underReviewValidiums,
-      ...underReviewOthers,
-    ],
-  }
-}
-
-export function splitUnderReviewEntries<T extends CommonScalingEntry>(
-  entries: TabbedScalingEntries<T>,
-) {
-  const [underReviewRollups, rollups] = partition(
-    entries.rollups,
-    (e) => e.statuses?.underReview === 'config',
-  )
-  const [underReviewValidiums, validiumsAndOptimiums] = partition(
-    entries.validiumsAndOptimiums,
-    (e) => e.statuses?.underReview === 'config',
-  )
-  const [underReviewOthers, others] = partition(
-    entries.others,
-    (e) => e.statuses?.underReview === 'config',
-  )
-
-  return {
-    rollups,
-    validiumsAndOptimiums,
-    others,
     underReview: [
       ...underReviewRollups,
       ...underReviewValidiums,

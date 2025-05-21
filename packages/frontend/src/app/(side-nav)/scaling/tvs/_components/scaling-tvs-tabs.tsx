@@ -1,5 +1,3 @@
-'use client'
-import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
@@ -21,11 +19,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingTvsTable } from './table/scaling-tvs-table'
+import { featureFlags } from '~/consts/feature-flags'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
   milestones: Milestone[]
@@ -40,26 +38,28 @@ export function ScalingTvsTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
   }
 
-  const baseEntries = showRecategorised
-    ? filteredEntries
-    : {
-        rollups: filteredEntries.rollups.filter(
-          (e) => e.statuses?.underReview !== 'config',
-        ),
-        validiumsAndOptimiums: filteredEntries.validiumsAndOptimiums.filter(
-          (e) => e.statuses?.underReview !== 'config',
-        ),
-        others: filteredEntries.others.filter(
-          (e) => e.statuses?.underReview !== 'config',
-        ),
-        underReview: [],
-      }
+  const recategorisedEntries = getRecategorisedEntries(
+    filteredEntries,
+    compareStageAndTvs,
+  )
+
+  const baseEntries = {
+    rollups: filteredEntries.rollups.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    validiumsAndOptimiums: filteredEntries.validiumsAndOptimiums.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    others: filteredEntries.others.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    underReview: [],
+  }
 
   const entries = showRecategorised
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
+    ? recategorisedEntries
     : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
@@ -88,8 +88,7 @@ export function ScalingTvsTabs(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
-          ...props.underReview,
-        ]}
+        ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -103,9 +102,11 @@ export function ScalingTvsTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="underReview">
-            Under review <CountBadge>{entries.underReview.length}</CountBadge>
-          </DirectoryTabsTrigger>
+          {showRecategorised && (
+            <DirectoryTabsTrigger value="underReview">
+              Under review <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
@@ -147,11 +148,13 @@ export function ScalingTvsTabs(props: Props) {
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview" className="pt-5">
-            <ScalingTvsTable entries={entries.underReview} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
+        {showRecategorised && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="underReview" className="pt-5">
+              <ScalingTvsTable entries={entries.underReview} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+        )}
       </DirectoryTabs>
     </>
   )

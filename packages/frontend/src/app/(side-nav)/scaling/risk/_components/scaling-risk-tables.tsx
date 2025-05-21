@@ -18,11 +18,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingRiskTable } from './table/scaling-risk-table'
+import { featureFlags } from '~/consts/feature-flags'
 
 type Props = TabbedScalingEntries<ScalingRiskEntry>
 
@@ -35,24 +35,25 @@ export function ScalingRiskTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
   }
-  const baseEntries = showRecategorised
-    ? filteredEntries
-    : {
-        rollups: filteredEntries.rollups.filter(
-          (e) => e.statuses?.underReview !== 'config',
-        ),
-        validiumsAndOptimiums: filteredEntries.validiumsAndOptimiums.filter(
-          (e) => e.statuses?.underReview !== 'config',
-        ),
-        others: filteredEntries.others.filter(
-          (e) => e.statuses?.underReview !== 'config',
-        ),
-        underReview: [],
-      }
+  const recategorisedEntries = getRecategorisedEntries(
+    filteredEntries,
+    compareStageAndTvs,
+  )
+  const baseEntries = {
+    rollups: filteredEntries.rollups.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    validiumsAndOptimiums: filteredEntries.validiumsAndOptimiums.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    others: filteredEntries.others.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    underReview: [],
+  }
   const entries = showRecategorised
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
+    ? recategorisedEntries
     : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
@@ -81,8 +82,7 @@ export function ScalingRiskTables(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
-          ...props.underReview,
-        ]}
+        ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
       />
 
       <DirectoryTabs defaultValue="rollups">
@@ -97,9 +97,11 @@ export function ScalingRiskTables(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="underReview">
-            Under review <CountBadge>{entries.underReview.length}</CountBadge>
-          </DirectoryTabsTrigger>
+          {showRecategorised && (
+            <DirectoryTabsTrigger value="underReview">
+              Under review <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -123,11 +125,13 @@ export function ScalingRiskTables(props: Props) {
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview">
-            <ScalingRiskTable entries={entries.underReview} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
+        {showRecategorised && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="underReview">
+              <ScalingRiskTable entries={entries.underReview} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+        )}
       </DirectoryTabs>
     </>
   )

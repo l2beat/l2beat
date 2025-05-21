@@ -11,7 +11,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-
+import { featureFlags } from '~/consts/feature-flags'
 import {
   OthersInfo,
   RollupsInfo,
@@ -20,18 +20,14 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { ExcludeAssociatedTokensCheckbox } from '../../_components/exclude-associated-tokens-checkbox'
-import {
-  getRecategorisedEntries,
-  splitUnderReviewEntries,
-} from '../../_utils/get-recategorised-entries'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
-import { ScalingSummaryUnderReviewTable } from './table/scaling-summary-under-review-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
+import { ScalingSummaryUnderReviewTable } from './table/scaling-summary-under-review-table'
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
@@ -43,15 +39,28 @@ export function ScalingSummaryTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
   }
 
-  const baseEntries = showRecategorised
-    ? filteredEntries
-    : splitUnderReviewEntries(filteredEntries)
+  const recategorisedEntries = getRecategorisedEntries(
+    filteredEntries,
+    compareStageAndTvs,
+  )
+
+  const baseEntries = {
+    rollups: filteredEntries.rollups.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    validiumsAndOptimiums: filteredEntries.validiumsAndOptimiums.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    others: filteredEntries.others.filter(
+      (e) => e.statuses?.underReview !== 'config',
+    ),
+    underReview: [],
+  }
 
   const entries = showRecategorised
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
+    ? recategorisedEntries
     : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
@@ -86,8 +95,7 @@ export function ScalingSummaryTables(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.underReview,
-          ]}
+          ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
         />
         <ExcludeAssociatedTokensCheckbox />
       </div>
@@ -104,9 +112,11 @@ export function ScalingSummaryTables(props: Props) {
             Others
             <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="underReview">
-            Under review <CountBadge>{entries.underReview.length}</CountBadge>
-          </DirectoryTabsTrigger>
+          {showRecategorised && (
+            <DirectoryTabsTrigger value="underReview">
+              Under review <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -132,11 +142,13 @@ export function ScalingSummaryTables(props: Props) {
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview">
-            <ScalingSummaryUnderReviewTable entries={entries.underReview} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
+        {showRecategorised && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="underReview">
+              <ScalingSummaryUnderReviewTable entries={entries.underReview} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+        )}
       </DirectoryTabs>
     </>
   )
