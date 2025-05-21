@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { ChainConverter } from '@l2beat/shared-pure'
-import { ProjectService } from '@l2beat/config'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'

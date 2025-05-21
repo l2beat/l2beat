@@ -5,9 +5,9 @@ import {
   type ChainConverter,
   type ChainId,
   type EthereumAddress,
+  ProjectId,
   UnixTime,
   formatAsAsciiTable,
-  ProjectId,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 

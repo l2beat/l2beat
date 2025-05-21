@@ -4,14 +4,14 @@ import {
   ChainConverter,
   ChainId,
   EthereumAddress,
+  ProjectId,
   UnixTime,
   formatAsAsciiTable,
-  ProjectId,
 } from '@l2beat/shared-pure'
-import { expect, mockObject, mockFn } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
-import type { Database } from '@l2beat/database'
 import type { ProjectService } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import {
   type DiscordClient,
   MAX_MESSAGE_LENGTH,

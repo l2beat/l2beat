@@ -1,3 +1,4 @@
+import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type {
   ConfigReader,
@@ -10,7 +11,6 @@ import {
   getDashboardProjects,
 } from './props/getDashboardProjects'
 import { renderDashboardPage } from './view/DashboardPage'
-import type { ProjectService } from '@l2beat/config'
 
 export class UpdateMonitorController {
   private readonly onDiskConfigs: Record<string, ConfigRegistry[]> = {}
