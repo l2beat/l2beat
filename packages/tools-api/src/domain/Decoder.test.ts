@@ -80,6 +80,10 @@ class TestSignatureService implements ISignatureService {
     return Promise.resolve(this.signatures.get(selector) ?? [])
   }
 
+  lookupWellKnown(_: `0x${string}`): string | undefined {
+    return undefined
+  }
+
   getInterface(_: `0x${string}`): string | undefined {
     return undefined
   }
@@ -88,7 +92,7 @@ class TestSignatureService implements ISignatureService {
 describe(Decoder.name, () => {
   const addressService = new TestAddressService()
   const signatureService = new TestSignatureService()
-  const decoder = new Decoder(addressService, signatureService, {})
+  const decoder = new Decoder(addressService, signatureService, {}, {})
 
   beforeEach(() => {
     addressService.clear()

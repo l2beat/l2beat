@@ -5,6 +5,7 @@ import type {
   DecodedCall,
   DecodedResult,
   DecodedValue,
+  Value,
 } from './DecodedResult'
 import type { ISignatureService } from './SignatureService'
 import { decode } from './decode'
@@ -26,6 +27,7 @@ export class Decoder {
     private addressService: IAddressService,
     private signatureService: ISignatureService,
     private tokens: TokenConfig,
+    private hashes: Record<`0x${string}`, string>,
   ) {}
 
   async decode(tx: Transaction) {
@@ -135,6 +137,23 @@ export class Decoder {
       }),
     )
 
+    const hashes = result.arguments.map(getBytes32).flat(1)
+    for (const hash of hashes) {
+      if (hash.decoded?.type === 'bytes') {
+        let preImage = this.hashes[hash.decoded.value]
+        if (preImage) {
+          hash.decoded = { type: 'hash', value: preImage }
+          continue
+        }
+        const plusOne: `0x${string}` = `0x${(BigInt(hash.decoded.value) + 1n).toString(16).padStart(64, '0')}`
+        preImage = this.hashes[plusOne]
+        if (preImage) {
+          hash.decoded = { type: 'hash', value: preImage, minusOne: true }
+          continue
+        }
+      }
+    }
+
     for (const value of nested) {
       if (value.data.decoded?.type !== 'bytes') {
         continue
@@ -186,6 +205,23 @@ function getAddresses(value: DecodedValue): DecodedAddress[] {
     return value.arguments.flatMap((x) =>
       x.decoded ? getAddresses(x.decoded) : [],
     )
+  }
+  return []
+}
+
+function getBytes32(value: Value): Value[] {
+  if (
+    value.decoded?.type === 'bytes' &&
+    !value.decoded.dynamic &&
+    value.decoded.value.length === 66
+  ) {
+    return [value]
+  }
+  if (value.decoded?.type === 'array') {
+    return value.decoded.values.flatMap(getBytes32)
+  }
+  if (value.decoded?.type === 'call') {
+    return value.decoded.arguments.flatMap(getBytes32)
   }
   return []
 }

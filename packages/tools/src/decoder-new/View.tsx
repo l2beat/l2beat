@@ -114,10 +114,25 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
     )
   }
   if (decoded.type === 'boolean') {
-    return <div>{decoded.value ? 'true' : 'false'}</div>
+    return (
+      <div className="font-bold font-mono">
+        {decoded.value ? 'true' : 'false'}
+      </div>
+    )
   }
   if (decoded.type === 'bytes') {
     return <BytesDisplay value={decoded.value} inline={!decoded.dynamic} />
+  }
+  if (decoded.type === 'hash') {
+    return (
+      <div className="font-mono">
+        <span className="text-sm text-zinc-500">keccak256("</span>
+        <span className="italic">{decoded.value}</span>
+        <span className="text-sm text-zinc-500">
+          "){decoded.minusOne ? ' - 1' : ''}
+        </span>
+      </div>
+    )
   }
   if (decoded.type === 'string') {
     return (
@@ -280,6 +295,7 @@ function getOptions(value: Value): string[] {
     case 'bytes':
     case 'call':
     case 'array':
+    case 'hash':
     case 'string':
       return ['decoded', 'raw']
   }

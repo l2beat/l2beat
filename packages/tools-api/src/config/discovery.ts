@@ -13,6 +13,7 @@ export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
   const names: Record<Address, string> = {}
   const abis: Record<Address, string[]> = {}
   const allAbis = new Set<string>()
+  const preImages = new Set<string>()
 
   for (const project of projects) {
     for (const discoveryChain of project.chains) {
@@ -39,6 +40,10 @@ export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
           const abiEntries = new Set<string>()
           for (const key of keys) {
             for (const abi of discovery.abis[key] ?? []) {
+              const match = abi.match(/^function ([A-Z_\d]+)\(\)/)
+              if (match && match[1]) {
+                preImages.add(match[1])
+              }
               abiEntries.add(abi)
             }
           }
@@ -54,5 +59,6 @@ export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
     names,
     abis,
     allAbis: [...allAbis],
+    preImages: [...preImages],
   }
 }

@@ -22,6 +22,7 @@ export type DecodedValue =
   | DecodedAmount
   | DecodedBoolean
   | DecodedBytes
+  | DecodedHash
   | DecodedString
   | DecodedAddress
   | DecodedCall
@@ -51,6 +52,12 @@ export interface DecodedBytes {
   dynamic: boolean
   value: `0x${string}`
   extra?: `0x${string}`
+}
+
+export interface DecodedHash {
+  type: 'hash'
+  value: string
+  minusOne?: boolean
 }
 
 export interface DecodedString {

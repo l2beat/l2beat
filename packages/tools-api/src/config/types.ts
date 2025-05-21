@@ -10,6 +10,7 @@ export interface Config {
   discovered: DiscoveredConfig
   tokens: TokenConfig
   wellKnownAbi: Record<string, string[]>
+  hashes: Record<`0x${string}`, string>
 }
 
 export type Chain = z.infer<typeof Chain>
@@ -32,6 +33,7 @@ export interface DiscoveredConfig {
   names: Record<Address, string>
   abis: Record<Address, string[]>
   allAbis: string[]
+  preImages: string[]
 }
 
 export type TokenConfig = Record<Address, TokenInfo>
