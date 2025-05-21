@@ -33,7 +33,7 @@ export function tokenAmount(
   tokens: TokenConfig,
 ) {
   const token = address && tokens[address]
-  const decimals = token?.decimals ?? 0
+  const decimals = token?.decimals ?? 18 // We use 18 as the most common default
   const currency = token?.name ?? '???'
 
   if (value?.decoded?.type === 'number') {

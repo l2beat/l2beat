@@ -31,7 +31,7 @@ export function Form(props: Props) {
   }
 
   return (
-    <main className="mx-auto max-w-[800px] p-4 pb-20">
+    <main className="mx-auto max-w-[900px] p-4 pb-20">
       <h1 className="mb-4 font-bold">Transaction data decoder</h1>
       <form
         onSubmit={(e) => {
