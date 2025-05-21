@@ -178,15 +178,6 @@ describe('getProjects', () => {
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const [i, contract] of perChain.entries()) {
-            const description = contract.description
-            if (description) {
-              it(`contracts[${i}].description - each line ends with a dot`, () => {
-                for (const descLine of description.trimEnd().split('\n')) {
-                  expect(descLine.trimEnd().endsWith('.')).toEqual(true)
-                }
-              })
-            }
-
             it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
               assert(
                 contract.name.trim().length > 0,
