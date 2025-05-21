@@ -31,7 +31,9 @@ describe(UpdateNotifier.name, () => {
     { name: 'arbitrum', chainId: ChainId.ARBITRUM },
   ])
 
-  const projectService = mockObject<ProjectService>({})
+  const projectService = mockObject<ProjectService>({
+    getProject: mockFn().resolvesTo(undefined),
+  })
 
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
