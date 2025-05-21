@@ -18,11 +18,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingRiskTable } from './table/scaling-risk-table'
-import { featureFlags } from '~/consts/feature-flags'
 
 type Props = TabbedScalingEntries<ScalingRiskEntry>
 
@@ -52,9 +52,7 @@ export function ScalingRiskTables(props: Props) {
     ),
     underReview: [],
   }
-  const entries = showRecategorised
-    ? recategorisedEntries
-    : baseEntries
+  const entries = showRecategorised ? recategorisedEntries : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
@@ -82,7 +80,9 @@ export function ScalingRiskTables(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
-        ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
+        ].filter(
+          (e) => showRecategorised || e.statuses?.underReview !== 'config',
+        )}
       />
 
       <DirectoryTabs defaultValue="rollups">

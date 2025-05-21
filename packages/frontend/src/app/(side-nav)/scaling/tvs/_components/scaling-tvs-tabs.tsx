@@ -19,11 +19,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingTvsTable } from './table/scaling-tvs-table'
-import { featureFlags } from '~/consts/feature-flags'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
   milestones: Milestone[]
@@ -58,9 +58,7 @@ export function ScalingTvsTabs(props: Props) {
     underReview: [],
   }
 
-  const entries = showRecategorised
-    ? recategorisedEntries
-    : baseEntries
+  const entries = showRecategorised ? recategorisedEntries : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
@@ -88,7 +86,9 @@ export function ScalingTvsTabs(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
-        ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
+        ].filter(
+          (e) => showRecategorised || e.statuses?.underReview !== 'config',
+        )}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

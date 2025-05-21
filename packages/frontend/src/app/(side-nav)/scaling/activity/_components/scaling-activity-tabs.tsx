@@ -21,11 +21,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { UopsExplorerLink } from '../../_components/uops-explorer-link'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
-import { featureFlags } from '~/consts/feature-flags'
 
 type Props = TabbedScalingEntries<ScalingActivityEntry> & {
   milestones: Milestone[]
@@ -42,7 +42,10 @@ export function ScalingActivityTabs(props: Props) {
     others: props.others.filter(filterEntries),
   }
 
-  const recategorisedEntries = getRecategorisedEntries(filteredEntries, undefined)
+  const recategorisedEntries = getRecategorisedEntries(
+    filteredEntries,
+    undefined,
+  )
 
   const baseEntries = {
     rollups: filteredEntries.rollups.filter(
@@ -57,9 +60,7 @@ export function ScalingActivityTabs(props: Props) {
     underReview: [],
   }
 
-  const entries = showRecategorised
-    ? recategorisedEntries
-    : baseEntries
+  const entries = showRecategorised ? recategorisedEntries : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
@@ -88,7 +89,9 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-          ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
+          ].filter(
+            (e) => showRecategorised || e.statuses?.underReview !== 'config',
+          )}
         />
         <UopsExplorerLink />
       </div>

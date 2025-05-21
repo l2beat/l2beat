@@ -22,7 +22,10 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
     ...entries.others,
   ].sort(sortFn)
 
-  const [underReviewRollups, activeRollups] = partition(rollups, (e) => e.statuses?.underReview === 'config')
+  const [underReviewRollups, activeRollups] = partition(
+    rollups,
+    (e) => e.statuses?.underReview === 'config',
+  )
   const [underReviewValidiums, activeValidiums] = partition(
     validiumsAndOptimiums,
     (e) => e.statuses?.underReview === 'config',

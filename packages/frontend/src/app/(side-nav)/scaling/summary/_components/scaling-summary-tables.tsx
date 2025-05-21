@@ -11,7 +11,6 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { featureFlags } from '~/consts/feature-flags'
 import {
   OthersInfo,
   RollupsInfo,
@@ -20,14 +19,15 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { ExcludeAssociatedTokensCheckbox } from '../../_components/exclude-associated-tokens-checkbox'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
-import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
 import { ScalingSummaryUnderReviewTable } from './table/scaling-summary-under-review-table'
+import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
@@ -59,9 +59,7 @@ export function ScalingSummaryTables(props: Props) {
     underReview: [],
   }
 
-  const entries = showRecategorised
-    ? recategorisedEntries
-    : baseEntries
+  const entries = showRecategorised ? recategorisedEntries : baseEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
@@ -95,7 +93,9 @@ export function ScalingSummaryTables(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-          ].filter((e) => showRecategorised || e.statuses?.underReview !== 'config')}
+          ].filter(
+            (e) => showRecategorised || e.statuses?.underReview !== 'config',
+          )}
         />
         <ExcludeAssociatedTokensCheckbox />
       </div>
