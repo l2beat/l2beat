@@ -29,91 +29,61 @@ export function createScalingRouter(
   })
 
   router.get('/scaling/summary', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'summary'], ttl: 10 * 60 },
-      () => getScalingSummaryData(manifest, req.originalUrl),
-    )
+    const data = await getScalingSummaryData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
   router.get('/scaling/activity', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'activity'], ttl: 10 * 60 },
-      () => getScalingActivityData(manifest, req.originalUrl),
-    )
+    const data = await getScalingActivityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/risk', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'risk'], ttl: 10 * 60 },
-      () => getScalingRiskData(manifest, req.originalUrl),
-    )
+    const data = await getScalingRiskData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/tvs', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'tvs'], ttl: 10 * 60 },
-      () => getScalingTvsData(manifest, req.originalUrl),
-    )
+    const data = await getScalingTvsData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/data-availability', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'data-availability'], ttl: 10 * 60 },
-      () => getScalingDataAvailabilityData(manifest, req.originalUrl),
-    )
+    const data = await getScalingDataAvailabilityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/liveness', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'liveness'], ttl: 10 * 60 },
-      () => getScalingLivenessData(manifest, req.originalUrl),
-    )
+    const data = await getScalingLivenessData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/finality', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'finality'], ttl: 10 * 60 },
-      () => getScalingFinalityData(manifest, req.originalUrl),
-    )
+    const data = await getScalingFinalityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/costs', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'costs'], ttl: 10 * 60 },
-      () => getScalingCostsData(manifest, req.originalUrl),
-    )
+    const data = await getScalingCostsData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/archived', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'archived'], ttl: 10 * 60 },
-      () => getScalingArchivedData(manifest, req.originalUrl),
-    )
+    const data = await getScalingArchivedData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/upcoming', async (req, res) => {
-    const data = await cache.get(
-      { key: ['scaling', 'upcoming'], ttl: 10 * 60 },
-      () => getScalingUpcomingData(manifest, req.originalUrl),
-    )
+    const data = await getScalingUpcomingData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { createContext, useContext, useState } from 'react'
+import { setCookie } from '~/utils/cookies/client'
 
 type RecategorisationPreviewContextValue = {
   checked: boolean
@@ -14,18 +15,28 @@ const RecategorisationPreviewContext =
 
 interface Props {
   children: React.ReactNode
+  defaultChecked?: boolean
 }
 
-export function RecategorisationPreviewContextProvider({ children }: Props) {
+export function RecategorisationPreviewContextProvider({
+  children,
+  defaultChecked,
+}: Props) {
   const pathname = usePathname()
-  const [checked, setChecked] = useState<boolean>(false)
+  const [checked, setChecked] = useState(defaultChecked ?? false)
+
+  const onChange = (checked: boolean) => {
+    setChecked(checked)
+    setCookie('recategorisationPreview', checked)
+  }
+
   const isScalingMainPage =
     pathname.startsWith('/scaling') && !pathname.startsWith('/scaling/projects')
   return (
     <RecategorisationPreviewContext.Provider
       value={{
         checked,
-        setChecked,
+        setChecked: onChange,
         isScalingMainPage,
       }}
     >

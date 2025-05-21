@@ -6,6 +6,11 @@ import { z } from 'zod'
  */
 export const knownCookies = {
   example: knownCookie('example', z.string(), 'example'),
+  recategorisationPreview: knownCookie(
+    'recategorisationPreview',
+    z.boolean(),
+    false,
+  ),
 } satisfies Record<string, KnownCookie>
 
 /**
