@@ -84,7 +84,8 @@ export class UpdateNotifier {
       return
     }
 
-    const trackedTxsAffected = await this.canTrackedTxsBeAffected(
+    const trackedTxsAffected = await canTrackedTxsBeAffected(
+      this.projectService,
       name,
       throttled,
     )
@@ -133,48 +134,6 @@ export class UpdateNotifier {
       name,
       amount: countDiff(filteredDiff),
     })
-  }
-
-  private async canTrackedTxsBeAffected(
-    projectId: string,
-    diffs: DiscoveryDiff[],
-  ): Promise<boolean> {
-    if (!this.projectService || diffs.length === 0) {
-      return false
-    }
-
-    try {
-      const project = await this.projectService.getProject({
-        id: ProjectId(projectId),
-        select: ['trackedTxsConfig'],
-      })
-
-      if (!project?.trackedTxsConfig || project.trackedTxsConfig.length === 0) {
-        return false
-      }
-
-      const contractAddresses = diffs.map((diff) => diff.address.toString())
-
-      return project.trackedTxsConfig.some((config) => {
-        switch (config.params.formula) {
-          case 'functionCall':
-          case 'sharedBridge':
-          case 'sharpSubmission':
-            return contractAddresses.includes(config.params.address.toString())
-          case 'transfer':
-            return (
-              contractAddresses.includes(config.params.from.toString()) ||
-              contractAddresses.includes(config.params.to.toString())
-            )
-        }
-      })
-    } catch (error) {
-      this.logger.error('Error checking if tracked transactions are affected', {
-        error,
-        projectId,
-      })
-      return false
-    }
   }
 
   async getInternalMessageNonce() {
@@ -408,4 +367,39 @@ function handleOverflow(
     0,
     maxLength - WARNING_MESSAGE.length - userSuffix.length,
   )}${WARNING_MESSAGE}${userSuffix}`
+}
+
+export async function canTrackedTxsBeAffected(
+  ps: ProjectService,
+  projectId: string,
+  diffs: DiscoveryDiff[],
+): Promise<boolean> {
+  if (diffs.length === 0) {
+    return false
+  }
+
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    select: ['trackedTxsConfig'],
+  })
+
+  if (!project?.trackedTxsConfig || project.trackedTxsConfig.length === 0) {
+    return false
+  }
+
+  const contractAddresses = diffs.map((diff) => diff.address.toString())
+
+  return project.trackedTxsConfig.some((config) => {
+    switch (config.params.formula) {
+      case 'functionCall':
+      case 'sharedBridge':
+      case 'sharpSubmission':
+        return contractAddresses.includes(config.params.address.toString())
+      case 'transfer':
+        return (
+          contractAddresses.includes(config.params.from.toString()) ||
+          contractAddresses.includes(config.params.to.toString())
+        )
+    }
+  })
 }
