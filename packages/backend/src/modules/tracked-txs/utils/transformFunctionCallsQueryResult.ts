@@ -11,9 +11,9 @@ import type {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
+import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
 import { isChainIdMatching } from './isChainIdMatching'
 import { isProgramHashProven } from './isProgramHashProven'
-import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
 
 export function transformFunctionCallsQueryResult(
   functionCalls: Configuration<
