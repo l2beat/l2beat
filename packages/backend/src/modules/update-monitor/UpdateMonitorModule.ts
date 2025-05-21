@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import { ChainConverter } from '@l2beat/shared-pure'
+import { ProjectService } from '@l2beat/config'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -42,6 +43,7 @@ export function createUpdateMonitorModule(
 
   const chainConverter = new ChainConverter(config.chains)
   const discoveryOutputCache = new DiscoveryOutputCache()
+  const projectService = new ProjectService()
 
   const updateNotifier = new UpdateNotifier(
     peripherals.database,
@@ -49,6 +51,7 @@ export function createUpdateMonitorModule(
     chainConverter,
     logger,
     updateMessagesService,
+    projectService,
     config.updateMonitor.disabledChains,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
