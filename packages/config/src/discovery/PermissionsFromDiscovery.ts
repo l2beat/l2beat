@@ -132,10 +132,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   describeRoles(contractOrEoa: EntryParameters) {
     const issued = this.getIssuedPermissions(contractOrEoa.address)
     const roles: Record<string, Record<'direct' | 'ultimate', Set<string>>> = {}
-    const entryName = (address: EthereumAddress) =>
-      this.projectDiscovery.getContractByAddress(address)?.name ??
-      this.projectDiscovery.getEOAName(address) ??
-      address.toString()
+    const entryName = (address: EthereumAddress) => 
+      this.projectDiscovery.getEntryByAddress(address)?.name ??
+      (this.projectDiscovery.isEOA(address)
+        ? this.projectDiscovery.getEOAName(address)
+        : address.toString())
 
     const result = []
     for (const p of issued) {
