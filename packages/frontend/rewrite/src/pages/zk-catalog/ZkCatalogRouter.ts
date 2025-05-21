@@ -15,7 +15,7 @@ export function createZkCatalogRouter(
   const router = express.Router()
 
   router.get('/zk-catalog', async (req, res) => {
-    const data = await cache.get({ key: '/zk-catalog', ttl: 10 * 60 }, () =>
+    const data = await cache.get({ key: ['zk-catalog'], ttl: 10 * 60 }, () =>
       getZkCatalogData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -29,7 +29,7 @@ export function createZkCatalogRouter(
     }),
     async (req, res) => {
       const data = await cache.get(
-        { key: `/zk-catalog/projects/${req.params.slug}`, ttl: 10 * 60 },
+        { key: ['zk-catalog', 'projects', req.params.slug], ttl: 10 * 60 },
         () =>
           getZkCatalogProjectData(manifest, req.params.slug, req.originalUrl),
       )

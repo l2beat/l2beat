@@ -19,16 +19,17 @@ export class InMemoryCache implements ICache {
   }
 
   async get<T>(
-    options: { key: string; ttl: number },
+    options: { key: string[]; ttl: number },
     fallback: () => Promise<T>,
   ): Promise<T> {
-    const result = this.cache.get(options.key)
+    const key = this.getKey(options.key)
+    const result = this.cache.get(key)
 
     if (result && result.timestamp + options.ttl > UnixTime.now()) {
       return result.result as T
     }
 
-    const existingPromise = this.inFlight.get(options.key)
+    const existingPromise = this.inFlight.get(key)
     if (
       existingPromise &&
       existingPromise.timestamp + this.promiseTimeout > UnixTime.now()
@@ -37,12 +38,12 @@ export class InMemoryCache implements ICache {
     }
 
     const promise = fallback().finally(() => {
-      this.inFlight.delete(options.key)
+      this.inFlight.delete(key)
     })
-    this.inFlight.set(options.key, { promise, timestamp: UnixTime.now() })
+    this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
 
     const fallbackResult = await promise
-    this.cache.set(options.key, {
+    this.cache.set(key, {
       result: fallbackResult,
       timestamp: UnixTime.now(),
     })
@@ -55,5 +56,9 @@ export class InMemoryCache implements ICache {
 
   _set(key: string, value: { result: unknown; timestamp: number }) {
     this.cache.set(key, value)
+  }
+
+  private getKey(key: string[]) {
+    return key.join('-')
   }
 }
