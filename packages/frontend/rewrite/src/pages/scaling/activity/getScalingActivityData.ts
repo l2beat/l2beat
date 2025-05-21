@@ -6,6 +6,7 @@ import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingActivityData(
@@ -13,6 +14,7 @@ export async function getScalingActivityData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
+  const helpers = getExpressHelpers()
   const cookies = parseCookies(req)
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps({
@@ -22,6 +24,15 @@ export async function getScalingActivityData(
       { key: ['scaling', 'activity', 'entries'], ttl: 10 * 60 },
       getScalingActivityEntries,
     ),
+    helpers.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+    helpers.activity.chartStats.prefetch({
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
   ])
 
   return {
@@ -40,6 +51,7 @@ export async function getScalingActivityData(
         ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
+        queryState: helpers.dehydrate(),
       },
     },
   }

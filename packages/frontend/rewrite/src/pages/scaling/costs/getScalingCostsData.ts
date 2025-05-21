@@ -6,6 +6,7 @@ import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingCostsData(
@@ -14,6 +15,7 @@ export async function getScalingCostsData(
   cache: ICache,
 ): Promise<RenderData> {
   const cookies = parseCookies(req)
+  const helpers = getExpressHelpers()
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps({
       recategorisationPreview: cookies.recategorisationPreview,
@@ -40,6 +42,7 @@ export async function getScalingCostsData(
         ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
+        queryState: helpers.dehydrate(),
       },
     },
   }

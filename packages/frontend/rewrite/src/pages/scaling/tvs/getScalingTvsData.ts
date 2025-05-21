@@ -6,6 +6,7 @@ import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingTvsData(
@@ -13,6 +14,7 @@ export async function getScalingTvsData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
+  const helpers = getExpressHelpers()
   const cookies = parseCookies(req)
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps({
@@ -22,6 +24,14 @@ export async function getScalingTvsData(
       { key: ['scaling', 'tvs', 'entries'], ttl: 10 * 60 },
       getScalingTvsEntries,
     ),
+    helpers.tvs.chart.prefetch({
+      filter: {
+        type: 'rollups',
+      },
+      range: '1y',
+      excludeAssociatedTokens: false,
+      previewRecategorisation: false,
+    }),
   ])
 
   return {
@@ -40,6 +50,7 @@ export async function getScalingTvsData(
         ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
+        queryState: helpers.dehydrate(),
       },
     },
   }
