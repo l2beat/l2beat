@@ -282,6 +282,10 @@ function totalPermissionDelay(p: ReceivedPermission): number {
 function prettifyRole(role: string): string {
   const trimmed = role.replace(/^[.$]+/, '')
   const withoutAcPrefix = trimmed.replace(/^ac/, '')
+  const isAllCaps = (s: string) => s === s.toUpperCase()
+  if (isAllCaps(withoutAcPrefix)) {
+    return withoutAcPrefix.toLowerCase()
+  }
   const withoutACSuffix = withoutAcPrefix.replace(/AC$/, '')
   const decapitalized = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
   return decapitalized(withoutACSuffix)
