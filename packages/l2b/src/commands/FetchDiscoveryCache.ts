@@ -1,9 +1,8 @@
-import chalk from 'chalk'
-import { createClient } from 'redis'
-import { command, positional, string } from 'cmd-ts'
 import { SQLiteCache } from '@l2beat/discovery'
 import { formatSI } from '@l2beat/shared'
 import { formatSeconds } from '@l2beat/shared-pure'
+import { command, positional, string } from 'cmd-ts'
+import { createClient } from 'redis'
 
 export const FetchDiscoveryCache = command({
   name: 'fetch-discovery-cache',
@@ -47,7 +46,10 @@ export const FetchDiscoveryCache = command({
 
       rowsFetched += result.keys.length
 
-      const timePerMillionRows = formatSeconds((((scanElapsed + getElapsed + dbElapsed) / values.length) * 1_000_000) / 1000)
+      const timePerMillionRows = formatSeconds(
+        (((scanElapsed + getElapsed + dbElapsed) / values.length) * 1_000_000) /
+          1000,
+      )
 
       console.log(
         `Progress: ${formatSI(rowsFetched, 'rows').padStart(13)} | ` +
