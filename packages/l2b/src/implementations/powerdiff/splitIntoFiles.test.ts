@@ -89,19 +89,19 @@ describe('splitIntoSubfiles', () => {
     expect(result.filePathsList[0].right ?? '').toInclude('/tmp/0x')
 
     // Check if subfiles were created
-    const leftSubfiles = fs.readdirSync(result.filePathsList[0].left ?? "")
-    const rightSubfiles = fs.readdirSync(result.filePathsList[0].right ?? "")
+    const leftSubfiles = fs.readdirSync(result.filePathsList[0].left ?? '')
+    const rightSubfiles = fs.readdirSync(result.filePathsList[0].right ?? '')
 
     expect(leftSubfiles).toEqualUnsorted(['Test1.sol', 'Test2.sol'])
     expect(rightSubfiles).toEqualUnsorted(['Test3.sol', 'Test4.sol'])
 
     // Check content of subfiles
     const leftTest1Content = fs.readFileSync(
-      path.join(result.filePathsList[0].left ?? "", 'Test1.sol'),
+      path.join(result.filePathsList[0].left ?? '', 'Test1.sol'),
       'utf8',
     )
     const rightTest1Content = fs.readFileSync(
-      path.join(result.filePathsList[0].right ?? "", 'Test3.sol'),
+      path.join(result.filePathsList[0].right ?? '', 'Test3.sol'),
       'utf8',
     )
 
@@ -189,7 +189,7 @@ describe('splitIntoSubfiles', () => {
 
     expect(result.filePathsList).toHaveLength(1)
 
-    const subfiles = fs.readdirSync(result.filePathsList[0].left ?? "")
+    const subfiles = fs.readdirSync(result.filePathsList[0].left ?? '')
     expect(subfiles).toEqualUnsorted([
       'ComplexContract.sol',
       'SimpleContract.sol',
