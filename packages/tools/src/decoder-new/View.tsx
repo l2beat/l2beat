@@ -138,7 +138,10 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
     return (
       <div>
         <div className="flex items-baseline gap-2">
-          <BytesDisplay value={decoded.selector} inline />
+          <span className="font-mono">{functionName(decoded.abi)}</span>
+          <span className="font-mono text-sm text-yellow-500">
+            {decoded.selector}
+          </span>
           <span className="font-mono text-orange-500 text-sm">
             {decoded.abi}
           </span>
@@ -169,15 +172,21 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
   }
   if (decoded.type === 'number') {
     return (
-      <div className="font-mono">{formatNumber(decoded.value, option)}</div>
+      <div className="font-mono" style={{ lineBreak: 'anywhere' }}>
+        {formatNumber(decoded.value, option)}
+      </div>
     )
   }
   if (decoded.type === 'amount') {
     if (option === 'e0') {
-      return <div className="font-mono">{formatNumber(decoded.value)}</div>
+      return (
+        <div className="font-mono" style={{ lineBreak: 'anywhere' }}>
+          {formatNumber(decoded.value)}
+        </div>
+      )
     }
     return (
-      <div className="flex gap-2 font-mono">
+      <div className="flex gap-2 font-mono" style={{ lineBreak: 'anywhere' }}>
         <span>{formatDecimals(decoded.value, decoded.decimals)}</span>
         {decoded.currencyLink ? (
           <ExplorerLink href={decoded.currencyLink}>
@@ -189,6 +198,7 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
       </div>
     )
   }
+  // This shouldn't happen
   return (
     <pre>
       <code>{JSON.stringify(decoded, null, 2)}</code>
@@ -324,7 +334,7 @@ const MAX_UINT = (2n ** 256n - 1n).toString()
 
 function formatNumber(value: string, transform?: string) {
   if (value === MAX_UINT) {
-    return 'MAX_UINT (2^256 - 1)'
+    return 'Infinity'
   }
   if (transform === '18') {
     return formatDecimals(value, 18)
@@ -386,7 +396,7 @@ function formatDuration(value: string): string {
 
 function formatDecimals(value: string, decimals: number) {
   if (value === MAX_UINT) {
-    return 'MAX_UINT (2^256 - 1)'
+    return 'Infinity'
   }
   const n = BigInt(value)
 
@@ -402,4 +412,12 @@ function formatDecimals(value: string, decimals: number) {
     )
   }
   return `${negative ? '-' : ''}${thousands.join(',')}${ending}`
+}
+
+function functionName(abi: string) {
+  const open = abi.indexOf('(')
+  if (abi.startsWith('function ') && open !== -1) {
+    return abi.slice('function '.length, open)
+  }
+  return 'unknown'
 }
