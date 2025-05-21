@@ -31,7 +31,8 @@ export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
 
       for (const entry of discovery.entries) {
         if (entry.name) {
-          const address = `${chain.shortName}:${entry.address}` as Address
+          const address =
+            `${chain.shortName}:${entry.address.toLowerCase()}` as Address
           names[address] = `${project.project}/${entry.name}`
 
           const keys = [entry.address, ...get$Implementations(entry.values)]

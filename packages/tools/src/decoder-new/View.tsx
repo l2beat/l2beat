@@ -4,7 +4,7 @@ import type {
   Value,
 } from '@l2beat/tools-api/types'
 import clsx from 'clsx'
-import { Fragment, type ReactNode, useState } from 'react'
+import React, { Fragment, type ReactNode, useState } from 'react'
 import { formatUnits } from 'viem'
 
 interface Props {
@@ -70,7 +70,7 @@ interface DecodedLabelProps {
 
 function DecodedLabel(props: DecodedLabelProps) {
   return (
-    <p className="-mb-0.5 flex items-baseline gap-2">
+    <p className="flex items-baseline gap-2 leading-[20px]">
       <span className="text-yellow-100">{props.name}</span>
       <span className="font-mono text-orange-500 text-sm">{props.type}</span>
       {props.options && props.options.length > 0 && (
@@ -105,11 +105,11 @@ interface DecodedValueDisplayProps {
 function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
   if (decoded.type === 'address') {
     return (
-      <div>
-        {decoded.discovered && <span>DISCOVERED</span>}
+      <div className="flex items-center gap-2">
         <ExplorerLink href={decoded.explorerLink}>
           {decoded.name} {decoded.value}
         </ExplorerLink>
+        {decoded.discovered && <Badge>DISCOVERED</Badge>}
       </div>
     )
   }
@@ -139,6 +139,7 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
       <div>
         <div className="flex items-baseline gap-2">
           <span className="font-mono">{functionName(decoded.abi)}</span>
+          {decoded.interface && <Badge>{decoded.interface}</Badge>}
           <span className="font-mono text-sm text-yellow-500">
             {decoded.selector}
           </span>
@@ -147,11 +148,11 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
           </span>
         </div>
         {decoded.arguments.length > 0 && (
-          <div className="border-zinc-700 border-l-2 pt-2 pl-4">
+          <Collapsible>
             {decoded.arguments.map((x, i) => (
               <DecodedDisplay key={i} index={i} value={x} />
             ))}
-          </div>
+          </Collapsible>
         )}
       </div>
     )
@@ -161,11 +162,11 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
       <div>
         <p className="font-mono">{decoded.values.length} elements</p>
         {decoded.values.length > 0 && (
-          <div className="border-zinc-700 border-l-2 pt-2 pl-4">
+          <Collapsible>
             {decoded.values.map((x, i) => (
               <DecodedDisplay key={i} index={i} value={x} />
             ))}
-          </div>
+          </Collapsible>
         )}
       </div>
     )
@@ -203,6 +204,38 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
     <pre>
       <code>{JSON.stringify(decoded, null, 2)}</code>
     </pre>
+  )
+}
+
+function Collapsible({
+  children,
+  forBytes,
+}: { children: ReactNode; forBytes?: boolean }) {
+  const [open, setOpen] = useState(true)
+  return (
+    <div
+      className={clsx(
+        'relative',
+        open && 'border-zinc-700 border-l-2 pl-4',
+        open && !forBytes && 'pt-2',
+      )}
+    >
+      {open && (
+        <button
+          onClick={() => setOpen(false)}
+          className="-left-px absolute top-0 h-full w-1 bg-zinc-300 opacity-0 transition-opacity hover:opacity-100"
+        />
+      )}
+      {!open && (
+        <button
+          className="font-mono text-sm text-zinc-500"
+          onClick={() => setOpen(true)}
+        >
+          &lt;Collapsed. Click to Expand&gt;
+        </button>
+      )}
+      <div className={open ? 'block' : 'hidden'}>{children}</div>
+    </div>
   )
 }
 
@@ -269,16 +302,18 @@ function BytesDisplay(props: BytesDisplayProps) {
   }
   const lines = toLines(props.value.slice(2))
   return (
-    <div className="flex items-baseline font-mono">
-      <span className="text-zinc-500">0x</span>
-      <div>
-        {lines.map((parts, i) => (
-          <div key={i}>
-            <Line parts={parts} />
-          </div>
-        ))}
+    <Collapsible forBytes>
+      <div className="flex items-baseline font-mono">
+        <span className="text-zinc-500">0x</span>
+        <div>
+          {lines.map((parts, i) => (
+            <div key={i}>
+              <Line parts={parts} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Collapsible>
   )
 }
 
@@ -336,13 +371,13 @@ function formatNumber(value: string, transform?: string) {
   if (value === MAX_UINT) {
     return 'Infinity'
   }
-  if (transform === '18') {
+  if (transform === 'e18') {
     return formatDecimals(value, 18)
   }
-  if (transform === '8') {
+  if (transform === 'e8') {
     return formatDecimals(value, 8)
   }
-  if (transform === '6') {
+  if (transform === 'e6') {
     return formatDecimals(value, 6)
   }
   if (transform === 'seconds') {
@@ -420,4 +455,12 @@ function functionName(abi: string) {
     return abi.slice('function '.length, open)
   }
   return 'unknown'
+}
+
+function Badge({ children }: { children: ReactNode }) {
+  return (
+    <span className="rounded-sm bg-pink-400 px-1 font-bold font-mono text-black text-xs">
+      {children}
+    </span>
+  )
 }
