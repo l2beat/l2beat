@@ -1,3 +1,887 @@
+Generated with discovered.json: 0x7f5e2d1ebde2c8173dc699ff8ae8d02976e8d88c
+
+# Diff at Mon, 19 May 2025 12:55:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ef43789b43755ecf09702c088ebd4effe5bee7d0 block: 22481930
+- current block number: 22517139
+
+## Description
+
+Main TaikoL1 contract has been upgraded to an intermediate proxy that points to both an old and new implementation. The old implementation is also not the same as the actually previous one, but it's just add a "Pacaya" fork height that prevents proposing or proving for new blocks. The new fork compared to the new presents some simplifications, like removal of `AddressCache`, `AddressResolver`, `IAddressResolver`, `ITaikoL1`, `LibBonds`, `LibData`, `LibProposing`, `LibProving`, `LibUtils`, `LibVerifying`, `RollupAddressCache`, `SafeCastUpgradeable`, `TaikoData`, and `TaikoEvents`. The address resolving logic is still present and has been moved to the `EssentialContract` contract.
+
+At the time of writing, calls are still forwarded to the old impl as the Pacaya fork is expected to go live on Wed 21 May. `ITaikoInbox` and `TaikoInbox` replace `ITaikoL1` and `TaikoL1`. Batches have replaced blocks, as now one batch can contain multiple blocks. Instead of `proposeBlocksV2`, the `proposeBatch` function is called to sequence blocks. An `InboxWrapper` contract has been introduced, which is referenced by the `TaikoInbox`. The `InboxWrapper` references a `ForcedInclusionStore` contract that is used to submit forced transactions. All forced transactions must pay a fee, and it's currently set to a very high value meaning that the mechanism is in practice disabled. The slowest forced transactions can be included is one by one every 255 batches, creating a potential DoS attack via spam of forced transactions. It's therefore not clear how to estimate exit windows (not that it matters rn).
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: None
+      template:
+-        "taiko/TaikoL1Contract"
+      sourceHashes.1:
+-        "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4"
++        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
+      description:
+-        "This contract provides functionalities for proposing, proving, and verifying blocks."
+      values.$implementation:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
++        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
+      values.$pastUpgrades.25:
++        ["2024-11-10T16:10:23.000Z","0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]]
+      values.$pastUpgrades.24:
++        ["2024-11-10T15:46:23.000Z","0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04",["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]]
+      values.$pastUpgrades.23.2.0:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.23.1:
+-        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
++        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
+      values.$pastUpgrades.23.0:
+-        "2024-11-10T16:10:23.000Z"
++        "2024-11-03T05:15:23.000Z"
+      values.$pastUpgrades.22.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795"
+      values.$pastUpgrades.22.1:
+-        "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04"
++        ["0x4e030b19135869F6fd926614754B7F9c184E2B83"]
+      values.$pastUpgrades.22.0:
+-        "2024-11-10T15:46:23.000Z"
++        "2025-05-16T02:36:23.000Z"
+      values.$pastUpgrades.21.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
+      values.$pastUpgrades.21.1:
+-        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
++        "2024-11-10T15:32:47.000Z"
+      values.$pastUpgrades.21.0:
+-        "2024-11-03T05:15:23.000Z"
++        ["0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"]
+      values.$pastUpgrades.20.2:
+-        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
++        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
+      values.$pastUpgrades.20.1:
+-        "2024-11-10T15:32:47.000Z"
++        "2025-02-13T06:57:47.000Z"
+      values.$pastUpgrades.20.0.0:
+-        "0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"
++        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
+      values.$pastUpgrades.19.2:
+-        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
++        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
+      values.$pastUpgrades.19.1:
+-        "2025-02-13T06:57:47.000Z"
++        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
+      values.$pastUpgrades.19.0:
+-        ["0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]
++        "2024-12-24T14:19:11.000Z"
+      values.$pastUpgrades.18.2.0:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.18.1:
+-        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
++        "2024-12-23T03:12:35.000Z"
+      values.$pastUpgrades.18.0:
+-        "2024-12-24T14:19:11.000Z"
++        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
+      values.$pastUpgrades.17.2.0:
+-        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
++        "0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"
+      values.$pastUpgrades.17.1:
+-        "2024-12-23T03:12:35.000Z"
++        "2024-12-23T14:55:47.000Z"
+      values.$pastUpgrades.17.0:
+-        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
++        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
+      values.$pastUpgrades.16.2.0:
+-        "0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"
++        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
+      values.$pastUpgrades.16.1:
+-        "2024-12-23T14:55:47.000Z"
++        "2024-05-27T16:37:11.000Z"
+      values.$pastUpgrades.16.0:
+-        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
++        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
+      values.$pastUpgrades.15.2.0:
+-        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
++        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.$pastUpgrades.15.1:
+-        "2024-05-27T16:37:11.000Z"
++        "2024-07-02T07:03:35.000Z"
+      values.$pastUpgrades.15.0:
+-        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
++        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
+      values.$pastUpgrades.14.2:
+-        ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
++        "2024-11-01T09:20:35.000Z"
+      values.$pastUpgrades.14.1:
+-        "2024-07-02T07:03:35.000Z"
++        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
+      values.$pastUpgrades.14.0:
+-        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
++        ["0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
+      values.$pastUpgrades.13.2:
+-        "2024-11-01T09:20:35.000Z"
++        ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
+      values.$pastUpgrades.13.1:
+-        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
++        "2024-10-16T07:55:23.000Z"
+      values.$pastUpgrades.13.0:
+-        ["0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
++        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
+      values.$pastUpgrades.12.2.0:
+-        "0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"
++        "0x0468745A07de44A9a3138adAc35875ecaf7a20D5"
+      values.$pastUpgrades.12.1:
+-        "2024-10-16T07:55:23.000Z"
++        "2024-06-07T04:02:11.000Z"
+      values.$pastUpgrades.12.0:
+-        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.11.2.0:
+-        "0x0468745A07de44A9a3138adAc35875ecaf7a20D5"
++        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
+      values.$pastUpgrades.11.1:
+-        "2024-06-07T04:02:11.000Z"
++        "2024-07-16T14:30:23.000Z"
+      values.$pastUpgrades.11.0:
+-        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.10.2:
+-        ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
++        "2024-05-01T08:03:47.000Z"
+      values.$pastUpgrades.10.1:
+-        "2024-07-16T14:30:23.000Z"
++        ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
+      values.$pastUpgrades.10.0:
+-        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
++        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
+      values.$pastUpgrades.9.2:
+-        "2024-05-01T08:03:47.000Z"
++        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
+      values.$pastUpgrades.9.1:
+-        ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
++        "2024-06-07T08:40:35.000Z"
+      values.$pastUpgrades.9.0:
+-        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
++        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
+      values.$pastUpgrades.8.2:
+-        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
++        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
+      values.$pastUpgrades.8.1:
+-        "2024-06-07T08:40:35.000Z"
++        ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
+      values.$pastUpgrades.8.0:
+-        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
++        "2025-02-27T03:27:23.000Z"
+      values.$pastUpgrades.7.2:
+-        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
++        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
+      values.$pastUpgrades.7.1:
+-        ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
++        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.7.0:
+-        "2025-02-27T03:27:23.000Z"
++        "2024-05-21T14:15:11.000Z"
+      values.$pastUpgrades.6.2:
+-        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
++        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
+      values.$pastUpgrades.6.1:
+-        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
++        "2024-06-04T06:10:11.000Z"
+      values.$pastUpgrades.6.0:
+-        "2024-05-21T14:15:11.000Z"
++        ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
+      values.$pastUpgrades.5.2:
+-        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.5.1:
+-        "2024-06-04T06:10:11.000Z"
++        "2024-05-11T06:26:35.000Z"
+      values.$pastUpgrades.5.0.0:
+-        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
++        "0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"
+      values.$pastUpgrades.4.2:
+-        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
++        "2024-07-13T12:34:35.000Z"
+      values.$pastUpgrades.4.1:
+-        "2024-05-11T06:26:35.000Z"
++        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
+      values.$pastUpgrades.4.0:
+-        ["0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
++        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
+      values.$pastUpgrades.3.2:
+-        "2024-07-13T12:34:35.000Z"
++        "2024-12-23T02:45:11.000Z"
+      values.$pastUpgrades.3.1:
+-        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
++        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
+      values.$pastUpgrades.3.0:
+-        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
++        ["0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
+      values.$pastUpgrades.2.2:
+-        "2024-12-23T02:45:11.000Z"
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.2.1:
+-        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
++        "2024-06-06T08:51:11.000Z"
+      values.$pastUpgrades.2.0.0:
+-        "0xb74A66b6CF50AD63E29669F0BDE4354E11758162"
++        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
+      values.$pastUpgrades.1.2:
+-        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
++        "2024-05-28T05:18:11.000Z"
+      values.$pastUpgrades.1.1:
+-        "2024-06-06T08:51:11.000Z"
++        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
+      values.$pastUpgrades.1.0:
+-        ["0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
++        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
+      values.$pastUpgrades.0.2:
+-        "2024-05-28T05:18:11.000Z"
++        "2025-05-15T08:40:47.000Z"
+      values.$pastUpgrades.0.1:
+-        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
++        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
+      values.$pastUpgrades.0.0:
+-        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
++        ["0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf"]
+      values.$upgradeCount:
+-        24
++        26
+      values.addressManager:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      values.assignment_hook:
+-        "0x0000000000000000000000000000000000000000"
+      values.automata_dcap_attestation:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.bond_token:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.bridge:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.bridge_watchdog:
+-        "0x0000000000000000000000000000000000000000"
+      values.bridged_erc1155:
+-        "0x0000000000000000000000000000000000000000"
+      values.bridged_erc20:
+-        "0x0000000000000000000000000000000000000000"
+      values.bridged_erc721:
+-        "0x0000000000000000000000000000000000000000"
+      values.chain_watchdog:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      values.erc1155_vault:
+-        "0x0000000000000000000000000000000000000000"
+      values.erc20_vault:
+-        "0x0000000000000000000000000000000000000000"
+      values.erc721_vault:
+-        "0x0000000000000000000000000000000000000000"
+      values.getConfig:
+-        {"chainId":167000,"blockMaxProposals":324000,"blockRingBufferSize":360000,"maxBlocksToVerify":16,"blockMaxGasLimit":240000000,"livenessBond":"125000000000000000000","stateRootSyncInternal":16,"maxAnchorHeightOffset":64,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":75,"gasIssuancePerSecond":5000000,"minGasExcess":1340000000,"maxGasIssuancePerBlock":600000000},"ontakeForkHeight":538304}
+      values.getLastSyncedBlock:
+-        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
+      values.getLastVerifiedBlock:
+-        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
+      values.getStateVariables:
+-        [{"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1148703,"lastSynecdAt":1747226267},{"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}]
+      values.impl:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
+      values.inNonReentrant:
+-        false
+      values.lastProposedIn:
+-        22481927
+      values.lastUnpausedAt:
+-        1716571955
+      values.paused:
+-        false
+      values.preconf_task_manager:
+-        "0x0000000000000000000000000000000000000000"
+      values.proposer:
+-        "0x000000633b68f5D8D3a86593ebB815b4663BCBe0"
+      values.proposer_one:
+-        "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+      values.prover_assignment:
+-        "0x0000000000000000000000000000000000000000"
+      values.prover_set:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.quota_manager:
+-        "0x0000000000000000000000000000000000000000"
+      values.return_liveness_bond:
+-        "0x0000000000000000000000000000000000000000"
+      values.sgx_watchdog:
+-        "0x0000000000000000000000000000000000000000"
+      values.signal_root:
+-        "0x0000000000000000000000000000000000000000"
+      values.signal_service:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.sp1_remote_verifier:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
+      values.state:
+-        {"__reserve1":"0x0000000000000000000000000000000000000000000000000000000000000000","slotA":{"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1148703,"lastSynecdAt":1747226267},"slotB":{"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}}
+      values.state_root:
+-        "0x0000000000000000000000000000000000000000"
+      values.taiko:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.taiko_token:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.tier_router:
+-        "0x44d307a9ec47aA55a7a30849d065686753C86Db6"
+      values.verifier_RISCZERO_GROTH16_VERIFIER:
+-        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
+      values.verifier_TIER_GUARDIAN:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      values.verifier_TIER_GUARDIAN_MINORITY:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      values.verifier_TIER_OPTIMISTIC:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_SGX:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+      values.verifier_TIER_TDX:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_TEE_ANY:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_ZKVM_AND_TEE:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_ZKVM_ANY:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_ZKVM_RISC0:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      values.verifier_TIER_ZKVM_SP1:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      values.withdrawer:
+-        "0x0000000000000000000000000000000000000000"
+      values.newFork:
++        "0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.oldFork:
++        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      implementationNames.0x5110634593Ccb8072d161A7d260A409A7E74D7Ca:
+-        "MainnetTaikoL1"
+      implementationNames.0x4e030b19135869F6fd926614754B7F9c184E2B83:
++        "PacayaForkRouter"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      template:
+-        "taiko/TaikoToken"
+      sourceHashes.1:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0x2b1eb63ab3adb1a0783bae6252816727a2fb5d150dd0e9912e0a01e4ee224be9"
+      sourceHashes.0:
+-        "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f"
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      description:
+-        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
+      values.$implementation:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.$pastUpgrades.6:
++        ["2024-05-29T08:03:23.000Z","0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2",["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"]]
+      values.$pastUpgrades.5.2:
+-        "0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2"
++        "2024-05-11T05:46:11.000Z"
+      values.$pastUpgrades.5.1.0:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
+      values.$pastUpgrades.5.0:
+-        "2024-05-29T08:03:23.000Z"
++        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
+      values.$pastUpgrades.4.2:
+-        "2024-05-11T05:46:11.000Z"
++        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
+      values.$pastUpgrades.4.1.0:
+-        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
++        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
+      values.$pastUpgrades.4.0:
+-        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
++        "2024-04-25T08:29:59.000Z"
+      values.$pastUpgrades.3.2:
+-        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
++        "0xdb7d5de46738ad3f676db47b61772db531f9858b7a01e8c3b5aee49fa74cac95"
+      values.$pastUpgrades.3.1.0:
+-        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.3.0:
+-        "2024-04-25T08:29:59.000Z"
++        "2025-05-13T00:47:23.000Z"
+      values.$pastUpgrades.2.2:
+-        "0xdb7d5de46738ad3f676db47b61772db531f9858b7a01e8c3b5aee49fa74cac95"
++        "2024-07-02T07:15:47.000Z"
+      values.$pastUpgrades.2.1.0:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "0xcfe803378D79d1180EbF030455040EA6513869dF"
+      values.$pastUpgrades.2.0:
+-        "2025-05-13T00:47:23.000Z"
++        "0xc9f468d33d8d55911e4e5b5c301ed244a5f81ab0f389d2b4f398eb5b89d417ef"
+      values.$pastUpgrades.1.2:
+-        "2024-07-02T07:15:47.000Z"
++        ["0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"]
+      values.$pastUpgrades.1.1:
+-        ["0xcfe803378D79d1180EbF030455040EA6513869dF"]
++        "2024-06-07T04:02:11.000Z"
+      values.$pastUpgrades.1.0:
+-        "0xc9f468d33d8d55911e4e5b5c301ed244a5f81ab0f389d2b4f398eb5b89d417ef"
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.0.2.0:
+-        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
++        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.$pastUpgrades.0.1:
+-        "2024-06-07T04:02:11.000Z"
++        "0x986fc2c7ae945cdd358b2f2ae54364b350026f965f5861ed470f78e145f12626"
+      values.$pastUpgrades.0.0:
+-        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
++        "2025-05-15T05:12:11.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.clock:
+-        1747232111
++        1747659299
+      values.getNonVotingAccounts.3:
++        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.getNonVotingAccounts.2:
++        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      values.getNonVotingAccounts.1:
+-        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "0x0000000000000000000000000000000000000000"
+      values.impl:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.getPastTotalSupply:
++        [0,0,0,0,0]
+      values.TAIKO_ERC20_VAULT:
++        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      implementationNames.0x87C752b0F70cAa237Edd7571B0845470A37DE040:
+-        "TaikoToken"
+      implementationNames.0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106:
++        "TaikoToken"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"getPastTotalSupply":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetProverSet (0x280eAbfd252f017B78e15b69580F249F45FB55Fa)
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6)
+    +++ description: Contract managing and routing the multi-tier proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc)
+    +++ description: Verifier contract for Risc0 proven blocks.
+```
+
+```diff
+-   Status: DELETED
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+```
+
+```diff
+-   Status: DELETED
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780)
+    +++ description: This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452)
+    +++ description: Verifier contract for ZK-proven batches.
+```
+
+```diff
+    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: None
+      template:
+-        "taiko/DAOFallbackProposer"
+      sourceHashes.1:
+-        "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0x3ea52d6499eecde88b2ef9725bb22d9d0adb70d187cdfa89dfe3f63895d57ee4"
+      description:
+-        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities."
+      values.$implementation:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
++        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
+      values.$pastUpgrades.11:
++        ["2024-06-08T10:54:11.000Z","0xb4c23d57a1f0916180d0752c57726b634e7707bb7377c93d9e95d19e3695887a",["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"]]
+      values.$pastUpgrades.10.2:
+-        ["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"]
++        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
+      values.$pastUpgrades.10.1:
+-        "0xb4c23d57a1f0916180d0752c57726b634e7707bb7377c93d9e95d19e3695887a"
++        "2025-02-13T06:57:47.000Z"
+      values.$pastUpgrades.10.0:
+-        "2024-06-08T10:54:11.000Z"
++        ["0x280eAbfd252f017B78e15b69580F249F45FB55Fa"]
+      values.$pastUpgrades.9.2:
+-        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
++        "2024-11-01T09:20:35.000Z"
+      values.$pastUpgrades.9.1:
+-        "2025-02-13T06:57:47.000Z"
++        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
+      values.$pastUpgrades.9.0.0:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
++        "0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"
+      values.$pastUpgrades.8.2:
+-        "2024-11-01T09:20:35.000Z"
++        ["0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"]
+      values.$pastUpgrades.8.1:
+-        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
++        "0xf3b6af477112d0a8209506c8f310f4eb0713beebb1911ef5d11162d36d93c0ff"
+      values.$pastUpgrades.8.0:
+-        ["0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"]
++        "2024-05-20T15:05:59.000Z"
+      values.$pastUpgrades.7.2.0:
+-        "0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+      values.$pastUpgrades.7.1:
+-        "0xf3b6af477112d0a8209506c8f310f4eb0713beebb1911ef5d11162d36d93c0ff"
++        "2024-07-13T12:34:35.000Z"
+      values.$pastUpgrades.7.0:
+-        "2024-05-20T15:05:59.000Z"
++        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
+      values.$pastUpgrades.6.2:
+-        ["0x518845daA8870bE2C59E49620Fc262AD48953C9a"]
++        "2024-12-23T02:45:11.000Z"
+      values.$pastUpgrades.6.1:
+-        "2024-07-13T12:34:35.000Z"
++        ["0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"]
+      values.$pastUpgrades.6.0:
+-        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
++        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
+      values.$pastUpgrades.5.2:
+-        "2024-12-23T02:45:11.000Z"
++        ["0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"]
+      values.$pastUpgrades.5.1:
+-        ["0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"]
++        "2024-06-07T04:02:11.000Z"
+      values.$pastUpgrades.5.0:
+-        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.4.2:
+-        ["0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.4.1:
+-        "2024-06-07T04:02:11.000Z"
++        "2024-06-06T08:51:11.000Z"
+      values.$pastUpgrades.4.0:
+-        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
++        ["0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"]
+      values.$pastUpgrades.3.2:
+-        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
++        "2024-07-17T06:19:35.000Z"
+      values.$pastUpgrades.3.1:
+-        "2024-06-06T08:51:11.000Z"
++        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
+      values.$pastUpgrades.3.0.0:
+-        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
++        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
+      values.$pastUpgrades.2.2:
+-        "2024-07-17T06:19:35.000Z"
++        "2025-05-15T08:40:47.000Z"
+      values.$pastUpgrades.2.1:
+-        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
++        ["0xB8826B144eB895eFE2923b61b3b117B1298A9526"]
+      values.$pastUpgrades.2.0:
+-        ["0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"]
++        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
+      values.$upgradeCount:
+-        11
++        12
+      values.addressManager:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      values.impl:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
++        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
+      values.lastUnpausedAt:
+-        0
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.bondToken:
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.entrypoint:
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.inbox:
++        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.resolver:
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      implementationNames.0x280eAbfd252f017B78e15b69580F249F45FB55Fa:
+-        "MainnetProverSet"
+      implementationNames.0xB8826B144eB895eFE2923b61b3b117B1298A9526:
++        "ProverSet"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.5:
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.4:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.3:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0x0aED2375549D1115e180bd0caea829C429Ea50B3"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 6 (67%)"
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"}
+      receivedPermissions.13.from:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.12.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.11.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.10.from:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.9.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.8.from:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.7.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.6.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.5.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.4.from:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.3.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.1.from:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.0.from:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      template:
+-        "taiko/SignalService"
+      sourceHashes.1:
+-        "0xf99b7d5f650d3734e945c5040d8e4776dfdc97ff745666e084c1d471b7973f38"
++        "0xc978dbfc097ca447823c4a1eb83078cd63532727420b19287acc0f87e884285f"
+      description:
+-        "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs."
+      values.$implementation:
+-        "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
++        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.$pastUpgrades.7:
++        ["2024-05-01T08:03:23.000Z","0x0898d14da2f38d677085073d2decfb7ca32902406df2e7a84f6615d9c92d4516",["0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"]]
+      values.$pastUpgrades.6:
++        ["2024-06-06T08:51:11.000Z","0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",["0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"]]
+      values.$pastUpgrades.5.2:
+-        "2024-05-01T08:03:23.000Z"
++        ["0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"]
+      values.$pastUpgrades.5.1:
+-        "0x0898d14da2f38d677085073d2decfb7ca32902406df2e7a84f6615d9c92d4516"
++        "2025-05-18T14:25:11.000Z"
+      values.$pastUpgrades.5.0:
+-        ["0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"]
++        "0x0ae99d24b294622e3d3868c8dca911a5936231ce1f97254ec0c6a6f65f7aa81c"
+      values.$pastUpgrades.4.2.0:
+-        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
++        "0x0783Ee019C9b0f918A741469bD488A88827b3617"
+      values.$pastUpgrades.4.1:
+-        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
++        "2025-05-15T08:40:47.000Z"
+      values.$pastUpgrades.4.0:
+-        "2024-06-06T08:51:11.000Z"
++        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
+      values.$upgradeCount:
+-        6
++        8
+      values.addressManager:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
++        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.lastUnpausedAt:
+-        0
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.resolver:
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      implementationNames.0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3:
+-        "MainnetSignalService"
+      implementationNames.0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c:
++        "MainnetSignalService"
+      category:
+-        {"name":"Spam","priority":-1}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
+-   Status: DELETED
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
+    +++ description: Verifier contract for Guardian proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetInbox (0x497B13f9192B09244de9b5F0964830969FB26F07)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Risc0Verifier (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetTaikoL1 (0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetVerifier (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../AutomataDcapV3Attestation.sol                  |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../DAOFallbackProposer/ProverSet.sol}             |  962 ++---
+ .../DefaultResolver.sol}                           |  807 ++---
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../DefaultResolver.sol}                           | 1404 ++------
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
+ .../ForcedInclusionStore/ForcedInclusionStore.sol  | 1633 +++++++++
+ .../projects/taiko/ethereum/.flat/MainnetInbox.sol | 2964 ++++++++++++++++
+ .../TaikoL1Contract => .flat}/MainnetTaikoL1.sol   |    7 +
+ .../MainnetTierRouter.sol => /dev/null             |  219 --
+ .../.flat/MainnetVerifier/ERC1967Proxy.p.sol       |  594 ++++
+ .../MainnetVerifier/MainnetVerifier.sol}           | 1453 ++------
+ .../Risc0Verifier/Risc0Verifier.sol                |  907 ++---
+ .../SP1Verifier/SP1Verifier.sol                    |  914 ++---
+ .../ERC1967Proxy.p.sol                             |  594 ++++
+ .../SgxVerifier.sol}                               | 3349 ++++++++---------
+ .../ERC1967Proxy.p.sol                             |  594 ++++
+ .../SgxVerifier.sol}                               | 3447 ++++++++----------
+ .../SignalService/MainnetSignalService.sol         |  822 ++---
+ .../.flat/TaikoL1Contract/PacayaForkRouter.sol     | 1173 ++++++
+ .../TaikoToken/TaikoToken.sol                      |  132 +-
+ .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
+ .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
+ 27 files changed, 18673 insertions(+), 9125 deletions(-)
+```
+
 Generated with discovered.json: 0x76cef9cfa7a1610b4426a22f4da2af90943911da
 
 # Diff at Tue, 13 May 2025 14:42:00 GMT:
