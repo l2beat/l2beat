@@ -27,6 +27,7 @@ export async function getScalingProjectData(
       'permissions',
       'chainConfig',
       'scalingDa',
+      'livenessConfig',
       'customDa',
       'isUpcoming',
       'archivedAt',
