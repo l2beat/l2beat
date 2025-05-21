@@ -132,15 +132,10 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   describeRoles(contractOrEoa: EntryParameters) {
     const issued = this.getIssuedPermissions(contractOrEoa.address)
     const roles: Record<string, Record<'direct' | 'ultimate', Set<string>>> = {}
-    const entryName = (address: EthereumAddress) => 
-      this.projectDiscovery.getEntryByAddress(address)?.name ??
-      (this.projectDiscovery.isEOA(address)
-        ? this.projectDiscovery.getEOAName(address)
-        : address.toString())
 
     const result = []
     for (const p of issued) {
-      const receiverName = entryName(p.to)
+      const receiverName = this.projectDiscovery.getName(p.to)
       if (p.role) {
         let text = receiverName
         if (p.condition) {
@@ -228,12 +223,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       issuedPermissions
         ?.filter((p) => p.permission === 'upgrade')
         .map((p) => {
-          const entry = this.projectDiscovery.getEntryByAddress(p.to)
-          const address =
-            entry?.name ??
-            (this.projectDiscovery.isEOA(p.to)
-              ? this.projectDiscovery.getEOAName(p.to)
-              : p.to.toString())
+          const address = this.projectDiscovery.getName(p.to)
           const delay =
             (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
           return [address, delay]

@@ -64,6 +64,13 @@ export class ProjectDiscovery {
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
+  getName(address: EthereumAddress): string {
+    return (
+      this.getEntryByAddress(address)?.name ??
+      (this.isEOA(address) ? this.getEOAName(address) : address.toString())
+    )
+  }
+
   getEOAName(address: EthereumAddress): string {
     if (!(address in this.eoaIDMap)) {
       this.eoaIDMap[address] = `EOA ${Object.keys(this.eoaIDMap).length + 1}`
