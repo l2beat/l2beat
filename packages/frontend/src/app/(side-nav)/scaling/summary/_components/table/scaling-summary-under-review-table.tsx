@@ -43,4 +43,5 @@ export function ScalingSummaryUnderReviewTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={table} rowColoringMode="no-under-review" />
+  return <BasicTable table={table} />
+}
