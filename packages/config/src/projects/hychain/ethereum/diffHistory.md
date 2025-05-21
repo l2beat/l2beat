@@ -1,3 +1,177 @@
+Generated with discovered.json: 0x5c86bf40e7e10d8e9e91fef5aee386b9c7164a02
+
+# Diff at Wed, 21 May 2025 12:12:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 22437617
+- current block number: 22531183
+
+## Description
+
+upgrade to code-identical contracts and standard proof system, 1 validator removed.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x50828eBB7585b5f3307f89D87E55619BaceF4ed5)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x5E06CF736Dffa9ACCAa82Bf6aD28848234F9fF3b)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x8C96A26175c80ABe1fd49548E9Cee34747168658)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RollupProxy (0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.$implementation.1:
+-        "0xe3b13e7b160aE4b799A7B3F9877316e717706291"
++        "0xb8921bDB9Ca3697B9791A5116D5aA9C7c34566e8"
+      values.$implementation.0:
+-        "0x59CDE86f1a538a7a2329269d3704CA302DF23736"
++        "0x4541436dF3568F8eB21542c2C30b38f5F69d29a4"
+      values.$pastUpgrades.2:
++        ["2024-03-05T02:34:47.000Z","0x0189408056104b3ae135806be8f29175efe35f6ca587fbd540dd95d16bb1482c",["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]]
+      values.$pastUpgrades.1.2:
+-        "2024-03-05T02:34:47.000Z"
++        "2025-05-05T18:23:35.000Z"
+      values.$pastUpgrades.1.1.1:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "0xe3b13e7b160aE4b799A7B3F9877316e717706291"
+      values.$pastUpgrades.1.1.0:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "0x59CDE86f1a538a7a2329269d3704CA302DF23736"
+      values.$pastUpgrades.1.0:
+-        "0x0189408056104b3ae135806be8f29175efe35f6ca587fbd540dd95d16bb1482c"
++        "0x02347eef5f8983282386149ec51cdf2c71a213accc06a522f20d6a7cbdc341cd"
+      values.$pastUpgrades.0.2:
+-        "2025-05-05T18:23:35.000Z"
++        "2025-05-20T18:43:11.000Z"
+      values.$pastUpgrades.0.1:
+-        ["0xe3b13e7b160aE4b799A7B3F9877316e717706291","0x59CDE86f1a538a7a2329269d3704CA302DF23736"]
++        "0x1f529475acbcee3bcffa4abc760e39b104a9f7a62e316c07661f6f3579199fa9"
+      values.$pastUpgrades.0.0:
+-        "0x02347eef5f8983282386149ec51cdf2c71a213accc06a522f20d6a7cbdc341cd"
++        ["0xb8921bDB9Ca3697B9791A5116D5aA9C7c34566e8","0x4541436dF3568F8eB21542c2C30b38f5F69d29a4"]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        3
+      values.validators.1:
+-        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
+      implementationNames.0xe3b13e7b160aE4b799A7B3F9877316e717706291:
+-        "RollupAdminLogic"
+      implementationNames.0x59CDE86f1a538a7a2329269d3704CA302DF23736:
+-        "RollupUserLogic"
+      implementationNames.0xb8921bDB9Ca3697B9791A5116D5aA9C7c34566e8:
++        "RollupAdminLogic"
+      implementationNames.0x4541436dF3568F8eB21542c2C30b38f5F69d29a4:
++        "RollupUserLogic"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xc644eF0a862893e096b6a64101998459d8392C1e)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract ChallengeManager (0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.$implementation:
+-        "0xE4CeB57354e5BF85bC2dC1C1fC5C0E0657370367"
++        "0x9FB045EF8c6852455e82e886c87a4717732Ad4F7"
+      values.$pastUpgrades.3:
++        ["2025-05-05T18:23:35.000Z","0x02347eef5f8983282386149ec51cdf2c71a213accc06a522f20d6a7cbdc341cd",["0xE4CeB57354e5BF85bC2dC1C1fC5C0E0657370367"]]
+      values.$pastUpgrades.2.2:
+-        "2025-05-05T18:23:35.000Z"
++        "0xbe9d272252815301e6616f2075045660b8304aad0bfa5259a29680ec2eeee6ff"
+      values.$pastUpgrades.2.1:
+-        "0x02347eef5f8983282386149ec51cdf2c71a213accc06a522f20d6a7cbdc341cd"
++        "2025-05-05T16:20:11.000Z"
+      values.$pastUpgrades.2.0.0:
+-        "0xE4CeB57354e5BF85bC2dC1C1fC5C0E0657370367"
++        "0xdec03E497222017550Fb83273d8FB4546eaDA625"
+      values.$pastUpgrades.1.2:
+-        "0xbe9d272252815301e6616f2075045660b8304aad0bfa5259a29680ec2eeee6ff"
++        "2024-03-05T02:34:47.000Z"
+      values.$pastUpgrades.1.1:
+-        "2025-05-05T16:20:11.000Z"
++        "0x0189408056104b3ae135806be8f29175efe35f6ca587fbd540dd95d16bb1482c"
+      values.$pastUpgrades.1.0.0:
+-        "0xdec03E497222017550Fb83273d8FB4546eaDA625"
++        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
+      values.$pastUpgrades.0.2:
+-        "2024-03-05T02:34:47.000Z"
++        "2025-05-20T18:43:11.000Z"
+      values.$pastUpgrades.0.1:
+-        "0x0189408056104b3ae135806be8f29175efe35f6ca587fbd540dd95d16bb1482c"
++        "0x1f529475acbcee3bcffa4abc760e39b104a9f7a62e316c07661f6f3579199fa9"
+      values.$pastUpgrades.0.0.0:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0x9FB045EF8c6852455e82e886c87a4717732Ad4F7"
+      values.$upgradeCount:
+-        3
++        4
+      values.osp:
+-        "0x5E06CF736Dffa9ACCAa82Bf6aD28848234F9fF3b"
++        "0xD534457D005a895072E54B84DC51bAa5b11a44AC"
+      implementationNames.0xE4CeB57354e5BF85bC2dC1C1fC5C0E0657370367:
+-        "ChallengeManager"
+      implementationNames.0x9FB045EF8c6852455e82e886c87a4717732Ad4F7:
++        "ChallengeManager"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xFe04A2678C68fC19F8476992938fD77562957eDa)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x0F680fAF68BFfe6360C5c264d7649d874AF1507A)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x774806aaFD8B4fCdC0985DE8058D41A4e0efab0b)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xb6313ff423a864f1e700B4941714E8fF8Fa3954a)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xD534457D005a895072E54B84DC51bAa5b11a44AC)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0xe580c0338fc26fFc71C376caE6B82F9DE6e06289)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
 Generated with discovered.json: 0x517cebaa359b432db3a210be90052740eec01e61
 
 # Diff at Thu, 08 May 2025 08:24:43 GMT:
