@@ -49,7 +49,7 @@ export const nearomni: Bridge = {
   riskView: {
     validatedBy: {
       value: 'MPC',
-      description: `The derived EVM address of the multi-party computation signer is ${nearBridgeDerivedAddress}. MPC setup is offchain and members are not public.`,
+      description: `The derived EVM address of the multi-party computation signer is ${nearBridgeDerivedAddress}. The MPC setup is offchain and members are not public. Transfers from Ethereum to NEAR are validated by an Ethereum light client on NEAR.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -61,7 +61,7 @@ export const nearomni: Bridge = {
     livenessFailure: {
       value: 'No mechanism',
       description:
-        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
+        'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck. For Ethereum -> NEAR transfers, users can potentially self-relay but the destination smart contract is unverified.',
       sentiment: 'bad',
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
@@ -77,8 +77,8 @@ export const nearomni: Bridge = {
       risks: [],
     },
     validation: {
-      name: 'MPC validation',
-      description: `Multi-party computation (MPC) is used to validate all bridge transactions. This usually means that multiple distributed signers need to combine their signatures to create a single signature which authorizes a transaction. The MPC setup is offchain and from an onchain perspective is equal to an EOA.`,
+      name: 'MPC validation and ethereum light client',
+      description: `Multi-party computation (MPC) is used to validate bridge transactions going out from NEAR. This usually means that multiple distributed signers need to combine their signatures to create a single signature authorizings a transaction. The MPC setup is offchain and from an Ethereum L1 perspective is equal to an EOA. Transfers from Ethereum to NEAR are validated by an Ethereum light client implemented as a smart contract on NEAR, of which the source code is unverified.`,
       references: [],
       risks: [
         {
