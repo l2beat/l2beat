@@ -1,3 +1,5 @@
+'use client'
+import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
