@@ -43,7 +43,7 @@ describe(getFunctionCallQuery.name, () => {
       txs.receipt_blob_gas_used,
       txs.receipt_blob_gas_price,
       (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
-      (LENGTH(REPLACE(REGEXP_REPLACE(SUBSTR(txs.input,3), '([0-9A-Fa-f]{2})','\\1x'),'00x',''))) / 3 AS non_zero_bytes,
+      (LENGTH(REPLACE(REGEXP_REPLACE(SUBSTR(txs.input, 3), '([0-9A-Fa-f]{2})', '\\\\1x'), '00x', '')) / 3) AS non_zero_bytes,
       CASE
         WHEN traces.to_address IN UNNEST(?) THEN traces.input
       ELSE
