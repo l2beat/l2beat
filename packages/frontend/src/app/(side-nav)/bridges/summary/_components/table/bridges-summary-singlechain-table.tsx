@@ -21,7 +21,7 @@ export function BridgesSummarySingleChainTable({ entries }: Props) {
     initialState: {
       sorting: [
         {
-          id: 'total',
+          id: 'tvs',
           desc: true,
         },
       ],
