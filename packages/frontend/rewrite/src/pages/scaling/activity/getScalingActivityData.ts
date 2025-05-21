@@ -41,7 +41,7 @@ export async function getScalingActivityData(
         ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

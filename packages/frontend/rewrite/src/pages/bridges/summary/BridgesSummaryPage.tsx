@@ -9,17 +9,13 @@ import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-
 
 interface Props extends AppLayoutProps {
   entries: TabbedBridgeEntries<BridgesSummaryEntry>
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
-export function BridgesSummaryPage({
-  entries,
-  dehydratedState,
-  ...props
-}: Props) {
+export function BridgesSummaryPage({ entries, queryState, ...props }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextSummaryPage entries={entries} />
         </SideNavLayout>

@@ -44,7 +44,7 @@ export async function getDataAvailabilityProjectData(
       props: {
         ...appLayoutProps,
         projectEntry,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

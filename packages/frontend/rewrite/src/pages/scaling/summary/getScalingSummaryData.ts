@@ -45,7 +45,7 @@ export async function getScalingSummaryData(
       props: {
         ...appLayoutProps,
         entries,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

@@ -32,7 +32,7 @@ export async function getDataAvailabilityThroughputData(
       props: {
         ...appLayoutProps,
         entries,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

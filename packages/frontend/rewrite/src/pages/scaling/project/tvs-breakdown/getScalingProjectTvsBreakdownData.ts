@@ -46,7 +46,7 @@ export async function getScalingProjectTvsBreakdownData(
       props: {
         ...appLayoutProps,
         tvsBreakdownData,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

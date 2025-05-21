@@ -8,17 +8,17 @@ import type { DaThroughputEntry } from '~/server/features/data-availability/thro
 
 interface Props extends AppLayoutProps {
   entries: DaThroughputEntry[]
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function DataAvailabilityThroughputPage({
   entries,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextDataAvailabilityThroughputPage entries={entries} />
         </SideNavLayout>

@@ -8,17 +8,17 @@ import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-
 
 interface Props extends AppLayoutProps {
   projectEntry: BridgesProjectEntry
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function BridgesProjectPage({
   projectEntry,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <TopNavLayout>
           <NextBridgesProjectPage projectEntry={projectEntry} />
         </TopNavLayout>

@@ -36,7 +36,7 @@ export async function getBridgesSummaryData(
       props: {
         ...appLayoutProps,
         entries,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

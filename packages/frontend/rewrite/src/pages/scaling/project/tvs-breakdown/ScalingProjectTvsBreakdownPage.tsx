@@ -8,17 +8,17 @@ import type { ScalingProjectTvsBreakdownData } from '~/server/features/scaling/p
 
 interface Props extends AppLayoutProps {
   tvsBreakdownData: ScalingProjectTvsBreakdownData
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function ScalingProjectTvsBreakdownPage({
   tvsBreakdownData,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <TopNavLayout>
           <NextScalingProjectTvsBreakdownPage {...tvsBreakdownData} />
         </TopNavLayout>

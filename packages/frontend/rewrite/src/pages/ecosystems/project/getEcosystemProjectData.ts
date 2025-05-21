@@ -53,7 +53,7 @@ export async function getEcosystemProjectData(
       props: {
         ...appLayoutProps,
         ecosystem,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

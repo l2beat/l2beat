@@ -11,18 +11,18 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingTvsEntry>
   milestones: Milestone[]
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function ScalingTvsPage({
   entries,
   milestones,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextTvsPage entries={entries} milestones={milestones} />
         </SideNavLayout>

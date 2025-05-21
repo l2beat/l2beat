@@ -40,7 +40,7 @@ export async function getScalingTvsData(
         ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

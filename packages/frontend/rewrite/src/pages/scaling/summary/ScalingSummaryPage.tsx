@@ -9,16 +9,12 @@ import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingSummaryEntry>
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
-export function ScalingSummaryPage({
-  entries,
-  dehydratedState,
-  ...props
-}: Props) {
+export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextSummaryPage entries={entries} />
         </SideNavLayout>

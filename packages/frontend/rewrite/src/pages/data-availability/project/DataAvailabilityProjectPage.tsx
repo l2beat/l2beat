@@ -10,17 +10,17 @@ import type {
 
 interface Props extends AppLayoutProps {
   projectEntry: DaProjectPageEntry | EthereumDaProjectPageEntry
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function DataAvailabilityProjectPage({
   projectEntry,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <TopNavLayout>
           <NextDataAvailabilityProjectPage projectEntry={projectEntry} />
         </TopNavLayout>

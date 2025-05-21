@@ -32,7 +32,7 @@ export async function getScalingCostsData(
         ...appLayoutProps,
         entries,
         milestones: HOMEPAGE_MILESTONES,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

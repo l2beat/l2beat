@@ -7,17 +7,17 @@ import { AppLayout } from '~/app/_layout'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function EcosystemProjectPage({
   ecosystem,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextEcosystemProjectPage ecosystem={ecosystem} />
         </SideNavLayout>

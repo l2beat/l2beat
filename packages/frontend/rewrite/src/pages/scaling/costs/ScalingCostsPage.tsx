@@ -11,18 +11,18 @@ import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scal
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingCostsEntry>
   milestones: Milestone[]
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function ScalingCostsPage({
   entries,
   milestones,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextCostsPage entries={entries} milestones={milestones} />
         </SideNavLayout>

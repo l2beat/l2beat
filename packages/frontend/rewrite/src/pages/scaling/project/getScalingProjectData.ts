@@ -75,7 +75,7 @@ export async function getScalingProjectData(
       props: {
         ...appLayoutProps,
         projectEntry,
-        dehydratedState: helpers.dehydrate(),
+        queryState: helpers.dehydrate(),
       },
     },
   }

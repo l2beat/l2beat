@@ -11,18 +11,18 @@ import type { ScalingActivityEntry } from '~/server/features/scaling/activity/ge
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingActivityEntry>
   milestones: Milestone[]
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function ScalingActivityPage({
   entries,
   milestones,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <NextActivityPage entries={entries} milestones={milestones} />
         </SideNavLayout>

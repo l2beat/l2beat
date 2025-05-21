@@ -8,17 +8,17 @@ import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
-  dehydratedState: DehydratedState
+  queryState: DehydratedState
 }
 
 export function ScalingProjectPage({
   projectEntry,
-  dehydratedState,
+  queryState,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={queryState}>
         <TopNavLayout>
           <div className="smooth-scroll">
             <NextScalingProjectPage projectEntry={projectEntry} />
