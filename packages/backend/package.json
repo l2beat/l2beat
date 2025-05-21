@@ -61,7 +61,7 @@
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
     "viem": "^2.8.14",
-    "zod": "^3.22.2",
+    "zod": "^3.25.17",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
