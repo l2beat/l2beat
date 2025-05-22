@@ -51,7 +51,7 @@ describe(InMemoryCache.name, () => {
     })
 
     it('should timeout if fallback takes too long', async () => {
-      const cache = new InMemoryCache(undefined, true, 0)
+      const cache = new InMemoryCache(undefined, 0)
       const cacheOptions = { key: ['key'], ttl: 1000 }
       const fallback1 = () =>
         new Promise((resolve) => setTimeout(() => resolve('test1'), 10))
