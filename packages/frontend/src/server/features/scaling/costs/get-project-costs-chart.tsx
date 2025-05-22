@@ -18,6 +18,10 @@ type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {
   posted: number | undefined
 }
 
+export type ProjectCostsChartResponse = Awaited<
+  ReturnType<typeof getProjectCostsChart>
+>
+
 export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   const [costsChart, costs, throughput, activityRecords] = await Promise.all([
     getCostsChart({
@@ -30,19 +34,19 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     getActivityForProjectAndRange(params.projectId, params.range),
   ])
 
-  if (costsChart.length === 0 || !costs || !throughput) {
+  if (costsChart.length === 0 || !costs) {
     return {
       chart: [],
       stats: undefined,
     }
   }
-  const costsUopsCount = getSummedUopsCount(activityRecords, costs.range)
-  const throughputUopsCount = getSummedUopsCount(
-    activityRecords,
-    throughput.range,
-  )
 
-  const timestampedDaData = Object.fromEntries(throughput.chart ?? [])
+  const costsUopsCount = getSummedUopsCount(activityRecords, costs.range)
+  const throughputUopsCount = throughput
+    ? getSummedUopsCount(activityRecords, throughput.range)
+    : undefined
+
+  const timestampedDaData = Object.fromEntries(throughput?.chart ?? [])
   const chart = costsChart.map((cost) => {
     const dailyTimestamp = UnixTime.toStartOf(cost[0], 'day')
     const isHourlyRange = params.range === '1d' || params.range === '7d'
@@ -53,7 +57,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     ] as const
   })
 
-  const summedThroughput = throughput.chart.reduce((acc, [_, throughput]) => {
+  const summedThroughput = throughput?.chart.reduce((acc, [_, throughput]) => {
     return acc + throughput
   }, 0)
   const total = withTotal({
@@ -63,9 +67,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
 
   const resolution = rangeToResolution(params.range)
   const perL2Uop =
-    throughputUopsCount !== undefined &&
-    costsUopsCount !== undefined &&
-    resolution === 'daily'
+    costsUopsCount !== undefined && resolution === 'daily'
       ? mapToPerL2UopsCost(total, {
           costs: costsUopsCount,
           throughput: throughputUopsCount,
@@ -112,7 +114,7 @@ function mapToPerL2UopsCost(
   data: ReturnType<typeof withTotal>,
   uops: {
     costs: number
-    throughput: number
+    throughput: number | undefined
   },
 ) {
   const divideIfValid = (value: number | undefined) =>
@@ -142,7 +144,9 @@ function mapToPerL2UopsCost(
       total: divideIfValid(data.usd.total),
     },
     posted:
-      data.posted !== undefined ? data.posted / uops.throughput : undefined,
+      data.posted !== undefined && uops.throughput !== undefined
+        ? data.posted / uops.throughput
+        : undefined,
   }
 }
 
