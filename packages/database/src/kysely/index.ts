@@ -7,6 +7,7 @@ import { Pool, type PoolConfig, defaults, types } from 'pg'
 import type { DB as GeneratedDB } from './generated/types'
 
 import { AsyncLocalStorage } from 'node:async_hooks'
+import { compiledToSqlQuery } from '../utils/compiledToSqlQuery'
 
 export type DB = GeneratedDB
 // Interpret `timestamp without time zone` as UTC
@@ -30,12 +31,12 @@ export class DatabaseClient {
           console.error('Query failed : ', {
             durationMs: event.queryDurationMillis,
             error: event.error,
-            sql: event.query.sql,
+            sql: compiledToSqlQuery(event.query),
           })
         } else {
           console.log('Query executed : ', {
             durationMs: event.queryDurationMillis,
-            sql: event.query.sql,
+            sql: compiledToSqlQuery(event.query),
           })
         }
       },
