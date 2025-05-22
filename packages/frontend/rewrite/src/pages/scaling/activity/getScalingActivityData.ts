@@ -14,25 +14,15 @@ export async function getScalingActivityData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const helpers = getExpressHelpers()
   const cookies = parseCookies(req)
-  const [appLayoutProps, entries] = await Promise.all([
+  const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'activity', 'entries'], ttl: 10 * 60 },
-      getScalingActivityEntries,
+      { key: ['scaling', 'activity', 'data'], ttl: 10 * 60 },
+      getCachedData,
     ),
-    helpers.activity.chart.prefetch({
-      range: '1y',
-      filter: { type: 'rollups' },
-      previewRecategorisation: false,
-    }),
-    helpers.activity.chartStats.prefetch({
-      filter: { type: 'rollups' },
-      previewRecategorisation: false,
-    }),
   ])
 
   return {
@@ -49,10 +39,31 @@ export async function getScalingActivityData(
       page: 'ScalingActivityPage',
       props: {
         ...appLayoutProps,
-        entries,
+        ...data,
         milestones: HOMEPAGE_MILESTONES,
-        queryState: helpers.dehydrate(),
       },
     },
+  }
+}
+
+async function getCachedData() {
+  const helpers = getExpressHelpers()
+
+  const [entries] = await Promise.all([
+    getScalingActivityEntries(),
+    helpers.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+    helpers.activity.chartStats.prefetch({
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+  ])
+
+  return {
+    entries,
+    queryState: helpers.dehydrate(),
   }
 }

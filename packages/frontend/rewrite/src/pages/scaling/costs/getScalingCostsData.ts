@@ -15,21 +15,14 @@ export async function getScalingCostsData(
   cache: ICache,
 ): Promise<RenderData> {
   const cookies = parseCookies(req)
-  const helpers = getExpressHelpers()
-  const [appLayoutProps, entries] = await Promise.all([
+  const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'costs', 'entries'], ttl: 10 * 60 },
-      getScalingCostsEntries,
+      { key: ['scaling', 'costs', 'data'], ttl: 10 * 60 },
+      getCachedData,
     ),
-    helpers.costs.chart.prefetch({
-      range: '30d',
-      filter: { type: 'rollups' },
-      previewRecategorisation: false,
-    }),
-    helpers.costs.table.prefetch({ range: '30d' }),
   ])
 
   return {
@@ -46,10 +39,27 @@ export async function getScalingCostsData(
       page: 'ScalingCostsPage',
       props: {
         ...appLayoutProps,
-        entries,
+        ...data,
         milestones: HOMEPAGE_MILESTONES,
-        queryState: helpers.dehydrate(),
       },
     },
+  }
+}
+
+async function getCachedData() {
+  const helpers = getExpressHelpers()
+  const [entries] = await Promise.all([
+    getScalingCostsEntries(),
+    helpers.costs.chart.prefetch({
+      range: '30d',
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+    helpers.costs.table.prefetch({ range: '30d' }),
+  ])
+
+  return {
+    entries,
+    queryState: helpers.dehydrate(),
   }
 }

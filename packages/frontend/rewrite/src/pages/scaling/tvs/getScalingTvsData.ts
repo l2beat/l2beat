@@ -14,24 +14,12 @@ export async function getScalingTvsData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const helpers = getExpressHelpers()
   const cookies = parseCookies(req)
-  const [appLayoutProps, entries] = await Promise.all([
+  const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
       recategorisationPreview: cookies.recategorisationPreview,
     }),
-    cache.get(
-      { key: ['scaling', 'tvs', 'entries'], ttl: 10 * 60 },
-      getScalingTvsEntries,
-    ),
-    helpers.tvs.chart.prefetch({
-      filter: {
-        type: 'rollups',
-      },
-      range: '1y',
-      excludeAssociatedTokens: false,
-      previewRecategorisation: false,
-    }),
+    cache.get({ key: ['scaling', 'tvs', 'data'], ttl: 10 * 60 }, getCachedData),
   ])
 
   return {
@@ -48,10 +36,29 @@ export async function getScalingTvsData(
       page: 'ScalingTvsPage',
       props: {
         ...appLayoutProps,
-        entries,
+        ...data,
         milestones: HOMEPAGE_MILESTONES,
-        queryState: helpers.dehydrate(),
       },
     },
+  }
+}
+
+async function getCachedData() {
+  const helpers = getExpressHelpers()
+  const [entries] = await Promise.all([
+    getScalingTvsEntries(),
+    helpers.tvs.chart.prefetch({
+      filter: {
+        type: 'rollups',
+      },
+      range: '1y',
+      excludeAssociatedTokens: false,
+      previewRecategorisation: false,
+    }),
+  ])
+
+  return {
+    entries,
+    queryState: helpers.dehydrate(),
   }
 }

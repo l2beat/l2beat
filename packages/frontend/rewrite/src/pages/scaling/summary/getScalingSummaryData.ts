@@ -14,16 +14,42 @@ export async function getScalingSummaryData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const helpers = getExpressHelpers()
   const cookies = parseCookies(req)
-  const [appLayoutProps, entries] = await Promise.all([
+  const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'summary', 'entries'], ttl: 10 * 60 },
-      getScalingSummaryEntries,
+      { key: ['scaling', 'summary', 'data'], ttl: 10 * 60 },
+      getCachedData,
     ),
+  ])
+
+  return {
+    head: {
+      manifest,
+      metadata: getMetadata(manifest, {
+        openGraph: {
+          url: req.originalUrl,
+          image: '/meta-images/scaling/summary/opengraph-image.png',
+        },
+      }),
+    },
+    ssr: {
+      page: 'ScalingSummaryPage',
+      props: {
+        ...appLayoutProps,
+        ...data,
+      },
+    },
+  }
+}
+
+async function getCachedData() {
+  const helpers = getExpressHelpers()
+
+  const [entries] = await Promise.all([
+    getScalingSummaryEntries(),
     helpers.tvs.recategorisedChart.prefetch({
       range: SCALING_SUMMARY_TIME_RANGE,
       filter: { type: 'layer2' },
@@ -41,22 +67,7 @@ export async function getScalingSummaryData(
   ])
 
   return {
-    head: {
-      manifest,
-      metadata: getMetadata(manifest, {
-        openGraph: {
-          url: req.originalUrl,
-          image: '/meta-images/scaling/summary/opengraph-image.png',
-        },
-      }),
-    },
-    ssr: {
-      page: 'ScalingSummaryPage',
-      props: {
-        ...appLayoutProps,
-        entries,
-        queryState: helpers.dehydrate(),
-      },
-    },
+    entries,
+    queryState: helpers.dehydrate(),
   }
 }
