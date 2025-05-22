@@ -56,7 +56,10 @@ export const ContractPermissionField = z.object({
 export type ContractPermission = z.infer<typeof ContractPermission>
 export const ContractPermission = z.object({
   canActIndependently: z.optional(z.boolean()),
-  fields: z.record(z.string(), ContractPermissionField).default({}),
+  fields: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), ContractPermissionField),
+  ),
 })
 
 export type PermissionsConfig = z.infer<typeof PermissionsConfig>

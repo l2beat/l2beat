@@ -63,10 +63,22 @@ export const StructureContract = z.object({
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.array(z.string()).default([]),
   ignoreRelatives: z.array(z.string()).default([]),
-  fields: z.record(z.string(), StructureContractField).default({}),
-  methods: z.record(z.string(), z.string()).default({}),
-  manualSourcePaths: z.record(z.string(), z.string()).default({}),
-  types: z.record(z.string(), DiscoveryCustomType).default({}),
+  fields: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), StructureContractField),
+  ),
+  methods: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), z.string()),
+  ),
+  manualSourcePaths: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), z.string()),
+  ),
+  types: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), DiscoveryCustomType),
+  ),
 })
 
 export type StructureConfig = z.infer<typeof StructureConfig>

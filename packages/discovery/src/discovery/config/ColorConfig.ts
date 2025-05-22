@@ -39,8 +39,14 @@ export const ColorContract = z.object({
   category: z.optional(z.string()),
   description: z.optional(z.string()),
   references: z.optional(z.array(ExternalReference)),
-  fields: z.record(z.string(), ColorContractField).default({}),
-  manualSourcePaths: z.record(z.string(), z.string()).default({}),
+  fields: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), ColorContractField),
+  ),
+  manualSourcePaths: z.preprocess(
+    (val) => (val == null ? {} : val),
+    z.record(z.string(), z.string()),
+  ),
 })
 
 export type ColorConfig = z.infer<typeof ColorConfig>
