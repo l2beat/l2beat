@@ -88,7 +88,9 @@ function TimePart({
         className,
       )}
     >
-      <span className="tabular-nums">{children}</span>
+      <span className="tabular-nums" suppressHydrationWarning>
+        {children}
+      </span>
       <span
         className={cn(
           'ml-0.5',
