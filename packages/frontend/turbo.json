@@ -11,6 +11,7 @@
         "CI",
         "CRON_SECRET",
         "DATABASE_URL",
+        "DATABASE_LOG_ENABLED",
         "EXCLUDED_TVS_PROJECTS",
         "EXCLUDED_ACTIVITY_PROJECTS",
         "ETHEREUM_RPC_URL",

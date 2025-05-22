@@ -15,6 +15,7 @@ export async function getScalingSummaryData(
   cache: ICache,
 ): Promise<RenderData> {
   const cookies = parseCookies(req)
+
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
       recategorisationPreview: cookies.recategorisationPreview,
