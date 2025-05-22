@@ -1,6 +1,7 @@
+import { z } from 'zod/v4'
 type CollectionType = 'data' | 'content'
 
-interface CollectionInput<T extends CollectionType, S extends Zod.Schema> {
+interface CollectionInput<T extends CollectionType, S extends z.Schema> {
   type: T
   schema: S
 }
@@ -12,7 +13,7 @@ const typeToExtension = {
 
 export function defineCollection<
   T extends CollectionType,
-  S extends Zod.Schema,
+  S extends z.Schema,
 >(input: CollectionInput<T, S>) {
   return {
     type: input.type,
