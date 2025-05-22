@@ -1,3 +1,5 @@
+const PECTRA_START_BLOCK = 22431084
+
 export function calculateCalldataGasUsed(
   blockNumber: number,
   dataLength: number,
@@ -7,8 +9,7 @@ export function calculateCalldataGasUsed(
   const zeroBytes = dataLength - nonZeroBytes
   const standardCalldata = 16 * nonZeroBytes + 4 * zeroBytes
 
-  if (blockNumber < 22431084) {
-    // this is first block where Pectra was live
+  if (blockNumber < PECTRA_START_BLOCK) {
     return standardCalldata
   }
 
