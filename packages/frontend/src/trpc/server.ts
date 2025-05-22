@@ -32,9 +32,17 @@ export type ExpressHelpers = ReturnType<typeof getExpressHelpers>
 export const getExpressHelpers = () =>
   createServerSideHelpers({
     router: appRouter,
+    queryClient: getQueryClient(),
     ctx: { headers: new Headers() },
+    // Do not serialize data to JSON, because it will be serialized again by the render function
+    //     .replace(
+    //       `<!--ssr-data-->`,
+    //       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
+    //     )
     transformer: {
-      serialize: JSON.stringify,
-      deserialize: JSON.parse,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      serialize: (data) => data,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      deserialize: (data) => data,
     },
   })
