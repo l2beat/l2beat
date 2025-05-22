@@ -37,16 +37,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     safeHeight: number,
     parentSafeHeight: number,
   ): Promise<number> {
-    const { from: clampedFrom, to } = clampRangeToDay(
-      safeHeight,
-      parentSafeHeight,
-    )
     const from =
-      clampedFrom <= this.$.minHeight
+      safeHeight <= this.$.minHeight
         ? this.$.minHeight
-        : UnixTime.toStartOf(clampedFrom, 'hour')
+        : UnixTime.toStartOf(safeHeight, 'hour')
+    const { from: clampedFrom, to } = clampRangeToDay(from, parentSafeHeight)
 
-    const updatedLivenessRecords = await this.generateLiveness(from, to)
+    const updatedLivenessRecords = await this.generateLiveness(clampedFrom, to)
 
     await this.$.db.aggregatedLiveness.upsertMany(updatedLivenessRecords)
     return to
