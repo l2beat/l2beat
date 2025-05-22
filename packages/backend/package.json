@@ -42,7 +42,7 @@
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/uif": "workspace:*",
-    "@polkadot/api": "^12.4.2",
+    "@polkadot/api": "^14.1.1",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
     "elastic-apm-node": "^4.11.2",
