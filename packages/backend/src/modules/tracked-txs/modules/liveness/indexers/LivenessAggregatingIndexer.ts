@@ -1,9 +1,11 @@
 import type { Database } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import {
+  clampRangeToDay,
   ProjectId,
-  type TrackedTxsConfigSubtype,
+  slidingWindow,
   UnixTime,
+  type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { TrackedTxProject } from '../../../../../config/Config'
@@ -35,13 +37,14 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     safeHeight: number,
     parentSafeHeight: number,
   ): Promise<number> {
+    const { from: clampedFrom, to } = clampRangeToDay(
+      safeHeight,
+      parentSafeHeight,
+    )
     const from =
-      safeHeight <= this.$.minHeight
+      clampedFrom <= this.$.minHeight
         ? this.$.minHeight
-        : UnixTime.toStartOf(safeHeight, 'hour')
-    const endOfHour = UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
-
-    const to = parentSafeHeight > endOfHour ? endOfHour : parentSafeHeight
+        : UnixTime.toStartOf(clampedFrom, 'hour')
 
     const updatedLivenessRecords = await this.generateLiveness(from, to)
 
@@ -73,6 +76,15 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       allProjectConfigs,
       this.$.db,
     )
+
+    const hourlyTimestamps: UnixTime[] = []
+    let currentHour = UnixTime.toStartOf(from, 'hour')
+    while (currentHour <= to) {
+      hourlyTimestamps.push(currentHour)
+      currentHour = currentHour + UnixTime.HOUR
+    }
+
+    const slidingWindows = slidingWindow(hourlyTimestamps, 2, 1)
 
     // for every considered time range we also take latest record before `from`
     // for each configuration to calculate interval for first record in time range
@@ -109,30 +121,32 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         projectLivenessRecords,
       )
 
-      aggregatedRecords.push(
-        this.aggregateRecords(
-          ProjectId(project),
-          'batchSubmissions',
-          batchSubmissions,
-          from,
-        ),
-      )
-      aggregatedRecords.push(
-        this.aggregateRecords(
-          ProjectId(project),
-          'stateUpdates',
-          stateUpdates,
-          from,
-        ),
-      )
-      aggregatedRecords.push(
-        this.aggregateRecords(
-          ProjectId(project),
-          'proofSubmissions',
-          proofSubmissions,
-          from,
-        ),
-      )
+      for (const [start, end] of slidingWindows) {
+        aggregatedRecords.push(
+          this.aggregateRecords(
+            ProjectId(project),
+            'batchSubmissions',
+            batchSubmissions.filter((r) => r.timestamp < end),
+            start,
+          ),
+        )
+        aggregatedRecords.push(
+          this.aggregateRecords(
+            ProjectId(project),
+            'stateUpdates',
+            stateUpdates.filter((r) => r.timestamp < end),
+            start,
+          ),
+        )
+        aggregatedRecords.push(
+          this.aggregateRecords(
+            ProjectId(project),
+            'proofSubmissions',
+            proofSubmissions.filter((r) => r.timestamp < end),
+            start,
+          ),
+        )
+      }
     }
 
     return aggregatedRecords.filter((r) => r !== undefined)
