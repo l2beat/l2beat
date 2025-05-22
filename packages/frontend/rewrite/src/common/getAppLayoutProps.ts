@@ -2,7 +2,7 @@ import type { AppLayoutProps } from '~/app/_layout'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 
-export async function getAppLayoutProps(opts: {
+export async function getAppLayoutProps(opts?: {
   recategorisationPreview?: boolean
 }): Promise<AppLayoutProps> {
   const searchBarProjects = await getSearchBarProjects()
