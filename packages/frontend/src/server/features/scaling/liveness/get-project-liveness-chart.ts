@@ -55,9 +55,11 @@ export const getCachedProjectLivenessChartData = cache(
       ids: [ProjectId(projectId)],
       optional: ['livenessConfig'],
     })
+    const livenessConfig = livenessProject?.livenessConfig
+
     let effectiveSubtype = subtype
-    if (livenessProject?.livenessConfig?.duplicateData.to === subtype) {
-      effectiveSubtype = livenessProject.livenessConfig.duplicateData.from
+    if (livenessConfig?.duplicateData.to === subtype) {
+      effectiveSubtype = livenessConfig.duplicateData.from
     }
 
     const [chartEntries, subtypeAverages] = await Promise.all([
@@ -81,6 +83,11 @@ export const getCachedProjectLivenessChartData = cache(
         data: [],
         stats: undefined,
       }
+    }
+
+    if (livenessConfig?.duplicateData.to) {
+      const { from, to } = livenessConfig.duplicateData
+      stats[to] = stats[from]
     }
 
     const groupedByResolution = groupBy(chartEntries, (e) =>
