@@ -42,10 +42,10 @@ export class InMemoryCache implements ICache {
     this.inFlight.set(options.key, { promise, timestamp: UnixTime.now() })
 
     const fallbackResult = await promise
-    this.cache.set(options.key, {
-      result: fallbackResult,
-      timestamp: UnixTime.now(),
-    })
+    // this.cache.set(options.key, {
+    //   result: fallbackResult,
+    //   timestamp: UnixTime.now(),
+    // })
     return fallbackResult
   }
 

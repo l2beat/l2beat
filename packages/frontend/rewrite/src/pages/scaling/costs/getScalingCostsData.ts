@@ -14,6 +14,12 @@ export async function getScalingCostsData(
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getScalingCostsEntries(),
+    helpers.costs.chart.prefetch({
+      range: '30d',
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+    helpers.costs.table.prefetch({ range: '30d' }),
   ])
 
   return {

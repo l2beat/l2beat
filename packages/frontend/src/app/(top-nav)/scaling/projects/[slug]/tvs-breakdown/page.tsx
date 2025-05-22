@@ -50,6 +50,7 @@ export default async function Page(props: Props) {
       projectIds: [tvsBreakdownData.project.id.toString()],
     },
     excludeAssociatedTokens: false,
+    previewRecategorisation: false,
     range: '1y',
   })
 

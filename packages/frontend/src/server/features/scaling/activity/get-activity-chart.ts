@@ -20,7 +20,7 @@ export type ActivityChartParams = z.infer<typeof ActivityChartParams>
 export const ActivityChartParams = z.object({
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
-  previewRecategorisation: z.boolean().default(false),
+  previewRecategorisation: z.boolean(),
 })
 
 /**

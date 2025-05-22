@@ -18,7 +18,7 @@ const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 export const CostsChartParams = z.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
-  previewRecategorisation: z.boolean().default(false),
+  previewRecategorisation: z.boolean(),
 })
 export type CostsChartParams = z.infer<typeof CostsChartParams>
 
