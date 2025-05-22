@@ -13,7 +13,7 @@ export async function getDataAvailabilityThroughputData(
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getDaThroughputEntries(),
-    helpers.da.chart.prefetch({ range: '30d', includeScalingOnly: false }),
+    helpers.da.chart.prefetch({ range: '1y', includeScalingOnly: false }),
   ])
 
   return {

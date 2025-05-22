@@ -44,9 +44,13 @@ function DashboardPage(props: DashboardPageProps) {
                   >
                     <TableData
                       value={
-                        project.diff && project.diff.length > 0 ? (
+                        project.changes.diff &&
+                        project.changes.diff.length > 0 ? (
                           <ChangedDetectedDropdown
                             project={project}
+                            trackedTxsAffected={
+                              project.changes.trackedTxsAffected
+                            }
                             summary={
                               <div
                                 style={{ color: '#cecbc4' }}
@@ -72,10 +76,15 @@ function DashboardPage(props: DashboardPageProps) {
 function ChangedDetectedDropdown({
   project,
   summary,
-}: { project: DashboardProject; summary: ReactNode }) {
+  trackedTxsAffected,
+}: {
+  project: DashboardProject
+  summary: ReactNode
+  trackedTxsAffected?: boolean
+}) {
   return (
-    project.diff &&
-    project.diff.length > 0 && (
+    project.changes.diff &&
+    project.changes.diff.length > 0 && (
       <details
         key={project.name}
         style={{ marginTop: '0px', marginBottom: '0px', textWrap: 'wrap' }}
@@ -86,7 +95,12 @@ function ChangedDetectedDropdown({
           {summary}
         </summary>
         <p>
-          {project.diff.map((d, index) => {
+          {trackedTxsAffected && (
+            <span style={{ color: 'yellow' }}>
+              Tracked transactions might be affected
+            </span>
+          )}
+          {project.changes.diff.map((d, index) => {
             return (
               <p style={{ marginTop: '8px' }} key={index}>
                 <span style={{ fontWeight: 'bold' }}>

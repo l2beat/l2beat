@@ -5,7 +5,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { assert } from '@l2beat/shared-pure'
 import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
-import type { LeftRightPair } from '../powerdiff'
+import type { LeftRightPair, ValidatedLeftRightPair } from '../powerdiff'
 
 interface Result {
   filePathsList: LeftRightPair[]
@@ -19,7 +19,7 @@ export function splitIntoSubfiles(
 ): Result {
   const newFilePathList: LeftRightPair[] = []
   for (const fullPaths of filePathsList) {
-    if (fullPaths.left === fullPaths.right) {
+    if (fullPaths.left === undefined || fullPaths.right === undefined) {
       newFilePathList.push(fullPaths)
     } else {
       const truncPaths = removeCommonPath(fullPaths)
@@ -40,13 +40,16 @@ export function splitIntoSubfiles(
 
 function splitPair(
   fullPaths: LeftRightPair,
-  truncPaths: LeftRightPair,
+  truncPaths: ValidatedLeftRightPair,
 ): LeftRightPair | undefined {
+  const { left, right } = fullPaths
   if (
-    isFile(fullPaths.left) &&
-    isFile(fullPaths.right) &&
-    fullPaths.left.endsWith('.sol') &&
-    fullPaths.right.endsWith('.sol')
+    left !== undefined &&
+    right !== undefined &&
+    isFile(left) &&
+    isFile(right) &&
+    left.endsWith('.sol') &&
+    right.endsWith('.sol')
   ) {
     return {
       left: splitSolidityFiles(fullPaths.left, truncPaths.left),
@@ -118,7 +121,9 @@ function getASTTopLevelChildName(child: ASTNode): string | undefined {
   }
 }
 
-function removeCommonPath(paths: LeftRightPair): LeftRightPair {
+function removeCommonPath(
+  paths: ValidatedLeftRightPair,
+): ValidatedLeftRightPair {
   const findCommonPath = (array: string[]): string => {
     const firstPath = array[0]
     const parts = firstPath.split('/')
