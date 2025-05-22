@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22537952,
-  "configHash": "0x556ac373a56883c5bf21b35d4a11469064ef6ad714162ea8d2fd3da1694af084",
+  "blockNumber": 22538263,
+  "configHash": "0xb49d71053f374f31755f5ebb54fbb8dcd89d35775d715402758b148710439d65",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -119,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000682efb33000138486b",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682efb33000138486b",
-        "length": 28733,
-        "lengthByChainId": 28733,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000682f09eb0001384a02",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682f09eb0001384a02",
+        "length": 28735,
+        "lengthByChainId": 28735,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -150,7 +150,7 @@
         "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Factory contract for creating dispute games.",
+      "description": "Factory contract for creating dispute games. Currently not used, no games are created.",
       "sinceTimestamp": 1747126931,
       "sinceBlock": 22473285,
       "values": {
@@ -320,7 +320,7 @@
         "0x41942b2c90ded6bd7da7f87e7398c6b118638d9c97de7bede373140ecabc23d1"
       ],
       "proxyType": "immutable",
-      "description": "Contract for handling fault disputes.",
+      "description": "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.",
       "sinceTimestamp": 1747127747,
       "sinceBlock": 22473352,
       "values": {
@@ -550,7 +550,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": ""
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "RewardEscrowerMultisig",
@@ -816,12 +817,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1747909427,
-        "getLastSequencerTimestampByChainId": 1747909427,
-        "getTotalBatches": 28733,
-        "getTotalBatchesByChainId": 28733,
-        "getTotalElements": 20465771,
-        "getTotalElementsByChainId": 20465771,
+        "getLastSequencerTimestamp": 1747913195,
+        "getLastSequencerTimestampByChainId": 1747913195,
+        "getTotalBatches": 28735,
+        "getTotalBatchesByChainId": 28735,
+        "getTotalElements": 20466178,
+        "getTotalElementsByChainId": 20466178,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },

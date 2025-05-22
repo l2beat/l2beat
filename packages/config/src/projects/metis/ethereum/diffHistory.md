@@ -1,16 +1,19 @@
-Generated with discovered.json: 0x2bb47ba7f5887b649641d02b7d3eb0b3b71f8516
+Generated with discovered.json: 0x08a02f189d77a75f91f311ef1798013e0d9d491d
 
-# Diff at Thu, 22 May 2025 10:55:39 GMT:
+# Diff at Thu, 22 May 2025 11:58:09 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
-- current block number: 22537952
+- current block number: 22538263
 
 ## Description
 
-Posting blobs to the inbox, authorized batcher in L2 node config (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
-
 Templitized contracts.
+
+Batcher is posting blobs to the inbox, the authorized batcher is in L2 node config (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
+
+However, DisputeGameFactory is not used, meaning that no games a created. 
+In theory, games could be played and disputed state batches can be marked as such in the StateCommitmentChain. Then, these flagged batches could be deleted (within the fraud proof window). However, batches can only be deleted from the MVM_Verifier contract, which currently has an active whitelist but no whitelisted verifiers. So proof system could be operational if a) games are created b) whitelist is filled or removed.
 
 ## Config/verification related changes
 
@@ -54,11 +57,11 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 
 ```diff
     contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
-    +++ description: Factory contract for creating dispute games.
+    +++ description: Factory contract for creating dispute games. Currently not used, no games are created.
       template:
 +        "metis/DisputeGameFactory_Metis"
       description:
-+        "Factory contract for creating dispute games."
++        "Factory contract for creating dispute games. Currently not used, no games are created."
     }
 ```
 
@@ -84,11 +87,11 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 
 ```diff
     contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235) {
-    +++ description: Contract for handling fault disputes.
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
       template:
 +        "metis/FaultDisputeGame"
       description:
-+        "Contract for handling fault disputes."
++        "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain."
     }
 ```
 
@@ -147,6 +150,8 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
       name:
 -        ""
 +        "unverified_MVM_FraudVerifier"
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 

@@ -1,7 +1,7 @@
 {
   "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "DisputeGameFactory_Metis",
-  "description": "Factory contract for creating dispute games.",
+  "description": "Factory contract for creating dispute games. Currently not used, no games are created.",
   "fields": {
     "gameImpls": {
       "handler": {

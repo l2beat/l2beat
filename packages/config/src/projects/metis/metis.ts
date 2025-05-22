@@ -113,8 +113,8 @@ export const metis: ScalingProject = {
     },
   },
   dataAvailability: {
-    layer: DA_LAYERS.MEMO,
-    bridge: DA_BRIDGES.NONE,
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
