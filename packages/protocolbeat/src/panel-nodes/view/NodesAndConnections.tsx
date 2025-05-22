@@ -53,13 +53,12 @@ export function NodesAndConnections() {
           const targetNode = visible.find((n) => n.id === field.target)
           const isDashed = targetNode?.addressType === 'EOA'
 
-          // A connection is highlighted if either the source or target node is highlighted
+          // A connection is highlighted ONLY if:
+          // 1. It's directly from a selected node to any target
+          // 2. It's directly to a selected node from any source
+          // NOT if it's from a first-degree neighbor (unless that neighbor is also selected)
           const connectionHighlighted =
-            enableDimming && selected.length > 0
-              ? highlightedNodeIds.includes(node.id) &&
-                highlightedNodeIds.includes(field.target)
-              : selected.includes(node.id) || selected.includes(field.target)
-
+            selected.includes(node.id) || selected.includes(field.target)
           // Dim connections when there are selected nodes, dimming is enabled, and this connection is not highlighted
           const isDimmed =
             enableDimming && selected.length > 0 && !connectionHighlighted
