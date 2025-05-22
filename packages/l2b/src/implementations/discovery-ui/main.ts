@@ -42,18 +42,22 @@ const projectSearchTermParamsSchema = z.object({
   address: z.string().optional(),
 })
 
-// TODO(radomski): Removed something because new zod didn't like it, don't know why it was here
 const discoverQuerySchema = z.object({
   project: safeStringSchema,
   chain: safeStringSchema,
-  devMode: z.enum(['true', 'false']).transform((val) => val === 'true'),
+  devMode: z
+    .enum(['true', 'false'], {
+      error: () => ({ message: "devMode must be 'true' or 'false'." }),
+    })
+    .transform((val) => val === 'true'),
 })
 
-// TODO(radomski): Removed something because new zod didn't like it, don't know why it was here
 const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
-  against: z.enum(['templates', 'projects']),
+  against: z.enum(['templates', 'projects'], {
+    error: () => ({ message: "against must be 'templates' or 'projects'." }),
+  }),
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
