@@ -11,7 +11,7 @@
     "format:fix": "biome format --write .",
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
-    "start": "node -r source-map-support/register build/index.js",
+    "start": "node build/index.js",
     "dev": "node -r esbuild-register --watch src/index.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
