@@ -44,13 +44,14 @@ export function DecodedView({ decoded, onBack }: Props) {
 
 interface ExplorerLinkProps {
   href: string
+  className?: string
   children: ReactNode
 }
 
 function ExplorerLink(props: ExplorerLinkProps) {
   return (
     <a
-      className="w-min font-mono text-blue-400"
+      className={clsx('font-mono text-blue-400', props.className)}
       href={props.href}
       target="_blank"
       rel="noopener noreferrer"
@@ -106,7 +107,7 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
   if (decoded.type === 'address') {
     return (
       <div className="flex items-center gap-2">
-        <ExplorerLink href={decoded.explorerLink}>
+        <ExplorerLink className="w-min" href={decoded.explorerLink}>
           {decoded.name} {decoded.value}
         </ExplorerLink>
         {decoded.discovered && <Badge>DISCOVERED</Badge>}
