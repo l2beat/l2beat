@@ -215,7 +215,7 @@ export class ProjectDiscovery {
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
+      `* A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
         fullModulesDescription,
     ]
   }
@@ -224,7 +224,6 @@ export class ProjectDiscovery {
     identifier: string,
     description: string | string[],
     userReferences?: ReferenceLink[],
-    useBulletPoints: boolean = false,
   ): ProjectPermission {
     const contract = this.getContract(identifier)
 
@@ -234,11 +233,11 @@ export class ProjectDiscovery {
 
     const multisigDesc = this.getMultisigDescription(identifier)
 
-    const combinedDescriptions = [...multisigDesc, ...passedDescription]
+    const combinedDescriptions = [...multisigDesc, ...passedDescription].filter(
+      (s) => s !== undefined && s !== '',
+    )
 
-    const formattedDesc = useBulletPoints
-      ? formatAsBulletPoints(combinedDescriptions)
-      : combinedDescriptions.join(' ')
+    const formattedDesc = combinedDescriptions.join('\n')
 
     const descriptionWithContractNames =
       this.replaceAddressesWithNames(formattedDesc)
@@ -642,7 +641,9 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(addresses)
   }
 
-  describeGnosisSafeMembership(contractOrEoa: EntryParameters): string[] {
+  describeGnosisSafeMembership(
+    contractOrEoa: EntryParameters,
+  ): string | undefined {
     const safesWithThisMember = this.discoveries
       .flatMap((discovery) => discovery.entries)
       .filter((contract) => isMultisigLike(contract))
@@ -653,8 +654,8 @@ export class ProjectDiscovery {
       )
       .map((contract) => contract.name)
     return safesWithThisMember.length === 0
-      ? []
-      : ['Member of ' + safesWithThisMember.join(', ') + '.']
+      ? undefined
+      : '* Member of ' + safesWithThisMember.join(', ') + '.'
   }
 
   describeRolePermissions(
@@ -751,15 +752,14 @@ export class ProjectDiscovery {
   describeContractOrEoa(
     contractOrEoa: EntryParameters,
     describeRoles: boolean = true,
-  ): string[] {
+  ): string {
     return [
       contractOrEoa.description,
-      ...this.describeGnosisSafeMembership(contractOrEoa),
-      ...this.permissionRegistry.describePermissions(
-        contractOrEoa,
-        describeRoles,
-      ),
-    ].filter(notUndefined)
+      this.describeGnosisSafeMembership(contractOrEoa),
+      this.permissionRegistry.describePermissions(contractOrEoa, describeRoles),
+    ]
+      .filter(notUndefined)
+      .join('\n')
   }
 
   replaceAddressesWithNames(s: string): string {
@@ -815,23 +815,15 @@ export class ProjectDiscovery {
             contract.address.toString(),
             descriptions,
             [],
-            true,
           ),
         )
       } else {
-        allActors.push(
-          this.contractAsPermissioned(
-            contract,
-            formatAsBulletPoints(descriptions),
-          ),
-        )
+        allActors.push(this.contractAsPermissioned(contract, descriptions))
       }
     }
 
     for (const eoa of permissionedEoas) {
-      const description = formatAsBulletPoints(
-        this.describeContractOrEoa(eoa, false),
-      )
+      const description = this.describeContractOrEoa(eoa, false)
       allActors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: this.formatPermissionedAccounts([eoa.address]),
@@ -969,10 +961,7 @@ export class ProjectDiscovery {
         const upgradableBy = this.permissionRegistry.getUpgradableBy(contract)
 
         return this.getContractDetails(contract.address.toString(), {
-          description: formatAsBulletPoints(
-            this.describeContractOrEoa(contract, true),
-            { skipForSingle: true },
-          ),
+          description: this.describeContractOrEoa(contract, true),
           ...(upgradableBy.length > 0 ? { upgradableBy } : {}),
           discoveryDrivenData: true,
         })
@@ -1011,15 +1000,6 @@ function isNonNullable<T>(
   value: T | undefined | null,
 ): value is NonNullable<T> {
   return value !== null && value !== undefined
-}
-
-export function formatAsBulletPoints(
-  description: string[],
-  options: { skipForSingle?: boolean } = {},
-): string {
-  return description.length > 1 || !options.skipForSingle
-    ? description.map((s) => `* ${s}\n`).join('')
-    : description.join(' ')
 }
 
 function isEntryVerified(entry: EntryParameters): boolean {

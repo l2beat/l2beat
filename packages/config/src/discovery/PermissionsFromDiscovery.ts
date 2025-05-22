@@ -68,7 +68,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           .map((d) => formatPermissionDelay(Number(d)))
           .join(' or ')
         return [
-          `Can upgrade **${delaysString}**`,
+          `* Can upgrade **${delaysString}**`,
           ...Object.values(permissionsByDelay).map((p) => {
             const name = this.projectDiscovery.getContract(p.from).name
             const vias = Object.values(p.permissionsByDelay).map((p) =>
@@ -109,7 +109,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           return result.join(' ')
         })
         .join('\n')
-      return `Can interact with ${name}\n${permissionsString}`
+      return `* Can interact with ${name}\n${permissionsString}`
     })
   }
 
@@ -125,7 +125,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       .map((p) => {
         const prefix = UltimatePermissionToPrefix[p.permission]
         const via = this.formatPermissionVia(p)
-        return `${prefix} ${via}`
+        return `* ${prefix} ${via}`
       })
   }
 
@@ -139,7 +139,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       if (p.role) {
         let text = receiverName
         if (p.condition) {
-          text += ` if ${formatPermissionCondition(p.condition)}`
+          text += ` ${formatPermissionCondition(p.condition)}`
         }
         const prettyfiedRole = prettifyRole(p.role)
         roles[prettyfiedRole] ??= {
@@ -166,7 +166,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       result.push(value.join(''))
     }
     if (result.length > 0) {
-      result.unshift('Roles:')
+      result.unshift('* Roles:')
     }
     return [result.join('\n')]
   }
@@ -174,14 +174,14 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   describePermissions(
     contractOrEoa: EntryParameters,
     describeRoles: boolean = true,
-  ) {
+  ): string {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
     const legacy = this.describeLegacyPermissions(contractOrEoa)
     const roles = describeRoles ? this.describeRoles(contractOrEoa) : []
-    return [...upgrade, ...interact, ...legacy, ...roles].filter(
-      (s) => s !== '',
-    )
+    return [...upgrade, ...interact, ...legacy, ...roles]
+      .filter((s) => s !== '')
+      .join('\n')
   }
 
   getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
