@@ -950,11 +950,7 @@ export class ProjectDiscovery {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
       })
 
-    // const gnosisModules = contracts.flatMap((contract) =>
-    //   toAddressArray(contract.values?.GnosisSafe_modules),
-    // )
     const result = contracts
-      // .filter((contract) => !gnosisModules.includes(contract.address))
       .filter((contract) => contract.receivedPermissions === undefined)
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {

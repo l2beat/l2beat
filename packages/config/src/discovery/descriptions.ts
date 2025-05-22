@@ -1,30 +1,5 @@
 import type { Permission, RolePermissionEntries } from '@l2beat/discovery'
 
-export const DirectPermissionToPrefix: {
-  [key in Permission]: string | undefined
-} = {
-  interact: 'Can be used to interact with',
-  upgrade: 'Can be used to upgrade implementation of',
-  act: 'Can act on behalf of',
-  guard: 'Can act as a Guardian',
-  challenge: 'Can act as a Challenger',
-  propose: 'Can act as a Proposer',
-  sequence: 'Can act as a Sequencer',
-  validate: 'Can act as a Validator',
-  operateLinea: 'Can act as an Operator',
-  fastconfirm: 'Can act as a FastConfirmer',
-  validateZkStack: 'Can act as a Validator',
-  relay: 'Can act as a Relayer',
-  validateBridge: 'Can act as a Validator',
-  validateBridge2: 'Can act as a Validator',
-  validateBridge3: 'Can act as a Validator',
-  aggregatePolygon: 'Can act as a trusted Aggregator',
-  operateStarknet: 'Can act as an Operator',
-  operateStarkEx: 'Can act as an Operator',
-  governStarknet: 'Can act as a Governor',
-  member: 'Is a member of',
-}
-
 export const UltimatePermissionToPrefix: {
   [key in Permission]: string | undefined
 } = {
