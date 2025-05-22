@@ -1,6 +1,6 @@
 import type { Chain } from '@/chains'
 import type { Block } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { BlockClient } from './BlockClient'
 
 // TODO: To be replaced by BlockProvider from @l2beat/shared

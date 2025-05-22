@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export class FourByteClient {
   async lookup(selector: `0x${string}`): Promise<string[]> {

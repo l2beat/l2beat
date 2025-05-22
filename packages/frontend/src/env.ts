@@ -29,7 +29,7 @@ const SERVER_CONFIG = {
     .string()
     .url()
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
-  DATABASE_LOG_ENABLED: coerceBoolean.default('false'),
+  DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default(false),
   NODE_ENV: z

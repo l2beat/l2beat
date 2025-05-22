@@ -1004,7 +1004,7 @@ importers:
         specifier: ^2.8.14
         version: 2.21.36(typescript@5.6.3)(zod@3.25.17)
       zod:
-        specifier: ^3.23.8
+        specifier: ^3.25.17
         version: 3.25.17
     devDependencies:
       '@l2beat/typescript-config':

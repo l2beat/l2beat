@@ -2,7 +2,7 @@ import type { Server } from 'http'
 import type { Logger } from '@l2beat/backend-tools'
 import cors from 'cors'
 import express from 'express'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { Config } from '../config/types'
 import type { ApiController } from '../domain/ApiController'
 

@@ -1,5 +1,5 @@
 import { formatAbi } from 'abitype'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { RateLimiter } from './RateLimiter'
 
 export interface ContractInfo {
