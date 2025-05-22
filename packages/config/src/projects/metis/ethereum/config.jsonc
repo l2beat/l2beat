@@ -23,7 +23,8 @@
     "0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager",
     "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "LockingInfo",
     "0x735Aad08c5eF7620b6422E85613f8335Ec07b573": "EquilibriaStakingPool",
-    "0x62478E4eeb4070fE399866aB05e821AB97200947": "RewardEscrowerMultisig"
+    "0x62478E4eeb4070fE399866aB05e821AB97200947": "RewardEscrowerMultisig",
+    "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": "unverified_MVM_FraudVerifier"
   },
   "overrides": {
     "0xfA947f70c3509d5b70A606e871aE0C85397D0738": {

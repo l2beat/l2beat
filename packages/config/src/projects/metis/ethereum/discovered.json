@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22530402,
+  "blockNumber": 22537952,
   "configHash": "0x556ac373a56883c5bf21b35d4a11469064ef6ad714162ea8d2fd3da1694af084",
   "entries": [
     {
@@ -90,7 +90,7 @@
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "439088283172960613228411",
+        "totalLocked": "439089040806059990733197",
         "totalRewardsLiquidated": "42296928236590808876180"
       },
       "implementationNames": {
@@ -119,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000682d9d770001382e21",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682d9d770001382e21",
-        "length": 28699,
-        "lengthByChainId": 28699,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000682efb33000138486b",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000682efb33000138486b",
+        "length": 28733,
+        "lengthByChainId": 28733,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -232,7 +232,7 @@
         "0x558909a2a0c5a264fed5f222b7ceecf453fa3ef587de764b74ae5f8290dde15c"
       ],
       "proxyType": "immutable",
-      "description": "Contract used to manage configuration of global metis values",
+      "description": "Contract used to manage configuration of global Metis values.",
       "sinceTimestamp": 1747126991,
       "sinceBlock": 22473290,
       "values": {
@@ -502,8 +502,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 3981,
-        "getQueueLength": 40265,
+        "getNumPendingQueueElements": 3984,
+        "getQueueLength": 40268,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -540,7 +540,7 @@
       }
     },
     {
-      "name": "",
+      "name": "unverified_MVM_FraudVerifier",
       "address": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb",
       "type": "Contract",
       "unverified": true,
@@ -816,12 +816,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1747819895,
-        "getLastSequencerTimestampByChainId": 1747819895,
-        "getTotalBatches": 28699,
-        "getTotalBatchesByChainId": 28699,
-        "getTotalElements": 20459041,
-        "getTotalElementsByChainId": 20459041,
+        "getLastSequencerTimestamp": 1747909427,
+        "getLastSequencerTimestampByChainId": 1747909427,
+        "getTotalBatches": 28733,
+        "getTotalBatchesByChainId": 28733,
+        "getTotalElements": 20465771,
+        "getTotalElementsByChainId": 20465771,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -940,7 +940,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
-        "currentBatch": 120,
+        "currentBatch": 121,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -1100,11 +1100,13 @@
       "name": "DelayedWMetis",
       "address": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
       "type": "Contract",
+      "template": "metis/DelayedWMetis",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x9d2c1c322c99db1beff551176a6a67aed49220a4307f3d9b797ac7dcc975ecab"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Delayed wrapped Metis token contract.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1747127051,
       "sinceBlock": 22473294,
@@ -2008,6 +2010,7 @@
     "metis/ChainStorageContainer-CTC-batches": "0x9204ffa48447039c6d4c4ce6552397c95ae65ce02590f76b05207a2775fe4777",
     "metis/ChainStorageContainer-CTC-queue": "0xa1e630674758f9d275bdb1dfb9fcce997af7df07ed0598a876ac488bbe8a32e1",
     "metis/ChainStorageContainer-SCC-batches": "0xcd021c2fba2b365c63f7d95323b7c2d6104ef46bb56933bd22cfdfab848cef1d",
+    "metis/DelayedWMetis": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "metis/DisputeGameFactory_Metis": "0x6a8d6f11f834731e39240590d7e622a3fb7a8b6db2dee0f1381bb4bb64111d4a",
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2024,5 +2027,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0x6ba86fcb50d50d06fc233080a7788f25e2e233ee7d5eb4cb46c4057beb89e6ad"
+  "permissionsConfigHash": "0xec991eaf20265d49356d9d4a596c83d693ac8efd7ddf67346bc0ea4b54b76775"
 }

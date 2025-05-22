@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x301aa0184a84bbc0ecead4b6e616b933f3030395
+Generated with discovered.json: 0x2bb47ba7f5887b649641d02b7d3eb0b3b71f8516
 
-# Diff at Wed, 21 May 2025 09:34:01 GMT:
+# Diff at Thu, 22 May 2025 10:55:39 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
-- current block number: 22530402
+- current block number: 22537952
 
 ## Description
 
@@ -64,11 +64,11 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 
 ```diff
     contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff) {
-    +++ description: Contract used to manage configuration of global metis values
+    +++ description: Contract used to manage configuration of global Metis values.
       template:
 +        "metis/MetisConfig"
       description:
-+        "Contract used to manage configuration of global metis values"
++        "Contract used to manage configuration of global Metis values."
     }
 ```
 
@@ -138,6 +138,15 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 +        "metis/BondManager"
       description:
 +        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented."
+    }
+```
+
+```diff
+    contract unverified_MVM_FraudVerifier (0x5fF5316CD1C015970eEC83D34a69E504B577a5bb) {
+    +++ description: None
+      name:
+-        ""
++        "unverified_MVM_FraudVerifier"
     }
 ```
 
@@ -265,6 +274,16 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 +        "metis/MVM_L2ChainManagerOnL1"
       description:
 +        "Contract that allows METIS_MANAGER to switch Sequencer."
+    }
+```
+
+```diff
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      template:
++        "metis/DelayedWMetis"
+      description:
++        "Delayed wrapped Metis token contract."
     }
 ```
 
