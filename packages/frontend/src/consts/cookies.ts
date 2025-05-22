@@ -1,4 +1,3 @@
-import type { ZodTypeAny } from 'zod/v4'
 import { z } from 'zod/v4'
 
 /**
@@ -20,7 +19,7 @@ export const knownCookies = {
  * @param defaultValue default value (required!)
  * @returns an object that can be used in `knownCookies` object
  */
-function knownCookie<T extends ZodTypeAny = ZodTypeAny>(
+function knownCookie<T extends z.Schema = z.Schema>(
   key: string,
   schema: T,
   defaultValue: z.infer<T>,
@@ -28,7 +27,7 @@ function knownCookie<T extends ZodTypeAny = ZodTypeAny>(
   return { key, schema, defaultValue }
 }
 
-type KnownCookie<T extends ZodTypeAny = ZodTypeAny> = ReturnType<
+type KnownCookie<T extends z.Schema = z.Schema> = ReturnType<
   typeof knownCookie<T>
 >
 
