@@ -15,7 +15,7 @@ export function getDb() {
             ...pool(),
           },
           {
-            loggerEnabled: true,
+            loggerEnabled: env.DATABASE_LOG_ENABLED,
           },
         )
       : createThrowingProxy()
