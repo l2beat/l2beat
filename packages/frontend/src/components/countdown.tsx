@@ -59,7 +59,7 @@ export function TextCountdown({ expiresAt }: { expiresAt: number }) {
 
   const { days, hours, minutes, seconds } = getTimeParts(secondsLeft)
   return (
-    <span>
+    <span suppressHydrationWarning>
       {days} days {hours} hours {minutes} minutes {seconds} seconds
     </span>
   )

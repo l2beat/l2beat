@@ -12,7 +12,7 @@ describe(InMemoryCache.name, () => {
       const cache = new InMemoryCache(initialCache)
       const fallback = mockFn().resolvesTo('test2')
 
-      const result = await cache.get({ key: 'key', ttl: 1000 }, fallback)
+      const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
       expect(fallback).not.toHaveBeenCalled()
       expect(cache._get('key')).toEqual({ result: 'test', timestamp: now })
@@ -27,7 +27,7 @@ describe(InMemoryCache.name, () => {
       const cache = new InMemoryCache(initialCache)
       const fallback = mockFn().resolvesTo('test2')
 
-      const result = await cache.get({ key: 'key', ttl: 1000 }, fallback)
+      const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
       expect(fallback).toHaveBeenCalled()
       expect(cache._get('key')).toEqual({ result: 'test2', timestamp: now })
@@ -39,9 +39,9 @@ describe(InMemoryCache.name, () => {
       const fallback = mockFn().resolvesTo('test2')
 
       const [res1, res2, res3] = await Promise.all([
-        cache.get({ key: 'key', ttl: 1000 }, fallback),
-        cache.get({ key: 'key', ttl: 1000 }, fallback),
-        cache.get({ key: 'key', ttl: 1000 }, fallback),
+        cache.get({ key: ['key'], ttl: 1000 }, fallback),
+        cache.get({ key: ['key'], ttl: 1000 }, fallback),
+        cache.get({ key: ['key'], ttl: 1000 }, fallback),
       ])
 
       expect(fallback).toHaveBeenCalledTimes(1)
@@ -51,8 +51,8 @@ describe(InMemoryCache.name, () => {
     })
 
     it('should timeout if fallback takes too long', async () => {
-      const cache = new InMemoryCache(undefined, 0)
-      const cacheOptions = { key: 'key', ttl: 1000 }
+      const cache = new InMemoryCache(undefined, true, 0)
+      const cacheOptions = { key: ['key'], ttl: 1000 }
       const fallback1 = () =>
         new Promise((resolve) => setTimeout(() => resolve('test1'), 10))
       const fallback2 = () => new Promise((resolve) => resolve('test2'))
