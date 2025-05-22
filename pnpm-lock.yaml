@@ -993,7 +993,7 @@ importers:
         version: 5.0.0
       abitype:
         specifier: ^1.0.6
-        version: 1.0.6(typescript@5.6.3)(zod@3.23.8)
+        version: 1.0.6(typescript@5.6.3)(zod@3.25.17)
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -1002,10 +1002,10 @@ importers:
         version: 5.0.1
       viem:
         specifier: ^2.8.14
-        version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
+        version: 2.21.36(typescript@5.6.3)(zod@3.25.17)
       zod:
         specifier: ^3.23.8
-        version: 3.23.8
+        version: 3.25.17
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
