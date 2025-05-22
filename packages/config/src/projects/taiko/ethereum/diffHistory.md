@@ -12,6 +12,8 @@ Main TaikoL1 contract has been upgraded to an intermediate proxy that points to 
 
 At the time of writing, calls are still forwarded to the old impl as the Pacaya fork is expected to go live on Wed 21 May. `ITaikoInbox` and `TaikoInbox` replace `ITaikoL1` and `TaikoL1`. Batches have replaced blocks, as now one batch can contain multiple blocks. Instead of `proposeBlocksV2`, the `proposeBatch` function is called to sequence blocks. An `InboxWrapper` contract has been introduced, which is referenced by the `TaikoInbox`. The `InboxWrapper` references a `ForcedInclusionStore` contract that is used to submit forced transactions. All forced transactions must pay a fee, and it's currently set to a very high value meaning that the mechanism is in practice disabled. The slowest forced transactions can be included is one by one every 255 batches, creating a potential DoS attack via spam of forced transactions. It's therefore not clear how to estimate exit windows (not that it matters rn).
 
+The `verifyBatches` function reflects the removal of tiers. The main function is still to credit back bonds to the proposer, specifically the full liveness bond if the block has been proved within the proving window, or half bond if not.
+
 ## Watched changes
 
 ```diff

@@ -252,7 +252,7 @@ struct BatchInfo {
 }
 ```
 
-It is recommended to check the diagram above to understand how it is constructed. A `Batch` structure is also populated to be then saved in the `batches` mapping under the `numBatches % batchRingBufferSize` key. Then the `numBatches` is incremented, and the `lastProposedIn` is set to the current block number. Finally, the `debitBond` function is called to collect the liveness bond, which is slashed if the proposed block doesn't get timely proven. The token used is the `_bondToken`, and the amount is the `livenessBond` value.
+It is recommended to check the diagram above to understand how it is constructed. A `Batch` structure is also populated to be then saved in the `batches` mapping under the `numBatches % batchRingBufferSize` key. A `verifiedTransitionId` of 0 and a `nextTransitionId` of 1 means that a batch has been sequenced but not yet proven. Then the `numBatches` is incremented, and the `lastProposedIn` is set to the current block number. Finally, the `debitBond` function is called to collect the liveness bond, which is slashed if the proposed block doesn't get timely proven. The token used is the `_bondToken`, and the amount is the `livenessBond` value.
 
 The `verifyBlock` function is then called, which is discussed in the [proof system](proof_system.md) page.
 
