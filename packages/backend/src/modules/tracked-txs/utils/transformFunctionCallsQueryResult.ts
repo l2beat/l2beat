@@ -11,6 +11,7 @@ import type {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
+import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
 import { isChainIdMatching } from './isChainIdMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -82,7 +83,12 @@ export function transformFunctionCallsQueryResult(
           receiptGasUsed: r.receipt_gas_used,
           gasPrice: r.gas_price,
           dataLength: r.data_length,
-          calldataGasUsed: r.calldata_gas_used,
+          calldataGasUsed: calculateCalldataGasUsed(
+            r.block_number,
+            r.data_length,
+            r.non_zero_bytes,
+            r.receipt_gas_used,
+          ),
           receiptBlobGasUsed: r.receipt_blob_gas_used,
           receiptBlobGasPrice: r.receipt_blob_gas_price,
         }) as const,

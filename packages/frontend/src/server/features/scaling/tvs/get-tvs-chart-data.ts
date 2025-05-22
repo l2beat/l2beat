@@ -22,7 +22,7 @@ export const TvsChartDataParams = z.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
   excludeAssociatedTokens: z.boolean(),
-  previewRecategorisation: z.boolean().default(false),
+  previewRecategorisation: z.boolean(),
 })
 
 export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>

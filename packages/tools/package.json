@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/tools-api": "workspace:*",
     "@tanstack/react-query": "^5.59.16",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

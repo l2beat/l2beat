@@ -2,7 +2,7 @@ import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import http from 'http'
 import path from 'path'
-import { assert } from '@l2beat/shared-pure'
+import { assert, slidingWindow } from '@l2beat/shared-pure'
 import Convert from 'ansi-to-html'
 import chalk from 'chalk'
 import { splitIntoSubfiles } from './powerdiff/splitIntoFiles'
@@ -18,10 +18,12 @@ const displayModeMap: Record<DisplayMode, string> = {
   'side-by-side': '--display=side-by-side-show-both --width=200',
 }
 
-export interface LeftRightPair {
-  left: string
-  right: string
-}
+export type ValidatedLeftRightPair = { left: string; right: string }
+
+export type LeftRightPair =
+  | ValidatedLeftRightPair
+  | { left: string; right: undefined }
+  | { left: undefined; right: string }
 
 function diffToHtml(
   path1: string,
@@ -57,7 +59,7 @@ function diffToHtml(
     config.path2 = splitResult.path2
     for (const list of splitResult.filePathsList) {
       const { left, right } = list
-      if (left === right) {
+      if (left === right || left === undefined || right === undefined) {
         result.push(diffPaths(config, [list]))
       } else {
         const filePathsList = processGitDiff(gitDiffFolders(left, right))
@@ -93,15 +95,14 @@ function diffPaths(
   for (const filePaths of filePathsList) {
     let status: 'diff' | 'added' | 'removed' = 'diff'
     let diff
-    if (filePaths.left === filePaths.right) {
+    if (filePaths.left === undefined) {
+      diff = readFileSync(filePaths.right).toString()
+      status = 'added'
+      diff = chalk.greenBright(diff)
+    } else if (filePaths.right === undefined) {
       diff = readFileSync(filePaths.left).toString()
-      if (filePaths.left.startsWith(addTrailingSlash(config.path1))) {
-        status = 'removed'
-        diff = chalk.redBright(diff)
-      } else {
-        status = 'added'
-        diff = chalk.greenBright(diff)
-      }
+      status = 'removed'
+      diff = chalk.redBright(diff)
     } else {
       diff = compareUsingDifftastic(
         filePaths.left,
@@ -122,7 +123,7 @@ function diffPaths(
           `Error with difftastic: exceeded DFT_PARSE_ERROR_LIMIT for ${filePaths.left}`,
         )
         result.push(
-          `<div class="warning">  
+          `<div class="warning">
             <p>Error with difftastic:</p>
             <p><code>exceeded DFT_PARSE_ERROR_LIMIT</code></p>
             <p>Include the following command to increase the limit:</p>
@@ -140,28 +141,33 @@ function diffPaths(
 
 function processGitDiff(gitDiff: string): LeftRightPair[] {
   const lines = gitDiff.split('\n')
-  const pathLines = lines.filter((line) => line.startsWith('diff --git'))
-  const pathsList = pathLines.map((path) => {
-    // Find the start of first path (after 'a/')
-    const aIndex = path.indexOf('a/')
-    assert(
-      aIndex !== -1,
-      `Invalid git diff line - missing 'a/' prefix: ${path}`,
-    )
 
-    // Find the separator between paths (space before 'b/')
-    const bIndex = path.indexOf(' b/')
-    assert(
-      bIndex !== -1,
-      `Invalid git diff line - missing ' b/' separator: ${path}`,
-    )
+  const matches = lines.filter(
+    (line) => line.startsWith('---') || line.startsWith('+++'),
+  )
 
-    const left = path.slice(aIndex + 2, bIndex) // +2 to skip 'a/'
-    const right = path.slice(bIndex + 3) // +3 to skip ' b/'
+  const validMatches =
+    matches.every((line, i) => {
+      return line.startsWith(i % 2 === 0 ? '---' : '+++')
+    }) && matches.length % 2 === 0
+  assert(validMatches, 'Failed to parse the git diff result')
 
-    return { left, right }
-  })
-  return pathsList
+  const matchesTrimed = matches.map((match) => match.slice(4).trim())
+  const window = slidingWindow(matchesTrimed, 2, 2)
+
+  const result: LeftRightPair[] = []
+  for (const element of window) {
+    const [left, right] = element
+
+    const pair = {
+      left: left === '/dev/null' ? undefined : left.slice(2),
+      right: right === '/dev/null' ? undefined : right.slice(2),
+    } as LeftRightPair
+    assert(pair.left !== undefined || pair.right !== undefined)
+    result.push(pair)
+  }
+
+  return result
 }
 
 function compareUsingDifftastic(
@@ -236,7 +242,7 @@ function genDiffHtml(
   result.push('</pre>')
 
   return collapsible(
-    `(${status}) ${filePaths.left.split('/').slice(-1)[0]}`,
+    `(${status}) ${(filePaths.left ?? filePaths.right).split('/').slice(-1)[0]}`,
     result.join('\n'),
   )
 }
@@ -374,7 +380,7 @@ const HTML_START = `
     <script>
       function toggleCollapse(element) {
         var content = element;
-        
+
         if (content.classList.contains('expanded')) {
             content.classList.remove('expanded');
         } else {
@@ -386,10 +392,6 @@ const HTML_START = `
   `
 
 const HTML_END = '<br><br></body></html>'
-
-function addTrailingSlash(path: string): string {
-  return path.endsWith('/') ? path : `${path}/`
-}
 
 export function powerdiff(
   path1: string,

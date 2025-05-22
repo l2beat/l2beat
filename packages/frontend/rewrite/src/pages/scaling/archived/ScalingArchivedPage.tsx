@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingArchivedEntry>
 }
 
-export function ScalingArchivedPage(props: Props) {
+export function ScalingArchivedPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextArchivedPage entries={props.entries} />
+        <NextArchivedPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )

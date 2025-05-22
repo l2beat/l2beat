@@ -3,6 +3,7 @@ import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { ps } from '~/server/projects'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesProjectData(
@@ -35,9 +36,16 @@ export async function getBridgesProjectData(
 
   if (!project) return undefined
 
+  const helpers = getExpressHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
     getBridgesProjectEntry(project),
+    helpers.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+      previewRecategorisation: false,
+    }),
   ])
 
   return {
@@ -57,6 +65,7 @@ export async function getBridgesProjectData(
       props: {
         ...appLayoutProps,
         projectEntry,
+        queryState: helpers.dehydrate(),
       },
     },
   }

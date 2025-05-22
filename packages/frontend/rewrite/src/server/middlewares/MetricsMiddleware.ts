@@ -6,6 +6,10 @@ export function MetricsMiddleware(
   res: Response,
   next: NextFunction,
 ) {
+  if (env.NODE_ENV !== 'production') {
+    console.log(`[${req.method}] ${req.originalUrl} - processing...`)
+  }
+
   const start = process.hrtime.bigint()
 
   const originalSend = res.send

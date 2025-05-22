@@ -1,16 +1,26 @@
+import type { Request } from 'express'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { ICache } from 'rewrite/src/server/cache/ICache'
+import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingDaEntries } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingDataAvailabilityData(
+  req: Request,
   manifest: Manifest,
-  url: string,
+  cache: ICache,
 ): Promise<RenderData> {
+  const cookies = parseCookies(req)
   const [appLayoutProps, entries] = await Promise.all([
-    getAppLayoutProps(),
-    getScalingDaEntries(),
+    getAppLayoutProps({
+      recategorisationPreview: cookies.recategorisationPreview,
+    }),
+    cache.get(
+      { key: ['scaling', 'data-availability', 'entries'], ttl: 10 * 60 },
+      getScalingDaEntries,
+    ),
   ])
 
   return {
@@ -18,7 +28,7 @@ export async function getScalingDataAvailabilityData(
       manifest,
       metadata: getMetadata(manifest, {
         openGraph: {
-          url,
+          url: req.originalUrl,
           image: '/meta-images/scaling/data-availability/opengraph-image.png',
         },
       }),
