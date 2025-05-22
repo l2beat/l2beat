@@ -6,7 +6,7 @@ export function NodesAndConnections() {
   const nodes = useStore((state) => state.nodes)
   const hidden = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
-  const { enableDimming } = useStore((state) => state.userPreferences)
+  const enableDimming = useStore((state) => state.userPreferences.enableDimming)
   const visible = nodes.filter((node) => !hidden.includes(node.id))
 
   // Only compute highlighted nodes if dimming is enabled and we have selections
