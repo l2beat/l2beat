@@ -196,12 +196,13 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       return withLayouts(state, panels)
     }),
   resizeAll: () =>
-    set((state) => ({
-      panels: state.panels.map((panel) => ({
+    set((state) => {
+      const panels = state.panels.map((panel) => ({
         ...panel,
         size: panel.id === 'list' ? 0.5 : 1,
-      })),
-    })),
+      }))
+      return withLayouts(state, panels)
+    }),
   mouseMove: (x, y) => set(() => ({ mouse: { x, y } })),
   pickUp: (id) => set(() => ({ pickedUp: id })),
   order: (id, before) =>
