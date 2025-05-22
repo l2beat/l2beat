@@ -12,30 +12,48 @@ export type KnownCookies = {
 
 export function parseCookies(req: Request): KnownCookies {
   const rawCookies = req.headers.cookie ?? ''
+
+  const allowedCookies = Object.keys(knownCookies) as KnownCookieName[]
+
   const parsedCookies = Object.fromEntries(
     rawCookies
       .split('; ')
       .map((rawCookie) => {
+        if (rawCookie === '') {
+          return undefined
+        }
+
         const [key, ...v] = rawCookie.split('=')
         if (!key) {
           throw new Error('Invalid cookie')
         }
-        const meta = knownCookies[key as KnownCookieName]
+        return [key, decodeURIComponent(v.join('='))] as const
+      })
+      .filter((cookie) => cookie !== undefined),
+  )
+
+  const parsedAllowedCookies = Object.fromEntries(
+    allowedCookies
+      .map((allowedCookie) => {
+        const cookie = parsedCookies[allowedCookie]
+        const meta = knownCookies[allowedCookie]
         if (!meta) {
           return undefined
         }
-        const cookie = decodeURIComponent(v.join('='))
         if (cookie === undefined) {
-          return [key, meta.defaultValue] as const
+          return [allowedCookie, meta.defaultValue] as const
         }
 
         return [
-          key,
-          parseKnownCookie({ name: key as KnownCookieName, value: cookie }),
+          allowedCookie,
+          parseKnownCookie({
+            name: allowedCookie,
+            value: cookie,
+          }),
         ] as const
       })
       .filter((x) => x !== undefined),
   )
 
-  return parsedCookies as unknown as KnownCookies
+  return parsedAllowedCookies as unknown as KnownCookies
 }
