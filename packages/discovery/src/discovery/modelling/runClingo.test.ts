@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { runClingo } from './runClingo'
-import { assert } from '@l2beat/shared-pure'
 
 describe(runClingo.name, () => {
   it('runs clingo on passed program', async () => {

@@ -13,12 +13,12 @@
         "type": "object",
         "properties": {
           "mode": {
-            "type": "string",
-            "enum": ["auto", "custom"]
+            "enum": [
+              "auto",
+              "custom"
+            ]
           },
-          "id": {
-            "type": "string"
-          },
+          "id": {},
           "priceId": {
             "type": "string"
           },
@@ -37,262 +37,554 @@
           "amount": {
             "anyOf": [
               {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "const": "calculation"
-                  },
-                  "operator": {
-                    "type": "string",
-                    "enum": ["sum", "diff", "max", "min"]
-                  },
-                  "arguments": {
-                    "type": "array",
-                    "items": {
-                      "anyOf": [
-                        {
-                          "$ref": "#/properties/tokens/items/properties/amount/anyOf/0"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "const": "value"
-                            },
-                            "amount": {
-                              "anyOf": [
-                                {
-                                  "anyOf": [
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "const": "balanceOfEscrow"
-                                        },
-                                        "chain": {
-                                          "type": "string"
-                                        },
-                                        "sinceTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "untilTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "address": {
-                                          "anyOf": [
-                                            {
-                                              "type": "string"
-                                            },
-                                            {
-                                              "type": "string",
-                                              "const": "native"
-                                            }
-                                          ]
-                                        },
-                                        "decimals": {
-                                          "type": "number"
-                                        },
-                                        "escrowAddress": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "chain",
-                                        "sinceTimestamp",
-                                        "address",
-                                        "decimals",
-                                        "escrowAddress"
-                                      ],
-                                      "additionalProperties": false
-                                    },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "const": "totalSupply"
-                                        },
-                                        "chain": {
-                                          "type": "string"
-                                        },
-                                        "sinceTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "untilTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "address": {
-                                          "type": "string"
-                                        },
-                                        "decimals": {
-                                          "type": "number"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "chain",
-                                        "sinceTimestamp",
-                                        "address",
-                                        "decimals"
-                                      ],
-                                      "additionalProperties": false
-                                    },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "const": "circulatingSupply"
-                                        },
-                                        "sinceTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "untilTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "apiId": {
-                                          "type": "string"
-                                        },
-                                        "decimals": {
-                                          "type": "number"
-                                        },
-                                        "address": {
-                                          "type": "string"
-                                        },
-                                        "chain": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "sinceTimestamp",
-                                        "apiId",
-                                        "decimals",
-                                        "address",
-                                        "chain"
-                                      ],
-                                      "additionalProperties": false
-                                    },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "const": "const"
-                                        },
-                                        "sinceTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "untilTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        },
-                                        "decimals": {
-                                          "type": "number"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "sinceTimestamp",
-                                        "value",
-                                        "decimals"
-                                      ],
-                                      "additionalProperties": false
-                                    },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "const": "starknetTotalSupply"
-                                        },
-                                        "chain": {
-                                          "type": "string"
-                                        },
-                                        "sinceTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "untilTimestamp": {
-                                          "type": "number"
-                                        },
-                                        "address": {
-                                          "type": "string"
-                                        },
-                                        "decimals": {
-                                          "type": "number"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "chain",
-                                        "sinceTimestamp",
-                                        "address",
-                                        "decimals"
-                                      ],
-                                      "additionalProperties": false
-                                    }
-                                  ]
-                                },
-                                {
-                                  "$ref": "#/properties/tokens/items/properties/amount/anyOf/0"
-                                }
-                              ]
-                            },
-                            "priceId": {
-                              "type": "string"
-                            }
-                          },
-                          "required": ["type", "amount", "priceId"],
-                          "additionalProperties": false
-                        },
-                        {
-                          "$ref": "#/properties/tokens/items/properties/amount/anyOf/0/properties/arguments/items/anyOf/1/properties/amount/anyOf/0"
-                        }
-                      ]
-                    }
-                  }
-                },
-                "required": ["type", "operator", "arguments"],
-                "additionalProperties": false
+                "$ref": "#/$defs/__schema0"
               },
               {
-                "$ref": "#/properties/tokens/items/properties/amount/anyOf/0/properties/arguments/items/anyOf/1/properties/amount/anyOf/0"
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "balanceOfEscrow"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {
+                        "anyOf": [
+                          {},
+                          {
+                            "const": "native"
+                          }
+                        ]
+                      },
+                      "decimals": {
+                        "type": "number"
+                      },
+                      "escrowAddress": {}
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals",
+                      "escrowAddress"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "totalSupply"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {},
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "circulatingSupply"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "apiId": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      },
+                      "address": {},
+                      "chain": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "sinceTimestamp",
+                      "apiId",
+                      "decimals",
+                      "address",
+                      "chain"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "const"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "sinceTimestamp",
+                      "value",
+                      "decimals"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "starknetTotalSupply"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals"
+                    ]
+                  }
+                ]
               }
             ]
           },
           "valueForProject": {
             "anyOf": [
               {
-                "$ref": "#/properties/tokens/items/properties/amount/anyOf/0"
+                "$ref": "#/$defs/__schema0"
               },
               {
-                "$ref": "#/properties/tokens/items/properties/amount/anyOf/0/properties/arguments/items/anyOf/1"
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "value"
+                  },
+                  "amount": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "balanceOfEscrow"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {
+                                "anyOf": [
+                                  {},
+                                  {
+                                    "const": "native"
+                                  }
+                                ]
+                              },
+                              "decimals": {
+                                "type": "number"
+                              },
+                              "escrowAddress": {}
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals",
+                              "escrowAddress"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "totalSupply"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {},
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "circulatingSupply"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "apiId": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              },
+                              "address": {},
+                              "chain": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sinceTimestamp",
+                              "apiId",
+                              "decimals",
+                              "address",
+                              "chain"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "const"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sinceTimestamp",
+                              "value",
+                              "decimals"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "starknetTotalSupply"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "#/$defs/__schema0"
+                      }
+                    ]
+                  },
+                  "priceId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "amount",
+                  "priceId"
+                ]
               }
             ]
           },
           "valueForSummary": {
             "anyOf": [
               {
-                "$ref": "#/properties/tokens/items/properties/amount/anyOf/0"
+                "$ref": "#/$defs/__schema0"
               },
               {
-                "$ref": "#/properties/tokens/items/properties/amount/anyOf/0/properties/arguments/items/anyOf/1"
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "value"
+                  },
+                  "amount": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "balanceOfEscrow"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {
+                                "anyOf": [
+                                  {},
+                                  {
+                                    "const": "native"
+                                  }
+                                ]
+                              },
+                              "decimals": {
+                                "type": "number"
+                              },
+                              "escrowAddress": {}
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals",
+                              "escrowAddress"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "totalSupply"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {},
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "circulatingSupply"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "apiId": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              },
+                              "address": {},
+                              "chain": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sinceTimestamp",
+                              "apiId",
+                              "decimals",
+                              "address",
+                              "chain"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "const"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sinceTimestamp",
+                              "value",
+                              "decimals"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "starknetTotalSupply"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "#/$defs/__schema0"
+                      }
+                    ]
+                  },
+                  "priceId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "amount",
+                  "priceId"
+                ]
               }
             ]
           },
           "category": {
-            "type": "string",
-            "enum": ["ether", "stablecoin", "other"]
+            "enum": [
+              "ether",
+              "stablecoin",
+              "other"
+            ]
           },
           "source": {
-            "type": "string",
-            "enum": ["canonical", "external", "native"]
+            "enum": [
+              "canonical",
+              "external",
+              "native"
+            ]
           },
           "isAssociated": {
             "type": "boolean"
@@ -308,12 +600,383 @@
           "category",
           "source",
           "isAssociated"
-        ],
-        "additionalProperties": false
+        ]
       }
     }
   },
-  "required": ["projectId", "tokens"],
-  "additionalProperties": false,
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "required": [
+    "projectId",
+    "tokens"
+  ],
+  "$defs": {
+    "__schema0": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "calculation"
+        },
+        "operator": {
+          "enum": [
+            "sum",
+            "diff",
+            "max",
+            "min"
+          ]
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/__schema0"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "value"
+                  },
+                  "amount": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "balanceOfEscrow"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {
+                                "anyOf": [
+                                  {},
+                                  {
+                                    "const": "native"
+                                  }
+                                ]
+                              },
+                              "decimals": {
+                                "type": "number"
+                              },
+                              "escrowAddress": {}
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals",
+                              "escrowAddress"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "totalSupply"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {},
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "circulatingSupply"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "apiId": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              },
+                              "address": {},
+                              "chain": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sinceTimestamp",
+                              "apiId",
+                              "decimals",
+                              "address",
+                              "chain"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "const"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sinceTimestamp",
+                              "value",
+                              "decimals"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "const": "starknetTotalSupply"
+                              },
+                              "chain": {
+                                "type": "string"
+                              },
+                              "sinceTimestamp": {
+                                "type": "number"
+                              },
+                              "untilTimestamp": {
+                                "type": "number"
+                              },
+                              "address": {
+                                "type": "string"
+                              },
+                              "decimals": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "chain",
+                              "sinceTimestamp",
+                              "address",
+                              "decimals"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "#/$defs/__schema0"
+                      }
+                    ]
+                  },
+                  "priceId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "amount",
+                  "priceId"
+                ]
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "balanceOfEscrow"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {
+                        "anyOf": [
+                          {},
+                          {
+                            "const": "native"
+                          }
+                        ]
+                      },
+                      "decimals": {
+                        "type": "number"
+                      },
+                      "escrowAddress": {}
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals",
+                      "escrowAddress"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "totalSupply"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {},
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "circulatingSupply"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "apiId": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      },
+                      "address": {},
+                      "chain": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "sinceTimestamp",
+                      "apiId",
+                      "decimals",
+                      "address",
+                      "chain"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "const"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "sinceTimestamp",
+                      "value",
+                      "decimals"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "starknetTotalSupply"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "operator",
+        "arguments"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft-2020-12/schema"
 }

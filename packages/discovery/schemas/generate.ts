@@ -1,30 +1,20 @@
 import { writeFileSync } from 'fs'
 import { z } from 'zod/v4'
-import { zodToJsonSchema } from 'zod-to-json-schema'
 import {
   ColorConfig,
   ColorContract,
   ColorContractField,
-  ContractValueType,
-  DiscoveryCategory,
-  ExternalReference,
 } from '../src/discovery/config/ColorConfig'
 import {
   ContractPermission,
   ContractPermissionField,
-  Permission,
   PermissionsConfig,
-  RawPermissionConfiguration,
 } from '../src/discovery/config/PermissionConfig'
 import {
-  ContractFieldSeverity,
-  DiscoveryCustomType,
-  ManualProxyType,
   StructureConfig,
   StructureContract,
   StructureContractField,
 } from '../src/discovery/config/StructureConfig'
-import { UserHandlerDefinition } from '../src/discovery/handlers/user'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 
 async function generateAndSaveSchema(
@@ -35,23 +25,8 @@ async function generateAndSaveSchema(
   const schemaWithMeta = z
     .object({ $schema: z.string().optional() })
     .merge(baseSchema)
-  const schema = zodToJsonSchema(schemaWithMeta, {
-    definitions: {
-      UserHandlerDefinition,
-      Permission,
-      RawPermissionConfiguration,
-      ContractValueType,
-      ContractFieldSeverity,
-      DiscoveryContractField: StructureContractField,
-      ColorContractField,
-      DiscoveryCustomType,
-      ExternalReference,
-      DiscoveryCategory,
-      ManualProxyType,
-      DiscoveryContract: StructureContract,
-      ColorContract,
-      MergedContract: z.union([StructureContract, ColorContract]),
-    } as const,
+  const schema = z.toJSONSchema(schemaWithMeta, {
+    unrepresentable: 'any',
   })
   writeFileSync(filename, await toPrettyJson(schema))
 }
@@ -59,20 +34,20 @@ async function generateAndSaveSchema(
 async function main() {
   const MergedField = ContractPermissionField.merge(ColorContractField).merge(
     // special handling due to the .refine() call in StructureContractField
-    StructureContractField._def.schema,
+    StructureContractField,
   )
-  const MergedContract = z.object({
-    ...StructureContract.omit({ fields: true }).shape,
-    ...ColorContract.omit({ fields: true }).shape,
-    ...ContractPermission.omit({ fields: true }).shape,
-    fields: z.record(MergedField).optional(),
-  })
-  const MergedConfig = z.object({
-    ...StructureConfig.omit({ overrides: true }).shape,
-    ...ColorConfig.omit({ overrides: true }).shape,
-    ...PermissionsConfig.omit({ overrides: true }).shape,
-    overrides: z.record(MergedContract).optional(),
-  })
+
+  const MergedContract = StructureContract.omit({ fields: true })
+    .merge(ColorContract.omit({ fields: true }))
+    .merge(ContractPermission.omit({ fields: true }))
+    .merge(z.object({ fields: z.record(z.string(), MergedField).optional() }))
+
+  const MergedConfig = StructureConfig.omit({ overrides: true })
+    .merge(ColorConfig.omit({ overrides: true }))
+    .merge(PermissionsConfig.omit({ overrides: true }))
+    .merge(
+      z.object({ overrides: z.record(z.string(), MergedContract).optional() }),
+    )
 
   await generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')
   await generateAndSaveSchema(MergedContract, 'schemas/contract.v2.schema.json')

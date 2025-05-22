@@ -290,9 +290,6 @@ importers:
       p-limit:
         specifier: ^6.1.0
         version: 6.1.0
-      zod-to-json-schema:
-        specifier: ^3.24.4
-        version: 3.24.5(zod@3.25.17)
 
   packages/database:
     dependencies:
@@ -421,9 +418,6 @@ importers:
       mock-fs:
         specifier: ^5.2.0
         version: 5.4.0
-      zod-to-json-schema:
-        specifier: ^3.24.4
-        version: 3.24.5(zod@3.25.17)
 
   packages/eslint-config:
     devDependencies:
@@ -8182,11 +8176,6 @@ packages:
   zip-stream@4.1.1:
     resolution: {integrity: sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==}
     engines: {node: '>= 10'}
-
-  zod-to-json-schema@3.24.5:
-    resolution: {integrity: sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==}
-    peerDependencies:
-      zod: ^3.24.1
 
   zod@3.25.17:
     resolution: {integrity: sha512-8hQzQ/kMOIFbwOgPrm9Sf9rtFHpFUMy4HvN0yEB0spw14aYi0uT5xG5CE2DB9cd51GWNsz+DNO7se1kztHMKnw==}
@@ -16197,10 +16186,6 @@ snapshots:
       archiver-utils: 3.0.4
       compress-commons: 4.1.2
       readable-stream: 3.6.2
-
-  zod-to-json-schema@3.24.5(zod@3.25.17):
-    dependencies:
-      zod: 3.25.17
 
   zod@3.25.17: {}
 

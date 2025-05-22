@@ -1,6 +1,5 @@
 import * as fs from 'fs'
 import { z } from 'zod/v4'
-import { zodToJsonSchema } from 'zod-to-json-schema'
 import { ProjectTvsConfigSchema } from '../../src/types'
 
 function main() {
@@ -9,7 +8,7 @@ function main() {
       .object({ $schema: z.string().optional() })
       .merge(ProjectTvsConfigSchema)
 
-    const schema = zodToJsonSchema(schemaWithMeta)
+    const schema = z.toJSONSchema(schemaWithMeta, { unrepresentable: 'any' })
 
     fs.writeFileSync(
       './src/tvs/json/schema/tvs-config-schema.json',
