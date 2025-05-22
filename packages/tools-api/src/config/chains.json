@@ -1,0 +1,305 @@
+[
+  {
+    "name": "Ethereum Mainnet",
+    "discoveryName": "ethereum",
+    "shortName": "eth",
+    "chainId": 1,
+    "etherscanApi": true,
+    "explorerUrl": "https://etherscan.io",
+    "alchemyId": "eth-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "OP Mainnet",
+    "discoveryName": "optimism",
+    "shortName": "oeth",
+    "chainId": 10,
+    "etherscanApi": true,
+    "explorerUrl": "https://optimistic.etherscan.io",
+    "alchemyId": "opt-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Gnosis",
+    "discoveryName": "gnosis",
+    "shortName": "gno",
+    "chainId": 100,
+    "etherscanApi": true,
+    "explorerUrl": "https://gnosisscan.io",
+    "alchemyId": "gnosis-mainnet",
+    "nativeCurrency": {
+      "name": "xDAI",
+      "symbol": "XDAI",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Metis Andromeda Mainnet",
+    "discoveryName": "metis",
+    "shortName": "metis-andromeda",
+    "chainId": 1088,
+    "etherscanApi": false,
+    "explorerUrl": "https://andromeda-explorer.metis.io",
+    "alchemyId": "metis-mainnet",
+    "nativeCurrency": {
+      "name": "Metis",
+      "symbol": "METIS",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Polygon zkEVM",
+    "discoveryName": "polygonzkevm",
+    "shortName": "zkevm",
+    "chainId": 1101,
+    "etherscanApi": true,
+    "explorerUrl": "https://zkevm.polygonscan.com",
+    "alchemyId": "polygonzkevm-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Unichain",
+    "discoveryName": "unichain",
+    "shortName": "unichain",
+    "chainId": 130,
+    "etherscanApi": true,
+    "explorerUrl": "https://uniscan.xyz",
+    "alchemyId": "unichain-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Polygon Mainnet",
+    "discoveryName": "polygonpos",
+    "shortName": "pol",
+    "chainId": 137,
+    "etherscanApi": true,
+    "explorerUrl": "https://polygonscan.com",
+    "alchemyId": "polygon-mainnet",
+    "nativeCurrency": {
+      "name": "POL",
+      "symbol": "POL",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Sonic Mainnet",
+    "shortName": "sonic",
+    "chainId": 146,
+    "etherscanApi": false,
+    "explorerUrl": "https://explorer.soniclabs.com",
+    "alchemyId": "sonic-mainnet",
+    "nativeCurrency": {
+      "name": "Sonic",
+      "symbol": "S",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Soneium",
+    "shortName": "soneium",
+    "chainId": 1868,
+    "etherscanApi": false,
+    "explorerUrl": "https://soneium.blockscout.com",
+    "alchemyId": "soneium-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Abstract",
+    "shortName": "abstract",
+    "chainId": 2741,
+    "etherscanApi": true,
+    "explorerUrl": "https://abscan.org",
+    "alchemyId": "abstract-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "zkSync Mainnet",
+    "discoveryName": "zksync2",
+    "shortName": "zksync",
+    "chainId": 324,
+    "etherscanApi": false,
+    "explorerUrl": "https://explorer.zksync.io",
+    "alchemyId": "zksync-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Arbitrum One",
+    "discoveryName": "arbitrum",
+    "shortName": "arb1",
+    "chainId": 42161,
+    "etherscanApi": true,
+    "explorerUrl": "https://arbiscan.io",
+    "alchemyId": "arb-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Arbitrum Nova",
+    "discoveryName": "nova",
+    "shortName": "arb-nova",
+    "chainId": 42170,
+    "etherscanApi": false,
+    "explorerUrl": "https://nova-explorer.arbitrum.io",
+    "alchemyId": "arbnova-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Avalanche C-Chain",
+    "shortName": "avax",
+    "chainId": 43114,
+    "etherscanApi": true,
+    "explorerUrl": "https://snowscan.xyz",
+    "alchemyId": "avax-mainnet",
+    "nativeCurrency": {
+      "name": "Avalanche",
+      "symbol": "AVAX",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "World Chain",
+    "shortName": "wc",
+    "chainId": 480,
+    "etherscanApi": true,
+    "explorerUrl": "https://worldscan.org",
+    "alchemyId": "worldchain-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Mantle",
+    "discoveryName": "mantle",
+    "shortName": "mantle",
+    "chainId": 5000,
+    "etherscanApi": true,
+    "explorerUrl": "https://mantlescan.xyz",
+    "alchemyId": "mantle-mainnet",
+    "nativeCurrency": {
+      "name": "Mantle",
+      "symbol": "MNT",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Scroll",
+    "discoveryName": "scroll",
+    "shortName": "scr",
+    "chainId": 534352,
+    "etherscanApi": true,
+    "explorerUrl": "https://scrollscan.com",
+    "alchemyId": "scroll-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Ink",
+    "discoveryName": "ink",
+    "shortName": "ink",
+    "chainId": 57073,
+    "etherscanApi": false,
+    "explorerUrl": "https://explorer.inkonchain.com",
+    "alchemyId": "ink-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Linea",
+    "discoveryName": "linea",
+    "shortName": "linea",
+    "chainId": 59144,
+    "etherscanApi": true,
+    "explorerUrl": "https://lineascan.build",
+    "alchemyId": "linea-mainnet",
+    "nativeCurrency": {
+      "name": "Linea Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Zora",
+    "discoveryName": "zora",
+    "shortName": "zora",
+    "chainId": 7777777,
+    "etherscanApi": false,
+    "explorerUrl": "https://explorer.zora.energy",
+    "alchemyId": "zora-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Blast",
+    "discoveryName": "blast",
+    "shortName": "blastmainnet",
+    "chainId": 81457,
+    "etherscanApi": true,
+    "explorerUrl": "https://blastscan.io",
+    "alchemyId": "blast-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  },
+  {
+    "name": "Base",
+    "discoveryName": "base",
+    "shortName": "base",
+    "chainId": 8453,
+    "etherscanApi": true,
+    "explorerUrl": "https://basescan.org",
+    "alchemyId": "base-mainnet",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
+  }
+]
