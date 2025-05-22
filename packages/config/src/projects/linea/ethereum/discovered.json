@@ -165,8 +165,7 @@
         {
           "permission": "interact",
           "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
-          "role": ".fallbackOperator"
+          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed."
         }
       ],
       "sinceTimestamp": 1733219987,
@@ -239,8 +238,7 @@
         {
           "permission": "interact",
           "from": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
-          "role": ".pausers"
+          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."
         }
       ]
     },
@@ -251,8 +249,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "role": ".Operators"
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ]
     },
@@ -273,8 +270,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "role": ".Operators"
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ]
     },
@@ -297,50 +293,42 @@
         {
           "permission": "interact",
           "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "role": ".defaultAdminAC"
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
         },
         {
           "permission": "interact",
           "from": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
+          "description": "change the beacon implementation."
         },
         {
           "permission": "interact",
           "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
-          "role": ".defaultAdminAC"
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system)."
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "cancel queued transactions.",
-          "role": ".cancellerAC"
+          "description": "cancel queued transactions."
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "execute transactions that are ready.",
-          "role": ".executorAC"
+          "description": "execute transactions that are ready."
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
           "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions.",
-          "role": ".proposerAC"
+          "description": "propose transactions."
         },
         {
           "permission": "upgrade",
           "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "role": "admin",
           "via": [
             { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
             { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
@@ -349,7 +337,6 @@
         {
           "permission": "upgrade",
           "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "role": "admin",
           "via": [
             { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
             { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
@@ -359,8 +346,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "role": ".executorAC"
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -689,14 +675,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-          "role": ".owner"
+          "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
+          "description": "manage all access control roles and change the minimum delay."
         }
       ],
       "sinceTimestamp": 1689150959,
@@ -754,8 +738,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "role": ".GnosisSafe_modules"
+          "from": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         }
       ],
       "sinceTimestamp": 1700506439,
@@ -837,13 +820,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "role": "admin"
+          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
         },
         {
           "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "role": "admin"
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ],
       "sinceTimestamp": 1689158711,
@@ -1319,5 +1300,5 @@
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xbcda861cbfd1b6632c78d6febcb7d62b6379485207b7828e5e1f254e25072ca3"
+  "permissionsConfigHash": "0xa7dfeb6fc78e5e2841238c4346cbbf089b50bead767a8b1820fb014ce51f27a4"
 }

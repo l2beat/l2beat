@@ -15,13 +15,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
-          "role": "admin"
+          "from": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
         },
         {
           "permission": "upgrade",
-          "from": "0xA68D85dF56E733A06443306A095646317B5Fa633",
-          "role": "admin"
+          "from": "0xA68D85dF56E733A06443306A095646317B5Fa633"
         }
       ],
       "sinceTimestamp": 1616482354,
@@ -670,5 +668,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x880d7aa720d915451716cefc5ebfbfb518b800b6e38107cb974da479656a20bf"
+  "permissionsConfigHash": "0xaf8b0f9a9db45c8c392c0df94b4df2c94f36bbf8cdaefa4605d54aa5792aa399"
 }

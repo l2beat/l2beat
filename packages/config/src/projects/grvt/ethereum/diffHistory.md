@@ -1,139 +1,29 @@
-Generated with discovered.json: 0xb4fb58a02b560b8977e8ad574eadfe6bffde6733
+Generated with discovered.json: 0x9a75da8de575c90381a6c042b9f09b52e945506a
 
-# Diff at Tue, 20 May 2025 13:06:49 GMT:
+# Diff at Wed, 21 May 2025 12:10:12 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22517885
-- current block number: 22517885
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 22517885
+- current block number: 22531175
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+v27 upgrade complete.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22517885 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    EOA  (0x0b114d4675Cb79507e68F2616c93e124122c6ef0) {
-    +++ description: None
-      receivedPermissions.1.role:
-+        ".validatorsVTL"
-      receivedPermissions.0.role:
-+        ".validatorsVTL"
-    }
-```
-
-```diff
-    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
-    +++ description: None
-      receivedPermissions.3.permission:
--        "interact"
-+        "upgrade"
-      receivedPermissions.3.from:
--        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
-+        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
-      receivedPermissions.3.description:
--        "set the conversion factor for gas token deposits."
-      receivedPermissions.3.role:
-+        "admin"
-      receivedPermissions.2.from:
--        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
-+        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
-      receivedPermissions.2.role:
-+        "admin"
-      receivedPermissions.1.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.1.from:
--        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
-+        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
-      receivedPermissions.1.description:
-+        "set the conversion factor for gas token deposits."
-      receivedPermissions.1.role:
-+        ".tokenMultiplierSetter"
-      receivedPermissions.0.role:
-+        ".getAdmin"
-      directlyReceivedPermissions.0.role:
-+        ".owner"
-    }
-```
-
-```diff
-    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        ".getTransactionFilterer"
-    }
-```
-
-```diff
-    EOA  (0x58D14960E0a2be353eDdE61ad719196A2b816522) {
-    +++ description: None
-      receivedPermissions.1.role:
-+        ".validatorsVTL"
-      receivedPermissions.0.role:
-+        ".validatorsVTL"
-    }
-```
-
-```diff
-    EOA  (0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        ".depositApprover"
-    }
-```
-
-```diff
-    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
-    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-      receivedPermissions.0.role:
-+        ".validators"
-    }
-```
-
-```diff
-    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
-    +++ description: None
-      directlyReceivedPermissions.0.role:
-+        ".getAdmin"
-    }
-```
-
-```diff
-    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
-    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-      receivedPermissions.0.role:
-+        ".validators"
-    }
-```
-
-```diff
-    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
-    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
-      receivedPermissions.0.role:
-+        ".whitelistedSender"
-    }
-```
-
-```diff
-    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        ".whitelistedSender"
-    }
-```
-
-```diff
-    EOA  (0xF29bFff344c7ef0186432fE30C39fda0cca0550b) {
-    +++ description: None
-      receivedPermissions.1.role:
-+        ".whitelistedSender"
-      receivedPermissions.0.role:
-+        ".acAdmin"
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        3199
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        3199
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0x7ead5e3e088ce4a6d739a729550f453bdc83ca10104b1916d9b0ee8722946d4a"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
     }
 ```
 

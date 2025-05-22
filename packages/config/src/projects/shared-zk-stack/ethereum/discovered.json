@@ -49,8 +49,7 @@
         {
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "start (queue) upgrades.",
-          "role": ".L2_PROTOCOL_GOVERNOR"
+          "description": "start (queue) upgrades."
         }
       ]
     },
@@ -153,8 +152,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "role": "admin"
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
         }
       ],
       "sinceTimestamp": 1738855967,
@@ -232,14 +230,12 @@
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
-          "role": ".admin"
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
-          "role": ".admin"
+          "description": "revert batches for any connected chain (ZK cluster Admin role)."
         }
       ],
       "sinceTimestamp": 1722434735,
@@ -631,22 +627,19 @@
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
-          "role": ".admin",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "revert batches for any connected chain (ZK cluster Admin role).",
-          "role": ".admin",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063",
-          "role": ".owner"
+          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -839,14 +832,12 @@
         {
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "extend the legal veto period, approve a protocol upgrade.",
-          "role": ".guardians"
+          "description": "extend the legal veto period, approve a protocol upgrade."
         },
         {
           "permission": "interact",
           "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers.",
-          "role": ".GUARDIANS"
+          "description": "one of its 3/3 signers."
         }
       ],
       "sinceTimestamp": 1738855979,
@@ -958,14 +949,12 @@
         {
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
-          "role": ".securityCouncil"
+          "description": "soft freeze, hard freeze, approve a protocol upgrade."
         },
         {
           "permission": "interact",
           "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers.",
-          "role": ".SECURITY_COUNCIL"
+          "description": "one of its 3/3 signers."
         }
       ],
       "sinceTimestamp": 1738855991,
@@ -1482,8 +1471,7 @@
         {
           "permission": "interact",
           "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers.",
-          "role": ".ZK_FOUNDATION_SAFE"
+          "description": "one of its 3/3 signers."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1569,38 +1557,31 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "role": "admin"
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
         },
         {
           "permission": "upgrade",
-          "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
-          "role": "admin"
+          "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
         },
         {
           "permission": "upgrade",
-          "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
-          "role": "admin"
+          "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
         },
         {
           "permission": "upgrade",
-          "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
-          "role": "admin"
+          "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
         },
         {
           "permission": "upgrade",
-          "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "role": "admin"
+          "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
         },
         {
           "permission": "upgrade",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "role": "admin"
+          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
         },
         {
           "permission": "upgrade",
-          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "role": "admin"
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
         }
       ],
       "sinceTimestamp": 1717520627,
@@ -1889,37 +1870,31 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
-          "role": ".owner"
+          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
         },
         {
           "permission": "act",
-          "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-          "role": ".owner"
+          "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
         },
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
-          "role": ".owner"
+          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "role": ".owner"
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
         },
         {
           "permission": "interact",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "description": "pause, unpause and set critical escrow address references.",
-          "role": ".owner"
+          "description": "pause, unpause and set critical escrow address references."
         },
         {
           "permission": "interact",
           "from": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "role": ".owner"
+          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
         }
       ],
       "sinceTimestamp": 1738855967,
@@ -2034,34 +2009,29 @@
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
-          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "interact",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "description": "pause, unpause and set critical escrow address references.",
-          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "interact",
           "from": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "upgrade",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2070,7 +2040,6 @@
         {
           "permission": "upgrade",
           "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2079,7 +2048,6 @@
         {
           "permission": "upgrade",
           "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2088,7 +2056,6 @@
         {
           "permission": "upgrade",
           "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2097,7 +2064,6 @@
         {
           "permission": "upgrade",
           "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2106,7 +2072,6 @@
         {
           "permission": "upgrade",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2115,7 +2080,6 @@
         {
           "permission": "upgrade",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2124,7 +2088,6 @@
         {
           "permission": "upgrade",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "role": "admin",
           "via": [
             { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2134,8 +2097,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "role": ".emergencyUpgradeBoard"
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
         }
       ],
       "sinceTimestamp": 1738856003,
@@ -3092,5 +3054,5 @@
     "shared-zk-stack/v26/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x72fdb64754369dd4fc01745069b3be6da00764d2ce1161b47311d50181c19db6"
+  "permissionsConfigHash": "0x36d96cb7f70916d115e86b344284ac0f0ecb4f339f40da0a3b3cef7bde38a9c1"
 }

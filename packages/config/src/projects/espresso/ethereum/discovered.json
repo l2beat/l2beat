@@ -18,13 +18,11 @@
         {
           "permission": "interact",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
-          "role": ".owner"
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
         },
         {
           "permission": "upgrade",
-          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "role": "admin"
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -64,8 +62,7 @@
         {
           "permission": "interact",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can call newFinalizedState() to prove the latest HotShot state.",
-          "role": ".permissionedProver"
+          "description": "can call newFinalizedState() to prove the latest HotShot state."
         }
       ]
     },
@@ -264,5 +261,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xa8099c50dbc025908922c90376070d7de92532916cbadc9512ab820ee15315fb"
+  "permissionsConfigHash": "0x93790699f4cdb0b99f3c90feaa129c375fd8beef1de7608c015ca0ec416a5c28"
 }

@@ -1,37 +1,3 @@
-Generated with discovered.json: 0x78cc20bee80773250d92d66da554bc3f1876d933
-
-# Diff at Tue, 20 May 2025 13:06:42 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 22346547
-- current block number: 22346547
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22346547 (main branch discovery), not current.
-
-```diff
-    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
-```diff
-    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
 Generated with discovered.json: 0x08ea67124df4760d1beaebe6fee9671915e0f834
 
 # Diff at Tue, 29 Apr 2025 08:19:10 GMT:

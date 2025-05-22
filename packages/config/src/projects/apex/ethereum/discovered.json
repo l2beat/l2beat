@@ -126,20 +126,17 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "role": ".$admin"
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         },
         {
           "permission": "interact",
           "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
+          "description": "manage the token admin role."
         },
         {
           "permission": "upgrade",
           "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "delay": 1209600,
-          "role": ".$admin"
+          "delay": 1209600
         }
       ]
     },
@@ -150,8 +147,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "role": ".operators"
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         }
       ]
     },
@@ -163,24 +159,20 @@
         {
           "permission": "interact",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
+          "description": "Can regsiter new tokens for deposits and withdrawals."
         },
         {
           "permission": "interact",
           "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
+          "description": "Can regsiter new tokens for deposits and withdrawals."
         },
         {
           "permission": "operateStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "role": ".operators"
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         },
         {
           "permission": "operateStarknet",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "role": ".operators"
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         }
       ]
     },
@@ -234,8 +226,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "role": ".operators"
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ]
     },
@@ -461,20 +452,17 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "role": ".$admin"
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         },
         {
           "permission": "interact",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
+          "description": "manage the token admin role."
         },
         {
           "permission": "upgrade",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "delay": 1209600,
-          "role": ".$admin"
+          "delay": 1209600
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -691,20 +679,17 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "role": ".$admin"
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         },
         {
           "permission": "interact",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
+          "description": "manage the token admin role."
         },
         {
           "permission": "upgrade",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "delay": 1209600,
-          "role": ".$admin"
+          "delay": 1209600
         }
       ]
     }
@@ -1364,5 +1349,5 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "permissionsConfigHash": "0x94decf238b2e5bf9f1358ebe5f659ea1239de32a2c0805cdba197256ee0336c7"
+  "permissionsConfigHash": "0xfc4502ff4b3620142113ac6202d1c2715c52125fb7dce05c2408eaa6e85fe827"
 }

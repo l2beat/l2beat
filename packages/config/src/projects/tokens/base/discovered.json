@@ -62,8 +62,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "role": "admin"
+          "from": "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64"
         }
       ]
     },
@@ -86,8 +85,7 @@
         {
           "permission": "interact",
           "from": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter"
+          "description": "manage minter addresses."
         }
       ],
       "sinceTimestamp": 1692385055,
@@ -180,8 +178,7 @@
         {
           "permission": "interact",
           "from": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer.",
-          "role": ".owner"
+          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer."
         }
       ]
     },
@@ -228,8 +225,7 @@
         {
           "permission": "interact",
           "from": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "description": "blacklist addresses, freezing any interactions with the USDC token for them.",
-          "role": ".blacklister"
+          "description": "blacklist addresses, freezing any interactions with the USDC token for them."
         }
       ]
     },
@@ -246,8 +242,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "role": "admin"
+          "from": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
         }
       ]
     },
@@ -267,7 +262,6 @@
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
           "delay": 172800,
           "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
@@ -278,16 +272,14 @@
         {
           "permission": "interact",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
-          "description": "execute transactions that are ready.",
-          "role": ".executorAC"
+          "description": "execute transactions that are ready."
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
-          "delay": 172800,
-          "role": ".executorAC"
+          "delay": 172800
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -496,8 +488,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "role": "admin"
+          "from": "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"
         }
       ]
     },
@@ -527,7 +518,6 @@
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
           "delay": 172800,
           "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
@@ -538,28 +528,24 @@
         {
           "permission": "interact",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
-          "description": "cancel queued transactions.",
-          "role": ".cancellerAC"
+          "description": "cancel queued transactions."
         },
         {
           "permission": "interact",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
-          "description": "execute transactions that are ready.",
-          "role": ".executorAC"
+          "description": "execute transactions that are ready."
         },
         {
           "permission": "interact",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
-          "description": "propose transactions.",
-          "role": ".proposerAC"
+          "description": "propose transactions."
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
-          "delay": 172800,
-          "role": ".executorAC"
+          "delay": 172800
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -685,8 +671,7 @@
         {
           "permission": "interact",
           "from": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "description": "pause the USDC token (no transfers, mints, burns).",
-          "role": ".pauser"
+          "description": "pause the USDC token (no transfers, mints, burns)."
         }
       ]
     },
@@ -801,8 +786,7 @@
           "permission": "interact",
           "from": "0xf817cb3092179083c48c014688D98B72fB61464f",
           "delay": 172800,
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
+          "description": "manage all access control roles and change the minimum delay."
         }
       ],
       "sinceTimestamp": 1725274881,
@@ -1474,5 +1458,5 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0x01a1c819bddac79917f9a2670111a55b63ac9c668607dd945b9698d0c106e24e"
+  "permissionsConfigHash": "0x1b434e256fd8167b345318254a5b94abb30b06bf0f93fd5650a4a2dd910697fe"
 }

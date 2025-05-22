@@ -156,13 +156,11 @@
         {
           "permission": "interact",
           "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner"
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "role": "admin"
+          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
         }
       ],
       "sinceTimestamp": 1709904018,
@@ -244,21 +242,18 @@
           "permission": "interact",
           "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
           "via": [{ "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }]
         },
         {
           "permission": "upgrade",
           "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "role": "admin",
           "via": [{ "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
-          "role": ".executors"
+          "from": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
         }
       ]
     },
@@ -288,38 +283,31 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
-          "role": "admin"
+          "from": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
         },
         {
           "permission": "upgrade",
-          "from": "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
-          "role": "admin"
+          "from": "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
         },
         {
           "permission": "upgrade",
-          "from": "0x383eFE8D410285c5CbE1B4F296022640759aA834",
-          "role": "admin"
+          "from": "0x383eFE8D410285c5CbE1B4F296022640759aA834"
         },
         {
           "permission": "upgrade",
-          "from": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
-          "role": "admin"
+          "from": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
         },
         {
           "permission": "upgrade",
-          "from": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
-          "role": "admin"
+          "from": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
         },
         {
           "permission": "upgrade",
-          "from": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-          "role": "admin"
+          "from": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
         },
         {
           "permission": "upgrade",
-          "from": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
-          "role": "admin"
+          "from": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad"
         }
       ],
       "sinceTimestamp": 1709904018,
@@ -400,8 +388,7 @@
         {
           "permission": "sequence",
           "from": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -511,8 +498,7 @@
         {
           "permission": "validate",
           "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1301,5 +1287,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x1da6e1c6ed728282c8c2256b40995a569dd8662d97b3802f3976636f2510ee31"
+  "permissionsConfigHash": "0x6e5f4959deb5087bd8d7cd803f402ded3642458d3f96f115974edd7c93b6e5e9"
 }

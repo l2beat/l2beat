@@ -1,107 +1,183 @@
-Generated with discovered.json: 0x9d288397e73b39aa33b6d9f91ce9edbfe3ebf123
+Generated with discovered.json: 0x4e3090c896925e07ed912bdf1a8d21678e012af9
 
-# Diff at Tue, 20 May 2025 13:06:52 GMT:
+# Diff at Wed, 21 May 2025 12:19:06 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 333826548
-- current block number: 333826548
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 333826548
+- current block number: 338996542
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+single line formatting change in the OneStepProverHostIo (compared to previous blobstream implementation), no consequences for the overall function of `executeReadInboxMessage()`.
 
-## Config/verification related changes
+`success = inboxValidate(execCtx, uint64(msgIndex), proof[proofOffset:proofEnd]);` now uses a function type / pointer.
 
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 333826548 (main branch discovery), not current.
+blobstream is now integrated again into the rari proof system.
+
+## Watched changes
 
 ```diff
-    contract ProxyAdmin (0x003e70B041abb993006C03E56c8515622a02928C) {
-    +++ description: None
-      directlyReceivedPermissions.9.role:
-+        "admin"
-      directlyReceivedPermissions.8.role:
-+        "admin"
-      directlyReceivedPermissions.7.role:
-+        "admin"
-      directlyReceivedPermissions.6.role:
-+        "admin"
-      directlyReceivedPermissions.5.role:
-+        "admin"
-      directlyReceivedPermissions.4.role:
-+        "admin"
-      directlyReceivedPermissions.3.role:
-+        "admin"
-      directlyReceivedPermissions.2.role:
-+        "admin"
-      directlyReceivedPermissions.1.role:
-+        "admin"
-      directlyReceivedPermissions.0.role:
-+        "admin"
+-   Status: DELETED
+    contract OneStepProofEntry (0x01ad6E65e01928938448A1Fcf5C93Bf7BfE720e0)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract Inbox (0x37e60F80d921dc5E7f501a7130F31f6548dBa564) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      values.$implementation:
+-        "0x6B292d1d4D38653b4F1D6De41c6be198371C5af1"
++        "0x4cA89361F5F79092822F95F34334227528ed63A8"
+      values.$pastUpgrades.2:
++        ["2025-05-05T13:43:44.000Z","0x4eacd17837407047b65635abdfb9d2693b58efa4040f33baca7b9d27271b0a2c",["0x6B292d1d4D38653b4F1D6De41c6be198371C5af1"]]
+      values.$pastUpgrades.1.2.0:
+-        "0x6B292d1d4D38653b4F1D6De41c6be198371C5af1"
++        "0x198792E7e60688FEeB0b89f0ABD3b85953Dd05Cd"
+      values.$pastUpgrades.1.1:
+-        "0x4eacd17837407047b65635abdfb9d2693b58efa4040f33baca7b9d27271b0a2c"
++        "0xfc9b3973815b82226b0df5c0db23edf854e2ff768a745792e2c27f31b36798c2"
+      values.$pastUpgrades.1.0:
+-        "2025-05-05T13:43:44.000Z"
++        "2024-01-20T02:02:25.000Z"
+      values.$pastUpgrades.0.2.0:
+-        "0x198792E7e60688FEeB0b89f0ABD3b85953Dd05Cd"
++        "0x4cA89361F5F79092822F95F34334227528ed63A8"
+      values.$pastUpgrades.0.1:
+-        "0xfc9b3973815b82226b0df5c0db23edf854e2ff768a745792e2c27f31b36798c2"
++        "0x1ff1a74aaa6a58e0a3389de2761ed84c9051a4ffea080265aae0d62aaf9df75c"
+      values.$pastUpgrades.0.0:
+-        "2024-01-20T02:02:25.000Z"
++        "2025-05-20T18:18:40.000Z"
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.0x6B292d1d4D38653b4F1D6De41c6be198371C5af1:
+-        "Inbox"
+      implementationNames.0x4cA89361F5F79092822F95F34334227528ed63A8:
++        "Inbox"
     }
 ```
 
 ```diff
-    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
-    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      directlyReceivedPermissions.2.role:
-+        "admin"
-      directlyReceivedPermissions.1.role:
-+        ".owner"
-      directlyReceivedPermissions.0.role:
-+        ".owner"
+-   Status: DELETED
+    contract OneStepProverMath (0x44e5De8cE3bAfEd3bC87F7024573Ff7D2a10b905)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x8F359bc614f82e472971e65dEB3Ba61B6F01911b)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.$pastUpgrades.6:
++        ["2025-05-05T13:43:44.000Z","0x4eacd17837407047b65635abdfb9d2693b58efa4040f33baca7b9d27271b0a2c",["0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC"]]
+      values.$pastUpgrades.5.2:
+-        "0x4eacd17837407047b65635abdfb9d2693b58efa4040f33baca7b9d27271b0a2c"
++        "2025-01-29T20:23:12.000Z"
+      values.$pastUpgrades.5.1:
+-        "2025-05-05T13:43:44.000Z"
++        "0xb59494487d444c465d61f19a4fe9830806da172e2883ae0861c155f3066592a7"
+      values.$pastUpgrades.5.0.0:
+-        "0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC"
++        "0xE2DdF957261A6d8a96A7eff29C51460707FfbBE5"
+      values.$pastUpgrades.4.2:
+-        "2025-01-29T20:23:12.000Z"
++        ["0x805dc3546d99AfB35EfB261b907679b67A08256e"]
+      values.$pastUpgrades.4.1:
+-        "0xb59494487d444c465d61f19a4fe9830806da172e2883ae0861c155f3066592a7"
++        "0x206804ee59ae4cd1cd13fc2c92c59958f3ecfcf3f210b2d583a6816e3a4a0b10"
+      values.$pastUpgrades.4.0:
+-        ["0xE2DdF957261A6d8a96A7eff29C51460707FfbBE5"]
++        "2025-01-31T02:05:35.000Z"
+      values.$pastUpgrades.3.2:
+-        ["0x805dc3546d99AfB35EfB261b907679b67A08256e"]
++        "0x1ff1a74aaa6a58e0a3389de2761ed84c9051a4ffea080265aae0d62aaf9df75c"
+      values.$pastUpgrades.3.1:
+-        "0x206804ee59ae4cd1cd13fc2c92c59958f3ecfcf3f210b2d583a6816e3a4a0b10"
++        "2025-05-20T18:18:40.000Z"
+      values.$pastUpgrades.3.0:
+-        "2025-01-31T02:05:35.000Z"
++        ["0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC"]
+      values.$upgradeCount:
+-        6
++        7
     }
 ```
 
 ```diff
-    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
-    +++ description: None
-      receivedPermissions.11.role:
-+        "admin"
-      receivedPermissions.10.role:
-+        "admin"
-      receivedPermissions.9.role:
-+        "admin"
-      receivedPermissions.8.role:
-+        "admin"
-      receivedPermissions.7.role:
-+        "admin"
-      receivedPermissions.6.role:
-+        "admin"
-      receivedPermissions.5.role:
-+        "admin"
-      receivedPermissions.4.role:
-+        "admin"
-      receivedPermissions.3.role:
-+        "admin"
-      receivedPermissions.2.role:
-+        "admin"
-      receivedPermissions.1.role:
-+        "admin"
-      receivedPermissions.0.role:
-+        ".owner"
-      directlyReceivedPermissions.0.role:
-+        ".executors"
+    contract ChallengeManager (0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.$implementation:
+-        "0x5DD914a56853Da4C6Cee07827483F532e65B6FeD"
++        "0x7e4c2B3405cA7900d0f7C2DBEF3Dc127D9f3Cb9b"
+      values.$pastUpgrades.5:
++        ["2025-05-20T18:18:40.000Z","0x1ff1a74aaa6a58e0a3389de2761ed84c9051a4ffea080265aae0d62aaf9df75c",["0x7e4c2B3405cA7900d0f7C2DBEF3Dc127D9f3Cb9b"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.osp:
+-        "0x01ad6E65e01928938448A1Fcf5C93Bf7BfE720e0"
++        "0x2BA5cB2D332E266c43D0Ef18F879650d00630B61"
+      implementationNames.0x5DD914a56853Da4C6Cee07827483F532e65B6FeD:
+-        "ChallengeManager"
+      implementationNames.0x7e4c2B3405cA7900d0f7C2DBEF3Dc127D9f3Cb9b:
++        "ChallengeManager"
     }
 ```
 
 ```diff
-    EOA  (0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        ".validators"
-    }
+-   Status: DELETED
+    contract OneStepProverMemory (0xF30f32a5Bb30EE098AAFBC06C7C30705396632da)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ```diff
-    EOA  (0xffE86271e68A0365d71B86b101Fc8CA5546E7E77) {
++   Status: CREATED
+    contract OneStepProverMath (0x1e5fCE58D1358aCbc3d32ac106a20B7F19C434eC)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x2BA5cB2D332E266c43D0Ef18F879650d00630B61)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x3A765e7a1709C19F065F098AAF2940AAA7ac0AE3)
     +++ description: None
-      receivedPermissions.1.role:
-+        ".batchPosterManager"
-      receivedPermissions.0.role:
-+        ".batchPosters"
-    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xb47a57a218911653d964fE8aAa1cED55A71D8043)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../rari/arbitrum/.flat/OneStepProverHostIo.sol    | 3136 ++++++++++++++++++++
+ .../.flat/SP1Blobstream/ERC1967Proxy.p.sol         |  594 ++++
+ .../arbitrum/.flat/SP1Blobstream/SP1Blobstream.sol | 2199 ++++++++++++++
+ 3 files changed, 5929 insertions(+)
 ```
 
 Generated with discovered.json: 0x9f58bcea479e7ac0a771574783ac78e3caecd3b5

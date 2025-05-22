@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 850146,
+  "blockNumber": 869343,
   "configHash": "0x6f21c1713db8dc80377eac63e2e206ca18ba3f896cc10b1eb4e5113eb0960d28",
   "entries": [
     {
@@ -18,7 +18,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1746452165,
+        "clock": 1747834051,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -58,7 +58,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1746452165,
+        "clock": 1747834051,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -265,7 +265,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "29820107590028460475",
+        "getDeposit": "29745606936971840375",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -311,28 +311,24 @@
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 604800,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
-          "role": ".securityCouncilPermission"
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 950400,
-          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
-          "role": ".securityCouncilPermission"
+          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 950400,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
-          "role": ".securityCouncilPermission"
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "confirm sanctions, making them permanent without providing an exit window.",
-          "role": ".securityCouncilPermission"
+          "description": "confirm sanctions, making them permanent without providing an exit window."
         }
       ]
     },
@@ -349,37 +345,31 @@
         {
           "permission": "interact",
           "from": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
-          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
-          "role": ".owner"
+          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 1036800,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
-          "role": ".kintoMultisig2Permission"
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "approve smart wallet recoveries for any KintoWallet.",
-          "role": ".kintoMultisig2Permission"
+          "description": "approve smart wallet recoveries for any KintoWallet."
         },
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         },
         {
           "permission": "upgrade",
-          "from": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
-          "role": "admin"
+          "from": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
         },
         {
           "permission": "upgrade",
-          "from": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd",
-          "role": "admin"
+          "from": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
         }
       ],
       "ignoreInWatchMode": ["getNonce"],
@@ -574,7 +564,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4870,
+        "getNonce": 4925,
         "getOwnersCount": 4,
         "inRecovery": 0,
         "insurancePolicy": 0,
@@ -621,7 +611,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 50612,
+        "globalMessageCount": 55188,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -646,8 +636,7 @@
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
     },
@@ -781,7 +770,7 @@
           ]
         ],
         "$upgradeCount": 22,
-        "appCount": 76,
+        "appCount": 79,
         "getApproved": [
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
@@ -851,7 +840,7 @@
           "https://kinto.xyz/metadata/kintoapp/3",
           "https://kinto.xyz/metadata/kintoapp/4"
         ],
-        "totalSupply": 76
+        "totalSupply": 79
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
@@ -879,8 +868,7 @@
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
     },
@@ -892,8 +880,7 @@
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
     },
@@ -905,8 +892,7 @@
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
     },
@@ -945,13 +931,11 @@
         {
           "permission": "interact",
           "from": "0x87f0eE85bF3198654900a422832157abBba30828",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
+          "description": "change the beacon implementation."
         },
         {
           "permission": "upgrade",
-          "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "role": "admin"
+          "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
         }
       ],
       "ignoreInWatchMode": ["totalWallets"],
@@ -1089,7 +1073,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75702
+        "totalWallets": 75717
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
@@ -1137,47 +1121,39 @@
         {
           "permission": "interact",
           "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
-          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
-          "role": ".owner"
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
         },
         {
           "permission": "interact",
           "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
-          "role": ".owner"
+          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
         },
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         },
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
-          "role": ".GOVERNANCErs"
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
         },
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "transfer KYC NFTs to a different address.",
-          "role": ".DEFAULT_ADMINs"
+          "description": "transfer KYC NFTs to a different address."
         },
         {
           "permission": "upgrade",
-          "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
-          "role": "admin"
+          "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
         },
         {
           "permission": "upgrade",
-          "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "role": "admin"
+          "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
         },
         {
           "permission": "upgrade",
-          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "role": ".UPGRADERs"
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ],
       "sinceTimestamp": 1729791296,
@@ -1416,6 +1392,22 @@
             "caller": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
             "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
             "data": "0x25c471a000000000000000000000000000000000000000000000000007d8641643fe2cba00000000000000000000000028fc10e12a78f986c78f973fc70ed88072b34c8e0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "operationId": "0x69b7415762436b7382a471e6bd835c18496843f284e45e2772b8fdca14129eda",
+            "nonce": 1,
+            "schedule": 1748821944,
+            "caller": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+            "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+            "data": "0x853551b8000000000000000000000000000000000000000000000000afc4a9e25c1e99b80000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000f4445565f48454c5045525f524f4c450000000000000000000000000000000000"
+          },
+          {
+            "operationId": "0x1da4805821f761c940612ee65771335cc7ba51c99fad482463a23aca00081b5c",
+            "nonce": 1,
+            "schedule": 1748821945,
+            "caller": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+            "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+            "data": "0x08d6122d0000000000000000000000005a2b641b84b0230c8e75f55d5afd27f4dbd59d5b0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000afc4a9e25c1e99b800000000000000000000000000000000000000000000000000000000000000019a6896f600000000000000000000000000000000000000000000000000000000"
           }
         ],
         "PUBLIC_ROLE": "18446744073709551615",
@@ -1665,8 +1657,7 @@
         {
           "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
     },
@@ -1807,7 +1798,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1746448750,
+        "lastMonitoredAt": 1747832229,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3121,7 +3112,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75370,
+        "totalSupply": 75387,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
@@ -3963,5 +3954,5 @@
     "kinto/KintoAppRegistry": "0xb37bd2f43ee0daa14c470dd51a29784276dfaadfb3a6e142e9753d27d138df1d",
     "kinto/KintoID": "0x60c7db78a1d45df2b83b6c019907865abc7fb5b31ab065b7d69aafa67c19fb8b"
   },
-  "permissionsConfigHash": "0xa68f0272a1deccba4e683dd6cb7390535af602dd880ca3038b09ca452af4e587"
+  "permissionsConfigHash": "0x844ff3e03fa3560dd4a830cb5508c0d7f1290a922f27201633cb0ea60ad01b39"
 }

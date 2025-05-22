@@ -306,8 +306,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
-          "role": "admin"
+          "from": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
         }
       ],
       "sinceTimestamp": 1664208791,
@@ -375,8 +374,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
-          "role": "admin"
+          "from": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
         }
       ],
       "sinceTimestamp": 1640866403,
@@ -1101,5 +1099,5 @@
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
   },
-  "permissionsConfigHash": "0xf651e25e165b55883211ce775a8bd44954eba0b0742708f56e7bcef5e72e0124"
+  "permissionsConfigHash": "0xca95d4fbacaf969bdc12cc43b7c6b948a72f068e895d4fb980a026b04e420c4c"
 }

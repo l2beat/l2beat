@@ -1,31 +1,3 @@
-Generated with discovered.json: 0x0824fd690d95c409bed33124d5ea9d71f098e83d
-
-# Diff at Tue, 20 May 2025 13:06:36 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21778467
-- current block number: 21778467
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21778467 (main branch discovery), not current.
-
-```diff
-    contract ProxyAdmin (0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3) {
-    +++ description: None
-      receivedPermissions.1.role:
-+        "admin"
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
 Generated with discovered.json: 0x53cad9ac40b27cde6bec066f7d20e25583b0fe0d
 
 # Diff at Tue, 29 Apr 2025 08:19:04 GMT:

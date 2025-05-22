@@ -333,23 +333,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x42303634F37956687fB7ff2c6146AC842481A052",
-          "role": "admin"
+          "from": "0x42303634F37956687fB7ff2c6146AC842481A052"
         },
         {
           "permission": "upgrade",
-          "from": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47",
-          "role": "admin"
+          "from": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47"
         },
         {
           "permission": "upgrade",
-          "from": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b",
-          "role": "admin"
+          "from": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b"
         },
         {
           "permission": "upgrade",
-          "from": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97",
-          "role": "admin"
+          "from": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97"
         }
       ],
       "sinceTimestamp": 1631138008,
@@ -744,5 +740,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xb10c43d6ba45f642b67c2edc81f3e9d0405705df1eee5c97926339c2379d3d5b"
+  "permissionsConfigHash": "0xec679df71f308515d43c34488a1a5bdc90d7b0ad35318bea630aa6503fa92f86"
 }

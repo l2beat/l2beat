@@ -61,13 +61,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
-          "role": "admin"
+          "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
         },
         {
           "permission": "upgrade",
-          "from": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
-          "role": "admin"
+          "from": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
         }
       ]
     },
@@ -96,57 +94,47 @@
         {
           "permission": "interact",
           "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.",
-          "role": ".owner"
+          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references."
         },
         {
           "permission": "interact",
           "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "description": "change external validation logic refered to by this contract (e.g. Hashi).",
-          "role": ".owner"
+          "description": "change external validation logic refered to by this contract (e.g. Hashi)."
         },
         {
           "permission": "interact",
           "from": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "description": "change all critical configurations like yield farming for escrowed funds and limits.",
-          "role": ".owner"
+          "description": "change all critical configurations like yield farming for escrowed funds and limits."
         },
         {
           "permission": "interact",
           "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "change the threshold and manage signers.",
-          "role": ".owner"
+          "description": "change the threshold and manage signers."
         },
         {
           "permission": "interact",
           "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "change the threshold and manage signers.",
-          "role": ".owner"
+          "description": "change the threshold and manage signers."
         },
         {
           "permission": "upgrade",
-          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "role": "admin"
+          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
         },
         {
           "permission": "upgrade",
-          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "role": "admin"
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
         },
         {
           "permission": "upgrade",
-          "from": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "role": "admin"
+          "from": "0x88ad09518695c6c3712AC10a214bE5109a655671"
         },
         {
           "permission": "upgrade",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "role": "admin"
+          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
         },
         {
           "permission": "upgrade",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "role": "admin"
+          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -457,14 +445,12 @@
         {
           "permission": "interact",
           "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "role": ".owner"
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
         },
         {
           "permission": "interact",
           "from": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "role": ".owner"
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -913,8 +899,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
-          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "role": ".validatorContract"
+          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
         }
       ],
       "sinceTimestamp": 1539028018,
@@ -989,8 +974,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
-          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "role": ".validatorContract"
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
         }
       ],
       "sinceTimestamp": 1579258396,
@@ -1668,5 +1652,5 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xa5347786623c7738d92da2fb94a1dd9dc7968837be269c2d4b35d08a60ced1a0"
+  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
 }

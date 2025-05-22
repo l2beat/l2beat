@@ -86,8 +86,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
-          "role": "admin"
+          "from": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
         }
       ],
       "sinceTimestamp": 1654638154,
@@ -504,5 +503,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xaec1fa2a53038889dd3036d14f998ac232d9969795a57a218962801f924d5eba"
+  "permissionsConfigHash": "0x37720592f72b0ce23713d9e2326d5aef6c58a0a126328bce0bd43d1b9fe2bfcc"
 }

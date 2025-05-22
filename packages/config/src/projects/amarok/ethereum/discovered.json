@@ -134,8 +134,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-          "role": ".GnosisSafe_modules"
+          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
         }
       ],
       "sinceTimestamp": 1693752671,
@@ -668,8 +667,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
-          "role": "admin"
+          "from": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
         }
       ]
     },
@@ -1686,21 +1684,18 @@
         {
           "permission": "upgrade",
           "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
-          "role": "admin",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
           "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
-          "role": "admin",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-          "role": ".GnosisSafe_modules"
+          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
         }
       ],
       "sinceTimestamp": 1603880884,
@@ -1818,13 +1813,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
-          "role": "admin"
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
         },
         {
           "permission": "upgrade",
-          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
-          "role": "admin"
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -3966,5 +3959,5 @@
     "amarok/RelayerProxyHub": "0xabf44b5af1f5a5287b387cf1ec1d54a3d609495fa34a36162765992d7d896fc0",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xaff971005b7f9fe9e249c27ca19bcf45b8791292618fc4bc59c860360dca7c6c"
+  "permissionsConfigHash": "0xa146f17f88d39d691ec1a7c3b56a9dbfca83dd1e171289debcf2284ecad01035"
 }

@@ -30,8 +30,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
-          "role": ".trustedSequencer"
+          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
         }
       ]
     },
@@ -47,8 +46,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
-          "role": "admin"
+          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
         }
       ],
       "sinceTimestamp": 1720547171,
@@ -191,15 +189,13 @@
         {
           "permission": "upgrade",
           "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
-          "role": "admin",
           "via": [{ "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
-          "role": ".owner"
+          "from": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
         }
       ]
     },
@@ -211,14 +207,12 @@
         {
           "permission": "interact",
           "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "role": ".owner"
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
         },
         {
           "permission": "interact",
           "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "role": ".admin"
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
         }
       ]
     },
@@ -230,8 +224,7 @@
         {
           "permission": "interact",
           "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
+          "description": "sole address that can force batches."
         }
       ]
     },
@@ -422,5 +415,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xf528c2362985ba63660b0f653a508b41120fa238fa6717fa15c44ae2f8e86662"
+  "permissionsConfigHash": "0x87a54c93aadea423d473541b942e7c64e2dfcd45e3a43c2b8a2ec4d004d1fbb6"
 }

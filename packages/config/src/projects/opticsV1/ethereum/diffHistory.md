@@ -1,35 +1,3 @@
-Generated with discovered.json: 0x2f98f752986bc8a4cd69026cd19650a6c4fa65ad
-
-# Diff at Tue, 20 May 2025 13:06:40 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 21937199
-- current block number: 21937199
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21937199 (main branch discovery), not current.
-
-```diff
-    contract UpgradeBeaconController (0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B) {
-    +++ description: None
-      receivedPermissions.3.role:
-+        "admin"
-      receivedPermissions.2.role:
-+        "admin"
-      receivedPermissions.1.role:
-+        "admin"
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
 Generated with discovered.json: 0xc03042ee89f87a335bc6e50be7e884262ab10f74
 
 # Diff at Tue, 29 Apr 2025 08:19:08 GMT:

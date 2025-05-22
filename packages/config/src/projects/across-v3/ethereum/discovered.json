@@ -718,8 +718,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xB524735356985D2f267FA010D681f061DfF03715",
-          "role": ".GnosisSafe_modules"
+          "from": "0xB524735356985D2f267FA010D681f061DfF03715"
         }
       ],
       "sinceTimestamp": 1683067175,
@@ -950,8 +949,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "role": "admin"
+          "from": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
         }
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],
@@ -2182,5 +2180,5 @@
     "acrossv3/adapter": "0xb4255921436c1b241e151988fe5443ec28852daad474c31507370e6006903dbe",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x9f333b71bd71d931472b3192767396bb7812a4f905ef0301d24915b0a5a5649f"
+  "permissionsConfigHash": "0x774b07e6a84f59fcc70a44a81a7c99d0993d2cdb2da723267cd4a6650c7b1c8d"
 }

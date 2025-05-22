@@ -1,37 +1,3 @@
-Generated with discovered.json: 0x82d421c2a4ba290aefc28dd6b5a55bd6ed25849f
-
-# Diff at Tue, 20 May 2025 13:07:01 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 17565279
-- current block number: 17565279
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 17565279 (main branch discovery), not current.
-
-```diff
-    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
-```diff
-    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
 Generated with discovered.json: 0xf2d073a7cd313ee63829a336ec2408f20ca3bd58
 
 # Diff at Tue, 29 Apr 2025 08:19:30 GMT:

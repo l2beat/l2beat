@@ -213,8 +213,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-          "role": "admin"
+          "from": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
         }
       ]
     },
@@ -915,5 +914,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x29c6fec5f8504a770b8c859e31bc46b98715605c4c82c5b49c40dfb17357dbc4"
+  "permissionsConfigHash": "0xcc4a4150126d700d8bee119ce8ce8c67642160de7ead1c93416718f246f52eb0"
 }

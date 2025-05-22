@@ -17,8 +17,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-          "role": ".trustedSequencer"
+          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
         }
       ]
     },
@@ -327,18 +326,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-          "role": "admin"
+          "from": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
         },
         {
           "permission": "upgrade",
-          "from": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-          "role": "admin"
+          "from": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
         },
         {
           "permission": "upgrade",
-          "from": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
-          "role": "admin"
+          "from": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -721,5 +717,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xd7c5014d4dbf76d0eb98621e0b5ff9a4bdea6d891352aa00e06de6a5510b96ef"
+  "permissionsConfigHash": "0x21e158c4a293fe6c76f5d3e598bda4a959f316e386b3b4b70b1b2efee87f4d35"
 }

@@ -45,8 +45,7 @@
         {
           "permission": "interact",
           "from": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
-          "role": ".owner"
+          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract."
         }
       ],
       "sinceTimestamp": 1701258227,
@@ -71,8 +70,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
         }
       ]
     },
@@ -109,8 +107,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
     },
@@ -583,8 +580,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
         }
       ]
     },
@@ -729,8 +725,7 @@
         {
           "permission": "interact",
           "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
       ],
       "sinceTimestamp": 1717520615,
@@ -768,8 +763,7 @@
         {
           "permission": "interact",
           "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
       ],
       "sinceTimestamp": 1739108999,
@@ -806,8 +800,7 @@
         {
           "permission": "interact",
           "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
       ],
       "sinceTimestamp": 1709850611,
@@ -870,8 +863,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
     }
@@ -1389,5 +1381,5 @@
     "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x024cad214f794d0921c638e0785751079fc4c4ac6043936e3802cbcee91fbca8"
+  "permissionsConfigHash": "0x95f2cbeab77eb0f2b0a31d33b878064d25eccd0af5a1f1a99045f20c8f3c188e"
 }

@@ -1,29 +1,3 @@
-Generated with discovered.json: 0xb6028e4de0d76ceb2dc4fdf36e577992b612883c
-
-# Diff at Tue, 20 May 2025 13:06:42 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a62d240b112d7a286b9ef3592c555741cc8bb569 block: 20017695
-- current block number: 20017695
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20017695 (main branch discovery), not current.
-
-```diff
-    EOA  (0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05) {
-    +++ description: None
-      receivedPermissions.0.role:
-+        "admin"
-    }
-```
-
 Generated with discovered.json: 0x019f71c7ac9a3bbc065d059258214315f9f9b610
 
 # Diff at Tue, 06 May 2025 10:56:55 GMT:

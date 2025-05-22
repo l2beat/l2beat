@@ -588,78 +588,64 @@
         {
           "permission": "interact",
           "from": "0x17174796E0eF24330aed565c87Ba5e85431DE19e",
-          "description": "can update the validator registry address used to check whitelist inclusion.",
-          "role": ".owner"
+          "description": "can update the validator registry address used to check whitelist inclusion."
         },
         {
           "permission": "interact",
           "from": "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
-          "description": "can update the whitelist of validators",
-          "role": ".owner"
+          "description": "can update the whitelist of validators"
         },
         {
           "permission": "interact",
           "from": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can replace all validators.",
-          "role": ".owner"
+          "description": "can replace all validators."
         },
         {
           "permission": "interact",
           "from": "0x885fcE983b6a01633f764325B8c3c5D31032C995",
-          "description": "can update the root chain it references.",
-          "role": ".owner"
+          "description": "can update the root chain it references."
         },
         {
           "permission": "interact",
           "from": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
-          "description": "can update how much of the slashed funds go to the proposer and reporter.",
-          "role": ".owner"
+          "description": "can update how much of the slashed funds go to the proposer and reporter."
         },
         {
           "permission": "interact",
           "from": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
-          "description": "can delete arbitrary checkpoints.",
-          "role": ".owner"
+          "description": "can delete arbitrary checkpoints."
         },
         {
           "permission": "upgrade",
-          "from": "0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "role": "admin"
+          "from": "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
         },
         {
           "permission": "upgrade",
-          "from": "0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "role": "admin"
+          "from": "0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665"
         },
         {
           "permission": "upgrade",
-          "from": "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
-          "role": "admin"
+          "from": "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
         },
         {
           "permission": "upgrade",
-          "from": "0x12185669Dac70749f717247971E0B8819b2e472e",
-          "role": "admin"
+          "from": "0x12185669Dac70749f717247971E0B8819b2e472e"
         },
         {
           "permission": "upgrade",
-          "from": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "role": "admin"
+          "from": "0x65218A41Fb92637254B4f8c97448d3dF343A3064"
         },
         {
           "permission": "upgrade",
-          "from": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "role": "admin"
+          "from": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
         },
         {
           "permission": "upgrade",
-          "from": "0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "role": "admin"
+          "from": "0x98C831cFB18852f7deB3E3a970e907475b49730f"
         },
         {
           "permission": "upgrade",
-          "from": "0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "role": "admin"
+          "from": "0xc3897302aB4B42931cB4857050Fa60f53B775870"
         }
       ]
     },
@@ -1847,5 +1833,5 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x1c5f1ed2842ebbc2f17795416f12113fc66cb0ae09b5109ef119243b4875a5bb"
+  "permissionsConfigHash": "0x10dc816c7af47a91ad8f5d2c34186f8887f8e105596dc497cd39850e443aa5e2"
 }

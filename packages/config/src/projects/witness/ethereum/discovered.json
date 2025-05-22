@@ -30,8 +30,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-          "role": ".trustedSequencer"
+          "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
         }
       ]
     },
@@ -117,8 +116,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "role": "admin"
+          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
         }
       ],
       "sinceTimestamp": 1718630195,
@@ -186,15 +184,13 @@
         {
           "permission": "upgrade",
           "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "role": "admin",
           "via": [{ "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
-          "role": ".owner"
+          "from": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"
         }
       ]
     },
@@ -211,20 +207,17 @@
         {
           "permission": "interact",
           "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "role": ".admin"
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
         },
         {
           "permission": "interact",
           "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
+          "description": "sole address that can force batches."
         },
         {
           "permission": "interact",
           "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "role": ".owner"
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
         }
       ]
     },
@@ -415,5 +408,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x17e19bf84853d3854b6658aa25869ca1261f35e79bf999243244f489c1d713df"
+  "permissionsConfigHash": "0x4596ce4d94fda427e55192123d42235e2a6317a6c210c578547fcc0dae6afcd6"
 }
