@@ -28,6 +28,7 @@ export async function getEcosystemProjectData(
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),
       },
+      previewRecategorisation: false,
     }),
     helpers.activity.chart.prefetch({
       range: '1y',
@@ -35,6 +36,7 @@ export async function getEcosystemProjectData(
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),
       },
+      previewRecategorisation: false,
     }),
   ])
 

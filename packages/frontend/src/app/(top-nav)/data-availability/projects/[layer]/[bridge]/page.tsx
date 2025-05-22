@@ -94,6 +94,10 @@ async function getEntry(params: { layer: string; bridge: string }) {
   if (!layer) {
     notFound()
   }
+  const prefetch = api.da.projectChart.prefetch({
+    range: '1y',
+    projectId: layer.id,
+  })
   if (layer.id === ProjectId.ETHEREUM) {
     const bridge = await ps.getProject({
       slug: params.bridge,
@@ -106,14 +110,7 @@ async function getEntry(params: { layer: string; bridge: string }) {
 
     const [entry] = await Promise.all([
       getEthereumDaProjectEntry(layer, bridge),
-      api.da.projectChart.prefetch({
-        range: 'max',
-        projectId: layer.id,
-      }),
-      api.da.projectChartByProject.prefetch({
-        range: '30d',
-        daLayer: layer.id,
-      }),
+      prefetch,
     ])
 
     return entry
@@ -121,14 +118,7 @@ async function getEntry(params: { layer: string; bridge: string }) {
 
   const [entry] = await Promise.all([
     getDaProjectEntry(layer, params.bridge),
-    api.da.projectChart.prefetch({
-      range: 'max',
-      projectId: layer.id,
-    }),
-    api.da.projectChartByProject.prefetch({
-      range: '30d',
-      daLayer: layer.id,
-    }),
+    prefetch,
   ])
   if (!entry) {
     notFound()

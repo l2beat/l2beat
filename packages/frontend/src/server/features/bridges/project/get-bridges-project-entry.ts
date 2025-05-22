@@ -138,6 +138,7 @@ export async function getBridgesProjectEntry(
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
     getTokensForProject(project),
   ])

@@ -22,7 +22,7 @@ import { TvsChartRange, rangeToResolution } from './utils/range'
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  previewRecategorisation: z.boolean().default(false),
+  previewRecategorisation: z.boolean(),
 })
 
 export type RecategorisedTvsChartDataParams = z.infer<
