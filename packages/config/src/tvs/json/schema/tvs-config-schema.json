@@ -13,10 +13,7 @@
         "type": "object",
         "properties": {
           "mode": {
-            "enum": [
-              "auto",
-              "custom"
-            ]
+            "enum": ["auto", "custom"]
           },
           "id": {},
           "priceId": {
@@ -157,12 +154,7 @@
                         "type": "number"
                       }
                     },
-                    "required": [
-                      "type",
-                      "sinceTimestamp",
-                      "value",
-                      "decimals"
-                    ]
+                    "required": ["type", "sinceTimestamp", "value", "decimals"]
                   },
                   {
                     "type": "object",
@@ -377,11 +369,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "type",
-                  "amount",
-                  "priceId"
-                ]
+                "required": ["type", "amount", "priceId"]
               }
             ]
           },
@@ -564,27 +552,15 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "type",
-                  "amount",
-                  "priceId"
-                ]
+                "required": ["type", "amount", "priceId"]
               }
             ]
           },
           "category": {
-            "enum": [
-              "ether",
-              "stablecoin",
-              "other"
-            ]
+            "enum": ["ether", "stablecoin", "other"]
           },
           "source": {
-            "enum": [
-              "canonical",
-              "external",
-              "native"
-            ]
+            "enum": ["canonical", "external", "native"]
           },
           "isAssociated": {
             "type": "boolean"
@@ -604,10 +580,7 @@
       }
     }
   },
-  "required": [
-    "projectId",
-    "tokens"
-  ],
+  "required": ["projectId", "tokens"],
   "$defs": {
     "__schema0": {
       "type": "object",
@@ -616,12 +589,7 @@
           "const": "calculation"
         },
         "operator": {
-          "enum": [
-            "sum",
-            "diff",
-            "max",
-            "min"
-          ]
+          "enum": ["sum", "diff", "max", "min"]
         },
         "arguments": {
           "type": "array",
@@ -804,11 +772,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "type",
-                  "amount",
-                  "priceId"
-                ]
+                "required": ["type", "amount", "priceId"]
               },
               {
                 "anyOf": [
@@ -928,12 +892,7 @@
                         "type": "number"
                       }
                     },
-                    "required": [
-                      "type",
-                      "sinceTimestamp",
-                      "value",
-                      "decimals"
-                    ]
+                    "required": ["type", "sinceTimestamp", "value", "decimals"]
                   },
                   {
                     "type": "object",
@@ -971,11 +930,7 @@
           }
         }
       },
-      "required": [
-        "type",
-        "operator",
-        "arguments"
-      ]
+      "required": ["type", "operator", "arguments"]
     }
   },
   "$schema": "https://json-schema.org/draft-2020-12/schema"

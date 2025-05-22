@@ -29,7 +29,9 @@ export class ViemRpcClient {
     )
   }
 
-  async getTransaction(txHash: `0x${string}`): Promise<ReturnType<PublicClient['getTransaction']>> {
+  async getTransaction(
+    txHash: `0x${string}`,
+  ): Promise<ReturnType<PublicClient['getTransaction']>> {
     // eth_getTransactionByHash
     return await this.provider.getTransaction({
       hash: txHash,
