@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import type { ICache } from './ICache'
 
 const PROMISE_TIMEOUT = 30
@@ -22,6 +23,10 @@ export class InMemoryCache implements ICache {
     options: { key: string[]; ttl: number },
     fallback: () => Promise<T>,
   ): Promise<T> {
+    if (env.NODE_ENV !== 'production') {
+      return fallback()
+    }
+
     const key = this.getKey(options.key)
     const result = this.cache.get(key)
 
