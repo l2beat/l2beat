@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x8fccdf30acbc06bfb64600db9689892a5715fb63
+
+# Diff at Thu, 22 May 2025 07:22:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 22437961
+- current block number: 22536886
+
+## Description
+
+another pessimistic proof test (see telegram).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.4:
++        20
+    }
+```
+
 Generated with discovered.json: 0xf24409b47de5bb61044cd351a996611ad12516e5
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:
