@@ -24,6 +24,12 @@ export async function getScalingCostsData(
       { key: ['scaling', 'costs', 'entries'], ttl: 10 * 60 },
       getScalingCostsEntries,
     ),
+    helpers.costs.chart.prefetch({
+      range: '30d',
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+    helpers.costs.table.prefetch({ range: '30d' }),
   ])
 
   return {

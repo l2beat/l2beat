@@ -44,6 +44,7 @@ export async function getBridgesProjectData(
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
   ])
 

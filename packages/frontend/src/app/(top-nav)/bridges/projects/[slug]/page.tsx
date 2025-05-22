@@ -76,6 +76,7 @@ export default async function Page(props: Props) {
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
   ])
 
