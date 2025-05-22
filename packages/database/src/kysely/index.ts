@@ -25,6 +25,20 @@ export class DatabaseClient {
       dialect: new PostgresDialect({
         pool: new Pool({ types, ...config }),
       }),
+      log(event) {
+        if (event.level === 'error') {
+          console.error('Query failed : ', {
+            durationMs: event.queryDurationMillis,
+            error: event.error,
+            sql: event.query.sql,
+          })
+        } else {
+          console.log('Query executed : ', {
+            durationMs: event.queryDurationMillis,
+            sql: event.query.sql,
+          })
+        }
+      },
     })
   }
 
