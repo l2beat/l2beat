@@ -11,9 +11,9 @@ import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
+import { cn } from '~/utils/cn'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
-import { cn } from '~/utils/cn'
 import { ProjectCostsChartStats } from './project-costs-chart-stats'
 
 interface Props {
