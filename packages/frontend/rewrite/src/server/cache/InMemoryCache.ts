@@ -13,7 +13,6 @@ export class InMemoryCache implements ICache {
 
   constructor(
     initialCache?: Map<string, { result: unknown; timestamp: number }>,
-    private readonly enabled = env.NODE_ENV === 'production',
     private readonly promiseTimeout = PROMISE_TIMEOUT,
   ) {
     this.cache =
@@ -24,7 +23,7 @@ export class InMemoryCache implements ICache {
     options: { key: string[]; ttl: number },
     fallback: () => Promise<T>,
   ): Promise<T> {
-    if (!this.enabled) {
+    if (!(env.NODE_ENV !== 'production')) {
       return fallback()
     }
 
