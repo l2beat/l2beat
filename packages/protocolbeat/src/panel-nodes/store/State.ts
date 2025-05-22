@@ -7,6 +7,7 @@ export interface State {
   readonly hidden: readonly string[]
   readonly userPreferences: {
     readonly hideUnknownOnLoad: boolean
+    readonly enableDimming: boolean
   }
   readonly transform: {
     readonly offsetX: number
