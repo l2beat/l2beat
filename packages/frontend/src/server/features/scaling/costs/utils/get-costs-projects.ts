@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { ps } from '~/server/projects'
 import { isProjectOther } from '../../utils/is-project-other'
 

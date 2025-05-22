@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from 'zod/v4'
 
 export const FinalityDataPoint = z.object({
   minimumInSeconds: z.number().nonnegative().int().optional(),

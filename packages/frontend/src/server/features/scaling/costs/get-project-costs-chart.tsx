@@ -1,6 +1,6 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/get-project-da-throughput-chart'
 import { getActivityForProjectAndRange } from '../activity/get-activity-for-project-and-range'
 import { getCostsChart } from './get-costs-chart'

@@ -69,7 +69,7 @@ export function DaThroughputChart() {
           name="Range"
           value={range}
           setValue={setRange}
-          options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+          options={Object.values(DaThroughputTimeRange.enum).map((v) => ({
             value: v,
             label: v.toUpperCase(),
           }))}

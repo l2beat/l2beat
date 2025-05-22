@@ -1,5 +1,5 @@
 import { initTRPC } from '@trpc/server'
-import { ZodError } from 'zod'
+import { ZodError } from 'zod/v4'
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
     ...opts,

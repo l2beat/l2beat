@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
@@ -13,13 +13,13 @@ const stringArray = z.string().transform((val) => {
 const featureFlag = coerceBoolean.optional()
 
 const CLIENT_CONFIG = {
-  NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
-  NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
+  NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default(false),
+  NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
-  NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('false'),
-  NEXT_PUBLIC_ECOSYSTEMS: coerceBoolean.default('false'),
-  NEXT_PUBLIC_REWRITE: coerceBoolean.default('false'),
+  NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default(false),
+  NEXT_PUBLIC_ECOSYSTEMS: coerceBoolean.default(false),
+  NEXT_PUBLIC_REWRITE: coerceBoolean.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -31,7 +31,7 @@ const SERVER_CONFIG = {
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
   DATABASE_LOG_ENABLED: coerceBoolean.default('false'),
   ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
-  MOCK: coerceBoolean.default('false'),
+  MOCK: coerceBoolean.default(false),
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),

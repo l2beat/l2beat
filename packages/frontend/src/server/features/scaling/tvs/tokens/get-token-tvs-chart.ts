@@ -1,7 +1,7 @@
 import type { TokenValueRecord } from '@l2beat/database'
 import { assert, TokenId, UnixTime, branded } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
