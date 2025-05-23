@@ -3,9 +3,10 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
-const genesisTimestamp = UnixTime(1744840800) // 2025-04-16T17:00:00Z
-const chainId = 2904
 const discovery = new ProjectDiscovery('lachain')
+const chainId = 2904
+const genesisTimestamp = UnixTime(1744817872) // 2025-04-16T17:00:00Z
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const lachain: ScalingProject = zkStackL2({
   addedAt: UnixTime(1740072754), // 2025-01-20T17:32:34Z
@@ -43,7 +44,7 @@ export const lachain: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  diamondContract: discovery.getContract(''), // TODO
+  diamondContract: discovery.getContract('LaChainZkEvm'), // TODO
   usesEthereumBlobs: true,
   milestones: [
     {
