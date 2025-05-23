@@ -120,13 +120,14 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       'interact',
       'member',
     ] satisfies ReceivedPermission['permission'][]
-    return (contractOrEoa.receivedPermissions ?? [])
+    const legacyPermissions = (contractOrEoa.receivedPermissions ?? [])
       .filter((p) => !excludedPermissions.includes(p.permission))
       .map((p) => {
         const prefix = UltimatePermissionToPrefix[p.permission]
         const via = this.formatPermissionVia(p)
         return `* ${prefix} ${via}`
       })
+    return [...new Set(legacyPermissions)].sort()
   }
 
   describeRoles(contractOrEoa: EntryParameters) {
