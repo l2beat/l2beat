@@ -2,8 +2,14 @@ import type { DecodedCall, Value } from '../DecodedResult'
 import { erc20Plugin } from './erc20'
 import { multiSendPlugin } from './multiSend'
 import type { NestedCall, Plugin } from './types'
+import { whitebitBatchPlugin } from './whitebitBatchPlugin'
 
-export const plugins: Plugin[] = [erc20Plugin, multiSendPlugin, defaultPlugin]
+export const plugins: Plugin[] = [
+  erc20Plugin,
+  multiSendPlugin,
+  whitebitBatchPlugin,
+  defaultPlugin,
+]
 
 function defaultPlugin(call: DecodedCall): NestedCall[] {
   return call.arguments.flatMap(getNestedBytes)

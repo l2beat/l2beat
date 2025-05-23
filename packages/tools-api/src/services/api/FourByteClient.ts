@@ -19,7 +19,7 @@ export class FourByteClient {
     }
     return parsed.data.results
       .sort((a, b) => a.id - b.id)
-      .map((x) => x.text_signature)
+      .map((x) => `function ${x.text_signature}`)
   }
 }
 
