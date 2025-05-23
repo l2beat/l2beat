@@ -326,6 +326,8 @@ export class RpcCounter implements Counter {
         return 'EIP-2930'
       case '2':
         return 'EIP-1559'
+      case '4':
+        return 'EIP-7702'
       case '113':
         return 'EIP-712'
     }

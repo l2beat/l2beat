@@ -107,7 +107,8 @@
     ["0x6a000f20005980200259b80c5102003040001068", "AugustusV6"],
     ["0x27a09b5de426a6f3ce12251c43dae670bad95a2e", "quantrobotics"],
     ["0x000000000022d473030f116ddee9f6b43ac78ba3", "Permit2"],
-    ["0x66a9893cc07d91d95644aedd05d03f95e1dba8af", "UniversalRouter"]
+    ["0x66a9893cc07d91d95644aedd05d03f95e1dba8af", "UniversalRouter"],
+    ["0x8629bcd3b8a90fd7247f0c0e0e1434c69dadcca7", "Create2ForwarderFactory"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
