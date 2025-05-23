@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xe25d199b4a066594acb8ab0472d5ff2fcef27ec8
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22397507
+- current block number: 22397507
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397507 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".permissionedProver"
+    }
+```
+
 Generated with discovered.json: 0xc85388059da46c9566b54b1176f84dd9ae17881a
 
 # Diff at Fri, 02 May 2025 17:23:34 GMT:

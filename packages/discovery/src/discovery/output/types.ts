@@ -126,5 +126,6 @@ export type PermissionsOutput = {
       condition?: string
     }[]
     isFinal: boolean
+    role?: string
   }[]
 }

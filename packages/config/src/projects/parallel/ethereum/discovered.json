@@ -110,11 +110,13 @@
           "permission": "interact",
           "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
           "via": [{ "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }]
         },
         {
           "permission": "upgrade",
           "from": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -123,6 +125,7 @@
         {
           "permission": "upgrade",
           "from": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -131,6 +134,7 @@
         {
           "permission": "upgrade",
           "from": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -139,6 +143,7 @@
         {
           "permission": "upgrade",
           "from": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -147,6 +152,7 @@
         {
           "permission": "upgrade",
           "from": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -155,6 +161,7 @@
         {
           "permission": "upgrade",
           "from": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -163,11 +170,13 @@
         {
           "permission": "upgrade",
           "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+          "role": "admin",
           "via": [{ "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }]
         },
         {
           "permission": "upgrade",
           "from": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -176,6 +185,7 @@
         {
           "permission": "upgrade",
           "from": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -184,6 +194,7 @@
         {
           "permission": "upgrade",
           "from": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -192,6 +203,7 @@
         {
           "permission": "upgrade",
           "from": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -200,6 +212,7 @@
         {
           "permission": "upgrade",
           "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -209,7 +222,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+          "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "role": ".executors"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -344,7 +358,8 @@
         {
           "permission": "sequence",
           "from": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
         }
       ]
     },
@@ -642,47 +657,58 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"
+          "from": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"
+          "from": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"
+          "from": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
+          "from": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E"
+          "from": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5D657b905275F36AD62C3d5C36966975613aFB96"
+          "from": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"
+          "from": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa1c86E2362dba0525075622af6d5f739B1304D45"
+          "from": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"
+          "from": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"
+          "from": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+          "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1704125939,
@@ -762,7 +788,8 @@
         {
           "permission": "sequence",
           "from": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
         }
       ]
     },
@@ -980,7 +1007,8 @@
         {
           "permission": "validate",
           "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
         }
       ]
     },
@@ -998,16 +1026,19 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
+          "from": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"
+          "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1704125939,
@@ -1069,11 +1100,13 @@
           "permission": "interact",
           "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
           "via": [{ "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }]
         },
         {
           "permission": "upgrade",
           "from": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1082,6 +1115,7 @@
         {
           "permission": "upgrade",
           "from": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1090,6 +1124,7 @@
         {
           "permission": "upgrade",
           "from": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1098,6 +1133,7 @@
         {
           "permission": "upgrade",
           "from": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1106,6 +1142,7 @@
         {
           "permission": "upgrade",
           "from": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1114,6 +1151,7 @@
         {
           "permission": "upgrade",
           "from": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1122,11 +1160,13 @@
         {
           "permission": "upgrade",
           "from": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+          "role": "admin",
           "via": [{ "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }]
         },
         {
           "permission": "upgrade",
           "from": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1135,6 +1175,7 @@
         {
           "permission": "upgrade",
           "from": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1143,6 +1184,7 @@
         {
           "permission": "upgrade",
           "from": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1151,6 +1193,7 @@
         {
           "permission": "upgrade",
           "from": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1159,6 +1202,7 @@
         {
           "permission": "upgrade",
           "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "role": "admin",
           "via": [
             { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
             { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
@@ -1168,7 +1212,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+          "from": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "role": ".executors"
         }
       ]
     }
@@ -1931,5 +1976,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xacd361c64ca747806a8977609b29dd3d0839082c2bd74654af4a8e5229ccf651"
+  "permissionsConfigHash": "0x774a8c4a689b2953bca6380d9df358355b6912b52b8445dc57f46e7c625c1e2f"
 }

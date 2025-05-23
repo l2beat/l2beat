@@ -195,7 +195,7 @@ export function MultiView(props: MultiViewProps) {
       >
         {sizes.map((size, i) => (
           <div
-            className="pointer-events-none absolute top-0 z-20 h-full cursor-col-resize"
+            className="absolute top-0 z-20 h-full cursor-col-resize"
             style={{
               width: RESIZE_AREA,
               left: `${size - RESIZE_AREA / 2}px`,

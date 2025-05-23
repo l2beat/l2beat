@@ -16,7 +16,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1715a3E4A142d8b698131108995174F37aEBA10D"
+          "from": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+          "role": "admin"
         }
       ]
     },
@@ -138,7 +139,8 @@
         {
           "permission": "interact",
           "from": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
-          "description": "change the threshold and manage signers."
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
         }
       ]
     },
@@ -287,11 +289,13 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
+          "from": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
+          "from": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+          "role": "admin"
         }
       ]
     },
@@ -559,5 +563,5 @@
   "usedTemplates": {
     "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019"
   },
-  "permissionsConfigHash": "0xb76a552effed22c4fdc08a5a3395345138d5152fdde60733faff4c1c46401660"
+  "permissionsConfigHash": "0x66e32d3d952657f2934e6c452b62e990390adb4502d2019fbf28751bfe79cb0e"
 }

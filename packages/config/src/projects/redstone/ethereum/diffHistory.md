@@ -1,3 +1,179 @@
+Generated with discovered.json: 0x280fee52c84f9a3f9c3b849e3c3d57eb0fe219b8
+
+# Diff at Fri, 23 May 2025 09:41:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22208357
+- current block number: 22208357
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208357 (main branch discovery), not current.
+
+```diff
+    EOA  (0x4c465E58946145bb2BFC38833154f5A3B5728CF7) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0xa426A052f657AEEefc298b3B5c35a470e4739d69","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract RedstoneMultisig (0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
++        "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D"
+      receivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D"
++        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
++        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.from:
+-        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
++        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
+      receivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xA31cb9Bc414601171D4537580f98F66C03aECd43) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    EOA  (0xb356B146F1629c49C44344464F69BCDAfb4bb664) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"guard","from":"0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae","role":".GUARDIAN"}
+      receivedPermissions.5:
++        {"permission":"guard","from":"0x4b5b41c240173191425F5928bc6bdd0d439331BB","role":".guardian"}
+      receivedPermissions.4.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x4b5b41c240173191425F5928bc6bdd0d439331BB"
++        "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80"
+      receivedPermissions.4.description:
++        "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+      receivedPermissions.4.role:
++        ".owner"
+      receivedPermissions.3.permission:
+-        "interact"
++        "guard"
+      receivedPermissions.3.from:
+-        "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80"
++        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
+      receivedPermissions.3.description:
+-        "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+      receivedPermissions.3.role:
++        ".guardian"
+      receivedPermissions.2.permission:
+-        "guard"
++        "challenge"
+      receivedPermissions.2.from:
+-        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
++        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+      receivedPermissions.2.role:
++        ".CHALLENGER"
+      receivedPermissions.1.permission:
+-        "interact"
++        "challenge"
+      receivedPermissions.1.from:
+-        "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D"
++        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+      receivedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.1.role:
++        ".challenger"
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
++        "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D"
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCC53b447aFe07926423aB96D5496b1af30485ED2) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.from:
+-        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
++        "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.from:
+-        "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D"
++        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
++        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.from:
+-        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
++        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
+      directlyReceivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xc1dc712ef9cbae85dc25395c5d975f32922c7199
 
 # Diff at Tue, 29 Apr 2025 08:19:10 GMT:

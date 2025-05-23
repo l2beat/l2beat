@@ -16,7 +16,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
+          "from": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1709295839,
@@ -86,21 +87,25 @@
         {
           "permission": "upgrade",
           "from": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "role": "admin",
           "via": [{ "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05" }]
         },
         {
           "permission": "upgrade",
-          "from": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
+          "from": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+          "from": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+          "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
+          "from": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1710253339,
@@ -450,5 +455,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
+  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
 }
