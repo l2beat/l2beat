@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x4b31f458c5c9683aa27cac2709ed241293ab2230
+
+# Diff at Fri, 23 May 2025 09:40:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22046068
+- current block number: 22046068
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046068 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.4.from:
+-        "0x2b3F201543adF73160bA42E1a5b7750024F30420"
++        "0x59625d1FE0Eeb8114a4d13c863978F39b3471781"
+      receivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.4.via:
+-        [{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]
+      receivedPermissions.4.role:
++        ".GUARDIAN"
+      receivedPermissions.3.role:
++        ".CHALLENGER"
+      receivedPermissions.2.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0x59625d1FE0Eeb8114a4d13c863978F39b3471781"
++        "0x2b3F201543adF73160bA42E1a5b7750024F30420"
+      receivedPermissions.2.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.2.via:
++        [{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x68bdFecE01535090c8f3C27ec3b1AE97E83fA4aA) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xa5f8c641b9401cbdece680d336e4d241c7346191
 
 # Diff at Tue, 29 Apr 2025 08:19:07 GMT:

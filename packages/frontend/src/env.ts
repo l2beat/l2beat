@@ -29,6 +29,8 @@ const SERVER_CONFIG = {
     .string()
     .url()
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
+  DATABASE_LOG_ENABLED: coerceBoolean.default('false'),
+  DISABLE_CACHE: coerceBoolean.default('false'),
   ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default('false'),
   NODE_ENV: z
@@ -82,6 +84,8 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
+    DISABLE_CACHE: process.env.DISABLE_CACHE,
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,

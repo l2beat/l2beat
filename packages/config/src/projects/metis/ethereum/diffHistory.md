@@ -1,3 +1,434 @@
+Generated with discovered.json: 0xac83b4b3d25472fc55c1908686ca00de7665f81b
+
+# Diff at Fri, 23 May 2025 13:41:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0981ad29dde2407ba3849802ee6a490d2d0799a5 block: 22494955
+- current block number: 22545767
+
+## Description
+
+Templatized contracts.
+
+Batcher is posting blobs to the inbox, the authorized batcher is in L2 node config (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
+
+However, DisputeGameFactory is not used, meaning that no games a created. 
+In theory, games could be played and disputed state batches can be marked as such in the StateCommitmentChain. Then, these flagged batches could be deleted (within the fraud proof window). However, batches can only be deleted from the MVM_Verifier contract, which currently is set to a Multisig. So proof system could be operational if a) games are created b) Multisig acts as permissioned challenger.
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values._1088_MVM_FraudVerifier:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.1088_MVM_FraudVerifier:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22494955 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "metis/L1CrossDomainMessenger"
+      description:
++        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/LockingInfo"
+      description:
++        "Contract acting as an escrow for METIS tokens managed by LockingPool."
+    }
+```
+
+```diff
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: Storage container for SCC batches.
+      template:
++        "metis/ChainStorageContainer-SCC-batches"
+      description:
++        "Storage container for SCC batches."
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Currently not used, no games are created.
+      template:
++        "metis/DisputeGameFactory_Metis"
+      description:
++        "Factory contract for creating dispute games. Currently not used, no games are created."
+    }
+```
+
+```diff
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff) {
+    +++ description: Contract used to manage configuration of global Metis values.
+      template:
++        "metis/MetisConfig"
+      description:
++        "Contract used to manage configuration of global Metis values."
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: Storage container for CTC batches.
+      template:
++        "metis/ChainStorageContainer-CTC-batches"
+      description:
++        "Storage container for CTC batches."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/L1StandardBridge"
+      description:
++        "Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway."
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235) {
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+      template:
++        "metis/FaultDisputeGame"
+      description:
++        "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain."
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","role":"admin"}
+      receivedPermissions.6.from:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.5.from:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.4.from:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.3.from:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.2.from:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.2.via:
+-        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.1.from:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.from:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.0.description:
+-        "set and change address mappings."
+      receivedPermissions.0.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.0.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+    }
+```
+
+```diff
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+      template:
++        "metis/CanonicalTransactionChain"
+      description:
++        "The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528) {
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/BondManager"
+      description:
++        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x5fF5316CD1C015970eEC83D34a69E504B577a5bb)
+    +++ description: None
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_CanonicalTransaction"
+      description:
++        "MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain."
+    }
+```
+
+```diff
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC) {
+    +++ description: Oracle for providing preimages.
+      template:
++        "metis/PreimageOracle"
+      description:
++        "Oracle for providing preimages."
+    }
+```
+
+```diff
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063) {
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_DiscountOracle"
+      description:
++        "Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication."
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      template:
+-        "opstack/AddressManager"
++        "metis/Lib_AddressManager"
+      description:
+-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
++        "Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      values.1088_MVM_FraudVerifier:
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: Metis token contract.
+      name:
+-        "MToken"
++        "Metis Token"
+      template:
++        "metis/METISToken"
+      description:
++        "Metis token contract."
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      template:
++        "metis/MVM_StateCommitmentChain"
+      description:
++        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: Storage container for CTC queue.
+      template:
++        "metis/ChainStorageContainer-CTC-queue"
+      description:
++        "Storage container for CTC queue."
+    }
+```
+
+```diff
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057) {
+    +++ description: None
+      template:
++        "metis/MIPS"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+      template:
++        "metis/LockingPool"
+      description:
++        "Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution."
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_Verifier"
+      description:
++        "The MVM Verifier contract is responsible for verifying the state of the MVM."
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/MVM_L2ChainManagerOnL1"
+      description:
++        "Contract that allows METIS_MANAGER to switch Sequencer."
+    }
+```
+
+```diff
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      template:
++        "metis/DelayedWMetis"
+      description:
++        "Delayed wrapped Metis token contract."
+    }
+```
+
+Generated with discovered.json: 0xee316cd9d06ba620002ce4a912220373f42eb647
+
+# Diff at Fri, 23 May 2025 09:40:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22494955
+- current block number: 22494955
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22494955 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.3.description:
+-        "set and change address mappings."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.2.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.1.from:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0x918778e825747a892b17C66fe7D24C618262867d"
+      receivedPermissions.0.via:
+-        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.0.description:
++        "set and change address mappings."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x5345fCDCF5449a40df030798C195603d27691502) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xe76af737833e2ba17ce79291ef9499bc8dfac9fb
 
 # Diff at Fri, 16 May 2025 12:25:09 GMT:

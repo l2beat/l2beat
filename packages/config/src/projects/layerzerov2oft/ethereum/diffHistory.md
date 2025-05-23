@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x6e02d898be8eec9cb7813626fa85fcbddc076b66
+
+# Diff at Fri, 23 May 2025 09:40:58 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22174829
+- current block number: 22174829
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x77a791f0fc886d26edf7f4abba6ce1b93fc6138d
 
 # Diff at Tue, 06 May 2025 13:32:00 GMT:

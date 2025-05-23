@@ -150,7 +150,8 @@
         {
           "permission": "interact",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "pause the bridge."
+          "description": "pause the bridge.",
+          "role": ".pauserAC"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -201,7 +202,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+          "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1720568903,
@@ -292,17 +294,20 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+          "from": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees."
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
+          "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
         }
       ],
       "sinceTimestamp": 1745960099,
@@ -372,12 +377,14 @@
         {
           "permission": "interact",
           "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can freeze the Vector contract and update the list of authorized relayers."
+          "description": "can freeze the Vector contract and update the list of authorized relayers.",
+          "role": ".guardians"
         },
         {
           "permission": "interact",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
           "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
+          "role": ".defaultAdminAC",
           "via": [
             {
               "address": "0x45828180bbE489350D621d002968A0585406d487",
@@ -388,17 +395,20 @@
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
           "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
           "via": [
             {
               "address": "0x45828180bbE489350D621d002968A0585406d487",
@@ -409,20 +419,24 @@
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "upgrade",
-          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "role": ".timelocks"
         },
         {
           "permission": "upgrade",
           "from": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "role": "admin",
           "via": [
             { "address": "0x36194271a00dBBBae314E83dA56d0FF75fDa367B" },
             {
@@ -436,7 +450,8 @@
         {
           "permission": "act",
           "from": "0x45828180bbE489350D621d002968A0585406d487",
-          "delay": 86400
+          "delay": 86400,
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -495,7 +510,8 @@
         {
           "permission": "interact",
           "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract.",
+          "role": ".relayers"
         }
       ]
     },
@@ -513,7 +529,8 @@
         {
           "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -903,5 +920,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
   },
-  "permissionsConfigHash": "0x945bc2bd3cec638e9caa5b8c0454330be58463c59deeca2191cd4f94943fbcb1"
+  "permissionsConfigHash": "0x14f46c83d670da7a34f30c8a27ac22677ef7772519a278f637a3d7866c62f94c"
 }

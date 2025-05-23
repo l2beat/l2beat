@@ -59,7 +59,7 @@ export function TextCountdown({ expiresAt }: { expiresAt: number }) {
 
   const { days, hours, minutes, seconds } = getTimeParts(secondsLeft)
   return (
-    <span>
+    <span suppressHydrationWarning>
       {days} days {hours} hours {minutes} minutes {seconds} seconds
     </span>
   )
@@ -88,7 +88,9 @@ function TimePart({
         className,
       )}
     >
-      <span className="tabular-nums">{children}</span>
+      <span className="tabular-nums" suppressHydrationWarning>
+        {children}
+      </span>
       <span
         className={cn(
           'ml-0.5',

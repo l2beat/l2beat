@@ -83,10 +83,12 @@ export default async function Page(props: Props) {
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
     api.activity.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
+      previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
       ? api.costs.projectChart.prefetch({

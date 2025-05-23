@@ -1,0 +1,27 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "CanonicalTransactionChain",
+  "category": "core",
+  "description": "The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.",
+  "ignoreInWatchMode": [
+    "getLastBlockNumber",
+    "getLastTimestamp",
+    "getNextQueueIndex",
+    "getNumPendingQueueElements",
+    "getQueueLength",
+    "getTotalBatches",
+    "getTotalElements"
+  ],
+  "ignoreMethods": [
+    "getBatchGlobalMetadataByChainId",
+    "getLastBlockNumberByChainId",
+    "getLastTimestampByChainId",
+    "getNextQueueIndexByChainId",
+    "getNumPendingQueueElementsByChainId",
+    "getQueueElement",
+    "getQueueLengthByChainId",
+    "getTotalBatchesByChainId",
+    "getTotalElementsByChainId",
+    "lengthBatchByChainId"
+  ]
+}

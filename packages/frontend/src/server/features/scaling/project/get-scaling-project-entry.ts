@@ -143,10 +143,12 @@ export async function getScalingProjectEntry(
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
     api.activity.chart({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
+      previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
       ? api.costs.projectChart({

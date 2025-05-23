@@ -46,10 +46,12 @@ export async function getScalingProjectData(
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
     helpers.activity.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
+      previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
       ? helpers.costs.projectChart.prefetch({

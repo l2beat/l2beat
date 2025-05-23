@@ -21,6 +21,7 @@ import { layerzerov2oft } from '../projects/layerzerov2oft/layerzerov2oft'
 import { lzOmnichain } from '../projects/lzomnichain/lzomnichain'
 import { multichain } from '../projects/multichain/multichain'
 import { near } from '../projects/near/near'
+import { nearomni } from '../projects/nearomni/nearomni'
 import { nomad } from '../projects/nomad/nomad'
 import { omni } from '../projects/omni/omni'
 import { opticsV1 } from '../projects/opticsV1/opticsV1'
@@ -68,6 +69,7 @@ export const bridges: Bridge[] = [
   layerzerov2oft,
   multichain,
   near,
+  nearomni,
   fraxferry,
   nomad,
   omni,

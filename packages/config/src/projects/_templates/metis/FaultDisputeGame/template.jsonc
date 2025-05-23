@@ -1,0 +1,11 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "FaultDisputeGame",
+  "description": "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.",
+  "fields": {},
+  "ignoreMethods": [
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames"
+  ]
+}

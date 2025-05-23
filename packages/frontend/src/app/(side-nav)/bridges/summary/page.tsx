@@ -16,6 +16,7 @@ export default async function Page() {
       range: '1y',
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
   ])
 
