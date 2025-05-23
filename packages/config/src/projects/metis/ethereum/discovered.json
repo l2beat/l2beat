@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22545251,
+  "blockNumber": 22545767,
   "configHash": "0xa4728ee1a59053d3a41721136b75dec7edd691227ad21b85a1e8cc6e1ac8ed7f",
   "entries": [
     {
@@ -119,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x0000000000000000000000000000000000006830552f00013866a9",
-        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006830552f00013866a9",
-        "length": 28765,
-        "lengthByChainId": 28765,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006830624f0001386732",
+        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006830624f0001386732",
+        "length": 28766,
+        "lengthByChainId": 28766,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -380,12 +380,6 @@
       "proxyType": "gnosis safe",
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
-          "description": "set and change address mappings.",
-          "role": ".owner"
-        },
         {
           "permission": "upgrade",
           "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
@@ -838,12 +832,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1747997999,
-        "getLastSequencerTimestampByChainId": 1747997999,
-        "getTotalBatches": 28765,
-        "getTotalBatchesByChainId": 28765,
-        "getTotalElements": 20473513,
-        "getTotalElementsByChainId": 20473513,
+        "getLastSequencerTimestamp": 1748001359,
+        "getLastSequencerTimestampByChainId": 1748001359,
+        "getTotalBatches": 28766,
+        "getTotalBatchesByChainId": 28766,
+        "getTotalElements": 20473650,
+        "getTotalElementsByChainId": 20473650,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -2054,5 +2048,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0x75dbd6fd8858b691340c8af2cddb7bcc8deb5348357dfd2bb87c645cc318d2c1"
+  "permissionsConfigHash": "0xfb245cf12f14ae4e27590b244e16c4f0759ed579b734c17907df545c1d230935"
 }
