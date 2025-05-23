@@ -11,6 +11,23 @@
         "expectRevert": true
       }
     }
+    // TODO: resolve permissions
+    // "permissionsGranted":{
+    //   "handler": {
+    //     "type": "event",
+    //     "add": {
+    //       "event": "Granted",
+    //     }
+    //   }
+    // },
+    // "permissionsRevoked":{
+    //   "handler": {
+    //     "type": "event",
+    //     "add": {
+    //       "event": "Revoked",
+    //     }
+    //   }
+    // }
   },
   "category": "gov"
 }

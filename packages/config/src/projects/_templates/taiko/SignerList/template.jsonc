@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A signer list for registering agents, similar to a Multisig.",
+  "ignoreMethods": ["addresslistLengthAtBlock"]
+}
