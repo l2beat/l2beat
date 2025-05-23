@@ -23,7 +23,7 @@ export function createEcosystemsRouter(
     }),
     async (req, res) => {
       const data = await cache.get(
-        { key: `/ecosystems/${req.params.slug}`, ttl: 10 * 60 },
+        { key: ['ecosystems', req.params.slug], ttl: 10 * 60 },
         () =>
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )

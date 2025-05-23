@@ -3,13 +3,16 @@
   "extends": ["//"],
   "tasks": {
     "rewrite:build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "outputs": ["rewrite/dist"]
     },
     "build": {
       "env": [
         "CI",
         "CRON_SECRET",
         "DATABASE_URL",
+        "DATABASE_LOG_ENABLED",
+        "DISABLE_CACHE",
         "EXCLUDED_TVS_PROJECTS",
         "EXCLUDED_ACTIVITY_PROJECTS",
         "ETHEREUM_RPC_URL",

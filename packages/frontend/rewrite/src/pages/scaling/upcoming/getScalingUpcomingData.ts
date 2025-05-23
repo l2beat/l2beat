@@ -1,16 +1,26 @@
+import type { Request } from 'express'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import type { ICache } from 'rewrite/src/server/cache/ICache'
+import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingUpcomingEntries } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingUpcomingData(
+  req: Request,
   manifest: Manifest,
-  url: string,
+  cache: ICache,
 ): Promise<RenderData> {
+  const cookies = parseCookies(req)
   const [appLayoutProps, entries] = await Promise.all([
-    getAppLayoutProps(),
-    getScalingUpcomingEntries(),
+    getAppLayoutProps({
+      recategorisationPreview: cookies.recategorisationPreview,
+    }),
+    cache.get(
+      { key: ['scaling', 'upcoming', 'entries'], ttl: 10 * 60 },
+      getScalingUpcomingEntries,
+    ),
   ])
 
   return {
@@ -18,7 +28,7 @@ export async function getScalingUpcomingData(
       manifest,
       metadata: getMetadata(manifest, {
         openGraph: {
-          url,
+          url: req.originalUrl,
           image: '/meta-images/scaling/upcoming/opengraph-image.png',
         },
       }),

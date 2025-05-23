@@ -1,3 +1,372 @@
+Generated with discovered.json: 0x870e2a3be5b9cdca1244fb6d1ea5e3f86033eb67
+
+# Diff at Fri, 23 May 2025 09:41:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22397503
+- current block number: 22397503
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397503 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.6.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
+      directlyReceivedPermissions.6.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      directlyReceivedPermissions.5.description:
++        "cancel queued transactions."
+      directlyReceivedPermissions.5.role:
++        ".Canceller"
+      directlyReceivedPermissions.4.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.4.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.3.role:
++        ".owner"
+      directlyReceivedPermissions.2.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin 2 (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x71D78dC7cCC0e037e12de1E50f5470903ce37148) {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) {
+    +++ description: None
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosterManager"
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      receivedPermissions.14.role:
++        "admin"
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.10.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.10.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.10.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
+      receivedPermissions.9.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.9.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
++        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
+      receivedPermissions.8.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.8.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688"
+      receivedPermissions.7.description:
+-        "cancel queued transactions."
+      receivedPermissions.7.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.7.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
++        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688"
++        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
++        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.3.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "cancel queued transactions."
+      receivedPermissions.3.role:
++        ".Canceller"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.2.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.2.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.2.description:
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.2.role:
++        ".timelockAdminAC"
+      receivedPermissions.1.from:
+-        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.1.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
+      receivedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.0.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions.14.role:
++        "admin"
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.10.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.10.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.10.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
+      receivedPermissions.9.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.9.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
++        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
+      receivedPermissions.8.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.8.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688"
+      receivedPermissions.7.description:
+-        "cancel queued transactions."
+      receivedPermissions.7.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.7.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
++        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688"
++        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
++        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.3.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "cancel queued transactions."
+      receivedPermissions.3.role:
++        ".Canceller"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.2.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.2.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.2.description:
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.2.role:
++        ".timelockAdminAC"
+      receivedPermissions.1.from:
+-        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.1.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd"
+      receivedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.0.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
 Generated with discovered.json: 0x7acb770d530023d526560279daace3f4b80c0755
 
 # Diff at Fri, 02 May 2025 17:25:43 GMT:

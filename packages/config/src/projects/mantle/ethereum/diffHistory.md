@@ -1,3 +1,225 @@
+Generated with discovered.json: 0x2995c37f4bf9e9657aa9000786b0b8fcd629464f
+
+# Diff at Fri, 23 May 2025 09:40:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22273219
+- current block number: 22273219
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273219 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".GUARDIAN"
+      receivedPermissions.0.role:
++        ".CHALLENGER"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.9.from:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.9.description:
+-        "manage all access control roles."
+      receivedPermissions.9.via.0.address:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.9.via.0.delay:
+-        86400
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.8.from:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      receivedPermissions.8.description:
+-        "set and change address mappings."
+      receivedPermissions.8.via.1:
++        {"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}
+      receivedPermissions.8.via.0.address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.8.via.0.delay:
++        86400
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.7.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.7.description:
++        "execute transactions that are ready."
+      receivedPermissions.7.role:
++        ".Executor"
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.6.via.1:
+-        {"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}
+      receivedPermissions.6.description:
++        "manage all access control roles."
+      receivedPermissions.6.role:
++        ".defaultAdminAC"
+      receivedPermissions.5.from:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      receivedPermissions.5.description:
+-        "manage all access control roles."
++        "set and change address mappings."
+      receivedPermissions.5.role:
++        ".owner"
+      receivedPermissions.5.via:
++        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.4.from:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.4.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "manage all access control roles."
+      receivedPermissions.4.role:
++        ".defaultAdminAC"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      receivedPermissions.3.description:
+-        "execute transactions that are ready."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.3.role:
++        ".$admin"
+      receivedPermissions.3.via:
++        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.2.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.2.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".Proposer"
+      receivedPermissions.0.role:
++        ".Canceller"
+      directlyReceivedPermissions.1.from:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      directlyReceivedPermissions.1.delay:
++        86400
+      directlyReceivedPermissions.1.role:
++        ".Executor"
+      directlyReceivedPermissions.0.from:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      directlyReceivedPermissions.0.delay:
+-        86400
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.1.role:
++        ".defaultAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      directlyReceivedPermissions.2.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      directlyReceivedPermissions.1.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
 Generated with discovered.json: 0xb19a60dc6d6a2fb930f25b694e4e50bc68cd27fd
 
 # Diff at Tue, 29 Apr 2025 08:19:06 GMT:

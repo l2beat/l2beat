@@ -51,6 +51,7 @@ export const ManualProxyType = z.enum([
   'Axelar proxy',
   'LightLink proxy',
   'Everclear proxy',
+  'TaikoFork proxy',
   'immutable',
 ])
 

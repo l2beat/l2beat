@@ -18,11 +18,13 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -98,7 +100,8 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".operators"
         }
       ]
     },
@@ -407,21 +410,25 @@
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         },
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "upgrade",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -756,5 +763,5 @@
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "permissionsConfigHash": "0x791542d76f5ebf8faf888a4cdb4032e815636f085d0aa4bbcdd63781e2af2749"
+  "permissionsConfigHash": "0xcf8f16e015f9adb54eeffd4e84b3d1b44c72663fe597473268dfeb93de320a32"
 }

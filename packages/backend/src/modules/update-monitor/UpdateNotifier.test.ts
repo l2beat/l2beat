@@ -4,11 +4,13 @@ import {
   ChainConverter,
   ChainId,
   EthereumAddress,
+  ProjectId,
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
+import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import {
   type DiscordClient,
@@ -28,6 +30,10 @@ describe(UpdateNotifier.name, () => {
     { name: 'ethereum', chainId: ChainId.ETHEREUM },
     { name: 'arbitrum', chainId: ChainId.ARBITRUM },
   ])
+
+  const projectService = mockObject<ProjectService>({
+    getProject: mockFn().resolvesTo(undefined),
+  })
 
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
@@ -55,6 +61,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -145,6 +152,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -247,6 +255,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -342,6 +351,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -391,6 +401,214 @@ describe(UpdateNotifier.name, () => {
         chainId: ChainId.ETHEREUM,
       })
     })
+
+    it('sends notification about tracked transactions being affected', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
+        insert: async () => 0,
+        findLatestId: async () => undefined,
+        getNewerThan: async () => [],
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
+      // Mock project with trackedTxsConfig
+      const mockProject = {
+        id: ProjectId('project-a'),
+        trackedTxsConfig: [
+          {
+            params: {
+              formula: 'functionCall',
+              address: EthereumAddress(
+                '0x1234567890123456789012345678901234567890',
+              ),
+              selector: '0x12345678',
+            },
+          },
+        ],
+      }
+      const mockProjectService = mockObject<ProjectService>({
+        getProject: mockFn().resolvesTo(mockProject),
+      })
+
+      const updateNotifier = new UpdateNotifier(
+        mockObject<Database>({
+          updateNotifier: updateNotifierRepository,
+        }),
+        discordClient,
+        chainConverter,
+        Logger.SILENT,
+        updateMessagesService,
+        mockProjectService,
+        [],
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress(
+        '0x1234567890123456789012345678901234567890',
+      ) // Same address as in trackedTxsConfig
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          addressType: 'Contract',
+          diff: [{ key: 'A', before: '1', after: '2' }],
+        },
+      ]
+
+      await updateNotifier.handleUpdate(
+        project,
+        changes,
+        BLOCK,
+        ChainId.ETHEREUM,
+        dependents,
+        [],
+        UnixTime.now(),
+      )
+
+      expect(mockProjectService.getProject).toHaveBeenCalledWith({
+        id: ProjectId('project-a'),
+        select: ['trackedTxsConfig'],
+      })
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        [
+          '> #0000 (block_number=123)',
+          '',
+          '***project-a*** | detected changes on chain: ***ethereum***',
+          '*Tracked transactions might be affected.*```diff',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
+          '```',
+        ].join('\n'),
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        [
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
+          '```',
+        ].join('\n'),
+        'PUBLIC',
+      )
+    })
+
+    it('does not include tracked transactions message when contract is not in trackedTxsConfig', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
+        insert: async () => 0,
+        findLatestId: async () => undefined,
+        getNewerThan: async () => [],
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
+      // Mock project with trackedTxsConfig that has a different address
+      const mockProject = {
+        id: ProjectId('project-a'),
+        trackedTxsConfig: [
+          {
+            params: {
+              formula: 'functionCall',
+              address: EthereumAddress(
+                '0x9999999999999999999999999999999999999999',
+              ),
+              selector: '0x12345678',
+            },
+          },
+        ],
+      }
+      const mockProjectService = mockObject<ProjectService>({
+        getProject: mockFn().resolvesTo(mockProject),
+      })
+
+      const updateNotifier = new UpdateNotifier(
+        mockObject<Database>({
+          updateNotifier: updateNotifierRepository,
+        }),
+        discordClient,
+        chainConverter,
+        Logger.SILENT,
+        updateMessagesService,
+        mockProjectService,
+        [],
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress(
+        '0x1234567890123456789012345678901234567890',
+      ) // Different from trackedTxsConfig
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          addressType: 'Contract',
+          diff: [{ key: 'A', before: '1', after: '2' }],
+        },
+      ]
+
+      await updateNotifier.handleUpdate(
+        project,
+        changes,
+        BLOCK,
+        ChainId.ETHEREUM,
+        dependents,
+        [],
+        UnixTime.now(),
+      )
+
+      expect(mockProjectService.getProject).toHaveBeenCalledWith({
+        id: ProjectId('project-a'),
+        select: ['trackedTxsConfig'],
+      })
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      // Verify message doesn't contain tracked transactions notification
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        [
+          '> #0000 (block_number=123)',
+          '',
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
+          '```',
+        ].join('\n'),
+        'INTERNAL',
+      )
+    })
   })
 
   describe(UpdateNotifier.prototype.sendDailyReminder.name, () => {
@@ -413,6 +631,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -486,6 +705,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -537,6 +757,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         [],
       )
 
@@ -567,6 +788,7 @@ describe(UpdateNotifier.name, () => {
         chainConverter,
         Logger.SILENT,
         updateMessagesService,
+        projectService,
         disabledChains,
       )
 

@@ -1,3 +1,127 @@
+Generated with discovered.json: 0xc9d579162a594d178f7bdb1726533381c5d44fad
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22425142
+- current block number: 22425142
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22425142 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      receivedPermissions.0.role:
++        ".pauserRegistry"
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".rewardsInitiator"
+    }
+```
+
+```diff
+    EOA  (0x454Ef2f69f91527856E06659f92a66f464C1ca4e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchConfirmers"
+    }
+```
+
+```diff
+    EOA  (0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchConfirmers"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x8642473a123FE33b0aaE90bD8604eA1029417236) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".ejectors"
+    }
+```
+
+```diff
+    EOA  (0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchConfirmers"
+    }
+```
+
+```diff
+    EOA  (0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".ejectors"
+    }
+```
+
+```diff
+    EOA  (0xe0550117Cb066D3b330eBd764B0d75D3BA378734) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".churnApprover"
+    }
+```
+
 Generated with discovered.json: 0xcccee4500604b05cff3671140c666084f65d605a
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:

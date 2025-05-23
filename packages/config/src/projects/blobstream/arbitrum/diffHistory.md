@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x7b0bfb4b715bbfdaa55182df29f448ffd7123ac9
+
+# Diff at Fri, 23 May 2025 09:41:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 325165450
+- current block number: 325165450
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 325165450 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".relayers"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".guardians"
+    }
+```
+
+```diff
+    EOA  (0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".relayers"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xaea9d63389eab81d2f2faa3634ce6c49375a407d
 
 # Diff at Tue, 29 Apr 2025 08:19:22 GMT:

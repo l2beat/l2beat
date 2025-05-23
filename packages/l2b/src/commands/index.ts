@@ -11,6 +11,7 @@ import { Discover } from './Discover'
 import { DownloadShapes } from './DownloadShapes'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
+import { FetchDiscoveryCache } from './FetchDiscoveryCache'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
@@ -46,14 +47,20 @@ export function getSubcommands() {
     CountUserOperations,
     DeploymentTimestamp,
     DetectProxy,
-    DownloadShapes,
     Discover,
+    DownloadShapes,
     Events,
+    FetchAgglayer,
+    FetchDiscoveryCache,
     FetchFlatSources,
+    FetchZkStack,
+    FindCelestiaNamespace,
+    FindL2,
     Flatten,
     FlattenAndDiff,
-    FindCelestiaNamespace,
     GetTokenMinters,
+    Init,
+    InitTemplate,
     MatchFlat,
     ModelPermissions,
     OPConfigs,
@@ -63,11 +70,6 @@ export function getSubcommands() {
     SolFmt,
     StarknetAccessControl,
     StarknetProgramHashes,
-    FetchAgglayer,
-    FetchZkStack,
-    FindL2,
-    Init,
-    InitTemplate,
     TVL,
     UI,
     ZkGovProposal,

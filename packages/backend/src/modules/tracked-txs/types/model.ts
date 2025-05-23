@@ -26,8 +26,8 @@ export const BigQueryFunctionCallResult = z.object({
   input: z.string(),
   receipt_gas_used: z.number(),
   gas_price: z.coerce.bigint(),
-  calldata_gas_used: z.number(),
   data_length: z.number(),
+  non_zero_bytes: z.number(),
   receipt_blob_gas_used: z.number().nullable(),
   receipt_blob_gas_price: z.coerce.bigint().nullable(),
 })
@@ -62,8 +62,8 @@ export const BigQueryTransferResult = z.object({
   to_address: branded(z.string(), EthereumAddress),
   receipt_gas_used: z.number(),
   gas_price: z.coerce.bigint(),
-  calldata_gas_used: z.number(),
   data_length: z.number(),
+  non_zero_bytes: z.number(),
   receipt_blob_gas_used: z.number().nullable(),
   receipt_blob_gas_price: z.coerce.bigint().nullable(),
 })

@@ -95,7 +95,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
+          "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "role": "admin"
         }
       ]
     },
@@ -437,19 +438,23 @@
         {
           "permission": "interact",
           "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "change the threshold and manage signers."
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+          "from": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
+          "from": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -652,7 +657,8 @@
         {
           "permission": "interact",
           "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1564,5 +1570,5 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
+  "permissionsConfigHash": "0xa5347786623c7738d92da2fb94a1dd9dc7968837be269c2d4b35d08a60ced1a0"
 }

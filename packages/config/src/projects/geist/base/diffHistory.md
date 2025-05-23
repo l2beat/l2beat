@@ -1,3 +1,193 @@
+Generated with discovered.json: 0xda9ce9561e370fc90e5cfb2d25f53e3d980c6fca
+
+# Diff at Fri, 23 May 2025 09:41:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 30439434
+- current block number: 30439434
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30439434 (main branch discovery), not current.
+
+```diff
+    EOA  (0x01F010a5e001fe9d6940758EA5e8c777885E351e) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x327b96a94763c50D5EC56D79a0324f5eb9527306) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "fastconfirm"
+      directlyReceivedPermissions.1.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      directlyReceivedPermissions.1.role:
++        ".anyTrustFastConfirmer"
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      directlyReceivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      directlyReceivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.permission:
+-        "act"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD"
++        "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "act"
+      directlyReceivedPermissions.1.from:
+-        "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09"
++        "0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x97B942C591C484bBdDBb1cd04560924cf8a8fe3f) {
+    +++ description: None
+      receivedPermissions.2.permission:
+-        "validate"
++        "fastconfirm"
+      receivedPermissions.2.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      receivedPermissions.2.role:
++        ".anyTrustFastConfirmer"
+      receivedPermissions.1.role:
++        ".validators"
+      receivedPermissions.1.via:
++        [{"address":"0x327b96a94763c50D5EC56D79a0324f5eb9527306"}]
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      receivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      receivedPermissions.0.via:
+-        [{"address":"0x327b96a94763c50D5EC56D79a0324f5eb9527306"}]
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD) {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0xDbc9207a27aD463f0C383c05fC03AeDf1b3D90b1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    EOA  (0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
 Generated with discovered.json: 0xce736a957f962cb3138b1a5b5ffcab6d53781286
 
 # Diff at Mon, 19 May 2025 15:23:53 GMT:

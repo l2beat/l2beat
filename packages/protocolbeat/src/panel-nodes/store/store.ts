@@ -46,6 +46,7 @@ const INITIAL_STATE: State = {
   projectId: '',
   userPreferences: {
     hideUnknownOnLoad: true,
+    enableDimming: true,
   },
 }
 

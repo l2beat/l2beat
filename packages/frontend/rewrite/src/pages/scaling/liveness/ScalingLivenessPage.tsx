@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingLivenessEntry>
 }
 
-export function ScalingLivenessPage(props: Props) {
+export function ScalingLivenessPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextLivenessPage entries={props.entries} />
+        <NextLivenessPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )

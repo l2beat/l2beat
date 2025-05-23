@@ -10,9 +10,17 @@ export interface ConnectionProps {
     direction: 'left' | 'right'
   }
   isHighlighted?: boolean
+  isDashed?: boolean
+  isDimmed?: boolean
 }
 
-export function Connection({ from, to, isHighlighted }: ConnectionProps) {
+export function Connection({
+  from,
+  to,
+  isHighlighted,
+  isDashed,
+  isDimmed,
+}: ConnectionProps) {
   const minX = Math.min(from.x, to.x) - 200
   const maxX = Math.max(from.x, to.x) + 200
   const minY = Math.min(from.y, to.y) - 200
@@ -54,10 +62,13 @@ export function Connection({ from, to, isHighlighted }: ConnectionProps) {
       <path
         d={path.join(' ')}
         strokeLinecap="round"
+        strokeDasharray={isDashed ? '5,5' : undefined}
         className={
           isHighlighted
             ? 'stroke-[3] stroke-autumn-300'
-            : 'stroke-2 stroke-coffee-400'
+            : isDimmed
+              ? 'stroke-2 stroke-coffee-400/30'
+              : 'stroke-2 stroke-coffee-400'
         }
       />
     </svg>

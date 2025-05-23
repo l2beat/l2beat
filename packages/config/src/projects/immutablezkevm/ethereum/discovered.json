@@ -225,18 +225,21 @@
         {
           "permission": "upgrade",
           "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "role": "admin",
           "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         },
         {
           "permission": "upgrade",
           "from": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "role": "admin",
           "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+          "from": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -288,11 +291,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+          "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+          "from": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1702962527,
@@ -591,5 +596,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x31469a0fd25bd4fd1b53fb66cf139440fb56237426ff00853f0a4bec410e6e68"
+  "permissionsConfigHash": "0x404ca0da000d34d279819c22691aded4e8cb899761fe1f0eb89529c32843572f"
 }

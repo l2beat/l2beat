@@ -12,7 +12,8 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826"
+          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "role": ".operators"
         }
       ]
     },
@@ -45,17 +46,20 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826"
+          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "description": "manage the token admin role."
+          "description": "manage the token admin role.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "delay": 1209600
+          "delay": 1209600,
+          "role": ".$admin"
         }
       ]
     },
@@ -66,7 +70,8 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826"
+          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "role": ".operators"
         }
       ]
     },
@@ -83,7 +88,8 @@
         {
           "permission": "interact",
           "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
         }
       ]
     },
@@ -137,7 +143,8 @@
         {
           "permission": "interact",
           "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
         }
       ]
     },
@@ -212,17 +219,20 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826"
+          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "description": "manage the token admin role."
+          "description": "manage the token admin role.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "delay": 1209600
+          "delay": 1209600,
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -927,5 +937,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "permissionsConfigHash": "0xff884092f9fc8e5ddd858914cef6e92f7f177556578f9623fee7bb85a826e6bb"
+  "permissionsConfigHash": "0xcb6d856cbbcc244f668fef092b0430cc785733449edc86d8e37696fbccd1b63b"
 }

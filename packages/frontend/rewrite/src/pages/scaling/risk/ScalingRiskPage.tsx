@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingRiskEntry>
 }
 
-export function ScalingRiskPage(props: Props) {
+export function ScalingRiskPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextRiskPage entries={props.entries} />
+        <NextRiskPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )

@@ -1,3 +1,375 @@
+Generated with discovered.json: 0x499c2a11b808a66e0a2ead7a04e09df85877fa25
+
+# Diff at Fri, 23 May 2025 09:41:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22466462
+- current block number: 22466462
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22466462 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0092bC49078f130D27e70dBeee441E227280B97D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x323a78C1c910b282dE98a557d735628A02E00983) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
+```diff
+    EOA  (0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x61F2945d4bc9E40B66a6376d1094a50438f613e2) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
+```diff
+    EOA  (0x6aB0E960911b50f6d14f249782ac12EC3E7584A0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
+```diff
+    EOA  (0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x71C10870dC38E54d987C22e96aB32b46cc08564F) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x74204e3801E9394848AbDBAd6f378d0b11e9a091) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x77B29534738E3F0F297d36635d7884965C7c8cE1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x95417708f67f4a5dF1A447efe40c6C74e38Ab832) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x95C373754C66feF1Eb2dbb6934aF821C551D9738) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
+```diff
+    EOA  (0xb4A20D473e8C378aE742a8017DD67756a358eAB6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".challengers"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
+```diff
+    EOA  (0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xC412B4e6399F694CfF21D038d225373Fd6596811) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xC4db900F76293042349448D1Ba30F71518325Bb3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xd11f9c4F5d9b1feC2d14581d3674066442B68772) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xF2FF0509520fAf35B511074466A509e00d73C307) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".challengers"
+    }
+```
+
+```diff
+    EOA  (0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getActiveStakers"
+    }
+```
+
 Generated with discovered.json: 0x0491437995384bf231290d5ba70c1831b021126d
 
 # Diff at Mon, 12 May 2025 12:13:27 GMT:

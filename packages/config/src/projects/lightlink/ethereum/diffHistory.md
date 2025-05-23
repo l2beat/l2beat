@@ -1,3 +1,88 @@
+Generated with discovered.json: 0x8c0caf4c17f28e9e3edf8c9271be8b171fbae2ba
+
+# Diff at Fri, 23 May 2025 09:40:58 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22208513
+- current block number: 22208513
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208513 (main branch discovery), not current.
+
+```diff
+    contract Lightlink Multisig 1 (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+      receivedPermissions.0.role:
++        ".multisig"
+    }
+```
+
+```diff
+    EOA  (0x514F8211B64f0620349659DeaDB5911a9896E7EC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".publisher"
+    }
+```
+
+```diff
+    contract Lightlink Multisig 2 (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7) {
+    +++ description: None
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
++        "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38"
+      receivedPermissions.5.description:
+-        "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38"
++        "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
++        "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
+      receivedPermissions.3.description:
+-        "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."
++        "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE"
++        "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
+      receivedPermissions.2.description:
++        "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xd5396e23a67847aef87d655edc853c668152254b
 
 # Diff at Tue, 29 Apr 2025 08:19:06 GMT:

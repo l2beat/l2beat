@@ -178,7 +178,7 @@ function makeTechnologyContract(
     if (!description) {
       description = tokenText
     } else {
-      description += ' ' + tokenText
+      description += '\n* ' + tokenText
     }
   }
 
