@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "An optimistic governance module. Proposals pass and can be executed unless {{}}k TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}.", // TODO: multiply by 1000 typecaster
+  "ignoreMethods": [
+    "getProposal",
+    "bridgedVotingPower",
+    "canExecute",
+    "isMinVetoRatioReached",
+    "parseProposalId",
+    "proxiableUUID",
+    "totalVotingPower"
+  ],
+  "fields": {
+    "proposalIds": {
+      "handler": {
+        "type": "array",
+        "length": "{{ proposalCount }}"
+      }
+    },
+    "governanceSettings_timelockPeriod_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "governanceSettings",
+        "args": []
+      },
+      "edit": ["pipe", ["get", "timelockPeriod"], ["format", "FormatSeconds"]]
+    }
+  }
+}
