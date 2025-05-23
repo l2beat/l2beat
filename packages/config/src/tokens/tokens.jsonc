@@ -6810,5 +6810,13 @@
         ]
       }
     }
+  ],
+  "immutablezkevm": [
+    {
+      "symbol": "TGT",
+      "address": "0x0FA1d8Ffa9B414ABF0F47183e088bddC32e084F3",
+      "source": "native",
+      "supply": "circulatingSupply"
+    }
   ]
 }
