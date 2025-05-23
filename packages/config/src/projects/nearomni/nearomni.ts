@@ -32,7 +32,7 @@ export const nearomni: Bridge = {
       ],
     },
     description:
-      'The NEAR Omni Bridge (also called Rainbow Bridge) is an MPC-validated multichain bridge. The MPC signature request/response logic is implemented on the NEAR blockchan and is called "Chain Signatures" there.',
+      'The NEAR Omni Bridge (also called Rainbow Bridge) is an MPC-validated multichain bridge. The MPC signature request/response logic is implemented on the NEAR blockchan and is called "Chain Signatures" there. Although it currently is limited to sending tokens between Ethereum and Near + Aurora, future plans include other chains and more light clients on the NEAR blcokchain.',
     category: 'Single-chain',
   },
   config: {
@@ -74,7 +74,12 @@ export const nearomni: Bridge = {
       description:
         'The NEAR Omni Bridge is a Token Bridge that allows transferring assets and passing arbitrary messages between Ethereum, NEAR, and Aurora chains (and more chains in the future). The bridge locks tokens in the escrow contracts on Ethereum and mints / releases tokens on the Aurora or NEAR networks. When bridging back to Ethereum, tokens are burned / locked on Aurora / NEAR and then released from the escrow on Ethereum.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be frozen if', // no validation in initTransfer()
+          text: 'a user bridges an unsupported token or specifies an unsupported destination address.',
+        },
+      ],
     },
     validation: {
       name: 'MPC validation and ethereum light client',
