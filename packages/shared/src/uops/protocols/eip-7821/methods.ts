@@ -34,8 +34,6 @@ function decodeExecuteInput(mode: string, executionData: string): Call[] {
 
   const calls: Call[] = []
 
-  console.log('id', id)
-
   if (id === 3) {
     const decoded = ethers.utils.defaultAbiCoder.decode(
       ['bytes[]'],
