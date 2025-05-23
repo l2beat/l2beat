@@ -130,7 +130,7 @@ export class ProjectValueRepository extends BaseRepository {
         ])
         .where('type', 'in', types)
         // We dont need to query whole database, we can limit it to 30 days
-        .where('timestamp', '<=', sql<Date>`NOW() - INTERVAL '30 days'`)
+        .where('timestamp', '>=', sql<Date>`NOW() - INTERVAL '30 days'`)
         .where('timestamp', '<=', UnixTime.toDate(timestamp))
         .groupBy(['project', 'type'])
 
