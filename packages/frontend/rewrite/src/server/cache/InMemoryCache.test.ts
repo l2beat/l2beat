@@ -4,8 +4,15 @@ import { env } from '~/env'
 import { InMemoryCache } from './InMemoryCache'
 
 describe(InMemoryCache.name, () => {
+  let NODE_ENV: 'development' | 'test' | 'production'
+
   before(() => {
+    NODE_ENV = env.NODE_ENV
     env.NODE_ENV = 'production'
+  })
+
+  after(() => {
+    env.NODE_ENV = NODE_ENV
   })
 
   describe('getData', () => {
