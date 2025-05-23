@@ -69,13 +69,12 @@ export const getCachedRecategorisedTvsChartData = cache(
       []
     const others = groupedByType.others?.map(({ projectId }) => projectId) ?? []
 
-    const rollupValues = await getSummedTvsValues(rollups, range, 'SUMMARY')
-    const validiumAndOptimiumsValues = await getSummedTvsValues(
-      validiumsAndOptimiums,
-      range,
-      'SUMMARY',
-    )
-    const othersValues = await getSummedTvsValues(others, range, 'SUMMARY')
+    const [rollupValues, validiumAndOptimiumsValues, othersValues] =
+      await Promise.all([
+        getSummedTvsValues(rollups, range, 'SUMMARY'),
+        getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
+        getSummedTvsValues(others, range, 'SUMMARY'),
+      ])
 
     return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
   },
