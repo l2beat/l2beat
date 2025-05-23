@@ -14,9 +14,9 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getStage } from '../../common/stages/getStage'
 
 const discovery = new ProjectDiscovery('metis')
 
@@ -33,9 +33,7 @@ export const metis: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.Fork.OVM, BADGES.DA.EthereumBlobs],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
@@ -140,9 +138,7 @@ export const metis: ScalingProject = {
         daLayer: ProjectId('ethereum'),
         sinceBlock: 22472728,
         inbox: '0xFf00000000000000000000000000000000001088',
-        sequencers: [
-          '0xae4d46bd9117cb017c5185844699c51107cb28a9',
-        ],
+        sequencers: ['0xae4d46bd9117cb017c5185844699c51107cb28a9'],
       },
     ],
   },
@@ -186,9 +182,9 @@ export const metis: ScalingProject = {
   technology: {
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
-      description: 'Transaction data is posted to Ethereum using blobs. Initially, data was posted to the CanonicalTransactionChain contract, then it moved to just posting hashes to an EOA address, and as of May 2025, the system uses blobs for data availability.',
-      risks: [
-      ],
+      description:
+        'Transaction data is posted to Ethereum using blobs. Initially, data was posted to the CanonicalTransactionChain contract, then it moved to just posting hashes to an EOA address, and as of May 2025, the system uses blobs for data availability.',
+      risks: [],
       references: [
         {
           title: 'Blobs batcher - Metis source code',
@@ -287,8 +283,7 @@ export const metis: ScalingProject = {
       title: 'Metis starts using blobs',
       url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
       date: '2025-05-13T00:00:00Z',
-      description:
-        'Permissioned batcher is posting blobs to the inbox.',
+      description: 'Permissioned batcher is posting blobs to the inbox.',
       type: 'general',
     },
   ],

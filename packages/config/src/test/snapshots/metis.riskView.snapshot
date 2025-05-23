@@ -2,10 +2,10 @@
 
 {
   dataAvailability: {
-    description: "Transaction data is kept in MEMO decentralized storage."
-    orderHint: -Infinity
-    sentiment: "bad"
-    value: "External (MEMO)"
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    orderHint: Infinity
+    sentiment: "good"
+    value: "Onchain"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
