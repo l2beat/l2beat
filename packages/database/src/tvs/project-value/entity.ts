@@ -16,6 +16,15 @@ export interface ProjectValueRecord {
   associated: number
 }
 
+export function toRecordWithoutProject(
+  row: Selectable<Omit<ProjectValue, 'project' | 'type'>>,
+): Omit<ProjectValueRecord, 'project' | 'type'> {
+  return {
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
+  }
+}
+
 export function toRecord(row: Selectable<ProjectValue>): ProjectValueRecord {
   return {
     ...row,
