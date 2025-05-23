@@ -58,6 +58,8 @@ export const immutablezkevm: ScalingProject = {
   chainConfig: {
     name: 'immutablezkevm',
     chainId: 13371,
+    coingeckoPlatform: 'immutable',
+    sinceTimestamp: UnixTime(1702962563),
     apis: [
       {
         type: 'rpc',

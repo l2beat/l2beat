@@ -10469,6 +10469,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "TGT",
+      "coingeckoId": "tokyo-games-token",
+      "address": "0x0FA1d8Ffa9B414ABF0F47183e088bddC32e084F3",
+      "symbol": "TGT",
+      "decimals": 18,
+      "deploymentTimestamp": 1742366160,
+      "coingeckoListingTimestamp": 1747785600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55923/large/tgt.jpg?1747738096",
+      "chainId": 13371,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Everclear",
       "coingeckoId": "everclear",
       "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
