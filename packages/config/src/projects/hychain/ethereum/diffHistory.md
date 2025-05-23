@@ -1,3 +1,127 @@
+Generated with discovered.json: 0x23f704c54ce8951d9edbd247850e15f11b1d205d
+
+# Diff at Fri, 23 May 2025 09:40:57 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22531183
+- current block number: 22531183
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22531183 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x4C5984E3841790335E6DC2e7ed92802FbF8a300F) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract HychainMultisig (0x798Fa726f0B4DF564681446D051b344E3FE4a6ca) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"
++        "0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e"
+      receivedPermissions.3.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.3.via.1:
++        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}
+      receivedPermissions.3.via.0.address:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e"
++        "0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.from:
+-        "0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"
+      receivedPermissions.0.via.1:
+-        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}
+      receivedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xC1d59449a546bA80d332De629724df8e9A9e9584) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    EOA  (0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
 Generated with discovered.json: 0x5c86bf40e7e10d8e9e91fef5aee386b9c7164a02
 
 # Diff at Wed, 21 May 2025 12:12:05 GMT:

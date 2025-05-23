@@ -637,6 +637,29 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 -        {"name":"Local Infrastructure","priority":5}
       errors:
 +        {"proxiableUUID":"Processing error occurred."}
+Generated with discovered.json: 0xaab72c9107d4bab5978b4f6c09e73c6157b6c6b8
+
+# Diff at Fri, 23 May 2025 09:41:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22481930
+- current block number: 22481930
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481930 (main branch discovery), not current.
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      receivedPermissions.0.role:
++        ".verifier_TIER_GUARDIAN_MINORITY"
     }
 ```
 

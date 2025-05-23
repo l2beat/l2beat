@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xf3d246cc8594aa2ef313f20ec713092ee643d6d1
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x902804af0206428a4b79e59b7dbe37c24d633d87
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

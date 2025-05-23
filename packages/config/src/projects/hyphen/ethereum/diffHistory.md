@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xa83872280ef1cb90dde9cf784a31768249cadf64
+
+# Diff at Fri, 23 May 2025 09:40:57 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 20138492
+- current block number: 20138492
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xec3b7820736232ee77927eccb0c9c77c7d6226e5
 
 # Diff at Tue, 29 Apr 2025 08:19:04 GMT:

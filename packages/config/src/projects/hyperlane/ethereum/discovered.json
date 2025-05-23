@@ -41,7 +41,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xef899e92DA472E014bE795Ecce948308958E25A2"
+          "from": "0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1730893559,
@@ -61,7 +62,8 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "role": ".validators"
         }
       ]
     },
@@ -79,22 +81,26 @@
         {
           "permission": "interact",
           "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x647C621CEb36853Ef6A907E397Adf18568E70543",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -169,7 +175,8 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "role": ".validators"
         }
       ]
     },
@@ -187,43 +194,51 @@
         {
           "permission": "interact",
           "from": "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944",
-          "description": "manage the domain -> ISM contract mapping."
+          "description": "manage the domain -> ISM contract mapping.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
-          "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them."
+          "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "role": "admin",
           "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         },
         {
           "permission": "upgrade",
           "from": "0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "role": "admin",
           "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         },
         {
           "permission": "upgrade",
           "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "role": "admin",
           "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         },
         {
           "permission": "upgrade",
           "from": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "role": "admin",
           "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         },
         {
           "permission": "upgrade",
           "from": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "role": "admin",
           "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+          "from": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -401,23 +416,28 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+          "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x647C621CEb36853Ef6A907E397Adf18568E70543"
+          "from": "0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239"
+          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+          "from": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+          "from": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1672088111,
@@ -477,7 +497,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
+          "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1732622519,
@@ -542,18 +563,21 @@
         {
           "permission": "interact",
           "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "role": "admin",
           "via": [{ "address": "0x9Fca159607687AE26367d66166e680A930af0780" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x9Fca159607687AE26367d66166e680A930af0780"
+          "from": "0x9Fca159607687AE26367d66166e680A930af0780",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -752,18 +776,21 @@
         {
           "permission": "interact",
           "from": "0xef899e92DA472E014bE795Ecce948308958E25A2",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "role": "admin",
           "via": [{ "address": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
+          "from": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -850,7 +877,8 @@
         {
           "permission": "interact",
           "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
-          "description": "verify messages for destination contracts that do not specify a custom ISM."
+          "description": "verify messages for destination contracts that do not specify a custom ISM.",
+          "role": ".defaultIsm"
         }
       ],
       "sinceTimestamp": 1745057591,
@@ -939,7 +967,8 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "role": ".validators"
         }
       ]
     },
@@ -950,7 +979,8 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "role": ".validators"
         }
       ]
     },
@@ -1475,5 +1505,5 @@
     "hyperlane/HypERC20Collateral": "0x74c72cea4d402a1c731e811f347b7c5add14af56aa440d3b0ec6f95034b4dd1b",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "permissionsConfigHash": "0x398c2fbb5fe3fb1ed1eacbbd198951ad12cde8e53ddbacf432b6195f9e5fa15b"
+  "permissionsConfigHash": "0x7e2f852c63864f2a7273803964983321d88b6ba59944dc2128c8a0c19885156e"
 }

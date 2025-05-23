@@ -1,3 +1,393 @@
+Generated with discovered.json: 0x674e436234f1a4b596a376bc026371925b961ce2
+
+# Diff at Fri, 23 May 2025 09:41:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22437905
+- current block number: 22437905
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437905 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0c5cc5155b346453154059aD9d2Ff695dB92f774) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Executor"
+      receivedPermissions.1.role:
++        ".Executor"
+      receivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.3.role:
++        ".scNoDelay"
+      directlyReceivedPermissions.2.role:
++        ".scNoDelay"
+      directlyReceivedPermissions.1.role:
++        ".scNoDelay"
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.4.role:
++        ".opsFast"
+      directlyReceivedPermissions.3.role:
++        ".opsFast"
+      directlyReceivedPermissions.2.role:
++        ".opsFast"
+      directlyReceivedPermissions.1.from:
+-        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      directlyReceivedPermissions.1.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "update the L1ScrollMessenger fee vault address."
+      directlyReceivedPermissions.1.role:
++        ".opsFast"
+      directlyReceivedPermissions.0.from:
+-        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
++        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+      directlyReceivedPermissions.0.description:
+-        "update the L1ScrollMessenger fee vault address."
++        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      receivedPermissions.12.role:
++        ".Executor"
+      receivedPermissions.11.from:
+-        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
++        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
+      receivedPermissions.11.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "execute transactions that are ready."
+      receivedPermissions.11.via:
+-        [{"address":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]
+      receivedPermissions.11.role:
++        ".Executor"
+      receivedPermissions.10.role:
++        ".scNoDelay"
+      receivedPermissions.9.description:
+-        "propose transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.9.role:
++        ".timelockAdminAC"
+      receivedPermissions.9.via:
++        [{"address":"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","delay":259200}]
+      receivedPermissions.8.from:
+-        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      receivedPermissions.8.description:
+-        "execute transactions that are ready."
++        "disable enforced batch mode."
+      receivedPermissions.8.role:
++        ".scNoDelay"
+      receivedPermissions.8.via:
++        [{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]
+      receivedPermissions.7.from:
+-        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      receivedPermissions.7.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "upgrade all core contracts of the system."
+      receivedPermissions.7.role:
++        ".scNoDelay"
+      receivedPermissions.7.via:
++        [{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]
+      receivedPermissions.6.description:
+-        "cancel queued transactions."
++        "propose transactions."
+      receivedPermissions.6.role:
++        ".Proposer"
+      receivedPermissions.5.from:
+-        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
++        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
+      receivedPermissions.5.description:
+-        "propose transactions."
++        "cancel queued transactions."
+      receivedPermissions.5.role:
++        ".Canceller"
+      receivedPermissions.4.from:
+-        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
++        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
+      receivedPermissions.4.description:
+-        "disable enforced batch mode."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.4.via:
+-        [{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]
+      receivedPermissions.4.role:
++        ".timelockAdminAC"
+      receivedPermissions.3.from:
+-        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
++        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
+      receivedPermissions.3.description:
+-        "upgrade all core contracts of the system."
++        "propose transactions."
+      receivedPermissions.3.via:
+-        [{"address":"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]
+      receivedPermissions.3.role:
++        ".Proposer"
+      receivedPermissions.2.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+      receivedPermissions.2.role:
++        ".Canceller"
+      receivedPermissions.1.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.1.role:
++        ".timelockAdminAC"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.1.role:
++        ".Proposer"
+      directlyReceivedPermissions.0.role:
++        ".Proposer"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      directlyReceivedPermissions.3.role:
++        ".Executor"
+      directlyReceivedPermissions.2.role:
++        ".Executor"
+      directlyReceivedPermissions.1.role:
++        ".Executor"
+      directlyReceivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    EOA  (0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Executor"
+      receivedPermissions.1.role:
++        ".Executor"
+      receivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.3.role:
++        ".opsNoDelay"
+      directlyReceivedPermissions.2.role:
++        ".opsNoDelay"
+      directlyReceivedPermissions.1.from:
+-        "0x826714adD4dDA2b8750794A467C892c0Cd49216b"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      directlyReceivedPermissions.1.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "revert unfinalized batches."
+      directlyReceivedPermissions.1.role:
++        ".opsNoDelay"
+      directlyReceivedPermissions.0.from:
+-        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
++        "0x826714adD4dDA2b8750794A467C892c0Cd49216b"
+      directlyReceivedPermissions.0.description:
+-        "revert unfinalized batches."
++        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      receivedPermissions.6.role:
++        ".opsNoDelay"
+      receivedPermissions.5.role:
++        ".opsNoDelay"
+      receivedPermissions.4.role:
++        ".Proposer"
+      receivedPermissions.3.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+      receivedPermissions.3.role:
++        ".Canceller"
+      receivedPermissions.2.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.2.role:
++        ".timelockAdminAC"
+      receivedPermissions.1.from:
+-        "0x826714adD4dDA2b8750794A467C892c0Cd49216b"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      receivedPermissions.1.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "revert unfinalized batches."
+      receivedPermissions.1.role:
++        ".opsNoDelay"
+      receivedPermissions.0.from:
+-        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
++        "0x826714adD4dDA2b8750794A467C892c0Cd49216b"
+      receivedPermissions.0.description:
+-        "revert unfinalized batches."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".Proposer"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.13.role:
++        "admin"
+      directlyReceivedPermissions.12.role:
++        "admin"
+      directlyReceivedPermissions.11.role:
++        "admin"
+      directlyReceivedPermissions.10.role:
++        "admin"
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Executor"
+      receivedPermissions.1.role:
++        ".Executor"
+      receivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      receivedPermissions.7.role:
++        ".opsFast"
+      receivedPermissions.6.role:
++        ".opsFast"
+      receivedPermissions.5.role:
++        ".opsFast"
+      receivedPermissions.4.from:
+-        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      receivedPermissions.4.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "update the L1ScrollMessenger fee vault address."
+      receivedPermissions.4.role:
++        ".opsFast"
+      receivedPermissions.3.description:
+-        "propose transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.3.role:
++        ".timelockAdminAC"
+      receivedPermissions.3.via:
++        [{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]
+      receivedPermissions.2.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "propose transactions."
+      receivedPermissions.2.role:
++        ".Proposer"
+      receivedPermissions.1.role:
++        ".Canceller"
+      receivedPermissions.0.from:
+-        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
++        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+      receivedPermissions.0.description:
+-        "update the L1ScrollMessenger fee vault address."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.0.via:
+-        [{"address":"0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".Proposer"
+    }
+```
+
+```diff
+    EOA  (0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".Executor"
+      receivedPermissions.2.role:
++        ".Executor"
+      receivedPermissions.1.role:
++        ".Executor"
+      receivedPermissions.0.role:
++        ".Executor"
+    }
+```
+
 Generated with discovered.json: 0x03aec8a359a6450ad9df9de95044bb545bd81d1d
 
 # Diff at Thu, 08 May 2025 09:56:44 GMT:

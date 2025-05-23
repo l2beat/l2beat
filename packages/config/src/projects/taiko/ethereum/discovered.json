@@ -1183,7 +1183,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1195,7 +1196,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+          "from": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1219,7 +1221,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1263,7 +1266,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+          "from": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1746111707,

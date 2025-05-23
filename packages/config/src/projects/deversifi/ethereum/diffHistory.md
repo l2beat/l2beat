@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x641acc0c2bf4b74da3e15e62a39a27220f2672f7
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    EOA  (0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x8fDEC5EE435501571034A78a7F3AA167185969b3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    EOA  (0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    contract RhinofiAdminMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
 Generated with discovered.json: 0xad10356a2c407145cd38c0a3c024cf7238fd4b73
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

@@ -61,6 +61,25 @@
     },
     {
       "mode": "auto",
+      "id": "immutablezkevm-TGT",
+      "priceId": "tokyo-games-token",
+      "symbol": "TGT",
+      "name": "TGT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55923/large/tgt.jpg?1747738096",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "tokyo-games-token",
+        "decimals": 18,
+        "sinceTimestamp": 1747785600,
+        "address": "0x0FA1d8Ffa9B414ABF0F47183e088bddC32e084F3",
+        "chain": "immutablezkevm"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "immutablezkevm-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

@@ -570,7 +570,8 @@
         "type": { "$ref": "#/definitions/Permission" },
         "delay": { "type": ["number", "string"], "default": 0 },
         "description": { "type": "string" },
-        "condition": { "type": "string" }
+        "condition": { "type": "string" },
+        "role": { "type": "string" }
       },
       "required": ["type"],
       "additionalProperties": false
