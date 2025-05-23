@@ -7,6 +7,6 @@ export interface PermissionRegistry {
   describePermissions(
     contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean,
-  ): string[]
+  ): string
   getUpgradableBy(contract: EntryParameters): { name: string; delay: string }[]
 }
