@@ -14,6 +14,7 @@
     - [Example](#example-1)
   - [Scroll](#scroll)
     - [Time to withdrawal calculation](#time-to-withdrawal-calculation)
+  - [Orbit Stack](#orbit-stack)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -337,3 +338,4 @@ event FinalizeBatch(
      `RelayedMessage.timestamp − AppendMessage.timestamp`  
      (includes any additional delay introduced by the relayer)
 
+### Orbit Stack

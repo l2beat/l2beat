@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Sequencing](#sequencing)
+  - [High-level flow](#high-level-flow)
+  - [The `proposeBlockV2` function](#the-proposeblockv2-function)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Sequencing
 
 ## High-level flow
