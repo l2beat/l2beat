@@ -1,3 +1,142 @@
+Generated with discovered.json: 0x66fddb062611cf0fc6cc12cbc3b8e5624f468be6
+
+# Diff at Fri, 23 May 2025 09:41:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22531175
+- current block number: 22531175
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22531175 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0b114d4675Cb79507e68F2616c93e124122c6ef0) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+      receivedPermissions.3.description:
+-        "set the conversion factor for gas token deposits."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
++        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      receivedPermissions.1.description:
++        "set the conversion factor for gas token deposits."
+      receivedPermissions.1.role:
++        ".tokenMultiplierSetter"
+      receivedPermissions.0.role:
++        ".getAdmin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getTransactionFilterer"
+    }
+```
+
+```diff
+    EOA  (0x58D14960E0a2be353eDdE61ad719196A2b816522) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".depositApprover"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      receivedPermissions.0.role:
++        ".whitelistedSender"
+    }
+```
+
+```diff
+    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".whitelistedSender"
+    }
+```
+
+```diff
+    EOA  (0xF29bFff344c7ef0186432fE30C39fda0cca0550b) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".whitelistedSender"
+      receivedPermissions.0.role:
++        ".acAdmin"
+    }
+```
+
 Generated with discovered.json: 0x9a75da8de575c90381a6c042b9f09b52e945506a
 
 # Diff at Wed, 21 May 2025 12:10:12 GMT:

@@ -16,13 +16,19 @@ export function NodesAndConnections() {
           // Get the IDs of the first-degree neighbors of selected nodes
           const firstDegreeNeighborIds = visible
             .filter((node) => selected.includes(node.id))
-            .flatMap((node) => node.fields.map((field) => field.target))
+            .flatMap((node) =>
+              node.fields
+                .filter((field) => !node.hiddenFields.includes(field.name)) // Only consider visible fields
+                .map((field) => field.target),
+            )
             .filter((id) => !hidden.includes(id))
 
           // Get target nodes pointing to selected nodes
           const nodesPointingToSelected = visible
             .filter((node) =>
-              node.fields.some((field) => selected.includes(field.target)),
+              node.fields
+                .filter((field) => !node.hiddenFields.includes(field.name)) // Only consider visible fields
+                .some((field) => selected.includes(field.target)),
             )
             .map((node) => node.id)
 
@@ -42,7 +48,7 @@ export function NodesAndConnections() {
       {visible.map((node) =>
         node.fields.map((field, i) => {
           const shouldHide =
-            hidden.find((id) => id === field.target) ||
+            hidden.includes(field.target) ||
             node.hiddenFields.includes(field.name)
 
           if (shouldHide) {
@@ -59,6 +65,7 @@ export function NodesAndConnections() {
           // NOT if it's from a first-degree neighbor (unless that neighbor is also selected)
           const connectionHighlighted =
             selected.includes(node.id) || selected.includes(field.target)
+
           // Dim connections when there are selected nodes, dimming is enabled, and this connection is not highlighted
           const isDimmed =
             enableDimming && selected.length > 0 && !connectionHighlighted

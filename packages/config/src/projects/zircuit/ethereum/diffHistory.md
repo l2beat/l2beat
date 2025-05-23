@@ -1,3 +1,169 @@
+Generated with discovered.json: 0xb5cbde34a0d685f27e69b00f5462e387064cf1ee
+
+# Diff at Fri, 23 May 2025 09:41:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22438012
+- current block number: 22438012
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438012 (main branch discovery), not current.
+
+```diff
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".guardian"
+      receivedPermissions.1.role:
++        ".defaultAdmin"
+      receivedPermissions.0.role:
++        ".defaultAdmin"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.11.permission:
+-        "challenge"
++        "upgrade"
+      receivedPermissions.11.from:
+-        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
++        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.11.via:
++        [{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]
+      receivedPermissions.10.from:
+-        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.from:
+-        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
++        "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
++        "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
++        "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
++        "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "challenge"
+      receivedPermissions.5.from:
+-        "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.5.via:
+-        [{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]
+      receivedPermissions.5.role:
++        ".challenger"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
++        "0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
+      receivedPermissions.3.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.3.via:
++        [{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]
+      receivedPermissions.2.from:
+-        "0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
++        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
++        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.1.via:
+-        [{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]
+      receivedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".proposer"
+    }
+```
+
+```diff
+    EOA  (0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".monitorAC"
+    }
+```
+
 Generated with discovered.json: 0x381d17d6400c3cc5d7595351dc5eb597d07428ea
 
 # Diff at Thu, 08 May 2025 09:49:03 GMT:
