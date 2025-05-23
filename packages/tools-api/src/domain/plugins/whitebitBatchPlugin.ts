@@ -22,6 +22,7 @@ export function whitebitBatchPlugin(
     try {
       const value = decodeBatch(call.extra, chain, tokens)
       call.arguments = [value]
+      call.extra = undefined
       return []
     } catch {}
   }
