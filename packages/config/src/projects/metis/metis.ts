@@ -162,7 +162,7 @@ export const metis: ScalingProject = {
       {
         title: 'No state validation',
         description:
-          'Dispute games contract for state validation are deployed but not used. In theory, disputed state batches can be marked as such in the `StateCommitmentChain`. Then, these flagged batches could be deleted (within the fraud proof window). Currenly, batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the `Metis Multisig`.',
+          'Dispute game contracts for state validation are deployed but not used. In theory, disputed state batches can be marked as such in the `StateCommitmentChain`. Then, these flagged batches could be deleted (within the fraud proof window). Currenly, batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the `Metis Multisig`.',
         risks: [
           {
             category: 'Funds can be stolen if',
