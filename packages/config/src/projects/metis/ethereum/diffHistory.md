@@ -13,7 +13,7 @@ Templitized contracts.
 Batcher is posting blobs to the inbox, the authorized batcher is in L2 node config (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
 
 However, DisputeGameFactory is not used, meaning that no games a created. 
-In theory, games could be played and disputed state batches can be marked as such in the StateCommitmentChain. Then, these flagged batches could be deleted (within the fraud proof window). However, batches can only be deleted from the MVM_Verifier contract, which currently has an active whitelist but no whitelisted verifiers. So proof system could be operational if a) games are created b) whitelist is filled or removed.
+In theory, games could be played and disputed state batches can be marked as such in the StateCommitmentChain. Then, these flagged batches could be deleted (within the fraud proof window). However, batches can only be deleted from the MVM_Verifier contract, which currently is set to a Multisig. So proof system could be operational if a) games are created b) Multisig acts as permissioned challenger.
 
 ## Watched changes
 
