@@ -16,6 +16,7 @@ export function decode(signature: string, data: `0x${string}`, chain: Chain) {
     abi: signature,
     selector: decoded.selector,
     arguments: decoded.parameters.map((x) => toResultValue(x, chain)),
+    extra: decoded.extra,
   }
   return result
 }
