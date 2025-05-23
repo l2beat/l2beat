@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x58d10ef7d9e27c7697ebf86d3cbe795eb545fdd7
+Generated with discovered.json: 0x5a2f1f4b538a1d06ce332c4bf89771d5d13774ff
 
-# Diff at Fri, 23 May 2025 13:09:42 GMT:
+# Diff at Fri, 23 May 2025 13:28:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@0981ad29dde2407ba3849802ee6a490d2d0799a5 block: 22494955
@@ -100,6 +100,18 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 ```
 
 ```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+      template:
++        "metis/L1StandardBridge"
+      description:
++        "Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway."
+    }
+```
+
+```diff
     contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235) {
     +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
       template:
@@ -180,8 +192,6 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
       name:
 -        ""
 +        "unverified_MVM_FraudVerifier"
-      category:
-+        {"name":"Spam","priority":-1}
     }
 ```
 

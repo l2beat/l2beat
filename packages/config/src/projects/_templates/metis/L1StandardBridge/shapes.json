@@ -1,8 +1,8 @@
 {
-  "L1StandardBridge.sol": {
-    "hash": "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
-    "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+  "L1StandardBridge": {
+    "hash": "0x6e30dabe85a54d5753ec304088b4cc9f1fc2ba202fb3982bf202b0cc4a922c99",
+    "address": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
     "chain": "ethereum",
-    "blockNumber": 22517630
+    "blockNumber": 22545767
   }
 }
