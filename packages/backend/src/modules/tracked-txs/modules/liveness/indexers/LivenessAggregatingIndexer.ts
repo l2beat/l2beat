@@ -1,11 +1,11 @@
 import type { Database } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import {
-  clampRangeToDay,
   ProjectId,
-  slidingWindow,
-  UnixTime,
   type TrackedTxsConfigSubtype,
+  UnixTime,
+  clampRangeToDay,
+  slidingWindow,
 } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { TrackedTxProject } from '../../../../../config/Config'
