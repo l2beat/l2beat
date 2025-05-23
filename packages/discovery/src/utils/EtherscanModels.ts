@@ -4,7 +4,7 @@ import {
   type json,
   stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>
 const EtherscanSuccessResponse = z.object({

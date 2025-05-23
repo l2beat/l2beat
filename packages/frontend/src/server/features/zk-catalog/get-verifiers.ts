@@ -1,5 +1,5 @@
 import { UnixTime, branded } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'

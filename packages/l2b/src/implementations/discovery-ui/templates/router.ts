@@ -1,7 +1,7 @@
 import type { TemplateService } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import type { Express } from 'express'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 

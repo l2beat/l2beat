@@ -1,7 +1,7 @@
 import express from 'express'
 import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { Manifest } from '../../../../src/utils/Manifest'
 import { getGovernanceData } from './getGovernanceData'
 import { getGovernancePublicationData } from './publication/getGovernancePublicationData'

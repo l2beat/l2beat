@@ -14,6 +14,9 @@ export async function getCookie<T extends KnownCookieName>(
   if (cookie === undefined) {
     return meta.defaultValue
   }
+
+  // NOTE(radomski): ESLint is tripping here
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return parseKnownCookie({ name, value: cookie.value })
 }
 

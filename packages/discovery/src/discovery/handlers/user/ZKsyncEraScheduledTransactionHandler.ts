@@ -1,6 +1,6 @@
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 import uniqBy from 'lodash/uniqBy'
 import type { ContractValue } from '../../output/types'

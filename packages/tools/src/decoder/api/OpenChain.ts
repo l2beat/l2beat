@@ -1,9 +1,10 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const Response = z.object({
   ok: z.boolean(),
   result: z.object({
     function: z.record(
+      z.string(),
       z
         .array(
           z.object({

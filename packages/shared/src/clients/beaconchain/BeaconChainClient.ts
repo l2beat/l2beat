@@ -1,5 +1,5 @@
 import type { json } from '@l2beat/shared-pure'
-import type { z } from 'zod'
+import type { z } from 'zod/v4'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   BeaconChainError,

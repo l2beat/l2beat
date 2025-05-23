@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export const TendermintValidatorsResponseBodySchema = z.object({
   jsonrpc: z.literal('2.0'),

@@ -1,5 +1,5 @@
 import type { providers } from 'ethers'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export async function getGenesisTimestamp(
   provider: providers.JsonRpcProvider,

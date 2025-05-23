@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 

@@ -1,7 +1,7 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'

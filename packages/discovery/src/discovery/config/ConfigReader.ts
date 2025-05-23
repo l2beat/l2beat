@@ -9,7 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import merge from 'lodash/merge'
-import { type ZodError, z } from 'zod'
+import { type ZodError, z } from 'zod/v4'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
@@ -210,7 +210,7 @@ export class ConfigReader {
 }
 
 function formatZodParsingError(error: ZodError, fileName: string): string {
-  const errors = error.errors
+  const errors = error.issues
   const lines = [
     `${chalk.red(' ERROR:')} reading ${fileName} encountered ${
       errors.length

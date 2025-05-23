@@ -1,6 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { encodePacked, keccak256 } from 'viem'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import chainList from './chains.json'
 import { getDiscoveredConfig } from './discovery'
 import preImages from './preImages.json'

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { rangeToDays } from '~/utils/range/range-to-days'
 
 export const LivenessChartTimeRange = z.union([

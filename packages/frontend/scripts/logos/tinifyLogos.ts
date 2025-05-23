@@ -4,7 +4,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import tinify from 'tinify'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 
 const TinifiedLogos = z.record(z.string(), z.string())

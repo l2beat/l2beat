@@ -1,5 +1,5 @@
 import type { CliLogger } from '@l2beat/shared'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { Column, FetchProjects, FetchResult } from './FetchInterface'
 
 const receiverMapping: Record<string, string> = {

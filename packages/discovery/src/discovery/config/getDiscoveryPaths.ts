@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join, resolve } from 'path'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const CONFIG_FILENAME = '.discovery.json'
 

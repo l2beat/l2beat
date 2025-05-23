@@ -5,7 +5,7 @@ import {
   type json,
   stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export type BlockscoutSuccessResponse = z.infer<
   typeof BlockscoutSuccessResponse
@@ -109,7 +109,7 @@ export const ContractSource = z.object({
   OptimizationRuns: z.number(),
   EVMVersion: z.string(),
   CompilerSettings: z.object({
-    libraries: z.record(z.string()),
+    libraries: z.record(z.string(), z.string()),
     optimizer: z.object({
       enabled: z.boolean(),
       runs: z.number(),

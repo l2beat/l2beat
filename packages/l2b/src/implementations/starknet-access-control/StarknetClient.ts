@@ -1,5 +1,5 @@
 import type { HttpClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { segmentRange, starknetKeccak } from './utils'
 
 const StarknetRPCResponse = z.object({

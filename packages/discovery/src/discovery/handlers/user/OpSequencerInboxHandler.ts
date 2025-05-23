@@ -1,5 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 import type { Transaction } from '../../../utils/IEtherscanClient'
 import type { IProvider } from '../../provider/IProvider'

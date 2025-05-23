@@ -1,6 +1,6 @@
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 import { base64 } from 'ethers/lib/utils'
 import type { IProvider } from '../../provider/IProvider'

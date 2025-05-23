@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export class OpenChainClient {
   async lookup(selector: `0x${string}`): Promise<string[]> {
@@ -44,6 +44,7 @@ const SuccessSchema = z.object({
   ok: z.literal(true),
   result: z.object({
     function: z.record(
+      z.string(),
       z.union([
         z.array(
           z.object({

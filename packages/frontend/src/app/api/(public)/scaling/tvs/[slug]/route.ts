@@ -51,7 +51,7 @@ const getCachedResponse = cache(
     if (parsedParams.error) {
       return {
         success: false,
-        errors: parsedParams.error.errors,
+        errors: parsedParams.error.issues,
       } as const
     }
 

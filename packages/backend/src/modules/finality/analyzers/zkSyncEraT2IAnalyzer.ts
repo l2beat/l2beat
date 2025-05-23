@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import type { Database } from '@l2beat/database'
 import type { RpcClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 

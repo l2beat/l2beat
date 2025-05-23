@@ -2,7 +2,7 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { type BigNumber, type providers, utils } from 'ethers'
 import isEmpty from 'lodash/isEmpty'
 import zip from 'lodash/zip'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'

@@ -1,9 +1,5 @@
 import { Client } from '@elastic/elasticsearch'
-import type {
-  BulkOperationType,
-  BulkResponseItem,
-  ErrorCause,
-} from '@elastic/elasticsearch/lib/api/types'
+import type { estypes } from '@elastic/elasticsearch'
 
 export interface ElasticSearchClientOptions {
   node: string
@@ -12,7 +8,7 @@ export interface ElasticSearchClientOptions {
 
 type DocumentError = {
   status: number
-  error: ErrorCause
+  error: estypes.ErrorCause
 }
 
 type BulkResponse =
@@ -69,13 +65,15 @@ export class ElasticSearchClient {
   private bundleErrors<
     T extends {
       errors: boolean
-      items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
+      items: Partial<
+        Record<estypes.BulkOperationType, estypes.BulkResponseItem>
+      >[]
     },
   >(response: T): DocumentError[] {
     const erroredDocuments: DocumentError[] = []
     if (response.errors) {
       response.items.forEach((action) => {
-        const operation = Object.keys(action)[0] as BulkOperationType
+        const operation = Object.keys(action)[0] as estypes.BulkOperationType
         if (!operation) return
         const item = action[operation]
         if (item?.error) {

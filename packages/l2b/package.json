@@ -34,13 +34,13 @@
     "cmd-ts": "^0.13.0",
     "ethers": "^5.7.2",
     "express": "^4.21.1",
-    "graphviz-wasm": "^3.0.2",
     "redis": "^4.7.0",
+    "graphviz-wasm": "^2.0.2",
     "node-fetch": "^2.6.7",
     "readline-sync": "^1.4.10",
     "rimraf": "^5.0.0",
     "viem": "^2.18.6",
-    "zod": "^3.23.8",
+    "zod": "^3.25.17",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {

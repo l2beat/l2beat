@@ -1,6 +1,6 @@
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { RLP } from 'ethers/lib/utils'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
 import type { IProvider } from '../../../provider/IProvider'
 

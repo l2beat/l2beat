@@ -9,7 +9,7 @@ import {
   type UnixTime,
   stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'

@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { hashPng } from './hashPng'
 
 const metadataFile = path.join(__dirname, '../metadata.json')

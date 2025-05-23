@@ -7,7 +7,7 @@ import {
 import groupBy from 'lodash/groupBy'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from 'process'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'

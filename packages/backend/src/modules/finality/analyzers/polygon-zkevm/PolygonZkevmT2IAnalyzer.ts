@@ -4,7 +4,7 @@ import {
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 import type { Database } from '@l2beat/database'
 import type { RpcClient } from '@l2beat/shared'

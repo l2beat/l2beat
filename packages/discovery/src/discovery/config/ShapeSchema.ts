@@ -1,5 +1,5 @@
 import { EthereumAddress, Hash256, stringAs } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export type ShapeSchema = z.infer<typeof ShapeSchema>
 export const ShapeSchema = z.record(

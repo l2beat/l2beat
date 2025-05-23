@@ -43,24 +43,8 @@ describe('tvs', () => {
       ],
     }
 
-    const expectedErrors = [
-      {
-        code: 'custom',
-        message: 'Failed to transform to EthereumAddress type',
-        path: ['tokens', 0, 'amount', 'address'],
-      },
-      {
-        received: 'wrong-category',
-        code: 'invalid_enum_value',
-        options: ['ether', 'stablecoin', 'other'],
-        path: ['tokens', 0, 'category'],
-        message:
-          "Invalid enum value. Expected 'ether' | 'stablecoin' | 'other', received 'wrong-category'",
-      },
-    ]
-
     expect(() => ProjectTvsConfigSchema.parse(mockTvsConfig)).toThrow(
-      JSON.stringify(expectedErrors, null, 2),
+      'invalid_union',
     )
   })
 

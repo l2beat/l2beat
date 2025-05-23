@@ -6,7 +6,7 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import express from 'express'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
@@ -47,7 +47,7 @@ const discoverQuerySchema = z.object({
   chain: safeStringSchema,
   devMode: z
     .enum(['true', 'false'], {
-      errorMap: () => ({ message: "devMode must be 'true' or 'false'." }),
+      error: () => ({ message: "devMode must be 'true' or 'false'." }),
     })
     .transform((val) => val === 'true'),
 })
@@ -56,7 +56,7 @@ const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
   against: z.enum(['templates', 'projects'], {
-    errorMap: () => ({ message: "against must be 'templates' or 'projects'." }),
+    error: () => ({ message: "against must be 'templates' or 'projects'." }),
   }),
 })
 

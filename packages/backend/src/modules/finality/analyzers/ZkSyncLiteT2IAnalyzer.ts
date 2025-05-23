@@ -1,6 +1,6 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { type BigNumber, utils } from 'ethers'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'

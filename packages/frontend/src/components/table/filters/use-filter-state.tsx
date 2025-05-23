@@ -2,7 +2,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { usePathname } from 'next/navigation'
 import { useEffect, useReducer } from 'react'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { useTracking } from '~/hooks/use-tracking'
 import { FilterableValueId } from './filterable-value'
 import { getFilterSearchParams } from './utils/get-filter-search-params'
@@ -13,8 +13,8 @@ export const FilterValue = z.object({
   inversed: z.boolean().optional(),
 })
 
-export type FilterState = Partial<Record<FilterableValueId, FilterValue>>
-export const FilterState = z.record(FilterableValueId, FilterValue)
+export type FilterState = z.infer<typeof FilterState>
+export const FilterState = z.partialRecord(FilterableValueId, FilterValue)
 
 type FilterAction =
   | AddFilterAction

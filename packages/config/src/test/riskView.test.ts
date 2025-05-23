@@ -1,6 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { MochaTestContext } from 'earl/dist/cjs/validators/snapshots/TestContext'
 import { layer2s } from '../processing/layer2s'
 import { layer3s } from '../processing/layer3s'
 
@@ -39,7 +38,7 @@ describe('riskView', () => {
   }
 })
 
-function getContext(title: string, projectId: ProjectId): MochaTestContext {
+function getContext(title: string, projectId: ProjectId) {
   return {
     test: {
       fullTitle: () => title,

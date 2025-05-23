@@ -7,7 +7,7 @@ import {
   UnixTime,
   branded,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export type TrackedTxResult =
   | TrackedTxTransferResult

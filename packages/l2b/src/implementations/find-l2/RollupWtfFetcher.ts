@@ -1,7 +1,8 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { FetchProjects, FetchResult } from './FetchInterface'
 
 const RollupWtfResponse = z.record(
+  z.string(),
   z.object({
     name: z.string(),
     label: z.string(),

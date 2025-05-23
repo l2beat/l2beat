@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { FetchProjects, FetchResult } from './FetchInterface'
 
 export const ResponsesRollupWithStatsSchema = z.array(

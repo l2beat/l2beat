@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from 'zod/v4'
 
 export const FlatSourcesApiResponse = z.array(
   z.object({
@@ -6,7 +6,7 @@ export const FlatSourcesApiResponse = z.array(
     chainName: z.string(),
     blockNumber: z.number(),
     contentHash: z.string(),
-    flat: z.record(z.string()),
+    flat: z.record(z.string(), z.string()),
   }),
 )
 export type FlatSourcesApiResponse = z.infer<typeof FlatSourcesApiResponse>

@@ -1,23 +1,24 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 declare const __brand: unique symbol
 type Brand<B> = { [__brand]: B }
 export type Branded<T, B> = T & Brand<B>
 
 export function branded<B extends z.ZodTypeAny, R>(
-  baseParser: B,
-  Brand: (b: z.infer<B>) => R,
+  base: B,
+  Brand: (v: z.infer<B>) => R,
 ) {
-  return baseParser
-    .refine((a: z.infer<B>) => {
-      try {
-        Brand(a)
-        return true
-      } catch {
-        return false
-      }
-    }, `Failed to transform to ${Brand.name} type`)
-    .transform(Brand)
+  return base.transform((v, ctx) => {
+    try {
+      return Brand(v)
+    } catch {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Failed to transform to ${Brand.name}`,
+      })
+      return v as R
+    }
+  })
 }
 
 export function stringAs<T>(Brand: (s: string) => T) {

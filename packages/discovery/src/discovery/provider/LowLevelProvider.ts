@@ -12,7 +12,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { providers } from 'ethers'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { IEtherscanClient } from '../../utils/IEtherscanClient'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'

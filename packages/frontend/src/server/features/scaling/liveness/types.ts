@@ -1,5 +1,5 @@
 import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import z from 'zod'
+import z from 'zod/v4'
 
 export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])
 export type LivenessTimeRange = z.infer<typeof LivenessTimeRange>

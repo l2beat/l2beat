@@ -1,5 +1,5 @@
 import type { RequestHandler } from 'express'
-import type { AnyZodObject, z } from 'zod'
+import type { AnyZodObject, z } from 'zod/v4'
 
 export function validateRoute<
   TParams extends AnyZodObject,

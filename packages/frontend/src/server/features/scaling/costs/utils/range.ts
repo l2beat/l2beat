@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { rangeToDays } from '~/utils/range/range-to-days'
 

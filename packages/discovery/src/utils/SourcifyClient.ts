@@ -11,7 +11,7 @@ import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
 import type { HttpClient } from '@l2beat/shared'
 
 import { utils } from 'ethers'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const URL = 'https://sourcify.dev/server'
 

@@ -1,6 +1,6 @@
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'

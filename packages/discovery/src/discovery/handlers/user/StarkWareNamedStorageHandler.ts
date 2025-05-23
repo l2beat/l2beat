@@ -1,6 +1,6 @@
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import * as z from 'zod'
+import * as z from 'zod/v4'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
