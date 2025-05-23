@@ -135,6 +135,8 @@ export async function getScalingProjectEntry(
     costsChartData,
     tokens,
     liveness,
+    daSolution,
+    contractUtils,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -158,6 +160,8 @@ export async function getScalingProjectEntry(
       : undefined,
     getTokensForProject(project),
     getLiveness(),
+    getScalingDaSolution(project),
+    getContractUtils(),
   ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
@@ -234,7 +238,6 @@ export async function getScalingProjectEntry(
       : project.scalingStage,
     discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
-  const daSolution = await getScalingDaSolution(project)
 
   const sections: ProjectDetailsSection[] = []
 
@@ -564,8 +567,6 @@ export async function getScalingProjectEntry(
       },
     })
   }
-
-  const contractUtils = await getContractUtils()
 
   const permissionsSection = getPermissionsSection(
     {
