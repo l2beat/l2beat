@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x08a02f189d77a75f91f311ef1798013e0d9d491d
+Generated with discovered.json: 0xf59f4c51a132c6e38788b6ba7253d0de6db4b8fc
 
-# Diff at Thu, 22 May 2025 11:58:09 GMT:
+# Diff at Fri, 23 May 2025 11:24:44 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@ba8e985e5fa76cd0f189044e5978c2480eab9450 block: 22494955
-- current block number: 22538263
+- current block number: 22545251
 
 ## Description
 
@@ -14,6 +14,20 @@ Batcher is posting blobs to the inbox, the authorized batcher is in L2 node conf
 
 However, DisputeGameFactory is not used, meaning that no games a created. 
 In theory, games could be played and disputed state batches can be marked as such in the StateCommitmentChain. Then, these flagged batches could be deleted (within the fraud proof window). However, batches can only be deleted from the MVM_Verifier contract, which currently has an active whitelist but no whitelisted verifiers. So proof system could be operational if a) games are created b) whitelist is filled or removed.
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values._1088_MVM_FraudVerifier:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.1088_MVM_FraudVerifier:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
 
 ## Config/verification related changes
 

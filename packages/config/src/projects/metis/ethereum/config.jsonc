@@ -10,7 +10,8 @@
     // These addresses where hardcoded in .ts file of this project. We require
     // having them in the discovery in order to be able to tell if this address
     // is verified or not.
-    "0x1A9da0aedA630dDf2748a453BF6d92560762D914" // Sequencer
+    "0x1A9da0aedA630dDf2748a453BF6d92560762D914", // Sequencer,
+    "0xae4d46bd9117cb017c5185844699c51107cb28a9" // Blobs batcher
   ],
   "names": {
     "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer-CTC-batches",
