@@ -16,14 +16,14 @@ export async function getSummedTvsValues(
   const db = getDb()
   const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from] = getRangeWithMax(range, resolution, {
     now: target,
   })
   const [latest, valueRecords] = await Promise.all([
     db.tvsProjectValue.getLatestValues(type ?? 'SUMMARY', projectIds),
     db.tvsProjectValue.getSummedByTimestamp(projectIds, type ?? 'SUMMARY', [
       from,
-      to,
+      target,
     ]),
   ])
 
@@ -72,18 +72,18 @@ export async function getSummedTvsValues(
       }
     }
   }
-  
+
   const timestamps = valueRecords.map((v) => v.timestamp)
-  const [fromTimestamp, toTimestamp] = [
-    Math.min(...timestamps),
-    Math.max(...timestamps),
-  ]
+  const fromTimestamp = Math.min(...timestamps)
   const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
-  return generateTimestamps([fromTimestamp, toTimestamp], resolution, {
+  return generateTimestamps([fromTimestamp, target], resolution, {
     addTarget: true,
   }).map((timestamp) => {
     const record = groupedByTimestamp[timestamp]
+    if (!record) {
+      console.log(timestamp, record)
+    }
     assert(record, 'Record is not defined')
     return record
   })
