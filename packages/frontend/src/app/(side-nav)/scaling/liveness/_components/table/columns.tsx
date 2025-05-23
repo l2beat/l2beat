@@ -20,7 +20,7 @@ const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 export const columns = [
   ...getScalingCommonProjectColumns(
     columnHelper,
-    (row) => `/scaling/projects/${row.slug}`,
+    (row) => `/scaling/projects/${row.slug}#liveness`,
   ),
   columnHelper.group({
     id: 'data',

@@ -11,13 +11,17 @@ import { TRPCReactProvider } from '~/trpc/react'
 export interface AppLayoutProps {
   terms: GlossaryTermWithoutDescription[]
   searchBarProjects: SearchBarProject[]
+  defaultRecategorisationPreviewChecked?: boolean
 }
 
 export function AppLayout({
   children,
   terms,
   searchBarProjects,
-}: AppLayoutProps & { children: React.ReactNode }) {
+  defaultRecategorisationPreviewChecked,
+}: AppLayoutProps & {
+  children: React.ReactNode
+}) {
   return (
     <TRPCReactProvider>
       <ThemeProvider
@@ -29,7 +33,9 @@ export function AppLayout({
           <TooltipProvider delayDuration={300} disableHoverableContent>
             <GlossaryContextProvider terms={terms}>
               <SearchBarContextProvider projects={searchBarProjects}>
-                <RecategorisationPreviewContextProvider>
+                <RecategorisationPreviewContextProvider
+                  defaultChecked={defaultRecategorisationPreviewChecked}
+                >
                   {children}
                 </RecategorisationPreviewContextProvider>
               </SearchBarContextProvider>

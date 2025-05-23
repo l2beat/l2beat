@@ -7,12 +7,17 @@ let db: Database | undefined
 export function getDb() {
   if (!db) {
     db = !env.MOCK
-      ? createDatabase({
-          application_name: createConnectionTag(),
-          connectionString: env.DATABASE_URL,
-          ssl: ssl(),
-          ...pool(),
-        })
+      ? createDatabase(
+          {
+            application_name: createConnectionTag(),
+            connectionString: env.DATABASE_URL,
+            ssl: ssl(),
+            ...pool(),
+          },
+          {
+            loggerEnabled: env.DATABASE_LOG_ENABLED,
+          },
+        )
       : createThrowingProxy()
   }
 

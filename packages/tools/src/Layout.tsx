@@ -46,6 +46,16 @@ export function Layout() {
                   className={({ isActive }) =>
                     clsx('font-mono underline', isActive && 'text-orange-500')
                   }
+                  to="/decoder-new"
+                >
+                  /decoder-new
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
                   to="/simulator"
                 >
                   /simulator

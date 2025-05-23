@@ -5,6 +5,7 @@ import {
   type ChainConverter,
   type ChainId,
   type EthereumAddress,
+  ProjectId,
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
@@ -42,6 +43,7 @@ export class UpdateNotifier {
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly updateMessagesService: UpdateMessagesService,
+    private readonly projectService: ProjectService,
     private readonly disabledChains: string[],
   ) {
     this.logger = this.logger.for(this)
@@ -82,6 +84,12 @@ export class UpdateNotifier {
       return
     }
 
+    const trackedTxsAffected = await canTrackedTxsBeAffected(
+      this.projectService,
+      name,
+      throttled,
+    )
+
     const message = diffToMessage(
       name,
       throttled,
@@ -89,6 +97,7 @@ export class UpdateNotifier {
       this.chainConverter.toName(chainId),
       dependents,
       nonce,
+      trackedTxsAffected,
     )
     await this.notify(message, 'INTERNAL')
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
@@ -107,6 +116,7 @@ export class UpdateNotifier {
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
+      undefined,
     )
     await this.notify(filteredMessage, 'PUBLIC')
 
@@ -357,4 +367,39 @@ function handleOverflow(
     0,
     maxLength - WARNING_MESSAGE.length - userSuffix.length,
   )}${WARNING_MESSAGE}${userSuffix}`
+}
+
+export async function canTrackedTxsBeAffected(
+  ps: ProjectService,
+  projectId: string,
+  diffs: DiscoveryDiff[],
+): Promise<boolean> {
+  if (diffs.length === 0) {
+    return false
+  }
+
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    select: ['trackedTxsConfig'],
+  })
+
+  if (!project?.trackedTxsConfig || project.trackedTxsConfig.length === 0) {
+    return false
+  }
+
+  const contractAddresses = diffs.map((diff) => diff.address.toString())
+
+  return project.trackedTxsConfig.some((config) => {
+    switch (config.params.formula) {
+      case 'functionCall':
+      case 'sharedBridge':
+      case 'sharpSubmission':
+        return contractAddresses.includes(config.params.address.toString())
+      case 'transfer':
+        return (
+          contractAddresses.includes(config.params.from.toString()) ||
+          contractAddresses.includes(config.params.to.toString())
+        )
+    }
+  })
 }

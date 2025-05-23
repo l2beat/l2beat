@@ -1,8 +1,9 @@
 import { createHydrationHelpers } from '@trpc/react-query/rsc'
+import { createServerSideHelpers } from '@trpc/react-query/server'
 import { cache } from 'react'
 
 import type { AppRouter } from '~/server/api/root'
-import { createCaller } from '~/server/api/root'
+import { appRouter, createCaller } from '~/server/api/root'
 import { createTRPCContext } from '~/server/api/trpc'
 import { createQueryClient } from './query-client'
 
@@ -26,3 +27,22 @@ export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
   caller,
   getQueryClient,
 )
+
+export type ExpressHelpers = ReturnType<typeof getExpressHelpers>
+export const getExpressHelpers = () =>
+  createServerSideHelpers({
+    router: appRouter,
+    queryClient: getQueryClient(),
+    ctx: { headers: new Headers() },
+    // Do not serialize data to JSON, because it will be serialized again by the render function
+    //     .replace(
+    //       `<!--ssr-data-->`,
+    //       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
+    //     )
+    transformer: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      serialize: (data) => data,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      deserialize: (data) => data,
+    },
+  })

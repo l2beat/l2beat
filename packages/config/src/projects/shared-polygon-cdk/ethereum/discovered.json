@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22437961,
+  "blockNumber": 22536886,
   "configHash": "0xc6bd1557718c613e7ddae4bb901df4b92ef2dd43faaa642799a484147a433d01",
   "entries": [
     {
@@ -220,7 +220,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x3a6a6c4024d6975c5835242a48308905e4a8775b274bb21fc3c39e695fd4cc7b",
+        "getRoot": "0xad8f6c5a8d50db615ede82ec0b7e55a8d87075d956d2f584361d6c712a9f47b1",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -436,12 +436,12 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x6f0c80968a1fe7370088f8db837b78b860b073c941755d2f213ffabfdfd1af72",
+        "getRollupExitRoot": "0x333ba4fc1db0b70fa0ec38c249070919d8cd3be300388f58ed8cd678e3f7ad25",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1746696335,
+        "lastAggregationTimestamp": 1747897487,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14, 17, 18, 19],
+        "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 20,
@@ -710,8 +710,8 @@
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
-        "totalSequencedBatches": 724890,
-        "totalVerifiedBatches": 724297,
+        "totalSequencedBatches": 736556,
+        "totalVerifiedBatches": 736055,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -776,8 +776,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 58040,
-        "getRoot": "0x7c8f53b31aba082b58fd85808339eb64dcaaf0aba3d233cdc5ecd32ce6d52b8a",
+        "depositCount": 58534,
+        "getRoot": "0x5699eeef44353c3d10c0aae3ca60fa876097256ba346f4af28f0820311aef79b",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {

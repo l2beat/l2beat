@@ -12,7 +12,7 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getDaThroughputEntries(),
-    api.da.chart.prefetch({ range: '30d', includeScalingOnly: false }),
+    api.da.chart.prefetch({ range: '1y', includeScalingOnly: false }),
   ])
 
   return (

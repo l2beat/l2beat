@@ -133,16 +133,12 @@ export async function getBridgesProjectEntry(
     discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
 
-  await api.tvs.chart.prefetch({
-    range: '1y',
-    filter: { type: 'projects', projectIds: [project.id] },
-    excludeAssociatedTokens: false,
-  })
   const [tvsChartData, tokens] = await Promise.all([
     api.tvs.chart({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
+      previewRecategorisation: false,
     }),
     getTokensForProject(project),
   ])
