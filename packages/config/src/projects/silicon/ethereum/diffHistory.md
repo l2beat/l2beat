@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xa3da232ff5f99ec63ffbd9e27ec17b208ce7e7f7
+
+# Diff at Fri, 23 May 2025 09:41:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22397534
+- current block number: 22397534
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397534 (main branch discovery), not current.
+
+```diff
+    EOA  (0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".forceBatchAddress"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedSequencer"
+    }
+```
+
+```diff
+    EOA  (0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7) {
+    +++ description: None
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
++        "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
+      receivedPermissions.2.description:
+-        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.2.via:
++        [{"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}]
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
++        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
+      receivedPermissions.1.via:
+-        [{"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}]
+      receivedPermissions.1.description:
++        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+      receivedPermissions.1.role:
++        ".admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0xe87bfae82c39b8f88dc8284ab4147645803b19fd
 
 # Diff at Tue, 06 May 2025 10:56:56 GMT:

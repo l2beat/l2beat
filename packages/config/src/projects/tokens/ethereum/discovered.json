@@ -163,7 +163,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f"
+          "from": "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["votesLength"],
@@ -251,35 +252,43 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e"
+          "from": "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da"
+          "from": "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x852deD011285fe67063a08005c71a85690503Cee"
+          "from": "0x852deD011285fe67063a08005c71a85690503Cee",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1"
+          "from": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb"
+          "from": "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
+          "from": "0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
+          "from": "0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xFdDf38947aFB03C621C71b06C9C70bce73f12999"
+          "from": "0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1608242396,
@@ -973,7 +982,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xCa14076A3cec95448BaD179cc19B351A4204B88B"
+          "from": "0xCa14076A3cec95448BaD179cc19B351A4204B88B",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -4476,5 +4486,5 @@
     "tokens/Lido/wstETH": "0x9b708a05879c062566a96f737bd9998af0ceda3a51a54456a93cd24fd4c4dfdf",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "permissionsConfigHash": "0x1b434e256fd8167b345318254a5b94abb30b06bf0f93fd5650a4a2dd910697fe"
+  "permissionsConfigHash": "0x01a1c819bddac79917f9a2670111a55b63ac9c668607dd945b9698d0c106e24e"
 }

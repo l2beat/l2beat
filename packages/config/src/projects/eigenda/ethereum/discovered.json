@@ -19,48 +19,57 @@
         {
           "permission": "interact",
           "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "description": "can add and remove strategies"
+          "description": "can add and remove strategies",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
+          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "role": "admin",
           "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
         },
         {
           "permission": "upgrade",
           "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "role": "admin",
           "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
         },
         {
           "permission": "upgrade",
           "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "role": "admin",
           "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
         },
         {
           "permission": "upgrade",
           "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin",
           "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
         },
         {
           "permission": "upgrade",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin",
           "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
         },
         {
           "permission": "upgrade",
           "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin",
           "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+          "from": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -470,7 +479,8 @@
         {
           "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can pause the DA bridge"
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry"
         }
       ],
       "sinceTimestamp": 1686348935,
@@ -559,7 +569,8 @@
         {
           "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can create rewards submissions."
+          "description": "can create rewards submissions.",
+          "role": ".rewardsInitiator"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -616,7 +627,8 @@
         {
           "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can confirm batches to the DA bridge."
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
         }
       ]
     },
@@ -638,7 +650,8 @@
         {
           "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can confirm batches to the DA bridge."
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
         }
       ]
     },
@@ -664,27 +677,33 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1712353787,
@@ -705,7 +724,8 @@
         {
           "permission": "interact",
           "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "description": "can eject DA operators from a quorum."
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
         }
       ]
     },
@@ -840,7 +860,8 @@
         {
           "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can confirm batches to the DA bridge."
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
         }
       ]
     },
@@ -899,7 +920,8 @@
         {
           "permission": "interact",
           "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "description": "can eject DA operators from a quorum."
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
         }
       ]
     },
@@ -911,7 +933,8 @@
         {
           "permission": "interact",
           "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "description": "can approve the replacement of churned operators from a quorum"
+          "description": "can approve the replacement of churned operators from a quorum",
+          "role": ".churnApprover"
         }
       ]
     },
@@ -1345,5 +1368,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x2fdd288a791ea275e3e8fe8d362fc4f124d1f3da8aebbe66292d012f97895205"
+  "permissionsConfigHash": "0x960334a57dd948ad07a3b8fb850419bd072ee6e0f910baaac2d8353be3ee0036"
 }

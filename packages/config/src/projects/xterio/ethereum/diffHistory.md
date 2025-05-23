@@ -1,3 +1,179 @@
+Generated with discovered.json: 0x5030d43ceca5e0cc170da65e4d26b9a99037f53e
+
+# Diff at Fri, 23 May 2025 09:41:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22297620
+- current block number: 22297620
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22297620 (main branch discovery), not current.
+
+```diff
+    EOA  (0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    EOA  (0x8b3B4F6C348f6baC39190B89c801E61E41F05b88) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"0x5A0492D20D984eE904E46E6Ff24572bc755abb28","role":".CHALLENGER"}
+      receivedPermissions.0.role:
++        ".challenger"
+    }
+```
+
+```diff
+    contract Safe (0x8f33C32503B860eDd31BeC1c80669aFee40901f3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".privilegedAddress"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.from:
+-        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
++        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
+      directlyReceivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.from:
+-        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
++        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.from:
+-        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
++        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.from:
+-        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
++        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.from:
+-        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
++        "0x16193e14197c10109F3e81b938153A04A2a00190"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0x16193e14197c10109F3e81b938153A04A2a00190"
++        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.from:
+-        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
++        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
+      directlyReceivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xCf06c459AE59d4f47469BcE535afC3485Ce89dBf) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"guard","from":"0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A","role":".GUARDIAN"}
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    EOA  (0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0x5A0492D20D984eE904E46E6Ff24572bc755abb28","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract Xterio Multisig (0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
++        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
+      receivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
++        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
++        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
++        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
++        "0x16193e14197c10109F3e81b938153A04A2a00190"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x16193e14197c10109F3e81b938153A04A2a00190"
++        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.from:
+-        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
++        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
+      receivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x04187c77a5aed182deba3712443819c086031654
 
 # Diff at Tue, 29 Apr 2025 08:19:15 GMT:
