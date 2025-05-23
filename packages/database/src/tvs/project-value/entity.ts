@@ -16,15 +16,6 @@ export interface ProjectValueRecord {
   associated: number
 }
 
-export function toRecordWithoutProject(
-  row: Selectable<Omit<ProjectValue, 'project' | 'type'>>,
-): Omit<ProjectValueRecord, 'project' | 'type'> {
-  return {
-    ...row,
-    timestamp: UnixTime.fromDate(row.timestamp),
-  }
-}
-
 export function toRecord(row: Selectable<ProjectValue>): ProjectValueRecord {
   return {
     ...row,
@@ -37,5 +28,19 @@ export function toRow(record: ProjectValueRecord): Insertable<ProjectValue> {
   return {
     ...record,
     timestamp: UnixTime.toDate(record.timestamp),
+  }
+}
+
+export type SummedByTimestampProjectValueRecord = Omit<
+  ProjectValueRecord,
+  'project' | 'type'
+>
+
+export function toSummedByTimestampRecord(
+  row: Selectable<Omit<ProjectValue, 'project' | 'type'>>,
+): SummedByTimestampProjectValueRecord {
+  return {
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
   }
 }

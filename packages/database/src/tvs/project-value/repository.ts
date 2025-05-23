@@ -8,8 +8,8 @@ import { BaseRepository } from '../../BaseRepository'
 import {
   type ProjectValueRecord,
   toRecord,
-  toRecordWithoutProject,
   toRow,
+  toSummedByTimestampRecord,
 } from './entity'
 
 export class ProjectValueRepository extends BaseRepository {
@@ -141,7 +141,7 @@ export class ProjectValueRepository extends BaseRepository {
 
     const rows = await query.execute()
 
-    return rows.map(toRecordWithoutProject)
+    return rows.map(toSummedByTimestampRecord)
   }
 
   async getLatestValues(
