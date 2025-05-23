@@ -9,6 +9,8 @@ import type {
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import {
   EIP712_methods,
+  EIP7821_methods,
+  EIP_7821_TRANSACTION_SELECTOR,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ENTRY_POINT_ADDRESS_0_8_0,
@@ -24,6 +26,7 @@ import {
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
   isEip712,
+  isEip7821,
   isErc20Router,
   isErc4337,
   isGnosisSafe,
@@ -101,13 +104,15 @@ export class RpcCounter implements Counter {
       .concat(EIP712_methods)
       .concat(MULTICALLV3_methods)
       .concat(ERC20ROUTER_methods)
+      .concat(EIP7821_methods)
 
     if (
       isErc4337(tx) ||
       isGnosisSafe(tx) ||
       isEip712(tx) ||
       isMulticallv3(tx) ||
-      isErc20Router(tx)
+      isErc20Router(tx) ||
+      isEip7821(tx)
     ) {
       const countedOperation = this.countUserOperations(
         tx.data as string,
@@ -310,6 +315,8 @@ export class RpcCounter implements Counter {
         return 'Safe: Singleton 1.3.0'
       case ERC20ROUTER_TRANSACTION_SELECTOR:
         return 'ERC-20 Router'
+      case EIP_7821_TRANSACTION_SELECTOR:
+        return 'EIP-7821'
     }
 
     switch (type) {
