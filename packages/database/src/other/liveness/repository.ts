@@ -83,28 +83,28 @@ export class LivenessRepository extends BaseRepository {
       .groupBy(['configurationId'])
       .as('latest')
 
-    const latestBeforeFromRows = await this.db
-      .selectFrom('Liveness')
-      .innerJoin(subquery, (join) =>
-        join
-          .onRef('Liveness.configurationId', '=', 'latest.configurationId')
-          .onRef('Liveness.timestamp', '=', 'latest.maxTimestamp'),
-      )
-      .where('Liveness.configurationId', 'in', configurationIds)
-      .selectAll('Liveness')
-      .orderBy('timestamp', 'desc')
-      .execute()
-
-    // Get records within the time range
-    const withinRangeRows = await this.db
-      .selectFrom('Liveness')
-      .select(selectLiveness)
-      .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<', UnixTime.toDate(to))
-      .distinctOn(['timestamp', 'configurationId'])
-      .orderBy('timestamp', 'desc')
-      .execute()
+    const [latestBeforeFromRows, withinRangeRows] = await Promise.all([
+      this.db
+        .selectFrom('Liveness')
+        .innerJoin(subquery, (join) =>
+          join
+            .onRef('Liveness.configurationId', '=', 'latest.configurationId')
+            .onRef('Liveness.timestamp', '=', 'latest.maxTimestamp'),
+        )
+        .where('Liveness.configurationId', 'in', configurationIds)
+        .selectAll('Liveness')
+        .orderBy('timestamp', 'desc')
+        .execute(),
+      this.db
+        .selectFrom('Liveness')
+        .select(selectLiveness)
+        .where('configurationId', 'in', configurationIds)
+        .where('timestamp', '>=', UnixTime.toDate(from))
+        .where('timestamp', '<', UnixTime.toDate(to))
+        .distinctOn(['timestamp', 'configurationId'])
+        .orderBy('timestamp', 'desc')
+        .execute(),
+    ])
 
     return [...withinRangeRows, ...latestBeforeFromRows].map(toRecord)
   }

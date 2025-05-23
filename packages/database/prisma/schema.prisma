@@ -126,6 +126,7 @@ model Liveness {
   configurationId String   @db.VarChar(12)
 
   @@id([configurationId, txHash])
+  @@index([configurationId, timestamp])
 }
 
 model UpdateMonitor {
