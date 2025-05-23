@@ -79,12 +79,11 @@ export async function getSummedTvsValues(
 
   return generateTimestamps([fromTimestamp, target], resolution, {
     addTarget: true,
-  }).map((timestamp) => {
+  }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]
     if (!record) {
-      console.log(timestamp, record)
+      return []
     }
-    assert(record, 'Record is not defined')
     return record
   })
 }
