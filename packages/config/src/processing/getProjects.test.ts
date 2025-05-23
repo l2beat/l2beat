@@ -8,8 +8,8 @@ import {
 import {
   assert,
   EthereumAddress,
-  UnixTime,
   type ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
