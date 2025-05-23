@@ -176,7 +176,7 @@ export const celestia: BaseProject = {
     {
       title: 'Mainnet Launch',
       url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
-      date: '2023-10-31T14:00:00Z',
+      date: '2023-10-31T00:00:00Z',
       description: 'Celestia mainnet launches.',
       type: 'general',
     },

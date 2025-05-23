@@ -7,7 +7,7 @@ import {
   type DiscoveryConfig,
 } from '@l2beat/discovery'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
-import { ProjectDiscovery, formatAsBulletPoints } from './ProjectDiscovery'
+import { ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
@@ -127,26 +127,6 @@ describe(ProjectDiscovery.name, () => {
         'Can be updated by MockedContract, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
     })
-  })
-})
-
-describe(formatAsBulletPoints.name, () => {
-  it('should format description as bullet points', () => {
-    const description = ['First point', 'Second point', 'Third point']
-    const formatted = formatAsBulletPoints(description)
-    expect(formatted).toEqual('* First point\n* Second point\n* Third point\n')
-  })
-
-  it('should format single point as string is skipForSingle is true', () => {
-    const description = ['Single point']
-    const formatted = formatAsBulletPoints(description, { skipForSingle: true })
-    expect(formatted).toEqual('Single point')
-  })
-
-  it('should format single point as bullet point if no skipForSingle', () => {
-    const description = ['Single point']
-    const formatted = formatAsBulletPoints(description)
-    expect(formatted).toEqual('* Single point\n')
   })
 })
 

@@ -1,8 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import { env } from '~/env'
 import { InMemoryCache } from './InMemoryCache'
 
 describe(InMemoryCache.name, () => {
+  before(() => {
+    env.NODE_ENV = 'production'
+  })
+
   describe('getData', () => {
     it('it should return cached value if it is not expired', async () => {
       const now = UnixTime.now()
