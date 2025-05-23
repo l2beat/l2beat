@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
+  "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
+  "fields": {
+    // "getProposal": {
+    //   "handler": {
+    //     "type": "array",
+    //     "maxLength": 20
+    //   },
+    //   "description": "encrypted emergency proposals",
+    //   "edit": [
+    //     "map",
+    //     [
+    //       "shape",
+    //       "executed",
+    //       "approvals",
+    //       "parameters",
+    //       "encryptedPayloadURI",
+    //       "publicMetadataUriHash",
+    //       "destinationActionsHash",
+    //       "destinationPlugin"
+    //     ]
+    //   ]
+    // }
+    // TODO: set severity high as soon as gov is live
+    // "multisigSettings":{
+    //     "severity": "HIGH"
+    // },
+    // "proposalCount":{
+    //     "severity": "HIGH"
+    // }
+  }
+}
