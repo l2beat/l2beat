@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x86ab6bb825c9f317f417248c4118e67e3d353c64
+
+# Diff at Fri, 23 May 2025 09:40:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22187675
+- current block number: 22187675
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22187675 (main branch discovery), not current.
+
+```diff
+    EOA  (0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) {
+    +++ description: None
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.permission:
+-        "challenge"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
++        "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.5.via:
++        [{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]
+      receivedPermissions.4.permission:
+-        "interact"
++        "challenge"
+      receivedPermissions.4.from:
+-        "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"
++        "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
+      receivedPermissions.4.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.4.role:
++        ".CHALLENGER"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.3.via:
+-        [{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]
+      receivedPermissions.3.role:
++        ".GUARDIAN"
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"
++        "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"
+      receivedPermissions.2.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x00d9d538f789ab508c2f5aba6dcdee85b76c8f25
 
 # Diff at Tue, 29 Apr 2025 08:19:00 GMT:

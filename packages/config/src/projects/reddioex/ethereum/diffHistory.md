@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x86e47989fec9bd3949fd302ad9b3c1bef9ebff74
+
+# Diff at Fri, 23 May 2025 09:41:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 19825385
+- current block number: 19825385
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825385 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x6b7763b749073e892c83E674c1EC4799D6f339Ef) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
 Generated with discovered.json: 0xd6c2365b45948ff6e5f94b4bbf2fa5b17167669b
 
 # Diff at Tue, 06 May 2025 10:56:55 GMT:

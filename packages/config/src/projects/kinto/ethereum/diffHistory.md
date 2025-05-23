@@ -1,3 +1,143 @@
+Generated with discovered.json: 0xdb4d7b711526cb99174a6046185a8b3f2d4fbc57
+
+# Diff at Fri, 23 May 2025 09:41:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22437620
+- current block number: 22437620
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437620 (main branch discovery), not current.
+
+```diff
+    contract Kinto Security Council (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    EOA Ankr (0x2bfDA59220413DEd39dD0E443620b5277EcE6348) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA Hypernative2 (0x58028fFbc25aE2e12b96276bDB125955F41D41f3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA Caldera2 (0x64Cf65036a76E3827e448cadbc53D31EefDCE04a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x74C717C01425eb475A5fC55d2A4a9045fC9800df) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA MamoriLabs3 (0x944eB0a2829A859959586b10D54229278534a696) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0xe27f3f6db6824def1738b2aACe2672aC59046a39) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    EOA Venn2 (0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract Kinto Multisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x8a1ba9050b01b05066890629ae8b3cfd17ed588f
 
 # Diff at Thu, 08 May 2025 10:05:22 GMT:

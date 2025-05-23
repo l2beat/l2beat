@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x08cc5029685da762bd2deaf43135aef06cbd4403
+
+# Diff at Fri, 23 May 2025 09:41:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22181511
+- current block number: 22181511
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22181511 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getAdmin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x479B7c95b9509E1A834C994fc94e3581aA8A73B9) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
 Generated with discovered.json: 0xdac14234517154e9209b31d6e21375e7677bb120
 
 # Diff at Tue, 29 Apr 2025 08:19:18 GMT:
