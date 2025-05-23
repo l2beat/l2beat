@@ -223,46 +223,6 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getNew(types: ProjectValueType[]): Promise<ProjectValueRecord[]> {
-    /* 1️⃣  CTE "filtered" — apply the optional `type` filter once */
-    let filteredQ = this.db.selectFrom('ProjectValue as pv').selectAll()
-
-    if (types && types.length > 0) {
-      filteredQ = filteredQ.where('pv.type', 'in', types)
-    }
-
-    /* 4️⃣  final UNION ALL */
-    const rows = await this.db
-      .with('filtered', (qb) =>
-        qb
-          .selectFrom('ProjectValue as pv')
-          .selectAll()
-          .where('pv.type', 'in', types)
-          .where('pv.timestamp', '>=', new Date('2025-05-01T13:29:43.000Z')),
-      )
-      .with('latest', (qb) =>
-        qb
-          .selectFrom('filtered')
-          .selectAll()
-          .distinctOn(['project', 'type'])
-          .orderBy(['project', 'type', 'timestamp desc']),
-      )
-      .with('before_7d', (qb) =>
-        qb
-          .selectFrom('filtered')
-          .selectAll()
-          .where('timestamp', '<', new Date('2025-05-15T13:29:43.000Z'))
-          .distinctOn(['project', 'type'])
-          .orderBy(['project', 'type', 'timestamp desc']),
-      )
-      .selectFrom('latest')
-      .selectAll()
-      .unionAll((qb) => qb.selectFrom('before_7d').selectAll())
-      .execute()
-
-    return rows.map(toRecord)
-  }
-
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('ProjectValue').executeTakeFirst()
     return Number(result.numDeletedRows)
