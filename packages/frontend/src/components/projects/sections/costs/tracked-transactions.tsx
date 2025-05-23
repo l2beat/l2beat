@@ -19,7 +19,7 @@ import { formatTimestamp } from '~/utils/dates'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
-} from '~/utils/project/costs/get-tracked-transactions'
+} from '~/utils/project/tracked-txs/get-tracked-transactions'
 
 export function TrackedTransactions(props: TrackedTransactionsByType) {
   const [showHistoricalTransactions, setShowHistoricalTransactions] =

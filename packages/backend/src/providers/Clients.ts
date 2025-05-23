@@ -13,6 +13,8 @@ import {
   RpcClient,
   StarkexClient,
   StarknetClient,
+  type SvmBlockClient,
+  SvmRpcClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
@@ -20,6 +22,7 @@ import type { Config } from '../config/Config'
 
 export interface Clients {
   block: BlockClient[]
+  svmBlock: SvmBlockClient[]
   indexer: BlockIndexerClient[]
   starkex: StarkexClient | undefined
   loopring: LoopringClient | undefined
@@ -47,6 +50,7 @@ export function initClients(config: Config, logger: Logger): Clients {
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
+  const svmBlockClients: SvmBlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
   const rpcClients: RpcClient[] = []
 
@@ -156,6 +160,18 @@ export function initClients(config: Config, logger: Logger): Clients {
           })
           break
         }
+        case 'svm-rpc': {
+          const client = new SvmRpcClient({
+            sourceName: chain.name,
+            url: blockApi.url,
+            http,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
+            logger,
+          })
+          svmBlockClients.push(client)
+          break
+        }
         default:
           assertUnreachable(blockApi)
       }
@@ -228,6 +244,7 @@ export function initClients(config: Config, logger: Logger): Clients {
 
   return {
     block: blockClients,
+    svmBlock: svmBlockClients,
     indexer: indexerClients,
     starkex: starkexClient,
     loopring: loopringClient,

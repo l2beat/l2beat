@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 22481883,
-  "configHash": "0xb7d1f7c8cfe111e3c8976b0ea8eb509b281d1380e7d21a01b7897300da47046d",
+  "configHash": "0x61929a0cacdd4fb4d42b26cef2e1fe0c555f9e47b82571031d1666ec16210119",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -1378,7 +1378,7 @@
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
+    "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "permissionsConfigHash": "0x95f2cbeab77eb0f2b0a31d33b878064d25eccd0af5a1f1a99045f20c8f3c188e"

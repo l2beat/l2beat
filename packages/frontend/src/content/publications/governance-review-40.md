@@ -2,7 +2,7 @@
   title: "Governance Review #40"
   description: "Things in governance are heating up ahead of ETHDenver!."
   publishedOn: "2025-02-17"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 
 ## **Optimism**

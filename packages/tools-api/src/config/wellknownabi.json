@@ -1,0 +1,24 @@
+{
+  "ERC20": [
+    "function name()",
+    "function symbol()",
+    "function decimals()",
+    "function totalSupply()",
+    "function balanceOf(address owner)",
+    "function transfer(address to, uint256 amount)",
+    "function transferFrom(address from, address to, uint256 amount)",
+    "function approve(address spender, uint256 amount)",
+    "function allowance(address owner, address spender)"
+  ],
+  "ERC20+": [
+    "function increaseAllowance(address spender, uint256 amount)",
+    "function decreaseAllowance(address spender, uint256 amount)",
+    "function burn(uint256 amount)",
+    "function burn(address spender, uint256 amount)",
+    "function burnFrom(address spender, uint256 amount)",
+    "function mint(uint256 amount)",
+    "function mint(address spender, uint256 amount)",
+    "function mintFrom(address spender, uint256 amount)"
+  ],
+  "MultiSend": ["function multiSend(bytes transactions)"]
+}

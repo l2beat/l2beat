@@ -3,7 +3,8 @@ import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router'
 import { Layout } from './Layout'
-import { DecoderApp } from './decoder/DecoderApp'
+import { DecoderApp as NewDecoderApp } from './decoder-new/DecoderApp'
+import { DecoderApp as OldDecoderApp } from './decoder/DecoderApp'
 import { DiscoLupe } from './discolupe/DiscoLupe'
 import { LogoGenerator } from './logo-generator/LogoGenerator'
 import { MonitorApp } from './monitor/MonitorApp'
@@ -21,7 +22,8 @@ ReactDOM.createRoot(root).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<AutoRedirect />} />
-            <Route path="/decoder" element={<DecoderApp />} />
+            <Route path="/decoder" element={<OldDecoderApp />} />
+            <Route path="/decoder-new" element={<NewDecoderApp />} />
             <Route path="/simulator" element={<SimulatorApp />} />
             <Route path="/discolupe" element={<DiscoLupe />} />
             <Route path="/logo-generator" element={<LogoGenerator />} />

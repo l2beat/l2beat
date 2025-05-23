@@ -2,7 +2,7 @@
   title: "Governance Review #45"
   description: "This week, lots of initiatives across DAOs have been posting updates."
   publishedOn: "2025-03-31"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 
 ## **Optimism**

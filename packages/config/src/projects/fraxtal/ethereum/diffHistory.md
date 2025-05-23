@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xc0807344ce97929242b997559b83f768418923e2
+Generated with discovered.json: 0x82d7507204e2db46f205585ddd6377188eab1489
+
+# Diff at Wed, 21 May 2025 12:09:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 22423720
+- current block number: 22531170
+
+## Description
+
+base fee increase of the blob-independent part by ~10x.
+
+post-ecotone fee calculator: https://docs.google.com/spreadsheets/d/12VIiXHaVECG2RUunDSVJpn67IQp9NHFJqUsma2PndpE/edit#gid=186414307
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        500
++        5000
+    }
+```
+
+Generated with discovered.json: 0x61fdc3fbb96fb65212ac10df30a1fcdc7ec4aac7
 
 # Diff at Tue, 06 May 2025 09:18:18 GMT:
 

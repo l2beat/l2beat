@@ -1344,10 +1344,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
-    "starkex/StarkPerpetual": "0x903f514b88caac1d83815c927eeb78ab045ea9eb8c455cd469433e071039d07a"
+    "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "permissionsConfigHash": "0xfc4502ff4b3620142113ac6202d1c2715c52125fb7dce05c2408eaa6e85fe827"
 }

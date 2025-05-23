@@ -9,6 +9,7 @@ import type {
   BigQueryTransferResult,
   TrackedTxTransferResult,
 } from '../types/model'
+import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
 
 export function transformTransfersQueryResult(
   configs: Configuration<
@@ -44,7 +45,12 @@ export function transformTransfersQueryResult(
           receiptGasUsed: r.receipt_gas_used,
           gasPrice: r.gas_price,
           dataLength: r.data_length,
-          calldataGasUsed: r.calldata_gas_used,
+          calldataGasUsed: calculateCalldataGasUsed(
+            r.block_number,
+            r.data_length,
+            r.non_zero_bytes,
+            r.receipt_gas_used,
+          ),
           receiptBlobGasUsed: r.receipt_blob_gas_used,
           receiptBlobGasPrice: r.receipt_blob_gas_price,
         }) as const,
