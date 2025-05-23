@@ -1,3 +1,128 @@
+Generated with discovered.json: 0xf360ed893f5a9f5604518e143638a531816e4d35
+
+# Diff at Fri, 23 May 2025 09:41:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22517904
+- current block number: 22517904
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22517904 (main branch discovery), not current.
+
+```diff
+    EOA  (0x4cc87B0A504047967CeD9A955431B3229237e7de) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x50B238788747B26c408681283D148659F9da7Cf9) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".whitelistedSendersAC"
+      receivedPermissions.0.role:
++        ".defaultAdminAC"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      receivedPermissions.0.role:
++        ".getTransactionFilterer"
+    }
+```
+
+```diff
+    EOA  (0xe14828E4405239dD331F194F1B7883eeD73bCBF3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenMultiplierSetter"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".getAdmin"
+      receivedPermissions.0.role:
++        ".defaultAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+Generated with discovered.json: 0xd51f92447314ab19b6ec29ca15b9abcfcb973592
+
+# Diff at Mon, 19 May 2025 15:29:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22480309
+- current block number: 22517904
+
+## Description
+
+Whitelisted USDC bridge contract on L2.
+
+## Watched changes
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      values.accessControl.WHITELISTED_ROLE.members.1:
++        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
++++ description: Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.
+      values.whitelistedContractsAC.1:
++        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
+    }
+```
+
 Generated with discovered.json: 0x821b11cd324bfdf250c740d460994f73a6f084f3
 
 # Diff at Wed, 14 May 2025 13:53:00 GMT:

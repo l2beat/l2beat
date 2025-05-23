@@ -1,3 +1,162 @@
+Generated with discovered.json: 0x4cef444d3fbaf39a22fbc802219b1bd1f897a020
+
+# Diff at Fri, 23 May 2025 09:41:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22431552
+- current block number: 22431552
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431552 (main branch discovery), not current.
+
+```diff
+    EOA  (0x11b0E7Bef4046dD43b09489926F30514584B1161) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".acRelay"
+    }
+```
+
+```diff
+    EOA  (0x2534ED5d1303F035fa7e5d6a52199e59328B3F72) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    EOA  (0x32744b98cC03A76C0559e905a31E8474a31729c1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    EOA  (0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    EOA  (0x3Dd6C793AbA45738e531639977a292A3A8E32C9D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    EOA  (0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".exitAdministrator"
+    }
+```
+
+```diff
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B) {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "set permissioned relayers."
++        "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
+      receivedPermissions.2.role:
++        ".acHeartbeat"
+      receivedPermissions.1.description:
+-        "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
++        "set the fast lane fee."
+      receivedPermissions.1.role:
++        ".acFeeSetter"
+      receivedPermissions.0.description:
+-        "set the fast lane fee."
++        "set permissioned relayers."
+      receivedPermissions.0.role:
++        ".acRelayAdmin"
+    }
+```
+
+```diff
+    EOA  (0x8406de45bfAca854d08377ca1436C6b4785b4D79) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    EOA  (0x92E33222A1389aAf89C0794643fBBC7E679a6Dad) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
+```diff
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0) {
+    +++ description: None
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        ".acAdmin"
+      receivedPermissions.3.role:
++        ".acAdmin"
+      receivedPermissions.2.description:
+-        "remove tokens from the whitelist."
++        "add tokens to the whitelist."
+      receivedPermissions.2.role:
++        ".acRegister"
+      receivedPermissions.1.description:
+-        "add tokens to the whitelist."
++        "remove tokens from the whitelist."
+      receivedPermissions.1.role:
++        ".acUnregister"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".acRelay"
+    }
+```
+
+```diff
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4) {
+    +++ description: Entry point for state (oracle) updates.
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorAddress"
+    }
+```
+
 Generated with discovered.json: 0x90e4e2965a5e52d01e085f57f7bb9b880d15fbd6
 
 # Diff at Wed, 07 May 2025 11:45:14 GMT:

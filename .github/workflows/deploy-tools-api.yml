@@ -1,0 +1,44 @@
+name: Deploy Tools API
+
+concurrency:
+  group: tools-api-deployment
+permissions: {}
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-tools-api:
+    name: Deploy Tools API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Install heroku CLI
+        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - name: Login to heroku container registry
+        uses: docker/login-action@v3
+        with:
+          username: "_"
+          password: ${{ secrets.HEROKU_TOKEN }}
+          registry: registry.heroku.com
+      - name: Build and publish containers
+        run: |
+          docker build --push \
+            --build-arg TURBO_TEAM=${TURBO_TEAM} \
+            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+            -t ${TAG} -f ${DOCKERFILE} .
+        env:
+          DOCKERFILE: Dockerfile.toolsapi
+          TAG: registry.heroku.com/${{ secrets.HEROKU_TOOLS_API }}/web
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      - name: Release published container
+        run: |
+          heroku container:release -a ${{ secrets.HEROKU_TOOLS_API }} -v web
+        env:
+          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}

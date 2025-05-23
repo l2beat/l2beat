@@ -54,6 +54,7 @@ export interface ResolvedPermissionDetails {
   permission: Permission
   delay?: number
   description?: string
+  role?: string
   condition?: string
   via?: ResolvedPermissionPath[]
 }
@@ -126,5 +127,6 @@ export type PermissionsOutput = {
       condition?: string
     }[]
     isFinal: boolean
+    role?: string
   }[]
 }

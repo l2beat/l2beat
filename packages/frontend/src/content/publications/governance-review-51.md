@@ -2,7 +2,7 @@
 title: "Governance Review #51"
 description: "Scaling Decisions, Global Ambitions: upgrades approved, experiments queued, and incentives re‑imagined."
 publishedOn: "2025-05-12"
-authorId: anastassis-oikonomopoulos
+authorId: manuel-gonzalez
 ---
 
 ## **Optimism**

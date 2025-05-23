@@ -1,3 +1,256 @@
+Generated with discovered.json: 0x1982813fa0431cb6198054901e737d33a892aeff
+
+# Diff at Fri, 23 May 2025 09:41:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22437746
+- current block number: 22437746
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437746 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C) {
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".livenessGuard"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputy"
+    }
+```
+
+```diff
+    contract Soneium Multisig (0x509182eC226b3B71D36A3255A80EF0b1A9D43033) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.10.from:
+-        "0x9AEA1FD851b63d57Ba4Fc556B0e0c170126C9EAf"
++        "0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3"
+      receivedPermissions.10.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.10.via:
++        [{"address":"0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"}]
+      receivedPermissions.9.from:
+-        "0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3"
++        "0x88e529A6ccd302c948689Cd5156C83D4614FAE92"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0x88e529A6ccd302c948689Cd5156C83D4614FAE92"
++        "0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0"
++        "0x190B6ecEE5A2ddF39669288B9B8daEa4641ae8b1"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x5933e323bE8896DfaCd1cD671442F27dAA10a053"
+      receivedPermissions.6.description:
+-        "set and change address mappings."
+      receivedPermissions.6.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0x190B6ecEE5A2ddF39669288B9B8daEa4641ae8b1"
++        "0xc1047e30EFC9E172cFe7aa0219895B6a43fC415F"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x5933e323bE8896DfaCd1cD671442F27dAA10a053"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.4.via.0.address:
+-        "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0xc1047e30EFC9E172cFe7aa0219895B6a43fC415F"
++        "0x9AEA1FD851b63d57Ba4Fc556B0e0c170126C9EAf"
+      receivedPermissions.3.via:
+-        [{"address":"0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"}]
+      receivedPermissions.3.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.2.description:
++        "set and change address mappings."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".fallbackOwner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputyGuardian"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
 Generated with discovered.json: 0xfba1f4082c76bc77112d628eb936323d17a110bf
 
 # Diff at Fri, 09 May 2025 10:09:21 GMT:

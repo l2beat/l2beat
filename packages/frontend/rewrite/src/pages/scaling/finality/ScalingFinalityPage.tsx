@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingFinalityEntry>
 }
 
-export function ScalingFinalityPage(props: Props) {
+export function ScalingFinalityPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextFinalityPage entries={props.entries} />
+        <NextFinalityPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )

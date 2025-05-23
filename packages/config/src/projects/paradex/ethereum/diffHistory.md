@@ -1,3 +1,139 @@
+Generated with discovered.json: 0x16698a69a474a97d091809b8bb14dc2450bf3e29
+
+# Diff at Fri, 23 May 2025 09:41:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22517899
+- current block number: 22517899
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22517899 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.description:
++        "disable the withdrawal limit and manage the security agent role that can enable it."
+      receivedPermissions.3.role:
++        ".secAdminAC"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.description:
+-        "disable the withdrawal limit and manage the security agent role that can enable it."
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".govAdminAC"
+      receivedPermissions.0.role:
++        ".secAgentAC"
+    }
+```
+
+Generated with discovered.json: 0xf7ad29432de7c8c023f91d04532287efa3f3de15
+
+# Diff at Mon, 19 May 2025 15:28:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22467133
+- current block number: 22517899
+
+## Description
+
+Upgrade USDC Bridge to change withdrawal limit: now 0% meaning enabling the withdrawal limit pauses withdrawals.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      description:
+-        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours."
+      values.$pastUpgrades.3:
++        ["2025-05-16T18:05:23.000Z","0x6df9f1b6e2fe53f2ea980ff4908aca6e43dc77e17cfdb869c67e4879c49eabf2",["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.accessControl.APP_ROLE_ADMIN.members.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.0:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
+-        5
++        0
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.5:
++        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
+      values.$members.4:
+-        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
++        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.$members.3:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit and manage the security agent role that can enable it."}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.0.description:
+-        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "enable the withdrawal limit."
+    }
+```
+
 Generated with discovered.json: 0x4fb9c8d6725ebbb01ac220ea9e445c77c4f32c38
 
 # Diff at Wed, 14 May 2025 11:06:55 GMT:

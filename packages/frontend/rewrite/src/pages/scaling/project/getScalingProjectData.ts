@@ -3,6 +3,7 @@ import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ps } from '~/server/projects'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectData(
@@ -26,6 +27,7 @@ export async function getScalingProjectData(
       'permissions',
       'chainConfig',
       'scalingDa',
+      'livenessConfig',
       'customDa',
       'isUpcoming',
       'archivedAt',
@@ -36,9 +38,27 @@ export async function getScalingProjectData(
   })
   if (!project) return undefined
 
+  const helpers = getExpressHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
     getScalingProjectEntry(project),
+    helpers.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+      previewRecategorisation: false,
+    }),
+    helpers.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      previewRecategorisation: false,
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? helpers.costs.projectChart.prefetch({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
   ])
 
   return {
@@ -58,6 +78,7 @@ export async function getScalingProjectData(
       props: {
         ...appLayoutProps,
         projectEntry,
+        queryState: helpers.dehydrate(),
       },
     },
   }

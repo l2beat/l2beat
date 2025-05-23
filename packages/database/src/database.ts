@@ -27,8 +27,11 @@ import { IndexerConfigurationRepository } from './uif/indexer-configuration/repo
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(config?: PoolConfig) {
-  const db = new DatabaseClient({ ...config })
+export function createDatabase(
+  config?: PoolConfig,
+  opts?: { loggerEnabled?: boolean },
+) {
+  const db = new DatabaseClient({ ...config }, opts)
 
   return {
     transaction: db.transaction.bind(db),

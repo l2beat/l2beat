@@ -36,6 +36,7 @@ export default async function Page({ params }: Props) {
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),
       },
+      previewRecategorisation: false,
     }),
     api.activity.chart.prefetch({
       range: '1y',
@@ -43,6 +44,7 @@ export default async function Page({ params }: Props) {
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),
       },
+      previewRecategorisation: false,
     }),
   ])
 

@@ -43,6 +43,7 @@ export function ProjectActivityChart({
       type: 'projects',
       projectIds: [projectId],
     },
+    previewRecategorisation: false,
   })
 
   const type = getChartType(category)
