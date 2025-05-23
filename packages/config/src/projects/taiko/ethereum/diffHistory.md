@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7f5e2d1ebde2c8173dc699ff8ae8d02976e8d88c
+Generated with discovered.json: 0xcd6cac47f4a25354e4d9f0b021ab213588c79637
 
-# Diff at Mon, 19 May 2025 12:55:40 GMT:
+# Diff at Fri, 23 May 2025 13:50:46 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ef43789b43755ecf09702c088ebd4effe5bee7d0 block: 22481930
-- current block number: 22517139
+- current block number: 22545974
 
 ## Description
 
@@ -446,7 +446,7 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 +        7
       values.clock:
 -        1747232111
-+        1747659299
++        1748008235
       values.getNonVotingAccounts.3:
 +        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
       values.getNonVotingAccounts.2:
@@ -637,29 +637,6 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 -        {"name":"Local Infrastructure","priority":5}
       errors:
 +        {"proxiableUUID":"Processing error occurred."}
-Generated with discovered.json: 0xaab72c9107d4bab5978b4f6c09e73c6157b6c6b8
-
-# Diff at Fri, 23 May 2025 09:41:06 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22481930
-- current block number: 22481930
-
-## Description
-
-Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22481930 (main branch discovery), not current.
-
-```diff
-    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
-    +++ description: Verifier contract for blocks proven by Guardian minority.
-      receivedPermissions.0.role:
-+        ".verifier_TIER_GUARDIAN_MINORITY"
     }
 ```
 
@@ -681,13 +658,13 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 -        "3 of 5 (60%)"
 +        "4 of 6 (67%)"
       receivedPermissions.17:
-+        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"}
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
       receivedPermissions.16:
-+        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"}
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
       receivedPermissions.15:
-+        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"}
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
       receivedPermissions.14:
-+        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"}
++        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
       receivedPermissions.13.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
 +        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
@@ -907,7 +884,73 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
  27 files changed, 18673 insertions(+), 9125 deletions(-)
 ```
 
-Generated with discovered.json: 0x671ab3bce1dd8e7fd074e68ae54bdccebf46988b
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481930 (main branch discovery), not current.
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      receivedPermissions.0.role:
++        ".verifier_TIER_GUARDIAN_MINORITY"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The entry point to the DAO Aragon-based governance framework.
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      receivedPermissions.1.role:
++        ".chain_watchdog"
+      receivedPermissions.0.role:
++        ".verifier_TIER_GUARDIAN"
+    }
+```
+
+Generated with discovered.json: 0x76cef9cfa7a1610b4426a22f4da2af90943911da
 
 # Diff at Tue, 13 May 2025 14:42:00 GMT:
 
