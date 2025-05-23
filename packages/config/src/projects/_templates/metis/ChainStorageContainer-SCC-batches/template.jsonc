@@ -1,0 +1,28 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "ChainStorageContainer-SCC-batches",
+  "description": "Storage container for SCC batches.",
+  "ignoreMethods": ["get"],
+  "ignoreInWatchMode": [
+    "getGlobalMetadata",
+    "length",
+    "getGlobalMetadataByChainId",
+    "lengthByChainId"
+  ],
+  "fields": {
+    "getGlobalMetadataByChainId": {
+      "handler": {
+        "type": "call",
+        "method": "getGlobalMetadataByChainId",
+        "args": ["{{ DEFAULT_CHAINID }}"]
+      }
+    },
+    "lengthByChainId": {
+      "handler": {
+        "type": "call",
+        "method": "lengthByChainId",
+        "args": ["{{ DEFAULT_CHAINID }}"]
+      }
+    }
+  }
+}

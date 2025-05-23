@@ -1,0 +1,7 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "PreimageOracle",
+  "description": "Oracle for providing preimages.",
+  "fields": {},
+  "ignoreMethods": ["zeroHashes"]
+}
