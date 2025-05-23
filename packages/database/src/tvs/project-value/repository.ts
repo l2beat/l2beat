@@ -3,6 +3,7 @@ import {
   type ProjectValueType,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type ProjectValueRecord, toRecord, toRow } from './entity'
 
@@ -62,29 +63,6 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByTypeAndRange(
-    types: ProjectValueType[],
-    range: [number | null, number | null],
-  ): Promise<ProjectValueRecord[]> {
-    const [from, to] = range
-    let query = this.db
-      .selectFrom('ProjectValue')
-      .selectAll()
-      .where('type', 'in', types)
-      .orderBy('timestamp', 'desc')
-
-    if (from !== null) {
-      query = query.where('timestamp', '>=', UnixTime.toDate(from))
-    }
-
-    if (to !== null) {
-      query = query.where('timestamp', '<=', UnixTime.toDate(to))
-    }
-
-    const rows = await query.execute()
-    return rows.map(toRecord)
-  }
-
   async getByProjectsForType(
     projects: ProjectId[],
     type: ProjectValueType,
@@ -141,58 +119,85 @@ export class ProjectValueRepository extends BaseRepository {
       return []
     }
 
-    // Find latest records for each project/type combo before or at latestTimestamp
-    const latestSubQuery = this.db
-      .selectFrom('ProjectValue')
-      .select([
-        'project',
-        'type',
-        this.db.fn.max('timestamp').as('maxTimestamp'),
-      ])
-      .where('timestamp', '<=', UnixTime.toDate(latestTimestamp))
-      .where('type', 'in', types)
-      .groupBy(['project', 'type'])
-      .as('latest')
-
-    // Find oldest records for each project/type combo before or at oldestTimestamp
-    const oldestSubQuery = this.db
-      .selectFrom('ProjectValue')
-      .select([
-        'project',
-        'type',
-        this.db.fn.max('timestamp').as('maxTimestamp'),
-      ])
-      .where('timestamp', '<=', UnixTime.toDate(oldestTimestamp))
-      .where('type', 'in', types)
-      .groupBy(['project', 'type'])
-      .as('oldest')
-
-    const [latestRecords, oldestRecords] = await Promise.all([
+    // Find latest records for each project/type combo before or at given timestamp
+    const subQuery = (timestamp: number) =>
       this.db
-        .selectFrom('ProjectValue as pv')
-        .innerJoin(latestSubQuery, (join) =>
-          join
-            .onRef('pv.project', '=', 'latest.project')
-            .onRef('pv.type', '=', 'latest.type')
-            .onRef('pv.timestamp', '=', 'latest.maxTimestamp'),
-        )
-        .selectAll('pv')
-        .execute(),
-      this.db
-        .selectFrom('ProjectValue as pv')
-        .innerJoin(oldestSubQuery, (join) =>
-          join
-            .onRef('pv.project', '=', 'oldest.project')
-            .onRef('pv.type', '=', 'oldest.type')
-            .onRef('pv.timestamp', '=', 'oldest.maxTimestamp'),
-        )
-        .selectAll('pv')
-        .execute(),
-    ])
+        .selectFrom('ProjectValue')
+        .select([
+          'project',
+          'type',
+          this.db.fn.max('timestamp').as('maxTimestamp'),
+        ])
+        .where('type', 'in', types)
+        // We dont need to query whole database, we can limit it to 30 days
+        .where('timestamp', '<=', sql<Date>`NOW() - INTERVAL '30 days'`)
+        .where('timestamp', '<=', UnixTime.toDate(timestamp))
+        .groupBy(['project', 'type'])
 
-    return [...latestRecords, ...oldestRecords]
-      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
-      .map(toRecord)
+    const rows = await this.db
+      .selectFrom('ProjectValue as pv')
+      .innerJoin(subQuery(latestTimestamp).as('latest'), (join) =>
+        join
+          .onRef('pv.project', '=', 'latest.project')
+          .onRef('pv.type', '=', 'latest.type')
+          .onRef('pv.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('pv')
+      .unionAll((qb) =>
+        qb
+          .selectFrom('ProjectValue as pv')
+          .innerJoin(subQuery(oldestTimestamp).as('oldest'), (join) =>
+            join
+              .onRef('pv.project', '=', 'oldest.project')
+              .onRef('pv.type', '=', 'oldest.type')
+              .onRef('pv.timestamp', '=', 'oldest.maxTimestamp'),
+          )
+          .selectAll('pv'),
+      )
+      .orderBy('timestamp')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getNew(types: ProjectValueType[]): Promise<ProjectValueRecord[]> {
+    /* 1️⃣  CTE "filtered" — apply the optional `type` filter once */
+    let filteredQ = this.db.selectFrom('ProjectValue as pv').selectAll()
+
+    if (types && types.length > 0) {
+      filteredQ = filteredQ.where('pv.type', 'in', types)
+    }
+
+    /* 4️⃣  final UNION ALL */
+    const rows = await this.db
+      .with('filtered', (qb) =>
+        qb
+          .selectFrom('ProjectValue as pv')
+          .selectAll()
+          .where('pv.type', 'in', types)
+          .where('pv.timestamp', '>=', new Date('2025-05-01T13:29:43.000Z')),
+      )
+      .with('latest', (qb) =>
+        qb
+          .selectFrom('filtered')
+          .selectAll()
+          .distinctOn(['project', 'type'])
+          .orderBy(['project', 'type', 'timestamp desc']),
+      )
+      .with('before_7d', (qb) =>
+        qb
+          .selectFrom('filtered')
+          .selectAll()
+          .where('timestamp', '<', new Date('2025-05-15T13:29:43.000Z'))
+          .distinctOn(['project', 'type'])
+          .orderBy(['project', 'type', 'timestamp desc']),
+      )
+      .selectFrom('latest')
+      .selectAll()
+      .unionAll((qb) => qb.selectFrom('before_7d').selectAll())
+      .execute()
+
+    return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
