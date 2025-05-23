@@ -28,9 +28,6 @@
     "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": "unverified_MVM_FraudVerifier"
   },
   "overrides": {
-    "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": {
-      // unused, unverified_MVM_FraudVerifier
-    },
     "0xfA947f70c3509d5b70A606e871aE0C85397D0738": {
       //delayedWmetis
       "ignoreInWatchMode": ["totalSupply"]

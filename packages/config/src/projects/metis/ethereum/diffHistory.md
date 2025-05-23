@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5a2f1f4b538a1d06ce332c4bf89771d5d13774ff
+Generated with discovered.json: 0xac83b4b3d25472fc55c1908686ca00de7665f81b
 
-# Diff at Fri, 23 May 2025 13:28:47 GMT:
+# Diff at Fri, 23 May 2025 13:41:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@0981ad29dde2407ba3849802ee6a490d2d0799a5 block: 22494955
@@ -187,12 +187,9 @@ discovery. Values are for block 22494955 (main branch discovery), not current.
 ```
 
 ```diff
-    contract unverified_MVM_FraudVerifier (0x5fF5316CD1C015970eEC83D34a69E504B577a5bb) {
+-   Status: DELETED
+    contract  (0x5fF5316CD1C015970eEC83D34a69E504B577a5bb)
     +++ description: None
-      name:
--        ""
-+        "unverified_MVM_FraudVerifier"
-    }
 ```
 
 ```diff

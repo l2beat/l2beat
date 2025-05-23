@@ -3,6 +3,7 @@
   "name": "Lib_AddressManager",
   "description": "Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
   // Lib_AddressManager
+  "ignoreRelatives": ["undefined_MVM_FraudVerifier"],
   "fields": {
     "DisputeGameFactory": {
       "handler": {

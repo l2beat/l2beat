@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 22545767,
-  "configHash": "0xa4728ee1a59053d3a41721136b75dec7edd691227ad21b85a1e8cc6e1ac8ed7f",
+  "configHash": "0x9a50cb882de3bc16e4fded3c3f9b27b6f026b6648d40c94d2b9bba28fd53681d",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -553,19 +553,6 @@
       },
       "implementationNames": {
         "0x595801b85628ec6979C420988b8843A40F850528": "BondManager"
-      }
-    },
-    {
-      "name": "unverified_MVM_FraudVerifier",
-      "address": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1637083067,
-      "sinceBlock": 13627861,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": ""
       }
     },
     {
@@ -2038,7 +2025,7 @@
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "metis/Lib_AddressManager": "0xece3b35b44ae1515f27d1c676bafb7e9a4814afd817c6895575e26d2519d7392",
+    "metis/Lib_AddressManager": "0xa145ce2ec589f30ce10c1f4f1c91e0c8e0a4f0c115f90aeb3982d590a679d49c",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",
     "metis/MetisConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2051,5 +2038,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xfb245cf12f14ae4e27590b244e16c4f0759ed579b734c17907df545c1d230935"
+  "permissionsConfigHash": "0xb1e7d5124725e363612cfcec503e7ebbaed605286e5597b75e732dd3241a4d93"
 }
