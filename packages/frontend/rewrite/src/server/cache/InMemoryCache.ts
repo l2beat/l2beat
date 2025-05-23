@@ -23,7 +23,7 @@ export class InMemoryCache implements ICache {
     options: { key: string[]; ttl: number },
     fallback: () => Promise<T>,
   ): Promise<T> {
-    if (!(env.NODE_ENV !== 'production')) {
+    if (env.NODE_ENV !== 'production' || env.DISABLE_CACHE) {
       return fallback()
     }
 

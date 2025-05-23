@@ -41,6 +41,17 @@ export class VerifierStatusRepository extends BaseRepository {
     return row && toRecord(row)
   }
 
+  async getVerifierStatuses(
+    addresses: string[],
+  ): Promise<VerifierStatusRecord[]> {
+    const rows = await this.db
+      .selectFrom('VerifierStatus')
+      .select(selectVerifierStatus)
+      .where('address', 'in', addresses)
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getAll(): Promise<VerifierStatusRecord[]> {
     const rows = await this.db
       .selectFrom('VerifierStatus')
