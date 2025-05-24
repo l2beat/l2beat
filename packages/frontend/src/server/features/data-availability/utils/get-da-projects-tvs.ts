@@ -7,7 +7,7 @@ export async function getDaProjectsTvs(projectIds: ProjectId[]) {
   if (env.MOCK) {
     return getMockDaProjectsTvsData()
   }
-  return await getDaProjectsTvsData(projectIds)
+  return getDaProjectsTvsData(projectIds)
 }
 
 type DaProjectsTvs = Awaited<ReturnType<typeof getDaProjectsTvsData>>

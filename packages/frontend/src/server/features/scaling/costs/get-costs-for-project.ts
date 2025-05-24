@@ -41,22 +41,20 @@ const getCachedCostsForProject = cache(
       select: ['trackedTxsConfig'],
     })
     if (!project) return undefined
-    const configurations = await db.indexerConfiguration.getByIndexerId(
-      'tracked_txs_indexer',
-    )
+    const [configurations, records] = await Promise.all([
+      db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
+      db.aggregatedL2Cost.getByProjectAndTimeRange(
+        project.id,
+        fullySyncedRange,
+      ),
+    ])
 
     const trackedTxsProject = getTrackedTxsProject(
       project,
       configurations,
       'l2costs',
     )
-    if (!trackedTxsProject) return undefined
-
-    const records = await db.aggregatedL2Cost.getByProjectAndTimeRange(
-      project.id,
-      fullySyncedRange,
-    )
-    if (records.length === 0) return undefined
+    if (!trackedTxsProject || records.length === 0) return undefined
 
     const timestamps = records.map((r) => r.timestamp)
     const range: [UnixTime, UnixTime] = [

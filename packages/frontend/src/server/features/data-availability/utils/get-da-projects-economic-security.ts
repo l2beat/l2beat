@@ -15,30 +15,36 @@ export type ProjectsEconomicSecurity = Record<string, number | undefined>
 async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecurity> {
   // TODO: It's probably better to not fetch all data at once
   const db = getDb()
-  const stakes = Object.fromEntries(
-    (await db.stake.getAll()).map((s) => [s.id, s.thresholdStake]),
+
+  const [stakes, currentPrices, projects] = await Promise.all([
+    db.stake.getAll(),
+    db.currentPrice.getAll(),
+    ps.getProjects({
+      select: ['daLayer'],
+    }),
+  ])
+
+  const stakesById = Object.fromEntries(
+    stakes.map((s) => [s.id, s.thresholdStake]),
   )
 
-  const currentPrices = Object.fromEntries(
-    (await db.currentPrice.getAll()).map((p) => [p.coingeckoId, p.priceUsd]),
+  const currentPricesById = Object.fromEntries(
+    currentPrices.map((p) => [p.coingeckoId, p.priceUsd]),
   )
 
-  const projects = await ps.getProjects({
-    select: ['daLayer'],
-  })
   const arr = projects.map((project) => {
     if (!project.daLayer.economicSecurity) {
       return undefined
     }
 
-    const thresholdStake = stakes[project.daLayer.economicSecurity.name]
+    const thresholdStake = stakesById[project.daLayer.economicSecurity.name]
 
     if (!thresholdStake) {
       return undefined
     }
 
     const currentPrice =
-      currentPrices[project.daLayer.economicSecurity.token.coingeckoId]
+      currentPricesById[project.daLayer.economicSecurity.token.coingeckoId]
 
     if (!currentPrice) {
       return undefined

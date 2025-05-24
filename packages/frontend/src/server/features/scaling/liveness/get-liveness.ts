@@ -34,15 +34,14 @@ async function getLivenessData() {
   const db = getDb()
   const projects: LivenessResponse = {}
 
-  const configurations = await db.indexerConfiguration.getByIndexerId(
-    'tracked_txs_indexer',
-  )
-
-  const livenessProjects = await ps.getProjects({
-    select: ['trackedTxsConfig'],
-    optional: ['livenessConfig'],
-    whereNot: ['isUpcoming', 'archivedAt'],
-  })
+  const [configurations, livenessProjects] = await Promise.all([
+    db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
+    ps.getProjects({
+      select: ['trackedTxsConfig'],
+      optional: ['livenessConfig'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+  ])
 
   const trackedTxsProjects = getTrackedTxsProjects(
     livenessProjects,

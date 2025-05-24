@@ -44,14 +44,13 @@ const getCachedDaThroughputChartByProjectData = cache(
     const [from, to] = getRangeWithMax(range, 'daily', {
       offset: -1 * UnixTime.DAY,
     })
-    const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
-      [daLayer],
-      [from, to],
-    )
+    const [throughput, allProjects] = await Promise.all([
+      db.dataAvailability.getByDaLayersAndTimeRange([daLayer], [from, to]),
+      ps.getProjects({}),
+    ])
     if (throughput.length === 0) {
       return []
     }
-    const allProjects = await ps.getProjects({})
     const { grouped, minTimestamp, maxTimestamp } =
       groupByTimestampAndProjectId(throughput, allProjects)
 
