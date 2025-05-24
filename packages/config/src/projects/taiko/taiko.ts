@@ -1,11 +1,11 @@
 import {
-  assert,
+  // assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatSeconds,
+  // formatSeconds,
 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+// import { utils } from 'ethers'
 import {
   CONTRACTS,
   DATA_ON_CHAIN,
@@ -22,103 +22,103 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('taiko')
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
+//
+// const TIER_SGX = discovery.getContractValue<{
+//   verifierName: string
+//   validityBond: number
+//   contestBond: number
+//   cooldownWindow: number
+//   provingWindow: number
+//   maxBlocksToVerifyPerProof: number
+// }>('MainnetTierRouter', 'TIER_SGX')
+//
+// const TIER_RISC0 = discovery.getContractValue<{
+//   verifierName: string
+//   validityBond: number
+//   contestBond: number
+//   cooldownWindow: number
+//   provingWindow: number
+//   maxBlocksToVerifyPerProof: number
+// }>('MainnetTierRouter', 'TIER_RISC0')
+//
+// const TIER_SP1 = discovery.getContractValue<{
+//   verifierName: string
+//   validityBond: number
+//   contestBond: number
+//   cooldownWindow: number
+//   provingWindow: number
+//   maxBlocksToVerifyPerProof: number
+// }>('MainnetTierRouter', 'TIER_SP1')
+//
+// const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
+//   verifierName: string
+//   validityBond: number
+//   contestBond: number
+//   cooldownWindow: number
+//   provingWindow: number
+//   maxBlocksToVerifyPerProof: number
+// }>('MainnetTierRouter', 'TIER_GUARDIAN_MINORITY')
 
-const TIER_SGX = discovery.getContractValue<{
-  verifierName: string
-  validityBond: number
-  contestBond: number
-  cooldownWindow: number
-  provingWindow: number
-  maxBlocksToVerifyPerProof: number
-}>('MainnetTierRouter', 'TIER_SGX')
+// const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
+//   'GuardianMinorityProver',
+//   'minGuardians',
+// )
+// const NumGuardiansMinorityProver = discovery.getContractValue<string[]>(
+//   'GuardianMinorityProver',
+//   'numGuardians',
+// )
+//
+// const GuardianProverMinSigners = discovery.getContractValue<string[]>(
+//   'GuardianProver',
+//   'minGuardians',
+// )
+// const NumGuardiansProver = discovery.getContractValue<string[]>(
+//   'GuardianProver',
+//   'numGuardians',
+// )
 
-const TIER_RISC0 = discovery.getContractValue<{
-  verifierName: string
-  validityBond: number
-  contestBond: number
-  cooldownWindow: number
-  provingWindow: number
-  maxBlocksToVerifyPerProof: number
-}>('MainnetTierRouter', 'TIER_RISC0')
+// const TaikoChainConfig = discovery.getContractValue<{
+//   [key: string]: number | string
+// }>('TaikoL1Contract', 'getConfig')
 
-const TIER_SP1 = discovery.getContractValue<{
-  verifierName: string
-  validityBond: number
-  contestBond: number
-  cooldownWindow: number
-  provingWindow: number
-  maxBlocksToVerifyPerProof: number
-}>('MainnetTierRouter', 'TIER_SP1')
+// const SGXcooldownWindow = formatSeconds(Number(TIER_SGX.cooldownWindow) * 60) // value in minutes
+// const SGXprovingWindow = formatSeconds(Number(TIER_SGX.provingWindow) * 60) // value in minutes
+// const SGXvalidityBond = utils.formatEther(TIER_SGX.validityBond) // value in TAIKO
+// const SGXcontestBond = utils.formatEther(TIER_SGX.contestBond) // value in TAIKO
+// const RISC0cooldownWindow = formatSeconds(TIER_RISC0.cooldownWindow * 60) // value in minutes
+// const RISC0provingWindow = formatSeconds(TIER_RISC0.provingWindow * 60) // value in minutes
+// const RISC0validityBond = utils.formatEther(TIER_RISC0.validityBond) // value in TAIKO
+// const RISC0contestBond = utils.formatEther(TIER_RISC0.contestBond) // value in TAIKO
+// const SP1cooldownWindow = formatSeconds(TIER_SP1.cooldownWindow * 60) // value in minutes
+// const SP1provingWindow = formatSeconds(TIER_SP1.provingWindow * 60) // value in minutes
+// const SP1validityBond = utils.formatEther(TIER_SP1.validityBond) // value in TAIKO
+// const SP1contestBond = utils.formatEther(TIER_SP1.contestBond) // value in TAIKO
+// const MinorityValidityBond = utils.formatEther(
+//   TIER_MINORITY_GUARDIAN.validityBond,
+// ) // value in TAIKO
+// const MinorityContestBond = utils.formatEther(
+//   TIER_MINORITY_GUARDIAN.contestBond,
+// ) // value in TAIKO
 
-const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
-  verifierName: string
-  validityBond: number
-  contestBond: number
-  cooldownWindow: number
-  provingWindow: number
-  maxBlocksToVerifyPerProof: number
-}>('MainnetTierRouter', 'TIER_GUARDIAN_MINORITY')
+// assert(
+//   RISC0cooldownWindow === SP1cooldownWindow &&
+//   RISC0provingWindow === SP1provingWindow &&
+//   RISC0validityBond === SP1validityBond &&
+//   RISC0contestBond === SP1contestBond &&
+//   SGXcooldownWindow === RISC0cooldownWindow,
+//   'The tier config assumptions have changed, plz review the technology section and riskView.stateValidation.',
+// )
 
-const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
-  'GuardianMinorityProver',
-  'minGuardians',
-)
-const NumGuardiansMinorityProver = discovery.getContractValue<string[]>(
-  'GuardianMinorityProver',
-  'numGuardians',
-)
+// const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
-const GuardianProverMinSigners = discovery.getContractValue<string[]>(
-  'GuardianProver',
-  'minGuardians',
-)
-const NumGuardiansProver = discovery.getContractValue<string[]>(
-  'GuardianProver',
-  'numGuardians',
-)
-
-const TaikoChainConfig = discovery.getContractValue<{
-  [key: string]: number | string
-}>('TaikoL1Contract', 'getConfig')
-
-const SGXcooldownWindow = formatSeconds(Number(TIER_SGX.cooldownWindow) * 60) // value in minutes
-const SGXprovingWindow = formatSeconds(Number(TIER_SGX.provingWindow) * 60) // value in minutes
-const SGXvalidityBond = utils.formatEther(TIER_SGX.validityBond) // value in TAIKO
-const SGXcontestBond = utils.formatEther(TIER_SGX.contestBond) // value in TAIKO
-const RISC0cooldownWindow = formatSeconds(TIER_RISC0.cooldownWindow * 60) // value in minutes
-const RISC0provingWindow = formatSeconds(TIER_RISC0.provingWindow * 60) // value in minutes
-const RISC0validityBond = utils.formatEther(TIER_RISC0.validityBond) // value in TAIKO
-const RISC0contestBond = utils.formatEther(TIER_RISC0.contestBond) // value in TAIKO
-const SP1cooldownWindow = formatSeconds(TIER_SP1.cooldownWindow * 60) // value in minutes
-const SP1provingWindow = formatSeconds(TIER_SP1.provingWindow * 60) // value in minutes
-const SP1validityBond = utils.formatEther(TIER_SP1.validityBond) // value in TAIKO
-const SP1contestBond = utils.formatEther(TIER_SP1.contestBond) // value in TAIKO
-const MinorityValidityBond = utils.formatEther(
-  TIER_MINORITY_GUARDIAN.validityBond,
-) // value in TAIKO
-const MinorityContestBond = utils.formatEther(
-  TIER_MINORITY_GUARDIAN.contestBond,
-) // value in TAIKO
-
-assert(
-  RISC0cooldownWindow === SP1cooldownWindow &&
-    RISC0provingWindow === SP1provingWindow &&
-    RISC0validityBond === SP1validityBond &&
-    RISC0contestBond === SP1contestBond &&
-    SGXcooldownWindow === RISC0cooldownWindow,
-  'The tier config assumptions have changed, plz review the technology section and riskView.stateValidation.',
-)
-
-const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
-
-const numberActiveTiers =
-  discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
-    .length === 5
-
-assert(
-  numberActiveTiers,
-  'Review the technology section and riskView.stateValidation since the number of active tiers changed.',
-)
+// const numberActiveTiers =
+//   discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
+//     .length === 5
+//
+// assert(
+//   numberActiveTiers,
+//   'Review the technology section and riskView.stateValidation since the number of active tiers changed.',
+// )
 
 const chainId = 167000
 
@@ -294,7 +294,7 @@ export const taiko: ScalingProject = {
         The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
-      secondLine: `${SGXcooldownWindow} challenge period`,
+      // secondLine: `${SGXcooldownWindow} challenge period`,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -344,42 +344,42 @@ export const taiko: ScalingProject = {
       rollupNodeLink: 'https://github.com/taikoxyz/simple-taiko-node',
     },
   ),
-  stateValidation: {
-    categories: [
-      {
-        title: 'Fraud proofs',
-        description: `
-Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
-
-When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
-The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
-
-After the proof is submitted and during its ${SGXcooldownWindow} *cooldown window*, anyone can dispute the batch by submitting a *contest bond*. Anyone can then prove this new dispute by submitting a *validity bond* as a commitment to win the respective higher-tier proof.
-A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers.
-For the Minority guardian tier, *validity* and *contest bonds* are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. The highest Guardian tier does not require bonds.
-
-It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
-If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
-        references: [
-          {
-            title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-            url: 'https://etherscan.io/address/0x44d307a9ec47aA55a7a30849d065686753C86Db6#code#F1#L26',
-          },
-          {
-            title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
-          },
-        ],
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'a malicious block is proven by a compromised SGX instance or approved by Guardians.',
-          },
-        ],
-      },
-    ],
-  },
+  //   stateValidation: {
+  //     categories: [
+  //       {
+  //         title: 'Fraud proofs',
+  //         description: `
+  // Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
+  // Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
+  //
+  // When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
+  // The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
+  //
+  // After the proof is submitted and during its ${SGXcooldownWindow} *cooldown window*, anyone can dispute the batch by submitting a *contest bond*. Anyone can then prove this new dispute by submitting a *validity bond* as a commitment to win the respective higher-tier proof.
+  // A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers.
+  // For the Minority guardian tier, *validity* and *contest bonds* are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. The highest Guardian tier does not require bonds.
+  //
+  // It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
+  // If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
+  //         references: [
+  //           {
+  //             title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
+  //             url: 'https://etherscan.io/address/0x44d307a9ec47aA55a7a30849d065686753C86Db6#code#F1#L26',
+  //           },
+  //           {
+  //             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
+  //             url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
+  //           },
+  //         ],
+  //         risks: [
+  //           {
+  //             category: 'Funds can be stolen if',
+  //             text: 'a malicious block is proven by a compromised SGX instance or approved by Guardians.',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
   technology: {
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
@@ -402,14 +402,14 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
       ],
       risks: [],
     },
-    forceTransactions: {
-      name: `Users can force any transaction`,
-      description: `The system is designed to allow users to propose L2 blocks directly on L1.
-        Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
-        The Taiko multisig can pause block proposals without delay.`,
-      references: [],
-      risks: [],
-    },
+    // forceTransactions: {
+    //   name: `Users can force any transaction`,
+    //   description: `The system is designed to allow users to propose L2 blocks directly on L1.
+    //     Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
+    //     The Taiko multisig can pause block proposals without delay.`,
+    //   references: [],
+    //   risks: [],
+    // },
     exitMechanisms: [
       // to do: double check exit mechanism
       {
