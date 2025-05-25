@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 22545974,
-  "configHash": "0x3b8b688ea6f25ac667a8d48f05dcd2d6b9e51beb97167d0b1c20228d3b7abc8f",
+  "configHash": "0x10026db1a34199b22e2404273f9bd886e4976b93fcee9961cf236a3f9f24a543",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -123,156 +123,403 @@
       "type": "Contract",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
+        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19",
+        "0x8f478a5b25cb930dbc82c2aa3d87e577a5b0a2092f5d7871ff4ec3ad7e94ea91",
+        "0xaa88f4be5209c8cd10b63280cda8c2261bb15288adcdeff0fb923ccf1bb98e0f"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "TaikoFork proxy",
       "sinceTimestamp": 1714550627,
       "sinceBlock": 19773965,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "$implementation": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
+        "$implementation": [
+          "0x4e030b19135869F6fd926614754B7F9c184E2B83",
+          "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+          "0x497B13f9192B09244de9b5F0964830969FB26F07"
+        ],
         "$pastUpgrades": [
           [
             "2024-05-01T08:03:47.000Z",
             "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702",
-            ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
+            [
+              "0x99Ba70E62cab0cB983e66F72330fBDDC11d85501",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-05-11T06:26:35.000Z",
             "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
-            ["0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
+            [
+              "0x9fBBedBBcBb753E7214BE08381efE10d89D712fE",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-05-21T14:15:11.000Z",
             "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b",
-            ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
+            [
+              "0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-05-27T16:37:11.000Z",
             "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2",
-            ["0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]
+            [
+              "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-05-28T05:18:11.000Z",
             "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028",
-            ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
+            [
+              "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-06-04T06:10:11.000Z",
             "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78",
-            ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
+            [
+              "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-06-06T08:51:11.000Z",
             "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
-            ["0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
+            [
+              "0x4b2743B869b85d5F7D8020566f92664995E4f3c5",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-06-07T04:02:11.000Z",
             "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04",
-            ["0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
+            [
+              "0x0468745A07de44A9a3138adAc35875ecaf7a20D5",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-06-07T08:40:35.000Z",
             "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914",
-            ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
+            [
+              "0xB9E1E58bcF33B79CcfF99c298963546a6c334388",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-07-02T07:03:35.000Z",
             "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b",
-            ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
+            [
+              "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-07-13T12:34:35.000Z",
             "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f",
-            ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
+            [
+              "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-07-16T14:30:23.000Z",
             "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7",
-            ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
+            [
+              "0xBA1d90BCfA74163bFE09e8eF609b346507D83231",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-10-16T07:55:23.000Z",
             "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981",
-            ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
+            [
+              "0xf0E6d34937701622cA887a75c150cC23d4FFDf2F",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-11-01T09:20:35.000Z",
             "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
-            ["0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
+            [
+              "0x4229d14F520848aa83760Cf748abEB8A69cdaB2d",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-11-03T05:15:23.000Z",
             "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703",
-            ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
+            [
+              "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-11-10T15:32:47.000Z",
             "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38",
-            ["0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"]
+            [
+              "0x0205ea1e1162bc50E1030F36412E5Dd69daA4040",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-11-10T15:46:23.000Z",
             "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04",
-            ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
+            [
+              "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-11-10T16:10:23.000Z",
             "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",
-            ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
+            [
+              "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-12-23T02:45:11.000Z",
             "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
-            ["0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
+            [
+              "0xb74A66b6CF50AD63E29669F0BDE4354E11758162",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-12-23T03:12:35.000Z",
             "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20",
-            ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
+            [
+              "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-12-23T14:55:47.000Z",
             "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99",
-            ["0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"]
+            [
+              "0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2024-12-24T14:19:11.000Z",
             "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25",
-            ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
+            [
+              "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2025-02-13T06:57:47.000Z",
             "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c",
-            ["0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]
+            [
+              "0x2784423f7c61Bc7B75dB6CdA26959946f437588D",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2025-02-27T03:27:23.000Z",
             "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41",
-            ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
+            [
+              "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
+              "0x0000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000"
+            ]
           ],
           [
             "2025-05-15T08:40:47.000Z",
             "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd",
-            ["0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf"]
+            [
+              "0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf",
+              "0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01",
+              "0x497B13f9192B09244de9b5F0964830969FB26F07"
+            ]
           ],
           [
             "2025-05-16T02:36:23.000Z",
             "0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795",
-            ["0x4e030b19135869F6fd926614754B7F9c184E2B83"]
+            [
+              "0x4e030b19135869F6fd926614754B7F9c184E2B83",
+              "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+              "0x497B13f9192B09244de9b5F0964830969FB26F07"
+            ]
           ]
         ],
         "$upgradeCount": 26,
+        "bondToken": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+        "getConfig": {
+          "chainId": 167000,
+          "blockMaxProposals": 324000,
+          "blockRingBufferSize": 360000,
+          "maxBlocksToVerify": 16,
+          "blockMaxGasLimit": 240000000,
+          "livenessBond": "125000000000000000000",
+          "stateRootSyncInternal": 16,
+          "maxAnchorHeightOffset": 64,
+          "baseFeeConfig": {
+            "adjustmentQuotient": 8,
+            "sharingPctg": 75,
+            "gasIssuancePerSecond": 5000000,
+            "minGasExcess": 1340000000,
+            "maxGasIssuancePerBlock": 600000000
+          },
+          "ontakeForkHeight": 538304
+        },
+        "getLastSyncedTransition": {
+          "batchId_": 1169968,
+          "blockId_": 1169968,
+          "ts_": {
+            "parentHash": "0x19ffaae495a6b57e21688da53ee32dd07ac02a189b8a2d2dc280cec1d6fc7bb2",
+            "blockHash": "0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3",
+            "stateRoot": "0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4",
+            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+            "inProvingWindow": true,
+            "createdAt": 1748000543
+          }
+        },
+        "getLastVerifiedBlock": {
+          "blockId_": 1169968,
+          "blockHash_": "0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3",
+          "stateRoot_": "0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4",
+          "verifiedAt_": 1738283339
+        },
+        "getLastVerifiedTransition": {
+          "batchId_": 1169968,
+          "blockId_": 1169968,
+          "ts_": {
+            "parentHash": "0x19ffaae495a6b57e21688da53ee32dd07ac02a189b8a2d2dc280cec1d6fc7bb2",
+            "blockHash": "0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3",
+            "stateRoot": "0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4",
+            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+            "inProvingWindow": true,
+            "createdAt": 1748000543
+          }
+        },
+        "getStateVariables": [
+          {
+            "genesisHeight": 19923613,
+            "genesisTimestamp": 1716358991,
+            "lastSyncedBlockId": 1169968,
+            "lastSynecdAt": 1748007767
+          },
+          {
+            "numBlocks": 1170113,
+            "lastVerifiedBlockId": 1169968,
+            "provingPaused": false,
+            "lastProposedIn": 22545969,
+            "lastUnpausedAt": 1716571955
+          }
+        ],
+        "getStats1": {
+          "genesisHeight": 19923613,
+          "__reserved2": 1716358991,
+          "lastSyncedBatchId": 1169968,
+          "lastSyncedAt": 1748007767
+        },
+        "getStats2": {
+          "numBatches": 1170113,
+          "lastVerifiedBatchId": 1169968,
+          "paused": false,
+          "lastProposedIn": 22545969,
+          "lastUnpausedAt": 1716571955
+        },
+        "impl": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
+        "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+        "inNonReentrant": false,
+        "isOnL1": true,
+        "lastProposedIn": 22545969,
         "newFork": "0x497B13f9192B09244de9b5F0964830969FB26F07",
         "oldFork": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
+        "pacayaConfig": {
+          "chainId": 167000,
+          "maxUnverifiedBatches": 324000,
+          "batchRingBufferSize": 360000,
+          "maxBatchesToVerify": 16,
+          "blockMaxGasLimit": 240000000,
+          "livenessBondBase": "125000000000000000000",
+          "livenessBondPerBlock": 0,
+          "stateRootSyncInternal": 4,
+          "maxAnchorHeightOffset": 64,
+          "baseFeeConfig": {
+            "adjustmentQuotient": 8,
+            "sharingPctg": 50,
+            "gasIssuancePerSecond": 5000000,
+            "minGasExcess": 1344899430,
+            "maxGasIssuancePerBlock": 600000000
+          },
+          "provingWindow": 7200,
+          "cooldownWindow": 7200,
+          "maxSignalsToReceive": 16,
+          "maxBlocksPerBatch": 768,
+          "forkHeights": {
+            "ontake": 538304,
+            "pacaya": 1166000,
+            "shasta": 0,
+            "unzen": 0
+          }
+        },
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "resolver": "0x0000000000000000000000000000000000000000",
+        "signalService": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+        "state": {
+          "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "stats1": {
+            "genesisHeight": 19923613,
+            "__reserved2": 1716358991,
+            "lastSyncedBatchId": 1169968,
+            "lastSyncedAt": 1748007767
+          },
+          "stats2": {
+            "numBatches": 1170113,
+            "lastVerifiedBatchId": 1169968,
+            "paused": false,
+            "lastProposedIn": 22545969,
+            "lastUnpausedAt": 1716571955
+          }
+        },
+        "verifier": "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
+      "errors": {
+        "addressManager": "Processing error occurred.",
+        "getLastSyncedBlock": "Processing error occurred.",
+        "lastUnpausedAt": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
       "implementationNames": {
         "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "ERC1967Proxy",
-        "0x4e030b19135869F6fd926614754B7F9c184E2B83": "PacayaForkRouter"
+        "0x4e030b19135869F6fd926614754B7F9c184E2B83": "PacayaForkRouter",
+        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264": "MainnetTaikoL1",
+        "0x497B13f9192B09244de9b5F0964830969FB26F07": "MainnetInbox"
       }
     },
     {
@@ -536,105 +783,6 @@
       },
       "implementationNames": {
         "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98": "RiscZeroGroth16Verifier"
-      }
-    },
-    {
-      "name": "MainnetInbox",
-      "address": "0x497B13f9192B09244de9b5F0964830969FB26F07",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xaa88f4be5209c8cd10b63280cda8c2261bb15288adcdeff0fb923ccf1bb98e0f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747283891,
-      "sinceBlock": 22486189,
-      "values": {
-        "$immutable": true,
-        "bondToken": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-        "getLastSyncedTransition": {
-          "batchId_": 0,
-          "blockId_": 0,
-          "ts_": {
-            "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "0x0000000000000000000000000000000000000000",
-            "inProvingWindow": false,
-            "createdAt": 0
-          }
-        },
-        "getStats1": {
-          "genesisHeight": 0,
-          "__reserved2": 0,
-          "lastSyncedBatchId": 0,
-          "lastSyncedAt": 0
-        },
-        "getStats2": {
-          "numBatches": 0,
-          "lastVerifiedBatchId": 0,
-          "paused": false,
-          "lastProposedIn": 0,
-          "lastUnpausedAt": 0
-        },
-        "impl": "0x0000000000000000000000000000000000000000",
-        "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
-        "inNonReentrant": false,
-        "isOnL1": true,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "pacayaConfig": {
-          "chainId": 167000,
-          "maxUnverifiedBatches": 324000,
-          "batchRingBufferSize": 360000,
-          "maxBatchesToVerify": 16,
-          "blockMaxGasLimit": 240000000,
-          "livenessBondBase": "125000000000000000000",
-          "livenessBondPerBlock": 0,
-          "stateRootSyncInternal": 4,
-          "maxAnchorHeightOffset": 64,
-          "baseFeeConfig": {
-            "adjustmentQuotient": 8,
-            "sharingPctg": 50,
-            "gasIssuancePerSecond": 5000000,
-            "minGasExcess": 1344899430,
-            "maxGasIssuancePerBlock": 600000000
-          },
-          "provingWindow": 7200,
-          "cooldownWindow": 7200,
-          "maxSignalsToReceive": 16,
-          "maxBlocksPerBatch": 768,
-          "forkHeights": {
-            "ontake": 538304,
-            "pacaya": 1166000,
-            "shasta": 0,
-            "unzen": 0
-          }
-        },
-        "paused": false,
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
-        "resolver": "0x0000000000000000000000000000000000000000",
-        "signalService": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "state": {
-          "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "stats1": {
-            "genesisHeight": 0,
-            "__reserved2": 0,
-            "lastSyncedBatchId": 0,
-            "lastSyncedAt": 0
-          },
-          "stats2": {
-            "numBatches": 0,
-            "lastVerifiedBatchId": 0,
-            "paused": false,
-            "lastProposedIn": 0,
-            "lastUnpausedAt": 0
-          }
-        },
-        "verifier": "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
-      },
-      "errors": { "getLastVerifiedTransition": "Processing error occurred." },
-      "implementationNames": {
-        "0x497B13f9192B09244de9b5F0964830969FB26F07": "MainnetInbox"
       }
     },
     {
@@ -993,93 +1141,6 @@
       "implementationNames": {
         "0x8Efa01564425692d0a0838DC10E300BD310Cb43e": "ERC1967Proxy",
         "0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D": "DefaultResolver"
-      }
-    },
-    {
-      "name": "MainnetTaikoL1",
-      "address": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x8f478a5b25cb930dbc82c2aa3d87e577a5b0a2092f5d7871ff4ec3ad7e94ea91"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747360439,
-      "sinceBlock": 22492500,
-      "values": {
-        "$immutable": true,
-        "addressManager": "0x0000000000000000000000000000000000000000",
-        "getConfig": {
-          "chainId": 167000,
-          "blockMaxProposals": 324000,
-          "blockRingBufferSize": 360000,
-          "maxBlocksToVerify": 16,
-          "blockMaxGasLimit": 240000000,
-          "livenessBond": "125000000000000000000",
-          "stateRootSyncInternal": 16,
-          "maxAnchorHeightOffset": 64,
-          "baseFeeConfig": {
-            "adjustmentQuotient": 8,
-            "sharingPctg": 75,
-            "gasIssuancePerSecond": 5000000,
-            "minGasExcess": 1340000000,
-            "maxGasIssuancePerBlock": 600000000
-          },
-          "ontakeForkHeight": 538304
-        },
-        "getLastSyncedBlock": {
-          "blockId_": 0,
-          "blockHash_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 0
-        },
-        "getLastVerifiedBlock": {
-          "blockId_": 0,
-          "blockHash_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 0
-        },
-        "getStateVariables": [
-          {
-            "genesisHeight": 0,
-            "genesisTimestamp": 0,
-            "lastSyncedBlockId": 0,
-            "lastSynecdAt": 0
-          },
-          {
-            "numBlocks": 0,
-            "lastVerifiedBlockId": 0,
-            "provingPaused": false,
-            "lastProposedIn": 0,
-            "lastUnpausedAt": 0
-          }
-        ],
-        "impl": "0x0000000000000000000000000000000000000000",
-        "inNonReentrant": false,
-        "lastProposedIn": 0,
-        "lastUnpausedAt": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
-        "state": {
-          "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "slotA": {
-            "genesisHeight": 0,
-            "genesisTimestamp": 0,
-            "lastSyncedBlockId": 0,
-            "lastSynecdAt": 0
-          },
-          "slotB": {
-            "numBlocks": 0,
-            "lastVerifiedBlockId": 0,
-            "provingPaused": false,
-            "lastProposedIn": 0,
-            "lastUnpausedAt": 0
-          }
-        }
-      },
-      "implementationNames": {
-        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264": "MainnetTaikoL1"
       }
     },
     {
@@ -3264,5 +3325,5 @@
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea"
   },
-  "permissionsConfigHash": "0xcf134bfbaac7423e2210ab8b78546ff0b942bed83579bb7b57d2c0fefc39ff5b"
+  "permissionsConfigHash": "0x08b3b20b44cf6dbf88e4f75f3696dc589633ef751a4b1bc1de5371d6005dac3f"
 }

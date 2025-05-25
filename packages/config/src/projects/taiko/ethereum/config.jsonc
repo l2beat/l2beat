@@ -32,7 +32,7 @@
       "description": "Implementation contract for DAOFallbackProposer",
       "category": "spam"
     },
-    "0x4e030b19135869F6fd926614754B7F9c184E2B83": {
+    "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": {
       "proxyType": "TaikoFork proxy"
     }
   }

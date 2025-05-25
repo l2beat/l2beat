@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcd6cac47f4a25354e4d9f0b021ab213588c79637
+Generated with discovered.json: 0xf0c876e695e1c0df37373451b22fb7ef317fac31
 
-# Diff at Fri, 23 May 2025 13:50:46 GMT:
+# Diff at Fri, 23 May 2025 13:53:11 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ef43789b43755ecf09702c088ebd4effe5bee7d0 block: 22481930
@@ -21,234 +21,88 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
     +++ description: None
       template:
 -        "taiko/TaikoL1Contract"
+      sourceHashes.3:
++        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
+      sourceHashes.2:
++        "0xaa88f4be5209c8cd10b63280cda8c2261bb15288adcdeff0fb923ccf1bb98e0f"
       sourceHashes.1:
 -        "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4"
-+        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0x8f478a5b25cb930dbc82c2aa3d87e577a5b0a2092f5d7871ff4ec3ad7e94ea91"
       description:
 -        "This contract provides functionalities for proposing, proving, and verifying blocks."
       values.$implementation:
 -        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
-+        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        ["0x4e030b19135869F6fd926614754B7F9c184E2B83","0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","0x497B13f9192B09244de9b5F0964830969FB26F07"]
       values.$pastUpgrades.25:
-+        ["2024-11-10T16:10:23.000Z","0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]]
++        ["2024-11-10T16:10:23.000Z","0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]]
       values.$pastUpgrades.24:
-+        ["2024-11-10T15:46:23.000Z","0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04",["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]]
-      values.$pastUpgrades.23.2.0:
--        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
-+        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
-      values.$pastUpgrades.23.1:
++        ["2025-05-16T02:36:23.000Z","0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795",["0x4e030b19135869F6fd926614754B7F9c184E2B83","0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","0x497B13f9192B09244de9b5F0964830969FB26F07"]]
+      values.$pastUpgrades.23.2:
 -        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
-+        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
-      values.$pastUpgrades.23.0:
--        "2024-11-10T16:10:23.000Z"
-+        "2024-11-03T05:15:23.000Z"
-      values.$pastUpgrades.22.2:
--        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
-+        "0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795"
-      values.$pastUpgrades.22.1:
--        "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04"
-+        ["0x4e030b19135869F6fd926614754B7F9c184E2B83"]
-      values.$pastUpgrades.22.0:
--        "2024-11-10T15:46:23.000Z"
-+        "2025-05-16T02:36:23.000Z"
-      values.$pastUpgrades.21.2:
--        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
-+        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
-      values.$pastUpgrades.21.1:
--        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
-+        "2024-11-10T15:32:47.000Z"
-      values.$pastUpgrades.21.0:
--        "2024-11-03T05:15:23.000Z"
-+        ["0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"]
-      values.$pastUpgrades.20.2:
--        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
-+        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
-      values.$pastUpgrades.20.1:
--        "2024-11-10T15:32:47.000Z"
-+        "2025-02-13T06:57:47.000Z"
-      values.$pastUpgrades.20.0.0:
--        "0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"
-+        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
-      values.$pastUpgrades.19.2:
--        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
-+        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
-      values.$pastUpgrades.19.1:
--        "2025-02-13T06:57:47.000Z"
-+        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
-      values.$pastUpgrades.19.0:
--        ["0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]
-+        "2024-12-24T14:19:11.000Z"
-      values.$pastUpgrades.18.2.0:
--        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
-+        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
-      values.$pastUpgrades.18.1:
--        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
-+        "2024-12-23T03:12:35.000Z"
-      values.$pastUpgrades.18.0:
--        "2024-12-24T14:19:11.000Z"
-+        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
-      values.$pastUpgrades.17.2.0:
--        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
-+        "0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"
-      values.$pastUpgrades.17.1:
--        "2024-12-23T03:12:35.000Z"
-+        "2024-12-23T14:55:47.000Z"
-      values.$pastUpgrades.17.0:
--        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
-+        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
-      values.$pastUpgrades.16.2.0:
--        "0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"
-+        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
-      values.$pastUpgrades.16.1:
--        "2024-12-23T14:55:47.000Z"
-+        "2024-05-27T16:37:11.000Z"
-      values.$pastUpgrades.16.0:
--        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
-+        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
-      values.$pastUpgrades.15.2.0:
--        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
-+        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
-      values.$pastUpgrades.15.1:
--        "2024-05-27T16:37:11.000Z"
-+        "2024-07-02T07:03:35.000Z"
-      values.$pastUpgrades.15.0:
--        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
-+        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
-      values.$pastUpgrades.14.2:
--        ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
-+        "2024-11-01T09:20:35.000Z"
-      values.$pastUpgrades.14.1:
--        "2024-07-02T07:03:35.000Z"
-+        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
-      values.$pastUpgrades.14.0:
--        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
-+        ["0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
-      values.$pastUpgrades.13.2:
--        "2024-11-01T09:20:35.000Z"
-+        ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
-      values.$pastUpgrades.13.1:
--        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
-+        "2024-10-16T07:55:23.000Z"
-      values.$pastUpgrades.13.0:
--        ["0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
-+        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
-      values.$pastUpgrades.12.2.0:
--        "0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"
-+        "0x0468745A07de44A9a3138adAc35875ecaf7a20D5"
-      values.$pastUpgrades.12.1:
--        "2024-10-16T07:55:23.000Z"
-+        "2024-06-07T04:02:11.000Z"
-      values.$pastUpgrades.12.0:
--        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
-+        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
-      values.$pastUpgrades.11.2.0:
--        "0x0468745A07de44A9a3138adAc35875ecaf7a20D5"
-+        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
-      values.$pastUpgrades.11.1:
--        "2024-06-07T04:02:11.000Z"
-+        "2024-07-16T14:30:23.000Z"
-      values.$pastUpgrades.11.0:
--        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
-+        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
-      values.$pastUpgrades.10.2:
--        ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
-+        "2024-05-01T08:03:47.000Z"
-      values.$pastUpgrades.10.1:
--        "2024-07-16T14:30:23.000Z"
-+        ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
-      values.$pastUpgrades.10.0:
--        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
-+        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
-      values.$pastUpgrades.9.2:
--        "2024-05-01T08:03:47.000Z"
-+        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
-      values.$pastUpgrades.9.1:
--        ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
-+        "2024-06-07T08:40:35.000Z"
-      values.$pastUpgrades.9.0:
--        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
-+        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
-      values.$pastUpgrades.8.2:
--        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
-+        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
-      values.$pastUpgrades.8.1:
--        "2024-06-07T08:40:35.000Z"
-+        ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
-      values.$pastUpgrades.8.0:
--        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
-+        "2025-02-27T03:27:23.000Z"
-      values.$pastUpgrades.7.2:
--        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
-+        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
-      values.$pastUpgrades.7.1:
--        ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
-+        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
-      values.$pastUpgrades.7.0:
--        "2025-02-27T03:27:23.000Z"
-+        "2024-05-21T14:15:11.000Z"
-      values.$pastUpgrades.6.2:
--        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
 +        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
-      values.$pastUpgrades.6.1:
--        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.23.1:
+-        "2024-11-10T16:10:23.000Z"
 +        "2024-06-04T06:10:11.000Z"
-      values.$pastUpgrades.6.0:
--        "2024-05-21T14:15:11.000Z"
-+        ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
-      values.$pastUpgrades.5.2:
+      values.$pastUpgrades.23.0.2:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
+      values.$pastUpgrades.22.2:
 -        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
-+        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
-      values.$pastUpgrades.5.1:
++        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
+      values.$pastUpgrades.22.1:
 -        "2024-06-04T06:10:11.000Z"
-+        "2024-05-11T06:26:35.000Z"
-      values.$pastUpgrades.5.0.0:
++        "2025-02-27T03:27:23.000Z"
+      values.$pastUpgrades.22.0.2:
 -        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
-+        "0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"
-      values.$pastUpgrades.4.2:
--        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
-+        "2024-07-13T12:34:35.000Z"
-      values.$pastUpgrades.4.1:
--        "2024-05-11T06:26:35.000Z"
-+        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
-      values.$pastUpgrades.4.0:
--        ["0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
-+        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
-      values.$pastUpgrades.3.2:
--        "2024-07-13T12:34:35.000Z"
-+        "2024-12-23T02:45:11.000Z"
-      values.$pastUpgrades.3.1:
--        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
-+        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
-      values.$pastUpgrades.3.0:
--        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
-+        ["0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
-      values.$pastUpgrades.2.2:
--        "2024-12-23T02:45:11.000Z"
-+        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
-      values.$pastUpgrades.2.1:
--        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
-+        "2024-06-06T08:51:11.000Z"
-      values.$pastUpgrades.2.0.0:
--        "0xb74A66b6CF50AD63E29669F0BDE4354E11758162"
-+        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
-      values.$pastUpgrades.1.2:
--        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
-+        "2024-05-28T05:18:11.000Z"
-      values.$pastUpgrades.1.1:
--        "2024-06-06T08:51:11.000Z"
-+        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
-      values.$pastUpgrades.1.0:
--        ["0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
-+        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
-      values.$pastUpgrades.0.2:
--        "2024-05-28T05:18:11.000Z"
++        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
+      values.$pastUpgrades.21.2:
+-        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
++        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
+      values.$pastUpgrades.21.1:
+-        "2025-02-27T03:27:23.000Z"
++        "2024-11-03T05:15:23.000Z"
+      values.$pastUpgrades.21.0.2:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.20.2:
+-        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
++        "2024-05-27T16:37:11.000Z"
+      values.$pastUpgrades.20.1:
+-        "2024-11-03T05:15:23.000Z"
++        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
+      values.$pastUpgrades.20.0.2:
+-        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
++        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
+      values.$pastUpgrades.19.2:
+-        "2024-05-27T16:37:11.000Z"
++        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.19.1:
+-        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
++        "2024-05-21T14:15:11.000Z"
+      values.$pastUpgrades.19.0.2:
+-        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
++        "0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"
+      values.$pastUpgrades.18.2:
+-        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
++        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
+      values.$pastUpgrades.18.1:
+-        "2024-05-21T14:15:11.000Z"
++        "2024-12-24T14:19:11.000Z"
+      values.$pastUpgrades.18.0.2:
+-        "0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"
++        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
+      values.$pastUpgrades.17.2:
+-        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
 +        "2025-05-15T08:40:47.000Z"
-      values.$pastUpgrades.0.1:
--        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
+      values.$pastUpgrades.17.1:
+-        "2024-12-24T14:19:11.000Z"
++        ["0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf","0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01","0x497B13f9192B09244de9b5F0964830969FB26F07"]
+      values.$pastUpgrades.17.0:
+-        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
 +        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
-      values.$pastUpgrades.0.0:
--        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
-+        ["0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf"]
       values.$upgradeCount:
 -        24
 +        26
@@ -278,24 +132,64 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 -        "0x0000000000000000000000000000000000000000"
       values.erc721_vault:
 -        "0x0000000000000000000000000000000000000000"
-      values.getConfig:
--        {"chainId":167000,"blockMaxProposals":324000,"blockRingBufferSize":360000,"maxBlocksToVerify":16,"blockMaxGasLimit":240000000,"livenessBond":"125000000000000000000","stateRootSyncInternal":16,"maxAnchorHeightOffset":64,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":75,"gasIssuancePerSecond":5000000,"minGasExcess":1340000000,"maxGasIssuancePerBlock":600000000},"ontakeForkHeight":538304}
       values.getLastSyncedBlock:
 -        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
-      values.getLastVerifiedBlock:
--        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
-      values.getStateVariables:
--        [{"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1148703,"lastSynecdAt":1747226267},{"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}]
+      values.getLastVerifiedBlock.blockId_:
+-        1148703
++        1169968
+      values.getLastVerifiedBlock.blockHash_:
+-        "0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031"
++        "0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3"
+      values.getLastVerifiedBlock.stateRoot_:
+-        "0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d"
++        "0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4"
+      values.getLastVerifiedBlock.verifiedAt_:
+-        1747209131
++        1738283339
+      values.getStateVariables.1.genesisHeight:
+-        19923613
+      values.getStateVariables.1.genesisTimestamp:
+-        1716358991
+      values.getStateVariables.1.lastSyncedBlockId:
+-        1148703
+      values.getStateVariables.1.lastSynecdAt:
+-        1747226267
+      values.getStateVariables.1.numBlocks:
++        1170113
+      values.getStateVariables.1.lastVerifiedBlockId:
++        1169968
+      values.getStateVariables.1.provingPaused:
++        false
+      values.getStateVariables.1.lastProposedIn:
++        22545969
+      values.getStateVariables.1.lastUnpausedAt:
++        1716571955
+      values.getStateVariables.0.numBlocks:
+-        1149204
+      values.getStateVariables.0.lastVerifiedBlockId:
+-        1148703
+      values.getStateVariables.0.provingPaused:
+-        false
+      values.getStateVariables.0.lastProposedIn:
+-        22481927
+      values.getStateVariables.0.lastUnpausedAt:
+-        1716571955
+      values.getStateVariables.0.genesisHeight:
++        19923613
+      values.getStateVariables.0.genesisTimestamp:
++        1716358991
+      values.getStateVariables.0.lastSyncedBlockId:
++        1169968
+      values.getStateVariables.0.lastSynecdAt:
++        1748007767
       values.impl:
 -        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
-      values.inNonReentrant:
--        false
++        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
       values.lastProposedIn:
 -        22481927
++        22545969
       values.lastUnpausedAt:
 -        1716571955
-      values.paused:
--        false
       values.preconf_task_manager:
 -        "0x0000000000000000000000000000000000000000"
       values.proposer:
@@ -320,8 +214,14 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 -        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
       values.sp1_remote_verifier:
 -        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
-      values.state:
--        {"__reserve1":"0x0000000000000000000000000000000000000000000000000000000000000000","slotA":{"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1148703,"lastSynecdAt":1747226267},"slotB":{"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}}
+      values.state.slotA:
+-        {"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1148703,"lastSynecdAt":1747226267}
+      values.state.slotB:
+-        {"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}
+      values.state.stats1:
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1169968,"lastSyncedAt":1748007767}
+      values.state.stats2:
++        {"numBatches":1170113,"lastVerifiedBatchId":1169968,"paused":false,"lastProposedIn":22545969,"lastUnpausedAt":1716571955}
       values.state_root:
 -        "0x0000000000000000000000000000000000000000"
       values.taiko:
@@ -354,18 +254,44 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 -        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
       values.withdrawer:
 -        "0x0000000000000000000000000000000000000000"
+      values.bondToken:
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.getLastSyncedTransition:
++        {"batchId_":1169968,"blockId_":1169968,"ts_":{"parentHash":"0x19ffaae495a6b57e21688da53ee32dd07ac02a189b8a2d2dc280cec1d6fc7bb2","blockHash":"0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3","stateRoot":"0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4","prover":"0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","inProvingWindow":true,"createdAt":1748000543}}
+      values.getLastVerifiedTransition:
++        {"batchId_":1169968,"blockId_":1169968,"ts_":{"parentHash":"0x19ffaae495a6b57e21688da53ee32dd07ac02a189b8a2d2dc280cec1d6fc7bb2","blockHash":"0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3","stateRoot":"0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4","prover":"0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","inProvingWindow":true,"createdAt":1748000543}}
+      values.getStats1:
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1169968,"lastSyncedAt":1748007767}
+      values.getStats2:
++        {"numBatches":1170113,"lastVerifiedBatchId":1169968,"paused":false,"lastProposedIn":22545969,"lastUnpausedAt":1716571955}
+      values.inboxWrapper:
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.isOnL1:
++        true
       values.newFork:
 +        "0x497B13f9192B09244de9b5F0964830969FB26F07"
       values.oldFork:
 +        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.pacayaConfig:
++        {"chainId":167000,"maxUnverifiedBatches":324000,"batchRingBufferSize":360000,"maxBatchesToVerify":16,"blockMaxGasLimit":240000000,"livenessBondBase":"125000000000000000000","livenessBondPerBlock":0,"stateRootSyncInternal":4,"maxAnchorHeightOffset":64,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":50,"gasIssuancePerSecond":5000000,"minGasExcess":1344899430,"maxGasIssuancePerBlock":600000000},"provingWindow":7200,"cooldownWindow":7200,"maxSignalsToReceive":16,"maxBlocksPerBatch":768,"forkHeights":{"ontake":538304,"pacaya":1166000,"shasta":0,"unzen":0}}
+      values.resolver:
++        "0x0000000000000000000000000000000000000000"
+      values.signalService:
++        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.verifier:
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
       implementationNames.0x5110634593Ccb8072d161A7d260A409A7E74D7Ca:
 -        "MainnetTaikoL1"
       implementationNames.0x4e030b19135869F6fd926614754B7F9c184E2B83:
 +        "PacayaForkRouter"
+      implementationNames.0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264:
++        "MainnetTaikoL1"
+      implementationNames.0x497B13f9192B09244de9b5F0964830969FB26F07:
++        "MainnetInbox"
       category:
 -        {"name":"Local Infrastructure","priority":5}
       errors:
-+        {"proxiableUUID":"Processing error occurred."}
++        {"addressManager":"Processing error occurred.","getLastSyncedBlock":"Processing error occurred.","lastUnpausedAt":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -793,12 +719,6 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 
 ```diff
 +   Status: CREATED
-    contract MainnetInbox (0x497B13f9192B09244de9b5F0964830969FB26F07)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
     +++ description: None
 ```
@@ -818,12 +738,6 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 ```diff
 +   Status: CREATED
     contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract MainnetTaikoL1 (0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264)
     +++ description: None
 ```
 
@@ -865,8 +779,6 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
  .../ERC1967Proxy.p.sol                             |    2 +-
  .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
  .../ForcedInclusionStore/ForcedInclusionStore.sol  | 1633 +++++++++
- .../projects/taiko/ethereum/.flat/MainnetInbox.sol | 2964 ++++++++++++++++
- .../TaikoL1Contract => .flat}/MainnetTaikoL1.sol   |    7 +
  .../MainnetTierRouter.sol => /dev/null             |  219 --
  .../.flat/MainnetVerifier/ERC1967Proxy.p.sol       |  594 ++++
  .../MainnetVerifier/MainnetVerifier.sol}           | 1453 ++------
@@ -877,7 +789,9 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
  .../ERC1967Proxy.p.sol                             |  594 ++++
  .../SgxVerifier.sol}                               | 3447 ++++++++----------
  .../SignalService/MainnetSignalService.sol         |  822 ++---
- .../.flat/TaikoL1Contract/PacayaForkRouter.sol     | 1173 ++++++
+ .../.flat/TaikoL1Contract/MainnetInbox.3.sol       | 2964 ++++++++++++++++
+ .../TaikoL1Contract/MainnetTaikoL1.2.sol}          |    7 +
+ .../.flat/TaikoL1Contract/PacayaForkRouter.1.sol   | 1173 ++++++
  .../TaikoToken/TaikoToken.sol                      |  132 +-
  .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
  .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
@@ -889,6 +803,259 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22481930 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      proxyType:
+-        "EIP1967 proxy"
++        "TaikoFork proxy"
+      values.$pastUpgrades.23.2:
+-        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
++        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
+      values.$pastUpgrades.23.1:
+-        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
++        "2024-11-10T16:10:23.000Z"
+      values.$pastUpgrades.23.0:
+-        "2024-11-10T16:10:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
+      values.$pastUpgrades.22.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
+      values.$pastUpgrades.22.1:
+-        "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04"
++        "2024-06-04T06:10:11.000Z"
+      values.$pastUpgrades.22.0:
+-        "2024-11-10T15:46:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
+      values.$pastUpgrades.21.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
+      values.$pastUpgrades.21.1:
+-        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
++        "2025-02-27T03:27:23.000Z"
+      values.$pastUpgrades.21.0:
+-        "2024-11-03T05:15:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
+      values.$pastUpgrades.20.2:
+-        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
++        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
+      values.$pastUpgrades.20.1:
+-        "2024-11-10T15:32:47.000Z"
++        "2024-11-03T05:15:23.000Z"
+      values.$pastUpgrades.20.0.2:
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.20.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.20.0.0:
+-        "0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.2:
+-        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
++        "2024-05-27T16:37:11.000Z"
+      values.$pastUpgrades.19.1:
+-        "2025-02-13T06:57:47.000Z"
++        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
+      values.$pastUpgrades.19.0.2:
++        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
+      values.$pastUpgrades.19.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.0.0:
+-        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.18.2:
+-        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
++        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.18.1:
+-        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
++        "2024-05-21T14:15:11.000Z"
+      values.$pastUpgrades.18.0:
+-        "2024-12-24T14:19:11.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
+      values.$pastUpgrades.17.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
+      values.$pastUpgrades.17.1:
+-        "2024-12-23T03:12:35.000Z"
++        "2024-12-24T14:19:11.000Z"
+      values.$pastUpgrades.17.0:
+-        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
++        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.16.2:
+-        ["0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"]
++        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
+      values.$pastUpgrades.16.1:
+-        "2024-12-23T14:55:47.000Z"
++        "2025-02-13T06:57:47.000Z"
+      values.$pastUpgrades.16.0:
+-        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]
+      values.$pastUpgrades.15.2:
+-        ["0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.15.1:
+-        "2024-05-27T16:37:11.000Z"
++        "2024-05-11T06:26:35.000Z"
+      values.$pastUpgrades.15.0:
+-        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
+      values.$pastUpgrades.14.2:
+-        ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
++        "2024-12-23T02:45:11.000Z"
+      values.$pastUpgrades.14.1:
+-        "2024-07-02T07:03:35.000Z"
++        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
+      values.$pastUpgrades.14.0:
+-        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
+      values.$pastUpgrades.13.2:
+-        "2024-11-01T09:20:35.000Z"
++        "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04"
+      values.$pastUpgrades.13.1:
+-        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
++        "2024-11-10T15:46:23.000Z"
+      values.$pastUpgrades.13.0.2:
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.13.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.13.0.0:
+-        "0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.12.2:
+-        ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
++        "2024-07-13T12:34:35.000Z"
+      values.$pastUpgrades.12.1:
+-        "2024-10-16T07:55:23.000Z"
++        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
+      values.$pastUpgrades.12.0:
+-        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
++        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.11.2:
+-        ["0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
++        "2024-10-16T07:55:23.000Z"
+      values.$pastUpgrades.11.1:
+-        "2024-06-07T04:02:11.000Z"
++        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
+      values.$pastUpgrades.11.0:
+-        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
+      values.$pastUpgrades.10.2:
+-        ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.10.1:
+-        "2024-07-16T14:30:23.000Z"
++        "2024-06-06T08:51:11.000Z"
+      values.$pastUpgrades.10.0:
+-        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
+      values.$pastUpgrades.9.2:
+-        "2024-05-01T08:03:47.000Z"
++        "2024-07-16T14:30:23.000Z"
+      values.$pastUpgrades.9.1.2:
++        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
+      values.$pastUpgrades.9.1.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.1.0:
+-        "0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.0:
+-        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.8.2:
+-        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
++        "2024-05-28T05:18:11.000Z"
+      values.$pastUpgrades.8.1:
+-        "2024-06-07T08:40:35.000Z"
++        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
+      values.$pastUpgrades.8.0:
+-        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
+      values.$pastUpgrades.7.2:
+-        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
++        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
+      values.$pastUpgrades.7.1:
+-        ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
++        "2024-11-10T15:32:47.000Z"
+      values.$pastUpgrades.7.0:
+-        "2025-02-27T03:27:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"]
+      values.$pastUpgrades.6.2:
+-        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
++        "2024-06-07T04:02:11.000Z"
+      values.$pastUpgrades.6.1:
+-        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.6.0:
+-        "2024-05-21T14:15:11.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
+      values.$pastUpgrades.5.2:
+-        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
++        "2024-12-23T14:55:47.000Z"
+      values.$pastUpgrades.5.1:
+-        "2024-06-04T06:10:11.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"]
+      values.$pastUpgrades.5.0:
+-        ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
++        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
+      values.$pastUpgrades.4.2:
+-        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
++        "2024-05-01T08:03:47.000Z"
+      values.$pastUpgrades.4.1:
+-        "2024-05-11T06:26:35.000Z"
++        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
+      values.$pastUpgrades.4.0.2:
++        "0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"
+      values.$pastUpgrades.4.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.4.0.0:
+-        "0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.3.2:
+-        "2024-07-13T12:34:35.000Z"
++        "2024-12-23T03:12:35.000Z"
+      values.$pastUpgrades.3.1:
+-        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
++        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
+      values.$pastUpgrades.3.0:
+-        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
+      values.$pastUpgrades.2.2:
+-        "2024-12-23T02:45:11.000Z"
++        "2024-07-02T07:03:35.000Z"
+      values.$pastUpgrades.2.1:
+-        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
++        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
+      values.$pastUpgrades.2.0.2:
++        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.$pastUpgrades.2.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.0.0:
+-        "0xb74A66b6CF50AD63E29669F0BDE4354E11758162"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.2:
+-        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
++        "2024-06-07T08:40:35.000Z"
+      values.$pastUpgrades.1.1:
+-        "2024-06-06T08:51:11.000Z"
++        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
+      values.$pastUpgrades.1.0.2:
++        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
+      values.$pastUpgrades.1.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.0.0:
+-        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.0.2:
+-        "2024-05-28T05:18:11.000Z"
++        "2024-11-01T09:20:35.000Z"
+      values.$pastUpgrades.0.1:
+-        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
++        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
+      values.$pastUpgrades.0.0:
+-        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
+    }
+```
 
 ```diff
     contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
