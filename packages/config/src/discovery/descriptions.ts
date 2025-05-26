@@ -117,6 +117,6 @@ export const RoleDescriptions: {
   },
   metisGameCreator: {
     name: 'Game Creator',
-    description: 'Can create new dispute games',
+    description: 'Can create new dispute games.',
   },
 }

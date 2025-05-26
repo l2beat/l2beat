@@ -35,7 +35,6 @@
       "permissions": [
         {
           "type": "metisGameCreator"
-          // "description": "<Description on frontend if you want to override one you've specified inside descriptions.ts>"
         }
       ]
     }

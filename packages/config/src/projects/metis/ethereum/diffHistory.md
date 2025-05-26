@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb2ddebd6a2655c9da05c65da75fb7b9adfc86183
+Generated with discovered.json: 0x52b6f31dc8eb045bff5979ae4f317317d6d10b3c
 
-# Diff at Mon, 26 May 2025 14:36:57 GMT:
+# Diff at Mon, 26 May 2025 15:48:31 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@14a24072b88fe6b9a2bab667c3672c4f564c71db block: 22545767
-- current block number: 22567464
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22545767
+- current block number: 22567898
 
 ## Description
 
@@ -15,6 +15,14 @@ Added access control to DisputeGameFactory.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22545767 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1A9da0aedA630dDf2748a453BF6d92560762D914) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"0x918778e825747a892b17C66fe7D24C618262867d","role":".txChainBatcher"}]
+    }
+```
 
 ```diff
     contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
@@ -65,6 +73,32 @@ discovery. Values are for block 22545767 (main branch discovery), not current.
 +        ".gameCreator"
       receivedPermissions.0.via:
 -        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.blobBatcher:
++        "0xae4d46bd9117cb017c5185844699c51107cb28a9"
+      values.txChainBatcher:
++        "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+    }
+```
+
+```diff
+    EOA  (0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"0x918778e825747a892b17C66fe7D24C618262867d","role":".blobBatcher"}]
+    }
+```
+
+```diff
+    EOA  (0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"0x918778e825747a892b17C66fe7D24C618262867d","role":"._1088_MVM_Proposer"}]
     }
 ```
 
