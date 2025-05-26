@@ -1,5 +1,6 @@
 'use client'
 
+import type { Milestone } from '@l2beat/config'
 import {
   type TrackedTxsConfigSubtype,
   assertUnreachable,
@@ -33,9 +34,16 @@ interface Props {
   isLoading: boolean
   className?: string
   subtype: TrackedTxsConfigSubtype
+  milestones: Milestone[]
 }
 
-export function LivenessChart({ data, isLoading, className, subtype }: Props) {
+export function LivenessChart({
+  data,
+  isLoading,
+  className,
+  subtype,
+  milestones,
+}: Props) {
   const chartMeta = {
     range: {
       label: 'Min&max submission interval',
@@ -60,6 +68,7 @@ export function LivenessChart({ data, isLoading, className, subtype }: Props) {
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
+      milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
