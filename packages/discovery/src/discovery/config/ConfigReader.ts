@@ -17,9 +17,12 @@ import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
+type JustImport = z.infer<typeof JustImport>
 const JustImport = z
   .object({ import: z.optional(z.array(z.string())) })
   .passthrough()
+
+const importedCache = new Map<string, JustImport>()
 
 export class ConfigReader {
   constructor(private rootPath: string) {}
@@ -243,15 +246,20 @@ export function resolveImports(
     }
     visited.add(resolvedPath)
 
-    const contents = readJsonc(resolvedPath)
-    const parseResult = JustImport.safeParse(contents)
-    if (!parseResult.success) {
-      const message = formatZodParsingError(parseResult.error, importPath)
-      console.log(message)
+    let rawConfig = importedCache.get(resolvedPath)
+    if (rawConfig === undefined) {
+      const contents = readJsonc(resolvedPath)
+      const parseResult = JustImport.safeParse(contents)
+      if (!parseResult.success) {
+        const message = formatZodParsingError(parseResult.error, importPath)
+        console.log(message)
 
-      throw new Error(`Cannot parse file ${importPath}`)
+        throw new Error(`Cannot parse file ${importPath}`)
+      }
+      rawConfig = parseResult.data
+      importedCache.set(resolvedPath, rawConfig)
     }
-    const rawConfig = parseResult.data
+
     if (rawConfig.import !== undefined) {
       const importBasePath = path.dirname(resolvedPath)
       result = merge(
