@@ -1,18 +1,14 @@
-Generated with discovered.json: 0xf0c876e695e1c0df37373451b22fb7ef317fac31
+Generated with discovered.json: 0x8b2e5c4762ccff7e79eda073e24e0da167e0c2f6
 
-# Diff at Fri, 23 May 2025 13:53:11 GMT:
+# Diff at Mon, 26 May 2025 07:35:56 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@ef43789b43755ecf09702c088ebd4effe5bee7d0 block: 22481930
-- current block number: 22545974
+- comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
+- current block number: 22565516
 
 ## Description
 
-Main TaikoL1 contract has been upgraded to an intermediate proxy that points to both an old and new implementation. The old implementation is also not the same as the actually previous one, but it's just add a "Pacaya" fork height that prevents proposing or proving for new blocks. The new fork compared to the new presents some simplifications, like removal of `AddressCache`, `AddressResolver`, `IAddressResolver`, `ITaikoL1`, `LibBonds`, `LibData`, `LibProposing`, `LibProving`, `LibUtils`, `LibVerifying`, `RollupAddressCache`, `SafeCastUpgradeable`, `TaikoData`, and `TaikoEvents`. The address resolving logic is still present and has been moved to the `EssentialContract` contract.
-
-At the time of writing, calls are still forwarded to the old impl as the Pacaya fork is expected to go live on Wed 21 May. `ITaikoInbox` and `TaikoInbox` replace `ITaikoL1` and `TaikoL1`. Batches have replaced blocks, as now one batch can contain multiple blocks. Instead of `proposeBlocksV2`, the `proposeBatch` function is called to sequence blocks. An `InboxWrapper` contract has been introduced, which is referenced by the `TaikoInbox`. The `InboxWrapper` references a `ForcedInclusionStore` contract that is used to submit forced transactions. All forced transactions must pay a fee, and it's currently set to a very high value meaning that the mechanism is in practice disabled. The slowest forced transactions can be included is one by one every 255 batches, creating a potential DoS attack via spam of forced transactions. It's therefore not clear how to estimate exit windows (not that it matters rn).
-
-The `verifyBatches` function reflects the removal of tiers. The main function is still to credit back bonds to the proposer, specifically the full liveness bond if the block has been proved within the proving window, or half bond if not.
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
@@ -136,58 +132,37 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 -        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
       values.getLastVerifiedBlock.blockId_:
 -        1148703
-+        1169968
++        1175004
       values.getLastVerifiedBlock.blockHash_:
 -        "0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031"
-+        "0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3"
++        "0x22961a797a297ef4722b4c7f073f5daadd934fc8d7f3e54d004c0c136e61928c"
       values.getLastVerifiedBlock.stateRoot_:
 -        "0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d"
-+        "0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4"
++        "0x3f91f4d3b3b522d52477c6eb852ab137e5960947fe414d887ba59bfab57739ad"
       values.getLastVerifiedBlock.verifiedAt_:
 -        1747209131
-+        1738283339
-      values.getStateVariables.1.genesisHeight:
--        19923613
-      values.getStateVariables.1.genesisTimestamp:
--        1716358991
++        1738399175
       values.getStateVariables.1.lastSyncedBlockId:
 -        1148703
++        1175004
       values.getStateVariables.1.lastSynecdAt:
 -        1747226267
-      values.getStateVariables.1.numBlocks:
-+        1170113
-      values.getStateVariables.1.lastVerifiedBlockId:
-+        1169968
-      values.getStateVariables.1.provingPaused:
-+        false
-      values.getStateVariables.1.lastProposedIn:
-+        22545969
-      values.getStateVariables.1.lastUnpausedAt:
-+        1716571955
++        1748243435
       values.getStateVariables.0.numBlocks:
 -        1149204
++        1175320
       values.getStateVariables.0.lastVerifiedBlockId:
 -        1148703
-      values.getStateVariables.0.provingPaused:
--        false
++        1175004
       values.getStateVariables.0.lastProposedIn:
 -        22481927
-      values.getStateVariables.0.lastUnpausedAt:
--        1716571955
-      values.getStateVariables.0.genesisHeight:
-+        19923613
-      values.getStateVariables.0.genesisTimestamp:
-+        1716358991
-      values.getStateVariables.0.lastSyncedBlockId:
-+        1169968
-      values.getStateVariables.0.lastSynecdAt:
-+        1748007767
++        22565513
       values.impl:
 -        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
 +        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
       values.lastProposedIn:
 -        22481927
-+        22545969
++        22565513
       values.lastUnpausedAt:
 -        1716571955
       values.preconf_task_manager:
@@ -219,9 +194,9 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
       values.state.slotB:
 -        {"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}
       values.state.stats1:
-+        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1169968,"lastSyncedAt":1748007767}
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1175004,"lastSyncedAt":1748243435}
       values.state.stats2:
-+        {"numBatches":1170113,"lastVerifiedBatchId":1169968,"paused":false,"lastProposedIn":22545969,"lastUnpausedAt":1716571955}
++        {"numBatches":1175320,"lastVerifiedBatchId":1175004,"paused":false,"lastProposedIn":22565513,"lastUnpausedAt":1716571955}
       values.state_root:
 -        "0x0000000000000000000000000000000000000000"
       values.taiko:
@@ -257,13 +232,13 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
       values.bondToken:
 +        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
       values.getLastSyncedTransition:
-+        {"batchId_":1169968,"blockId_":1169968,"ts_":{"parentHash":"0x19ffaae495a6b57e21688da53ee32dd07ac02a189b8a2d2dc280cec1d6fc7bb2","blockHash":"0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3","stateRoot":"0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4","prover":"0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","inProvingWindow":true,"createdAt":1748000543}}
++        {"batchId_":1175004,"blockId_":1175004,"ts_":{"parentHash":"0xb0ece3907bc57abb13a98f5f8cc1824a51e4fcaf84d2ee003933e4859b1c97f0","blockHash":"0x22961a797a297ef4722b4c7f073f5daadd934fc8d7f3e54d004c0c136e61928c","stateRoot":"0x3f91f4d3b3b522d52477c6eb852ab137e5960947fe414d887ba59bfab57739ad","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748234819}}
       values.getLastVerifiedTransition:
-+        {"batchId_":1169968,"blockId_":1169968,"ts_":{"parentHash":"0x19ffaae495a6b57e21688da53ee32dd07ac02a189b8a2d2dc280cec1d6fc7bb2","blockHash":"0xe49dd885879425bd4fec52712822cf3a2caf57dcc23301f889de5ae90a36d6d3","stateRoot":"0xcccc97c3b35f2cac035d09d18bd0e282b161a449531193e355028f35c7647cd4","prover":"0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","inProvingWindow":true,"createdAt":1748000543}}
++        {"batchId_":1175004,"blockId_":1175004,"ts_":{"parentHash":"0xb0ece3907bc57abb13a98f5f8cc1824a51e4fcaf84d2ee003933e4859b1c97f0","blockHash":"0x22961a797a297ef4722b4c7f073f5daadd934fc8d7f3e54d004c0c136e61928c","stateRoot":"0x3f91f4d3b3b522d52477c6eb852ab137e5960947fe414d887ba59bfab57739ad","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748234819}}
       values.getStats1:
-+        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1169968,"lastSyncedAt":1748007767}
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1175004,"lastSyncedAt":1748243435}
       values.getStats2:
-+        {"numBatches":1170113,"lastVerifiedBatchId":1169968,"paused":false,"lastProposedIn":22545969,"lastUnpausedAt":1716571955}
++        {"numBatches":1175320,"lastVerifiedBatchId":1175004,"paused":false,"lastProposedIn":22565513,"lastUnpausedAt":1716571955}
       values.inboxWrapper:
 +        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
       values.isOnL1:
@@ -372,7 +347,7 @@ The `verifyBatches` function reflects the removal of tiers. The main function is
 +        7
       values.clock:
 -        1747232111
-+        1748008235
++        1748244947
       values.getNonVotingAccounts.3:
 +        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
       values.getNonVotingAccounts.2:
@@ -1057,6 +1032,24 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
     }
 ```
 
+Generated with discovered.json: 0xaab72c9107d4bab5978b4f6c09e73c6157b6c6b8
+
+# Diff at Fri, 23 May 2025 09:41:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22481930
+- current block number: 22481930
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481930 (main branch discovery), not current.
+
 ```diff
     contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
     +++ description: Verifier contract for blocks proven by Guardian minority.
@@ -1117,7 +1110,7 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x76cef9cfa7a1610b4426a22f4da2af90943911da
+Generated with discovered.json: 0x671ab3bce1dd8e7fd074e68ae54bdccebf46988b
 
 # Diff at Tue, 13 May 2025 14:42:00 GMT:
 
