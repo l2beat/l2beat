@@ -6,8 +6,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import { AnomaliesIndexer } from './AnomaliesIndexer'
+import type { LivenessRecordWithConfig } from '../utils/mapToRecordWithConfig'
 
 const NOW = UnixTime.now()
 const MIN = NOW - 100 * UnixTime.DAY
