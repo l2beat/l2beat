@@ -1,7 +1,11 @@
 import { ethers } from 'ethers'
-import type { Method, Operation } from '../../types'
+import { BinaryReader } from '../../../tools/BinaryReader'
+import type { Method, Operation, TransferOperation } from '../../types'
 import { defineMethod } from '../defineMethod'
-import { EIP_7821_TRANSACTION_SIGNATURE } from './const'
+import {
+  EIP_7821_TRANSACTION_SIGNATURE,
+  WHITEBIT_TRANSACTION_SIGNATURE,
+} from './const'
 
 export const EIP7821_methods: Method[] = [
   defineMethod(
@@ -19,6 +23,13 @@ export const EIP7821_methods: Method[] = [
       })
     },
     'EIP-7821',
+  ),
+  defineMethod(
+    WHITEBIT_TRANSACTION_SIGNATURE,
+    (_, calldata) => {
+      return decodeBatchInput(calldata)
+    },
+    'WhiteBIT sweeper',
   ),
 ]
 
@@ -68,4 +79,43 @@ function executionModeId(mode: string): number {
     default:
       throw new Error(`Unsupported execution mode: ${mode}`)
   }
+}
+
+function decodeBatchInput(data: `0x${string}`): TransferOperation[] {
+  if (!data) {
+    return []
+  }
+
+  const reader = new BinaryReader(data, 4)
+  const count = Number(reader.read(1))
+
+  const triplets = Array.from({ length: count }).map(() => ({
+    tokenIndex: Number(reader.read(1)),
+    addressIndex: Number(reader.read(1)),
+    amountIndex: Number(reader.read(1)),
+  }))
+
+  const values: `0x${string}`[] = []
+  while (!reader.isAtEnd()) {
+    values.push(reader.read(20))
+  }
+
+  const results = triplets.map((t) => {
+    const token = values[t.tokenIndex]
+    const address = values[t.addressIndex]
+    const amount = values[t.amountIndex]
+
+    if ((!token && t.tokenIndex !== 255) || !address || !amount) {
+      throw new Error('Invalid encoding')
+    }
+
+    return {
+      type: 'transfer' as const,
+      name: token ? 'collectERC20()' : 'collectETH()',
+      to: address,
+      count: 1,
+    }
+  })
+
+  return results
 }

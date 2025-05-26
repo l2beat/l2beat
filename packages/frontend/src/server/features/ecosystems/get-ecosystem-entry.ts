@@ -91,30 +91,31 @@ export async function getEcosystemEntry(
     return undefined
   }
 
-  const allScalingProjects = await ps.getProjects({
-    where: ['isScaling'],
-  })
-
-  const projects = await ps.getProjects({
-    select: [
-      'statuses',
-      'scalingInfo',
-      'scalingRisks',
-      'display',
-      'ecosystemInfo',
-    ],
-    optional: [
-      'tvsInfo',
-      'tvsConfig',
-      'scalingDa',
-      'scalingStage',
-      'chainConfig',
-      'milestones',
-      'archivedAt',
-    ],
-    where: ['isScaling'],
-    whereNot: ['isUpcoming'],
-  })
+  const [allScalingProjects, projects] = await Promise.all([
+    ps.getProjects({
+      where: ['isScaling'],
+    }),
+    ps.getProjects({
+      select: [
+        'statuses',
+        'scalingInfo',
+        'scalingRisks',
+        'display',
+        'ecosystemInfo',
+      ],
+      optional: [
+        'tvsInfo',
+        'tvsConfig',
+        'scalingDa',
+        'scalingStage',
+        'chainConfig',
+        'milestones',
+        'archivedAt',
+      ],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming'],
+    }),
+  ])
 
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),

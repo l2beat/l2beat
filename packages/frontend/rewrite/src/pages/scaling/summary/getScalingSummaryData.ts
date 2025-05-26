@@ -21,7 +21,11 @@ export async function getScalingSummaryData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'summary', 'data'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'summary', 'data'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getCachedData,
     ),
   ])
