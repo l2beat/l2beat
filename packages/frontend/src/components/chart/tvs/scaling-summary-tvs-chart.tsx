@@ -1,5 +1,6 @@
 'use client'
 
+import { UnixTime } from '@l2beat/shared-pure'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -149,11 +150,14 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
   const validPayload = payload.filter((p) => p.type !== 'none')
   const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex !w-[158px] flex-col [@media(min-width:600px)]:!w-60">
         <div className="label-value-14-medium mb-3 text-secondary">
-          {formatTimestamp(label, { longMonthName: true })}
+          {isFullDay
+            ? formatTimestamp(label, { longMonthName: true })
+            : formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
         <div className="heading-16 mb-1.5 flex w-full items-center justify-between gap-2">
           <span className="[@media(min-width:600px)]:hidden">Total</span>

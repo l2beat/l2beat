@@ -30,3 +30,17 @@ export function toRow(record: ProjectValueRecord): Insertable<ProjectValue> {
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
+
+export type SummedByTimestampProjectValueRecord = Omit<
+  ProjectValueRecord,
+  'project' | 'type'
+>
+
+export function toSummedByTimestampRecord(
+  row: Selectable<Omit<ProjectValue, 'project' | 'type'>>,
+): SummedByTimestampProjectValueRecord {
+  return {
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
+  }
+}
