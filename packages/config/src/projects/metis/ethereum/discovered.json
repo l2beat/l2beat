@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22545767,
+  "blockNumber": 22567393,
   "configHash": "0x9a50cb882de3bc16e4fded3c3f9b27b6f026b6648d40c94d2b9bba28fd53681d",
   "entries": [
     {
@@ -90,7 +90,7 @@
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "439089040806059990733197",
+        "totalLocked": "423601833691609371299528",
         "totalRewardsLiquidated": "43141403568895808876180"
       },
       "implementationNames": {
@@ -119,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x0000000000000000000000000000000000006830624f0001386732",
-        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006830624f0001386732",
-        "length": 28766,
-        "lengthByChainId": 28766,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068346c2f000138c2cb",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068346c2f000138c2cb",
+        "length": 28853,
+        "lengthByChainId": 28853,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -150,7 +150,7 @@
         "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Factory contract for creating dispute games. Currently not used, no games are created.",
+      "description": "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.",
       "sinceTimestamp": 1747126931,
       "sinceBlock": 22473285,
       "values": {
@@ -164,6 +164,16 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+          },
+          "GAME_CREATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GAME_CREATOR_ROLE": "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02",
         "gameAtIndex": [],
@@ -518,8 +528,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 3989,
-        "getQueueLength": 40273,
+        "getNumPendingQueueElements": 3997,
+        "getQueueLength": 40281,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -821,12 +831,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1748001359,
-        "getLastSequencerTimestampByChainId": 1748001359,
-        "getTotalBatches": 28766,
-        "getTotalBatchesByChainId": 28766,
-        "getTotalElements": 20473650,
-        "getTotalElementsByChainId": 20473650,
+        "getLastSequencerTimestamp": 1748266031,
+        "getLastSequencerTimestampByChainId": 1748266031,
+        "getTotalBatches": 28853,
+        "getTotalBatchesByChainId": 28853,
+        "getTotalElements": 20497099,
+        "getTotalElementsByChainId": 20497099,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -950,7 +960,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
-        "currentBatch": 121,
+        "currentBatch": 122,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -2021,7 +2031,7 @@
     "metis/ChainStorageContainer-CTC-queue": "0xa1e630674758f9d275bdb1dfb9fcce997af7df07ed0598a876ac488bbe8a32e1",
     "metis/ChainStorageContainer-SCC-batches": "0xcd021c2fba2b365c63f7d95323b7c2d6104ef46bb56933bd22cfdfab848cef1d",
     "metis/DelayedWMetis": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
-    "metis/DisputeGameFactory_Metis": "0x6a8d6f11f834731e39240590d7e622a3fb7a8b6db2dee0f1381bb4bb64111d4a",
+    "metis/DisputeGameFactory_Metis": "0xbb9ce5ea923b1954acb08dfe96cc0c0c3a7af1b9e2ffa779a8d1cb919e79313e",
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",

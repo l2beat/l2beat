@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xe1580366d7af7ed1da0be9ae3f03978b761610c9
+
+# Diff at Mon, 26 May 2025 13:54:45 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22545767
+- current block number: 22567393
+
+## Description
+
+Added access control to DisputeGameFactory.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22545767 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      description:
+-        "Factory contract for creating dispute games. Currently not used, no games are created."
++        "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise."
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]},"GAME_CREATOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]}}
+    }
+```
+
 Generated with discovered.json: 0xac83b4b3d25472fc55c1908686ca00de7665f81b
 
 # Diff at Fri, 23 May 2025 13:41:14 GMT:
