@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe1580366d7af7ed1da0be9ae3f03978b761610c9
+Generated with discovered.json: 0xb2ddebd6a2655c9da05c65da75fb7b9adfc86183
 
-# Diff at Mon, 26 May 2025 13:54:45 GMT:
+# Diff at Mon, 26 May 2025 14:36:57 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22545767
-- current block number: 22567393
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@14a24072b88fe6b9a2bab667c3672c4f564c71db block: 22545767
+- current block number: 22567464
 
 ## Description
 
@@ -24,6 +24,47 @@ discovery. Values are for block 22545767 (main branch discovery), not current.
 +        "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise."
       values.accessControl:
 +        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]},"GAME_CREATOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]}}
+      values.gameCreator:
++        ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","role":"admin"}
+      receivedPermissions.6.from:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.5.from:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.4.from:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.3.from:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.2.from:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.2.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.1.from:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "metisGameCreator"
+      receivedPermissions.0.from:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+      receivedPermissions.0.role:
+-        "admin"
++        ".gameCreator"
+      receivedPermissions.0.via:
+-        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
     }
 ```
 

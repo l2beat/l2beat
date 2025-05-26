@@ -23,6 +23,21 @@
           "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02": "GAME_CREATOR_ROLE"
         }
       }
+    },
+    "gameCreator": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GAME_CREATOR_ROLE",
+        "roleNames": {
+          "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02": "GAME_CREATOR_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "metisGameCreator"
+          // "description": "<Description on frontend if you want to override one you've specified inside descriptions.ts>"
+        }
+      ]
     }
   }
 }

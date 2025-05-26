@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22567393,
+  "blockNumber": 22567464,
   "configHash": "0x9a50cb882de3bc16e4fded3c3f9b27b6f026b6648d40c94d2b9bba28fd53681d",
   "entries": [
     {
@@ -119,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068346c2f000138c2cb",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068346c2f000138c2cb",
-        "length": 28853,
-        "lengthByChainId": 28853,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068347613000138c363",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068347613000138c363",
+        "length": 28854,
+        "lengthByChainId": 28854,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -178,6 +178,7 @@
         "GAME_CREATOR_ROLE": "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02",
         "gameAtIndex": [],
         "gameCount": 0,
+        "gameCreator": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"],
         "gameImpls": [
           "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
           "0x0000000000000000000000000000000000000000",
@@ -393,6 +394,11 @@
       "proxyType": "gnosis safe",
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
+        {
+          "permission": "metisGameCreator",
+          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": ".gameCreator"
+        },
         {
           "permission": "upgrade",
           "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
@@ -831,12 +837,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1748266031,
-        "getLastSequencerTimestampByChainId": 1748266031,
-        "getTotalBatches": 28853,
-        "getTotalBatchesByChainId": 28853,
-        "getTotalElements": 20497099,
-        "getTotalElementsByChainId": 20497099,
+        "getLastSequencerTimestamp": 1748268563,
+        "getLastSequencerTimestampByChainId": 1748268563,
+        "getTotalBatches": 28854,
+        "getTotalBatchesByChainId": 28854,
+        "getTotalElements": 20497251,
+        "getTotalElementsByChainId": 20497251,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -2031,7 +2037,7 @@
     "metis/ChainStorageContainer-CTC-queue": "0xa1e630674758f9d275bdb1dfb9fcce997af7df07ed0598a876ac488bbe8a32e1",
     "metis/ChainStorageContainer-SCC-batches": "0xcd021c2fba2b365c63f7d95323b7c2d6104ef46bb56933bd22cfdfab848cef1d",
     "metis/DelayedWMetis": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
-    "metis/DisputeGameFactory_Metis": "0xbb9ce5ea923b1954acb08dfe96cc0c0c3a7af1b9e2ffa779a8d1cb919e79313e",
+    "metis/DisputeGameFactory_Metis": "0xcdbcc4615d43ff98023bd06e2e0baa3e022d7540474389a1aab75f0f5d409716",
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
@@ -2048,5 +2054,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xb1e7d5124725e363612cfcec503e7ebbaed605286e5597b75e732dd3241a4d93"
+  "permissionsConfigHash": "0x1ee7939fb9367106337dbe0f4204b3f0b3ef4ce124f05089495c979d8b5d8d0b"
 }
