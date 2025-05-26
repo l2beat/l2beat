@@ -40,7 +40,8 @@
     "0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
     "0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
     "0x444edf8b90763be7015f1f099a0da0ef10250c71": "AleksanderKryukov-Certora",
-    "0x5dd2205c3aac13e592f0a3d85188c948d1781df1": "fred-Arbitrum",
+    "0x5dd2205c3aac13e592f0a3d85188c948d1781df1": "fred - Arbitrum 1",
+    "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E": "fred - Arbitrum 2",
     "0x0275b3d54a5ddbf8205a75984796efe8b7357bae": "bartek.eth-L2BEAT",
     "0x9a301de96b15db3ab778e2969bf6caa909ca56e8": "GoncaloMagalhaes-Immunefi",
     "0x882c6fcb3d358b9d70b97c6999159cea64168b6f": "GriffGreen-Giveth",
@@ -48,6 +49,8 @@
     "0x5a09a94ee8198d3c474d723337aa58023810022c": "cts-Zellic",
     "0x475816ca2a31d601b4e336f5c2418a67978abf09": "yoav.eth-EF",
     "0x9316ca66f5f936e3239e4fd2aaaea5c7b6f3c4cc": "StevenThornton-OpenZeppelin",
+    "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D": "Certora 2",
+    "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392": "Michael Lewellen - blockaid",
     // kinto SC
     "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": "KintoFoundation",
     "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B": "MamoriLabs",
@@ -55,7 +58,7 @@
     "0x356000Cec4fC967f8FC372381D983426760A0391": "Caldera",
     "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B": "Hypernative",
     "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2": "Venn/Ironblocks",
-    "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621": "Certora",
+    "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621": "Certora 1",
     // kinto validators
     "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a": "Caldera2",
     "0x944eB0a2829A859959586b10D54229278534a696": "MamoriLabs3",
