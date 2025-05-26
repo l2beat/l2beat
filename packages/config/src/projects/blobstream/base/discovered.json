@@ -321,7 +321,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "description": "Verifier contract for SP1 proofs.",
       "sinceTimestamp": 1735949685,
       "sinceBlock": 24580169,
       "values": {

@@ -4,5 +4,11 @@
     "address": "0x5f5b83Ca87E2fBc513B800FeD6cCD626536d7219",
     "chain": "ethereum",
     "blockNumber": 22468063
+  },
+  "SP1PostPacaya": {
+    "hash": "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca",
+    "address": "0x35f26e14D0dAeDd1904843370f761C60B891D466",
+    "chain": "ethereum",
+    "blockNumber": 22565516
   }
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8b2e5c4762ccff7e79eda073e24e0da167e0c2f6
+Generated with discovered.json: 0x47b54e243f03c72d9ca69b19e587d2fe2c171f58
 
-# Diff at Mon, 26 May 2025 07:35:56 GMT:
+# Diff at Mon, 26 May 2025 15:11:18 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
@@ -398,7 +398,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 -   Status: DELETED
     contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc)
-    +++ description: Verifier contract for Risc0 proven blocks.
+    +++ description: Entry contract to verify batches using RISC Zero.
 ```
 
 ```diff
@@ -416,7 +416,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 -   Status: DELETED
     contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452)
-    +++ description: Verifier contract for ZK-proven batches.
+    +++ description: Entry contract to verify batches using SP1.
 ```
 
 ```diff
@@ -550,6 +550,40 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```
 
 ```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.11:
++        "0x3f71cf178a032816c2731a43aef746c464a5326e891dc881773ec2b599b2cf0a"
+      values.mrEnclaves.10:
++        "0xc90e5d2e39d1d3f8397a6048c32ba50139d1577c28985e1f7638785935f41734"
+      values.mrEnclaves.9:
+-        "0x3f71cf178a032816c2731a43aef746c464a5326e891dc881773ec2b599b2cf0a"
++        "0x13ea9869632ac20b176ae0fdc39998b2a644a695db024ef7fe0e4b3c59084160"
+      values.mrEnclaves.8:
+-        "0xc90e5d2e39d1d3f8397a6048c32ba50139d1577c28985e1f7638785935f41734"
++        "0x9546301721e2ea111ab0f79b6e529d6bb6c486ac98bcf7739429ad06c09db63d"
+      values.mrEnclaves.7:
+-        "0x13ea9869632ac20b176ae0fdc39998b2a644a695db024ef7fe0e4b3c59084160"
++        "0xdfcb4fca3073e3f3a90b05d328688c32619d56f26789c0a9797aa10e765a7807"
+      values.mrEnclaves.6:
+-        "0x9546301721e2ea111ab0f79b6e529d6bb6c486ac98bcf7739429ad06c09db63d"
++        "0xdcd483d3406d9b1871bb92420f5a080c4372e0d6b8522a4a2cb91a0f736669c6"
+      values.mrEnclaves.5:
+-        "0xdfcb4fca3073e3f3a90b05d328688c32619d56f26789c0a9797aa10e765a7807"
++        "0xa096348d480eb0474f5eab182671933c029545521960d87d4e49283005809be9"
+      values.mrEnclaves.4:
+-        "0xa096348d480eb0474f5eab182671933c029545521960d87d4e49283005809be9"
++        "0xa4eedfc6484494d4c08bfb9b9dd887c6e0540ba9d8ee207fe0e16814852e3356"
+      values.mrEnclaves.3:
+-        "0xa4eedfc6484494d4c08bfb9b9dd887c6e0540ba9d8ee207fe0e16814852e3356"
++        "0x3551faac39edee5abfaa19ab065c217db1485aebae255a9edddf6dfff6b29b52"
+      values.mrEnclaves.2:
+-        "0x3551faac39edee5abfaa19ab065c217db1485aebae255a9edddf6dfff6b29b52"
++        "0x3b589538b775ddbfc5fb028167ff846116159e6687aef9f849ca5a70a7871ea5"
+    }
+```
+
+```diff
     contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
     +++ description: None
       values.$members.5:
@@ -566,53 +600,91 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "4 of 6 (67%)"
-      receivedPermissions.17:
+      receivedPermissions.23:
 +        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.16:
+      receivedPermissions.22:
 +        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
-      receivedPermissions.15:
+      receivedPermissions.21:
 +        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
-      receivedPermissions.14:
+      receivedPermissions.20:
 +        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
-      receivedPermissions.13.from:
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
+      receivedPermissions.17.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
-+        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-      receivedPermissions.12.from:
--        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
-+        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
-      receivedPermissions.11.from:
--        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
 +        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-      receivedPermissions.10.from:
--        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      receivedPermissions.16.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
 +        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
-      receivedPermissions.9.from:
--        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.15.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
 +        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
-      receivedPermissions.8.from:
--        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      receivedPermissions.14.from:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
 +        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
-      receivedPermissions.7.from:
--        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.13.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
 +        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
-      receivedPermissions.6.from:
--        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.12.from:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
 +        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
-      receivedPermissions.5.from:
--        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.11.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
 +        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
-      receivedPermissions.4.from:
--        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      receivedPermissions.10.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
 +        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-      receivedPermissions.3.from:
--        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.9.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
 +        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.8.from:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.7.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.6.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.5.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.5.description:
++        "can update the program being verified"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.4.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.4.description:
++        "can update the program being verified"
+      receivedPermissions.3.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.2.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
       receivedPermissions.1.from:
 -        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
-+        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
       receivedPermissions.0.from:
 -        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
-+        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.0.description:
+-        "can update the program being verified"
++        "can add new instances without a DCAP attestation"
     }
 ```
 
@@ -697,7 +769,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 +   Status: CREATED
     contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
-    +++ description: None
+    +++ description: Contract managing SGX attestation certificates.
 ```
 
 ```diff
@@ -708,14 +780,14 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
 +   Status: CREATED
-    contract Risc0Verifier (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
-    +++ description: None
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
+    +++ description: Entry contract to verify batches using RISC Zero.
 ```
 
 ```diff
 +   Status: CREATED
     contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782)
-    +++ description: None
+    +++ description: Verifier contract for SGX proven blocks.
 ```
 
 ```diff
@@ -727,7 +799,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 +   Status: CREATED
     contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136)
-    +++ description: None
+    +++ description: Verifier contract for SGX proven blocks.
 ```
 
 ```diff
@@ -744,29 +816,32 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
-    +++ description: None
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
+    +++ description: Entry contract to verify batches using SP1.
 ```
 
 ## Source code changes
 
 ```diff
 .../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++++
- .../ERC1967Proxy.p.sol                             |    2 +-
+ .../ERC1967Proxy.p.sol                             |    0
  .../AutomataDcapV3Attestation.sol                  |    0
  .../ERC1967Proxy.p.sol                             |    0
  .../DAOFallbackProposer/ProverSet.sol}             |  962 ++---
  .../DefaultResolver.sol}                           |  807 ++---
- .../ERC1967Proxy.p.sol                             |    2 +-
+ .../ERC1967Proxy.p.sol                             |    0
  .../DefaultResolver.sol}                           | 1404 ++------
  .../ERC1967Proxy.p.sol                             |    2 +-
  .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
  .../ForcedInclusionStore/ForcedInclusionStore.sol  | 1633 +++++++++
+ .../MainnetGuardianProver.sol => /dev/null         | 2196 ------------
  .../MainnetTierRouter.sol => /dev/null             |  219 --
- .../.flat/MainnetVerifier/ERC1967Proxy.p.sol       |  594 ++++
- .../MainnetVerifier/MainnetVerifier.sol}           | 1453 ++------
- .../Risc0Verifier/Risc0Verifier.sol                |  907 ++---
- .../SP1Verifier/SP1Verifier.sol                    |  914 ++---
+ .../MainnetVerifier}/ERC1967Proxy.p.sol            |    2 +-
+ .../.flat/MainnetVerifier/MainnetVerifier.sol      | 1481 ++++++++
+ .../Risc0VerifierGateway}/ERC1967Proxy.p.sol       |    2 +-
+ .../Risc0VerifierGateway}/Risc0Verifier.sol        |  907 ++---
+ .../.flat/SP1VerifierGateway/ERC1967Proxy.p.sol    |  594 ++++
+ .../SP1VerifierGateway}/SP1Verifier.sol            |  914 ++---
  .../ERC1967Proxy.p.sol                             |  594 ++++
  .../SgxVerifier.sol}                               | 3349 ++++++++---------
  .../ERC1967Proxy.p.sol                             |  594 ++++
@@ -778,7 +853,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
  .../TaikoToken/TaikoToken.sol                      |  132 +-
  .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
  .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
- 27 files changed, 18673 insertions(+), 9125 deletions(-)
+ 30 files changed, 19785 insertions(+), 10237 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -1037,6 +1112,140 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
       values.$pastUpgrades.0.0:
 -        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
 +        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+      description:
+-        "Verifier contract for ZK-proven batches."
++        "Verifier contract for RISC Zero Groth16 proofs."
+    }
+```
+
+```diff
+    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      template:
+-        "taiko/Risc0Verifier"
++        "taiko/Risc0VerifierGateway"
+      description:
+-        "Verifier contract for Risc0 proven blocks."
++        "Entry contract to verify batches using RISC Zero."
+    }
+```
+
+```diff
+    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    +++ description: Entry contract to verify batches using SP1.
+      template:
+-        "taiko/SP1Verifier"
++        "taiko/SP1VerifierGateway"
+      description:
+-        "Verifier contract for ZK-proven batches."
++        "Entry contract to verify batches using SP1."
+    }
+```
+
+```diff
+    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    +++ description: Verifier contract for SP1 proofs.
+      description:
+-        "SP1Verifier is a contract used to verify proofs given public values and verification key."
++        "Verifier contract for SP1 proofs."
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves:
++        ["0xbdec26abd36fde2cfbb8db7a0793a9346b11bd558b39890407d458500711c88c","0xa5f741bfed254a1e21738d429e7bd074e25918af7f71fbe1e0135c3974b06e00","0x3551faac39edee5abfaa19ab065c217db1485aebae255a9edddf6dfff6b29b52","0xa4eedfc6484494d4c08bfb9b9dd887c6e0540ba9d8ee207fe0e16814852e3356","0xa096348d480eb0474f5eab182671933c029545521960d87d4e49283005809be9","0xdfcb4fca3073e3f3a90b05d328688c32619d56f26789c0a9797aa10e765a7807","0x9546301721e2ea111ab0f79b6e529d6bb6c486ac98bcf7739429ad06c09db63d","0x13ea9869632ac20b176ae0fdc39998b2a644a695db024ef7fe0e4b3c59084160","0xc90e5d2e39d1d3f8397a6048c32ba50139d1577c28985e1f7638785935f41734","0x3f71cf178a032816c2731a43aef746c464a5326e891dc881773ec2b599b2cf0a"]
+      values.mrSigners:
++        ["0xca0583a715534a8c981b914589a7f0dc5d60959d9ae79fb5353299a4231673d5"]
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0xE3D777143Ea25A6E031d1e921F396750885f43aC","role":"admin"}
+      receivedPermissions.13.from:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.12.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      receivedPermissions.11.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.10.from:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.9.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.8.from:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
++        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      receivedPermissions.7.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.6.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.5.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+      receivedPermissions.4.from:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
++        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.3.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.3.description:
++        "can update the program being verified"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.2.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.2.description:
++        "can update the program being verified"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.1.description:
++        "can add new instances without a DCAP attestation"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.0.description:
++        "can update the program being verified"
     }
 ```
 
