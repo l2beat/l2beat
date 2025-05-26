@@ -288,10 +288,10 @@ export class UpdateMonitor {
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
     let previousDiscovery: DiscoveryOutput
-    if (
-      databaseEntry &&
-      databaseEntry.configHash === hashJsonStable(projectConfig.structure)
-    ) {
+    const usingDatabase =
+      databaseEntry?.configHash === hashJsonStable(projectConfig.structure)
+
+    if (usingDatabase) {
       this.logger.info('Using database record', {
         chain: runner.chain,
         project: projectConfig.name,
@@ -314,13 +314,20 @@ export class UpdateMonitor {
       this.logger,
     )
 
-    await this.db.flatSources.upsert({
-      projectId: projectConfig.name,
-      chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
-      blockNumber: previousDiscovery.blockNumber,
-      contentHash: hashJson(sortObjectByKeys(flatSources)),
-      flat: flatSources,
-    })
+    // NOTE(radomski): We should only write to the database files that are
+    // resulting from discoveries accepted by the research team. Otherwise an
+    // update could happen to the implementation of a contract. UpdateMonitor
+    // will find it and write the _new_ implementation's source code to the
+    // database.
+    if (!usingDatabase) {
+      await this.db.flatSources.upsert({
+        projectId: projectConfig.name,
+        chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
+        blockNumber: previousDiscovery.blockNumber,
+        contentHash: hashJson(sortObjectByKeys(flatSources)),
+        flat: flatSources,
+      })
+    }
 
     return discovery
   }
