@@ -1,6 +1,8 @@
 import {
+  assert,
   // assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
   // formatSeconds,
@@ -13,23 +15,71 @@ import {
   DA_LAYERS,
   DA_MODES,
   REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { formatExecutionDelay } from '../../common/formatDelays'
+import type { ContractValue } from '@l2beat/discovery'
 
 const discovery = new ProjectDiscovery('taiko')
 
-const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
+const taikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
-const TaikoChainConfig = discovery.getContractValue<{
-  [key: string]: number | string
-}>('TaikoL1Contract', 'pacayaConfig')
+interface PacayaConfig extends Record<string, ContractValue> {
+  chainId: number
+  maxUnverifiedBatches: number
+  batchRingBufferSize: number
+  maxBatchesToVerify: number
+  blockMaxGasLimit: number
 
-const livenessBond = utils.formatEther(TaikoChainConfig.livenessBondBase)
+  livenessBondBase: string
+  livenessBondPerBlock: string
+
+  stateRootSyncInternal: number
+  maxAnchorHeightOffset: number
+
+  baseFeeConfig: {
+    adjustmentQuotient: number
+    sharingPctg: number
+    gasIssuancePerSecond: number
+    minGasExcess: number
+    maxGasIssuancePerBlock: number
+  }
+
+  provingWindow: number
+  cooldownWindow: number
+  maxSignalsToReceive: number
+  maxBlocksPerBatch: number
+
+  forkHeights: {
+    ontake: number
+    pacaya: number
+    shasta: number
+    unzen: number
+  }
+}
+
+const taikoChainConfig = discovery.getContractValue<PacayaConfig>(
+  'TaikoL1Contract',
+  'pacayaConfig',
+)
+
+const livenessBond = utils.formatEther(taikoChainConfig.livenessBondBase)
 
 const chainId = 167000
+
+const preconfRouter = discovery.getContractValue(
+  'TaikoWrapper',
+  'preconfRouter',
+)
+
+assert(
+  preconfRouter === '0x0000000000000000000000000000000000000000',
+  'preconf router is set, update sequencing sections',
+)
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -51,7 +101,7 @@ export const taiko: ScalingProject = {
     slug: 'taiko',
     stack: 'Taiko',
     description:
-      'Taiko Alethia is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
+      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko combines based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
     category: 'ZK Rollup', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
@@ -113,11 +163,12 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: TaikoL1ContractAddress,
+          address: taikoL1ContractAddress,
           selector: '0xef16e845',
           functionSignature:
             'function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)',
           sinceTimestamp: UnixTime(1716620627),
+          untilTimestamp: UnixTime(1747823664), // last propose block
         },
       },
       {
@@ -127,11 +178,12 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: TaikoL1ContractAddress,
+          address: taikoL1ContractAddress,
           selector: '0x648885fb',
           functionSignature:
             'function proposeBlockV2(bytes _params, bytes _txList) returns (tuple meta_)',
           sinceTimestamp: UnixTime(1730602883),
+          untilTimestamp: UnixTime(1747823664),
         },
       },
       {
@@ -141,11 +193,26 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: TaikoL1ContractAddress,
+          address: taikoL1ContractAddress,
           selector: '0x0c8f4a10',
           functionSignature:
             'function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple[] metaArr_)',
           sinceTimestamp: UnixTime(1730602883),
+          untilTimestamp: UnixTime(1747823664),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: taikoL1ContractAddress,
+          selector: '0x47faad14',
+          functionSignature:
+            'function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)',
+          sinceTimestamp: UnixTime(1747823664),
         },
       },
       {
@@ -155,11 +222,12 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: TaikoL1ContractAddress,
+          address: taikoL1ContractAddress,
           selector: '0x10d008bd',
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
           sinceTimestamp: UnixTime(1716620627),
+          untilTimestamp: UnixTime(1747815696), // last prove block
         },
       },
       {
@@ -169,11 +237,36 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: TaikoL1ContractAddress,
+          address: taikoL1ContractAddress,
           selector: '0x440b6e18',
           functionSignature:
             'function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)',
           sinceTimestamp: UnixTime(1730602883),
+          untilTimestamp: UnixTime(1747815696),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: taikoL1ContractAddress,
+          selector: '0xc9cc2843',
+          functionSignature:
+            'function proveBatches(bytes _params, bytes _proof)',
+          sinceTimestamp: UnixTime(1747815696),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: taikoL1ContractAddress,
+          selector: '0x0cc62b42',
+          functionSignature: 'function verifyBatches(uint64 _length)',
+          sinceTimestamp: UnixTime(1747823664),
         },
       },
     ],
@@ -196,11 +289,10 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description: `A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.
-        The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs.`,
+      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
-      // secondLine: `${SGXcooldownWindow} challenge period`,
+      secondLine: formatExecutionDelay(taikoChainConfig.cooldownWindow),
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -212,14 +304,14 @@ export const taiko: ScalingProject = {
       value: 'None',
     },
     sequencerFailure: {
-      description:
-        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The Taiko multisig can pause block proposals without delay.',
+      description: `The system uses a based (or L1-sequenced) rollup sequencing mechanism, meaning that users can propose L2 blocks directly on the Taiko L1 contract. Proposers are required to also prove blocks within ${formatSeconds(taikoChainConfig.provingWindow)}, or forfeit half of their liveness bond (${livenessBond} TAIKO).`,
       sentiment: 'good',
-      value: 'Self sequence', // based rollup sequencing
+      value: 'Self sequence',
     },
     proposerFailure: {
       description:
-        'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover providing a valid SGX attestation can register a SGX instance and create proofs for proposed blocks.',
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS +
+        ' Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
       sentiment: 'good',
       value: 'Self propose',
     },
@@ -297,13 +389,13 @@ export const taiko: ScalingProject = {
     operator: {
       name: 'The system uses a based sequencing mechanism',
       description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract.
-        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the initial proving window.
-        Currently, proving a block requires the block proposer to run an SGX instance. Proposing a block also requires depositing a liveness bond as a commitment to proving the block.
-        Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.`,
+        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
+        Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
+        Unless the block proposer proves the block within the proving window, it will forfeit half of its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
-          title: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
+          title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
+          url: 'https://etherscan.io/address/0x497B13f9192B09244de9b5F0964830969FB26F07#code',
         },
       ],
       risks: [],
