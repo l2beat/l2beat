@@ -288,10 +288,10 @@ export class UpdateMonitor {
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
     let previousDiscovery: DiscoveryOutput
-    const usingDatabase =
+    const dbEntryIsUpToDate =
       databaseEntry?.configHash === hashJsonStable(projectConfig.structure)
 
-    if (usingDatabase) {
+    if (dbEntryIsUpToDate) {
       this.logger.info('Using database record', {
         chain: runner.chain,
         project: projectConfig.name,
@@ -319,7 +319,7 @@ export class UpdateMonitor {
     // update could happen to the implementation of a contract. UpdateMonitor
     // will find it and write the _new_ implementation's source code to the
     // database.
-    if (!usingDatabase) {
+    if (!dbEntryIsUpToDate) {
       await this.db.flatSources.upsert({
         projectId: projectConfig.name,
         chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
