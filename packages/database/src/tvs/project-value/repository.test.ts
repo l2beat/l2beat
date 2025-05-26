@@ -1,4 +1,4 @@
-import { ProjectId, type ProjectValueType, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectValueType, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { ProjectValueRepository } from './repository'
@@ -314,86 +314,6 @@ describeDatabase(ProjectValueRepository.name, (db) => {
       const ethereumRecords = result.filter((r) => r.project === 'ethereum')
 
       expect(ethereumRecords.length).toEqual(5)
-    })
-  })
-
-  describe(ProjectValueRepository.prototype.getByProjectsForType.name, () => {
-    beforeEach(async () => {
-      await repository.upsertMany([
-        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
-        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
-        projectValue('ethereum', 'PROJECT', UnixTime(300), 3000),
-        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1100),
-        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
-        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
-        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
-        projectValue('arbitrum', 'PROJECT', UnixTime(300), 1500),
-        projectValue('optimism', 'SUMMARY', UnixTime(100), 5000),
-        projectValue('optimism', 'SUMMARY', UnixTime(200), 10000),
-        projectValue('optimism', 'SUMMARY', UnixTime(300), 10000),
-      ])
-    })
-
-    it('returns all records of the specified type within the range for a given projects', async () => {
-      const result = await repository.getByProjectsForType(
-        [ProjectId('ethereum'), ProjectId('arbitrum')],
-        'PROJECT',
-        [100, 200],
-      )
-
-      expect(result).toEqualUnsorted([
-        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
-        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
-        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
-        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
-      ])
-    })
-
-    it('returns records in ascending timestamp order', async () => {
-      const result = await repository.getByProjectsForType(
-        [ProjectId('optimism')],
-        'SUMMARY',
-        [null, 300],
-      )
-
-      expect(result).toEqualUnsorted([
-        projectValue('optimism', 'SUMMARY', UnixTime(100), 5000),
-        projectValue('optimism', 'SUMMARY', UnixTime(200), 10000),
-        projectValue('optimism', 'SUMMARY', UnixTime(300), 10000),
-      ])
-    })
-
-    it('handles null start timestamp correctly', async () => {
-      const result = await repository.getByProjectsForType(
-        [ProjectId('ethereum'), ProjectId('arbitrum')],
-        'PROJECT',
-        [null, 150],
-      )
-
-      expect(result).toEqualUnsorted([
-        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
-        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
-      ])
-    })
-
-    it('returns empty array when no records match the criteria', async () => {
-      const result = await repository.getByProjectsForType(
-        [ProjectId('arbitrum')],
-        'NON_EXISTENT_TYPE' as ProjectValueType,
-        [100, 300],
-      )
-
-      expect(result).toEqual([])
-    })
-
-    it('returns empty array when projects array is empty', async () => {
-      const result = await repository.getByProjectsForType(
-        [],
-        'PROJECT',
-        [100, 300],
-      )
-
-      expect(result).toEqual([])
     })
   })
 
