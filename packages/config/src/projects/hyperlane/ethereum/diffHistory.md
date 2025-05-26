@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xba654df46503c9721ca3965dbc94ccd5516ea23e
+Generated with discovered.json: 0xceb181a422100ed67709c81ebf08ce757518a8e0
 
-# Diff at Mon, 26 May 2025 13:54:21 GMT:
+# Diff at Mon, 26 May 2025 14:18:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22323047
@@ -8,12 +8,12 @@ Generated with discovered.json: 0xba654df46503c9721ca3965dbc94ccd5516ea23e
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New default ism, no significant changes.
 
 ## Watched changes
 
 ```diff
-    contract GnosisSafe (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
     +++ description: None
       receivedPermissions.6:
 +        {"permission":"upgrade","from":"0xc005dc82818d67AF737725bD4bf75435d065D239","role":"admin","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}
@@ -43,6 +43,18 @@ Provide description of changes. This section will be preserved.
       receivedPermissions.1.description:
 +        "manage the domain -> ISM contract mapping."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xb7d55490065c157352b2a560bb3eFf5d5c548563)
+    +++ description: None
 ```
 
 ```diff
@@ -87,19 +99,17 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0xE08367b408C4E17aA517593ffff9fe291b396a69)
+    contract UnknownIsm (0xE08367b408C4E17aA517593ffff9fe291b396a69)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-...0x4085486acE416fce164f578b6e56eFC96dcf6e2E.sol} |    0
- ...-0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944.sol | 2341 ++++++++++++++++++++
- .../StaticAggregationIsm_default.sol}              |    0
- .../.flat/StaticAggregationIsm_eclipse.sol         |  229 ++
- .../ethereum/.flat/StaticMerkleRootMultisigIsm.sol | 1378 ++++++++++++
- 5 files changed, 3948 insertions(+)
+.../StaticAggregationIsm_default.sol}              |    0
+ .../.flat/StaticAggregationIsm_eclipse.sol         |  229 ++++
+ .../ethereum/.flat/StaticMerkleRootMultisigIsm.sol | 1378 ++++++++++++++++++++
+ 3 files changed, 1607 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -109,8 +119,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22323047 (main branch discovery), not current.
 
 ```diff
-    contract GnosisSafe (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
     +++ description: None
+      name:
+-        "GnosisSafe"
++        "Hyperlane Multisig"
       receivedPermissions.6:
 -        {"permission":"upgrade","from":"0xc005dc82818d67AF737725bD4bf75435d065D239","role":"admin","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}
       receivedPermissions.5.from:
@@ -157,6 +170,15 @@ discovery. Values are for block 22323047 (main branch discovery), not current.
 -   Status: DELETED
     contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
     +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+    contract  (0xb7d55490065c157352b2a560bb3eFf5d5c548563) {
+    +++ description: None
+      name:
+-        "UnknownIsm"
++        ""
+    }
 ```
 
 ```diff

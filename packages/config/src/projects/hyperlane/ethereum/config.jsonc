@@ -18,7 +18,7 @@
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
     "0xc005dc82818d67AF737725bD4bf75435d065D239": "Mailbox",
     "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F": "StaticAggregationIsm_default",
-    "0xb7d55490065c157352b2a560bb3eFf5d5c548563": "UnknownIsm",
+    "0xE08367b408C4E17aA517593ffff9fe291b396a69": "UnknownIsm",
     "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": "DomainRoutingIsm",
     "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": "StaticAggregationIsm_eclipse",
     "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": "StaticMessageIdMultisigIsm",
@@ -56,16 +56,11 @@
       "fields": {
         "modules": {
           "copy": "modulesAndThreshold",
-      "edit": [
-        "get",
-        ["get", "roles", "SECURITY_COUNCIL_ROLE", "members"]
-      ],
+          "edit": ["get", 0]
         },
         "threshold": {
-          "handler": {
-            "type": "hardcoded",
-            "value": 2
-          }
+          "copy": "modulesAndThreshold",
+          "edit": ["get", 1]
         }
       }
     },
