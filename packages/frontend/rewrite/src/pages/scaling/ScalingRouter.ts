@@ -95,7 +95,11 @@ export function createScalingRouter(
     }),
     async (req, res) => {
       const data = await cache.get(
-        { key: ['scaling', 'projects', req.params.slug], ttl: 10 * 60 },
+        {
+          key: ['scaling', 'projects', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
         () => getScalingProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
@@ -116,7 +120,8 @@ export function createScalingRouter(
       const data = await cache.get(
         {
           key: ['scaling', 'projects', req.params.slug, 'tvs-breakdown'],
-          ttl: 10 * 60,
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
         },
         () =>
           getScalingProjectTvsBreakdownData(

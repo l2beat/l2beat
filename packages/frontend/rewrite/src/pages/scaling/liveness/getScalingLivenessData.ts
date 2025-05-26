@@ -18,7 +18,11 @@ export async function getScalingLivenessData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'liveness', 'entries'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'liveness', 'entries'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getScalingLivenessEntries,
     ),
   ])
