@@ -666,6 +666,7 @@
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1129,5 +1130,5 @@
     "orbitstack/layer2/L2WethGateway": "0xd84f362cbad6cd7de185b612e49e8eee1ad5e4d94eb0dd821258681d7f1448a5",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "permissionsConfigHash": "0x9e0625a827bccf44b878ff26b23dc21d6c8f3094e44626049b1d784d83a62f7c"
+  "permissionsConfigHash": "0x438a3e8ccf04c5035f524997c726dabaaae07df2943d49bf0055c4f131243457"
 }

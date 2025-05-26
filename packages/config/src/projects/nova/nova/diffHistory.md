@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x48dff8c76cd6b1b18dc5eefe0926a42bff82e109
+Generated with discovered.json: 0x4574c35451456798379aeb7c5a2c87904df7f923
 
-# Diff at Mon, 26 May 2025 13:36:20 GMT:
+# Diff at Mon, 26 May 2025 15:05:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 83508934
@@ -51,14 +51,6 @@ discovery. Values are for block 83508934 (main branch discovery), not current.
       name:
 -        "fred-Arbitrum"
 +        "fred - Arbitrum 1"
-    }
-```
-
-```diff
-    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
-    +++ description: None
-      controlsMajorityOfUpgradePermissions:
--        true
     }
 ```
 
