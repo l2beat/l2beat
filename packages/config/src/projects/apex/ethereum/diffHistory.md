@@ -1,37 +1,3 @@
-Generated with discovered.json: 0x9bd070104c3fb42c89cd4d2ce24c804bfc141faa
-
-# Diff at Mon, 26 May 2025 11:29:41 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5ebb17207c8579b0c67f4b4fedb1eb093f29aadf block: 21981180
-- current block number: 22566672
-
-## Description
-
-Config related: project is still EOA-upgradable.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21981180 (main branch discovery), not current.
-
-```diff
-    EOA  (0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
-    +++ description: None
-      controlsMajorityOfUpgradePermissions:
--        true
-    }
-```
-
-```diff
-    EOA  (0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
-    +++ description: None
-      controlsMajorityOfUpgradePermissions:
--        true
-    }
-```
-
 Generated with discovered.json: 0x8ee846ceb73ad123f4d748d7a82fc51574963736
 
 # Diff at Fri, 23 May 2025 09:40:53 GMT:
