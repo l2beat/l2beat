@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 22517904,
+  "blockNumber": 22567906,
   "configHash": "0xaae642321be505e6a34e58d769f738469fea1ec1ff7671e64473a84a0dc9a635",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -214,7 +214,7 @@
           "0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 6001,
+        "getFirstUnprocessedPriorityTx": 6235,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -222,21 +222,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 4,
-        "getPriorityTreeRoot": "0x5e365b1566d23b6890595054cd0d8e2475bb050ca1ef9d4c02c3c3f6df1ab11c",
+        "getPriorityQueueSize": 11,
+        "getPriorityTreeRoot": "0x66147b4001da7cc567789124d34db20ffdedc1253c8e4802d96e13b55ba4af22",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 24078,
-        "getTotalBatchesExecuted": 24066,
-        "getTotalBatchesVerified": 24077,
-        "getTotalBlocksCommitted": 24078,
-        "getTotalBlocksExecuted": 24066,
-        "getTotalBlocksVerified": 24077,
-        "getTotalPriorityTxs": 6005,
+        "getTotalBatchesCommitted": 24809,
+        "getTotalBatchesExecuted": 24784,
+        "getTotalBatchesVerified": 24809,
+        "getTotalBlocksCommitted": 24809,
+        "getTotalBlocksExecuted": 24784,
+        "getTotalBlocksVerified": 24809,
+        "getTotalPriorityTxs": 6246,
         "getTransactionFilterer": "0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -454,6 +454,18 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "0x78325837C780788Ce6afF7883FdF68890010Fe30",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
+        }
+      ]
+    },
+    {
       "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -489,7 +501,9 @@
         "revertedBlocks": [],
         "validatorsVTL": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
-          "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
+          "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f",
+          "0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+          "0x78325837C780788Ce6afF7883FdF68890010Fe30"
         ]
       },
       "implementationNames": {
@@ -618,6 +632,18 @@
       }
     },
     {
+      "address": "0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
+        }
+      ]
+    },
+    {
       "address": "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69",
       "type": "EOA",
       "proxyType": "EOA"
@@ -727,7 +753,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1295,5 +1321,5 @@
     "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x203869c063dcf059acd936f8cf0584ed5baf13cbf15fe85b7026f9012ef37a77"
+  "permissionsConfigHash": "0x8fee12ccd5c38c57343d705c1ecc294831415f47f716a3b3724b2ab52f89645c"
 }
