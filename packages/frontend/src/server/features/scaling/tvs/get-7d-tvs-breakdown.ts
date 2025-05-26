@@ -31,6 +31,10 @@ export interface ProjectSevenDayTvsBreakdown {
     ether: number
     stablecoin: number
   }
+  breakdown7d: BreakdownSplit & {
+    ether: number
+    stablecoin: number
+  }
   associated: BreakdownSplit
   change: BreakdownSplit
   changeExcludingAssociated: BreakdownSplit
@@ -99,6 +103,14 @@ const getCached7dTokenBreakdown = cache(
           external: latestValue.external,
           ether: latestValue.ether,
           stablecoin: latestValue.stablecoin,
+        },
+        breakdown7d: {
+          total: oldestValue.value,
+          native: oldestValue.native,
+          canonical: oldestValue.canonical,
+          external: oldestValue.external,
+          ether: oldestValue.ether,
+          stablecoin: oldestValue.stablecoin,
         },
         associated: {
           total: latestValue.associated,
@@ -191,6 +203,14 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             external: 10,
             ether: 30,
             stablecoin: 30,
+          },
+          breakdown7d: {
+            total: 50,
+            canonical: 25,
+            native: 15,
+            external: 10,
+            ether: 25,
+            stablecoin: 25,
           },
           associated: {
             total: 6,

@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getTvsValuesForProjects } from '../../scaling/tvs/utils/get-tvs-values-for-projects'
+import { get7dTvsBreakdown } from '../../scaling/tvs/get-7d-tvs-breakdown'
 
 export async function getDaProjectsTvs(projectIds: ProjectId[]) {
   if (env.MOCK) {
@@ -12,19 +12,14 @@ export async function getDaProjectsTvs(projectIds: ProjectId[]) {
 
 type DaProjectsTvs = Awaited<ReturnType<typeof getDaProjectsTvsData>>
 async function getDaProjectsTvsData(projectIds: ProjectId[]) {
-  const tvsValues = await getTvsValuesForProjects(projectIds, '7d', 'PROJECT')
+  const breakdown = await get7dTvsBreakdown({ type: 'projects', projectIds })
 
-  const aggregated = Object.entries(tvsValues).map(
+  const aggregated = Object.entries(breakdown.projects).map(
     ([projectId, projectValues]) => {
-      const values = Object.values(projectValues)
-
-      const latestTvs = values.at(-1)?.value
-      const oldestTvs = values.at(0)?.value
-
       return {
         projectId: ProjectId(projectId),
-        tvs: Number(latestTvs),
-        tvs7d: Number(oldestTvs),
+        tvs: projectValues.breakdown.total,
+        tvs7d: projectValues.breakdown7d.total,
       }
     },
   )
