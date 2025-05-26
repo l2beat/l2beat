@@ -26,7 +26,9 @@ export function AppLayout({
 }) {
   return (
     <TRPCReactProvider>
-      {env.NODE_ENV !== 'production' && <DevAutoReloader />}
+      {env.NODE_ENV !== 'production' && env.NEXT_PUBLIC_REWRITE && (
+        <DevAutoReloader />
+      )}
       <ThemeProvider
         attribute="class"
         storageKey="l2beat-theme"
