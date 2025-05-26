@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 22174829,
+  "blockNumber": 22567567,
   "configHash": "0x4ed7c6b756871ed3344b4f7cd7f5878e75149d064a97f9653d24737a5e48ff1c",
   "entries": [
     {
@@ -577,7 +577,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 40,
+        "nonce": 53,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -940,16 +940,21 @@
       }
     },
     {
-      "name": "",
+      "name": "DVNFeeLib",
       "address": "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1706495219,
       "sinceBlock": 19109197,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+      },
       "implementationNames": {
-        "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": ""
+        "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": "DVNFeeLib"
       }
     },
     {
@@ -1010,7 +1015,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 47,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1048,17 +1053,27 @@
       }
     },
     {
-      "name": "",
+      "name": "DVNFeeLib",
       "address": "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1706307983,
       "sinceBlock": 19093741,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+      },
       "implementationNames": {
-        "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": ""
+        "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": "DVNFeeLib"
       }
+    },
+    {
+      "address": "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xB88dca912E27EB7929a145458B99649C1120fE6b",
@@ -1234,7 +1249,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 250,
+        "nonce": 263,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2845,6 +2860,21 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": [
+      "constructor(uint256 _nativeDecimalsRate)",
+      "error DVN_EidNotSupported(uint32 eid)",
+      "error DVN_InvalidDVNOptions(uint256 cursor)",
+      "error DVN_UnsupportedOptionType(uint8 optionType)",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) view returns (uint256)",
+      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) payable returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)"
+    ],
     "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
       "constructor(address initialOwner)",
       "error AdminCallFailed()",
@@ -2922,6 +2952,21 @@
       "function sharedDecimals() view returns (uint8)",
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": [
+      "constructor(uint256 _nativeDecimalsRate)",
+      "error DVN_EidNotSupported(uint32 eid)",
+      "error DVN_InvalidDVNOptions(uint256 cursor)",
+      "error DVN_UnsupportedOptionType(uint8 optionType)",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) view returns (uint256)",
+      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) payable returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)"
     ],
     "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
@@ -3589,5 +3634,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x13107fb97b619eba0d1ce27c99dc775de51215400071cb5bf5a49e026da81f56"
+  "permissionsConfigHash": "0x1737c8c6248dd03d3b63241b91192f611dc7792cc912c4d38d1d52a981a8e09b"
 }

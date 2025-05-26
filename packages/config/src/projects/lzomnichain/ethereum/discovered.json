@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 21995383,
+  "blockNumber": 22567714,
   "configHash": "0x7434b8ea2c633886e2ef602a1994e24beaedc6ba3288f67aaf688b8ab9875720",
   "entries": [
     {
@@ -320,11 +320,14 @@
           "322": 20,
           "324": 20,
           "327": 20,
+          "329": 20,
           "332": 20,
           "339": 20,
           "340": 20,
           "362": 20,
-          "367": 20
+          "365": 20,
+          "367": 20,
+          "370": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -657,6 +660,10 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "329": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "332": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
@@ -673,7 +680,15 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "365": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "367": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "370": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -889,7 +904,7 @@
           },
           "158": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 225000,
+            "inboundBlockConfirm": 22499,
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
@@ -1343,6 +1358,14 @@
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
             "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
           },
+          "329": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
           "332": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
@@ -1375,9 +1398,25 @@
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
             "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
           },
+          "365": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
           "367": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 1,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "370": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
@@ -1700,6 +1739,10 @@
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ],
+          "329": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
           "332": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
@@ -1716,7 +1759,15 @@
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ],
+          "365": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
           "367": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "370": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
@@ -1809,11 +1860,14 @@
           "322": [2],
           "324": [2],
           "327": [2],
+          "329": [2],
           "332": [2],
           "339": [2],
           "340": [2],
           "362": [2],
-          "367": [2]
+          "365": [2],
+          "367": [2],
+          "370": [2]
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1899,11 +1953,14 @@
           "322": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "324": "0x000000000000000000000000fe5dfa6b4d6be848b57dd378b0798af60f1e6d35",
           "327": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "329": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be",
           "340": "0x0000000000000000000000009375af50d3aa53eab296ee80667ccd0d72a12a5b",
           "362": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "367": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098"
+          "365": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "367": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
+          "370": "0x000000000000000000000000fd76d9cb0bac839725ab79127e7411fe71b1e3ca"
         }
       },
       "implementationNames": {
@@ -1923,7 +1980,7 @@
       "sinceBlock": 15719673,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "37775053402223996",
+        "circulatingSupply": "39983343718834830",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -2051,7 +2108,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 903,
+        "nonce": 951,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2144,12 +2201,12 @@
       "values": {
         "$immutable": true,
         "cap": "100000000000000000000000",
-        "circulatingSupply": "89347055616926480590840",
+        "circulatingSupply": "61706202786491989268293",
         "DAY_INTERVAL": 86400,
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "enable": true,
-        "getQuota": "99999999700000000000000",
+        "getQuota": "99999397513000000000000",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "minter": "0xEc306E46549A7E8f4fCE823D3058f2D134133B17",
         "name": "StakeStone Ether",
@@ -2162,7 +2219,7 @@
         "PT_SET_ENABLE": 2,
         "symbol": "STONE",
         "token": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "totalSupply": "106541388696963592958750",
+        "totalSupply": "72124846268684645071533",
         "useCustomAdapterParams": false
       },
       "implementationNames": {
@@ -2283,7 +2340,7 @@
       "values": {
         "$immutable": true,
         "cap": "4761000000000000000000000000",
-        "circulatingSupply": "312079281111310493290251154",
+        "circulatingSupply": "290032230950315332627653369",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
@@ -2295,7 +2352,7 @@
         "PT_SEND": 0,
         "symbol": "WAGMI",
         "token": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
-        "totalSupply": "2644856967206793118294282880",
+        "totalSupply": "2753167189109098540924406744",
         "useCustomAdapterParams": true
       },
       "implementationNames": {
@@ -2399,16 +2456,21 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "DVNFeeLib",
       "address": "0xa7b5189bcA84Cd304D8553977c7C614329750d99",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1706489555,
       "sinceBlock": 19108731,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+      },
       "implementationNames": {
-        "0xa7b5189bcA84Cd304D8553977c7C614329750d99": ""
+        "0xa7b5189bcA84Cd304D8553977c7C614329750d99": "DVNFeeLib"
       }
     },
     {
@@ -2458,6 +2520,11 @@
       }
     },
     {
+      "address": "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2495,7 +2562,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 240,
+        "nonce": 263,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2608,7 +2675,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 197,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2629,7 +2696,7 @@
       "sinceBlock": 15584943,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "999976331524212995623532463",
+        "circulatingSupply": "999976334324212995623532463",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -3183,6 +3250,21 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0xa7b5189bcA84Cd304D8553977c7C614329750d99": [
+      "constructor(uint256 _nativeDecimalsRate)",
+      "error DVN_EidNotSupported(uint32 eid)",
+      "error DVN_InvalidDVNOptions(uint256 cursor)",
+      "error DVN_UnsupportedOptionType(uint8 optionType)",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) view returns (uint256)",
+      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) payable returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)"
+    ],
     "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": [
       "constructor(string _name, string _symbol, address _endpoint, uint16 _mainEndpointId, uint256 _initialSupplyOnMainEndpoint)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -3436,5 +3518,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x1678a7a34230eb2e973a1fd6f8d8cc948a6c9525735363732352ea3441347059"
+  "permissionsConfigHash": "0xb51473f2f56293adb3b99b2d0d5f0d001b0e7fcc80e9a6ccd0243637f68fd07a"
 }
