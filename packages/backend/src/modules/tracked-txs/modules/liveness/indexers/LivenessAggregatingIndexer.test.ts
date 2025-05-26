@@ -10,8 +10,8 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 import type { LivenessRecordWithConfig } from '../utils/mapToRecordWithConfig'
+import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 
 const NOW = UnixTime.toStartOf(UnixTime.now(), 'hour')
 
