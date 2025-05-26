@@ -58,7 +58,7 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
 % The number of upgrade permissions received for every actor
 receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions) :-
   address(Actor, _, _),
-  ReceivedUpgradePermissions = #count{Giver: ultimatePermission(Actor, "upgrade", Giver, _, _, _, _, _, isFinal)}.
+  ReceivedUpgradePermissions = #count{Giver: ultimatePermission(Actor, "upgrade", Giver, _, _, _, _, _, _, isFinal)}.
 
 % The maximum number of upgrade permissions received by any actor (per chain):
 maxReceivedUpgradePermissionsCount(Max, Chain) :-
