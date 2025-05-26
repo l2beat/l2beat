@@ -342,42 +342,26 @@ export const taiko: ScalingProject = {
       rollupNodeLink: 'https://github.com/taikoxyz/simple-taiko-node',
     },
   ),
-  //   stateValidation: {
-  //     categories: [
-  //       {
-  //         title: 'Fraud proofs',
-  //         description: `
-  // Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-  // Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
-  //
-  // When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
-  // The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
-  //
-  // After the proof is submitted and during its ${SGXcooldownWindow} *cooldown window*, anyone can dispute the batch by submitting a *contest bond*. Anyone can then prove this new dispute by submitting a *validity bond* as a commitment to win the respective higher-tier proof.
-  // A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers.
-  // For the Minority guardian tier, *validity* and *contest bonds* are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. The highest Guardian tier does not require bonds.
-  //
-  // It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
-  // If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
-  //         references: [
-  //           {
-  //             title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-  //             url: 'https://etherscan.io/address/0x44d307a9ec47aA55a7a30849d065686753C86Db6#code#F1#L26',
-  //           },
-  //           {
-  //             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-  //             url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
-  //           },
-  //         ],
-  //         risks: [
-  //           {
-  //             category: 'Funds can be stolen if',
-  //             text: 'a malicious block is proven by a compromised SGX instance or approved by Guardians.',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'Validity proofs',
+        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. The use of SGX (Geth) is mandatory, while the other three can be used interchangeably. This means that a block can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. Batch proposers are required to stake a liveness bond of ${livenessBond} TAIKO, half of which is forfeited if they fail to prove the block within the proving window of ${formatSeconds(taikoChainConfig.provingWindow)}. The multi-proof system allows to detect bugs in the verifiers if they produce different results for the same block. If such a bug is detected, the system gets automatically paused.`,
+        references: [
+          {
+            title: 'TaikoL1.sol - Etherscan source code, liveness bond',
+            url: 'https://etherscan.io/address/0x497B13f9192B09244de9b5F0964830969FB26F07#code',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'a malicious block is proven by compromised SGX instances.',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
@@ -400,16 +384,16 @@ export const taiko: ScalingProject = {
       ],
       risks: [],
     },
-    // forceTransactions: {
-    //   name: `Users can force any transaction`,
-    //   description: `The system is designed to allow users to propose L2 blocks directly on L1.
-    //     Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
-    //     The Taiko multisig can pause block proposals without delay.`,
-    //   references: [],
-    //   risks: [],
-    // },
+    forceTransactions: {
+      // NOTE: the ForcedInclusionStore mechanism is ignored on purpose as the system still allows free-for-all block proposals. When a preconfer router is added, it becomes relevant and will be described.
+      name: `Users can force any transaction`,
+      description: `The system is designed to allow users to propose L2 blocks directly on L1.
+        Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.`,
+      references: [],
+      risks: [],
+    },
     exitMechanisms: [
-      // to do: double check exit mechanism
+      // TODO: double check exit mechanism
       {
         name: 'Regular exit',
         description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is finalized the funds become available for withdrawal on L1. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
