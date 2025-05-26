@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x7c4f26fa364de0e5cd8225440c37274072df04c9
+
+# Diff at Mon, 26 May 2025 15:00:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 21995383
+- current block number: 22567714
+
+## Description
+
+common dvn fee lib verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995383 (main branch discovery), not current.
+
+```diff
+    contract DVNFeeLib (0xa7b5189bcA84Cd304D8553977c7C614329750d99) {
+    +++ description: None
+      name:
+-        ""
++        "DVNFeeLib"
+      unverified:
+-        true
+      values.owner:
++        "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+      implementationNames.0xa7b5189bcA84Cd304D8553977c7C614329750d99:
+-        ""
++        "DVNFeeLib"
+      sourceHashes:
++        ["0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"]
+    }
+```
+
 Generated with discovered.json: 0x0157b2205d2e7e3473003cec4ce1a5c129a86e9d
 
 # Diff at Fri, 23 May 2025 09:40:59 GMT:

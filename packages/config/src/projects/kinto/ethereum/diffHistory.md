@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x03d314ccfca269df4f0f7b53c93b276eaa3e7550
+
+# Diff at Mon, 26 May 2025 15:36:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22437620
+- current block number: 22437620
+
+## Description
+
+config related: naming.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437620 (main branch discovery), not current.
+
+```diff
+    EOA Certora 1 (0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621) {
+    +++ description: None
+      name:
+-        "Certora"
++        "Certora 1"
+    }
+```
+
 Generated with discovered.json: 0xdb4d7b711526cb99174a6046185a8b3f2d4fbc57
 
 # Diff at Fri, 23 May 2025 09:41:17 GMT:

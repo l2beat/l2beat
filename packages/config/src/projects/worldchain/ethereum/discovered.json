@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 22481876,
+  "blockNumber": 22567927,
   "configHash": "0x3da8283af9c63cffb37255b35654abdee5bda06ef1056a7af8ccd6abcf3798ee",
   "entries": [
     {
@@ -73,7 +73,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 3035,
+        "gameCount": 3324,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -83,7 +83,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 3035,
+        "permissionedGamesTotal": 3324,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -212,7 +212,7 @@
         "$upgradeCount": 1,
         "BRIDGE_MESSAGE_TYPEHASH": "0x87e4683aad14f1869b43140e06b846bd1b00c2e08e9825f6719d163b4cfef2a6",
         "burnAmount": 0,
-        "burnCaller": "0x0000000000000000000000000000000000000000",
+        "burnCaller": "0x2ba529D229FDc1DA08e67F536588aE45932d030A",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "OpUSDCBridgeAdapter",
@@ -224,7 +224,7 @@
         },
         "LINKED_ADAPTER": "0xbD80b06d3dbD0801132c6689429aC09Ca6D27f82",
         "MESSENGER": "0xf931a81D18B1766d15695ffc7c1920a62b7e710a",
-        "messengerStatus": 0,
+        "messengerStatus": 2,
         "owner": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
@@ -325,6 +325,19 @@
       }
     },
     {
+      "name": "Burn Caller",
+      "address": "0x2ba529D229FDc1DA08e67F536588aE45932d030A",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1746132875,
+      "sinceBlock": 22391512,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0x2ba529D229FDc1DA08e67F536588aE45932d030A": ""
+      }
+    },
+    {
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
       "type": "EOA",
       "proxyType": "EOA"
@@ -392,7 +405,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -691,7 +704,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -942,7 +955,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1059,7 +1072,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1292,7 +1305,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1415,8 +1428,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 489262,
-          "prevBlockNum": 22481800
+          "prevBoughtGas": 1301449,
+          "prevBlockNum": 22567861
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1599,7 +1612,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640039",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641847",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2511,5 +2524,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
   },
-  "permissionsConfigHash": "0xc5eb522095883c668940f62859ddb6cc5654cbd8cb9e09922997c7b13589d1da"
+  "permissionsConfigHash": "0xccc7a5b4ed926ebbe746c0192e81a84dd2c4db1a95d0e709eb0da967f4a9772f"
 }

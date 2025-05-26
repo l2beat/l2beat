@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xea176b65810ab2928afe453c7bd0d4fb6ddd6090
+
+# Diff at Mon, 26 May 2025 15:40:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22517904
+- current block number: 22567906
+
+## Description
+
+two new validators registered.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.3:
++        "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
+      values.validatorsVTL.2:
++        "0x4cc87B0A504047967CeD9A955431B3229237e7de"
+      values.validatorsVTL.1:
+-        "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
++        "0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
+      values.validatorsVTL.0:
+-        "0x4cc87B0A504047967CeD9A955431B3229237e7de"
++        "0x78325837C780788Ce6afF7883FdF68890010Fe30"
+    }
+```
+
 Generated with discovered.json: 0xf360ed893f5a9f5604518e143638a531816e4d35
 
 # Diff at Fri, 23 May 2025 09:41:10 GMT:

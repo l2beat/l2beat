@@ -1,7 +1,7 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 22046058,
+  "blockNumber": 22566407,
   "configHash": "0xe134a48712488aa9c7c7b9ca5b2f28c239c79a241d0c936df42b1f16091a0f0b",
   "entries": [
     {
@@ -40,7 +40,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620617",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620736",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -95,7 +95,7 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
-          "isUsingCelestia": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "overhead": 188,
@@ -348,7 +348,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "nonce": 101,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -408,8 +408,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 795560,
-          "prevBlockNum": 22022232
+          "prevBoughtGas": 796584,
+          "prevBlockNum": 22534068
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
@@ -542,10 +542,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 17965800,
-        "latestOutputIndex": 9980,
-        "nextBlockNumber": 17967600,
-        "nextOutputIndex": 9981,
+        "latestBlockNumber": 21110400,
+        "latestOutputIndex": 11727,
+        "nextBlockNumber": 21112200,
+        "nextOutputIndex": 11728,
         "PROPOSER": "0xAF24199C29D5cc3fd298356137913A42847eA690",
         "startingBlockNumber": 0,
         "startingTimestamp": 1706027387,

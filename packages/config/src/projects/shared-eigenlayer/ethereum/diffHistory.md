@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x1ce5ad4f20f98e97069daedeb775aba2085df005
+
+# Diff at Mon, 26 May 2025 15:38:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22438687
+- current block number: 22567898
+
+## Description
+
+ms member changes.
+
+## Watched changes
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      values.$members.5:
+-        "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835"
++        "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
+      values.$members.4:
+-        "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
++        "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a"
+      values.$members.3:
+-        "0x60bbde47423D62F6d7658bb3654869dfA397bF3D"
++        "0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E"
+      values.$members.2:
+-        "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a"
++        "0x985145F0f4dACe1387b856191C3574381B9DE524"
+      values.$members.1:
+-        "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
++        "0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
+      values.$members.0:
+-        "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B"
++        "0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc"
+    }
+```
+
 Generated with discovered.json: 0x173e4823f043fb41b95ae69e379d7213265c873c
 
 # Diff at Fri, 23 May 2025 09:41:03 GMT:

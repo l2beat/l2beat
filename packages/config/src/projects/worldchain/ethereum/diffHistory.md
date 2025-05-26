@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x88509e31ede8cf9165a333a2e50998e978890521
+
+# Diff at Mon, 26 May 2025 16:02:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22481876
+- current block number: 22567927
+
+## Description
+
+Burncaller (unverified contract) added to external usdc escrow.
+
+## Watched changes
+
+```diff
+    contract L1OpUSDCBridgeAdapter (0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      values.burnCaller:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2ba529D229FDc1DA08e67F536588aE45932d030A"
+      values.messengerStatus:
+-        0
++        2
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Burn Caller (0x2ba529D229FDc1DA08e67F536588aE45932d030A)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xaa90ed75998073f7368aa885f616c6cc6fd8901d
 
 # Diff at Fri, 23 May 2025 09:41:07 GMT:

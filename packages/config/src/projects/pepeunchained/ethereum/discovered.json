@@ -1,7 +1,7 @@
 {
   "name": "pepeunchained",
   "chain": "ethereum",
-  "blockNumber": 22437741,
+  "blockNumber": 22567759,
   "configHash": "0xd87d794e9e553a2e6f53ddb1a0ac8c206d345ff073be7efe6aec293c7374f807",
   "entries": [
     {
@@ -375,7 +375,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 22437404
+          "prevBlockNum": 22567731
         },
         "paused": false,
         "superchainConfig": "0x11654D67e0360A82e5Badd272Ced336B80972135",
@@ -446,7 +446,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -567,7 +567,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 98,
+        "nonce": 101,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -681,7 +681,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -727,7 +727,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621033",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621049",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -826,7 +826,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -975,7 +975,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1103,10 +1103,10 @@
         "finalizationPeriodSeconds": 86400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6771600,
-        "latestOutputIndex": 626,
-        "nextBlockNumber": 6782400,
-        "nextOutputIndex": 627,
+        "latestBlockNumber": 7560000,
+        "latestOutputIndex": 699,
+        "nextBlockNumber": 7570800,
+        "nextOutputIndex": 700,
         "proposer": "0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B",
         "PROPOSER": "0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B",
         "startingBlockNumber": 0,
@@ -1183,7 +1183,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1343,7 +1343,7 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
-          "isUsingCelestia": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
