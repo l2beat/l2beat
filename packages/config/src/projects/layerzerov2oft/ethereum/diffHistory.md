@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x960dde2a9c2842589e69056999d377ba894c06b2
+
+# Diff at Mon, 26 May 2025 18:58:13 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@14a24072b88fe6b9a2bab667c3672c4f564c71db block: 22174829
+- current block number: 22174829
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract DVNFeeLib (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB) {
+    +++ description: None
+      name:
+-        ""
++        "DVNFeeLib"
+      unverified:
+-        true
+      values.owner:
++        "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+      implementationNames.0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB:
+-        ""
++        "DVNFeeLib"
+      sourceHashes:
++        ["0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"]
+    }
+```
+
+```diff
+    contract DVNFeeLib (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b) {
+    +++ description: None
+      name:
+-        ""
++        "DVNFeeLib"
+      unverified:
+-        true
+      values.owner:
++        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+      implementationNames.0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b:
+-        ""
++        "DVNFeeLib"
+      sourceHashes:
++        ["0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"]
+    }
+```
+
 Generated with discovered.json: 0x6e02d898be8eec9cb7813626fa85fcbddc076b66
 
 # Diff at Fri, 23 May 2025 09:40:58 GMT:

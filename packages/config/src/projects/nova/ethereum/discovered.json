@@ -2929,8 +2929,7 @@
       "template": "orbitstack/RollupProxyBoLD",
       "sourceHashes": [
         "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642",
-        "0x24c1c1fe007d9dead1f00c99d1490ea00606ea5c7b12bb2f94f2f1dbb4fac23b",
-        "0xa2a02945fecf6c30403d40603a81bdca4ee7efd605e7600f428b94212ff0c9b9"
+        "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
