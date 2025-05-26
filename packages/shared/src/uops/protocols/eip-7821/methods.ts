@@ -1,11 +1,11 @@
 import { ethers } from 'ethers'
+import { BinaryReader } from '../../../tools/BinaryReader'
 import type { Method, Operation, TransferOperation } from '../../types'
 import { defineMethod } from '../defineMethod'
 import {
   EIP_7821_TRANSACTION_SIGNATURE,
   WHITEBIT_TRANSACTION_SIGNATURE,
 } from './const'
-import { BinaryReader } from '../../../tools/BinaryReader'
 
 export const EIP7821_methods: Method[] = [
   defineMethod(
