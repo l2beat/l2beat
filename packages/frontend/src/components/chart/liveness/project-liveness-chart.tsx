@@ -1,5 +1,6 @@
 'use client'
 
+import type { Milestone } from '@l2beat/config'
 import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { LivenessChartSubtypeControls } from '~/app/(side-nav)/scaling/liveness/_components/liveness-chart-subtype-controls'
@@ -19,6 +20,7 @@ interface Props {
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
+  milestones: Milestone[]
 }
 
 export function ProjectLivenessChart({
@@ -26,6 +28,7 @@ export function ProjectLivenessChart({
   configuredSubtypes,
   anomalies,
   hasTrackedContractsChanged,
+  milestones,
 }: Props) {
   const [timeRange, setTimeRange] = useState<LivenessChartTimeRange>('30d')
   const [subtype, setSubtype] = useState<TrackedTxsConfigSubtype>(
@@ -76,7 +79,12 @@ export function ProjectLivenessChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-      <LivenessChart data={chartData} isLoading={isLoading} subtype={subtype} />
+      <LivenessChart
+        data={chartData}
+        isLoading={isLoading}
+        subtype={subtype}
+        milestones={milestones}
+      />
       <LivenessChartStats
         timeRange={timeRange}
         isLoading={isLoading}

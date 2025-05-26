@@ -337,6 +337,7 @@ export async function getScalingProjectEntry(
         id: 'liveness',
         title: 'Liveness',
         projectId: project.id,
+        milestones: sortedMilestones,
         ...livenessSection,
       },
     })
