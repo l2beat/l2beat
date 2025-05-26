@@ -305,8 +305,8 @@ export interface ProjectBridgeRisks {
   destinationToken?: TableReadyValue
   livenessFailure?: TableReadyValue
   governance?: {
-    upgrade: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
-    pause: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
+    upgrade?: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
+    pause?: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
   }
 }
 
