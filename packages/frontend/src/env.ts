@@ -29,6 +29,8 @@ const SERVER_CONFIG = {
     .string()
     .url()
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
+  DATABASE_LOG_ENABLED: coerceBoolean.default('false'),
+  DISABLE_CACHE: coerceBoolean.default('false'),
   ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default('false'),
   NODE_ENV: z
@@ -41,7 +43,6 @@ const SERVER_CONFIG = {
   VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
-  REWRITE_DISABLE_CACHE: coerceBoolean.default('false'),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -83,6 +84,8 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
+    DISABLE_CACHE: process.env.DISABLE_CACHE,
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
@@ -93,7 +96,6 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
-    REWRITE_DISABLE_CACHE: process.env.REWRITE_DISABLE_CACHE,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,

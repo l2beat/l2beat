@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xabd7c7ad8a36b3c84823420f003825cf083c9c97
+Generated with discovered.json: 0x8c58c554120451fa4334c7995add21d56e0be024
 
-# Diff at Thu, 15 May 2025 19:19:43 GMT:
+# Diff at Fri, 23 May 2025 09:41:17 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@85aef73ab3a7f8056bb7b72afad184544b7d9ed5 block: 1122116
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 1122116
 - current block number: 1122116
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
@@ -17,22 +17,12 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1122116 (main branch discovery), not current.
 
 ```diff
-    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    contract  (0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8) {
     +++ description: None
-      sourceHashes.5:
--        "0x7128ff67025fb2bcb219505d0a80a78e76013becea566de4efba404b7869bc9f"
-      sourceHashes.4:
--        "0x62c0ff182f9767f2e54f31e47ffd6587cc114b97ea994c85864c11c8116eb229"
-      sourceHashes.3:
--        "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
-      sourceHashes.2:
--        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
-      sourceHashes.1:
--        "0x8225b12393daa7489701089347eb52c11b768a1c177a6cd227092c9aefd97b85"
-+        "0x457307c82577abe25e93c7096a0773b8bc37c55a1373212df91feeee68559f79"
-      sourceHashes.0:
--        "0x1e60affed7805f9a7e3ab1afdf31c05e81f9a8977725c508d6222e816b67806f"
-+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
     }
 ```
 

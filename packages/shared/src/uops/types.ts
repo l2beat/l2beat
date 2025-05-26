@@ -1,8 +1,15 @@
-export type Operation = StaticOperation | RecursiveOperation
+export type Operation = StaticOperation | RecursiveOperation | TransferOperation
 
 export interface StaticOperation {
   type: 'static'
   name?: string
+  count: number
+}
+
+export interface TransferOperation {
+  type: 'transfer'
+  name: string
+  to: string
   count: number
 }
 

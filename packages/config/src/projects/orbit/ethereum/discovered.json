@@ -57,28 +57,33 @@
         {
           "permission": "upgrade",
           "from": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
+          "role": "admin",
           "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
         },
         {
           "permission": "upgrade",
           "from": "0x830433dE03ABedE062660CC629e1A2c714272474",
+          "role": "admin",
           "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
         },
         {
           "permission": "upgrade",
           "from": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "role": "admin",
           "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
         },
         {
           "permission": "upgrade",
           "from": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
+          "role": "admin",
           "via": [{ "address": "0xFb504CD4eD46024B83c4337044995CF112205f18" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xFb504CD4eD46024B83c4337044995CF112205f18"
+          "from": "0xFb504CD4eD46024B83c4337044995CF112205f18",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["depositCount", "transactionCount"],
@@ -243,7 +248,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
+          "from": "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1708655543,
@@ -301,19 +307,23 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+          "from": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x830433dE03ABedE062660CC629e1A2c714272474"
+          "from": "0x830433dE03ABedE062660CC629e1A2c714272474",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+          "from": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+          "from": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1649901966,
@@ -500,7 +510,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0x99c72d1d8562e9003f05080e54860251fc859062b04a128d112f53199b3e5b1e"
+  "permissionsConfigHash": "0x5be97e75e5df399b7665a46fa1aeae9fc39dc80d9edf737421853cefcb15bf2a"
 }

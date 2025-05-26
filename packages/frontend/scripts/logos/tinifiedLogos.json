@@ -98,7 +98,7 @@
   "satellite.png": "df226eac4776afbf538a5fc36813bbcd",
   "scroll.png": "2e2e498dc22d0cf4d156d44968a1d3c5",
   "skale-ima.png": "4e20d65725bc1c0756799850fae86e7b",
-  "socket.png": "fea711197c28a8934e61c5d51d71484c",
+  "socket.png": "1f8105883b8bf53fb9def42d43160af7",
   "sollet.png": "4844481226982c02a52c33e8e59add5c",
   "sorare.png": "051633d7c42701d860d6b210b32380ad",
   "specular.png": "986510d31bd9d899f96ad1a452039c70",
@@ -298,7 +298,7 @@
   "geist.png": "dc33ce729479f169d42f10c17087dd3c",
   "pandasea.png": "f35ae333724095a021edeac7b389cb70",
   "hyperliquid.png": "99c5fe0d00ec10b0719c3ec91cf50213",
-  "status.png": "527f556474e5e7948bbf66b8d47b768d",
+  "status.png": "1b0b1787e2de226da3c58668c9f9df1b",
   "facet.png": "d672f59e98ade64b954d4c5504dc8427",
   "corn.png": "397cff5943f3e83928bf85ff3fe571ed",
   "phala.png": "9fd2b1a8426b20412d3f317fbed1810c",
@@ -383,5 +383,6 @@
   "spire.png": "17ddc76d95f48dbc8cea31385ed82152",
   "epicchain.png": "ade039e6b525d757a936f483ae7c3a42",
   "yellowstone.png": "7a58f52d6bebd20e57ef311b3d613ad4",
-  "moonchain.png": "d23755147dbe756796b74b9fb573de51"
+  "moonchain.png": "d23755147dbe756796b74b9fb573de51",
+  "nearomni.png": "7670967cc39290ecb136427347bb5a6d"
 }

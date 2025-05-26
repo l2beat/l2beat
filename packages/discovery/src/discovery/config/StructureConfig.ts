@@ -5,54 +5,6 @@ import type { BlipSexp } from '../../blip/type'
 import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
 
-export type RawPermissionConfiguration = z.infer<
-  typeof RawPermissionConfiguration
->
-
-export const BasePermissionEntries = [
-  'member',
-  'act',
-  'interact',
-  'upgrade',
-] as const
-
-export const RolePermissionEntries = [
-  'challenge',
-  'guard',
-  'propose',
-  'sequence',
-  'validate',
-  'operateLinea',
-  'fastconfirm',
-  'validateZkStack',
-  'validateBridge',
-  'validateBridge2',
-  'validateBridge3',
-  'relay',
-  'aggregatePolygon',
-  'operateStarknet',
-  'operateStarkEx',
-  'governStarknet',
-] as const
-
-export const Permission = z.enum([
-  ...RolePermissionEntries,
-  ...BasePermissionEntries,
-])
-export type Permission = z.infer<typeof Permission>
-
-export const RawPermissionConfiguration = z.object({
-  type: Permission,
-  delay: z.union([z.number(), z.string()]).default(0),
-  description: z.string().optional(),
-  condition: z.string().optional(),
-})
-
-export type PermissionConfiguration = RawPermissionConfiguration & {
-  target: EthereumAddress
-  delay: number
-}
-
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
 
@@ -61,7 +13,6 @@ export const StructureContractField = z
   .object({
     handler: z.optional(UserHandlerDefinition),
     template: z.string().optional(),
-    permissions: z.array(RawPermissionConfiguration).optional(),
     copy: z.string().optional(),
     edit: z
       .unknown()
@@ -100,6 +51,7 @@ export const ManualProxyType = z.enum([
   'Axelar proxy',
   'LightLink proxy',
   'Everclear proxy',
+  'TaikoFork proxy',
   'immutable',
 ])
 

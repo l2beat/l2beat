@@ -5,7 +5,7 @@ import { TopBar } from './TopBar'
 import { useBreakpoint } from './hooks/useBreakpoint'
 import { type PanelId, useMultiViewStore } from './store'
 
-const RESIZE_AREA = 20
+const RESIZE_AREA = 8
 const MIN_PANEL_WIDTH = 160
 
 export interface MultiViewProps {
@@ -29,12 +29,20 @@ export function MultiView(props: MultiViewProps) {
   const [sizes, setSizes] = useState<number[]>([])
 
   useEffect(() => {
-    const firstPanel = panels[0]
+    const nodesPanel = panels.find((panel) => panel.id === 'nodes')
 
-    if (isMobileOrTablet && !fullScreen && firstPanel) {
-      toggleFullScreen(firstPanel.id)
+    if (isMobileOrTablet && !fullScreen) {
+      if (nodesPanel) {
+        toggleFullScreen('nodes')
+        setActivePanel('nodes')
+      } else {
+        const firstPanel = panels[0]
+        if (firstPanel) {
+          toggleFullScreen(firstPanel.id)
+        }
+      }
     }
-  }, [isMobileOrTablet, fullScreen, panels, toggleFullScreen])
+  }, [isMobileOrTablet, fullScreen, panels, toggleFullScreen, setActivePanel])
 
   function getPanelElements() {
     const container = panelContainerRef.current
@@ -187,8 +195,11 @@ export function MultiView(props: MultiViewProps) {
       >
         {sizes.map((size, i) => (
           <div
-            className="absolute top-0 z-20 h-full"
-            style={{ width: RESIZE_AREA, left: `${size - RESIZE_AREA / 2}px` }}
+            className="absolute top-0 z-20 h-full cursor-col-resize"
+            style={{
+              width: RESIZE_AREA,
+              left: `${size - RESIZE_AREA / 2}px`,
+            }}
             onMouseDown={(e) => e.preventDefault()}
             onDoubleClick={resizeAll}
             key={i}

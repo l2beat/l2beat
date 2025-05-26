@@ -1,4 +1,319 @@
-Generated with discovered.json: 0xebf08d5f871947391118dd4b6cf829d826de867d
+Generated with discovered.json: 0x2f7aca9bd91d663db2fce84db50eb07c8009c614
+
+# Diff at Fri, 23 May 2025 09:41:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 869343
+- current block number: 869343
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 869343 (main branch discovery), not current.
+
+```diff
+    EOA KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".securityCouncilPermission"
+      receivedPermissions.2.role:
++        ".securityCouncilPermission"
+      receivedPermissions.1.role:
++        ".securityCouncilPermission"
+      receivedPermissions.0.role:
++        ".securityCouncilPermission"
+    }
+```
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.5.delay:
+-        1036800
+      receivedPermissions.5.description:
+-        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.3.delay:
++        1036800
+      receivedPermissions.3.description:
++        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.3.role:
++        ".kintoMultisig2Permission"
+      receivedPermissions.2.from:
+-        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.2.description:
+-        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      receivedPermissions.2.role:
++        ".KYC_PROVIDERs"
+      receivedPermissions.1.role:
++        ".kintoMultisig2Permission"
+      receivedPermissions.0.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+      receivedPermissions.0.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    EOA  (0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    EOA  (0x6E31039abF8d248aBed57E307C9E1b7530c269E4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    EOA  (0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.5.from:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      directlyReceivedPermissions.5.description:
+-        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.5.role:
++        ".UPGRADERs"
+      directlyReceivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.4.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      directlyReceivedPermissions.4.role:
++        ".KYC_PROVIDERs"
+      directlyReceivedPermissions.3.from:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      directlyReceivedPermissions.3.description:
+-        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
++        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.3.role:
++        ".owner"
+      directlyReceivedPermissions.2.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.2.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+      directlyReceivedPermissions.2.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".GOVERNANCErs"
+      directlyReceivedPermissions.0.role:
++        ".DEFAULT_ADMINs"
+    }
+```
+
+```diff
+    EOA  (0xb539019776eF803E89EC062Ad54cA24D1Fdb008a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".KYC_PROVIDERs"
+    }
+```
+
+Generated with discovered.json: 0x103c138a292812ec1952a34ff51fa08fc037bb04
+
+# Diff at Wed, 21 May 2025 13:29:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 850146
+- current block number: 869343
+
+## Description
+
+two new scheduled ops:
+
+```
+============= Queued Operations and Pending Role Grant Delays =============
+
+Queued Operations:
+
+Operation 0x69b7415762436b7382a471e6bd835c18496843f284e45e2772b8fdca14129eda:
+    Nonce: 1
+    Scheduled for: 2025-06-01T23:52:24.000Z
+    Caller: Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: labelRole(DEV_HELPER_ROLE, "DEV_HELPER_ROLE")
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x660eb4463bc00a727c981e88d2e6cf11290aa6b528f0499dd65c6d7c6b2c75b9
+
+Operation 0x1da4805821f761c940612ee65771335cc7ba51c99fad482463a23aca00081b5c:
+    Nonce: 1
+    Scheduled for: 2025-06-01T23:52:25.000Z
+    Caller: Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: setTargetFunctionRole(KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b), [overrideChildToParentContract(address,address)], DEV_HELPER_ROLE)
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0xf3c8ff8bfb8b7d123d8d99d694e7f2b7db4fca8e1e7676975cdd1dd89e7d6563
+```
+
+a new role is added with the target KintoAppRegistry.overrideChildToParentContract(). This allows managing child contracts for developers. these child contracts are automatically whitelisted for a certain developer if they have a parent who is whitelisted for this dev. since the system contract whitelist cannot be changed by this function, censorship by potential non-SC actors with this new role is not possible.
+
+## Watched changes
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.14:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.13:
++        {"operationId":"0xdc3e209a2fe4bae73e8fa0e602f61b887a4e123a18319283c3535622c64980f9","nonce":1,"schedule":1744220010,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000273c0248976abc550000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a0000000000000000000000000000000000000000000000000000000000000000"}
+      values.OperationScheduled.12.operationId:
+-        "0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8"
++        "0x1da4805821f761c940612ee65771335cc7ba51c99fad482463a23aca00081b5c"
+      values.OperationScheduled.12.schedule:
+-        1743464541
++        1748821945
+      values.OperationScheduled.12.data:
+-        "0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"
++        "0x08d6122d0000000000000000000000005a2b641b84b0230c8e75f55d5afd27f4dbd59d5b0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000afc4a9e25c1e99b800000000000000000000000000000000000000000000000000000000000000019a6896f600000000000000000000000000000000000000000000000000000000"
+      values.OperationScheduled.11.operationId:
+-        "0xdc3e209a2fe4bae73e8fa0e602f61b887a4e123a18319283c3535622c64980f9"
++        "0xdd5ae826ce8969e1e28b47bfb52c2ece6c9b94f3777698c30894e55dbc6fe8a0"
+      values.OperationScheduled.11.schedule:
+-        1744220010
++        1744220006
+      values.OperationScheduled.11.data:
+-        "0x25c471a0000000000000000000000000000000000000000000000000273c0248976abc550000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a0000000000000000000000000000000000000000000000000000000000000000"
++        "0x853551b8000000000000000000000000000000000000000000000000273c0248976abc55000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000165245434f564552595f415050524f5645525f524f4c4500000000000000000000"
+      values.OperationScheduled.10.operationId:
+-        "0xdd5ae826ce8969e1e28b47bfb52c2ece6c9b94f3777698c30894e55dbc6fe8a0"
++        "0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1"
+      values.OperationScheduled.10.schedule:
+-        1744220006
++        1743905986
+      values.OperationScheduled.10.data:
+-        "0x853551b8000000000000000000000000000000000000000000000000273c0248976abc55000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000165245434f564552595f415050524f5645525f524f4c4500000000000000000000"
++        "0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"
+      values.OperationScheduled.9.operationId:
+-        "0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1"
++        "0x62d4f9252894204088abbb251d9eb3f66b47459f8151390f3152ce5d0d0b189f"
+      values.OperationScheduled.9.schedule:
+-        1743905986
++        1744220007
+      values.OperationScheduled.9.data:
+-        "0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"
++        "0x853551b800000000000000000000000000000000000000000000000007d8641643fe2cba0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000f53414e4354494f4e45525f524f4c450000000000000000000000000000000000"
+      values.OperationScheduled.8.operationId:
+-        "0x62d4f9252894204088abbb251d9eb3f66b47459f8151390f3152ce5d0d0b189f"
++        "0x1180e76c68ad305ca046e644a97adb50f9b79684c420e10fbd71a5b941badea5"
+      values.OperationScheduled.8.schedule:
+-        1744220007
++        1744220008
+      values.OperationScheduled.8.data:
+-        "0x853551b800000000000000000000000000000000000000000000000007d8641643fe2cba0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000f53414e4354494f4e45525f524f4c450000000000000000000000000000000000"
++        "0x08d6122d000000000000000000000000f369f78e3a0492cc4e96a90dae0728a38498e9c7000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000007d8641643fe2cba0000000000000000000000000000000000000000000000000000000000000001fb0b294000000000000000000000000000000000000000000000000000000000"
+      values.OperationScheduled.7.operationId:
+-        "0x1180e76c68ad305ca046e644a97adb50f9b79684c420e10fbd71a5b941badea5"
++        "0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d"
+      values.OperationScheduled.7.schedule:
+-        1744220008
++        1743905137
+      values.OperationScheduled.7.data:
+-        "0x08d6122d000000000000000000000000f369f78e3a0492cc4e96a90dae0728a38498e9c7000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000007d8641643fe2cba0000000000000000000000000000000000000000000000000000000000000001fb0b294000000000000000000000000000000000000000000000000000000000"
++        "0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"
+      values.OperationScheduled.6.operationId:
+-        "0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d"
++        "0xa148a26d04bda6140c756b460fb9e37aecd93c69443af9f523d113d8593f8163"
+      values.OperationScheduled.6.schedule:
+-        1743905137
++        1744220011
+      values.OperationScheduled.6.data:
+-        "0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"
++        "0x25c471a000000000000000000000000000000000000000000000000007d8641643fe2cba00000000000000000000000028fc10e12a78f986c78f973fc70ed88072b34c8e0000000000000000000000000000000000000000000000000000000000000000"
+      values.OperationScheduled.5.operationId:
+-        "0xa148a26d04bda6140c756b460fb9e37aecd93c69443af9f523d113d8593f8163"
++        "0x18198983d32863dcc0dbdc5fbaf362b9e46652dae6c457956e761db4b87b8e4e"
+      values.OperationScheduled.5.schedule:
+-        1744220011
++        1744220008
+      values.OperationScheduled.5.data:
+-        "0x25c471a000000000000000000000000000000000000000000000000007d8641643fe2cba00000000000000000000000028fc10e12a78f986c78f973fc70ed88072b34c8e0000000000000000000000000000000000000000000000000000000000000000"
++        "0x08d6122d0000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d750000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000273c0248976abc550000000000000000000000000000000000000000000000000000000000000001456cf49200000000000000000000000000000000000000000000000000000000"
+      values.OperationScheduled.4.operationId:
+-        "0x18198983d32863dcc0dbdc5fbaf362b9e46652dae6c457956e761db4b87b8e4e"
++        "0x69b7415762436b7382a471e6bd835c18496843f284e45e2772b8fdca14129eda"
+      values.OperationScheduled.4.schedule:
+-        1744220008
++        1748821944
+      values.OperationScheduled.4.data:
+-        "0x08d6122d0000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d750000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000273c0248976abc550000000000000000000000000000000000000000000000000000000000000001456cf49200000000000000000000000000000000000000000000000000000000"
++        "0x853551b8000000000000000000000000000000000000000000000000afc4a9e25c1e99b80000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000f4445565f48454c5045525f524f4c450000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x0bae3346b6031c6b404caac70477c7fdbc38f44c
 
 # Diff at Mon, 12 May 2025 13:18:51 GMT:
 

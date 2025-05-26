@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xf86ed15146a3d65b3781a81ae7c12b77b1d5db01
+Generated with discovered.json: 0x0fca9e6c7bd50169ea8084a39895d803ccb5ca6f
+
+# Diff at Fri, 23 May 2025 09:41:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    EOA  (0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".trustedSequencer"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x1863289fc8f7c014e7d176d665d8c302fb1369a0
 
 # Diff at Tue, 29 Apr 2025 08:19:09 GMT:
 

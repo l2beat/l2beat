@@ -1,36 +1,123 @@
-Generated with discovered.json: 0x5e51fbd093c8e795ab7e041547c27018853ed0f0
+Generated with discovered.json: 0xbea867b915598897cf6607a51232c2a9fb5b6019
 
-# Diff at Thu, 15 May 2025 17:41:26 GMT:
+# Diff at Fri, 23 May 2025 09:41:09 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@b6675c89379b9fa87455d4fed68e15a59ba3fc0d block: 22480258
-- current block number: 22480258
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22496279
+- current block number: 22496279
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22480258 (main branch discovery), not current.
+discovery. Values are for block 22496279 (main branch discovery), not current.
+
+```diff
+    EOA  (0x11805594be0229EF08429D775AF0c55f7c4535dE) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x54aB716D465be3D5EEca64E63ac0048D7a81659a) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract Abstract Multisig (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getAdmin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
+Generated with discovered.json: 0xe2d0389a305066196f1800063716aa9a764d054c
+
+# Diff at Fri, 16 May 2025 14:39:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e002413ca40890ffd9150afa1422bcb6338725ba block: 22480258
+- current block number: 22496279
+
+## Description
+
+abstract emergency upgrade via zk stack:
+
+emergency upgrade did not change any contract source code, but included an unverified contract that helped change a single state var in the diamond during diamondCut
+https://dashboard.tenderly.co/tx/0xcaefda7f4c6e29f90b34a0b68817feeb9fac3da2cb66538ea15fbeed434a7201/state-diff
+
+which bumped the totalBatchesVerified from `16528` to `16529`
+
+the validator then resumed [executing the unproven batch](https://app.blocksec.com/explorer/tx/eth/0x96ddbadf9200634d4b8151f0236d3ff2676e61c54bb9af78de4fbd32a8e3331b) and [proving](https://app.blocksec.com/explorer/tx/eth/0x70c0de3eb6aa60b538e5894e5d390d5bc73d6c14e59932e26cce85f9de142c5c)/[executing](https://app.blocksec.com/explorer/tx/eth/0x1fb7232e9a17cb396851dcb7f1a85411ad07e4032913906474036ef37c4476a9) subsequent batches
+
+sub MS signer change.
+
+## Watched changes
 
 ```diff
     contract AbstractZkEvm (0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      sourceHashes.4:
--        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f"
-      sourceHashes.3:
--        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486"
-      sourceHashes.2:
--        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
-      sourceHashes.1:
--        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
-+        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
-      sourceHashes.0:
--        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25"
-+        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+      values.$pastUpgrades.5:
++        ["2025-05-16T12:59:47.000Z","0xcaefda7f4c6e29f90b34a0b68817feeb9fac3da2cb66538ea15fbeed434a7201",["0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4","0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4","0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f","0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"]]
+      values.$upgradeCount:
+-        5
++        6
+    }
+```
+
+```diff
+    contract Safe (0x58536761C97F5037931b56efeE922471add0eEe8) {
+    +++ description: None
+      values.$members.2:
++        "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553"
+      values.$members.1:
+-        "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553"
++        "0xbB943Cf3c5b90f2eD04F53658CCA49286601e808"
+      values.$members.0:
+-        "0xbB943Cf3c5b90f2eD04F53658CCA49286601e808"
++        "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2"
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "1 of 3 (33%)"
     }
 ```
 

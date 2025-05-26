@@ -1,40 +1,129 @@
-Generated with discovered.json: 0xb01b380dd05cae8fac84c101c29a38e9426b3f25
+Generated with discovered.json: 0xf360ed893f5a9f5604518e143638a531816e4d35
 
-# Diff at Thu, 15 May 2025 17:46:28 GMT:
+# Diff at Fri, 23 May 2025 09:41:10 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@b6675c89379b9fa87455d4fed68e15a59ba3fc0d block: 22480309
-- current block number: 22480309
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22517904
+- current block number: 22517904
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22480309 (main branch discovery), not current.
+discovery. Values are for block 22517904 (main branch discovery), not current.
 
 ```diff
-    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      sourceHashes.4:
--        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f"
-      sourceHashes.3:
--        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486"
-      sourceHashes.2:
--        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
-      sourceHashes.1:
--        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
-+        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
-      sourceHashes.0:
--        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25"
-+        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+    EOA  (0x4cc87B0A504047967CeD9A955431B3229237e7de) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
     }
 ```
 
-Generated with discovered.json: 0xcdb68748f3e212193e7f005ece40988d5b06cadd
+```diff
+    EOA  (0x50B238788747B26c408681283D148659F9da7Cf9) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".whitelistedSendersAC"
+      receivedPermissions.0.role:
++        ".defaultAdminAC"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      receivedPermissions.0.role:
++        ".getTransactionFilterer"
+    }
+```
+
+```diff
+    EOA  (0xe14828E4405239dD331F194F1B7883eeD73bCBF3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenMultiplierSetter"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".getAdmin"
+      receivedPermissions.0.role:
++        ".defaultAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+Generated with discovered.json: 0xd51f92447314ab19b6ec29ca15b9abcfcb973592
+
+# Diff at Mon, 19 May 2025 15:29:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ba4be7822b161a6616bac837b3f7f03225f5cb9 block: 22480309
+- current block number: 22517904
+
+## Description
+
+Whitelisted USDC bridge contract on L2.
+
+## Watched changes
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      values.accessControl.WHITELISTED_ROLE.members.1:
++        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
++++ description: Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.
+      values.whitelistedContractsAC.1:
++        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
+    }
+```
+
+Generated with discovered.json: 0x821b11cd324bfdf250c740d460994f73a6f084f3
 
 # Diff at Wed, 14 May 2025 13:53:00 GMT:
 

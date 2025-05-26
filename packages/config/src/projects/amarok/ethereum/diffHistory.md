@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xacbdb72626718ac37a4f57d662080fc446cebfcb
+Generated with discovered.json: 0x96c19c667c214211f2ac6c3aef34ad30f7979924
 
-# Diff at Thu, 15 May 2025 19:16:50 GMT:
+# Diff at Fri, 23 May 2025 09:40:52 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@82b2d64c74bfba4edbf8be310e136fc204fbaed0 block: 21629064
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21629064
 - current block number: 21629064
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
@@ -17,40 +17,44 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21629064 (main branch discovery), not current.
 
 ```diff
-    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
     +++ description: None
-      sourceHashes.12:
--        "0x535e1a3124295865c51f088c9c1b0d4aff2003c3ed2744a9f3d8c24d059b1de2"
-      sourceHashes.11:
--        "0x96019d37901a28e311eaa7c1cf12caa35106001dba2273cfd3380b89952f6108"
-      sourceHashes.10:
--        "0xddff88cf097843837c49f9ed19ac3343d4f1950d3e0508e63669fbd972e4100c"
-      sourceHashes.9:
--        "0xa76e155468cff4d404ed0288be360d31e5ad958e5c2608e63134e03ec1d030c4"
-      sourceHashes.8:
--        "0x6f2682c1f11312a6a8d948a5cf458cd0878e0b512e4e28f28c8444fd8a4bc91b"
-      sourceHashes.7:
--        "0xdbc90380d4658e61987fc156f3647d7db9f8c00d8af551f3abbd1bae5ded1e28"
-      sourceHashes.6:
--        "0x9efc9e4ba3961b565b36b5d255c7be95f240531bb7ffb97a3503db6bc34a5b77"
-      sourceHashes.5:
--        "0xeaf1c83d9906c268afae35bf023ae9d7861e4bcdca5969bfd3c839e07bf3ae25"
-      sourceHashes.4:
--        "0xf9087df539d680461ace025dfe27bd79d2eb110215ae416303b44629d7389219"
-      sourceHashes.3:
--        "0x53d627be0e3afee6df116dcbf8d5988fe3b0e0c75fac31d03ec65870d7eb688e"
-      sourceHashes.2:
--        "0x8692d1c129e074dfd45ba266215947cd7415ac1620b6aeca2d04cdfd593732ad"
-      sourceHashes.1:
--        "0x662d43eeaf35f8a6d80e9b833573360c1a83f418e93c65db17cf46c7b47758e8"
-+        "0xddff88cf097843837c49f9ed19ac3343d4f1950d3e0508e63669fbd972e4100c"
-      sourceHashes.0:
--        "0x72a9f0d6928e2ccb1a94e23690974a84ecc5be50d3be866e39469534323eebed"
-+        "0xf96bb1a4f35c949f170dae66f947e46f2e78265edaf26c1131507855ed435fae"
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
     }
 ```
 
-Generated with discovered.json: 0x0a66ded86d59caeabf09b8683d5a4fe67c2d81e0
+```diff
+    EOA  (0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x867b8a5042864a2e9fd61be284b16f62632e7d10
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:
 

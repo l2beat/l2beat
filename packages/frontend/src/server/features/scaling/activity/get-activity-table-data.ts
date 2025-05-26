@@ -19,6 +19,7 @@ export async function getActivityTable(projects: Project[]) {
   if (env.MOCK) {
     return getMockActivityTableData()
   }
+
   return getCachedActivityTableData(projects)
 }
 
@@ -28,12 +29,14 @@ type ActivityTableData = Awaited<ReturnType<typeof getCachedActivityTableData>>
 const getCachedActivityTableData = cache(
   async (projects: Project[]) => {
     const db = getDb()
-    const range = getFullySyncedActivityRange('max')
-    const records = await db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
-      range,
-    )
-    const maxCounts = await db.activity.getMaxCountsForProjects()
+    const range = getFullySyncedActivityRange('30d')
+    const [records, maxCounts] = await Promise.all([
+      db.activity.getByProjectsAndTimeRange(
+        [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
+        range,
+      ),
+      db.activity.getMaxCountsForProjects(),
+    ])
 
     const grouped = groupBy(records, (r) => r.projectId)
 
@@ -57,7 +60,7 @@ const getCachedActivityTableData = cache(
             tps: {
               change: getTpsWeeklyChange(records),
               pastDayCount: getLastDayTps(records),
-              summedCount: sumTpsCount(records.slice(-30)),
+              summedCount: sumTpsCount(records),
               maxCount: {
                 value: countPerSecond(maxCount.count),
                 timestamp: maxCount.countTimestamp,
@@ -66,7 +69,7 @@ const getCachedActivityTableData = cache(
             uops: {
               change: getUopsWeeklyChange(records),
               pastDayCount: getLastDayUops(records),
-              summedCount: sumUopsCount(records.slice(-30)),
+              summedCount: sumUopsCount(records),
               maxCount: {
                 value: countPerSecond(maxCount.uopsCount),
                 timestamp: maxCount.uopsTimestamp,

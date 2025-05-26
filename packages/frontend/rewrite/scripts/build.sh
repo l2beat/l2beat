@@ -7,7 +7,7 @@ export PATH="$(pwd)/../../node_modules/.bin:$PATH"
 rm -rf rewrite/dist
 
 esbuild \
-  rewrite/src/ssr/client.tsx \
+  rewrite/src/ssr/client-entry.tsx \
   --bundle \
   --minify \
   --tsconfig=rewrite/tsconfig.json \
@@ -17,11 +17,12 @@ tailwindcss \
   -o ./rewrite/static/index.css \
   --minify &
 wait
-tsx ./rewrite/scripts/hashFiles.ts
+node -r esbuild-register ./rewrite/scripts/hashFiles.ts
 
 esbuild \
   rewrite/src/index.ts \
   --bundle \
+  --minify \
   --platform=node \
   --packages=external \
   --tsconfig=rewrite/tsconfig.json \

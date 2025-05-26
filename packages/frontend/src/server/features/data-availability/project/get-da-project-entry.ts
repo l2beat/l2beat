@@ -12,7 +12,6 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
-import { api } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectIcon } from '../../utils/get-project-icon'
@@ -66,6 +65,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     usedIn: UsedInProjectWithIcon[]
   }
   sections: ProjectDetailsSection[]
+  discoUiHref?: string
 }
 
 export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
@@ -118,14 +118,6 @@ export async function getDaProjectEntry(
       getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
-      api.da.projectChart.prefetch({
-        range: 'max',
-        projectId: layer.id,
-      }),
-      api.da.projectChartByProject.prefetch({
-        range: '30d',
-        daLayer: layer.id,
-      }),
     ])
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
@@ -207,6 +199,9 @@ export async function getDaProjectEntry(
       title: bridge.daBridge.name,
       href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     })),
+    discoUiHref: selected
+      ? `https://disco.l2beat.com/ui/p/${selected.id}`
+      : undefined,
   }
 
   if (layer.daLayer.usedWithoutBridgeIn.length > 0) {

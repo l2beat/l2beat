@@ -1,0 +1,28 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "LockingPool",
+  "description": "Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.",
+  // LockingPool
+  "fields": {
+    "sequencers": {
+      "handler": {
+        // each sequencer entry has: amount uint256, reward uint256, activationBatch uint256, updatedBatch uint256, deactivationBatch uint256, deactivationTime uint256, unlockClaimTime uint256, nonce uint256, owner address, signer address, pubkey bytes, rewardRecipient address, status uint8
+        "startIndex": 1,
+        "type": "array",
+        "length": "{{ totalSequencers }}",
+        "ignoreRelative": true
+      },
+      // status: Unavailabe, Inactive, Active, Unlocked (Exited, the sequencer has no locked tokens, and it's no longer produce blocks on L2)
+      "edit": ["map", ["pick", "owner", "signer", "rewardRecipient", "status"]]
+    }
+  },
+  "ignoreMethods": ["curBatchState"], // interesting for finality?
+  "ignoreInWatchMode": [
+    "currentBatch",
+    "totalSequencers",
+    "sequencers",
+    "BLOCK_REWARD",
+    "rewardPerBlock"
+  ],
+  "ignoreRelatives": ["rewardRecipient"]
+}

@@ -144,7 +144,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2d5d7d31F671F86C782533cc367F14109a082712"
+          "from": "0x2d5d7d31F671F86C782533cc367F14109a082712",
+          "role": "admin"
         }
       ]
     },
@@ -544,5 +545,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x9885a89bcfbc6bfd9147dbf57dcfe1dda21a891efecdefd6f9e2daa30423963d"
+  "permissionsConfigHash": "0xeb9dc0f3bf6027d1be9c4618c40038c91bf244b7321ad4e8db9ad5e71ae010d6"
 }

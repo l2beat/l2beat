@@ -15,11 +15,6 @@ export const soneium = opStackL2({
     name: 'Soneium',
     slug: 'soneium',
     stateValidationImage: 'opfp',
-    tvsWarning: {
-      value:
-        'The total TVS doublecounts underlying assets for solvBTC.BBN and solvBTC since they are locked on Soneium. We are working on a fix.',
-      sentiment: 'warning',
-    },
     description:
       'Soneium is an Optimistic rollup based on the OP Stack. It is built by Sony Block Solutions Labs and planned to stand as a versatile, general-purpose blockchain.',
     links: {

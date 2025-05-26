@@ -1,4 +1,163 @@
-Generated with discovered.json: 0x00ff95a3ce0cfc77e5c7ef20903dacb88df61e8a
+Generated with discovered.json: 0x7074567db4ffe2001390b4965ae03e2004969580
+
+# Diff at Fri, 23 May 2025 09:40:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22415188
+- current block number: 22415188
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22415188 (main branch discovery), not current.
+
+```diff
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D) {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      receivedPermissions.0.role:
++        ".fallbackOperator"
+    }
+```
+
+```diff
+    EOA  (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".pausers"
+    }
+```
+
+```diff
+    EOA  (0x46d2F319fd42165D4318F099E143dEA8124E9E3e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".Operators"
+    }
+```
+
+```diff
+    EOA  (0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".Operators"
+    }
+```
+
+```diff
+    contract Linea Multisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.8.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.8.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.8.description:
+-        "execute transactions that are ready."
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.8.via:
++        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.7.from:
+-        "0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.7.description:
+-        "change the beacon implementation."
++        "propose transactions."
+      receivedPermissions.7.role:
++        ".proposerAC"
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.6.description:
+-        "manage all critical access control roles and permissions (full admin of the rollup system)."
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.6.via:
++        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.5.description:
+-        "propose transactions."
++        "execute transactions that are ready."
+      receivedPermissions.5.role:
++        ".executorAC"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.4.via:
+-        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.4.description:
++        "cancel queued transactions."
+      receivedPermissions.4.role:
++        ".cancellerAC"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.3.via:
+-        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.3.description:
++        "manage all critical access control roles and permissions (full admin of the rollup system)."
+      receivedPermissions.3.role:
++        ".defaultAdminAC"
+      receivedPermissions.2.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
+      receivedPermissions.2.description:
+-        "cancel queued transactions."
++        "change the beacon implementation."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".defaultAdminAC"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".executorAC"
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      directlyReceivedPermissions.1.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x24a1cd6f8eef7ea640c58d3e5b83e0efc96cfd6d
 
 # Diff at Mon, 05 May 2025 04:35:32 GMT:
 

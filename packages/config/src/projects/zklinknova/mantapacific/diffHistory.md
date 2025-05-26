@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x2f702c1361079c9755893a9dd781c31dd15b9e1c
+Generated with discovered.json: 0x0c79e3f90efd52a9aa806db407a111c7f4bc60d2
+
+# Diff at Fri, 23 May 2025 09:41:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 4745686
+- current block number: 4745686
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 4745686 (main branch discovery), not current.
+
+```diff
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+Generated with discovered.json: 0x3c9c3c994766f95fc3761d4e7b3197e62dbc7aa0
 
 # Diff at Tue, 29 Apr 2025 08:19:30 GMT:
 

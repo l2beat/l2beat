@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22437961,
+  "blockNumber": 22536886,
   "configHash": "0xc6bd1557718c613e7ddae4bb901df4b92ef2dd43faaa642799a484147a433d01",
   "entries": [
     {
@@ -26,15 +26,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+          "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+          "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1679653103,
@@ -54,7 +57,8 @@
       "receivedPermissions": [
         {
           "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": ".trustedAggregatorAC"
         }
       ]
     },
@@ -77,12 +81,14 @@
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "role": ".createRollupAC"
         },
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
@@ -94,13 +100,15 @@
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
+          "role": ".tweakParametersAC"
         },
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)",
           "via": [
             {
@@ -115,11 +123,13 @@
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
         },
         {
           "permission": "upgrade",
           "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
           "via": [
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
@@ -132,6 +142,7 @@
         {
           "permission": "upgrade",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin",
           "via": [
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
@@ -144,6 +155,7 @@
         {
           "permission": "upgrade",
           "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin",
           "via": [
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
@@ -159,6 +171,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
+          "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
         }
       ],
@@ -220,7 +233,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x3a6a6c4024d6975c5835242a48308905e4a8775b274bb21fc3c39e695fd4cc7b",
+        "getRoot": "0xad8f6c5a8d50db615ede82ec0b7e55a8d87075d956d2f584361d6c712a9f47b1",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -258,7 +271,8 @@
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
+          "role": ".emergencyCouncilAdminAC"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -436,12 +450,12 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x6f0c80968a1fe7370088f8db837b78b860b073c941755d2f213ffabfdfd1af72",
+        "getRollupExitRoot": "0x333ba4fc1db0b70fa0ec38c249070919d8cd3be300388f58ed8cd678e3f7ad25",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1746696335,
+        "lastAggregationTimestamp": 1747897487,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14, 17, 18, 19],
+        "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 20,
@@ -710,8 +724,8 @@
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
-        "totalSequencedBatches": 724890,
-        "totalVerifiedBatches": 724297,
+        "totalSequencedBatches": 736556,
+        "totalVerifiedBatches": 736055,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -776,8 +790,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 58040,
-        "getRoot": "0x7c8f53b31aba082b58fd85808339eb64dcaaf0aba3d233cdc5ecd32ce6d52b8a",
+        "depositCount": 58534,
+        "getRoot": "0x5699eeef44353c3d10c0aae3ca60fa876097256ba346f4af28f0820311aef79b",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -793,7 +807,8 @@
       "receivedPermissions": [
         {
           "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": ".trustedAggregatorAC"
         }
       ]
     },
@@ -841,7 +856,8 @@
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "role": ".createRollupAC"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -906,24 +922,28 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+          "from": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "role": ".owner"
         },
         {
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
+          "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
         },
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
         }
       ],
@@ -1648,12 +1668,12 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x5e1d98de3ff46a75b64cc2f65431dc2eb78d843aa0f1dcd462a2dbd073a6bf97",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x07e6443363d3b1a55f9514d38946df4f6030615786d629c78e66e0e134c8b383",
     "polygon-cdk/PolygonSharedBridge": "0x79b4355cba744a06d8705695336f169622edf05c3f32b1ae35da91fa577c536c",
-    "polygon-cdk/Timelock": "0x3f5d5523ccf7da29d1906039ac58c1201abf0deb7f65c30d122606cb2fd20468"
+    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
   },
-  "permissionsConfigHash": "0x7365af2cce295f619376bcb40303311e3d5c7459b624e20e8d01b53da4bdb072"
+  "permissionsConfigHash": "0x37f507b9ceed54aaea1b1af1cc8f4536d35835656d0518cde724b36317cd8312"
 }

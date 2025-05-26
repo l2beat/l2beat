@@ -16,7 +16,7 @@ export const BOTTOM_PADDING = 8
 
 export const NODE_WIDTH = 200
 
-export const ZOOM_SENSITIVITY = 0.002
+export const ZOOM_SENSITIVITY = 0.0015
 export const MAX_ZOOM = 1
 export const MIN_ZOOM = 0.1
 

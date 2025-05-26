@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xddce030f68ffa9f28dd4380a9e1671a9e806e643
+Generated with discovered.json: 0x1bb585c102d7a00683b16a8ab7f5857c99a98c0d
+
+# Diff at Fri, 23 May 2025 09:41:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 133912814
+- current block number: 133912814
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133912814 (main branch discovery), not current.
+
+```diff
+    EOA  (0x96d55BD9c8C4706FED243c1e15825FF7854920fA) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x53597b6099bb249886615946b724b5f695607f12
 
 # Diff at Tue, 06 May 2025 10:57:06 GMT:
 

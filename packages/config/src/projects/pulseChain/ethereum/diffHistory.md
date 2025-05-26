@@ -1,4 +1,48 @@
-Generated with discovered.json: 0x33fe7ea67bea256eee38adc2533c07e08ac47fba
+Generated with discovered.json: 0x78f7ca03d52a433891f718466a63a89d80b1b35a
+
+# Diff at Fri, 23 May 2025 09:41:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22431228
+- current block number: 22431228
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431228 (main branch discovery), not current.
+
+```diff
+    EOA  (0x13A9594a2696D3c35F9D6E4Be6b332f699C57801) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xDf5d165A7EB95D26355c56d53799B7da1240e585) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x71190e20f56abf162eedc997048474553205c043
 
 # Diff at Wed, 07 May 2025 10:36:22 GMT:
 

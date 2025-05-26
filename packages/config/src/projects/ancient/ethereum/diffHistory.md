@@ -1,4 +1,120 @@
-Generated with discovered.json: 0xb55b0336fc1992477f591621a54da033b09acf26
+Generated with discovered.json: 0x26418774a47098d4a61c68ba325ff22d3f364b66
+
+# Diff at Fri, 23 May 2025 09:40:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22046058
+- current block number: 22046058
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046058 (main branch discovery), not current.
+
+```diff
+    contract Ancient8GuardianMultisig (0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "challenge"
++        "guard"
+      receivedPermissions.1.from:
+-        "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996"
++        "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68"
+      receivedPermissions.1.role:
++        ".GUARDIAN"
+      receivedPermissions.0.permission:
+-        "guard"
++        "challenge"
+      receivedPermissions.0.from:
+-        "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68"
++        "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996"
+      receivedPermissions.0.role:
++        ".CHALLENGER"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
++        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
+      receivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
++        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
+      receivedPermissions.2.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x75a223Fb459461B9Fa61dd25109EA05522b4b492) {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
++        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
+      directlyReceivedPermissions.2.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.from:
+-        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
++        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
+      directlyReceivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xAF24199C29D5cc3fd298356137913A42847eA690) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+Generated with discovered.json: 0x8d7c187e8e886c5bc3ba35f0b26c08e1537c7fd5
 
 # Diff at Tue, 29 Apr 2025 08:18:59 GMT:
 

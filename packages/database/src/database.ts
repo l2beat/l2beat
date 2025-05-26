@@ -12,7 +12,6 @@ import { UpdateNotifierRepository } from './discovery/update-notifier/repository
 import { DatabaseClient } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
-import { AggregatedLiveness2Repository } from './other/aggregated-liveness2/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
@@ -28,8 +27,11 @@ import { IndexerConfigurationRepository } from './uif/indexer-configuration/repo
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(config?: PoolConfig) {
-  const db = new DatabaseClient({ ...config })
+export function createDatabase(
+  config?: PoolConfig,
+  opts?: { loggerEnabled?: boolean },
+) {
+  const db = new DatabaseClient({ ...config }, opts)
 
   return {
     transaction: db.transaction.bind(db),
@@ -62,7 +64,6 @@ export function createDatabase(config?: PoolConfig) {
     // #region Other
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     aggregatedLiveness: new AggregatedLivenessRepository(db),
-    aggregatedLiveness2: new AggregatedLiveness2Repository(db),
     anomalies: new AnomaliesRepository(db),
     finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),

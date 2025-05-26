@@ -1,4 +1,184 @@
-Generated with discovered.json: 0x359c95dca5f2f525b4812d3d095134cb9d0e81e7
+Generated with discovered.json: 0x19409ecefe716c9078f36c67639896e8693fe662
+
+# Diff at Fri, 23 May 2025 09:40:56 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22367347
+- current block number: 22367347
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+    EOA  (0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"propose","from":"0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":".proposer"}
+      receivedPermissions.2:
++        {"permission":"challenge","from":"0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":".CHALLENGER"}
+      receivedPermissions.1.role:
++        ".challenger"
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0x314d660b083675f415cCAA9c545FeedF377d1006) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getSigner"
+    }
+```
+
+```diff
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF) {
+    +++ description: Module that allows the Safe to send Facet transactions.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      receivedPermissions.9.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.9.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.9.via:
++        [{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]
+      receivedPermissions.8.from:
+-        "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
++        "0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
++        "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.6.via:
++        [{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]
+      receivedPermissions.5.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.5.from:
+-        "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
++        "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+      receivedPermissions.5.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.5.role:
++        ".owner"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.4.via:
+-        [{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]
+      receivedPermissions.4.role:
++        ".guardian"
+      receivedPermissions.3.permission:
+-        "interact"
++        "guard"
+      receivedPermissions.3.from:
+-        "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
++        "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      receivedPermissions.3.description:
+-        "set and change address mappings."
+      receivedPermissions.3.via:
+-        [{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]
+      receivedPermissions.3.role:
++        ".guardian"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
++        "0x0000000000000b07ED001607f5263D85bf28Ce4C"
+      receivedPermissions.2.via:
+-        [{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]
+      receivedPermissions.2.description:
++        "can withdraw all funds from the bridge."
+      receivedPermissions.2.role:
++        ".getAdmin"
+      receivedPermissions.1.from:
+-        "0x0000000000000b07ED001607f5263D85bf28Ce4C"
++        "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
+      receivedPermissions.1.description:
+-        "can withdraw all funds from the bridge."
++        "set and change address mappings."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.1.via:
++        [{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]
+      receivedPermissions.0.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract EthscriptionsSafeModule (0xDB866fD9241cd32851Df760c1Ec536f3199B22cE) {
+    +++ description: Module that allows the Safe to interact with Ethscriptions.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C) {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
++        "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      directlyReceivedPermissions.2.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
++        "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
+      directlyReceivedPermissions.1.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+Generated with discovered.json: 0x87742a143bf4434a14ffd02b9b40b74f87f832a6
 
 # Diff at Tue, 29 Apr 2025 09:37:25 GMT:
 

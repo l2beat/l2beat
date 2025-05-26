@@ -126,6 +126,7 @@ export async function getRegularDaProjectSections({
     },
   })
 
+  const discoUiHref = `https://disco.l2beat.com/ui/p/${bridge?.id}`
   if (permissionsSection) {
     daBridgeItems.push({
       type: 'PermissionsSection',
@@ -134,6 +135,7 @@ export async function getRegularDaProjectSections({
         permissionedEntities: bridge.daBridge.dac?.knownMembers,
         id: 'da-bridge-permissions',
         title: 'Permissions',
+        discoUiHref,
       },
     })
   }
@@ -145,6 +147,7 @@ export async function getRegularDaProjectSections({
         ...contractsSection,
         id: 'da-bridge-contracts',
         title: 'Contracts',
+        discoUiHref,
       },
     })
   }

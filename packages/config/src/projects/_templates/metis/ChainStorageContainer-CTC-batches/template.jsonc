@@ -1,0 +1,12 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "ChainStorageContainer-CTC-batches",
+  "description": "Storage container for CTC batches.",
+  "ignoreMethods": [
+    "get",
+    "getGlobalMetadata",
+    "getGlobalMetadataByChainId",
+    "length",
+    "lengthByChainId"
+  ]
+}

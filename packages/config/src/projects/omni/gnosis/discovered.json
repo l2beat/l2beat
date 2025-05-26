@@ -95,7 +95,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
+          "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "role": "admin"
         }
       ]
     },
@@ -437,19 +438,23 @@
         {
           "permission": "interact",
           "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "change the threshold and manage signers."
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+          "from": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+          "from": "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
+          "from": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -652,7 +657,8 @@
         {
           "permission": "interact",
           "from": "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1558,11 +1564,11 @@
     ]
   },
   "usedTemplates": {
-    "gnosisbridge/BridgeValidators": "0x356534465ab0329c89ea80ed97f0ee0b0ca948e3dadde05fe442c4709d352d27",
-    "gnosisbridge/HashiManager": "0xb24fa0969d8719d206e37e5479bf6c335e46bf45a6e6ff17ac6d2e22f3ca507d",
+    "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019",
+    "gnosisbridge/HashiManager": "0xa1138883de6a552d21b8e9078c9213aabe3c975dffc34d54f61c0f3c437ab1ff",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
+  "permissionsConfigHash": "0xa5347786623c7738d92da2fb94a1dd9dc7968837be269c2d4b35d08a60ced1a0"
 }

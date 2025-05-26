@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x1b6bab4e31369964dca244a11a0eb0570b84566d
+Generated with discovered.json: 0x8ee846ceb73ad123f4d748d7a82fc51574963736
 
-# Diff at Thu, 15 May 2025 11:12:03 GMT:
+# Diff at Fri, 23 May 2025 09:40:53 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@110dc89476a2b133f603a2498a8b12742d2d831f block: 21981180
-- current block number: 22488105
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21981180
+- current block number: 21981180
 
 ## Description
 
-Store single hash of all source hashes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
@@ -17,46 +17,92 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21981180 (main branch discovery), not current.
 
 ```diff
-    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
-    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
-      sourceHashes.5:
--        "0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29"
-      sourceHashes.4:
--        "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587"
-      sourceHashes.3:
--        "0xb5161e812087e15dd53a4c29ab296ade613b540445f7d1eb470de4f81a9c555c"
-      sourceHashes.2:
--        "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d"
-      sourceHashes.1:
--        "0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069"
-+        "0xd2cfc40f85f0171f0b9b5a88fc7638bbb2af49fb1b87cf13a11d58f32403c598"
-      sourceHashes.0:
--        "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
-+        "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587"
+    EOA  (0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
     }
 ```
 
 ```diff
-    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
-    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
-      sourceHashes.5:
--        "0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29"
-      sourceHashes.4:
--        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
-      sourceHashes.3:
--        "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d"
-      sourceHashes.2:
--        "0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069"
-      sourceHashes.1:
--        "0xb60327bf3481ca8d5ad46cb4fcec2f2db0b7d9eaa2cc0479fda600eb1021de93"
-+        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
-      sourceHashes.0:
--        "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
-+        "0xd44985473645ee33ac39b971c16c6b06bbada1d7c54ae7aa1e106e020fc3f4c1"
+    EOA  (0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
     }
 ```
 
-Generated with discovered.json: 0xf7927ae145280c166148abe7e41bdc7b0ddb5723
+```diff
+    EOA  (0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "operateStarknet"
++        "interact"
+      receivedPermissions.3.description:
++        "Can regsiter new tokens for deposits and withdrawals."
+      receivedPermissions.3.role:
++        ".tokenAdmins"
+      receivedPermissions.2.permission:
+-        "interact"
++        "operateStarknet"
+      receivedPermissions.2.description:
+-        "Can regsiter new tokens for deposits and withdrawals."
+      receivedPermissions.2.role:
++        ".operators"
+      receivedPermissions.1.permission:
+-        "operateStarknet"
++        "interact"
+      receivedPermissions.1.description:
++        "Can regsiter new tokens for deposits and withdrawals."
+      receivedPermissions.1.role:
++        ".tokenAdmins"
+      receivedPermissions.0.permission:
+-        "interact"
++        "operateStarknet"
+      receivedPermissions.0.description:
+-        "Can regsiter new tokens for deposits and withdrawals."
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    contract ApexAdminMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+Generated with discovered.json: 0xefc98c9cf4a86c38002e9d531117dc3bf34dab1c
 
 # Diff at Tue, 06 May 2025 10:56:46 GMT:
 
@@ -668,7 +714,6 @@ Generated with discovered.json: 0x38230bf391f21e818fe4fcf5837049e6204e1609
 Minor upgrade to the StarkExchangeUSDC contract which is an implementation of StarkEx Perpetual.
 
 Two new asset IDs are added:
-
 - NON_UNIQUE_MINTABLE_ASSET_ID_FLAG (ERC-1155)
 - MINTABLE_ERC20_ASSET_ID_FLAG (ERC-20)
 

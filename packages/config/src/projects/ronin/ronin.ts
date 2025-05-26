@@ -39,7 +39,7 @@ export const ronin: Bridge = {
     name: 'Ronin V3',
     slug: 'ronin',
     warning:
-      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Ronin is now using the Chainlink CCTP messaging protocol.',
+      'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Ronin is now using the Chainlink CCIP messaging protocol.',
     links: {
       websites: ['https://bridge.roninchain.com/'],
       apps: ['https://bridge.roninchain.com/'],

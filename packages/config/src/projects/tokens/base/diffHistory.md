@@ -1,4 +1,120 @@
-Generated with discovered.json: 0x74d050bb2805c975663303aa49742e3192d680e9
+Generated with discovered.json: 0xd5398ae158a00b58963568647b51f7d24f3c3ef4
+
+# Diff at Fri, 23 May 2025 09:41:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 30000033
+- current block number: 30000033
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30000033 (main branch discovery), not current.
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract MasterMinter (0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1) {
+    +++ description: Manager contract for minter management [sic].
+      receivedPermissions.0.role:
++        ".masterMinter"
+    }
+```
+
+```diff
+    EOA  (0x3ABd6f64A422225E61E435baE41db12096106df7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x4d15e70518A20Fc8828b5C3853f32e35238d0b77) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".blacklister"
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract SafeL2 (0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".executorAC"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".executorAC"
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      receivedPermissions.3.description:
+-        "execute transactions that are ready."
++        "propose transactions."
+      receivedPermissions.3.role:
++        ".proposerAC"
+      receivedPermissions.2.description:
+-        "propose transactions."
++        "execute transactions that are ready."
+      receivedPermissions.2.role:
++        ".executorAC"
+      receivedPermissions.1.role:
++        ".cancellerAC"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".executorAC"
+    }
+```
+
+```diff
+    EOA  (0xD3571B3bc51CECFf49194AD67aFFFC648d5e07b4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".pauser"
+    }
+```
+
+```diff
+    contract L1Timelock (0xf817cb3092179083c48c014688D98B72fB61464f) {
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+      directlyReceivedPermissions.0.role:
++        ".timelockAdminAC"
+    }
+```
+
+Generated with discovered.json: 0x2e7e8b0583e68462b41c5cd78fc1539f0bc69067
 
 # Diff at Wed, 14 May 2025 14:02:09 GMT:
 

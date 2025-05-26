@@ -130,7 +130,7 @@ function getDaSummaryEntry(
     }),
   )
 
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0) {
+  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
     daBridges.unshift({
       name: 'No Bridge',
       slug: 'no-bridge',

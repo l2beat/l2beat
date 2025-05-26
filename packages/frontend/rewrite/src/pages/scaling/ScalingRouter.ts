@@ -1,5 +1,6 @@
-import type { Router } from 'express'
-import type { RenderFunction } from 'rewrite/src/ssr/server'
+import express from 'express'
+import type { ICache } from 'rewrite/src/server/cache/ICache'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
@@ -16,112 +17,127 @@ import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
 import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
 
-export function ScalingRouter(
-  app: Router,
+export function createScalingRouter(
   manifest: Manifest,
   render: RenderFunction,
+  cache: ICache,
 ) {
-  app.get('/scaling', async (req, res) => {
+  const router = express.Router()
+
+  router.get('/scaling', async (req, res) => {
     res.redirect('/scaling/summary')
   })
 
-  app.get('/scaling/summary', async (req, res) => {
-    const data = await getScalingSummaryData(manifest, req.originalUrl)
+  router.get('/scaling/summary', async (req, res) => {
+    const data = await getScalingSummaryData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 
-  app.get('/scaling/activity', async (req, res) => {
-    const data = await getScalingActivityData(manifest, req.originalUrl)
+  router.get('/scaling/activity', async (req, res) => {
+    const data = await getScalingActivityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/risk', async (req, res) => {
-    const data = await getScalingRiskData(manifest, req.originalUrl)
+  router.get('/scaling/risk', async (req, res) => {
+    const data = await getScalingRiskData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/tvs', async (req, res) => {
-    const data = await getScalingTvsData(manifest, req.originalUrl)
+  router.get('/scaling/tvs', async (req, res) => {
+    const data = await getScalingTvsData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/data-availability', async (req, res) => {
-    const data = await getScalingDataAvailabilityData(manifest, req.originalUrl)
+  router.get('/scaling/data-availability', async (req, res) => {
+    const data = await getScalingDataAvailabilityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/liveness', async (req, res) => {
-    const data = await getScalingLivenessData(manifest, req.originalUrl)
+  router.get('/scaling/liveness', async (req, res) => {
+    const data = await getScalingLivenessData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/finality', async (req, res) => {
-    const data = await getScalingFinalityData(manifest, req.originalUrl)
+  router.get('/scaling/finality', async (req, res) => {
+    const data = await getScalingFinalityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/costs', async (req, res) => {
-    const data = await getScalingCostsData(manifest, req.originalUrl)
+  router.get('/scaling/costs', async (req, res) => {
+    const data = await getScalingCostsData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/archived', async (req, res) => {
-    const data = await getScalingArchivedData(manifest, req.originalUrl)
+  router.get('/scaling/archived', async (req, res) => {
+    const data = await getScalingArchivedData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/scaling/upcoming', async (req, res) => {
-    const data = await getScalingUpcomingData(manifest, req.originalUrl)
+  router.get('/scaling/upcoming', async (req, res) => {
+    const data = await getScalingUpcomingData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get(
+  router.get(
     '/scaling/projects/:slug',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectData(
-        manifest,
-        req.params.slug,
-        req.originalUrl,
+      const data = await cache.get(
+        {
+          key: ['scaling', 'projects', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () => getScalingProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
         res.status(404).send('Not found')
         return
       }
       const html = render(data, req.originalUrl)
-      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+      res.status(200).send(html)
     },
   )
 
-  app.get(
+  router.get(
     '/scaling/projects/:slug/tvs-breakdown',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectTvsBreakdownData(
-        manifest,
-        req.params.slug,
-        req.originalUrl,
+      const data = await cache.get(
+        {
+          key: ['scaling', 'projects', req.params.slug, 'tvs-breakdown'],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () =>
+          getScalingProjectTvsBreakdownData(
+            manifest,
+            req.params.slug,
+            req.originalUrl,
+          ),
       )
       if (!data) {
         res.status(404).send('Not found')
         return
       }
       const html = render(data, req.originalUrl)
-      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+      res.status(200).send(html)
     },
   )
+
+  return router
 }

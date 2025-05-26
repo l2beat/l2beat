@@ -34,15 +34,14 @@ async function getLivenessData() {
   const db = getDb()
   const projects: LivenessResponse = {}
 
-  const configurations = await db.indexerConfiguration.getByIndexerId(
-    'tracked_txs_indexer',
-  )
-
-  const livenessProjects = await ps.getProjects({
-    select: ['trackedTxsConfig'],
-    optional: ['livenessConfig'],
-    whereNot: ['isUpcoming', 'archivedAt'],
-  })
+  const [configurations, livenessProjects] = await Promise.all([
+    db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
+    ps.getProjects({
+      select: ['trackedTxsConfig'],
+      optional: ['livenessConfig'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+  ])
 
   const trackedTxsProjects = getTrackedTxsProjects(
     livenessProjects,
@@ -54,7 +53,12 @@ async function getLivenessData() {
   const targetTimestamp =
     UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-  const [records30Days, records90Days, recordsMax] = (
+  const last30Days = UnixTime.toStartOf(
+    UnixTime.now() - 30 * UnixTime.DAY,
+    'day',
+  )
+
+  const [last30DaysRecords, last90DaysRecords, lastMaxRecords, anomalyRecords] =
     await Promise.all([
       db.aggregatedLiveness.getAggregatesByTimeRange([
         targetTimestamp - 30 * UnixTime.DAY,
@@ -65,17 +69,12 @@ async function getLivenessData() {
         targetTimestamp,
       ]),
       db.aggregatedLiveness.getAggregatesByTimeRange([null, targetTimestamp]),
+      db.anomalies.getByProjectIdsFrom(projectIds, last30Days),
     ])
-  ).map((r) => groupBy(r, (r) => r.projectId))
 
-  const last30Days = UnixTime.toStartOf(
-    UnixTime.now() - 30 * UnixTime.DAY,
-    'day',
-  )
-  const anomalyRecords = await db.anomalies.getByProjectIdsFrom(
-    projectIds,
-    last30Days,
-  )
+  const groupedLast30Days = groupBy(last30DaysRecords, (r) => r.projectId)
+  const groupedLast90Days = groupBy(last90DaysRecords, (r) => r.projectId)
+  const groupedMax = groupBy(lastMaxRecords, (r) => r.projectId)
   const anomaliesByProjectId = groupBy(anomalyRecords, (r) => r.projectId)
 
   for (const project of trackedTxsProjects) {
@@ -83,9 +82,9 @@ async function getLivenessData() {
       (p) => p.id === project.id,
     )?.livenessConfig
 
-    const project30Days = records30Days?.[project.id]
-    const project90Days = records90Days?.[project.id]
-    const projectMax = recordsMax?.[project.id]
+    const project30Days = groupedLast30Days?.[project.id]
+    const project90Days = groupedLast90Days?.[project.id]
+    const projectMax = groupedMax?.[project.id]
     if (
       isEmpty(project30Days) &&
       isEmpty(project90Days) &&

@@ -1,14 +1,14 @@
 % condition is nil if not defined
-defaultedPermissionCondition(G, P, R, Delay, Description, nil) :-
-  permission(G, P, R, Delay, Description),
-  not permissionCondition(G, P, R, Delay, Description, _).
+defaultedPermissionCondition(G, P, R, Delay, Description, Role, nil) :-
+  permission(G, P, R, Delay, Description, Role),
+  not permissionCondition(G, P, R, Delay, Description, Role, _).
 
-defaultedPermissionCondition(G, P, R, Delay, Description, Cond) :-
-  permission(G, P, R, Delay, Description),
-  permissionCondition(G, P, R, Delay, Description, Cond).
+defaultedPermissionCondition(G, P, R, Delay, Description, Role, Cond) :-
+  permission(G, P, R, Delay, Description, Role),
+  permissionCondition(G, P, R, Delay, Description, Role, Cond).
 
 % multisig adds "act" permission if threshold is 1
-permission(Receiver, "act", Msig, 0, nil) :-
+permission(Receiver, "act", Msig, 0, nil, "member") :-
   member(Msig, Receiver),
   msig(Msig, Threshold),
   Threshold == 1.
@@ -22,33 +22,33 @@ canActIndependently(Msig) :-
 % anyone that doesn't pass act permission to someone else can act independently
 canActIndependently(Actor) :-
   address(Actor, _, _),
-  not permission(_, "act", Actor, _, _),
+  not permission(_, "act", Actor, _, _, _),
   not preventActingIndependently(Actor).
 
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
-transitivePermission(Receiver, Permission, Giver, Delay, Description, Condition, Delay, nil) :-
-  permission(Receiver, Permission, Giver, Delay, Description),
-  defaultedPermissionCondition(Receiver, Permission, Giver, Delay, Description, Condition).
+transitivePermission(Receiver, Permission, Giver, Delay, Description, Role, Condition, Delay, nil) :-
+  permission(Receiver, Permission, Giver, Delay, Description, Role),
+  defaultedPermissionCondition(Receiver, Permission, Giver, Delay, Description, Role, Condition).
 
-transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay, ViaCondition), IndirectVia))) :-
+transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay, ViaCondition), IndirectVia))) :-
   Receiver != Via, % deal with self-loops (e.g. timelock can act on timelock)
-  transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, PreviousTotalDelay, IndirectVia),
-  permission(Receiver, ViaPermission, Via, ViaDelay, ViaDescription),
-  defaultedPermissionCondition(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaCondition),
+  transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, PreviousTotalDelay, IndirectVia),
+  permission(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole),
+  defaultedPermissionCondition(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole, ViaCondition),
   ViaPermission == "act",
   TotalDelay = PreviousTotalDelay + ViaDelay.
   % OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
 % 2. Narrowing down to isFinal or directNonFinal 
-ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, isFinal) :-
-  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via),
+ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via, isFinal) :-
+  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via),
   OriginalPermission != "act",
   canActIndependently(Receiver).
 
-ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, directNonFinal) :-
-  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via),
-  not ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, isFinal),
+ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via, directNonFinal) :-
+  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via),
+  not ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via, isFinal),
   Via == nil, % we only want to show direct permissions
   not member(Giver, Receiver). % for backwards compatibility, we didn't show direct "act" permission for multisig members
 
@@ -58,7 +58,7 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
 % The number of upgrade permissions received for every actor
 receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions) :-
   address(Actor, _, _),
-  ReceivedUpgradePermissions = #count{Giver: ultimatePermission(Actor, "upgrade", Giver, _, _, _, _, _, isFinal)}.
+  ReceivedUpgradePermissions = #count{Giver: ultimatePermission(Actor, "upgrade", Giver, _, _, _, _, _, _, isFinal)}.
 
 % The maximum number of upgrade permissions received by any actor (per chain):
 maxReceivedUpgradePermissionsCount(Max, Chain) :-
@@ -80,8 +80,8 @@ eoaWithMajorityUpgradePermissions(Eoa) :-
 % #show addressName/2.
 % #show addressType/2.
 % #show canActIndependently/1.
-% #show transitivePermission/8.
-#show ultimatePermission/9.
+% #show transitivePermission/9.
+#show ultimatePermission/10.
 
 % #show maxReceivedUpgradePermissionsCount/2.
 % #show receivedUpgradePermissionsCount/2.

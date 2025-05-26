@@ -6,6 +6,7 @@ import type { DetailedDescriptionSectionProps } from './detailed-description-sec
 import type { GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
 import type { GroupSectionProps } from './group-section'
 import type { L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
+import type { LivenessSectionProps } from './liveness-section'
 import type { MarkdownSectionProps } from './markdown-section'
 import type { MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
 import type { PermissionsSectionProps } from './permissions/permissions-section'
@@ -25,6 +26,7 @@ type SectionId =
   | 'tvs'
   | 'activity'
   | 'onchain-costs'
+  | 'liveness'
   | 'detailed-description'
   | 'milestones-and-incidents'
   | 'risk-summary'
@@ -57,6 +59,11 @@ type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
   props: ProjectDetailsProps<CostsSectionProps>
+}
+
+interface ProjectDetailsLivenessSection {
+  type: 'LivenessSection'
+  props: ProjectDetailsProps<LivenessSectionProps>
 }
 
 interface ProjectDetailsThroughputSection {
@@ -169,6 +176,7 @@ export type ProjectDetailsSection = {
   sideNavTitle?: string
 } & (
   | ProjectDetailsCostsSection
+  | ProjectDetailsLivenessSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection

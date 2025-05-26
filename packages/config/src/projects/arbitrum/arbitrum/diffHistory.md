@@ -1,3 +1,346 @@
+Generated with discovered.json: 0x2d6d283cac6fca1e0e1ce550b0c3c6bdc173156f
+
+# Diff at Fri, 23 May 2025 09:41:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 337288646
+- current block number: 337288646
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 337288646 (main branch discovery), not current.
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      receivedPermissions.15.role:
++        "admin"
+      receivedPermissions.14.role:
++        "admin"
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.12.from:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      receivedPermissions.12.description:
+-        "manage all access control roles."
+      receivedPermissions.12.via.1:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      receivedPermissions.12.via.0.address:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.from:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.from:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.from:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
++        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
++        "0x912CE59144191C1204E64559FE8253a0e49E6548"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      receivedPermissions.3.via.1:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      receivedPermissions.3.via.0.address:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      receivedPermissions.3.description:
++        "manage all access control roles."
+      receivedPermissions.3.role:
++        ".defaultAdminAC"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C) {
+    +++ description: Token governance contract for the Security Council member elections.
+      receivedPermissions.0.role:
++        ".cohortReplacerAC"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) {
+    +++ description: Token governance contract for the Security Council member removals.
+      receivedPermissions.0.role:
++        ".memberRemoverAC"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      receivedPermissions.4.role:
++        ".memberAdderAC"
+      receivedPermissions.3.description:
+-        "schedule a proposal to rotate a Security Council member (same member, new address)."
++        "schedule a proposal to replace a Security Council member."
+      receivedPermissions.3.role:
++        ".memberReplacerAC"
+      receivedPermissions.2.role:
++        ".memberRemoverAC"
+      receivedPermissions.1.description:
+-        "schedule a proposal to replace a Security Council member."
++        "schedule a proposal to rotate a Security Council member (same member, new address)."
+      receivedPermissions.1.role:
++        ".memberRotatorAC"
+      receivedPermissions.0.role:
++        ".Proposer"
+      directlyReceivedPermissions.0.role:
++        ".Proposer"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      directlyReceivedPermissions.3.role:
++        ".defaultAdminAC"
+      directlyReceivedPermissions.2.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      directlyReceivedPermissions.1.role:
++        ".Proposer"
+      directlyReceivedPermissions.0.role:
++        ".Proposer"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      directlyReceivedPermissions.10.role:
++        "admin"
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      receivedPermissions.1.role:
++        ".Proposer"
+      receivedPermissions.0.role:
++        ".Canceller"
+      directlyReceivedPermissions.0.role:
++        ".Proposer"
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.15.role:
++        "admin"
+      receivedPermissions.14.role:
++        "admin"
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.12.from:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      receivedPermissions.12.description:
+-        "manage all access control roles."
+      receivedPermissions.12.via.1:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      receivedPermissions.12.via.0.address:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.from:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.from:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.from:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
++        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
++        "0x912CE59144191C1204E64559FE8253a0e49E6548"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      receivedPermissions.3.via.1:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      receivedPermissions.3.via.0.address:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      receivedPermissions.3.description:
++        "manage all access control roles."
+      receivedPermissions.3.role:
++        ".defaultAdminAC"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".timelockAdminAC"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+Generated with discovered.json: 0x7deef8de17c285c0f615b0b914edf9dcf96c8e46
+
+# Diff at Fri, 16 May 2025 13:00:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 333894848
+- current block number: 337288646
+
+## Description
+
+MS member change (l2 nominee vetter).
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) {
+    +++ description: None
+      values.$members.3:
+-        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
++        "0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6"
+      values.$members.2:
+-        "0xa98290a7A282d8249544D35b288E160A5580D57E"
++        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
+      values.$members.1:
+-        "0x25032D068633cfbe52c134EBdD965b2C2B4C2710"
++        "0xa98290a7A282d8249544D35b288E160A5580D57E"
+    }
+```
+
 Generated with discovered.json: 0xad1d0d3dcd1f3a6cdbd9c3acf8d45af766f85290
 
 # Diff at Mon, 12 May 2025 13:18:51 GMT:

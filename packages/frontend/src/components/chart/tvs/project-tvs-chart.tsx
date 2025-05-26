@@ -89,6 +89,7 @@ function DefaultChart({
     range: timeRange,
     filter: { type: 'projects', projectIds: [projectId] },
     excludeAssociatedTokens: false,
+    previewRecategorisation: false,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.map(

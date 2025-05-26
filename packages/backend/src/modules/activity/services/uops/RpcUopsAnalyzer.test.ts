@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 import {
   EIP712_TX_TYPE,
+  EIP_7821_TRANSACTION_SELECTOR,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ENTRY_POINT_ADDRESS_0_8_0,
@@ -144,6 +145,20 @@ describe(RpcUopsAnalyzer.name, () => {
       const tx = {
         to: EthereumAddress.random(),
         data: `${ERC20ROUTER_TRANSACTION_SELECTOR}1234abcd`,
+        hash: '0x0',
+      }
+
+      analyzer.countUserOperations = mockFn().returns(2)
+
+      const count = analyzer.mapTransaction(tx)
+      expect(count).toEqual(2)
+    })
+
+    it('should handle EIP-7821', () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const tx = {
+        to: EthereumAddress.random(),
+        data: `${EIP_7821_TRANSACTION_SELECTOR}1234abcd`,
         hash: '0x0',
       }
 

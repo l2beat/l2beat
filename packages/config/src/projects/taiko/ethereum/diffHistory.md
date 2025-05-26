@@ -1,4 +1,82 @@
-Generated with discovered.json: 0x76cef9cfa7a1610b4426a22f4da2af90943911da
+Generated with discovered.json: 0xaab72c9107d4bab5978b4f6c09e73c6157b6c6b8
+
+# Diff at Fri, 23 May 2025 09:41:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22481930
+- current block number: 22481930
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481930 (main branch discovery), not current.
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      receivedPermissions.0.role:
++        ".verifier_TIER_GUARDIAN_MINORITY"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The entry point to the DAO Aragon-based governance framework.
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      receivedPermissions.1.role:
++        ".chain_watchdog"
+      receivedPermissions.0.role:
++        ".verifier_TIER_GUARDIAN"
+    }
+```
+
+Generated with discovered.json: 0x671ab3bce1dd8e7fd074e68ae54bdccebf46988b
 
 # Diff at Tue, 13 May 2025 14:42:00 GMT:
 

@@ -48,6 +48,7 @@ export const sophon: ScalingProject = zkStackL2({
       ],
     },
   },
+  overridingPurposes: ['Gaming', 'Social', 'AI'],
   associatedTokens: ['SOPH'],
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),

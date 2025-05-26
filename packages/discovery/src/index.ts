@@ -32,7 +32,7 @@ export {
   Permission,
   BasePermissionEntries,
   RolePermissionEntries,
-} from './discovery/config/StructureConfig'
+} from './discovery/config/PermissionConfig'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
 export { getContractField } from './discovery/utils/metaGetters'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'

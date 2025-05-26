@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xfc783e3e67309e356136da029ac366c560e4c183
+Generated with discovered.json: 0x313cd64b58f62042e16f658cd276434a84a3947f
 
-# Diff at Thu, 15 May 2025 19:17:48 GMT:
+# Diff at Fri, 23 May 2025 09:41:00 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@82b2d64c74bfba4edbf8be310e136fc204fbaed0 block: 22231616
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22231616
 - current block number: 22231616
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
@@ -17,20 +17,80 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22231616 (main branch discovery), not current.
 
 ```diff
-    contract RollupProxy (0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      sourceHashes.2:
--        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
-      sourceHashes.1:
--        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
-+        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
-      sourceHashes.0:
--        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
-+        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+    EOA  (0x23b6bFACe63BFa288783b8344574c75b78FaEd59) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
     }
 ```
 
-Generated with discovered.json: 0xb75602ff6ce89ee87d013aa798238d2f776a81aa
+```diff
+    contract Caldera Multisig 3 (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0xd4D2F3cB313e59A34089F6635c5c1c6145298640) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+Generated with discovered.json: 0xc5c1d499ceca1fc6f43db8d9b58a07788e6d5bac
 
 # Diff at Fri, 02 May 2025 17:24:03 GMT:
 

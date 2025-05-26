@@ -15,7 +15,7 @@
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade."
     orderHint: -Infinity
     sentiment: "warning"
-    value: "Cannot withdraw"
+    value: "Replace proposer"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 OR their targets on L2, to be whitelisted."

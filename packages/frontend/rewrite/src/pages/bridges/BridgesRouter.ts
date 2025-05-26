@@ -1,34 +1,50 @@
-import type { Router } from 'express'
-import type { RenderFunction } from 'rewrite/src/ssr/server'
+import express from 'express'
+import type { ICache } from 'rewrite/src/server/cache/ICache'
+import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
 import type { Manifest } from '~/utils/Manifest'
 import { getBridgesArchivedData } from './archived/getBridgesArchivedData'
 import { getBridgesProjectData } from './project/getBridgesProjectData'
 import { getBridgesSummaryData } from './summary/getBridgesSummaryData'
-
-export function BridgesRouter(
-  app: Router,
+export function createBridgesRouter(
   manifest: Manifest,
   render: RenderFunction,
+  cache: ICache,
 ) {
-  app.get('/bridges', async (req, res) => {
+  const router = express.Router()
+
+  router.get('/bridges', async (req, res) => {
     res.redirect('/bridges/summary')
   })
 
-  app.get('/bridges/summary', async (req, res) => {
-    const data = await getBridgesSummaryData(manifest, req.originalUrl)
+  router.get('/bridges/summary', async (req, res) => {
+    const data = await cache.get(
+      {
+        key: ['bridges', 'summary'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getBridgesSummaryData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get('/bridges/archived', async (req, res) => {
-    const data = await getBridgesArchivedData(manifest, req.originalUrl)
+  router.get('/bridges/archived', async (req, res) => {
+    const data = await cache.get(
+      {
+        key: ['bridges', 'archived'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getBridgesArchivedData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
-  app.get(
+  router.get(
     '/bridges/projects/:slug',
     validateRoute({
       params: z.object({
@@ -36,17 +52,22 @@ export function BridgesRouter(
       }),
     }),
     async (req, res) => {
-      const data = await getBridgesProjectData(
-        manifest,
-        req.params.slug,
-        req.originalUrl,
+      const data = await cache.get(
+        {
+          key: ['bridges', 'projects', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () => getBridgesProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
         res.status(404).send('Not found')
         return
       }
       const html = render(data, req.originalUrl)
-      res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+      res.status(200).send(html)
     },
   )
+
+  return router
 }

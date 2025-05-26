@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 22337861,
-  "configHash": "0xacf56a58ec054179f7fe5ce439a4369d09fd0be8235513865c13021aa189f0ac",
+  "blockNumber": 22495658,
+  "configHash": "0x2f9f3ae3c94bef7c5e2aab708c7cc16411424500051bd23696fc55123a640cec",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -61,11 +61,13 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
+          "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
+          "from": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "role": "admin"
         }
       ]
     },
@@ -94,47 +96,57 @@
         {
           "permission": "interact",
           "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references."
+          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "description": "change external validation logic refered to by this contract (e.g. Hashi)."
+          "description": "change external validation logic refered to by this contract (e.g. Hashi).",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "description": "change all critical configurations like yield farming for escrowed funds and limits."
+          "description": "change all critical configurations like yield farming for escrowed funds and limits.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "change the threshold and manage signers."
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "change the threshold and manage signers."
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x88ad09518695c6c3712AC10a214bE5109a655671"
+          "from": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
+          "from": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -265,10 +277,10 @@
         "hashiManager": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9794700401791436249428247",
+        "maxAvailablePerTx": "9616893028733324420285376",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 148,
+        "nonce": 529,
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -445,12 +457,14 @@
         {
           "permission": "interact",
           "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses."
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -470,7 +484,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -666,7 +680,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
+        "adapters": ["gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
@@ -741,7 +755,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gno:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
+        "adapters": ["gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
@@ -899,7 +913,8 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
-          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+          "from": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "role": ".validatorContract"
         }
       ],
       "sinceTimestamp": 1539028018,
@@ -974,7 +989,8 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
-          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "role": ".validatorContract"
         }
       ],
       "sinceTimestamp": 1579258396,
@@ -1646,11 +1662,11 @@
     ]
   },
   "usedTemplates": {
-    "gnosisbridge/BridgeValidators": "0x356534465ab0329c89ea80ed97f0ee0b0ca948e3dadde05fe442c4709d352d27",
-    "gnosisbridge/HashiManager": "0xb24fa0969d8719d206e37e5479bf6c335e46bf45a6e6ff17ac6d2e22f3ca507d",
+    "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019",
+    "gnosisbridge/HashiManager": "0xa1138883de6a552d21b8e9078c9213aabe3c975dffc34d54f61c0f3c437ab1ff",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x5af41e077f8e37736892e88e95aa21a7528485342f62653d4a4da95b867689c9"
+  "permissionsConfigHash": "0xa5347786623c7738d92da2fb94a1dd9dc7968837be269c2d4b35d08a60ced1a0"
 }

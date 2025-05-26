@@ -1,7 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import pick from 'lodash/pick'
 import uniq from 'lodash/uniq'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
@@ -9,10 +8,9 @@ import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getRangeWithMax } from '~/utils/range/range'
+import { getSummedTvsValues } from './utils/get-summed-tvs-values'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
-import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
-import { groupValuesByTimestamp } from './utils/group-values-by-timestamp'
 import {
   TvsProjectFilter,
   createTvsProjectsFilter,
@@ -22,7 +20,7 @@ import { TvsChartRange, rangeToResolution } from './utils/range'
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  previewRecategorisation: z.boolean().default(false),
+  previewRecategorisation: z.boolean(),
 })
 
 export type RecategorisedTvsChartDataParams = z.infer<
@@ -63,11 +61,6 @@ export const getCachedRecategorisedTvsChartData = cache(
       previewRecategorisation,
     )
 
-    const tvsValues = await getTvsValuesForProjects(
-      tvsProjects.map((p) => p.projectId),
-      range,
-    )
-
     const groupedByType = groupBy(tvsProjects, (p) => p.category)
     const rollups =
       groupedByType.rollups?.map(({ projectId }) => projectId) ?? []
@@ -76,9 +69,12 @@ export const getCachedRecategorisedTvsChartData = cache(
       []
     const others = groupedByType.others?.map(({ projectId }) => projectId) ?? []
 
-    const rollupValues = pick(tvsValues, rollups)
-    const validiumAndOptimiumsValues = pick(tvsValues, validiumsAndOptimiums)
-    const othersValues = pick(tvsValues, others)
+    const [rollupValues, validiumAndOptimiumsValues, othersValues] =
+      await Promise.all([
+        getSummedTvsValues(rollups, range, 'SUMMARY'),
+        getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
+        getSummedTvsValues(others, range, 'SUMMARY'),
+      ])
 
     return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
   },
@@ -90,47 +86,45 @@ export const getCachedRecategorisedTvsChartData = cache(
 )
 
 function getChartData(
-  rollupsValues: Record<string, Record<string, ProjectValueRecord>>,
-  validiumAndOptimiumsValues: Record<
-    string,
-    Record<string, ProjectValueRecord>
-  >,
-  othersValues: Record<string, Record<string, ProjectValueRecord>>,
+  rollupsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  validiumAndOptimiumsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  othersValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
 ) {
-  const rollupTimestampValues = groupValuesByTimestamp(rollupsValues)
-  const validiumAndOptimiumsTimestampValues = groupValuesByTimestamp(
+  const rolupsGroupedByTimestamp = groupBy(rollupsValues, (v) => v.timestamp)
+  const validiumAndOptimiumsGroupedByTimestamp = groupBy(
     validiumAndOptimiumsValues,
+    (v) => v.timestamp,
   )
-  const othersTimestampValues = groupValuesByTimestamp(othersValues)
+  const othersGroupedByTimestamp = groupBy(othersValues, (v) => v.timestamp)
 
   const timestamps = uniq([
-    ...Object.keys(rollupTimestampValues),
-    ...Object.keys(validiumAndOptimiumsTimestampValues),
-    ...Object.keys(othersTimestampValues),
+    ...rollupsValues.map((v) => v.timestamp),
+    ...validiumAndOptimiumsValues.map((v) => v.timestamp),
+    ...othersValues.map((v) => v.timestamp),
   ]).sort()
 
   return timestamps.map((timestamp) => {
-    const rVals = rollupTimestampValues[timestamp]
-    const vVals = validiumAndOptimiumsTimestampValues[timestamp]
-    const oVals = othersTimestampValues[timestamp]
+    const rVals = rolupsGroupedByTimestamp[timestamp]
+    const vVals = validiumAndOptimiumsGroupedByTimestamp[timestamp]
+    const oVals = othersGroupedByTimestamp[timestamp]
 
     const rTotal =
       rVals?.reduce((acc, curr) => {
-        acc += Number(curr.value)
+        acc += curr.value
         return acc
       }, 0) ?? 0
     const vTotal =
       vVals?.reduce((acc, curr) => {
-        acc += Number(curr.value)
+        acc += curr.value
         return acc
       }, 0) ?? 0
     const oTotal =
       oVals?.reduce((acc, curr) => {
-        acc += Number(curr.value)
+        acc += curr.value
         return acc
       }, 0) ?? 0
 
-    return [+timestamp, rTotal, vTotal, oTotal] as const
+    return [timestamp, rTotal, vTotal, oTotal] as const
   })
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 22423720,
+  "blockNumber": 22531170,
   "configHash": "0x7e3a4591b2cbb690dce118dbd6a27bfd3d956b15553e8e952f732fdf84ffb19e",
   "entries": [
     {
@@ -103,7 +103,7 @@
         ],
         "$upgradeCount": 5,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636979",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637239",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -141,36 +141,44 @@
         {
           "permission": "interact",
           "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
-          "description": "set and change address mappings."
+          "description": "set and change address mappings.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+          "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+          "from": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -235,7 +243,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "basefeeScalar": 500,
+        "basefeeScalar": 5000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
         "batchInbox": "0xfF000000000000000000000000000000000420fC",
@@ -281,7 +289,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279131187530910663156",
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530910667656",
         "sequencerInbox": "0xfF000000000000000000000000000000000420fC",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19135324,
@@ -392,7 +400,7 @@
         "params": {
           "prevBaseFee": 10000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 22422911
+          "prevBlockNum": 22531156
         },
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
@@ -465,7 +473,7 @@
         "owner": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "120433513916627207388221"
+        "totalSupply": "121780153537832485352943"
       },
       "implementationNames": {
         "0x5E8422345238F34275888049021821E8E08CAa1f": "frxETH"
@@ -478,7 +486,8 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "role": ".batcherHash"
         }
       ]
     },
@@ -580,10 +589,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 19854000,
-        "latestOutputIndex": 11029,
-        "nextBlockNumber": 19855800,
-        "nextOutputIndex": 11030,
+        "latestBlockNumber": 20507400,
+        "latestOutputIndex": 11392,
+        "nextBlockNumber": 20509200,
+        "nextOutputIndex": 11393,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -630,7 +639,8 @@
         {
           "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can mint frxETH tokens."
+          "description": "can mint frxETH tokens.",
+          "role": ".minters_array"
         }
       ],
       "sinceTimestamp": 1734221195,
@@ -663,22 +673,26 @@
         {
           "permission": "interact",
           "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
-          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
+          "role": ".operatorAddress"
         },
         {
           "permission": "interact",
           "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
-          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
+          "role": ".timelockAddress"
         },
         {
           "permission": "interact",
           "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
-          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "role": ".timelockAddress"
         },
         {
           "permission": "interact",
           "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
-          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "role": ".operatorAddress"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -701,7 +715,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 1282,
+        "nonce": 1290,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -723,12 +737,14 @@
         {
           "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can add and remove frxETH minters and set a new timelock address."
+          "description": "can add and remove frxETH minters and set a new timelock address.",
+          "role": ".timelock_address"
         },
         {
           "permission": "interact",
           "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
-          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "role": ".timelock_address"
         }
       ],
       "sinceTimestamp": 1608140486,
@@ -856,15 +872,15 @@
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "49347000000000000000",
-        "lastSync": 1746057923,
+        "lastRewardAmount": "56979000000000000000",
+        "lastSync": 1747267511,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1121806671411616926",
-        "rewardsCycleEnd": 1746662400,
+        "pricePerShare": "1123241938098506914",
+        "rewardsCycleEnd": 1747872000,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "89501649229145151538375",
-        "totalSupply": "79783488108981763565454"
+        "totalAssets": "92693797364018093598703",
+        "totalSupply": "82523447727509051933834"
       },
       "implementationNames": {
         "0xac3E018457B222d93114458476f3E3416Abbe38F": "sfrxETH"
@@ -885,6 +901,7 @@
           "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can add and remove frxETH minters and set a new timelock address.",
+          "role": ".timelock_address",
           "via": [
             {
               "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
@@ -896,6 +913,7 @@
           "permission": "interact",
           "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "role": ".timelock_address",
           "via": [
             {
               "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
@@ -908,7 +926,8 @@
         {
           "permission": "act",
           "from": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-          "delay": 172800
+          "delay": 172800,
+          "role": ".admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -929,7 +948,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6424,
+        "nonce": 6486,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -951,7 +970,8 @@
         {
           "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can mint frxETH tokens."
+          "description": "can mint frxETH tokens.",
+          "role": ".minters_array"
         }
       ],
       "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
@@ -959,13 +979,13 @@
       "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
-        "currentWithheldETH": "4664341802460763921",
+        "currentWithheldETH": "1751814749923236608118",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
         "frxETHToken": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "numValidators": 197,
+        "numValidators": 196,
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "RATIO_PRECISION": 1000000,
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
@@ -1010,68 +1030,86 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": ".challenger"
+        },
+        {
+          "permission": "challenge",
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": ".CHALLENGER"
         },
         {
           "permission": "guard",
-          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "role": ".guardian"
         },
         {
           "permission": "guard",
-          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "role": ".guardian"
         },
         {
           "permission": "interact",
           "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
           "description": "set and change address mappings.",
+          "role": ".owner",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "role": "admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "role": "admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "role": "admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "role": "admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": "admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
           "from": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "role": "admin",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+          "from": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1092,7 +1130,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 40,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1107,7 +1145,13 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": ".proposer"
+        },
+        {
+          "permission": "propose",
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": ".PROPOSER"
         }
       ]
     },
@@ -1786,23 +1830,23 @@
     ]
   },
   "usedTemplates": {
-    "fraxtal/EtherRouter": "0xef59c702121fa237b84c63a50a8d185e10fc145a4439ffa2a288c2492719b1d2",
-    "fraxtal/FraxEtherMinter": "0x12055f63a452240c600d2fe2a7df4ead01140b5f10db9f1e4fa17e568988af91",
-    "fraxtal/frxETH": "0x309343979a98b09b7a1feca2cae6478857b23c4779b1d52e609c5163d5e0605b",
-    "fraxtal/FrxEthMinter": "0xec349b6ba74d5ac0cfb49b936b4a2fe20fefd898197873842e54e5135e92b6d3",
+    "fraxtal/EtherRouter": "0x9de3383c7e2e0bda24d9c31e1f731a33d28dc065335ff5329c6b306b14f559ed",
+    "fraxtal/FraxEtherMinter": "0xd950e978a75fe4dae81af9617c3f4e653ac5090089be7630a9b3d718ab74ef9a",
+    "fraxtal/frxETH": "0xd56ac6d2d451ee10e78811f0c50e81cbf5abfd333e6985ae16bcce1922e86ca1",
+    "fraxtal/FrxEthMinter": "0xd3fc3e0dfaee21dbd259775520c71c738aad904ff81876abf12cd458677fcf90",
     "fraxtal/sfrxETH": "0x658424c4c1ef4b2085df560f7d1996c64bc333438d1b73d648d47a26a44fa7db",
-    "fraxtal/Timelock": "0x8486fbd68e789064a1383f98e67434789d2d6c86809ad454bbd9e12aced6b980",
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "opstack/AddressManager": "0x25e40f0e8a2f78e589d0f70a8975281af9e50c15f998b39f8bfbd6d5682d4f26",
+    "fraxtal/Timelock": "0x8079de478ba3ed9fb9c870c9a1a8ea4ae157f9151992200a7087c3d897d46245",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568",
-    "opstack/L2OutputOracle": "0xdc22201273b90a248801424705d5602a5e68d8c60a2eaa84ca3ce386f9b71942",
+    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal": "0x6887b4bbf169bbbc6b50b3dcc2ceff2da0df7a824a84827301b57063bc0f1ba9",
-    "opstack/SuperchainConfigFake": "0x6dac142ba9c1d595920b33d54a95b1fb8237f9ea396311f48ea44f1d1491b977",
-    "opstack/SystemConfig": "0x1d7557c7c4b24dc7003b7c6d375b0e6c4975b7fae1242eca554820cfe21e1153"
+    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
+    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
+    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
   },
-  "permissionsConfigHash": "0xf658977610744e717f4eb71d101435935772da097614e7cfc3c29a9adfb14e1c"
+  "permissionsConfigHash": "0xdf2c6c0442cbd3a0422fc34ff413a3ae9324c3b94f7b6bbac4f64a8e80bb8810"
 }

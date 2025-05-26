@@ -11,6 +11,13 @@ interface BlockBasedApi {
   }
 }
 
+interface SvmBlockBasedApi {
+  type: 'svm-rpc'
+  url: string
+  callsPerMinute: number
+  retryStrategy: 'RELIABLE' | 'UNRELIABLE'
+}
+
 interface StarkexApi {
   type: 'starkex'
   product: string[]
@@ -19,4 +26,4 @@ interface StarkexApi {
   retryStrategy: 'RELIABLE' | 'UNRELIABLE'
 }
 
-export type BlockApi = BlockBasedApi | StarkexApi
+export type BlockApi = BlockBasedApi | StarkexApi | SvmBlockBasedApi

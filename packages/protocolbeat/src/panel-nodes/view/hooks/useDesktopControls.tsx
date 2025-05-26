@@ -10,7 +10,10 @@ type Props = {
 export type DesktopControls = {
   onWheel: (event: WheelEvent) => void
   onMouseDown: (event: MouseEvent) => void
-  onMouseMove: (event: MouseEvent) => void
+  onMouseMove: (
+    event: MouseEvent,
+    opts?: { disableSelection?: boolean },
+  ) => void
   onKeyDown: (event: KeyboardEvent) => void
   onKeyUp: (event: KeyboardEvent) => void
   onMouseUp: (event: MouseEvent) => void
@@ -46,9 +49,12 @@ export function useDesktopControls({
     onMouseDown(event, containerRef.current)
   }
 
-  function handleMouseMove(event: MouseEvent) {
+  function handleMouseMove(
+    event: MouseEvent,
+    opts?: { disableSelection?: boolean },
+  ) {
     if (!containerRef.current) return
-    onMouseMove(event, containerRef.current)
+    onMouseMove(event, containerRef.current, opts)
   }
 
   function handleKeyDown(event: KeyboardEvent) {

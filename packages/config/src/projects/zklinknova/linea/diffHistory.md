@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x3c3d71874e943f1f57f0780f582efaa3ba46ad63
+Generated with discovered.json: 0x82d421c2a4ba290aefc28dd6b5a55bd6ed25849f
 
-# Diff at Thu, 15 May 2025 19:19:56 GMT:
+# Diff at Fri, 23 May 2025 09:41:21 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@85aef73ab3a7f8056bb7b72afad184544b7d9ed5 block: 17565279
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 17565279
 - current block number: 17565279
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
@@ -17,21 +17,22 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 17565279 (main branch discovery), not current.
 
 ```diff
-    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
     +++ description: None
-      sourceHashes.4:
--        "0xb6a5aa1fb38aec46fe13d3e977cb8a06b3e3fd7e5c1ec2ef87f58fa4d21d3f45"
-      sourceHashes.3:
--        "0xe7e19467e9bc94a61947db08bfecea640d85dd166beac055385b877417dfbd71"
-      sourceHashes.2:
--        "0xbe5fe6b595b02be18ecb35c95a6b4b18c75aa4a08ab3cf035b72e9e5f71109d9"
-      sourceHashes.1:
--        "0x0aeeb5887677b09d5c9b6dfb6fd52bf2c97728ae0aedb533baab3f7fe0653ac3"
-+        "0x28d2bbb6847ab4d4dfc220d056bad884fa0fb9d713ee16b26a55e0e48e494d73"
+      receivedPermissions.0.role:
++        "admin"
     }
 ```
 
-Generated with discovered.json: 0xb4515b865ea299136b22078b0971a09ffa60dbb4
+```diff
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0xf2d073a7cd313ee63829a336ec2408f20ca3bd58
 
 # Diff at Tue, 29 Apr 2025 08:19:30 GMT:
 

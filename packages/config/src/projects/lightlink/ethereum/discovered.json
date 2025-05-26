@@ -119,7 +119,8 @@
         {
           "permission": "interact",
           "from": "0x624631881655a310adcF0d1336658Cc977609b72",
-          "description": "can remove and add validators, update their voting power, and change the required threshold."
+          "description": "can remove and add validators, update their voting power, and change the required threshold.",
+          "role": ".multisig"
         }
       ],
       "ignoreInWatchMode": [],
@@ -150,7 +151,8 @@
         {
           "permission": "interact",
           "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
-          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled."
+          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled.",
+          "role": ".publisher"
         }
       ]
     },
@@ -367,46 +369,56 @@
         {
           "permission": "interact",
           "from": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
-          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."
+          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
-          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."
+          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
-          "description": "it can pause the chain and update the gas token."
+          "description": "it can pause the chain and update the gas token.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
+          "from": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04"
+          "from": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
+          "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x670E1C42A7A5962348138110E3ede3F422c10e2f"
+          "from": "0x670E1C42A7A5962348138110E3ede3F422c10e2f",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38"
+          "from": "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE"
+          "from": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1122,17 +1134,17 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "lightlink/CanonicalStateChain": "0x219c144273024b07ca81f91c6c70aedd707f482a8f2d400bdc885ad7fd780467",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "lightlink/CanonicalStateChain": "0xe3cc4c86082455089a573a3718fa958bc4f7202fdbd9a57164be4c713a261490",
     "lightlink/ChainOracle": "0xf5edeb1b0b41c67d93ed6d4371fb70e9e1f1f97944a561fd49fa119c7503aa07",
-    "lightlink/Challenge": "0x54e478f3eb1e4542b6b3bf1a1eb64269b7a406619fbd417f15e7f3954da0410a",
-    "lightlink/L1BridgeRegistry": "0xa52359c35e33ea087a6cc360a0ab284549c3d7e0d3702cac1dcf9c4920993c8e",
+    "lightlink/Challenge": "0x1836016ec4b53b382eb6f74977ec6844799e1d510664a03e96856cf3d6cd4db7",
+    "lightlink/L1BridgeRegistry": "0x7e1d49d90906d68e0d175619bc3ab85e41a8281d179b8dfc6293a537938ffa31",
     "lightlink/L1ERC20Predicate": "0xf5edeb1b0b41c67d93ed6d4371fb70e9e1f1f97944a561fd49fa119c7503aa07",
-    "lightlink/LightLinkPortal": "0xd9d5146c2887a07d8c6fac45c7c3907a4bb9f8561cedead0708cec6265a2d67d",
+    "lightlink/LightLinkPortal": "0xe0fcc9299776b8384b60df1e2908abb375fe01985e75e67684bd590a74bb49c0",
     "lightlink/Multisig": "0xbf0a261e6c43f7c32678e3ac3c8b3409a9336d211bf3c10d9e8d64da91d9a2de",
     "lightlink/SystemConfig": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
-    "opstack/L1StandardBridge": "0xfb058df23faac0e013a6ee0b2298dc99719bdad3f340e85c05e281dca6321568"
+    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e"
   },
-  "permissionsConfigHash": "0xb240b919bb947da147d484ce062ec203fd947c4608b98c15cbef1111a8010cda"
+  "permissionsConfigHash": "0xf7d4841e5fdd5d915f5aa10ebd4934ec7520172ec5b3539e53ca91e0457a43ea"
 }

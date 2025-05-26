@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22481824,
+  "blockNumber": 22496282,
   "configHash": "0x1ae9b6d7d3421c2b2d93c40ef6367efc6ef88c7d48440d6dae7db429b91d4f79",
   "entries": [
     {
@@ -49,7 +49,8 @@
         {
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "start (queue) upgrades."
+          "description": "start (queue) upgrades.",
+          "role": ".L2_PROTOCOL_GOVERNOR"
         }
       ]
     },
@@ -152,7 +153,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1738855967,
@@ -230,12 +232,14 @@
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
+          "role": ".admin"
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for any connected chain (ZK cluster Admin role)."
+          "description": "revert batches for any connected chain (ZK cluster Admin role).",
+          "role": ".admin"
         }
       ],
       "sinceTimestamp": 1722434735,
@@ -627,19 +631,22 @@
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
+          "role": ".admin",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "revert batches for any connected chain (ZK cluster Admin role).",
+          "role": ".admin",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063"
+          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -832,12 +839,14 @@
         {
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "extend the legal veto period, approve a protocol upgrade."
+          "description": "extend the legal veto period, approve a protocol upgrade.",
+          "role": ".guardians"
         },
         {
           "permission": "interact",
           "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers."
+          "description": "one of its 3/3 signers.",
+          "role": ".GUARDIANS"
         }
       ],
       "sinceTimestamp": 1738855979,
@@ -949,12 +958,14 @@
         {
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade."
+          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
+          "role": ".securityCouncil"
         },
         {
           "permission": "interact",
           "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers."
+          "description": "one of its 3/3 signers.",
+          "role": ".SECURITY_COUNCIL"
         }
       ],
       "sinceTimestamp": 1738855991,
@@ -1282,6 +1293,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x98E24e308c4B7cdADcf4d116B2B8939a21420bA1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
       "type": "Contract",
@@ -1333,6 +1349,8 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
+          "0x98E24e308c4B7cdADcf4d116B2B8939a21420bA1",
           "0xc8E2806A97413b5496A1ba6050b517CC98D0EfCA",
           "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e",
           "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF",
@@ -1345,8 +1363,8 @@
         "domainSeparator": "0x8990652fa175690b7ef4cf7f1ae85971a55c587ff8e565372999ea62269e9742",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 7 (14%)",
-        "nonce": 11,
+        "multisigThreshold": "1 of 9 (11%)",
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1357,6 +1375,11 @@
     },
     {
       "address": "0x9f708301AA8CB86A06D23152fE67F2bFaa094cA1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1459,7 +1482,8 @@
         {
           "permission": "interact",
           "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers."
+          "description": "one of its 3/3 signers.",
+          "role": ".ZK_FOUNDATION_SAFE"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1469,9 +1493,9 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52",
           "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222",
           "0x441e5c8910Ef39996B2D01499509861228cbc2d1",
-          "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95",
           "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709",
           "0x610e45F112e0c8a9aA7137677C83E7A198A1b991"
         ],
@@ -1480,7 +1504,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1545,31 +1569,38 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
+          "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+          "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+          "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+          "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1717520627,
@@ -1762,11 +1793,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1845,6 +1871,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProtocolUpgradeHandler",
       "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
       "type": "Contract",
@@ -1858,31 +1889,37 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+          "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+          "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "description": "pause, unpause and set critical escrow address references."
+          "description": "pause, unpause and set critical escrow address references.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1738855967,
@@ -1907,7 +1944,8 @@
         "CHAIN_TYPE_MANAGER": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "emergencyUpgradeBoard": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
         "emergencyUpgradesExecuted": [
-          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
+          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13",
+          "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
         ],
         "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
@@ -1996,29 +2034,34 @@
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "interact",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "description": "pause, unpause and set critical escrow address references.",
+          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "interact",
           "from": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
+          "role": ".owner",
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "upgrade",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2027,6 +2070,7 @@
         {
           "permission": "upgrade",
           "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2035,6 +2079,7 @@
         {
           "permission": "upgrade",
           "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2043,6 +2088,7 @@
         {
           "permission": "upgrade",
           "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2051,6 +2097,7 @@
         {
           "permission": "upgrade",
           "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2059,6 +2106,7 @@
         {
           "permission": "upgrade",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2067,6 +2115,7 @@
         {
           "permission": "upgrade",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "role": "admin",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2075,6 +2124,7 @@
         {
           "permission": "upgrade",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": "admin",
           "via": [
             { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2084,7 +2134,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": ".emergencyUpgradeBoard"
         }
       ],
       "sinceTimestamp": 1738856003,
@@ -3023,23 +3074,23 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0xf0529192bd3663a9f0d22f9d6221b3b70a7b5bf83f48481fdf672ede9d755121",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0xacd4df56d946492afa03616aa316816a98708b5748146311403dee1b08202d21",
     "shared-zk-stack/Guardians": "0x930c8157109c56bfeaf429f0178d7025d6b21175c4f0c9d57ad594991cc7076d",
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
-    "shared-zk-stack/v26/BridgeHub": "0x559212a74df83ff51b4487146cd68a95d9d0f0c1a468e7eb0a60153c2cef184d",
-    "shared-zk-stack/v26/ChainTypeManager": "0xf23c99e1690902672fae5cf818f324272b9712393b6d2811bb1a90e1acc1cf3e",
+    "shared-zk-stack/v26/BridgeHub": "0xcd4a199c4e676c36dc4f1b4d9c57e695d6ecaccd252a1336611234f3e3e2f01a",
+    "shared-zk-stack/v26/ChainTypeManager": "0xbe2d88a172590cb3a629ad843086d648ed322c86eb23d4da6a7f43dfe04b8f0c",
     "shared-zk-stack/v26/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/v26/L1AssetRouter": "0x4530b565b0dd64d0a259a829b0966d9bad2fa221c992d87478f69a5d1b62fb76",
     "shared-zk-stack/v26/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/v26/L1NativeTokenVault": "0x7bd47f45f2baddec3c33a5404c10844207f831a2d96e1465df80445d277f32d1",
-    "shared-zk-stack/v26/L1Nullifier": "0xe61bb02b35569663b7e4c0f4bb6d67ae0e8872aa070cbbb5cfe0855f8269d6e4",
+    "shared-zk-stack/v26/L1Nullifier": "0xffad2aec15a6d3fed0ca55cc600f9ee54a1148708bbb360b9b82a1a4c7c05416",
     "shared-zk-stack/v26/MessageRoot": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x845f5c52bb56cdad184c9075a1d06fe4283a7dd9197c0e9dccc748bb3f80ae85",
-    "shared-zk-stack/v26/RollupDAManager": "0x1f13223d5cafcdf085f21bbe6e4a988bc53d13fce1257c48f223e38ac6a11eb9",
+    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x8aea3a24bbb610625e47a3a4b122ab03edc5836adb2cfec7e7d726f872498925",
+    "shared-zk-stack/v26/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x3e6e4286503b069af3ae831757971db9232c54f7b918b92a3848a19ac8ee8401"
+  "permissionsConfigHash": "0x72fdb64754369dd4fc01745069b3be6da00764d2ce1161b47311d50181c19db6"
 }

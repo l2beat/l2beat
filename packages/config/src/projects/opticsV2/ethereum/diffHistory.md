@@ -1,4 +1,36 @@
-Generated with discovered.json: 0x0c654f7f86a63ea1613fc966acfa0d68ae61ad7b
+Generated with discovered.json: 0x3564eca7b6a7153dfae9f112855fca09865fb04d
+
+# Diff at Fri, 23 May 2025 09:41:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21937191
+- current block number: 21937191
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937191 (main branch discovery), not current.
+
+```diff
+    contract UpgradeBeaconController (0x4F50a7081792063693F46A6402390b9647562457) {
+    +++ description: None
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x54bd8da9682eb7117bb70fa505e30790c8605f54
 
 # Diff at Tue, 29 Apr 2025 08:19:08 GMT:
 

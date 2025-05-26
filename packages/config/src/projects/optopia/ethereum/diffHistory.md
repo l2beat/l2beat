@@ -1,4 +1,156 @@
-Generated with discovered.json: 0x47f15497806d8159b46de48dadcc2b5979df3569
+Generated with discovered.json: 0xf0062f0b41bc2c9ea6add5fa5640ccdbe3fc6933
+
+# Diff at Fri, 23 May 2025 09:41:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21184911
+- current block number: 21184911
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) {
+    +++ description: None
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C"
++        "0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1"
++        "0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C"
+      directlyReceivedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Optopia Multisig (0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C"
++        "0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1"
++        "0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C"
+      receivedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "set and change address mappings."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x33397410000A219fa5a476c5B51032B367C77e78) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    EOA  (0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"guard","from":"0x39A90926306E11497EC5FE1C459910258B620edD","role":".GUARDIAN"}
+      receivedPermissions.4:
++        {"permission":"challenge","from":"0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5","role":".CHALLENGER"}
+      receivedPermissions.3.role:
++        ".guardian"
+      receivedPermissions.2.role:
++        ".challenger"
+      receivedPermissions.1.permission:
+-        "interact"
++        "guard"
+      receivedPermissions.1.from:
+-        "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9"
++        "0x39A90926306E11497EC5FE1C459910258B620edD"
+      receivedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x39A90926306E11497EC5FE1C459910258B620edD"
++        "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9"
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+Generated with discovered.json: 0xa17f6345901598458fd8f2d5da0067f968c82eeb
 
 # Diff at Tue, 29 Apr 2025 08:19:08 GMT:
 

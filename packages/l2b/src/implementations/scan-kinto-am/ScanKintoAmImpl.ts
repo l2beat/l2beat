@@ -24,6 +24,7 @@ const roleNames: Record<string, string> = {
   '565311800027786426': 'SANCTIONER_ROLE',
   '1635978423191113331': 'NIO_GOVERNOR_ROLE',
   '18446744073709551615': 'PUBLIC_ROLE',
+  '12665434841745889720': 'DEV_HELPER_ROLE',
 }
 
 // Roles that require the minimum delay for non-SecurityCouncil actors
@@ -70,6 +71,9 @@ const functionSignatures: Record<string, string> = {
 
   // recovery
   '0x456cf492': 'approveWalletRecovery(address)',
+
+  // appregistry other
+  '0x9a6896f6': 'overrideChildToParentContract(address,address)',
 
   // AccessManager functions
   '0xd6bb62c6': 'cancel(address,address,bytes)',

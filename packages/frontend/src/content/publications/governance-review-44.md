@@ -2,7 +2,7 @@
   title: "Governance Review #44"
   description: "Most DAOs have been relatively active this week."
   publishedOn: "2025-03-24"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 ## **Optimism**
 

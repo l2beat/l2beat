@@ -1,4 +1,90 @@
-Generated with discovered.json: 0x0a42e99ff59c8a983b70352a034bc29c502111ae
+Generated with discovered.json: 0x92cd2f92b182a765b88bb12c99eb0a17fd29560f
+
+# Diff at Fri, 23 May 2025 09:40:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22397569
+- current block number: 22397569
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397569 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019) {
+    +++ description: None
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "challenge"
++        "guard"
+      receivedPermissions.4.from:
+-        "0x909E51211e959339EFb14b36f5A50955a8ae3770"
++        "0x787A0ACaB02437c60Aafb1a29167A3609801e320"
+      receivedPermissions.4.role:
++        ".GUARDIAN"
+      receivedPermissions.3.permission:
+-        "guard"
++        "challenge"
+      receivedPermissions.3.from:
+-        "0x787A0ACaB02437c60Aafb1a29167A3609801e320"
++        "0x909E51211e959339EFb14b36f5A50955a8ae3770"
+      receivedPermissions.3.role:
++        ".CHALLENGER"
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+```diff
+    EOA  (0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+Generated with discovered.json: 0xbc33454c4fbabf1ab0fa8559745045b6f73e0a4f
 
 # Diff at Tue, 29 Apr 2025 08:18:58 GMT:
 

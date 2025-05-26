@@ -1,3 +1,483 @@
+Generated with discovered.json: 0x3aa88be72117e438917504e48356a2f13b5199aa
+
+# Diff at Fri, 23 May 2025 09:41:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22495698
+- current block number: 22495698
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22495698 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Swell Multisig (0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C) {
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".livenessGuard"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputy"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6) {
+    +++ description: None
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.3.from:
+-        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
++        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
+      directlyReceivedPermissions.3.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
++        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
++        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
+      directlyReceivedPermissions.1.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.13.role:
++        "admin"
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
++        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
+      receivedPermissions.7.description:
+-        "set and change address mappings."
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
++        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.5.description:
+-        "set and change address mappings."
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
++        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
+      receivedPermissions.4.description:
++        "set and change address mappings."
+      receivedPermissions.4.role:
++        ".owner"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.3.description:
++        "set and change address mappings."
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".fallbackOwner"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputyGuardian"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    EOA  (0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+Generated with discovered.json: 0x7afbf0720e1bda2660495a8445c1046371384cbd
+
+# Diff at Fri, 16 May 2025 12:41:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9912083f7b773804513e08ee765f8ba71a92980b block: 22437748
+- current block number: 22495698
+
+## Description
+
+Upgrade to latest OPFP (known contracts).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract ProxyAdmin (0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603"}
+      directlyReceivedPermissions.8.from:
+-        "0x89c98736A806176Fe85283c1cB727ffBdeaf37A9"
++        "0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e"
+      directlyReceivedPermissions.7.from:
+-        "0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603"
++        "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
+      directlyReceivedPermissions.6.from:
+-        "0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e"
++        "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57"
+      directlyReceivedPermissions.5.from:
+-        "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
++        "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812"
+      directlyReceivedPermissions.4.from:
+-        "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57"
++        "0x8834ec1f82db740E74277b9fa1b3781E0FAb80d4"
+      directlyReceivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.3.from:
+-        "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812"
++        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
+      directlyReceivedPermissions.3.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
++        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
+      directlyReceivedPermissions.2.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.1.from:
+-        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
++        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603","via":[{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e","via":[{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]}
+      receivedPermissions.11.from:
+-        "0x89c98736A806176Fe85283c1cB727ffBdeaf37A9"
++        "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
+      receivedPermissions.10.from:
+-        "0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603"
++        "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57"
+      receivedPermissions.9.from:
+-        "0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e"
++        "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812"
+      receivedPermissions.8.from:
+-        "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
++        "0x8834ec1f82db740E74277b9fa1b3781E0FAb80d4"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57"
++        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
+      receivedPermissions.7.description:
++        "set and change address mappings."
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0x89c98736A806176Fe85283c1cB727ffBdeaf37A9"
++        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
+      receivedPermissions.6.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.6.via:
++        [{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.5.via.0.address:
+-        "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.5.description:
++        "set and change address mappings."
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A"
++        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
+      receivedPermissions.4.description:
+-        "set and change address mappings."
+      receivedPermissions.3.from:
+-        "0x14387438EE964e826A4EAeB95B2BCe7754174dD1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.3.via.0.address:
+-        "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.2.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x8834ec1f82db740E74277b9fa1b3781E0FAb80d4"
+      receivedPermissions.2.description:
+-        "set and change address mappings."
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.2.via:
+-        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+      receivedPermissions.1.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8"
+      receivedPermissions.1.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"
+      receivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8"
++        "0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D"
+      receivedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.0.via:
+-        [{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x87690676786cDc8cCA75A472e483AF7C8F2f0F57) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2DabFf87A9a634f6c769b983aFBbF4D856aDD0bF"
+      values.gameImpls.3:
+-        "0x0000000000000000000000000000000000000000"
++        "0x1380Cc0E11Bfe6b5b399D97995a6B3D158Ed61a6"
+      values.gameImpls.0:
+-        "0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x89c98736A806176Fe85283c1cB727ffBdeaf37A9)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x1380Cc0E11Bfe6b5b399D97995a6B3D158Ed61a6)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x2DabFf87A9a634f6c769b983aFBbF4D856aDD0bF)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x8834ec1f82db740E74277b9fa1b3781E0FAb80d4)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH.sol                                |    0
+ .../Proxy.p.sol                                    |    0
+ .../DelayedWETH.sol                                |  651 ++++
+ .../Proxy.p.sol                                    |  200 +
+ .../swell/ethereum/.flat/FaultDisputeGame.sol      | 3921 ++++++++++++++++++++
+ .../ethereum/{.flat@22437748 => .flat}/MIPS.sol    |  444 ++-
+ .../PermissionedDisputeGame.sol                    |   14 +-
+ 7 files changed, 5106 insertions(+), 124 deletions(-)
+```
+
 Generated with discovered.json: 0x785b99930ef9d2f8d8fb7f0fdc51207b715967f4
 
 # Diff at Fri, 09 May 2025 10:09:22 GMT:

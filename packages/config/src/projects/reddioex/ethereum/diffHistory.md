@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd4e0b3211c2d8d3727d278d8f1248251ba12e9b5
+Generated with discovered.json: 0x86e47989fec9bd3949fd302ad9b3c1bef9ebff74
 
-# Diff at Thu, 15 May 2025 17:33:39 GMT:
+# Diff at Fri, 23 May 2025 09:41:02 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@3105a60379c26d49424dd724418ae7996b84e92f block: 19825385
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 19825385
 - current block number: 19825385
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
 
 ## Config/verification related changes
 
@@ -17,30 +17,42 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19825385 (main branch discovery), not current.
 
 ```diff
-    contract StarkExchange (0xB62BcD40A24985f560b5a9745d478791d8F1945C) {
-    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
-      sourceHashes.7:
--        "0xadae235d029868dddc287e823167705942660a99a9154a4e487f5dfb4ddd01c9"
-      sourceHashes.6:
--        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918"
-      sourceHashes.5:
--        "0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be"
-      sourceHashes.4:
--        "0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6"
-      sourceHashes.3:
--        "0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc"
-      sourceHashes.2:
--        "0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca"
-      sourceHashes.1:
--        "0x75d386d73767f57d5f11c11f7bf837a48cd417754eea559931fc98a96ef34152"
-+        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918"
-      sourceHashes.0:
--        "0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97"
-+        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
+    EOA  (0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
     }
 ```
 
-Generated with discovered.json: 0x8e7ad767b1baf24512eaf3088daf674f78622481
+```diff
+    EOA  (0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x6b7763b749073e892c83E674c1EC4799D6f339Ef) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+Generated with discovered.json: 0xd6c2365b45948ff6e5f94b4bbf2fa5b17167669b
 
 # Diff at Tue, 06 May 2025 10:56:55 GMT:
 

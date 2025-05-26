@@ -102,7 +102,7 @@
       }
     },
     "govAdminAC": {
-      "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation.",
+      "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -113,7 +113,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         }
       ]
     },
@@ -121,14 +121,14 @@
       "handler": {
         "type": "accessControl",
         "roleNames": {
-          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "SECURITY_ADMIN"
+          "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN"
         },
         "pickRoleMembers": "SECURITY_ADMIN"
       },
       "permissions": [
         {
           "type": "interact",
-          "description": "disable the withdrawal limit."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
         }
       ]
     },
@@ -136,7 +136,7 @@
       "handler": {
         "type": "accessControl",
         "roleNames": {
-          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "SECURITY_AGENT"
+          "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT"
         },
         "pickRoleMembers": "SECURITY_AGENT"
       },
