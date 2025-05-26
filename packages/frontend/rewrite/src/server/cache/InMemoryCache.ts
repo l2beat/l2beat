@@ -25,10 +25,7 @@ export class InMemoryCache implements ICache {
       initialCache ?? new Map<string, { result: unknown; timestamp: number }>()
   }
 
-  async get<T>(
-    options: Options,
-    fallback: () => Promise<T>,
-  ): Promise<T> {
+  async get<T>(options: Options, fallback: () => Promise<T>): Promise<T> {
     if (env.NODE_ENV !== 'production' || env.DISABLE_CACHE) {
       return fallback()
     }
