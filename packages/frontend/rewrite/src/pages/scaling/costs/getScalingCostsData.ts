@@ -20,7 +20,11 @@ export async function getScalingCostsData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'costs', 'data'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'costs', 'data'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getCachedData,
     ),
   ])

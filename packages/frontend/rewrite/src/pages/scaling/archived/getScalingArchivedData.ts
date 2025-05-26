@@ -18,7 +18,11 @@ export async function getScalingArchivedData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'archived', 'entries'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'archived', 'entries'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getScalingArchivedEntries,
     ),
   ])
