@@ -325,7 +325,7 @@
       }
     },
     {
-      "name": "",
+      "name": "Burn Caller",
       "address": "0x2ba529D229FDc1DA08e67F536588aE45932d030A",
       "type": "Contract",
       "unverified": true,
@@ -2524,5 +2524,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
   },
-  "permissionsConfigHash": "0xb50e8af1805b2800074d714d3e7e8375b182e77dce4cec93f88dc3b8d99e38a9"
+  "permissionsConfigHash": "0xccc7a5b4ed926ebbe746c0192e81a84dd2c4db1a95d0e709eb0da967f4a9772f"
 }

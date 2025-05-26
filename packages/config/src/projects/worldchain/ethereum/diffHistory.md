@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x001e26c2a70b74aa417b1917e474312a2c32777b
+Generated with discovered.json: 0x88509e31ede8cf9165a333a2e50998e978890521
 
-# Diff at Mon, 26 May 2025 15:44:20 GMT:
+# Diff at Mon, 26 May 2025 16:02:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22481876
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x001e26c2a70b74aa417b1917e474312a2c32777b
 
 ## Description
 
-Burncaller (EOA) added to external usdc escrow.
+Burncaller (unverified contract) added to external usdc escrow.
 
 ## Watched changes
 
@@ -26,7 +26,7 @@ Burncaller (EOA) added to external usdc escrow.
 
 ```diff
 +   Status: CREATED
-    contract  (0x2ba529D229FDc1DA08e67F536588aE45932d030A)
+    contract Burn Caller (0x2ba529D229FDc1DA08e67F536588aE45932d030A)
     +++ description: None
 ```
 
