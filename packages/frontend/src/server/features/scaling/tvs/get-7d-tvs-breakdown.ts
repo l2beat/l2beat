@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import pick from 'lodash/pick'
@@ -71,87 +71,79 @@ const getCached7dTokenBreakdown = cache(
       tvsProjects.map((p) => p.projectId),
     )
 
-    const projects = Object.fromEntries(
-      Object.entries(valuesByProject).map(
-        ([projectId, projectValues]): [string, ProjectSevenDayTvsBreakdown] => {
-          const [projectValuesAll, projectValuesWithoutAssociated] = partition(
-            projectValues,
-            (v) => v.type === 'PROJECT',
-          )
+    const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
+    for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
+      const [projectValuesAll, projectValuesWithoutAssociated] = partition(
+        projectValues,
+        (v) => v.type === 'PROJECT',
+      )
 
-          const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
-          const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
-          const latestValue = projectValuesAll.at(-1)
-          const oldestValue = projectValuesAll.at(0)
+      const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
+      const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
+      const latestValue = projectValuesAll.at(-1)
+      const oldestValue = projectValuesAll.at(0)
 
-          assert(
-            latestValue &&
-              oldestValue &&
-              latestWithoutAssociated &&
-              oldestWithoutAssociated,
-            `No values for project ${projectId}`,
-          )
-
-          return [
-            projectId,
-            {
-              breakdown: {
-                total: latestValue.value,
-                native: latestValue.native,
-                canonical: latestValue.canonical,
-                external: latestValue.external,
-                ether: latestValue.ether,
-                stablecoin: latestValue.stablecoin,
-              },
-              associated: {
-                total: latestValue.associated,
-                native: latestValue.native - latestWithoutAssociated.native,
-                canonical:
-                  latestValue.canonical - latestWithoutAssociated.canonical,
-                external:
-                  latestValue.external - latestWithoutAssociated.external,
-              },
-              change: {
-                total: calculatePercentageChange(
-                  latestValue.value,
-                  oldestValue.value,
-                ),
-                native: calculatePercentageChange(
-                  latestValue.native,
-                  oldestValue.native,
-                ),
-                canonical: calculatePercentageChange(
-                  latestValue.canonical,
-                  oldestValue.canonical,
-                ),
-                external: calculatePercentageChange(
-                  latestValue.external,
-                  oldestValue.external,
-                ),
-              },
-              changeExcludingAssociated: {
-                total: calculatePercentageChange(
-                  latestWithoutAssociated.value,
-                  oldestWithoutAssociated.value,
-                ),
-                native: calculatePercentageChange(
-                  latestWithoutAssociated.native,
-                  oldestWithoutAssociated.native,
-                ),
-                canonical: calculatePercentageChange(
-                  latestWithoutAssociated.canonical,
-                  oldestWithoutAssociated.canonical,
-                ),
-                external: calculatePercentageChange(
-                  latestWithoutAssociated.external,
-                  oldestWithoutAssociated.external,
-                ),
-              },
-            },
-          ]
+      if (
+        !latestValue ||
+        !oldestValue ||
+        !latestWithoutAssociated ||
+        !oldestWithoutAssociated
+      ) {
+        continue
+      }
+      projects[projectId] = {
+        breakdown: {
+          total: latestValue.value,
+          native: latestValue.native,
+          canonical: latestValue.canonical,
+          external: latestValue.external,
+          ether: latestValue.ether,
+          stablecoin: latestValue.stablecoin,
         },
-      ),
-    )
+        associated: {
+          total: latestValue.associated,
+          native: latestValue.native - latestWithoutAssociated.native,
+          canonical: latestValue.canonical - latestWithoutAssociated.canonical,
+          external: latestValue.external - latestWithoutAssociated.external,
+        },
+        change: {
+          total: calculatePercentageChange(
+            latestValue.value,
+            oldestValue.value,
+          ),
+          native: calculatePercentageChange(
+            latestValue.native,
+            oldestValue.native,
+          ),
+          canonical: calculatePercentageChange(
+            latestValue.canonical,
+            oldestValue.canonical,
+          ),
+          external: calculatePercentageChange(
+            latestValue.external,
+            oldestValue.external,
+          ),
+        },
+        changeExcludingAssociated: {
+          total: calculatePercentageChange(
+            latestWithoutAssociated.value,
+            oldestWithoutAssociated.value,
+          ),
+          native: calculatePercentageChange(
+            latestWithoutAssociated.native,
+            oldestWithoutAssociated.native,
+          ),
+          canonical: calculatePercentageChange(
+            latestWithoutAssociated.canonical,
+            oldestWithoutAssociated.canonical,
+          ),
+          external: calculatePercentageChange(
+            latestWithoutAssociated.external,
+            oldestWithoutAssociated.external,
+          ),
+        },
+      }
+    }
 
     const total = Object.values(projects).reduce(
       (acc, { breakdown }) => acc + breakdown.total,
