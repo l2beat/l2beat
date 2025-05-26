@@ -86,8 +86,7 @@ function decodeBatchInput(data: `0x${string}`): TransferOperation[] {
     return []
   }
 
-  const reader = new BinaryReader(data)
-  reader.read(4)
+  const reader = new BinaryReader(data, 4)
   const count = Number(reader.read(1))
 
   const triplets = Array.from({ length: count }).map(() => ({
