@@ -56,7 +56,7 @@ export interface BridgesProjectEntry {
     }
     destination: TableReadyValue
     category: ProjectBridgeInfo['category']
-    validatedBy: TableReadyValue
+    validatedBy: TableReadyValue | undefined
   }
   sections: ProjectDetailsSection[]
   discoUiHref: string

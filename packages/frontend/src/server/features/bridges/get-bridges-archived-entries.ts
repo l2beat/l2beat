@@ -10,7 +10,7 @@ import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export interface BridgesArchivedEntry extends CommonBridgesEntry {
   type: BridgeCategory
-  validatedBy: TableReadyValue
+  validatedBy: TableReadyValue | undefined
   totalTvs: number | undefined
   tvsOrder: number
 }
