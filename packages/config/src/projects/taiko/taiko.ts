@@ -5,7 +5,7 @@ import {
   UnixTime,
   // formatSeconds,
 } from '@l2beat/shared-pure'
-// import { utils } from 'ethers'
+import { utils } from 'ethers'
 import {
   CONTRACTS,
   DATA_ON_CHAIN,
@@ -22,103 +22,12 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('taiko')
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
-//
-// const TIER_SGX = discovery.getContractValue<{
-//   verifierName: string
-//   validityBond: number
-//   contestBond: number
-//   cooldownWindow: number
-//   provingWindow: number
-//   maxBlocksToVerifyPerProof: number
-// }>('MainnetTierRouter', 'TIER_SGX')
-//
-// const TIER_RISC0 = discovery.getContractValue<{
-//   verifierName: string
-//   validityBond: number
-//   contestBond: number
-//   cooldownWindow: number
-//   provingWindow: number
-//   maxBlocksToVerifyPerProof: number
-// }>('MainnetTierRouter', 'TIER_RISC0')
-//
-// const TIER_SP1 = discovery.getContractValue<{
-//   verifierName: string
-//   validityBond: number
-//   contestBond: number
-//   cooldownWindow: number
-//   provingWindow: number
-//   maxBlocksToVerifyPerProof: number
-// }>('MainnetTierRouter', 'TIER_SP1')
-//
-// const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
-//   verifierName: string
-//   validityBond: number
-//   contestBond: number
-//   cooldownWindow: number
-//   provingWindow: number
-//   maxBlocksToVerifyPerProof: number
-// }>('MainnetTierRouter', 'TIER_GUARDIAN_MINORITY')
 
-// const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
-//   'GuardianMinorityProver',
-//   'minGuardians',
-// )
-// const NumGuardiansMinorityProver = discovery.getContractValue<string[]>(
-//   'GuardianMinorityProver',
-//   'numGuardians',
-// )
-//
-// const GuardianProverMinSigners = discovery.getContractValue<string[]>(
-//   'GuardianProver',
-//   'minGuardians',
-// )
-// const NumGuardiansProver = discovery.getContractValue<string[]>(
-//   'GuardianProver',
-//   'numGuardians',
-// )
+const TaikoChainConfig = discovery.getContractValue<{
+  [key: string]: number | string
+}>('TaikoL1Contract', 'pacayaConfig')
 
-// const TaikoChainConfig = discovery.getContractValue<{
-//   [key: string]: number | string
-// }>('TaikoL1Contract', 'getConfig')
-
-// const SGXcooldownWindow = formatSeconds(Number(TIER_SGX.cooldownWindow) * 60) // value in minutes
-// const SGXprovingWindow = formatSeconds(Number(TIER_SGX.provingWindow) * 60) // value in minutes
-// const SGXvalidityBond = utils.formatEther(TIER_SGX.validityBond) // value in TAIKO
-// const SGXcontestBond = utils.formatEther(TIER_SGX.contestBond) // value in TAIKO
-// const RISC0cooldownWindow = formatSeconds(TIER_RISC0.cooldownWindow * 60) // value in minutes
-// const RISC0provingWindow = formatSeconds(TIER_RISC0.provingWindow * 60) // value in minutes
-// const RISC0validityBond = utils.formatEther(TIER_RISC0.validityBond) // value in TAIKO
-// const RISC0contestBond = utils.formatEther(TIER_RISC0.contestBond) // value in TAIKO
-// const SP1cooldownWindow = formatSeconds(TIER_SP1.cooldownWindow * 60) // value in minutes
-// const SP1provingWindow = formatSeconds(TIER_SP1.provingWindow * 60) // value in minutes
-// const SP1validityBond = utils.formatEther(TIER_SP1.validityBond) // value in TAIKO
-// const SP1contestBond = utils.formatEther(TIER_SP1.contestBond) // value in TAIKO
-// const MinorityValidityBond = utils.formatEther(
-//   TIER_MINORITY_GUARDIAN.validityBond,
-// ) // value in TAIKO
-// const MinorityContestBond = utils.formatEther(
-//   TIER_MINORITY_GUARDIAN.contestBond,
-// ) // value in TAIKO
-
-// assert(
-//   RISC0cooldownWindow === SP1cooldownWindow &&
-//   RISC0provingWindow === SP1provingWindow &&
-//   RISC0validityBond === SP1validityBond &&
-//   RISC0contestBond === SP1contestBond &&
-//   SGXcooldownWindow === RISC0cooldownWindow,
-//   'The tier config assumptions have changed, plz review the technology section and riskView.stateValidation.',
-// )
-
-// const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
-
-// const numberActiveTiers =
-//   discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
-//     .length === 5
-//
-// assert(
-//   numberActiveTiers,
-//   'Review the technology section and riskView.stateValidation since the number of active tiers changed.',
-// )
+const livenessBond = utils.formatEther(TaikoChainConfig.livenessBondBase)
 
 const chainId = 167000
 
@@ -141,13 +50,10 @@ export const taiko: ScalingProject = {
     name: 'Taiko Alethia',
     slug: 'taiko',
     stack: 'Taiko',
-    // headerWarning: hasThreeTiers
-    //   ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
-    //   : undefined,
     description:
       'Taiko Alethia is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'ZK Rollup', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.taiko.xyz/'],
@@ -165,7 +71,7 @@ export const taiko: ScalingProject = {
     },
     liveness: {
       explanation:
-        'Taiko is an Optimistic rollup that posts blocks of L2 transaction data directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly finalized after the challenge period has elapsed.',
+        'Taiko posts blocks of L2 transaction data directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly settled after a cooldown period.',
     },
   },
   config: {

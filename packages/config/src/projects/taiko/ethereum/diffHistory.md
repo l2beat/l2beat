@@ -8,7 +8,15 @@ Generated with discovered.json: 0x8b2e5c4762ccff7e79eda073e24e0da167e0c2f6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Main TaikoL1 contract has been upgraded to an intermediate proxy that points to both an old and new implementation. The old implementation is also not the same as the actually previous one, but it's just add a "Pacaya" fork height that prevents proposing or proving for new blocks. The new fork compared to the new presents some simplifications, like removal of `AddressCache`, `AddressResolver`, `IAddressResolver`, `ITaikoL1`, `LibBonds`, `LibData`, `LibProposing`, `LibProving`, `LibUtils`, `LibVerifying`, `RollupAddressCache`, `SafeCastUpgradeable`, `TaikoData`, and `TaikoEvents`. The address resolving logic is still present and has been moved to the `EssentialContract` contract.
+
+At the time of writing, calls are still forwarded to the old impl as the Pacaya fork is expected to go live on Wed 21 May. `ITaikoInbox` and `TaikoInbox` replace `ITaikoL1` and `TaikoL1`. Batches have replaced blocks, as now one batch can contain multiple blocks. Instead of `proposeBlocksV2`, the `proposeBatch` function is called to sequence blocks. An `InboxWrapper` contract has been introduced, which is referenced by the `TaikoInbox`. The `InboxWrapper` references a `ForcedInclusionStore` contract that is used to submit forced transactions. All forced transactions must pay a fee, and it's currently set to a very high value meaning that the mechanism is in practice disabled. The slowest forced transactions can be included is one by one every 255 batches, creating a potential DoS attack via spam of forced transactions. It's therefore not clear how to estimate exit windows (not that it matters rn).
+
+The `proveBatches` function reflects the removal of tiers. The `_params` is decoded into `metas[]` (metadatas) and `trans[]` (transitions). On transition ids: when a batch is first proposed, the `nextTransitionId` is 1 and the `verifiedTransitionId` is zero. When a batch is proven for the first time, the `nextTransitionId` is incremented to 2, the proofs get verified, everything is good. The same batch can be proven again: it is checked that the new block hash and new state root also corresponds. If it does, it is treated as a no-op, if it doesn't, the block hash of the transition is set to zero, and contracts are paused. It is possible to prove a fault this way by providing a different starting point for the proving process, by providing a different `parentHash` to start from. Batches whose transitions' `blockHash` is set to zero are skipped during the `verifyBatches` call.
+ 
+The `verifyBatches` function also reflects the removal of tiers. The main function is still to credit back bonds to the proposer, specifically the full liveness bond if the block has been proved within the proving window, or half bond if not.
+ 
+The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_reth and sgx_geth. A proof must contain exactly two sub-proofs targeting two different verifiers. An ordering is defined between them based on their address: r0 -> sgx_geth -> sgx_reth -> sp1. It is required that one of the verifiers used is sgx_geth. It is possible to use two TEEs to verify a block, which causes them to still be affected by our recategorization.
 
 ## Watched changes
 
