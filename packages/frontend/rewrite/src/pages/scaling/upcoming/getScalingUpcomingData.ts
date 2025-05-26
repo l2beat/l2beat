@@ -18,7 +18,11 @@ export async function getScalingUpcomingData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'upcoming', 'entries'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'upcoming', 'entries'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getScalingUpcomingEntries,
     ),
   ])
