@@ -24,6 +24,7 @@ import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
+import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
@@ -60,6 +61,7 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'Axelar proxy': getAxelarProxy,
   'LightLink proxy': getLightLinkProxy,
   'Everclear proxy': getEverclearProxy,
+  'TaikoFork proxy': gatTaikoForkProxy,
   immutable: getImmutableProxy,
 }
 

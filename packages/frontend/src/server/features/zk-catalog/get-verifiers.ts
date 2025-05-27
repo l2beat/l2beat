@@ -1,4 +1,5 @@
 import { UnixTime, branded } from '@l2beat/shared-pure'
+import uniq from 'lodash/uniq'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -15,20 +16,23 @@ export async function getVerifiers() {
     whereNot: ['archivedAt'],
   })
 
-  const coercedQueries = projects
-    .flatMap((p) => p.proofVerification.verifiers)
-    .map(async (verifier) => {
-      const status = await db.verifierStatus.findVerifierStatus(
-        verifier.contractAddress.toString(),
-        verifier.chainId,
-      )
-      return {
-        address: verifier.contractAddress.toString(),
-        timestamp: status ? status.lastUsed : null,
-      }
-    })
+  const verifiers = projects.flatMap((p) => p.proofVerification.verifiers)
 
-  return Promise.all(coercedQueries)
+  const statuses = await db.verifierStatus.getVerifierStatuses(
+    uniq(verifiers.map((v) => v.contractAddress.toString())),
+  )
+
+  return verifiers.map((verifier) => {
+    const status = statuses.find(
+      (s) =>
+        s.address === verifier.contractAddress.toString() &&
+        s.chainId === verifier.chainId,
+    )
+    return {
+      address: verifier.contractAddress.toString(),
+      timestamp: status ? status.lastUsed : null,
+    }
+  })
 }
 
 async function getMockVerifiers() {

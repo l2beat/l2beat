@@ -1,3 +1,169 @@
+Generated with discovered.json: 0x06f0eff17d7b96b9e619c0bd64e6a100aeb0a308
+
+# Diff at Tue, 27 May 2025 08:31:14 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 336627087
+- current block number: 336627087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 336627087 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.1:
+-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.0:
+-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
++        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+    }
+```
+
+Generated with discovered.json: 0x1d467d49ec1871bb2951a4c946510122d7976042
+
+# Diff at Fri, 23 May 2025 09:41:13 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 336627087
+- current block number: 336627087
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 336627087 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x802c7B6585d20cb69524EF23fCbF919F671F808a) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract WinrFastconfirmerMultisig (0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "fastconfirm"
+      directlyReceivedPermissions.1.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      directlyReceivedPermissions.1.role:
++        ".anyTrustFastConfirmer"
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      directlyReceivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      directlyReceivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e) {
+    +++ description: None
+      receivedPermissions.2.permission:
+-        "validate"
++        "fastconfirm"
+      receivedPermissions.2.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      receivedPermissions.2.role:
++        ".anyTrustFastConfirmer"
+      receivedPermissions.1.role:
++        ".validators"
+      receivedPermissions.1.via:
++        [{"address":"0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4"}]
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      receivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      receivedPermissions.0.via:
+-        [{"address":"0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4"}]
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
 Generated with discovered.json: 0x19a8e99b62041e5dc518559400d21feb04c00741
 
 # Diff at Wed, 14 May 2025 14:45:38 GMT:

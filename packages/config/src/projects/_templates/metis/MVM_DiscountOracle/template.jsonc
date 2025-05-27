@@ -1,0 +1,15 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "MVM_DiscountOracle",
+  "description": "Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  }
+}

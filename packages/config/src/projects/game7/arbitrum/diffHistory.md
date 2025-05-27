@@ -1,3 +1,195 @@
+Generated with discovered.json: 0x48e3a03f0d03e4a60b63e5e73fcdd5c7475a50bc
+
+# Diff at Tue, 27 May 2025 08:31:05 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 331093646
+- current block number: 331093646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331093646 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.1:
+-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.0:
+-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
++        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+    }
+```
+
+Generated with discovered.json: 0x5ad1a923eb493bab980cd7dff2539f161d111229
+
+# Diff at Fri, 23 May 2025 09:41:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 331093646
+- current block number: 331093646
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 331093646 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x1a8902780F37e0526788198Dee30b8375A0B24Bc) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "fastconfirm"
+      directlyReceivedPermissions.1.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      directlyReceivedPermissions.1.role:
++        ".anyTrustFastConfirmer"
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      directlyReceivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      directlyReceivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x401eCb1D350407f13ba348573E5630B83638E30D) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x8b2600BA65E7908D38Af906fbcafB2f62D395765) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0) {
+    +++ description: None
+      receivedPermissions.2.permission:
+-        "validate"
++        "fastconfirm"
+      receivedPermissions.2.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      receivedPermissions.2.role:
++        ".anyTrustFastConfirmer"
+      receivedPermissions.2.via:
++        [{"address":"0x1a8902780F37e0526788198Dee30b8375A0B24Bc"}]
+      receivedPermissions.1.via:
+-        [{"address":"0x1a8902780F37e0526788198Dee30b8375A0B24Bc"}]
+      receivedPermissions.1.role:
++        ".validators"
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      receivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd12478d6edD1db996313E2F4350F2FD99c118B6E) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
 Generated with discovered.json: 0xe898469cb74cf4a30e82db13b54cdb104f475d20
 
 # Diff at Fri, 02 May 2025 17:25:18 GMT:

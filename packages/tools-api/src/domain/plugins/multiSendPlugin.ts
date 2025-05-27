@@ -1,8 +1,8 @@
 import { toFunctionSelector } from 'viem'
 import type { Address, Chain } from '../../config/types'
 import type { DecodedCall, DecodedValue, Value } from '../DecodedResult'
-import { BinaryReader } from './BinaryReader'
 import type { NestedCall } from './types'
+import { BinaryReader } from './utils'
 
 const selectors = {
   multiSend: toFunctionSelector('function multiSend(bytes transactions)'),

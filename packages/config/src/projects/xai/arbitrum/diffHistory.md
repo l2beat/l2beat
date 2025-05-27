@@ -1,3 +1,213 @@
+Generated with discovered.json: 0x252a82c3125d9c96327ae0e389f2cb4308f26b1c
+
+# Diff at Tue, 27 May 2025 08:31:14 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 336630059
+- current block number: 336630059
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 336630059 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.1:
+-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.0:
+-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
++        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+    }
+```
+
+Generated with discovered.json: 0x493206398761d776875150cbeac17a2602ddb508
+
+# Diff at Fri, 23 May 2025 09:41:13 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 336630059
+- current block number: 336630059
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 336630059 (main branch discovery), not current.
+
+```diff
+    contract XaiMultisig2 (0x000d8C5A70B8805DF02f409F2715d05B9A63E871) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".batchPosterManager"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x041F85dD87c46B941dc9b15c6628B19ee5358485) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosterManager"
+    }
+```
+
+```diff
+    contract XaiMultisig (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+    +++ description: None
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    EOA  (0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7) {
+    +++ description: None
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x7F68dba68E72a250004812fe04F1123Fca89aBa9) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    EOA  (0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosterManager"
+    }
+```
+
+```diff
+    EOA  (0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosterManager"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x649c0d6e48d4eccb31647c8a8a41011b01903e05
 
 # Diff at Wed, 14 May 2025 14:56:11 GMT:

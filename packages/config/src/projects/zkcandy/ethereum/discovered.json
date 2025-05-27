@@ -12,11 +12,13 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
         }
       ]
     },
@@ -38,7 +40,8 @@
         {
           "permission": "interact",
           "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
         }
       ],
       "sinceTimestamp": 1740080279,
@@ -81,7 +84,8 @@
         {
           "permission": "interact",
           "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
         }
       ],
       "sinceTimestamp": 1717520615,
@@ -129,7 +133,8 @@
         {
           "permission": "interact",
           "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
         }
       ],
       "sinceTimestamp": 1739108999,
@@ -168,13 +173,15 @@
           "permission": "interact",
           "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
           "via": [{ "address": "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+          "from": "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -228,11 +235,13 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
         }
       ]
     },
@@ -269,10 +278,7 @@
       "template": "shared-zk-stack/v26/Diamond",
       "sourceHashes": [
         "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b",
-        "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
-        "0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da",
-        "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6",
-        "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
+        "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -946,5 +952,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x0b6f83979b5f054c4ee223c61025cab6cfae6f6386cf99bd8c6a6984924ee987"
+  "permissionsConfigHash": "0x7f5493087d4951d1bfeb41ea38752129d6e2d06a469350cc7b16e79652519683"
 }

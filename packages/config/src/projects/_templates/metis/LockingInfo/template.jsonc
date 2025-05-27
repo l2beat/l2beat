@@ -1,0 +1,15 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "LockingInfo",
+  "description": "Contract acting as an escrow for METIS tokens managed by LockingPool.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  }
+}

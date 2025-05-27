@@ -1,3 +1,178 @@
+Generated with discovered.json: 0x14cd8caff38edaf4e6e17d4e8597df5ae5c24030
+
+# Diff at Tue, 27 May 2025 08:30:34 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 22531175
+- current block number: 22531175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22531175 (main branch discovery), not current.
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.4:
+-        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f"
+      sourceHashes.3:
+-        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486"
+      sourceHashes.2:
+-        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+      sourceHashes.1:
+-        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
++        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
+      sourceHashes.0:
+-        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25"
++        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+    }
+```
+
+Generated with discovered.json: 0x66fddb062611cf0fc6cc12cbc3b8e5624f468be6
+
+# Diff at Fri, 23 May 2025 09:41:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22531175
+- current block number: 22531175
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22531175 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0b114d4675Cb79507e68F2616c93e124122c6ef0) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+      receivedPermissions.3.description:
+-        "set the conversion factor for gas token deposits."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
++        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      receivedPermissions.1.description:
++        "set the conversion factor for gas token deposits."
+      receivedPermissions.1.role:
++        ".tokenMultiplierSetter"
+      receivedPermissions.0.role:
++        ".getAdmin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getTransactionFilterer"
+    }
+```
+
+```diff
+    EOA  (0x58D14960E0a2be353eDdE61ad719196A2b816522) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".depositApprover"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      receivedPermissions.0.role:
++        ".whitelistedSender"
+    }
+```
+
+```diff
+    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".whitelistedSender"
+    }
+```
+
+```diff
+    EOA  (0xF29bFff344c7ef0186432fE30C39fda0cca0550b) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".whitelistedSender"
+      receivedPermissions.0.role:
++        ".acAdmin"
+    }
+```
+
 Generated with discovered.json: 0x9a75da8de575c90381a6c042b9f09b52e945506a
 
 # Diff at Wed, 21 May 2025 12:10:12 GMT:

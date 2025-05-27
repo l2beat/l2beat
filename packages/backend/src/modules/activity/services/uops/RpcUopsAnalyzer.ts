@@ -57,7 +57,7 @@ export class RpcUopsAnalyzer implements UopsAnalyzer {
       operation: Operation,
       methods: Method[],
     ): number => {
-      if (operation.type === 'static') {
+      if (operation.type === 'static' || operation.type === 'transfer') {
         return operation.count
       }
 

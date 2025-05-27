@@ -4,6 +4,12 @@ import type { ICache } from './ICache'
 
 const PROMISE_TIMEOUT = 30
 
+interface Options {
+  key: string[]
+  ttl: number
+  staleWhileRevalidate?: number
+}
+
 export class InMemoryCache implements ICache {
   private cache
   private inFlight = new Map<
@@ -19,25 +25,35 @@ export class InMemoryCache implements ICache {
       initialCache ?? new Map<string, { result: unknown; timestamp: number }>()
   }
 
-  async get<T>(
-    options: { key: string[]; ttl: number },
-    fallback: () => Promise<T>,
-  ): Promise<T> {
-    if (!(env.NODE_ENV !== 'production')) {
+  async get<T>(options: Options, fallback: () => Promise<T>): Promise<T> {
+    if (env.NODE_ENV !== 'production' || env.DISABLE_CACHE) {
       return fallback()
     }
 
     const key = this.getKey(options.key)
     const result = this.cache.get(key)
+    const now = UnixTime.now()
 
-    if (result && result.timestamp + options.ttl > UnixTime.now()) {
+    // If we have a result and it's not expired, return it immediately
+    if (result && result.timestamp + options.ttl > now) {
       return result.result as T
     }
 
+    // If we have stale data and staleWhileRevalidate is enabled
+    if (
+      result &&
+      options.staleWhileRevalidate &&
+      result.timestamp + options.ttl + options.staleWhileRevalidate > now
+    ) {
+      void this.revalidateInBackground(key, fallback)
+      return result.result as T
+    }
+
+    // If no valid data exists, wait for fresh data
     const existingPromise = this.inFlight.get(key)
     if (
       existingPromise &&
-      existingPromise.timestamp + this.promiseTimeout > UnixTime.now()
+      existingPromise.timestamp + this.promiseTimeout > now
     ) {
       return existingPromise.promise as Promise<T>
     }
@@ -45,14 +61,46 @@ export class InMemoryCache implements ICache {
     const promise = fallback().finally(() => {
       this.inFlight.delete(key)
     })
-    this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
+    this.inFlight.set(key, { promise, timestamp: now })
 
     const fallbackResult = await promise
     this.cache.set(key, {
       result: fallbackResult,
-      timestamp: UnixTime.now(),
+      timestamp: now,
     })
     return fallbackResult
+  }
+
+  private async revalidateInBackground<T>(
+    key: string,
+    fallback: () => Promise<T>,
+  ): Promise<void> {
+    console.log('inside revalidateInBackground', key)
+    const existingPromise = this.inFlight.get(key)
+    if (
+      existingPromise &&
+      existingPromise.timestamp + this.promiseTimeout > UnixTime.now()
+    ) {
+      return
+    }
+
+    const promise = fallback().finally(() => {
+      this.inFlight.delete(key)
+    })
+    this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
+    console.log('inside revalidateInBackground', key)
+
+    try {
+      const result = await promise
+      this.cache.set(key, {
+        result,
+        timestamp: UnixTime.now(),
+      })
+    } catch (error) {
+      // If revalidation fails, we keep the stale data
+      console.error('Background revalidation failed:', error)
+    }
+    console.log('inside revalidateInBackground', key)
   }
 
   _get(key: string) {

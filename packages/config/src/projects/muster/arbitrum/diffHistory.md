@@ -1,3 +1,164 @@
+Generated with discovered.json: 0x0d2607f4704c5206a5b5b359426c9e95b1925035
+
+# Diff at Tue, 27 May 2025 08:31:07 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 324576418
+- current block number: 324576418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 324576418 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.1:
+-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.0:
+-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
++        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+    }
+```
+
+Generated with discovered.json: 0x20d621aae1e0d0681c0cc43dff28e189d682f69b
+
+# Diff at Fri, 23 May 2025 09:41:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 324576418
+- current block number: 324576418
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 324576418 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x10083F68A4aEC72c567661616bd6036D3a6d1B36) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".batchPosterManager"
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    EOA  (0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1"
++        "0xD17550876106645988051ffDd31dFc3cDaA29F9c"
+      receivedPermissions.6.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.6.via.1:
++        {"address":"0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"}
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xD17550876106645988051ffDd31dFc3cDaA29F9c"
++        "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1"
++        "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
++        "0xE8c7770db364e57b2A4f5344d51b7f490aE9163A"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0xE8c7770db364e57b2A4f5344d51b7f490aE9163A"
++        "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.from:
+-        "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f"
++        "0xfb27e42E964F3364630F76D62EB295ae792BD4FA"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xfb27e42E964F3364630F76D62EB295ae792BD4FA"
++        "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1"
+      receivedPermissions.0.via.1:
+-        {"address":"0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"}
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
 Generated with discovered.json: 0xdc450229ea4170bfa08ddc432031472115cfda96
 
 # Diff at Tue, 06 May 2025 10:57:03 GMT:

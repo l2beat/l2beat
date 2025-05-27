@@ -20,7 +20,11 @@ export function createBridgesRouter(
 
   router.get('/bridges/summary', async (req, res) => {
     const data = await cache.get(
-      { key: ['bridges', 'summary'], ttl: 10 * 60 },
+      {
+        key: ['bridges', 'summary'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       () => getBridgesSummaryData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -29,7 +33,11 @@ export function createBridgesRouter(
 
   router.get('/bridges/archived', async (req, res) => {
     const data = await cache.get(
-      { key: ['bridges', 'archived'], ttl: 10 * 60 },
+      {
+        key: ['bridges', 'archived'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       () => getBridgesArchivedData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -45,7 +53,11 @@ export function createBridgesRouter(
     }),
     async (req, res) => {
       const data = await cache.get(
-        { key: ['bridges', 'projects', req.params.slug], ttl: 10 * 60 },
+        {
+          key: ['bridges', 'projects', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
         () => getBridgesProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {

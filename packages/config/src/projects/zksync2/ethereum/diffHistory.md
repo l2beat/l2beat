@@ -1,3 +1,121 @@
+Generated with discovered.json: 0x126e1ec210d620d7fb38a1bdc1886c61b2ad385e
+
+# Diff at Tue, 27 May 2025 08:30:51 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 22481883
+- current block number: 22481883
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481883 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      sourceHashes.4:
+-        "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea"
+      sourceHashes.3:
+-        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f"
+      sourceHashes.2:
+-        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486"
+      sourceHashes.1:
+-        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
++        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
+      sourceHashes.0:
+-        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25"
++        "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea"
+    }
+```
+
+Generated with discovered.json: 0x19d24398acc753904e78f1251baae7a1f10567dc
+
+# Diff at Fri, 23 May 2025 09:41:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22481883
+- current block number: 22481883
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481883 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x30066439887C0a509Cb38E45c9262E6924a29BbD) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
 Generated with discovered.json: 0x84b4ba69b750862f8f2c1188e37d63a5410894c3
 
 # Diff at Wed, 14 May 2025 14:05:56 GMT:

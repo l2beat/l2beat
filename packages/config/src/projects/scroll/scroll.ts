@@ -630,6 +630,14 @@ export const scroll: ScalingProject = {
     'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposal through the `AgoraGovernor` contract on L2. However, upgrades are not triggered automatically, the Security Council is in charge of executing upgrades.',
   milestones: [
     {
+      title: 'Emergency upgrade',
+      url: 'https://etherscan.io/tx/0xba98265b96c11b6b22d44f813082daf29a4dd0dd3dc40057ac4f9f6619362d0d',
+      date: '2025-05-26T00:00:00Z',
+      description:
+        'The SecurityCouncil emergency upgrades to fix a bug in the plonky3-based proof system.',
+      type: 'incident',
+    },
+    {
       title: 'Scroll Euclid upgrade',
       url: 'https://scroll.io/blog/euclid-upgrade',
       date: '2025-04-24T00:00:00.00Z',

@@ -1,0 +1,8 @@
+{
+  "InitialGatewayTransactionFilterer": {
+    "hash": "0x2d3f070828833b218c19d8599f163f154c820daf4bcde2902ab36af473211be6",
+    "address": "0x9B30061D077476a8B7e1b68c3da844Ed5FdE0432",
+    "chain": "ethereum",
+    "blockNumber": 22572509
+  }
+}

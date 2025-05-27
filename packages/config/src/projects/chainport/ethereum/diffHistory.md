@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xb182b6d03869d3c4c79c6a0aa47b8d7c19f0d174
+
+# Diff at Mon, 26 May 2025 13:41:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22045311
+- current block number: 22567327
+
+## Description
+
+Unfreeze bridge proposal executed.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        64
++        65
+    }
+```
+
+Generated with discovered.json: 0x3f4400e3c64ff1f39fa13c1f1a2afc5949d5d7bb
+
+# Diff at Fri, 23 May 2025 09:40:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22045311
+- current block number: 22045311
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045311 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0xdc5be125138251301b14abd65f49a3a7ce002762
 
 # Diff at Mon, 12 May 2025 13:18:50 GMT:

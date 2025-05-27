@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x5a84f171085ac92d6ad780ab694baaf0daae8b49
+
+# Diff at Tue, 27 May 2025 08:26:46 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.7:
+-        "0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be"
+      sourceHashes.6:
+-        "0x86d6fa45382a22e80ccfc3c25098fbb8d33ef8ae32da21e4fe8257f0caf8c114"
+      sourceHashes.5:
+-        "0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6"
+      sourceHashes.4:
+-        "0xa6841fa395d89b246e6ab746f0501d13a8c570e1c9fa282241c39b48c738067c"
+      sourceHashes.3:
+-        "0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc"
+      sourceHashes.2:
+-        "0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca"
+      sourceHashes.1:
+-        "0x46eae4f2e7b6b0f5096ba403f113ff3c86205368a36af081ab280441d64942fc"
++        "0xbe79d78e7db305a3c7147712a7cca3e0f82bacad7f00a96fa6b07bc8abfe9974"
+      sourceHashes.0:
+-        "0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97"
++        "0x46eae4f2e7b6b0f5096ba403f113ff3c86205368a36af081ab280441d64942fc"
+    }
+```
+
+Generated with discovered.json: 0x641acc0c2bf4b74da3e15e62a39a27220f2672f7
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    EOA  (0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".operators"
+    }
+```
+
+```diff
+    EOA  (0x8fDEC5EE435501571034A78a7F3AA167185969b3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    EOA  (0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".tokenAdmins"
+    }
+```
+
+```diff
+    contract RhinofiAdminMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: None
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
 Generated with discovered.json: 0xad10356a2c407145cd38c0a3c024cf7238fd4b73
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

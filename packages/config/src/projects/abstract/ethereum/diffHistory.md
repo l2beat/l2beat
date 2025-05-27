@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xe1592d6bb6a1547acb78f6b687804ea77246a279
+
+# Diff at Tue, 27 May 2025 08:30:33 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 22496279
+- current block number: 22496279
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22496279 (main branch discovery), not current.
+
+```diff
+    contract AbstractZkEvm (0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.4:
+-        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f"
+      sourceHashes.3:
+-        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486"
+      sourceHashes.2:
+-        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+      sourceHashes.1:
+-        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
++        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
+      sourceHashes.0:
+-        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25"
++        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f"
+    }
+```
+
+Generated with discovered.json: 0xbea867b915598897cf6607a51232c2a9fb5b6019
+
+# Diff at Fri, 23 May 2025 09:41:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22496279
+- current block number: 22496279
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22496279 (main branch discovery), not current.
+
+```diff
+    EOA  (0x11805594be0229EF08429D775AF0c55f7c4535dE) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    EOA  (0x54aB716D465be3D5EEca64E63ac0048D7a81659a) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".validatorsVTL"
+      receivedPermissions.0.role:
++        ".validatorsVTL"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract Abstract Multisig (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".getAdmin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".getAdmin"
+    }
+```
+
 Generated with discovered.json: 0xe2d0389a305066196f1800063716aa9a764d054c
 
 # Diff at Fri, 16 May 2025 14:39:40 GMT:

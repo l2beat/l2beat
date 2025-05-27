@@ -1,0 +1,15 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "MVM_CanonicalTransaction",
+  "description": "MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  }
+}

@@ -12,14 +12,14 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import {
-  type LivenessRecordWithConfig,
-  LivenessWithConfigService,
-} from '../services/LivenessWithConfigService'
 import { RunningStatistics } from '../utils/RollingVariance'
 import { type Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
+import {
+  type LivenessRecordWithConfig,
+  mapToRecordWithConfig,
+} from '../utils/mapToRecordWithConfig'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -95,14 +95,15 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
         continue
       }
 
-      const livenessWithConfig = new LivenessWithConfigService(
-        activeConfigs,
-        this.$.db,
-      )
+      const records =
+        await this.$.db.liveness.getByConfigurationIdWithinTimeRange(
+          activeConfigs.map((c) => c.id),
+          deviationRange,
+          to,
+        )
 
-      const livenessRecords = await livenessWithConfig.getWithinTimeRange(
-        deviationRange,
-        to,
+      const livenessRecords = records.map((r) =>
+        mapToRecordWithConfig(r, activeConfigs),
       )
 
       if (livenessRecords.length === 0) {

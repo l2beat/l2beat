@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22494955,
-  "configHash": "0xf3157aaa9a47b10476dd7a98c4da975e69a91efe4bfb9d0a589048d05ba7a1f0",
+  "blockNumber": 22567898,
+  "configHash": "0x9a50cb882de3bc16e4fded3c3f9b27b6f026b6648d40c94d2b9bba28fd53681d",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -18,11 +18,13 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
       "type": "Contract",
+      "template": "metis/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
         "0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7"
       ],
       "proxyType": "resolved delegate proxy",
+      "description": "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
       "sinceTimestamp": 1637076488,
       "sinceBlock": 13627370,
       "values": {
@@ -45,17 +47,20 @@
       "implementationNames": {
         "0x081D1101855bD523bA69A9794e0217F0DB6323ff": "Lib_ResolvedDelegateProxy",
         "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": "L1CrossDomainMessenger"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "LockingInfo",
       "address": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
       "type": "Contract",
+      "template": "metis/LockingInfo",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0x3052e020792c1a42febb86916d737ca4d3962b80b97fe18c7a778bf270acf023"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract acting as an escrow for METIS tokens managed by LockingPool.",
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
       "sinceTimestamp": 1710314867,
       "sinceBlock": 19424659,
@@ -83,9 +88,10 @@
         "maxLock": "100000000000000000000000",
         "minLock": "20000000000000000000000",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "439184108837702136013579",
-        "totalRewardsLiquidated": "42296928236590808876180"
+        "totalLocked": "423601833691609371299528",
+        "totalRewardsLiquidated": "43141403568895808876180"
       },
       "implementationNames": {
         "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
@@ -96,10 +102,12 @@
       "name": "ChainStorageContainer-SCC-batches",
       "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
       "type": "Contract",
+      "template": "metis/ChainStorageContainer-SCC-batches",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
       "proxyType": "immutable",
+      "description": "Storage container for SCC batches.",
       "ignoreInWatchMode": [
         "getGlobalMetadata",
         "length",
@@ -111,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068270acb000137adf3",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068270acb000137adf3",
-        "length": 28522,
-        "lengthByChainId": 28522,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068347d63000138c3f9",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068347d63000138c3f9",
+        "length": 28855,
+        "lengthByChainId": 28855,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -130,17 +138,26 @@
     {
       "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
+          "role": ".txChainBatcher"
+        }
+      ]
     },
     {
       "name": "DisputeGameFactory",
       "address": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
       "type": "Contract",
+      "template": "metis/DisputeGameFactory_Metis",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.",
       "sinceTimestamp": 1747126931,
       "sinceBlock": 22473285,
       "values": {
@@ -154,10 +171,21 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+          },
+          "GAME_CREATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GAME_CREATOR_ROLE": "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02",
         "gameAtIndex": [],
         "gameCount": 0,
+        "gameCreator": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"],
         "gameImpls": [
           "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
           "0x0000000000000000000000000000000000000000",
@@ -196,11 +224,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+          "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1747125995,
@@ -217,10 +247,12 @@
       "name": "MetisConfig",
       "address": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
       "type": "Contract",
+      "template": "metis/MetisConfig",
       "sourceHashes": [
         "0x558909a2a0c5a264fed5f222b7ceecf453fa3ef587de764b74ae5f8290dde15c"
       ],
       "proxyType": "immutable",
+      "description": "Contract used to manage configuration of global Metis values.",
       "sinceTimestamp": 1747126991,
       "sinceBlock": 22473290,
       "values": {
@@ -244,10 +276,12 @@
       "name": "ChainStorageContainer-CTC-batches",
       "address": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
       "type": "Contract",
+      "template": "metis/ChainStorageContainer-CTC-batches",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
       "proxyType": "immutable",
+      "description": "Storage container for CTC batches.",
       "sinceTimestamp": 1637047500,
       "sinceBlock": 13625270,
       "values": {
@@ -264,11 +298,13 @@
       "name": "L1StandardBridge",
       "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
       "type": "Contract",
+      "template": "metis/L1StandardBridge",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x6e30dabe85a54d5753ec304088b4cc9f1fc2ba202fb3982bf202b0cc4a922c99"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.",
       "sinceTimestamp": 1637077208,
       "sinceBlock": 13627429,
       "values": {
@@ -280,7 +316,8 @@
         "DEFAULT_CHAINID": 1088,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
-        "metis": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+        "metis": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
         "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": "L1ChugSplashProxy",
@@ -301,10 +338,12 @@
       "name": "FaultDisputeGame",
       "address": "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
       "type": "Contract",
+      "template": "metis/FaultDisputeGame",
       "sourceHashes": [
         "0x41942b2c90ded6bd7da7f87e7398c6b118638d9c97de7bede373140ecabc23d1"
       ],
       "proxyType": "immutable",
+      "description": "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.",
       "sinceTimestamp": 1747127747,
       "sinceBlock": 22473352,
       "values": {
@@ -363,45 +402,53 @@
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
         {
-          "permission": "interact",
-          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
-          "description": "set and change address mappings."
+          "permission": "metisGameCreator",
+          "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": ".gameCreator"
         },
         {
           "permission": "upgrade",
           "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "role": "admin",
           "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         },
         {
           "permission": "upgrade",
-          "from": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+          "from": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+          "from": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+          "from": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "role": "admin",
           "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         },
         {
           "permission": "upgrade",
-          "from": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+          "from": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+          "from": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+          "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+          "from": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -426,7 +473,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 40,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -446,18 +493,21 @@
         {
           "permission": "upgrade",
           "from": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin",
           "via": [{ "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21" }]
         },
         {
           "permission": "upgrade",
           "from": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "role": "admin",
           "via": [{ "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
+          "from": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
+          "role": ".owner"
         }
       ]
     },
@@ -465,10 +515,12 @@
       "name": "CanonicalTransactionChain",
       "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
       "type": "Contract",
+      "template": "metis/CanonicalTransactionChain",
       "sourceHashes": [
         "0x70010b1d5bb98964174a28e3c3a229763fb65df55575104adbec0bc0552cd31d"
       ],
       "proxyType": "immutable",
+      "description": "The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.",
       "ignoreInWatchMode": [
         "getLastBlockNumber",
         "getLastTimestamp",
@@ -489,8 +541,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 3958,
-        "getQueueLength": 40242,
+        "getNumPendingQueueElements": 3997,
+        "getQueueLength": 40281,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -502,37 +554,28 @@
       },
       "implementationNames": {
         "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": "CanonicalTransactionChain"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BondManager",
       "address": "0x595801b85628ec6979C420988b8843A40F850528",
       "type": "Contract",
+      "template": "metis/BondManager",
       "sourceHashes": [
         "0xe429226928e3766e14dbbf6391a4caa68cf9e4c12cb9e81ef04b84a38747449a"
       ],
       "proxyType": "immutable",
+      "description": "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
       "sinceTimestamp": 1713873023,
       "sinceBlock": 19717907,
       "values": {
         "$immutable": true,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d"
+        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
         "0x595801b85628ec6979C420988b8843A40F850528": "BondManager"
-      }
-    },
-    {
-      "name": "",
-      "address": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1637083067,
-      "sinceBlock": 13627861,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb": ""
       }
     },
     {
@@ -575,11 +618,13 @@
       "name": "MVM_CanonicalTransaction",
       "address": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
       "type": "Contract",
+      "template": "metis/MVM_CanonicalTransaction",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0xc5bc8dddf764177767a3613d96c31c0fcc86db07c909c72cbf2f6a2443942109"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.",
       "sinceTimestamp": 1649638297,
       "sinceBlock": 14561258,
       "values": {
@@ -595,6 +640,7 @@
         "getTxDataSliceCount": 100,
         "getTxDataSliceSize": 90000,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "proxiableUUID": "EXPECT_REVERT",
         "stakeBaseCost": "100000000000000000",
         "stakeSeqSeconds": 86400,
         "stakeUnitCost": 0,
@@ -612,10 +658,12 @@
       "name": "PreimageOracle",
       "address": "0x789a64284e29d2225430606D3D89a9336870BBbC",
       "type": "Contract",
+      "template": "metis/PreimageOracle",
       "sourceHashes": [
         "0x715f5c63ded74faed65181ca2796a35f260a2a074d16724707812a58ded43498"
       ],
       "proxyType": "immutable",
+      "description": "Oracle for providing preimages.",
       "sinceTimestamp": 1747125887,
       "sinceBlock": 22473198,
       "values": {
@@ -643,10 +691,12 @@
       "name": "MVM_DiscountOracle",
       "address": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
       "type": "Contract",
+      "template": "metis/MVM_DiscountOracle",
       "sourceHashes": [
         "0x8406419ac446023c37b27d0154da77b664a20b7da231802e32193c8883d32d06"
       ],
       "proxyType": "immutable",
+      "description": "Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.",
       "sinceTimestamp": 1649859244,
       "sinceBlock": 14577582,
       "values": {
@@ -656,7 +706,8 @@
         "getDiscount": 0,
         "getMinL2Gas": 200000,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
-        "minL2Gas": 200000
+        "minL2Gas": 200000,
+        "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
         "0x7f6B0b7589febc40419a8646EFf9801b87397063": "MVM_DiscountOracle"
@@ -674,11 +725,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1710314795,
@@ -695,20 +748,22 @@
       "name": "Lib_AddressManager",
       "address": "0x918778e825747a892b17C66fe7D24C618262867d",
       "type": "Contract",
-      "template": "opstack/AddressManager",
+      "template": "metis/Lib_AddressManager",
       "sourceHashes": [
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
       "proxyType": "immutable",
-      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "description": "Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "sinceTimestamp": 1637047108,
       "sinceBlock": 13625248,
       "values": {
-        "_1088_MVM_FraudVerifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+        "_1088_MVM_FraudVerifier": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "_1088_MVM_Proposer": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
         "_1088_MVM_Sequencer": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
         "_1088_MVM_Sequencer_Wrapper": "0xcDf02971871B7736874E20B8487c019D28090019",
         "$immutable": true,
+        "1088_MVM_FraudVerifier": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "blobBatcher": "0xae4d46bd9117cb017c5185844699c51107cb28a9",
         "BondManager": "0x595801b85628ec6979C420988b8843A40F850528",
         "CanonicalTransactionChain": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
         "ChainStorageContainer_CTC_queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
@@ -722,6 +777,7 @@
         "Proxy__MVM_Verifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
         "Proxy__OVM_L1StandardBridge": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "StateCommitmentChain": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+        "txChainBatcher": "0x1A9da0aedA630dDf2748a453BF6d92560762D914",
         "undefined_MVM_FraudVerifier": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
       },
       "fieldMeta": {
@@ -733,17 +789,18 @@
       },
       "implementationNames": {
         "0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager"
-      },
-      "category": { "name": "Spam", "priority": -1 }
+      }
     },
     {
-      "name": "MToken",
+      "name": "Metis Token",
       "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
       "type": "Contract",
+      "template": "metis/METISToken",
       "sourceHashes": [
         "0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203"
       ],
       "proxyType": "immutable",
+      "description": "Metis token contract.",
       "sinceTimestamp": 1607734167,
       "sinceBlock": 11434969,
       "values": {
@@ -762,11 +819,13 @@
       "name": "StateCommitmentChain",
       "address": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
       "type": "Contract",
+      "template": "metis/MVM_StateCommitmentChain",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x97bafeecd79eafa0a2d331c68498ce2ccecf89112ed12cb22b90aac48f1d0aa5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.",
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
         "getTotalBatches",
@@ -787,19 +846,20 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1747389131,
-        "getLastSequencerTimestampByChainId": 1747389131,
-        "getTotalBatches": 28522,
-        "getTotalBatchesByChainId": 28522,
-        "getTotalElements": 20426227,
-        "getTotalElementsByChainId": 20426227,
+        "getLastSequencerTimestamp": 1748270435,
+        "getLastSequencerTimestampByChainId": 1748270435,
+        "getTotalBatches": 28855,
+        "getTotalBatchesByChainId": 28855,
+        "getTotalElements": 20497401,
+        "getTotalElementsByChainId": 20497401,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
       "implementationNames": {
         "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
         "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": "MVM_StateCommitmentChain"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E",
@@ -810,10 +870,12 @@
       "name": "ChainStorageContainer-CTC-queue",
       "address": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
       "type": "Contract",
+      "template": "metis/ChainStorageContainer-CTC-queue",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
       "proxyType": "immutable",
+      "description": "Storage container for CTC queue.",
       "sinceTimestamp": 1637047833,
       "sinceBlock": 13625297,
       "values": {
@@ -832,9 +894,22 @@
       }
     },
     {
+      "address": "0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
+          "role": ".blobBatcher"
+        }
+      ]
+    },
+    {
       "name": "MIPS",
       "address": "0xAFD640204D73B02C3521eA8ea3771182527Ff057",
       "type": "Contract",
+      "template": "metis/MIPS",
       "sourceHashes": [
         "0x3a10a9204d3b7ad786308b5b5f2ca78af017388be046c0d3abe7d4193bbf2a0e"
       ],
@@ -874,11 +949,13 @@
       "name": "LockingPool",
       "address": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
       "type": "Contract",
+      "template": "metis/LockingPool",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0xff86f55c7d91dbdd408e8b44c6aa3647e5d7cef144de8a65bc84e13e3bf3524f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.",
       "ignoreInWatchMode": [
         "currentBatch",
         "totalSequencers",
@@ -905,7 +982,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
-        "currentBatch": 119,
+        "currentBatch": 122,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -997,11 +1074,13 @@
       "name": "MVM_Verifier",
       "address": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
       "type": "Contract",
+      "template": "metis/MVM_Verifier",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x85cae352a6b900f9d20a913095da6267900b8e10f04d7277743dcdd0ce8c809e"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The MVM Verifier contract is responsible for verifying the state of the MVM.",
       "sinceTimestamp": 1649719906,
       "sinceBlock": 14567320,
       "values": {
@@ -1016,6 +1095,7 @@
         "metis": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "minStake": "200000000000000000000",
         "numQualifiedVerifiers": 0,
+        "proxiableUUID": "EXPECT_REVERT",
         "seqStake": 0,
         "verifiers": [],
         "verifyWindow": 0
@@ -1028,17 +1108,26 @@
     {
       "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
+          "role": "._1088_MVM_Proposer"
+        }
+      ]
     },
     {
       "name": "MVM_L2ChainManagerOnL1",
       "address": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
       "type": "Contract",
+      "template": "metis/MVM_L2ChainManagerOnL1",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x8be6c2abbd355799e149ebae677a3814685c6b43ebad0b7853fe236af7a84fe7"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that allows METIS_MANAGER to switch Sequencer.",
       "sinceTimestamp": 1637089464,
       "sinceBlock": 13628326,
       "values": {
@@ -1048,7 +1137,8 @@
         "$upgradeCount": 0,
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+        "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+        "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
         "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": "L1ChugSplashProxy",
@@ -1059,11 +1149,13 @@
       "name": "DelayedWMetis",
       "address": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
       "type": "Contract",
+      "template": "metis/DelayedWMetis",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x9d2c1c322c99db1beff551176a6a67aed49220a4307f3d9b797ac7dcc975ecab"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Delayed wrapped Metis token contract.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1747127051,
       "sinceBlock": 22473294,
@@ -1962,7 +2054,28 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "metis/BondManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/CanonicalTransactionChain": "0xbe89d4af7610966b7bde89c028905d0727775c8a35c88299b60e9d8da3f899b3",
+    "metis/ChainStorageContainer-CTC-batches": "0x9204ffa48447039c6d4c4ce6552397c95ae65ce02590f76b05207a2775fe4777",
+    "metis/ChainStorageContainer-CTC-queue": "0xa1e630674758f9d275bdb1dfb9fcce997af7df07ed0598a876ac488bbe8a32e1",
+    "metis/ChainStorageContainer-SCC-batches": "0xcd021c2fba2b365c63f7d95323b7c2d6104ef46bb56933bd22cfdfab848cef1d",
+    "metis/DelayedWMetis": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
+    "metis/DisputeGameFactory_Metis": "0xcdbcc4615d43ff98023bd06e2e0baa3e022d7540474389a1aab75f0f5d409716",
+    "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
+    "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/Lib_AddressManager": "0x8a7b8bafae04f9be8a5026a865b494737de12d4c845b772f1845b4905013f86f",
+    "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",
+    "metis/MetisConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "metis/METISToken": "0xe4c7c8a93327a313a78b8443c90b3cfe44501c5ddc41bab647f77de5ff00152f",
+    "metis/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "metis/MVM_CanonicalTransaction": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/MVM_DiscountOracle": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/MVM_L2ChainManagerOnL1": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
+    "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0x3b259ef09f858994824ea44692be19c6c1bf292652904130ac0cdb44b689cfd9"
+  "permissionsConfigHash": "0xaf13f70d5fd48bd4ea50e5169b310cfb1a5912ee6eac4c876d88557132b2868c"
 }

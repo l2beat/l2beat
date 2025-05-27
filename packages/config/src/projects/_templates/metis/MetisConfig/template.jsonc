@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "MetisConfig",
+  "description": "Contract used to manage configuration of global Metis values.",
+  "fields": {}
+}

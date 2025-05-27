@@ -25,6 +25,7 @@ import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
+  WHITEBIT_TRANSACTION_SELECTOR,
   isEip712,
   isEip7821,
   isErc20Router,
@@ -176,6 +177,18 @@ export class RpcCounter implements Counter {
         }
       }
 
+      if (operation.type === 'transfer') {
+        return {
+          id: generateId(),
+          level,
+          methodSelector: '',
+          methodName: operation.name,
+          contractAddress: operation.to,
+          count: operation.count,
+          children: [],
+        }
+      }
+
       const selector = operation.calldata.slice(0, 10)
       const method = methods.find((m) => m.selector === selector)
 
@@ -317,6 +330,8 @@ export class RpcCounter implements Counter {
         return 'ERC-20 Router'
       case EIP_7821_TRANSACTION_SELECTOR:
         return 'EIP-7821'
+      case WHITEBIT_TRANSACTION_SELECTOR:
+        return 'WhiteBIT sweeper'
     }
 
     switch (type) {
@@ -326,6 +341,8 @@ export class RpcCounter implements Counter {
         return 'EIP-2930'
       case '2':
         return 'EIP-1559'
+      case '4':
+        return 'EIP-7702'
       case '113':
         return 'EIP-712'
     }

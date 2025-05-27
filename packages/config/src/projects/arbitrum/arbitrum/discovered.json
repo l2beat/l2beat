@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 337288646,
+  "blockNumber": 340727816,
   "configHash": "0x45ec79f8a9d463da9637729fe3dcab61e509d71e4d69be666654688c8a999a8a",
   "entries": [
     {
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 33090,
+        "exitNum": 33482,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -277,17 +277,20 @@
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200,
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
           "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
           "permission": "upgrade",
           "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+          "role": "admin",
           "via": [
             { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -296,6 +299,7 @@
         {
           "permission": "upgrade",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -304,6 +308,7 @@
         {
           "permission": "upgrade",
           "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -312,6 +317,7 @@
         {
           "permission": "upgrade",
           "from": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+          "role": "admin",
           "via": [
             { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -320,6 +326,7 @@
         {
           "permission": "upgrade",
           "from": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+          "role": "admin",
           "via": [
             { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -328,6 +335,7 @@
         {
           "permission": "upgrade",
           "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -336,6 +344,7 @@
         {
           "permission": "upgrade",
           "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -344,6 +353,7 @@
         {
           "permission": "upgrade",
           "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -352,6 +362,7 @@
         {
           "permission": "upgrade",
           "from": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -360,6 +371,7 @@
         {
           "permission": "upgrade",
           "from": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -368,6 +380,7 @@
         {
           "permission": "upgrade",
           "from": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -376,6 +389,7 @@
         {
           "permission": "upgrade",
           "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -384,6 +398,7 @@
         {
           "permission": "upgrade",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -392,6 +407,7 @@
         {
           "permission": "upgrade",
           "from": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -401,7 +417,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": ".executors"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -411,7 +428,9 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
+          "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
+          "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+          "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
           "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
@@ -419,8 +438,6 @@
           "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x5a09A94eE8198D3c474d723337aa58023810022C",
-          "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -436,12 +453,6 @@
         "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641": "GnosisSafeProxy",
         "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
-    },
-    {
-      "name": "AleksanderKryukov-Certora",
-      "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L2DAIGateway",
@@ -484,7 +495,8 @@
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "schedule a proposal to replace a Security Council member cohort."
+          "description": "schedule a proposal to replace a Security Council member cohort.",
+          "role": ".cohortReplacerAC"
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -573,18 +585,6 @@
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "cts-Zellic",
-      "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "fred-Arbitrum",
-      "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -690,7 +690,8 @@
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "schedule a proposal to remove a Security Council member."
+          "description": "schedule a proposal to remove a Security Council member.",
+          "role": ".memberRemoverAC"
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -990,34 +991,40 @@
         {
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "schedule a proposal to add a new member to the Security Council."
+          "description": "schedule a proposal to add a new member to the Security Council.",
+          "role": ".memberAdderAC"
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "schedule a proposal to remove a Security Council member."
+          "description": "schedule a proposal to remove a Security Council member.",
+          "role": ".memberRemoverAC"
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "schedule a proposal to replace a Security Council member."
+          "description": "schedule a proposal to replace a Security Council member.",
+          "role": ".memberReplacerAC"
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "schedule a proposal to rotate a Security Council member (same member, new address)."
+          "description": "schedule a proposal to rotate a Security Council member (same member, new address).",
+          "role": ".memberRotatorAC"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "delay": 691200
+          "delay": 691200,
+          "role": ".Proposer"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1027,7 +1034,9 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
+          "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
+          "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+          "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
           "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
@@ -1035,8 +1044,6 @@
           "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x5a09A94eE8198D3c474d723337aa58023810022C",
-          "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -1059,6 +1066,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Michael Lewellen - blockaid",
       "address": "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1230,7 +1238,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2057,
+        "exitNum": 2071,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1253,22 +1261,26 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+          "from": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+          "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "0xdb216562328215E010F819B5aBe947bad4ca961e"
+          "from": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200,
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -1335,12 +1347,14 @@
         {
           "permission": "act",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "delay": 691200
+          "delay": 691200,
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -1455,15 +1469,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+          "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+          "from": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+          "from": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1623784105,
@@ -1477,6 +1494,7 @@
       }
     },
     {
+      "name": "fred - Arbitrum 2",
       "address": "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1498,47 +1516,58 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+          "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
+          "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+          "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0"
+          "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x912CE59144191C1204E64559FE8253a0e49E6548"
+          "from": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+          "from": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+          "from": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+          "from": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1678968400,
@@ -1587,6 +1616,7 @@
       }
     },
     {
+      "name": "Certora 2",
       "address": "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1606,19 +1636,22 @@
         {
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "delay": 691200
+          "delay": 691200,
+          "role": ".Proposer"
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -1681,17 +1714,20 @@
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200,
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
           "permission": "interact",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
           "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
           "permission": "upgrade",
           "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+          "role": "admin",
           "via": [
             { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1700,6 +1736,7 @@
         {
           "permission": "upgrade",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1708,6 +1745,7 @@
         {
           "permission": "upgrade",
           "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1716,6 +1754,7 @@
         {
           "permission": "upgrade",
           "from": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+          "role": "admin",
           "via": [
             { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1724,6 +1763,7 @@
         {
           "permission": "upgrade",
           "from": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+          "role": "admin",
           "via": [
             { "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1732,6 +1772,7 @@
         {
           "permission": "upgrade",
           "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1740,6 +1781,7 @@
         {
           "permission": "upgrade",
           "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1748,6 +1790,7 @@
         {
           "permission": "upgrade",
           "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1756,6 +1799,7 @@
         {
           "permission": "upgrade",
           "from": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1764,6 +1808,7 @@
         {
           "permission": "upgrade",
           "from": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1772,6 +1817,7 @@
         {
           "permission": "upgrade",
           "from": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1780,6 +1826,7 @@
         {
           "permission": "upgrade",
           "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1788,6 +1835,7 @@
         {
           "permission": "upgrade",
           "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1796,6 +1844,7 @@
         {
           "permission": "upgrade",
           "from": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+          "role": "admin",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1805,7 +1854,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": ".executors"
         }
       ]
     }
@@ -2858,5 +2908,5 @@
     "orbitstack/layer2/TreasuryTimelock": "0x980b51e8fac48051f563d3246b01c151b043c4bd3e252b27a5f4a301a0a3fad3",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0xf345ec40fe1222ef7f4a526c7eb6312670077f7d9b24d7f9f82c517103b02639"
   },
-  "permissionsConfigHash": "0x6550950663d23c7fa380a5c70df1efa67c5b084a4addaee047e307ab28afb670"
+  "permissionsConfigHash": "0x31645c4d0c57fd361b9dcf830b4b242d88c4c1ec4c1013504650a2ec3b2ccfb4"
 }

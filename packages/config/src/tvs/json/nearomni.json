@@ -1,0 +1,766 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "nearomni",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "nearomni-1INCH",
+      "priceId": "1inch",
+      "symbol": "1INCH",
+      "name": "1INCH Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x111111111117dC0aa78b770fA6A738034120C302",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12409/large/amp-200x200.png?1696512231",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-AURORA",
+      "priceId": "aurora-near",
+      "symbol": "AURORA",
+      "name": "Aurora",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20582/large/aurora.jpeg?1696519989",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xAaAAAA20D9E0e2461697782ef11675f668207961",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-BAL",
+      "priceId": "balancer",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1696511572",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-BAT",
+      "priceId": "basic-attention-token",
+      "symbol": "BAT",
+      "name": "Basic Attention Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-BUSD",
+      "priceId": "binance-usd",
+      "symbol": "BUSD",
+      "name": "BUSD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9576/large/BUSDLOGO.jpg?1696509654",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-COMP",
+      "priceId": "compound-governance-token",
+      "symbol": "COMP",
+      "name": "Compound",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-CRO",
+      "priceId": "crypto-com-chain",
+      "symbol": "CRO",
+      "name": "CRO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 8,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-DAO",
+      "priceId": "dao-maker",
+      "symbol": "DAO",
+      "name": "DAO Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13915/large/4.png?1696513656",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0f51bb10119727a7e5eA3538074fb341F56B09Ad",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-DODO",
+      "priceId": "dodo",
+      "symbol": "DODO",
+      "name": "DODO bird",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12651/large/dodo_logo.png?1696512458",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-DPI",
+      "priceId": "defipulse-index",
+      "symbol": "DPI",
+      "name": "DefiPulse Index",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12465/large/defi_pulse_index_set.png?1696512284",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-EURA",
+      "priceId": "ageur",
+      "symbol": "EURA",
+      "name": "EURA (previously agEUR)",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-FRAX",
+      "priceId": "frax",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-FTX Token",
+      "priceId": "ftx-token",
+      "symbol": "FTX Token",
+      "name": "FTT",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9026/large/F.png?1696509161",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-FXS",
+      "priceId": "frax-share",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-GRT",
+      "priceId": "the-graph",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-GTC",
+      "priceId": "gitcoin",
+      "symbol": "GTC",
+      "name": "Gitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-GUSD",
+      "priceId": "gemini-dollar",
+      "symbol": "GUSD",
+      "name": "Gemini dollar",
+      "iconUrl": "https://assets.coingecko.com/coins/images/5992/large/gemini-dollar-gusd.png?1696506408",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 2,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-HT",
+      "priceId": "huobi-token",
+      "symbol": "HT",
+      "name": "HuobiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2822/large/huobi-token-logo.png?1696503584",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6f259637dcD74C767781E37Bc6133cd6A68aa161",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-LON",
+      "priceId": "tokenlon",
+      "symbol": "LON",
+      "name": "Tokenlon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13454/large/lon_logo.png?1696513217",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0000000000095413afC295d19EDeb1Ad7B71c952",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-MKR",
+      "priceId": "maker",
+      "symbol": "MKR",
+      "name": "Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-REN",
+      "priceId": "republic-protocol",
+      "symbol": "REN",
+      "name": "Republic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3139/large/REN.png?1696503862",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x408e41876cCCDC0F92210600ef50372656052a38",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-sFRAX",
+      "priceId": "staked-frax",
+      "symbol": "sFRAX",
+      "name": "Staked FRAX",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-SNT",
+      "priceId": "status",
+      "symbol": "SNT",
+      "name": "Status Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/779/large/status.png?1696501931",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-SNX",
+      "priceId": "havven",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1696504103",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-SUSHI",
+      "priceId": "sushi",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-TUSD",
+      "priceId": "true-usd",
+      "symbol": "TUSD",
+      "name": "TrueUSD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3449/large/tusd.png?1696504140",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0000000000085d4780B73119b644AE5ecd22b376",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 6,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-USDD",
+      "priceId": "usdd",
+      "symbol": "USDD",
+      "name": "Decentralized USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25380/large/UUSD.jpg?1696524513",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 6,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 8,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-WOO",
+      "priceId": "woo-network",
+      "symbol": "WOO",
+      "name": "Wootrade Network",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12921/large/WOO_Logos_2023_Profile_Pic_WOO.png?1696512709",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nearomni-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 18,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

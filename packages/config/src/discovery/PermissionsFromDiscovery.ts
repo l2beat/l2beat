@@ -1,21 +1,13 @@
-import type {
-  EntryParameters,
-  Permission,
-  ReceivedPermission,
-} from '@l2beat/discovery'
+import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import { type EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import {
-  DirectPermissionToPrefix,
-  UltimatePermissionToPrefix,
-} from './descriptions'
+import { UltimatePermissionToPrefix } from './descriptions'
 import {
   formatPermissionCondition,
   formatPermissionDelay,
-  formatPermissionDescription,
   isMultisigLike,
   trimTrailingDots,
 } from './utils'
@@ -76,7 +68,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           .map((d) => formatPermissionDelay(Number(d)))
           .join(' or ')
         return [
-          `Can upgrade **${delaysString}**`,
+          `* Can upgrade **${delaysString}**`,
           ...Object.values(permissionsByDelay).map((p) => {
             const name = this.projectDiscovery.getContract(p.from).name
             const vias = Object.values(p.permissionsByDelay).map((p) =>
@@ -117,7 +109,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           return result.join(' ')
         })
         .join('\n')
-      return `Can interact with ${name}\n${permissionsString}`
+      return `* Can interact with ${name}\n${permissionsString}`
     })
   }
 
@@ -128,81 +120,73 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       'interact',
       'member',
     ] satisfies ReceivedPermission['permission'][]
-    return (contractOrEoa.receivedPermissions ?? [])
+    const legacyPermissions = (contractOrEoa.receivedPermissions ?? [])
       .filter((p) => !excludedPermissions.includes(p.permission))
       .map((p) => {
         const prefix = UltimatePermissionToPrefix[p.permission]
         const via = this.formatPermissionVia(p)
-        return `${prefix} ${via}`
+        return `* ${prefix} ${via}`
       })
+    return [...new Set(legacyPermissions)].sort()
+  }
+
+  describeRoles(contractOrEoa: EntryParameters) {
+    const issued = this.getIssuedPermissions(contractOrEoa.address)
+    const roles: Record<string, Record<'direct' | 'ultimate', Set<string>>> = {}
+
+    const result = []
+    for (const p of issued) {
+      const receiverName = this.projectDiscovery.getName(p.to)
+      if (p.role) {
+        let text = receiverName
+        if (p.condition) {
+          text += ` ${formatPermissionCondition(p.condition)}`
+        }
+        const prettyfiedRole = prettifyRole(p.role)
+        roles[prettyfiedRole] ??= {
+          direct: new Set(),
+          ultimate: new Set(),
+        }
+
+        if ((p.via ?? []).length === 0) {
+          roles[prettyfiedRole].direct.add(text)
+        } else {
+          roles[prettyfiedRole].ultimate.add(text)
+        }
+      }
+    }
+
+    const roleNames = Object.keys(roles).sort()
+    for (const roleName of roleNames) {
+      const direct = Array.from(roles[roleName].direct).sort().join(', ')
+      const ultimate = Array.from(roles[roleName].ultimate).sort().join(', ')
+      const value = [`  * **${roleName}**: ${direct}`]
+      if (ultimate.length > 0) {
+        value.push(`; ultimately ${ultimate}`)
+      }
+      result.push(value.join(''))
+    }
+    if (result.length > 0) {
+      result.unshift('* Roles:')
+    }
+    return [result.join('\n')]
   }
 
   describePermissions(
     contractOrEoa: EntryParameters,
-    includeDirectPermissions: boolean = true,
-  ) {
+    describeRoles: boolean = true,
+  ): string {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
     const legacy = this.describeLegacyPermissions(contractOrEoa)
-    const direct = includeDirectPermissions
-      ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-      : []
-    return [...direct, ...upgrade, ...interact, ...legacy].filter(
-      (s) => s !== '',
-    )
+    const roles = describeRoles ? this.describeRoles(contractOrEoa) : []
+    return [...upgrade, ...interact, ...legacy, ...roles]
+      .filter((s) => s !== '')
+      .join('\n')
   }
 
-  describeDirectlyReceivedPermissions(
-    contractOrEoa: EntryParameters,
-  ): string[] {
-    return Object.entries(
-      groupBy(
-        contractOrEoa.directlyReceivedPermissions ?? [],
-        (value: ReceivedPermission) =>
-          [
-            value.permission,
-            value.description ?? '',
-            value.condition ?? '',
-            value.delay?.toString() ?? '',
-          ].join('►'),
-      ),
-    ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as Permission
-      const description = key.split('►')[1] ?? ''
-      const condition = key.split('►')[2] ?? ''
-      const delay = key.split('►')[3] ?? ''
-      const permissionsRequiringTarget: Permission[] = [
-        'interact',
-        'upgrade',
-        'act',
-      ]
-      const showTargets = permissionsRequiringTarget.includes(permission)
-      const addressesString = showTargets
-        ? entries
-            .map(
-              (entry) =>
-                this.projectDiscovery.getContract(entry.from.toString()).name,
-            )
-            .join(', ')
-        : ''
-
-      return `${[
-        DirectPermissionToPrefix[permission],
-        addressesString,
-        formatPermissionDescription(description),
-        formatPermissionCondition(condition),
-        delay === '' ? '' : formatPermissionDelay(Number(delay)),
-      ]
-        .filter((s) => s !== '')
-        .join(' ')
-        .trim()}.`
-    })
-  }
-
-  getUpgradableBy(
-    contract: EntryParameters,
-  ): { name: string; delay: string }[] {
-    const issuedPermissions = this.projectDiscovery
+  getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
+    return this.projectDiscovery
       .getEntries()
       .flatMap((c) =>
         (c.receivedPermissions ?? []).map((p) => ({
@@ -210,20 +194,37 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         })),
       )
-      .filter(
-        (receivedPermission) => receivedPermission.from === contract.address,
-      )
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+  }
+
+  getIssuedPermissions(fromAddress: EthereumAddress) {
+    return this.projectDiscovery
+      .getEntries()
+      .flatMap((c) => {
+        const allPermissions = [
+          ...(c.receivedPermissions ?? []),
+          ...(c.directlyReceivedPermissions ?? []),
+        ]
+        return allPermissions.map((p) => ({
+          to: c.address,
+          ...p,
+        }))
+      })
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+  }
+
+  getUpgradableBy(
+    contract: EntryParameters,
+  ): { name: string; delay: string }[] {
+    const issuedPermissions = this.getUltimatelyIssuedPermissions(
+      contract.address,
+    )
 
     const upgradersWithDelay: Record<string, number> = Object.fromEntries(
       issuedPermissions
         ?.filter((p) => p.permission === 'upgrade')
         .map((p) => {
-          const entry = this.projectDiscovery.getEntryByAddress(p.to)
-          const address =
-            entry?.name ??
-            (this.projectDiscovery.isEOA(p.to)
-              ? this.projectDiscovery.getEOAName(p.to)
-              : p.to.toString())
+          const address = this.projectDiscovery.getName(p.to)
           const delay =
             (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
           return [address, delay]
@@ -277,4 +278,16 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
 function totalPermissionDelay(p: ReceivedPermission): number {
   return (p.delay ?? 0) + sum((p.via ?? []).map((v) => v.delay ?? 0))
+}
+
+function prettifyRole(role: string): string {
+  const trimmed = role.replace(/^[.$]+/, '')
+  const withoutAcPrefix = trimmed.replace(/^ac/, '')
+  const isAllCaps = (s: string) => s === s.toUpperCase()
+  if (isAllCaps(withoutAcPrefix)) {
+    return withoutAcPrefix.toLowerCase()
+  }
+  const withoutACSuffix = withoutAcPrefix.replace(/AC$/, '')
+  const decapitalized = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
+  return decapitalized(withoutACSuffix)
 }

@@ -40,11 +40,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x62c0ff182f9767f2e54f31e47ffd6587cc114b97ea994c85864c11c8116eb229",
-        "0x8225b12393daa7489701089347eb52c11b768a1c177a6cd227092c9aefd97b85",
-        "0x1e60affed7805f9a7e3ab1afdf31c05e81f9a8977725c508d6222e816b67806f",
-        "0x7128ff67025fb2bcb219505d0a80a78e76013becea566de4efba404b7869bc9f",
-        "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
+        "0x457307c82577abe25e93c7096a0773b8bc37c55a1373212df91feeee68559f79"
       ],
       "proxyType": "Everclear proxy",
       "ignoreInWatchMode": [
@@ -132,11 +128,13 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816"
+          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
+          "from": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1731646546,
@@ -694,5 +692,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xe7bc819f20b988aeb8ee0ad0b2d7fb9a55c2c43dfc200e07e3720004cd776aac"
+  "permissionsConfigHash": "0xb72b3d399c322b88f0b38d5957a0350a0cb84f9f8bce4efee97fb643ff052179"
 }

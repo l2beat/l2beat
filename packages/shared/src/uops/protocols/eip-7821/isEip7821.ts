@@ -1,6 +1,9 @@
 import { assert, type Transaction } from '@l2beat/shared-pure'
 import isArray from 'lodash/isArray'
-import { EIP_7821_TRANSACTION_SELECTOR } from './const'
+import {
+  EIP_7821_TRANSACTION_SELECTOR,
+  WHITEBIT_TRANSACTION_SELECTOR,
+} from './const'
 
 export function isEip7821(tx: Transaction): boolean {
   assert(
@@ -9,5 +12,8 @@ export function isEip7821(tx: Transaction): boolean {
   )
   const selector = tx.data.slice(0, 10)
 
-  return selector === EIP_7821_TRANSACTION_SELECTOR
+  return (
+    selector === EIP_7821_TRANSACTION_SELECTOR ||
+    selector === WHITEBIT_TRANSACTION_SELECTOR
+  )
 }

@@ -1,3 +1,236 @@
+Generated with discovered.json: 0x0a111fc3a3e3ac068b9b2a52689b37f904dfdb2c
+
+# Diff at Tue, 27 May 2025 08:31:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22496282
+- current block number: 22572946
+
+## Description
+
+Config: add migration tracking.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22496282 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations:
++        []
+      fieldMeta.migrations:
++        {"severity":"HIGH","description":"zk chain migrations that were started"}
+    }
+```
+
+Generated with discovered.json: 0x549f6db2a17c41223d7aac5081b7692aad5f198d
+
+# Diff at Fri, 23 May 2025 09:41:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22496282
+- current block number: 22496282
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22496282 (main branch discovery), not current.
+
+```diff
+    EOA ProtocolTimelockController(L2->L1) (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".L2_PROTOCOL_GOVERNOR"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        ".admin"
+      directlyReceivedPermissions.0.role:
++        ".admin"
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".admin"
+      receivedPermissions.0.role:
++        ".admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.1.role:
++        ".guardians"
+      receivedPermissions.0.role:
++        ".GUARDIANS"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      receivedPermissions.1.role:
++        ".securityCouncil"
+      receivedPermissions.0.role:
++        ".SECURITY_COUNCIL"
+    }
+```
+
+```diff
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".ZK_FOUNDATION_SAFE"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.5.role:
++        ".owner"
+      directlyReceivedPermissions.4.role:
++        ".owner"
+      directlyReceivedPermissions.3.role:
++        ".owner"
+      directlyReceivedPermissions.2.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      receivedPermissions.7.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      receivedPermissions.7.via.1:
++        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      receivedPermissions.6.via.1.address:
+-        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.4.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.4.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
+      receivedPermissions.3.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.3.description:
++        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.2.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.2.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".emergencyUpgradeBoard"
+    }
+```
+
 Generated with discovered.json: 0xef8d564dad79326bcd20932896350ba05a834f44
 
 # Diff at Fri, 16 May 2025 14:40:27 GMT:

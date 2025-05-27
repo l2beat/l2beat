@@ -12,6 +12,9 @@ export class Editor {
   private models: Record<string, editor.IModel | null> = {}
   private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
   private currentCode: string = ''
+  private highlightTimeout: NodeJS.Timeout | null = null
+  private decorationsCollection: monaco.editor.IEditorDecorationsCollection | null =
+    null
 
   constructor(element: HTMLElement) {
     if (!initialized) {
@@ -49,7 +52,14 @@ export class Editor {
     this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
   }
 
-  showRange(startOffset: number, length: number) {
+  showRange(
+    startOffset: number,
+    length: number,
+    options?: {
+      highlight?: boolean
+      highlightDuration?: number
+    },
+  ) {
     const model = this.editor.getModel()
     if (model !== null) {
       const start = model.getPositionAt(startOffset)
@@ -61,8 +71,44 @@ export class Editor {
         endColumn: end.column,
       }
 
+      this.clearHighlight()
       this.editor.revealRangeInCenter(range)
       this.editor.setSelection(range)
+
+      if (options?.highlight !== false) {
+        this.decorationsCollection = this.editor.createDecorationsCollection([
+          {
+            range: new monaco.Range(
+              range.startLineNumber,
+              range.startColumn,
+              range.endLineNumber,
+              range.endColumn,
+            ),
+            options: {
+              className: 'bg-coffee-600 border-2 border-aux-amber rounded',
+            },
+          },
+        ])
+
+        const duration = options?.highlightDuration ?? 3000
+        if (duration > 0) {
+          if (this.highlightTimeout !== null) {
+            clearTimeout(this.highlightTimeout)
+          }
+
+          this.highlightTimeout = setTimeout(() => {
+            this.highlightTimeout = null
+            this.clearHighlight()
+          }, duration)
+        }
+      }
+    }
+  }
+
+  clearHighlight() {
+    if (this.decorationsCollection) {
+      this.decorationsCollection.clear()
+      this.decorationsCollection = null
     }
   }
 

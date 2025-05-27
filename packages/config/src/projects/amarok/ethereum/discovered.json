@@ -134,7 +134,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+          "role": ".GnosisSafe_modules"
         }
       ],
       "sinceTimestamp": 1693752671,
@@ -667,7 +668,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
+          "from": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
+          "role": "admin"
         }
       ]
     },
@@ -996,18 +998,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xddff88cf097843837c49f9ed19ac3343d4f1950d3e0508e63669fbd972e4100c",
-        "0x72a9f0d6928e2ccb1a94e23690974a84ecc5be50d3be866e39469534323eebed",
-        "0x662d43eeaf35f8a6d80e9b833573360c1a83f418e93c65db17cf46c7b47758e8",
-        "0xf9087df539d680461ace025dfe27bd79d2eb110215ae416303b44629d7389219",
-        "0xa76e155468cff4d404ed0288be360d31e5ad958e5c2608e63134e03ec1d030c4",
-        "0xeaf1c83d9906c268afae35bf023ae9d7861e4bcdca5969bfd3c839e07bf3ae25",
-        "0x8692d1c129e074dfd45ba266215947cd7415ac1620b6aeca2d04cdfd593732ad",
-        "0x53d627be0e3afee6df116dcbf8d5988fe3b0e0c75fac31d03ec65870d7eb688e",
-        "0x6f2682c1f11312a6a8d948a5cf458cd0878e0b512e4e28f28c8444fd8a4bc91b",
-        "0x535e1a3124295865c51f088c9c1b0d4aff2003c3ed2744a9f3d8c24d059b1de2",
-        "0x96019d37901a28e311eaa7c1cf12caa35106001dba2273cfd3380b89952f6108",
-        "0x9efc9e4ba3961b565b36b5d255c7be95f240531bb7ffb97a3503db6bc34a5b77",
-        "0xdbc90380d4658e61987fc156f3647d7db9f8c00d8af551f3abbd1bae5ded1e28"
+        "0xf96bb1a4f35c949f170dae66f947e46f2e78265edaf26c1131507855ed435fae"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": ["nonce", "proposedTimestamp", "ROUTERS"],
@@ -1684,18 +1675,21 @@
         {
           "permission": "upgrade",
           "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "role": "admin",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
           "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "role": "admin",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+          "role": ".GnosisSafe_modules"
         }
       ],
       "sinceTimestamp": 1603880884,
@@ -1813,11 +1807,13 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -3959,5 +3955,5 @@
     "amarok/RelayerProxyHub": "0xabf44b5af1f5a5287b387cf1ec1d54a3d609495fa34a36162765992d7d896fc0",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xa146f17f88d39d691ec1a7c3b56a9dbfca83dd1e171289debcf2284ecad01035"
+  "permissionsConfigHash": "0xaff971005b7f9fe9e249c27ca19bcf45b8791292618fc4bc59c860360dca7c6c"
 }

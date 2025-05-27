@@ -6,3 +6,8 @@ export const EIP_7821_TRANSACTION_SIGNATURE = parseAbiItem(
 export const EIP_7821_TRANSACTION_SELECTOR = toFunctionSelector(
   EIP_7821_TRANSACTION_SIGNATURE,
 )
+
+export const WHITEBIT_TRANSACTION_SIGNATURE = parseAbiItem('function batch()')
+export const WHITEBIT_TRANSACTION_SELECTOR = toFunctionSelector(
+  WHITEBIT_TRANSACTION_SIGNATURE,
+)

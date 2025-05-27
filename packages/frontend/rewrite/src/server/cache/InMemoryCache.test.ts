@@ -1,10 +1,22 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import { env } from '~/env'
 import { InMemoryCache } from './InMemoryCache'
 
 describe(InMemoryCache.name, () => {
-  describe('getData', () => {
-    it('it should return cached value if it is not expired', async () => {
+  let NODE_ENV: 'development' | 'test' | 'production'
+
+  before(() => {
+    NODE_ENV = env.NODE_ENV
+    env.NODE_ENV = 'production'
+  })
+
+  after(() => {
+    env.NODE_ENV = NODE_ENV
+  })
+
+  describe(InMemoryCache.prototype.get.name, () => {
+    it('should return cached value if it is not expired', async () => {
       const now = UnixTime.now()
       const initialCache = new Map([
         ['key', { result: 'test', timestamp: now }],
@@ -19,7 +31,7 @@ describe(InMemoryCache.name, () => {
       expect(result).toEqual('test')
     })
 
-    it('it should return value from fallback if it is expired', async () => {
+    it('should return value from fallback if it is expired', async () => {
       const now = UnixTime.now()
       const initialCache = new Map([
         ['key', { result: 'test', timestamp: now - 10000 }],
@@ -64,6 +76,126 @@ describe(InMemoryCache.name, () => {
 
       expect(result1).toEqual('test1')
       expect(result2).toEqual('test2')
+    })
+
+    describe('stale-while-revalidate', () => {
+      it('should serve stale data and revalidate in background', async () => {
+        const now = UnixTime.now()
+        const initialCache = new Map([
+          ['key', { result: 'stale', timestamp: now - 2000 }],
+        ])
+        const cache = new InMemoryCache(initialCache)
+        const fallback = mockFn().resolvesTo('fresh')
+
+        // First call should return stale data and trigger revalidation
+        const result1 = await cache.get(
+          { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+          fallback,
+        )
+
+        expect(result1).toEqual('stale')
+        expect(fallback).toHaveBeenCalledTimes(1)
+
+        // Wait for background revalidation to complete
+        await new Promise((resolve) => setTimeout(resolve, 10))
+
+        // Second call should return fresh data
+        const result2 = await cache.get(
+          { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+          fallback,
+        )
+
+        expect(result2).toEqual('fresh')
+        expect(fallback).toHaveBeenCalledTimes(1) // Still only called once
+      })
+
+      it('should not serve stale data if beyond stale-while-revalidate window', async () => {
+        const now = UnixTime.now()
+        const initialCache = new Map([
+          ['key', { result: 'stale', timestamp: now - 7000 }],
+        ])
+        const cache = new InMemoryCache(initialCache)
+        const fallback = mockFn().resolvesTo('fresh')
+
+        const result = await cache.get(
+          { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+          fallback,
+        )
+
+        expect(result).toEqual('fresh')
+        expect(fallback).toHaveBeenCalledTimes(1)
+      })
+
+      it('should handle multiple concurrent requests with stale data', async () => {
+        const now = UnixTime.now()
+        const initialCache = new Map([
+          ['key', { result: 'stale', timestamp: now - 2000 }],
+        ])
+        const cache = new InMemoryCache(initialCache)
+        const fallback = mockFn().resolvesTo('fresh')
+
+        const [result1, result2, result3] = await Promise.all([
+          cache.get(
+            { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+            fallback,
+          ),
+          cache.get(
+            { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+            fallback,
+          ),
+          cache.get(
+            { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+            fallback,
+          ),
+        ])
+
+        expect(result1).toEqual('stale')
+        expect(result2).toEqual('stale')
+        expect(result3).toEqual('stale')
+        expect(fallback).toHaveBeenCalledTimes(1)
+
+        // Wait for background revalidation
+        await new Promise((resolve) => setTimeout(resolve, 10))
+
+        // Next request should get fresh data
+        const result4 = await cache.get(
+          { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+          fallback,
+        )
+
+        expect(result4).toEqual('fresh')
+        expect(fallback).toHaveBeenCalledTimes(1)
+      })
+
+      it('should handle failed background revalidation gracefully', async () => {
+        const now = UnixTime.now()
+        const initialCache = new Map([
+          ['key', { result: 'stale', timestamp: now - 2000 }],
+        ])
+        const cache = new InMemoryCache(initialCache)
+        const fallback = mockFn().rejectsWith(new Error('Revalidation failed'))
+
+        // First call should return stale data and trigger revalidation
+        const result1 = await cache.get(
+          { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+          fallback,
+        )
+
+        expect(result1).toEqual('stale')
+        expect(fallback).toHaveBeenCalledTimes(1)
+
+        // Wait for background revalidation to fail
+        await new Promise((resolve) => setTimeout(resolve, 10))
+
+        // Next request should still get stale data since revalidation failed
+        const result2 = await cache.get(
+          { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
+          fallback,
+        )
+
+        expect(result2).toEqual('stale')
+        expect(fallback).toHaveBeenCalledTimes(2)
+      })
     })
   })
 })

@@ -71,7 +71,13 @@ export class Decoder {
         name: 'data',
         abi: 'bytes',
         encoded: tx.data,
-        decoded: await this.decodeBytes(tx.data, tx.to, tx.chain, known),
+        decoded: await this.decodeBytes(
+          tx.data,
+          undefined,
+          tx.to,
+          tx.chain,
+          known,
+        ),
       },
       to: toInfo && {
         type: 'address',
@@ -86,13 +92,14 @@ export class Decoder {
 
   private async decodeBytes(
     data: `0x${string}`,
+    extra: `0x${string}` | undefined,
     to: Address | undefined,
     chain: Chain,
     known: Known,
   ): Promise<DecodedValue> {
     const selector = getSelector(data)
     if (!selector) {
-      return { type: 'bytes', value: data, dynamic: true }
+      return { type: 'bytes', value: data, extra, dynamic: true }
     }
     let signatures: string[]
     const wellKnown = this.signatureService.lookupWellKnown(selector)
@@ -105,10 +112,13 @@ export class Decoder {
     }
     for (const signature of signatures) {
       try {
-        return await this.decodeCall(data, signature, to, chain, known)
-      } catch {}
+        const call = await this.decodeCall(data, signature, to, chain, known)
+        return { ...call, extra }
+      } catch (e) {
+        console.error(e)
+      }
     }
-    return { type: 'bytes', value: data, dynamic: true }
+    return { type: 'bytes', value: data, extra, dynamic: true }
   }
 
   private async decodeCall(
@@ -160,6 +170,7 @@ export class Decoder {
       }
       value.data.decoded = await this.decodeBytes(
         value.data.decoded.value,
+        value.data.decoded.extra,
         value.to,
         chain,
         known,

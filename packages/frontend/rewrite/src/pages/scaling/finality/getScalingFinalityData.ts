@@ -18,7 +18,11 @@ export async function getScalingFinalityData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'finality', 'entries'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'finality', 'entries'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getScalingFinalityEntries,
     ),
   ])
