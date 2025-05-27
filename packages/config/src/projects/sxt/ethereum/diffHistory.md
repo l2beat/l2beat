@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xd08b81be5d74a698cfc2cc973eeeafbcbebee951
+Generated with discovered.json: 0xd8da4a4ffef9fc9e81416e6f74ae77504d01bdd8
 
-# Diff at Tue, 27 May 2025 14:50:06 GMT:
+# Diff at Tue, 27 May 2025 15:28:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22574807
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard zk stack rollup.
 
 ## Initial discovery
 
