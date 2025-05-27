@@ -106,7 +106,9 @@ export class Decoder {
     for (const signature of signatures) {
       try {
         return await this.decodeCall(data, signature, to, chain, known)
-      } catch {}
+      } catch (e) {
+        console.error(e)
+      }
     }
     return { type: 'bytes', value: data, dynamic: true }
   }
