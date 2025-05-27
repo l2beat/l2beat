@@ -23,19 +23,17 @@ type TvsBreakdownForProject = Awaited<
 >
 export const getCachedTvsBreakdownForProjectData = cache(
   async (project: Project<'tvsConfig', 'chainConfig' | 'contracts'>) => {
-    const chains = (
-      await ps.getProjects({
-        select: ['chainConfig'],
-      })
-    ).map((x) => x.chainConfig)
-
-    const targetTimestamp = getTvsTargetTimestamp()
     const db = getDb()
-    const tokenValues = await db.tvsTokenValue.getByProjectAtOrBefore(
-      project.id,
-      targetTimestamp,
-    )
+    const targetTimestamp = getTvsTargetTimestamp()
 
+    const [projects, tokenValues] = await Promise.all([
+      ps.getProjects({
+        select: ['chainConfig'],
+      }),
+      db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
+    ])
+
+    const chains = projects.map((x) => x.chainConfig)
     const tokenValuesMap = new Map(
       tokenValues.map((x) => [TokenId(x.tokenId), x]),
     )

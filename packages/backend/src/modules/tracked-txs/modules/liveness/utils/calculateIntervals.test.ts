@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import { calculateIntervals } from './calculateIntervals'
+import type { LivenessRecordWithConfig } from './mapToRecordWithConfig'
 
 describe(calculateIntervals.name, () => {
   const NOW = UnixTime.now()

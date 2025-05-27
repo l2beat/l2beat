@@ -4,23 +4,16 @@ import type {
   Value,
 } from '@l2beat/tools-api/types'
 import clsx from 'clsx'
-import React, { Fragment, type ReactNode, useState } from 'react'
+import { Fragment, type ReactNode, useState } from 'react'
 import { formatUnits } from 'viem'
 
 interface Props {
   decoded: DecodedResult
-  onBack: () => void
 }
 
-export function DecodedView({ decoded, onBack }: Props) {
+export function DecodedView({ decoded }: Props) {
   return (
     <main className="mx-auto max-w-[900px] p-4 pb-20">
-      <button
-        className="mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1 active:mt-1 active:border-b-0"
-        onClick={onBack}
-      >
-        Back
-      </button>
       {decoded.transaction && (
         <div className="mb-2">
           <DecodedLabel name="hash" type="bytes32" />
@@ -122,7 +115,11 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
     )
   }
   if (decoded.type === 'bytes') {
-    return <BytesDisplay value={decoded.value} inline={!decoded.dynamic} />
+    return (
+      <WithExtra extra={decoded.extra}>
+        <BytesDisplay value={decoded.value} inline={!decoded.dynamic} />
+      </WithExtra>
+    )
   }
   if (decoded.type === 'hash') {
     return (
@@ -137,54 +134,60 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
   }
   if (decoded.type === 'string') {
     return (
-      <div className="flex items-start gap-2 italic">
-        <span className="relative top-[12px] inline-block select-none font-serif text-4xl text-zinc-500 leading-[10px]">
-          ”
-        </span>
-        <span
-          className="font-mono"
-          style={{ whiteSpace: 'pre-wrap', lineBreak: 'anywhere' }}
-        >
-          {decoded.value}
-        </span>
-      </div>
+      <WithExtra extra={decoded.extra}>
+        <div className="flex items-start gap-2 italic">
+          <span className="relative top-[12px] inline-block select-none font-serif text-4xl text-zinc-500 leading-[10px]">
+            ”
+          </span>
+          <span
+            className="font-mono"
+            style={{ whiteSpace: 'pre-wrap', lineBreak: 'anywhere' }}
+          >
+            {decoded.value}
+          </span>
+        </div>
+      </WithExtra>
     )
   }
   if (decoded.type === 'call') {
     return (
-      <div>
-        <div className="flex items-baseline gap-2">
-          <span className="font-mono">{functionName(decoded.abi)}</span>
-          {decoded.interface && <Badge>{decoded.interface}</Badge>}
-          <span className="font-mono text-sm text-yellow-500">
-            {decoded.selector}
-          </span>
-          <span className="font-mono text-orange-500 text-sm">
-            {decoded.abi}
-          </span>
+      <WithExtra extra={decoded.extra}>
+        <div>
+          <div className="flex items-baseline gap-2">
+            <span className="font-mono">{functionName(decoded.abi)}</span>
+            {decoded.interface && <Badge>{decoded.interface}</Badge>}
+            <span className="font-mono text-sm text-yellow-500">
+              {decoded.selector}
+            </span>
+            <span className="font-mono text-orange-500 text-sm">
+              {decoded.abi}
+            </span>
+          </div>
+          {decoded.arguments.length > 0 && (
+            <Collapsible>
+              {decoded.arguments.map((x, i) => (
+                <DecodedDisplay key={i} index={i} value={x} />
+              ))}
+            </Collapsible>
+          )}
         </div>
-        {decoded.arguments.length > 0 && (
-          <Collapsible>
-            {decoded.arguments.map((x, i) => (
-              <DecodedDisplay key={i} index={i} value={x} />
-            ))}
-          </Collapsible>
-        )}
-      </div>
+      </WithExtra>
     )
   }
   if (decoded.type === 'array') {
     return (
-      <div>
-        <p className="font-mono">{decoded.values.length} elements</p>
-        {decoded.values.length > 0 && (
-          <Collapsible>
-            {decoded.values.map((x, i) => (
-              <DecodedDisplay key={i} index={i} value={x} />
-            ))}
-          </Collapsible>
-        )}
-      </div>
+      <WithExtra extra={decoded.extra}>
+        <div>
+          <p className="font-mono">{decoded.values.length} elements</p>
+          {decoded.values.length > 0 && (
+            <Collapsible>
+              {decoded.values.map((x, i) => (
+                <DecodedDisplay key={i} index={i} value={x} />
+              ))}
+            </Collapsible>
+          )}
+        </div>
+      </WithExtra>
     )
   }
   if (decoded.type === 'number') {
@@ -253,6 +256,25 @@ function Collapsible({
       <div className={open ? 'block' : 'hidden'}>{children}</div>
     </div>
   )
+}
+
+interface WithExtraProps {
+  extra: `0x${string}` | undefined
+  children: ReactNode
+}
+
+function WithExtra({ extra, children }: WithExtraProps) {
+  if (extra) {
+    return (
+      <div>
+        {children}
+        <p className="text-blue-300 leading-[20px]">Unexpected extra bytes</p>
+        <BytesDisplay value={extra} />
+      </div>
+    )
+  } else {
+    return <>{children}</>
+  }
 }
 
 interface DecodedDisplayProps {

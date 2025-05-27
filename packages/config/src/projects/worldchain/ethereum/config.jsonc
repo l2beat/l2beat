@@ -11,6 +11,9 @@
     // "0x8eeF04eef96fef1050702453f75F0Fc4f8F70973", // ProtocolVersions
     // "0xF9adF7c9502C5C60352C20a4d22683422DbD061F" // DelayedWETH
   ],
+  "names": {
+    "0x2ba529D229FDc1DA08e67F536588aE45932d030A": "Burn Caller"
+  },
   "overrides": {
     "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": {
       // permissionedGamesTotal from the template ignored as they are using permissioned games by default

@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "optimism",
-  "blockNumber": 135473637,
+  "blockNumber": 136337893,
   "configHash": "0xb929f4fb2dfe6dcc06dac8d78881a04c7235fb913aa14bc4ce2d7b6c7d9d8967",
   "entries": [
     {
@@ -41,14 +41,14 @@
         "lpToken": "0x9f58A79D81477130C0C6D74b96e1397db9765ab1",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "646381844624410619",
-        "poolBalance": 286719909380,
+        "plannerFee": "741903939867318686",
+        "poolBalance": 101102640298,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-        "treasuryFee": 20845672006,
-        "tvl": 263870077860
+        "treasuryFee": 21475308731,
+        "tvl": 257059954010
       },
       "implementationNames": {
         "0x19cFCE47eD54a88614648DC3f19A5980097007dD": "StargatePoolMigratable"
@@ -76,7 +76,7 @@
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
-        "deficitOffset": 800000000000,
+        "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x1F605162282570dFa6255D27895587f4117F52FA",
@@ -91,14 +91,14 @@
         "lpToken": "0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "507985363519863303",
-        "poolBalance": 15596768070685,
+        "plannerFee": "703613286724761151",
+        "poolBalance": 2373974757018,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-        "treasuryFee": 39690037864,
-        "tvl": 454024970018
+        "treasuryFee": 41718695911,
+        "tvl": 419425092116
       },
       "implementationNames": {
         "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolUSDC"
@@ -129,7 +129,7 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": "400000000000000000000",
+        "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161",
@@ -144,14 +144,14 @@
         "lpToken": "0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "587948400047838206",
-        "poolBalance": "17719326074000000000000",
+        "plannerFee": "141563692139634402",
+        "poolBalance": "2176208885000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 28874407,
-        "tvl": "1488361430000000000000"
+        "treasuryFee": 30933077,
+        "tvl": "1374959655000000000000"
       },
       "implementationNames": {
         "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolNative"

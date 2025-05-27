@@ -72,6 +72,8 @@ export {
   buildSimilarityHashmap,
   estimateSimilarity,
   flatteningHash,
+  combineImplementationHashes,
+  getHashToBeMatched,
 } from './flatten/utils'
 export {
   type StructureContractConfig as ContractConfig,

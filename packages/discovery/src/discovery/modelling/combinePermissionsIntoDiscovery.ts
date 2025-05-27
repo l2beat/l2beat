@@ -54,13 +54,13 @@ export async function combinePermissionsIntoDiscovery(
               ),
             )
       updateRelevantField(entry, key, permissions)
-      if (
+
+      entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
           entry.address,
         )
-      ) {
-        entry.controlsMajorityOfUpgradePermissions = true
-      }
+          ? true
+          : undefined
     }
   }
 }

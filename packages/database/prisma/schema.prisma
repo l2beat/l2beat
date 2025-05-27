@@ -126,6 +126,7 @@ model Liveness {
   configurationId String   @db.VarChar(12)
 
   @@id([configurationId, txHash])
+  @@index([configurationId, timestamp])
 }
 
 model UpdateMonitor {
@@ -261,7 +262,6 @@ model ProjectValue {
   associated Float    @db.Real
 
   @@id([timestamp, project, type])
-  @@index([type, timestamp(sort: Desc)])
   @@index([type, project, timestamp])
 }
 

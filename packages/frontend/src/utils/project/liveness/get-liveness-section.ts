@@ -16,7 +16,10 @@ export async function getLivenessSection(
   liveness: LivenessProject | undefined,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): Promise<
-  | Omit<LivenessSectionProps, 'projectId' | 'id' | 'title' | 'sectionOrder'>
+  | Omit<
+      LivenessSectionProps,
+      'projectId' | 'id' | 'title' | 'sectionOrder' | 'milestones'
+    >
   | undefined
 > {
   const trackedTransactions = getTrackedTransactions(project, 'liveness')

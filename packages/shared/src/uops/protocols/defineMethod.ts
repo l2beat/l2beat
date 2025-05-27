@@ -11,6 +11,7 @@ export function defineMethod<T extends AbiFunction>(
   abi: T,
   countOperations: (
     decoded: DecodeFunctionDataReturnType<[T]>['args'],
+    calldata: `0x${string}`,
   ) => Operation[],
   contractName?: string,
 ): Method {
@@ -22,7 +23,7 @@ export function defineMethod<T extends AbiFunction>(
     signature: toFunctionSignature(abi),
     count(calldata: `0x${string}`) {
       const decoded = decodeFunctionData({ abi: [abi], data: calldata })
-      return countOperations(decoded.args)
+      return countOperations(decoded.args, calldata)
     },
   }
 }
