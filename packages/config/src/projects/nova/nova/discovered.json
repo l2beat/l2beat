@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 83508934,
+  "blockNumber": 83594372,
   "configHash": "0x2090336bccc932ec81190807653edf31ab50a6cbd2061ddc11d5b9376a126221",
   "entries": [
     {
@@ -52,12 +52,6 @@
     {
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "AleksanderKryukov-Certora",
-      "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -134,18 +128,6 @@
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "cts-Zellic",
-      "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "fred-Arbitrum",
-      "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -392,6 +374,12 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Michael Lewellen - blockaid",
+      "address": "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L2ARBGateway",
       "address": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
       "type": "Contract",
@@ -513,7 +501,9 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
+          "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
+          "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
+          "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
           "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
@@ -521,8 +511,6 @@
           "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x5a09A94eE8198D3c474d723337aa58023810022C",
-          "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -572,7 +560,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 908,
+        "exitNum": 912,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
@@ -601,6 +589,12 @@
       }
     },
     {
+      "name": "fred - Arbitrum 2",
+      "address": "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BeaconProxyFactory",
       "address": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
       "type": "Contract",
@@ -627,6 +621,12 @@
     },
     {
       "address": "0xE4E2121b479017955Be0b175305B35f312330BaE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Certora 2",
+      "address": "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1130,5 +1130,5 @@
     "orbitstack/layer2/L2WethGateway": "0xd84f362cbad6cd7de185b612e49e8eee1ad5e4d94eb0dd821258681d7f1448a5",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "permissionsConfigHash": "0x8725c67a171905ca8551b27a37ed06b02629de039379ab0ef45b1457245668a5"
+  "permissionsConfigHash": "0x438a3e8ccf04c5035f524997c726dabaaae07df2943d49bf0055c4f131243457"
 }

@@ -1,3 +1,205 @@
+Generated with discovered.json: 0xceb181a422100ed67709c81ebf08ce757518a8e0
+
+# Diff at Mon, 26 May 2025 14:18:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22323047
+- current block number: 22567365
+
+## Description
+
+New default ism, no significant changes.
+
+## Watched changes
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0xc005dc82818d67AF737725bD4bf75435d065D239","role":"admin","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}
+      receivedPermissions.5.from:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+      receivedPermissions.4.from:
+-        "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      receivedPermissions.3.from:
+-        "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      receivedPermissions.2.from:
+-        "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "0x4085486acE416fce164f578b6e56eFC96dcf6e2E"
+      receivedPermissions.1.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.1.via:
+-        [{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]
+      receivedPermissions.1.description:
++        "manage the domain -> ISM contract mapping."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xb7d55490065c157352b2a560bb3eFf5d5c548563)
+    +++ description: None
+```
+
+```diff
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
++++ description: The default ISM contract that is used for all destination contracts that do not override it.
+      values.defaultIsm:
+-        "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751"
++        "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm (0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0x4085486acE416fce164f578b6e56eFC96dcf6e2E)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
++   Status: CREATED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
++   Status: CREATED
+    contract UnknownIsm (0xE08367b408C4E17aA517593ffff9fe291b396a69)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../StaticAggregationIsm_default.sol}              |    0
+ .../.flat/StaticAggregationIsm_eclipse.sol         |  229 ++++
+ .../ethereum/.flat/StaticMerkleRootMultisigIsm.sol | 1378 ++++++++++++++++++++
+ 3 files changed, 1607 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22323047 (main branch discovery), not current.
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "Hyperlane Multisig"
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"0xc005dc82818d67AF737725bD4bf75435d065D239","role":"admin","via":[{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}
+      receivedPermissions.5.from:
+-        "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "0xc005dc82818d67AF737725bD4bf75435d065D239"
+      receivedPermissions.4.from:
+-        "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+      receivedPermissions.3.from:
+-        "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      receivedPermissions.2.from:
+-        "0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944"
++        "0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      receivedPermissions.1.description:
+-        "manage the domain -> ISM contract mapping."
+      receivedPermissions.1.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.1.via:
++        [{"address":"0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]
+    }
+```
+
+```diff
+    contract DomainRoutingIsm (0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944) {
+    +++ description: None
+      description:
+-        "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse."
+      values.module:
+-        "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c"
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"module":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+    contract  (0xb7d55490065c157352b2a560bb3eFf5d5c548563) {
+    +++ description: None
+      name:
+-        "UnknownIsm"
++        ""
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
+    contract StaticAggregationIsm (0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751) {
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+      name:
+-        "StaticAggregationIsm_default"
++        "StaticAggregationIsm"
+      values.modules:
+-        ["0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944","0xb7d55490065c157352b2a560bb3eFf5d5c548563"]
+      values.threshold:
+-        2
+    }
+```
+
 Generated with discovered.json: 0x8d0086506535fe3beebf9b7b59b135352b53c3a4
 
 # Diff at Fri, 23 May 2025 09:40:57 GMT:

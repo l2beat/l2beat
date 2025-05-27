@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 22437740,
+  "blockNumber": 22567749,
   "configHash": "0x1c384be3eb6908db12a08b09af1cf1322ff41dd38663d773e2fc16edbd56bc56",
   "entries": [
     {
@@ -189,11 +189,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0xbF9e68fe6f7d6e6b2Ec5e34b38DBEFaB5700B456",
+        "anchorGame": "0x9d3408F3814Fcf71102C8e6EDc05EfB70441541c",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "getAnchorRoot": [
-          "0xa370ba8e35b643d1d85cd1283a425a69dce97a3d3c28a1ecba187e8654301798",
-          135244172
+          "0x340c9f9116cfa2456cde76f3d1e2cb5c31d62e670c47787bd8c2aa3cbafa3eb7",
+          136033360
         ],
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "respectedGameType": 0,
@@ -360,8 +360,8 @@
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "eip1559Denominator": 250,
-        "eip1559Elasticity": 4,
-        "gasLimit": 60000000,
+        "eip1559Elasticity": 2,
+        "gasLimit": 40000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
           "l1ERC721Bridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
@@ -443,7 +443,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "24d 19h",
+        "timeSinceLastL2beatInteraction": "11d 1h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -533,7 +533,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292793059",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292795887",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -602,7 +602,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20415188000000000000",
+        "totalSupply": "20080000000000000000",
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -668,7 +668,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -918,7 +918,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1258,7 +1258,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1508,7 +1508,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1728,8 +1728,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 463628,
-          "prevBlockNum": 22437696
+          "prevBoughtGas": 1031404,
+          "prevBlockNum": 22567728
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1813,7 +1813,7 @@
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1915,7 +1915,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 7968,
+        "gameCount": 8405,
         "gameImpls": [
           "0x89D68b1D63AAA0db4af1163e81f56B76934292F8",
           "0xa1E0baCde89d899B3f24eEF3D179cC335A24E777",
