@@ -22,9 +22,9 @@ const JustImport = z
   .object({ import: z.optional(z.array(z.string())) })
   .passthrough()
 
-const importedCache = new Map<string, JustImport>()
-
 export class ConfigReader {
+  private importedCache = new Map<string, JustImport>()
+
   constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): ConfigRegistry {
@@ -52,7 +52,7 @@ export class ConfigReader {
     if (rawConfig.import !== undefined) {
       const visited = new Set<string>()
       rawConfig = merge(
-        resolveImports(basePath, rawConfig.import, visited),
+        this.resolveImports(basePath, rawConfig.import, visited),
         rawConfig,
       )
     }
@@ -210,6 +210,45 @@ export class ConfigReader {
   getProjectChainPath(project: string, chain: string): string {
     return path.join(this.getProjectPath(project), chain)
   }
+
+  resolveImports(
+    basePath: string,
+    imports: string[],
+    visited: Set<string>,
+  ): json {
+    let result: json = {}
+    for (const importPath of imports) {
+      const resolvedPath = path.resolve(basePath, importPath)
+      if (visited.has(resolvedPath)) {
+        throw new Error(`Circular import detected: ${importPath}`)
+      }
+      visited.add(resolvedPath)
+
+      let rawConfig = this.importedCache.get(resolvedPath)
+      if (rawConfig === undefined) {
+        const contents = readJsonc(resolvedPath)
+        const parseResult = JustImport.safeParse(contents)
+        if (!parseResult.success) {
+          const message = formatZodParsingError(parseResult.error, importPath)
+          console.log(message)
+
+          throw new Error(`Cannot parse file ${importPath}`)
+        }
+        rawConfig = parseResult.data
+        this.importedCache.set(resolvedPath, rawConfig)
+      }
+
+      if (rawConfig.import !== undefined) {
+        const importBasePath = path.dirname(resolvedPath)
+        result = merge(
+          this.resolveImports(importBasePath, rawConfig.import, visited),
+          result,
+        )
+      }
+      result = merge(result, rawConfig)
+    }
+    return result
+  }
 }
 
 function formatZodParsingError(error: ZodError, fileName: string): string {
@@ -231,43 +270,4 @@ function formatZodParsingError(error: ZodError, fileName: string): string {
     ...lines,
     chalk.red(`╚${'═'.repeat(maxLength - 1)}╝`),
   ].join('\n')
-}
-
-export function resolveImports(
-  basePath: string,
-  imports: string[],
-  visited: Set<string>,
-): json {
-  let result: json = {}
-  for (const importPath of imports) {
-    const resolvedPath = path.resolve(basePath, importPath)
-    if (visited.has(resolvedPath)) {
-      throw new Error(`Circular import detected: ${importPath}`)
-    }
-    visited.add(resolvedPath)
-
-    let rawConfig = importedCache.get(resolvedPath)
-    if (rawConfig === undefined) {
-      const contents = readJsonc(resolvedPath)
-      const parseResult = JustImport.safeParse(contents)
-      if (!parseResult.success) {
-        const message = formatZodParsingError(parseResult.error, importPath)
-        console.log(message)
-
-        throw new Error(`Cannot parse file ${importPath}`)
-      }
-      rawConfig = parseResult.data
-      importedCache.set(resolvedPath, rawConfig)
-    }
-
-    if (rawConfig.import !== undefined) {
-      const importBasePath = path.dirname(resolvedPath)
-      result = merge(
-        resolveImports(importBasePath, rawConfig.import, visited),
-        result,
-      )
-    }
-    result = merge(result, rawConfig)
-  }
-  return result
 }
