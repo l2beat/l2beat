@@ -69,6 +69,10 @@ export const bridgesSummarySingleChainColumns = [
   }),
   columnHelper.accessor((e) => adjustTableValue(e.livenessFailure), {
     header: 'Liveness\nfailure',
+    meta: {
+      tooltip:
+        'Indicates whether there is a mechanism to reclaim deposited funds in case the bridge operators are down.',
+    },
     cell: (ctx) => {
       if (!ctx.row.original.livenessFailure) return 'None'
       return <TableValueCell value={ctx.row.original.livenessFailure} />
@@ -79,6 +83,10 @@ export const bridgesSummarySingleChainColumns = [
   }),
   columnHelper.accessor((e) => adjustTableValue(e.sourceUpgradeability), {
     header: 'Governance',
+    meta: {
+      tooltip:
+        'Shows the entities allowed to perform upgrades and pause the bridge.',
+    },
     cell: (ctx) => (
       <>
         <div>
