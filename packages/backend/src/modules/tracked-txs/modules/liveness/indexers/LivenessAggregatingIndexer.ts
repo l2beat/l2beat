@@ -13,14 +13,14 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import {
-  type LivenessRecordWithConfig,
-  LivenessWithConfigService,
-} from '../services/LivenessWithConfigService'
 import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
+import {
+  type LivenessRecordWithConfig,
+  mapToRecordWithConfig,
+} from '../utils/mapToRecordWithConfig'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -69,11 +69,6 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       .flatMap((p) => getActiveConfigurations(p, configurations))
       .filter((c) => c !== undefined)
 
-    const livenessWithConfig = new LivenessWithConfigService(
-      allProjectConfigs,
-      this.$.db,
-    )
-
     const hourlyTimestamps: UnixTime[] = []
     let currentHour = UnixTime.toStartOf(from, 'hour')
     while (currentHour <= to) {
@@ -85,8 +80,15 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
     // for every considered time range we also take latest record before `from`
     // for each configuration to calculate interval for first record in time range
-    const livenessRecords =
-      await livenessWithConfig.getWithinTimeRangeWithLatestBeforeFrom(from, to)
+    const records = await this.$.db.liveness.getRecordsInRangeWithLatestBefore(
+      allProjectConfigs.map((c) => c.id),
+      from,
+      to,
+    )
+
+    const livenessRecords = records.map((r) =>
+      mapToRecordWithConfig(r, allProjectConfigs),
+    )
 
     const groupedConfigs = groupBy(allProjectConfigs, (c) => c.projectId)
 
