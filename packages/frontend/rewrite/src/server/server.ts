@@ -9,6 +9,7 @@ import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/server-entry'
 import { type RenderData } from '../ssr/types'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
+import { createInternalApiRouter } from './routers/InternalApiRouter'
 import { createPublicApiRouter } from './routers/PublicApiRouter'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -34,6 +35,7 @@ export function createServer() {
   app.use(MetricsMiddleware)
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createPublicApiRouter())
+  app.use('/', createInternalApiRouter())
 
   const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
     headers: new Headers(req.headers as Record<string, string>),
