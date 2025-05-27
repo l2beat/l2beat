@@ -41,15 +41,15 @@ function DecodedWrapper({ search }: { search: URLSearchParams }) {
     return <div className="text-red-500">Something went wrong :(</div>
   }
 
-  console.log(condensed, localStorage.getItem('condensed'))
-
   return (
     <main className="mx-auto max-w-[900px] p-4 pb-20">
       <div className="mb-4 flex">
         <button
           className={clsx(
-            'mb-8 block rounded-l-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1 active:mt-1 active:border-b-0',
-            !condensed && 'border-zinc-800 bg-zinc-600',
+            'mb-8 block rounded-l border-b-4 px-2 py-1 active:mt-1 active:border-b-0',
+            !condensed
+              ? 'border-zinc-800 bg-zinc-700'
+              : 'border-zinc-900 bg-zinc-800',
           )}
           onClick={() => updateCondensed(false)}
         >
@@ -57,8 +57,10 @@ function DecodedWrapper({ search }: { search: URLSearchParams }) {
         </button>
         <button
           className={clsx(
-            'mb-8 block rounded-r-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1 active:mt-1 active:border-b-0',
-            condensed && 'border-zinc-800 bg-zinc-600',
+            'mb-8 block rounded-r border-b-4 px-2 py-1 active:mt-1 active:border-b-0',
+            condensed
+              ? 'border-zinc-800 bg-zinc-700'
+              : 'border-zinc-900 bg-zinc-800',
           )}
           onClick={() => updateCondensed(true)}
         >

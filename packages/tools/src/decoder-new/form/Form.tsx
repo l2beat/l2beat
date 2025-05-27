@@ -14,9 +14,14 @@ export function Form() {
 
   function onSubmit() {
     dispatch({ type: 'submit' })
+    let data = (state.values.data as `0x${string}`) || undefined
+    if (data !== undefined && data.length > 512) {
+      localStorage.setItem('data', data)
+      data = '0xLOCALSTORAGE'
+    }
     const query = {
       hash: (state.values.hash as `0x${string}`) || undefined,
-      data: (state.values.data as `0x${string}`) || undefined,
+      data,
       to: (state.values.address as `0x${string}`) || undefined,
       chainId: state.values.chainId || undefined,
     }
