@@ -21,7 +21,6 @@ import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
-import { makeEntryStructureConfig } from '../config/structureUtils'
 import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -42,6 +41,9 @@ export class TemplateService {
   private loadedTemplates: Record<string, StructureContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
+  private hashIndex:
+    | Map<string, { templateId: string; criteria?: ShapeCriteria }[]>
+    | undefined
 
   constructor(private readonly rootPath: string) {}
 
@@ -112,34 +114,25 @@ export class TemplateService {
     sourcesHash: Hash256,
     address: EthereumAddress,
   ): string[] {
-    const result: [string, number][] = []
+    const candidates = this.getHashIndex().get(sourcesHash.toString()) ?? []
 
-    const allShapes = this.getAllShapes()
-    for (const [templateId, shape] of Object.entries(allShapes)) {
-      const criteriaMatches: string[] = []
-      if (shape.criteria && shape.criteria.validAddresses) {
-        if (!shape.criteria.validAddresses.includes(address)) {
-          continue
-        } else {
-          criteriaMatches.push('validAddress')
-        }
+    let max = 0
+    const scored: [string, number][] = []
+
+    for (const { templateId, criteria } of candidates) {
+      let score = 1 // implementation hash always matched
+      if (criteria?.validAddresses) {
+        if (!criteria.validAddresses.includes(address)) continue
+        score++ // valid-address criterion matched
       }
-      if (shape.hashes.includes(sourcesHash)) {
-        criteriaMatches.push('implementation')
-        result.push([templateId, criteriaMatches.length])
-      }
+      max = Math.max(max, score)
+      scored.push([templateId, score])
     }
 
-    const maxMatches = Math.max(...result.map(([, matches]) => matches))
-
-    // remove results that have less than maxMatches
-    // so that more specific match trumps more general ones
-    const filteredResult = result
-      .filter(([, matches]) => matches === maxMatches)
-      .map(([templateId]) => templateId)
-    filteredResult.sort()
-
-    return filteredResult
+    return scored
+      .filter(([, s]) => s === max)
+      .map(([id]) => id)
+      .sort()
   }
 
   loadContractTemplateBase<T extends z.ZodTypeAny>(
@@ -269,8 +262,8 @@ export class TemplateService {
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
         if (
-          makeEntryStructureConfig(config.structure, contract.address)
-            .extends === undefined
+          config.structure.overrides?.[contract.address.toString()]?.extends ===
+          undefined
         ) {
           if (matchingTemplates.length === 0) {
             return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
@@ -323,10 +316,26 @@ export class TemplateService {
     return false
   }
 
+  private getHashIndex() {
+    if (this.hashIndex) return this.hashIndex
+
+    this.hashIndex = new Map()
+    for (const [templateId, shape] of Object.entries(this.getAllShapes())) {
+      for (const h of shape.hashes) {
+        const key = h.toString()
+        const bucket = this.hashIndex.get(key)
+        const entry = { templateId, criteria: shape.criteria }
+        bucket ? bucket.push(entry) : this.hashIndex.set(key, [entry])
+      }
+    }
+    return this.hashIndex
+  }
+
   reload() {
     this.shapeHashes = undefined
     this.allTemplateHashes = undefined
     this.loadedTemplates = {}
+    this.hashIndex = undefined
   }
 
   async addToShape(
