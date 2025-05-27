@@ -1,14 +1,22 @@
 {
   "name": "gateway",
   "chain": "ethereum",
-  "blockNumber": 22566193,
-  "configHash": "0x8352677e031cf0865a8316f8c7125372ef5746e3df3772b88bc72e4f85180ab4",
+  "blockNumber": 22572509,
+  "configHash": "0x785d457c49b8cbf01f46a8f128ec2eb1357854e92bd33f590e6a6f573e0c0cd1",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
       "address": "0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x9B30061D077476a8B7e1b68c3da844Ed5FdE0432",
+          "description": "add and remove whitelisted sender addresses.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "name": "DualVerifier",
@@ -281,7 +289,7 @@
         "isPermanentRollup": 1,
         "isPermanentRollupString": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
         "isPriorityQueueActive": false,
-        "validators": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+        "validators": ["0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
       },
       "fieldMeta": {
         "getAdmin": { "severity": "HIGH" },
@@ -373,10 +381,12 @@
       "name": "InitiialGatewayTransactionFilterer",
       "address": "0x9B30061D077476a8B7e1b68c3da844Ed5FdE0432",
       "type": "Contract",
+      "template": "shared-zk-stack/InitialGatewayTransactionFilterer",
       "sourceHashes": [
         "0x2d3f070828833b218c19d8599f163f154c820daf4bcde2902ab36af473211be6"
       ],
       "proxyType": "immutable",
+      "description": "A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender addresses only. The whitelist is managed by the owner (0x043DA37F21c4C83b97b546724c75600c2D0C9E16).",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -449,12 +459,21 @@
     {
       "address": "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+          "description": "set the conversion factor for gas token deposits.",
+          "role": ".tokenMultiplierSetter"
+        }
+      ]
     },
     {
       "name": "ChainAdminOwnable",
       "address": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
       "type": "Contract",
+      "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
       ],
@@ -473,15 +492,18 @@
         "$immutable": true,
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "protocolVersionToUpgradeTimestamp": [0, 0, 0, 0, 0],
-        "tokenMultiplierSetter": "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9"
+        "tokenMultiplierSetter": "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
+        "upgradeTimestamps": []
       },
-      "errors": {
-        "protocolVersionToUpgradeTimestamp": "Processing error occurred."
+      "fieldMeta": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
+        }
       },
       "implementationNames": {
         "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": "ChainAdminOwnable"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "abis": {
@@ -831,11 +853,13 @@
     ]
   },
   "usedTemplates": {
+    "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/InitialGatewayTransactionFilterer": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x7290b29d0c9ab8d9defb891d66585ace4a75da2f7cd7093456ff7f5e3778dcc0"
+  "permissionsConfigHash": "0xd6d6a38fe0515412fa9ef57519fb9f022d1321eaba8adb27cd8a1ae377f99a03"
 }

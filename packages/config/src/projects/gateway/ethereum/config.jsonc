@@ -11,15 +11,6 @@
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {
-    "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": {
-      "fields": {
-        "validators": {
-          "handler": {
-            "type": "zksynceraValidators"
-          }
-        }
-      }
-    },
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       // local override over the template to fetch the validators from the shared contract
       "fields": {

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7cbcae303e33eb7b7bf42a93ab4f08f50b691260
+Generated with discovered.json: 0x2959f22728090692581419e3e7609f98d713673d
 
-# Diff at Mon, 26 May 2025 10:02:23 GMT:
+# Diff at Tue, 27 May 2025 07:40:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 22566193
+- current block number: 22572509
 
 ## Description
 
@@ -38,7 +38,7 @@ initial discovery of the gateway rollup: future settlement layer for zksync
 ```diff
 +   Status: CREATED
     contract InitiialGatewayTransactionFilterer (0x9B30061D077476a8B7e1b68c3da844Ed5FdE0432)
-    +++ description: None
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender addresses only. The whitelist is managed by the owner (0x043DA37F21c4C83b97b546724c75600c2D0C9E16).
 ```
 
 ```diff
