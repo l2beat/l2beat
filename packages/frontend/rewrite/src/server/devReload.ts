@@ -6,6 +6,6 @@ export function setupDevReload() {
   new WebSocketServer({ server })
 
   server.listen(9999, () => {
-    console.log(`Server started at http://localhost:9999`)
+    console.log(`[WS] Server started at http://localhost:9999`)
   })
 }
