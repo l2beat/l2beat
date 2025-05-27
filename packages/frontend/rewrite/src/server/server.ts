@@ -46,7 +46,7 @@ export function createServer() {
   )
 
   app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`)
+    console.log(`[HTTP] Server started at http://localhost:${port}`)
   })
 }
 
