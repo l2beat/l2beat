@@ -22,7 +22,11 @@ export function createDataAvailabilityRouter(
 
   router.get('/data-availability/summary', async (req, res) => {
     const data = await cache.get(
-      { key: ['data-availability', 'summary'], ttl: 10 * 60 },
+      {
+        key: ['data-availability', 'summary'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -31,7 +35,11 @@ export function createDataAvailabilityRouter(
 
   router.get('/data-availability/risk', async (req, res) => {
     const data = await cache.get(
-      { key: ['data-availability', 'risk'], ttl: 10 * 60 },
+      {
+        key: ['data-availability', 'risk'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       () => getDataAvailabilityRiskData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -40,7 +48,11 @@ export function createDataAvailabilityRouter(
 
   router.get('/data-availability/throughput', async (req, res) => {
     const data = await cache.get(
-      { key: ['data-availability', 'throughput'], ttl: 10 * 60 },
+      {
+        key: ['data-availability', 'throughput'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
@@ -64,7 +76,8 @@ export function createDataAvailabilityRouter(
             req.params.layer,
             req.params.bridge,
           ],
-          ttl: 10 * 60,
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
         },
         () =>
           getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),

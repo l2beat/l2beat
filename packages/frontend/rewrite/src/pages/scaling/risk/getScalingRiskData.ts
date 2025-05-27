@@ -18,7 +18,11 @@ export async function getScalingRiskData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'risk', 'entries'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'risk', 'entries'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getScalingRiskEntries,
     ),
   ])

@@ -18,7 +18,11 @@ export async function getScalingDataAvailabilityData(
       recategorisationPreview: cookies.recategorisationPreview,
     }),
     cache.get(
-      { key: ['scaling', 'data-availability', 'entries'], ttl: 10 * 60 },
+      {
+        key: ['scaling', 'data-availability', 'entries'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
       getScalingDaEntries,
     ),
   ])

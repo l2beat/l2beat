@@ -42,7 +42,7 @@ export const metis: ScalingProject = {
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     purposes: ['Universal'],
     stack: 'OVM',
-    category: 'Optimium',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://metis.io'],
       apps: ['https://bridge.metis.io'],
@@ -149,7 +149,11 @@ export const metis: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_NONE,
+      ...RISK_VIEW.STATE_FP_INT,
+      description:
+        RISK_VIEW.STATE_FP_INT.description +
+        ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
+      sentiment: 'bad',
       secondLine: formatChallengePeriod(CHALLENGE_PERIOD_SECONDS),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -160,19 +164,25 @@ export const metis: ScalingProject = {
   stateValidation: {
     categories: [
       {
-        title: 'No state validation',
+        title: 'State root proposals',
         description:
-          'Dispute game contracts for state validation are deployed but not used. In theory, disputed state batches can be marked as such in the `StateCommitmentChain`. Then, these flagged batches could be deleted (within the fraud proof window). Currenly, batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the `Metis Multisig`.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'an invalid state root is submitted to the system.',
-            isCritical: true,
-          },
-        ],
+          'Dispute game contracts for state validation are deployed but not used to propose state roots as in standard OP Stack chains. Instead, proposers submit state roots through the appendStateBatch function in the `StateCommitmentChain` contract. A state root gets confirmed if the challenge period has passed and the state batch is not disputed.',
         references: [
           {
-            title: 'DisputeGameFactory - No games are currently created',
+            title: 'StateCommitmentChain - Etherscan source code',
+            url: 'https://etherscan.io/address/0xe6e2dff51b039c8eff0b21880e2fb008af10b365#code',
+          },
+        ],
+      },
+      {
+        title: 'Challenges',
+        description:
+          'Games are created on demand by the permissioned `GameCreator` should a dispute arise. Once resolved, disputed state batches can be marked as such in the `StateCommitmentChain`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the `Metis Multisig`.',
+        risks: [],
+        references: [
+          {
+            title:
+              'DisputeGameFactory - No games are created to propose state roots',
             url: 'https://etherscan.io/address/0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3',
           },
         ],

@@ -16,11 +16,12 @@ export function decode(signature: string, data: `0x${string}`, chain: Chain) {
     abi: signature,
     selector: decoded.selector,
     arguments: decoded.parameters.map((x) => toResultValue(x, chain)),
+    extra: decoded.extra !== '0x' ? decoded.extra : undefined,
   }
   return result
 }
 
-function toResultValue(value: AbiValue, chain: Chain): Value {
+export function toResultValue(value: AbiValue, chain: Chain): Value {
   const common = {
     abi: value.abi,
     name: value.name,

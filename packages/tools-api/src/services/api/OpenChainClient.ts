@@ -30,7 +30,7 @@ export class OpenChainClient {
     }
     const fns = parsed.data.result.function
     return Object.fromEntries(
-      selectors.map((s) => [s, fns[s]?.map((f) => f.name) ?? []]),
+      selectors.map((s) => [s, fns[s]?.map((f) => `function ${f.name}`) ?? []]),
     )
   }
 }

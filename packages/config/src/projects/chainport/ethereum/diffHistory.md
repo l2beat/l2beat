@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xb182b6d03869d3c4c79c6a0aa47b8d7c19f0d174
+
+# Diff at Mon, 26 May 2025 13:41:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22045311
+- current block number: 22567327
+
+## Description
+
+Unfreeze bridge proposal executed.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        64
++        65
+    }
+```
+
 Generated with discovered.json: 0x3f4400e3c64ff1f39fa13c1f1a2afc5949d5d7bb
 
 # Diff at Fri, 23 May 2025 09:40:54 GMT:

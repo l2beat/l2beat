@@ -8,7 +8,11 @@ import {
 import path, { join } from 'path'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
-import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
+import {
+  combineImplementationHashes,
+  contractFlatteningHash,
+  getHashForMatchingFromSources,
+} from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ColorContract } from '../config/ColorConfig'
@@ -17,7 +21,6 @@ import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
-import { makeEntryStructureConfig } from '../config/structureUtils'
 import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -38,6 +41,9 @@ export class TemplateService {
   private loadedTemplates: Record<string, StructureContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
+  private hashIndex:
+    | Map<string, { templateId: string; criteria?: ShapeCriteria }[]>
+    | undefined
 
   constructor(private readonly rootPath: string) {}
 
@@ -91,10 +97,16 @@ export class TemplateService {
     sources: ContractSources,
     address: EthereumAddress,
   ): string[] {
-    const sourceHash = hashFirstSource(sources.isVerified, sources.sources)
+    if (!sources.isVerified) {
+      return []
+    }
+
+    const sourceHash = getHashForMatchingFromSources(sources.sources)
+
     if (sourceHash === undefined) {
       return []
     }
+
     return this.findMatchingTemplatesByHash(sourceHash, address)
   }
 
@@ -102,34 +114,31 @@ export class TemplateService {
     sourcesHash: Hash256,
     address: EthereumAddress,
   ): string[] {
-    const result: [string, number][] = []
+    const candidates = this.getHashIndex().get(sourcesHash.toString()) ?? []
 
-    const allShapes = this.getAllShapes()
-    for (const [templateId, shape] of Object.entries(allShapes)) {
-      const criteriaMatches: string[] = []
-      if (shape.criteria && shape.criteria.validAddresses) {
-        if (!shape.criteria.validAddresses.includes(address)) {
-          continue
-        } else {
-          criteriaMatches.push('validAddress')
-        }
+    let max = 0
+    const scored: [string, number][] = []
+
+    for (const { templateId, criteria } of candidates) {
+      let score = 1 // implementation hash always matched
+      if ((criteria?.validAddresses ?? []).includes(address)) {
+        score++ // valid-address criterion matched
+      } else if (criteria?.validAddresses?.length ?? 0 > 0) {
+        continue // valid-address criterion not matched
       }
-      if (shape.hashes.includes(sourcesHash)) {
-        criteriaMatches.push('implementation')
-        result.push([templateId, criteriaMatches.length])
-      }
+
+      max = Math.max(max, score)
+      scored.push([templateId, score])
     }
 
-    const maxMatches = Math.max(...result.map(([, matches]) => matches))
-
-    // remove results that have less than maxMatches
-    // so that more specific match trumps more general ones
-    const filteredResult = result
-      .filter(([, matches]) => matches === maxMatches)
-      .map(([templateId]) => templateId)
-    filteredResult.sort()
-
-    return filteredResult
+    return [
+      ...new Set(
+        scored
+          .filter(([, s]) => s === max)
+          .map(([id]) => id)
+          .sort(),
+      ),
+    ]
   }
 
   loadContractTemplateBase<T extends z.ZodTypeAny>(
@@ -259,8 +268,8 @@ export class TemplateService {
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
         if (
-          makeEntryStructureConfig(config.structure, contract.address)
-            .extends === undefined
+          config.structure.overrides?.[contract.address.toString()]?.extends ===
+          undefined
         ) {
           if (matchingTemplates.length === 0) {
             return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
@@ -313,19 +322,35 @@ export class TemplateService {
     return false
   }
 
+  private getHashIndex() {
+    if (this.hashIndex) return this.hashIndex
+
+    this.hashIndex = new Map()
+    for (const [templateId, shape] of Object.entries(this.getAllShapes())) {
+      for (const h of shape.hashes) {
+        const key = h.toString()
+        const bucket = this.hashIndex.get(key)
+        const entry = { templateId, criteria: shape.criteria }
+        bucket ? bucket.push(entry) : this.hashIndex.set(key, [entry])
+      }
+    }
+    return this.hashIndex
+  }
+
   reload() {
     this.shapeHashes = undefined
     this.allTemplateHashes = undefined
     this.loadedTemplates = {}
+    this.hashIndex = undefined
   }
 
   async addToShape(
     templateId: string,
     chain: string,
-    address: EthereumAddress,
+    addresses: EthereumAddress[],
     fileName: string,
     blockNumber: number,
-    source: ContractSource,
+    sources: ContractSource[],
   ): Promise<void> {
     assert(this.exists(templateId), 'Template does not exist')
     const allTemplates = this.listAllTemplates()
@@ -334,16 +359,28 @@ export class TemplateService {
 
     const shapes =
       entry.shapePath === undefined ? {} : this.readShapeSchema(entry.shapePath)
-    const hash = contractFlatteningHash(source)
-    assert(hash !== undefined, 'Could not find hash')
 
-    if (Object.values(shapes).some((s) => s.hash === hash)) {
+    const hashes = sources
+      .map(contractFlatteningHash)
+      .filter((h) => h !== undefined)
+      .sort()
+
+    assert(hashes.length > 0, 'Could not find hash')
+
+    const masterHash =
+      hashes.length > 1
+        ? combineImplementationHashes(hashes)
+        : // biome-ignore lint/style/noNonNullAssertion: just checked
+          Hash256(hashes[0]!)
+
+    if (Object.values(shapes).some((s) => s.hash === masterHash)) {
       return
     }
 
     shapes[fileName] = {
-      hash: Hash256(hash),
-      address,
+      hash: masterHash,
+      // biome-ignore lint/style/noNonNullAssertion: just checked
+      address: addresses.length > 1 ? addresses : addresses[0]!,
       chain,
       blockNumber,
     }

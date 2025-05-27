@@ -1,14 +1,11 @@
-import type { DecodedResult } from '@l2beat/tools-api/types'
 import { clsx } from 'clsx'
 import { useReducer } from 'react'
-import { decode } from './api'
+import { useNavigate } from 'react-router'
+import { getQueryParams } from './api'
 import { INITIAL_STATE, SUPPORTED_CHAINS, reducer } from './state'
 
-interface Props {
-  onDataDecoded: (decoded: DecodedResult) => void
-}
-
-export function Form(props: Props) {
+export function Form() {
+  const navigate = useNavigate()
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
   const hasErrors =
     !!state.errors.hash || !!state.errors.data || !!state.errors.address
@@ -17,17 +14,18 @@ export function Form(props: Props) {
 
   function onSubmit() {
     dispatch({ type: 'submit' })
-    decode({
+    let data = (state.values.data as `0x${string}`) || undefined
+    if (data !== undefined && data.length > 512) {
+      localStorage.setItem('data', data)
+      data = '0xLOCALSTORAGE'
+    }
+    const query = {
       hash: (state.values.hash as `0x${string}`) || undefined,
-      data: (state.values.data as `0x${string}`) || undefined,
+      data,
       to: (state.values.address as `0x${string}`) || undefined,
       chainId: state.values.chainId || undefined,
-    })
-      .then(
-        (x) => props.onDataDecoded(x),
-        (e) => console.error(e),
-      )
-      .then(() => dispatch({ type: 'submitted' }))
+    }
+    navigate(`/decoder-new/?${getQueryParams(query)}`)
   }
 
   return (

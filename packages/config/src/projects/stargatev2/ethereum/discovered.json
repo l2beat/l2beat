@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 22425618,
+  "blockNumber": 22567916,
   "configHash": "0xe92387951a9ceb499bac2d4ba91ba068861873f6276a919a5e9614f326cb9d08",
   "entries": [
     {
@@ -173,14 +173,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "22510931592871138",
-        "poolBalance": "302911661000000000000",
+        "plannerFee": "22524576783109262",
+        "poolBalance": "65537656000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 556136,
-        "tvl": "1972070480000000000000"
+        "treasuryFee": 556131,
+        "tvl": "1972071455000000000000"
       },
       "implementationNames": {
         "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": "StargatePool"
@@ -266,7 +266,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 938,
+        "nonce": 951,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -415,7 +415,7 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": "1440000000000000000000",
+        "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x3E368B6C95c6fEfB7A16dCc0D756389F3c658a06",
@@ -430,14 +430,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "175412635461546419",
-        "poolBalance": "6554917698000000000000",
+        "plannerFee": "246354554142420385",
+        "poolBalance": "16826912486000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 15344806,
-        "tvl": "10761149809000000000000"
+        "treasuryFee": 3380595,
+        "tvl": "20359439997000000000000"
       },
       "implementationNames": {
         "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": "StargatePoolNative"
@@ -516,14 +516,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "89042398092677402",
-        "poolBalance": 2851435525953,
+        "plannerFee": "128312117141573650",
+        "poolBalance": 1442609543160,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 153175920694,
-        "tvl": 5848307334502
+        "treasuryFee": 162048725797,
+        "tvl": 6678993416670
       },
       "implementationNames": {
         "0x933597a323Eb81cAe705C5bC29985172fd5A3973": "StargatePoolMigratable"
@@ -663,7 +663,7 @@
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
-        "deficitOffset": 4000000000000,
+        "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x52B35406CB2FB5e0038EdEcFc129A152a1f74087",
@@ -678,14 +678,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "134125220478138206",
-        "poolBalance": 22916078817117,
+        "plannerFee": "180985099533495668",
+        "poolBalance": 32240746821076,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 186559322409,
-        "tvl": 18313326711775
+        "treasuryFee": 191321655493,
+        "tvl": 24035337102697
       },
       "implementationNames": {
         "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": "StargatePoolUSDC"
@@ -791,7 +791,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 261,
+        "nonce": 263,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

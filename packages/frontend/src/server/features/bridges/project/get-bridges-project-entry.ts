@@ -56,7 +56,7 @@ export interface BridgesProjectEntry {
     }
     destination: TableReadyValue
     category: ProjectBridgeInfo['category']
-    validatedBy: TableReadyValue
+    validatedBy: TableReadyValue | undefined
   }
   sections: ProjectDetailsSection[]
   discoUiHref: string
@@ -80,10 +80,19 @@ export async function getBridgesProjectEntry(
     | 'permissions'
   >,
 ): Promise<BridgesProjectEntry> {
-  const [projectsChangeReport, tvsStats] = await Promise.all([
-    getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-  ])
+  const [projectsChangeReport, tvsStats, tvsChartData, tokens, contractUtils] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+      api.tvs.chart({
+        range: '1y',
+        filter: { type: 'projects', projectIds: [project.id] },
+        excludeAssociatedTokens: false,
+        previewRecategorisation: false,
+      }),
+      getTokensForProject(project),
+      getContractUtils(),
+    ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
 
@@ -132,16 +141,6 @@ export async function getBridgesProjectEntry(
     },
     discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
   }
-
-  const [tvsChartData, tokens] = await Promise.all([
-    api.tvs.chart({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-      previewRecategorisation: false,
-    }),
-    getTokensForProject(project),
-  ])
 
   const sections: ProjectDetailsSection[] = []
 
@@ -241,8 +240,6 @@ export async function getBridgesProjectEntry(
       },
     })
   }
-
-  const contractUtils = await getContractUtils()
 
   const permissionsSection = getPermissionsSection(
     {

@@ -18,13 +18,22 @@ const upgradeCompleteSignature1 =
 const upgradeCompleteSignature2 =
   'UpgradeComplete(uint256 indexed newProtocolVersion, bytes32 indexed l2UpgradeTxHash, tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) upgrade)'
 
+// NOTE(radomski): The DiamondCut interface allows the initialize function to
+// be anything. It changes from time to time and has to be manually updated.
+const initializeFunctions = [
+  'initialize(tuple(uint256 chainId, address bridgehub, address stateTransitionManager, uint256 protocolVersion, address admin, address validatorTimelock, address baseToken, address baseTokenBridge, bytes32 storedBatchZero, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes32 l2BootloaderBytecodeHash, bytes32 l2DefaultAccountBytecodeHash, uint256 priorityTxMaxGasLimit, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) feeParams, address blobVersionedHashRetriever) _initializeData) returns (bytes32)',
+
+  // Taken from: https://etherscan.io/address/0x877a3c97705c5d1a6fd7f3ed84d9a74de737c64a
+  'initialize(tuple(uint256 chainId, address bridgehub, address chainTypeManager, uint256 protocolVersion, address admin, address validatorTimelock, bytes32 baseTokenAssetId, bytes32 storedBatchZero, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes32 l2BootloaderBytecodeHash, bytes32 l2DefaultAccountBytecodeHash, bytes32 l2EvmEmulatorBytecodeHash, uint256 priorityTxMaxGasLimit, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) feeParams, address blobVersionedHashRetriever) _initializeData) returns (bytes32)',
+]
+
 const abi = new utils.Interface([
   'event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)',
   'event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)',
   `event ${upgradeCompleteSignature1}`,
   `event ${upgradeCompleteSignature2}`,
 
-  'function initialize(tuple(uint256 chainId, address bridgehub, address stateTransitionManager, uint256 protocolVersion, address admin, address validatorTimelock, address baseToken, address baseTokenBridge, bytes32 storedBatchZero, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes32 l2BootloaderBytecodeHash, bytes32 l2DefaultAccountBytecodeHash, uint256 priorityTxMaxGasLimit, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) feeParams, address blobVersionedHashRetriever) _initializeData) returns (bytes32)',
+  ...initializeFunctions.map((f) => `function ${f}`),
 ])
 
 export class ZKsyncEraValidatorsHandler implements Handler {
@@ -129,14 +138,17 @@ export class ZKsyncEraValidatorsHandler implements Handler {
           }
         }
       } else if (log.name === 'DiamondCut') {
-        try {
-          const result = abi.decodeFunctionData(
-            'initialize',
-            log.args.initCalldata,
-          )
-          validators.add(result._initializeData.validatorTimelock as string)
-        } catch {
-          // Do nothing, unsupported
+        for (const initializeFunction of initializeFunctions) {
+          try {
+            const result = abi.decodeFunctionData(
+              initializeFunction,
+              log.args.initCalldata,
+            )
+            validators.add(result._initializeData.validatorTimelock as string)
+            break
+          } catch {
+            // Do nothing, unsupported
+          }
         }
       }
     }
