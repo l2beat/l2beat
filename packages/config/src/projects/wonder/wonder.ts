@@ -46,7 +46,7 @@ export const wonder: ScalingProject = zkStackL2({
       address: bridge.address,
       tokens: ['ETH', 'USDC'],
       description:
-        'Shared bridge for depositing tokens to ZERϴ and other ZK stack chains.',
+        'Shared bridge for depositing tokens to Wonder and other ZK stack chains.',
       sharedEscrow: {
         type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
