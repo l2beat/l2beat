@@ -1103,5 +1103,5 @@
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0xd7d7e09626f5d15472ce53ad9b1433b2184854e50ce4b219d8e4519f2ed66778"
+  "permissionsConfigHash": "0x36da1d34f28453e919a8627bc0b1ab1004750c321022c1ef322323fa5f581365"
 }

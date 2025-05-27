@@ -1,0 +1,11 @@
+{
+  "name": "wonder",
+  "chain": "zksync2",
+  "blockNumber": 60986305,
+  "configHash": "0x296d9dce38173fb258713893a926261ffe7468ef4330c065265e47728fa830c3",
+  "sharedModules": ["shared-zk-stack"],
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x36da1d34f28453e919a8627bc0b1ab1004750c321022c1ef322323fa5f581365"
+}

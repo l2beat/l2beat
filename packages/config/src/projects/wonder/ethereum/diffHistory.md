@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x692d0d075ae533fa4a0e0380012a1f3d539a9f9c
+Generated with discovered.json: 0x15827362a071612e2061624913f3bbe4c6e9b971
 
-# Diff at Tue, 27 May 2025 14:55:58 GMT:
+# Diff at Tue, 27 May 2025 15:26:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22574842
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard zk stack validium.
 
 ## Initial discovery
 
