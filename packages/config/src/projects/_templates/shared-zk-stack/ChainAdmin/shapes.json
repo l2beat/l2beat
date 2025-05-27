@@ -10,5 +10,11 @@
     "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "ChainAdminOwnable": {
+    "hash": "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832",
+    "address": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+    "chain": "ethereum",
+    "blockNumber": 22572509
   }
 }
