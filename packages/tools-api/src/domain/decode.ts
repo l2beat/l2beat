@@ -21,7 +21,7 @@ export function decode(signature: string, data: `0x${string}`, chain: Chain) {
   return result
 }
 
-function toResultValue(value: AbiValue, chain: Chain): Value {
+export function toResultValue(value: AbiValue, chain: Chain): Value {
   const common = {
     abi: value.abi,
     name: value.name,

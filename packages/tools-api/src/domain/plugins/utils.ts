@@ -1,3 +1,28 @@
+import type { Address, Chain, TokenConfig } from '../../config/types'
+import type { Value } from '../DecodedResult'
+
+export function tokenAmount(
+  value: Value | undefined,
+  address: Address | undefined,
+  chain: Chain,
+  tokens: TokenConfig,
+) {
+  const token = address && tokens[address]
+  const decimals = token?.decimals ?? 18 // We use 18 as the most common default
+  const currency = token?.name ?? '???'
+
+  if (value?.decoded?.type === 'number') {
+    value.decoded = {
+      type: 'amount',
+      value: value.decoded.value,
+      decimals,
+      currency,
+      currencyLink:
+        address && `${chain.explorerUrl}/address/${address.split(':')[1]}`,
+    }
+  }
+}
+
 export class BinaryReader {
   private position = 0
   constructor(private readonly input: `0x${string}`) {}

@@ -1,7 +1,8 @@
 import { toFunctionSelector } from 'viem'
 import type { Address, Chain, TokenConfig } from '../../config/types'
-import type { DecodedCall, Value } from '../DecodedResult'
+import type { DecodedCall } from '../DecodedResult'
 import type { NestedCall } from './types'
+import { tokenAmount } from './utils'
 
 const selectors = {
   transfer: toFunctionSelector('function transfer(address, uint256)'),
@@ -51,26 +52,4 @@ export function erc20Plugin(
     return []
   }
   return false
-}
-
-export function tokenAmount(
-  value: Value | undefined,
-  address: Address | undefined,
-  chain: Chain,
-  tokens: TokenConfig,
-) {
-  const token = address && tokens[address]
-  const decimals = token?.decimals ?? 18 // We use 18 as the most common default
-  const currency = token?.name ?? '???'
-
-  if (value?.decoded?.type === 'number') {
-    value.decoded = {
-      type: 'amount',
-      value: value.decoded.value,
-      decimals,
-      currency,
-      currencyLink:
-        address && `${chain.explorerUrl}/address/${address.split(':')[1]}`,
-    }
-  }
 }
