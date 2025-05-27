@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -34,6 +34,50 @@ export const sxt: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
+  nonTemplateTrackedTxs: [
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0x98f81962',
+        functionSignature:
+          'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xe12a6137',
+        functionSignature:
+          'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xcf02827d',
+        functionSignature:
+          'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   chainConfig: {
     name: 'sxt',
     chainId,
@@ -45,14 +89,10 @@ export const sxt: ScalingProject = zkStackL2({
         url: 'https://spaceandtime.calderachain.xyz/http',
         callsPerMinute: 1500,
       },
-      {
-        type: 'blockscoutV2',
-        url: 'https://spaceandtime.calderaexplorer.xyz/api/v2',
-      },
     ],
   },
   discovery,
-  diamondContract: discovery.getContract(''), // TODO
+  diamondContract: discovery.getContract('zkVmDiamond'),
   milestones: [
     {
       title: 'Mainnet Launch',
