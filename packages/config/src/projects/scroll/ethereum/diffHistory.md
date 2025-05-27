@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7c72a724d5ea1a59d8916505b2dbebe517fbb383
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added manual source for new verifier.
 
 ## Config/verification related changes
 
