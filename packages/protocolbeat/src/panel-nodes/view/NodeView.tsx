@@ -47,11 +47,12 @@ export function NodeView(props: NodeViewProps) {
       >
         <AddressIcon type={props.node.addressType} />
         <div className="truncate">{props.node.name}</div>
-        {props.node.isInitial ? (
-          <IconInitial className="text-aux-green" />
-        ) : (
-          <span></span>
-        )}
+        <div className="flex items-center">
+          {props.node.isInitial && <IconInitial className="text-aux-green" />}
+          {props.node.hasTemplate && (
+            <IconInitial className="text-aux-orange" />
+          )}
+        </div>
       </div>
       {props.node.fields
         .filter((field) => !props.node.hiddenFields.includes(field.name))
