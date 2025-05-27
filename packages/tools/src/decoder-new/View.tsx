@@ -4,23 +4,16 @@ import type {
   Value,
 } from '@l2beat/tools-api/types'
 import clsx from 'clsx'
-import React, { Fragment, type ReactNode, useState } from 'react'
+import { Fragment, type ReactNode, useState } from 'react'
 import { formatUnits } from 'viem'
 
 interface Props {
   decoded: DecodedResult
-  onBack: () => void
 }
 
-export function DecodedView({ decoded, onBack }: Props) {
+export function DecodedView({ decoded }: Props) {
   return (
     <main className="mx-auto max-w-[900px] p-4 pb-20">
-      <button
-        className="mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1 active:mt-1 active:border-b-0"
-        onClick={onBack}
-      >
-        Back
-      </button>
       {decoded.transaction && (
         <div className="mb-2">
           <DecodedLabel name="hash" type="bytes32" />
