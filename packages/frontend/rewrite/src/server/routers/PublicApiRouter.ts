@@ -15,11 +15,6 @@ import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 export function createPublicApiRouter() {
   const router = express.Router()
 
-  router.use('/api', (_, res, next) => {
-    res.setHeader('Content-Type', 'application/json')
-    next()
-  })
-
   router.get(
     '/api/scaling/activity',
     validateRoute({
