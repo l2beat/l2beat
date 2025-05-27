@@ -139,7 +139,6 @@ export async function getDaProjectEntry(
     layerGrissiniValues,
     bridgeGrissiniValues,
   })
-
   const latestThroughput = layer.daLayer.throughput
     ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .at(-1)
