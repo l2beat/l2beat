@@ -8,7 +8,11 @@ import {
 import path, { join } from 'path'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
-import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
+import {
+  combineImplementationHashes,
+  contractFlatteningHash,
+  getHashForMatchingFromSources,
+} from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ColorContract } from '../config/ColorConfig'
@@ -91,10 +95,16 @@ export class TemplateService {
     sources: ContractSources,
     address: EthereumAddress,
   ): string[] {
-    const sourceHash = hashFirstSource(sources.isVerified, sources.sources)
+    if (!sources.isVerified) {
+      return []
+    }
+
+    const sourceHash = getHashForMatchingFromSources(sources.sources)
+
     if (sourceHash === undefined) {
       return []
     }
+
     return this.findMatchingTemplatesByHash(sourceHash, address)
   }
 
@@ -322,10 +332,10 @@ export class TemplateService {
   async addToShape(
     templateId: string,
     chain: string,
-    address: EthereumAddress,
+    addresses: EthereumAddress[],
     fileName: string,
     blockNumber: number,
-    source: ContractSource,
+    sources: ContractSource[],
   ): Promise<void> {
     assert(this.exists(templateId), 'Template does not exist')
     const allTemplates = this.listAllTemplates()
@@ -334,16 +344,28 @@ export class TemplateService {
 
     const shapes =
       entry.shapePath === undefined ? {} : this.readShapeSchema(entry.shapePath)
-    const hash = contractFlatteningHash(source)
-    assert(hash !== undefined, 'Could not find hash')
 
-    if (Object.values(shapes).some((s) => s.hash === hash)) {
+    const hashes = sources
+      .map(contractFlatteningHash)
+      .filter((h) => h !== undefined)
+      .sort()
+
+    assert(hashes.length > 0, 'Could not find hash')
+
+    const masterHash =
+      hashes.length > 1
+        ? combineImplementationHashes(hashes)
+        : // biome-ignore lint/style/noNonNullAssertion: just checked
+          Hash256(hashes[0]!)
+
+    if (Object.values(shapes).some((s) => s.hash === masterHash)) {
       return
     }
 
     shapes[fileName] = {
-      hash: Hash256(hash),
-      address,
+      hash: masterHash,
+      // biome-ignore lint/style/noNonNullAssertion: just checked
+      address: addresses.length > 1 ? addresses : addresses[0]!,
       chain,
       blockNumber,
     }

@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x177de7d15df9e817669bac999555cc7d6c485ede
+
+# Diff at Tue, 27 May 2025 08:27:16 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 21995398
+- current block number: 21995398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995398 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.7:
+-        "0x93b21bfbef09c4e60d6a17309877245220508c54478159a8f2b9dbfb60576c4b"
+      sourceHashes.6:
+-        "0x452c4b92e2f090f2979fe1dec4ee28bf8b9c431b96b67966a3c2279f9e332684"
+      sourceHashes.5:
+-        "0xf615d0291aa23f36d8cb749e3950b549d57d38bfef0c342331d0cedd7d769026"
+      sourceHashes.4:
+-        "0x7e358cdedbf8af25ae12a5fe965db091c7751aafa68c2460ab43e81a8eb364b9"
+      sourceHashes.3:
+-        "0x54407214d4211e41ecb742c3df7564e352844c1f5da38ef2e206b0465bd5345b"
+      sourceHashes.2:
+-        "0x105353ea24f9e10459c2487f227bc285c4ca2317fac8e12a8b936bc92329aea5"
+      sourceHashes.0:
+-        "0x497eebe95d8d7611823ffcb6cc098a9c3c71e91941026f2b4c4989d6f9fa944d"
++        "0xfaa0bf87cf9230ba5a3f5530b447f76606e0cd9fb9d1acd2f3b87d30884e63d1"
+    }
+```
+
 Generated with discovered.json: 0xdce0cc333f75d3dcc877376b582abd4424f38708
 
 # Diff at Fri, 23 May 2025 09:40:57 GMT:
