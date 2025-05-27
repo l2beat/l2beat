@@ -1,6 +1,7 @@
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
+import { DataAvailabilityRepository2 } from './da-beat/data-availability-2/repository'
 import { DataAvailabilityRepository } from './da-beat/data-availability/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
@@ -25,7 +26,6 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
-import { DataAvailabilityRepository2 } from './da-beat/data-availability-2/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(

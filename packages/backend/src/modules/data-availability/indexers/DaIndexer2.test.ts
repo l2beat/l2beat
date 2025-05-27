@@ -16,8 +16,8 @@ import type {
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { DaIndexer2 } from './DaIndexer2'
 import type { DaService2 } from '../services/DaService2'
+import { DaIndexer2 } from './DaIndexer2'
 
 // All test cases work on one layer.
 // DaIndexer assumes that all configurations will have the same layer.
@@ -56,7 +56,7 @@ describe(DaIndexer2.name, () => {
       expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
         blobs,
         previousRecords,
-        configurations
+        configurations,
       )
 
       expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
