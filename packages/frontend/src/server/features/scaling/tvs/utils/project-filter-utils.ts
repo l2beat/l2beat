@@ -28,6 +28,8 @@ export const TvsProjectFilterType = z.enum([
   'bridge',
   'projects',
 ])
+export type TvsProjectFilterType = z.infer<typeof TvsProjectFilterType>
+
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
   previewRecategorisation?: boolean,
