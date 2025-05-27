@@ -47,6 +47,15 @@ export class SignatureService implements ISignatureService {
   }
 
   async lookup(selector: `0x${string}`): Promise<string[]> {
+    let zeroCount = 0
+    for (const c of selector) {
+      if (c === '0') zeroCount++
+    }
+    if (zeroCount > 7) {
+      // This doesn't look like a selector
+      return []
+    }
+
     const wellKnown = this.wellKnown.get(selector)
     if (wellKnown) {
       return [wellKnown.signature]
