@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
-import { resolveImports } from './ConfigReader'
+import { ConfigReader } from './ConfigReader'
 
 describe('resolveImports', () => {
   beforeEach(() => {
@@ -21,28 +21,33 @@ describe('resolveImports', () => {
   afterEach(() => mockFs.restore())
 
   it('should resolve basic imports', () => {
-    const result = resolveImports('/base', ['valid.jsonc'], new Set())
+    const reader = new ConfigReader('/base')
+    const result = reader.resolveImports('/base', ['valid.jsonc'], new Set())
     expect(result).toEqual({ maxDepth: 123 })
   })
 
   it('should detect circular imports', () => {
+    const reader = new ConfigReader('/base')
     expect(() =>
-      resolveImports('/base', ['circular-a.jsonc'], new Set()),
+      reader.resolveImports('/base', ['circular-a.jsonc'], new Set()),
     ).toThrow('Circular import detected')
   })
 
   it('should throw on invalid config', () => {
-    expect(() => resolveImports('/base', ['invalid.jsonc'], new Set())).toThrow(
-      'Cannot parse file',
-    )
+    const reader = new ConfigReader('/base')
+    expect(() =>
+      reader.resolveImports('/base', ['invalid.jsonc'], new Set()),
+    ).toThrow('Cannot parse file')
   })
 
   it('should resolve nested imports', () => {
-    const result = resolveImports('/base', ['nested.jsonc'], new Set())
+    const reader = new ConfigReader('/base')
+    const result = reader.resolveImports('/base', ['nested.jsonc'], new Set())
     expect(result).toEqual({ import: ['./child.jsonc'], maxAddresses: 456 })
   })
 
   it('should merge configs with correct precedence', () => {
+    const reader = new ConfigReader('/base')
     mockFs({
       '/base/parent.jsonc': JSON.stringify({
         import: ['./child.jsonc'],
@@ -51,7 +56,7 @@ describe('resolveImports', () => {
       '/base/child.jsonc': JSON.stringify({ maxDepth: 123 }),
     })
 
-    const result = resolveImports('/base', ['parent.jsonc'], new Set())
+    const result = reader.resolveImports('/base', ['parent.jsonc'], new Set())
     expect((result as any).maxDepth).toEqual(123)
   })
 })
