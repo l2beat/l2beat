@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
+import { BADGES } from '../../common/badges'
 
 const genesisTimestamp = UnixTime(1744071776) // 2025-04-07T19:22:56Z
 const chainId = 1217
@@ -9,6 +10,7 @@ const discovery = new ProjectDiscovery('sxt')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
+  additionalBadges: [BADGES.RaaS.Caldera],
   display: {
     name: 'Space and Time',
     slug: 'sxt',
