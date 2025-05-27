@@ -176,6 +176,18 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['shape', [123, 'value']])).toBeFalsy() // Non-string key
     })
 
+    it('validates "to_entries" operation', () => {
+      expect(validateBlip(['to_entries'])).toBeTruthy() // Empty to_entries is valid
+      expect(validateBlip(['to_entries', 'prop'])).toBeFalsy() // String property
+      expect(validateBlip(['to_entries', ['key', 'value']])).toBeFalsy() // Key-value pair
+      expect(validateBlip(['to_entries', ['key', 123]])).toBeFalsy() // Key-value with number
+      expect(validateBlip(['to_entries', ['key', ['get', 'prop']]])).toBeFalsy() // Nested blip as value
+      expect(validateBlip(['to_entries', 'prop1', ['key2', 'value2']])).toBeFalsy() // Mixed string and pairs
+      expect(validateBlip(['to_entries', ['key']])).toBeFalsy() // Invalid pair (too short)
+      expect(validateBlip(['to_entries', ['key', 'value', 'extra']])).toBeFalsy() // Invalid pair (too long)
+      expect(validateBlip(['to_entries', [123, 'value']])).toBeFalsy() // Non-string key
+    })
+
     it('rejects unknown operations', () => {
       expect(validateBlip(['unknownOp', 123])).toBeFalsy()
       expect(validateBlip(['invalid', true, false])).toBeFalsy()

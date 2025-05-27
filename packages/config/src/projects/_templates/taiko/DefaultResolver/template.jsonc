@@ -31,16 +31,17 @@
     "namedAddresses": {
       "handler": {
         "type": "event",
-        "select": ["name", "newAddress"],
+        "select": "newAddress",
         "groupBy": "name",
         "set": {
           "event": "AddressRegistered"
         }
-      }
-    },
-    "decodedNamedAddresses": {
-      "copy": "namedAddresses",
-      "edit": ["pipe", ["get", "name"], ["format", "Bytes32ToName"]]
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["shape", ["name", ["format", "Bytes32ToName"]], "address"]]
+      ]
     }
   }
 }
