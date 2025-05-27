@@ -25,6 +25,7 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import { DataAvailabilityRepository2 } from './da-beat/data-availability-2/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(
@@ -45,6 +46,7 @@ export function createDatabase(
     currentPrice: new CurrentPriceRepository(db),
     stake: new StakeRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
+    dataAvailability2: new DataAvailabilityRepository2(db),
     // #endregion
 
     // #region Discovery
