@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x1b5a618115f2811813a72adceb75f41126cd3494
+Generated with discovered.json: 0x519bb4568c84ffcdbde50c83a69c7bb210bcac02
 
-# Diff at Tue, 27 May 2025 07:24:47 GMT:
+# Diff at Tue, 27 May 2025 12:46:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
@@ -21,22 +21,20 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ## Watched changes
 
 ```diff
-    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
-    +++ description: None
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      name:
+-        "MainnetTaikoL1"
++        "TaikoL1"
       template:
 -        "taiko/TaikoL1Contract"
-      sourceHashes.3:
-+        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
-      sourceHashes.2:
-+        "0xaa88f4be5209c8cd10b63280cda8c2261bb15288adcdeff0fb923ccf1bb98e0f"
++        "taiko/TaikoL1PostPacaya"
       sourceHashes.1:
 -        "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4"
-+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
-      sourceHashes.0:
--        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
-+        "0x8f478a5b25cb930dbc82c2aa3d87e577a5b0a2092f5d7871ff4ec3ad7e94ea91"
++        "0xc4ae3ca2fcf606673a1324989a7ac169b3fdb6780917814506e56898484e99d7"
       description:
 -        "This contract provides functionalities for proposing, proving, and verifying blocks."
++        "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
       values.$implementation:
 -        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
 +        ["0x4e030b19135869F6fd926614754B7F9c184E2B83","0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","0x497B13f9192B09244de9b5F0964830969FB26F07"]
@@ -280,9 +278,10 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
     contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
-    +++ description: None
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
       template:
 -        "taiko/TaikoToken"
++        "taiko/TaikoTokenPostPacaya"
       sourceHashes.1:
 -        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
 +        "0x2b1eb63ab3adb1a0783bae6252816727a2fb5d150dd0e9912e0a01e4ee224be9"
@@ -291,6 +290,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 +        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
       description:
 -        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
++        "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting."
       values.$implementation:
 -        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
 +        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
@@ -397,25 +397,25 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
 -   Status: DELETED
-    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc)
+    contract Risc0VerifierGateway (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc)
     +++ description: Entry contract to verify batches using RISC Zero.
 ```
 
 ```diff
 -   Status: DELETED
-    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
+    contract MainnetGuardianProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
     +++ description: Verifier contract for blocks proven by Guardian minority.
 ```
 
 ```diff
 -   Status: DELETED
-    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780)
+    contract MainnetRollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780)
     +++ description: This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.
 ```
 
 ```diff
 -   Status: DELETED
-    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452)
+    contract SP1VerifierGateway (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452)
     +++ description: Entry contract to verify batches using SP1.
 ```
 
@@ -476,75 +476,94 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "4 of 6 (67%)"
-      receivedPermissions.21:
+      receivedPermissions.23:
 +        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.20:
+      receivedPermissions.22:
 +        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
-      receivedPermissions.19:
+      receivedPermissions.21:
 +        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
-      receivedPermissions.18:
+      receivedPermissions.20:
 +        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
-      receivedPermissions.17.from:
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
+      receivedPermissions.18.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
-+        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-      receivedPermissions.16.from:
--        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
 +        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
-      receivedPermissions.15.from:
--        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.17.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
 +        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-      receivedPermissions.14.from:
--        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      receivedPermissions.16.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
 +        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
-      receivedPermissions.13.from:
--        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.15.from:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
 +        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
-      receivedPermissions.12.from:
--        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      receivedPermissions.14.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
 +        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
-      receivedPermissions.11.from:
--        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.13.from:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
 +        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
-      receivedPermissions.10.from:
--        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.12.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
 +        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
-      receivedPermissions.9.from:
--        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.11.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
 +        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-      receivedPermissions.8.from:
--        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      receivedPermissions.10.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
 +        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
-      receivedPermissions.7.from:
--        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.9.from:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
 +        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
-      receivedPermissions.6.from:
--        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.8.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
 +        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.7.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.7.description:
++        "can update the contract address for a given name"
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.6.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.6.description:
++        "can update the program being verified"
       receivedPermissions.5.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.5.from:
--        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
-+        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
       receivedPermissions.5.role:
 -        "admin"
 +        ".owner"
       receivedPermissions.5.description:
 +        "can update the program being verified"
-      receivedPermissions.4.permission:
--        "upgrade"
-+        "interact"
       receivedPermissions.4.from:
--        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
-+        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-      receivedPermissions.4.role:
--        "admin"
-+        ".owner"
-      receivedPermissions.4.description:
-+        "can update the program being verified"
-      receivedPermissions.3.from:
 -        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.4.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+      receivedPermissions.3.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
 +        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.3.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
       receivedPermissions.2.from:
 -        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
 +        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
@@ -561,15 +580,11 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```
 
 ```diff
-    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
-    +++ description: None
-      template:
--        "taiko/SignalService"
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
       sourceHashes.1:
 -        "0xf99b7d5f650d3734e945c5040d8e4776dfdc97ff745666e084c1d471b7973f38"
 +        "0xc978dbfc097ca447823c4a1eb83078cd63532727420b19287acc0f87e884285f"
-      description:
--        "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs."
       values.$implementation:
 -        "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
 +        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
@@ -605,30 +620,24 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 +        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
       values.lastUnpausedAt:
 -        0
-      values.proxiableUUID:
--        "EXPECT_REVERT"
       values.resolver:
 +        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
       implementationNames.0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3:
 -        "MainnetSignalService"
       implementationNames.0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c:
 +        "MainnetSignalService"
-      category:
--        {"name":"Spam","priority":-1}
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
 ```diff
 -   Status: DELETED
-    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81)
+    contract MainnetSgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81)
     +++ description: Verifier contract for SGX proven blocks.
 ```
 
 ```diff
 -   Status: DELETED
-    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
+    contract MainnetGuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
     +++ description: Verifier contract for Guardian proven blocks.
 ```
 
@@ -646,6 +655,18 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
 +   Status: CREATED
+    contract BridgedERC1155 (0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgedERC20V2 (0x65666141a541423606365123Ed280AB16a09A2e1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
     +++ description: Entry contract to verify batches using RISC Zero.
 ```
@@ -659,7 +680,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 +   Status: CREATED
     contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
-    +++ description: None
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
 ```
 
 ```diff
@@ -676,8 +697,8 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
 +   Status: CREATED
-    contract MainnetVerifier (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
-    +++ description: None
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
 ```
 
 ```diff
@@ -686,39 +707,45 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
     +++ description: Entry contract to verify batches using SP1.
 ```
 
+```diff
++   Status: CREATED
+    contract BridgedERC721 (0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7)
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
-.../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++++
- .../ERC1967Proxy.p.sol                             |    0
+.../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |    2 +-
  .../AutomataDcapV3Attestation.sol                  |    0
  .../ERC1967Proxy.p.sol                             |    0
- .../DefaultResolver/DefaultResolver.sol}           |  807 ++---
- .../DefaultResolver}/ERC1967Proxy.p.sol            |    0
+ .../BridgedERC1155.sol}                            | 3998 ++++++++++----------
+ .../taiko/ethereum/.flat/BridgedERC20V2.sol        | 3604 ++++++++++++++++++
+ .../taiko/ethereum/.flat/BridgedERC721.sol         | 3123 +++++++++++++++
+ .../DefaultResolver/DefaultResolver.sol}           |  807 ++--
+ .../DefaultResolver}/ERC1967Proxy.p.sol            |    2 +-
  .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
- .../ForcedInclusionStore/ForcedInclusionStore.sol  | 1633 +++++++++
- .../MainnetGuardianProver.sol => /dev/null         | 2196 ------------
+ .../ForcedInclusionStore/ForcedInclusionStore.sol} | 1533 +++-----
+ .../MainnetSignalService/MainnetSignalService.sol  |  822 ++--
+ .../MainnetTaikoL1/ERC1967Proxy.p.sol => /dev/null |  594 ---
  .../MainnetTierRouter.sol => /dev/null             |  219 --
- .../MainnetVerifier}/ERC1967Proxy.p.sol            |    2 +-
- .../MainnetVerifier/MainnetVerifier.sol}           | 1453 ++------
- .../Risc0VerifierGateway}/ERC1967Proxy.p.sol       |    2 +-
- .../Risc0VerifierGateway}/Risc0Verifier.sol        |  907 ++---
- .../SP1VerifierGateway}/ERC1967Proxy.p.sol         |    2 +-
- .../SP1VerifierGateway}/SP1Verifier.sol            |  914 ++---
- .../SgxVerifier/ERC1967Proxy.p.sol => /dev/null    |  594 ----
- .../MainnetSgxVerifier.sol => /dev/null            | 2857 ---------------
- .../ERC1967Proxy.p.sol                             |  594 ++++
- .../SgxVerifier.sol}                               | 3349 ++++++++---------
- .../ERC1967Proxy.p.sol                             |  594 ++++
- .../SgxVerifier.sol}                               | 3349 ++++++++---------
- .../SignalService/MainnetSignalService.sol         |  822 ++---
- .../.flat/TaikoL1Contract/MainnetInbox.3.sol       | 2964 ++++++++++++++++
- .../TaikoL1Contract/MainnetTaikoL1.2.sol}          |    7 +
- .../.flat/TaikoL1Contract/PacayaForkRouter.1.sol   | 1173 ++++++
+ .../Risc0VerifierGateway/Risc0Verifier.sol         |  907 ++---
+ .../SP1VerifierGateway/SP1Verifier.sol             |  914 ++---
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../SgxVerifier.sol}                               | 3349 ++++++++--------
+ .../ERC1967Proxy.p.sol                             |  594 +++
+ .../SgxVerifier.sol}                               | 3349 ++++++++--------
+ .../TaikoL1}/ERC1967Proxy.p.sol                    |    0
+ .../ethereum/.flat/TaikoL1/MainnetInbox.3.sol      | 2964 +++++++++++++++
+ .../TaikoL1/MainnetTaikoL1.2.sol}                  |    7 +
+ .../ethereum/.flat/TaikoL1/PacayaForkRouter.1.sol  | 1173 ++++++
  .../TaikoToken/TaikoToken.sol                      |  132 +-
- .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
- .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
- 29 files changed, 17516 insertions(+), 12871 deletions(-)
+ .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 +++
+ .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 +++++++
+ .../.flat/VerifierGateway/ERC1967Proxy.p.sol       |  594 +++
+ .../VerifierGateway/MainnetVerifier.sol}           | 1453 ++-----
+ 29 files changed, 25014 insertions(+), 10945 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -728,8 +755,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22481930 (main branch discovery), not current.
 
 ```diff
-    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    contract MainnetTaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
     +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      name:
+-        "TaikoL1Contract"
++        "MainnetTaikoL1"
       proxyType:
 -        "EIP1967 proxy"
 +        "TaikoFork proxy"
@@ -990,8 +1020,11 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
+    contract Risc0VerifierGateway (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
     +++ description: Entry contract to verify batches using RISC Zero.
+      name:
+-        "Risc0Verifier"
++        "Risc0VerifierGateway"
       template:
 -        "taiko/Risc0Verifier"
 +        "taiko/Risc0VerifierGateway"
@@ -1002,8 +1035,29 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    contract MainnetGuardianProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      name:
+-        "GuardianMinorityProver"
++        "MainnetGuardianProver"
+    }
+```
+
+```diff
+    contract MainnetRollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.
+      name:
+-        "L1RollupAddressManager"
++        "MainnetRollupAddressManager"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
     +++ description: Entry contract to verify batches using SP1.
+      name:
+-        "SP1Verifier"
++        "SP1VerifierGateway"
       template:
 -        "taiko/SP1Verifier"
 +        "taiko/SP1VerifierGateway"
@@ -1014,8 +1068,11 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    contract SP1Verifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
     +++ description: Verifier contract for SP1 proofs.
+      name:
+-        "SP1RemoteVerifier"
++        "SP1Verifier"
       description:
 -        "SP1Verifier is a contract used to verify proofs given public values and verification key."
 +        "Verifier contract for SP1 proofs."
@@ -1042,57 +1099,73 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      name:
+-        "SharedERC20Vault"
++        "MainnetERC20Vault"
+    }
+```
+
+```diff
     contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
     +++ description: None
-      receivedPermissions.17:
+      receivedPermissions.18:
 +        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.16:
+      receivedPermissions.17:
 +        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
-      receivedPermissions.15:
+      receivedPermissions.16:
 +        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
-      receivedPermissions.14:
+      receivedPermissions.15:
 +        {"permission":"upgrade","from":"0xE3D777143Ea25A6E031d1e921F396750885f43aC","role":"admin"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
       receivedPermissions.13.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
-+        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
       receivedPermissions.12.from:
 -        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
-+        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
       receivedPermissions.11.from:
 -        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-+        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
       receivedPermissions.10.from:
 -        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
-+        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
       receivedPermissions.9.from:
 -        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
-+        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0x579f40D0BE111b823962043702cabe6Aaa290780"
       receivedPermissions.8.from:
 -        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
-+        "0x579f40D0BE111b823962043702cabe6Aaa290780"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
       receivedPermissions.7.from:
 -        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-+        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
       receivedPermissions.6.from:
 -        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
-+        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
       receivedPermissions.5.from:
 -        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
-+        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
++        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
       receivedPermissions.4.from:
 -        "0x579f40D0BE111b823962043702cabe6Aaa290780"
-+        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.4.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.4.description:
++        "can update the program being verified"
       receivedPermissions.3.permission:
 -        "upgrade"
 +        "interact"
-      receivedPermissions.3.from:
--        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-+        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
       receivedPermissions.3.role:
 -        "admin"
 +        ".owner"
       receivedPermissions.3.description:
-+        "can update the program being verified"
++        "can update the contract address for a given name"
       receivedPermissions.2.permission:
 -        "upgrade"
 +        "interact"
@@ -1120,6 +1193,51 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 +        ".owner"
       receivedPermissions.0.description:
 +        "can update the program being verified"
+    }
+```
+
+```diff
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      name:
+-        "SignalService"
++        "MainnetSignalService"
+    }
+```
+
+```diff
+    contract MainnetSgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      name:
+-        "SgxVerifier"
++        "MainnetSgxVerifier"
+    }
+```
+
+```diff
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      name:
+-        "TaikoBridge"
++        "MainnetBridge"
+    }
+```
+
+```diff
+    contract MainnetGuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      name:
+-        "GuardianProver"
++        "MainnetGuardianProver"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      description:
+-        "This contract manages the shared addresses for Taiko rollups."
++        "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades."
     }
 ```
 
