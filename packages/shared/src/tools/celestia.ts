@@ -12,9 +12,7 @@ const opDecoders = [
   { prefix: '01010c', decoder: decodeOPCommitment },
 ]
 
-const arbDecoders = [
-  { prefix: '63', decoder: decodeArbCommitment },
-]
+const arbDecoders = [{ prefix: '63', decoder: decodeArbCommitment }]
 
 const decoders = opDecoders.concat(arbDecoders)
 
