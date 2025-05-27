@@ -2,10 +2,10 @@ import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import express from 'express'
 import { validateRoute } from 'rewrite/src/utils/validateRoute'
 import { z } from 'zod'
-import { getDiscolupeProjects } from './getDiscolupeProjects'
+import { getDiscolupeProjects } from '~/app/api/(internal)/_fns/getDiscolupeProjects'
+import { getLivenessTxs } from '~/app/api/(internal)/_fns/getLivenessTxs'
+import { getLogoGeneratorProjects } from '~/app/api/(internal)/_fns/getLogoGeneratorProjects'
 import { getHotPages } from './getHotPages'
-import { getLivenessTxs } from './getLivenessTxs'
-import { getLogoGeneratorProjects } from './getLogoGeneratorProjects'
 
 export function createInternalApiRouter() {
   const router = express.Router()
