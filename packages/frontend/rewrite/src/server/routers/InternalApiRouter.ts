@@ -10,7 +10,7 @@ import { ps } from '~/server/projects'
 export function createInternalApiRouter() {
   const router = express.Router()
 
-  router.get('/api/hotpages', async (_, res) => {
+  router.get('/api/hot-pages', async (_, res) => {
     const db = getDb()
 
     const [scaling, bridges, daLayers, daBridges, latestValues] =
