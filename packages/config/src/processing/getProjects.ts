@@ -215,7 +215,6 @@ function bridgeToProject(p: Bridge): BaseProject {
     bridgeInfo: {
       category: p.display.category,
       destination: p.technology.destination,
-      validatedBy: p.riskView.validatedBy.value,
     },
     bridgeTechnology: {
       ...p.technology,
