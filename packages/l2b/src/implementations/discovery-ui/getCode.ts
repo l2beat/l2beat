@@ -102,7 +102,7 @@ export function getAllCode(
         sources: availableCodePaths
           .map(({ name: fileName, path }) => ({
             name: fileName,
-            code: readFileSync(path, 'utf-8'),
+            code: addFlattenerNote(readFileSync(path, 'utf-8')),
           }))
           .sort((a, b) => compareFiles(a.name, b.name)),
       }
