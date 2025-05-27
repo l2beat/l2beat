@@ -124,7 +124,7 @@ export class TemplateService {
       if ((criteria?.validAddresses ?? []).includes(address)) {
         score++ // valid-address criterion matched
       } else if (criteria?.validAddresses?.length ?? 0 > 0) {
-        score-- // valid-address criterion not matched
+        continue // valid-address criterion not matched
       }
 
       max = Math.max(max, score)
