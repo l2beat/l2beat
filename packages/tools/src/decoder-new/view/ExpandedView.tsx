@@ -7,13 +7,13 @@ import clsx from 'clsx'
 import { Fragment, type ReactNode, useState } from 'react'
 import { formatUnits } from 'viem'
 
-interface Props {
+interface ExpandedViewProps {
   decoded: DecodedResult
 }
 
-export function DecodedView({ decoded }: Props) {
+export function ExpandedView({ decoded }: ExpandedViewProps) {
   return (
-    <main className="mx-auto max-w-[900px] p-4 pb-20">
+    <>
       {decoded.transaction && (
         <div className="mb-2">
           <DecodedLabel name="hash" type="bytes32" />
@@ -31,7 +31,7 @@ export function DecodedView({ decoded }: Props) {
         </div>
       )}
       <DecodedDisplay value={decoded.data} index={0} />
-    </main>
+    </>
   )
 }
 
